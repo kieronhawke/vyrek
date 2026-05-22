@@ -44,3 +44,7 @@ next-env.d.ts
 /.screenshots
 /.lighthouse
 .github-pending/
+
+# Internal brief documents (keep locally, not in public repo)
+/docs/vyrek-*.md
+/docs/NIGHT-OF-*.md
