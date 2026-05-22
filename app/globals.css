@@ -229,6 +229,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-y: none;
+  overflow-x: clip;
   font-variant-numeric: tabular-nums;
   min-height: 100svh;
 }

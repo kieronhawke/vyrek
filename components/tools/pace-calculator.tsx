@@ -140,15 +140,20 @@ export function PaceCalculator() {
         <Eyebrow>Station splits (seconds)</Eyebrow>
         <ul role="list" className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
           {stations.map((s, i) => (
-            <li key={s.name} className="flex items-center justify-between gap-3">
-              <span className="text-sm text-vyrek-text-secondary">{s.name}</span>
-              <input
-                type="number"
-                min={0}
-                value={s.seconds}
-                onChange={(e) => updateStation(i, parseInt(e.target.value, 10))}
-                className="h-10 w-24 rounded-md border border-vyrek-border bg-vyrek-base px-3 text-right font-mono text-sm text-vyrek-text outline-none focus:border-vyrek-accent"
-              />
+            <li key={s.name}>
+              <label className="flex items-center justify-between gap-3">
+                <span className="text-sm text-vyrek-text-secondary">
+                  {s.name}
+                </span>
+                <input
+                  type="number"
+                  min={0}
+                  value={s.seconds}
+                  onChange={(e) => updateStation(i, parseInt(e.target.value, 10))}
+                  aria-label={`${s.name} split in seconds`}
+                  className="h-10 w-24 rounded-md border border-vyrek-border bg-vyrek-base px-3 text-right font-mono text-sm text-vyrek-text outline-none focus:border-vyrek-accent"
+                />
+              </label>
             </li>
           ))}
         </ul>

@@ -88,8 +88,11 @@ export function Hero() {
         className="absolute inset-0 -z-10 will-change-[filter]"
         style={{ filter: "grayscale(1) brightness(1)" }}
       >
+        {/* hero-poster.jpg was a near-black video still — useless on mobile
+            where the autoplay video is gated off. Use the coach-portrait
+            shot instead; it's the same person the desktop video shows. */}
         <img
-          src="/hero-poster.jpg"
+          src="/media/images/coach-james-wright.jpg"
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
           loading="eager"
@@ -118,7 +121,7 @@ export function Hero() {
             CTA below carry the premium-feel motion instead. */}
         <h1
           id="hero-heading"
-          className="font-display max-w-[12ch] text-5xl font-bold uppercase leading-[0.92] tracking-[-0.02em] text-vyrek-text md:text-6xl lg:text-7xl"
+          className="font-display max-w-[14ch] text-[2.6rem] font-bold uppercase leading-[0.92] tracking-[-0.02em] text-vyrek-text sm:text-5xl md:text-6xl lg:text-7xl"
         >
           Train like a Hyrox athlete.
         </h1>

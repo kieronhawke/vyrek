@@ -107,7 +107,7 @@ export default function PricingPage() {
           <section className="mx-auto mt-16 max-w-2xl">
             <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/60 p-6 md:p-8">
               <Eyebrow>Why £4.99?</Eyebrow>
-              <h2 className="mt-3 text-2xl font-black leading-tight tracking-[-0.04em] text-vyrek-text md:text-3xl">
+              <h2 className="mt-3 text-balance text-xl font-black leading-tight tracking-[-0.04em] text-vyrek-text sm:text-2xl md:text-3xl">
                 Software-first, not 1:1 coaching.
               </h2>
               <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">

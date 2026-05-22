@@ -152,8 +152,14 @@ export default async function GearPage({
             </div>
           </section>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section
+            className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10"
+            aria-labelledby="gear-faq-heading"
+          >
             <Eyebrow>FAQs</Eyebrow>
+            <h2 id="gear-faq-heading" className="sr-only">
+              {g.eyebrow} — frequently asked questions
+            </h2>
             <div className="mt-6">
               <Accordion>
                 {g.faqs.map((f, i) => (

@@ -58,9 +58,13 @@ export function OutcomeStats() {
             What you get for £4.99 a month.
           </SplitHeading>
         </header>
-        <dl className="mx-auto mt-12 grid max-w-5xl grid-cols-2 gap-4 md:grid-cols-4">
+        {/* Use a plain grid + dl pairs as siblings — wrapping <dt>/<dd>
+            inside an arbitrary <div> inside <dl> breaks the
+            definition-list semantic rule. Each stat becomes its own
+            self-contained card via div wrapper, not a dl child. */}
+        <div className="mx-auto mt-12 grid max-w-5xl grid-cols-2 gap-4 md:grid-cols-4">
           {STATS.map((s) => (
-            <div
+            <dl
               key={s.label}
               className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-6 md:p-7"
             >
@@ -73,12 +77,12 @@ export function OutcomeStats() {
                   {s.suffix}
                 </span>
               </dd>
-              <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
+              <dd className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
                 {s.detail}
-              </p>
-            </div>
+              </dd>
+            </dl>
           ))}
-        </dl>
+        </div>
       </Container>
     </RevealOnView>
   );
