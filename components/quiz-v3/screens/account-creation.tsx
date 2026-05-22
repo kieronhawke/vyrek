@@ -128,7 +128,10 @@ export function validateAccountForm(
 ): { ok: true } | { ok: false; error: string } {
   const trimmed = email.trim();
   if (!trimmed) return { ok: false, error: "Email is required." };
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+  if (trimmed.length > 254) {
+    return { ok: false, error: "Email is too long." };
+  }
+  if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,24}$/.test(trimmed)) {
     return { ok: false, error: "Enter a valid email address." };
   }
   if (password.length < 8) {

@@ -1,18 +1,19 @@
+import type { Metadata } from "next";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
-import { ComingSoon } from "@/components/shared/coming-soon";
+import { ReferPanel } from "@/components/account/refer-panel";
 
-export const metadata = { title: "Refer a friend" };
+export const metadata: Metadata = {
+  title: "Refer & earn",
+  description:
+    "Refer a friend to Vyrek. When their trial converts to paid, we BACS £20 to your account within 5 business days.",
+};
 
-export default function ReferPlaceholder() {
+export default function ReferPage() {
   return (
     <>
       <MarketingNav />
-      <ComingSoon
-        eyebrow="Refer & earn"
-        title="Refer a friend. Earn £20."
-        description="When a friend's trial converts to paid, we BACS you £20 within 5 business days. Your referral hub goes live once you've started your trial."
-      />
+      <ReferPanel />
       <MarketingFooter />
     </>
   );

@@ -1,4 +1,5 @@
 import { Container } from "@/components/shared/container";
+import { CountUp } from "@/components/shared/count-up";
 import { getActiveStats } from "@/lib/stats";
 
 // Press logo wordmarks — DEMO placeholders. Replace with real partner
@@ -21,7 +22,11 @@ export function SocialProofBar() {
             </span>
             <span aria-hidden className="text-vyrek-text-tertiary">·</span>
             <span className="tabular-nums">
-              <span className="font-medium text-vyrek-text">{active}</span>{" "}
+              <CountUp
+                value={active}
+                durationMs={1100}
+                className="font-medium text-vyrek-text"
+              />{" "}
               athletes training
             </span>
           </div>

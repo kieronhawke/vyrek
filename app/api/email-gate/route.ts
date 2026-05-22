@@ -32,7 +32,11 @@ type Body = {
   path?: string;
 };
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Tighter than `[^\s@]+@[^\s@]+\.[^\s@]+` — rejects characters that have no
+// business in a real RFC-5321 address (`<>&"`) so injection-style values are
+// rejected at the gate, not later in the system.
+const EMAIL_RE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,24}$/;
+const EMAIL_MAX_LEN = 254; // RFC 5321 hard limit
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -82,7 +86,7 @@ export async function POST(req: Request) {
 
   const email = (body.email ?? "").trim().toLowerCase();
   const uuid = (body.uuid ?? "").trim();
-  if (!EMAIL_RE.test(email)) {
+  if (email.length > EMAIL_MAX_LEN || !EMAIL_RE.test(email)) {
     return NextResponse.json(
       { ok: false, reason: "invalid-email" },
       { status: 400 },

@@ -41,6 +41,11 @@ import {
 
 export const revalidate = 3600;
 
+// Block unknown slugs from rendering as dynamic 200s — a request for a
+// slug that wasn't in generateStaticParams returns a real 404, not the
+// not-found page with a 200 status (better for SEO + crawlers).
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const slugs = await allSlugs();
   return slugs.map((slug) => ({ slug }));

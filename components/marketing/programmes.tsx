@@ -107,7 +107,7 @@ function ProgrammeCard({
       data-programme-card
       href={`/quiz?program=${programme.slug}`}
       className={cn(
-        "group relative isolate flex flex-col justify-between overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 transition-[border,transform] duration-fast ease-out hover:border-vyrek-border-strong active:scale-[0.99]",
+        "group lift-on-hover shimmer relative isolate flex flex-col justify-between overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 active:scale-[0.99]",
         variant === "mobile" && "min-h-[300px] w-[78%] shrink-0 snap-center",
         variant === "desktop" && "aspect-[5/3]",
       )}

@@ -72,25 +72,25 @@ export function BentoFeatures() {
             <div className="relative z-10">
               <CardCopy
                 headline="Built by Elite 15 athletes."
-                sub="Programming designed by athletes who race at the top of the sport."
+                sub="Programming designed by athletes who race at the top of the sport. One programming team. Four pathways."
               />
               <div className="mt-8 grid grid-cols-4 gap-2">
-                {[0, 1, 2, 3].map((i) => (
+                {[
+                  { name: "James", role: "Coach" },
+                  { name: "First", role: "Race" },
+                  { name: "Sub-90", role: "Plan" },
+                  { name: "Doubles", role: "Plan" },
+                ].map((tile, i) => (
                   <div
-                    key={i}
+                    key={tile.name}
                     className="relative aspect-square overflow-hidden rounded-md border border-vyrek-border-subtle bg-vyrek-overlay/80 backdrop-blur-sm"
                   >
                     <div className="absolute inset-0 bg-[radial-gradient(80%_80%_at_50%_30%,rgba(255,90,31,0.18)_0%,rgba(20,20,20,0)_55%)]" />
-                    {i === 0 && (
-                      <span className="absolute bottom-2 left-2 font-mono text-[9px] uppercase tracking-[0.18em] text-vyrek-text-secondary">
-                        James
-                      </span>
-                    )}
-                    {i > 0 && (
-                      <span className="absolute bottom-2 left-2 font-mono text-[9px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-                        Soon
-                      </span>
-                    )}
+                    <span
+                      className={`absolute bottom-2 left-2 font-mono text-[9px] uppercase tracking-[0.18em] ${i === 0 ? "text-vyrek-text-secondary" : "text-vyrek-text-tertiary"}`}
+                    >
+                      {tile.name}
+                    </span>
                   </div>
                 ))}
               </div>

@@ -61,28 +61,6 @@ function CoachTile({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  if (coach.comingSoon) {
-    return (
-      <div
-        aria-hidden
-        className="relative flex aspect-[5/4] flex-col justify-between overflow-hidden rounded-lg border border-dashed border-vyrek-border bg-vyrek-elevated/40 p-6 sm:aspect-[4/5]"
-      >
-        <Eyebrow>{coach.role}</Eyebrow>
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 flex items-center justify-center text-[120px] font-black leading-none tracking-[-0.08em] text-vyrek-border-strong/40 sm:text-[180px]"
-        >
-          ?
-        </span>
-        <div className="relative">
-          <h3 className="text-2xl font-black tracking-[-0.04em] text-vyrek-text-tertiary">
-            —
-          </h3>
-        </div>
-      </div>
-    );
-  }
-
   // Initials are surfaced large as a brand element behind the bio.
   const initials = coach.name
     .split(" ")
@@ -98,7 +76,7 @@ function CoachTile({
           <button
             type="button"
             className={cn(
-              "group relative isolate flex aspect-[5/4] flex-col justify-between overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 text-left transition-[border,transform] duration-fast ease-out hover:border-vyrek-border-strong active:scale-[0.99] sm:aspect-[4/5]",
+              "group lift-on-hover shimmer relative isolate flex aspect-[5/4] flex-col justify-between overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 text-left active:scale-[0.99] sm:aspect-[4/5]",
             )}
           />
         }

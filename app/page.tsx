@@ -8,6 +8,7 @@ import { WeekInLife } from "@/components/marketing/week-in-life";
 import { NotReady } from "@/components/marketing/not-ready";
 import { CoachHub } from "@/components/marketing/coach-hub";
 import { PlanDeepDive } from "@/components/marketing/plan-deep-dive";
+import { Methodology } from "@/components/marketing/methodology";
 import { Testimonials } from "@/components/marketing/testimonials";
 import { Faq } from "@/components/marketing/faq";
 import { FinalCta } from "@/components/marketing/final-cta";
@@ -27,6 +28,7 @@ export default function Home() {
         <NotReady />
         <CoachHub />
         <PlanDeepDive />
+        <Methodology />
         <Testimonials />
         <Faq />
         <FinalCta />

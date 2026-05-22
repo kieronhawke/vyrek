@@ -47,12 +47,17 @@ export default function PricingPage() {
           </header>
 
           <section className="mx-auto mt-16 max-w-xl">
-            <div className="rounded-lg border border-vyrek-border-strong bg-vyrek-elevated p-8 md:p-10">
+            <div className="pricing-card shimmer relative overflow-hidden rounded-lg border border-vyrek-border-strong bg-vyrek-elevated p-8 md:p-10">
+              {/* Soft accent gradient on the top edge — Apple's pricing-card flourish */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-vyrek-accent/60 to-transparent"
+              />
               <div className="text-center">
                 <div className="font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary">
                   Vyrek membership
                 </div>
-                <div className="mt-4 flex items-baseline justify-center gap-2">
+                <div className="pricing-card-price mt-4 flex items-baseline justify-center gap-2">
                   <span className="text-4xl font-black tracking-[-0.06em] text-vyrek-text md:text-5xl">
                     {PRICING.monthlyDisplay}
                   </span>
