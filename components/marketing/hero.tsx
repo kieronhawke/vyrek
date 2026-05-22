@@ -135,6 +135,20 @@ export function Hero() {
             Find your plan →
           </Link>
         </div>
+        {/* Trust pill — kept under the CTA per Runna / Whoop. Honest claims
+            only: programming credentials + price + cancellation. */}
+        <div className="hero-intro hero-intro-late mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-vyrek-text-secondary md:text-sm">
+          <span className="inline-flex items-center gap-1.5">
+            <span aria-label="5 out of 5 stars" className="text-vyrek-accent">
+              ★★★★★
+            </span>
+            <span>Built by Elite 15 coaches</span>
+          </span>
+          <span aria-hidden className="text-vyrek-text-tertiary">·</span>
+          <span>£4.99/mo</span>
+          <span aria-hidden className="text-vyrek-text-tertiary">·</span>
+          <span>Cancel anytime</span>
+        </div>
       </div>
 
       <style jsx>{`

@@ -2,6 +2,10 @@ import type { MetadataRoute } from "next";
 import { PROGRAMMES } from "@/lib/programmes";
 import { listPostMeta, CATEGORIES } from "@/lib/blog/posts";
 import { AUTHORS } from "@/lib/blog/authors";
+import { UK_LOCATIONS } from "@/lib/uk-locations";
+import { STATIONS } from "@/lib/hyrox-stations";
+import { PLAN_TEMPLATES } from "@/lib/plan-templates";
+import { COMPARISONS } from "@/lib/hyrox-comparisons";
 
 const SITE_URL = "https://vyrek.com";
 
@@ -18,6 +22,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/about`, lastModified: now, priority: 0.6, changeFrequency: "monthly" },
     { url: `${SITE_URL}/contact`, lastModified: now, priority: 0.5, changeFrequency: "yearly" },
     { url: `${SITE_URL}/press`, lastModified: now, priority: 0.4, changeFrequency: "monthly" },
+    { url: `${SITE_URL}/press/brand-guidelines`, lastModified: now, priority: 0.3, changeFrequency: "yearly" },
+    { url: `${SITE_URL}/account/refer`, lastModified: now, priority: 0.4, changeFrequency: "monthly" },
+    // Programmatic hubs
+    { url: `${SITE_URL}/hyrox`, lastModified: now, priority: 0.9, changeFrequency: "weekly" },
+    { url: `${SITE_URL}/hyrox/stations`, lastModified: now, priority: 0.9, changeFrequency: "monthly" },
+    { url: `${SITE_URL}/plans`, lastModified: now, priority: 0.9, changeFrequency: "weekly" },
+    { url: `${SITE_URL}/compare`, lastModified: now, priority: 0.7, changeFrequency: "monthly" },
+    { url: `${SITE_URL}/tools`, lastModified: now, priority: 0.7, changeFrequency: "monthly" },
+    // Legal
     { url: `${SITE_URL}/legal/privacy`, lastModified: now, priority: 0.3, changeFrequency: "yearly" },
     { url: `${SITE_URL}/legal/terms`, lastModified: now, priority: 0.3, changeFrequency: "yearly" },
     { url: `${SITE_URL}/legal/cookies`, lastModified: now, priority: 0.3, changeFrequency: "yearly" },
@@ -64,6 +77,44 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   );
 
+  // ── Programmatic SEO routes ────────────────────────────────────
+  const cityRoutes: MetadataRoute.Sitemap = UK_LOCATIONS.map((loc) => ({
+    url: `${SITE_URL}/hyrox/${loc.slug}`,
+    lastModified: now,
+    priority: 0.7,
+    changeFrequency: "weekly",
+  }));
+
+  const stationRoutes: MetadataRoute.Sitemap = STATIONS.map((s) => ({
+    url: `${SITE_URL}/hyrox/stations/${s.slug}`,
+    lastModified: now,
+    priority: 0.8,
+    changeFrequency: "monthly",
+  }));
+
+  const planTemplateRoutes: MetadataRoute.Sitemap = PLAN_TEMPLATES.map((p) => ({
+    url: `${SITE_URL}/plans/${p.slug}`,
+    lastModified: now,
+    priority: 0.8,
+    changeFrequency: "monthly",
+  }));
+
+  const comparisonRoutes: MetadataRoute.Sitemap = COMPARISONS.map((c) => ({
+    url: `${SITE_URL}/compare/${c.slug}`,
+    lastModified: now,
+    priority: 0.6,
+    changeFrequency: "monthly",
+  }));
+
+  const toolRoutes: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/tools/pace-calculator`,
+      lastModified: now,
+      priority: 0.7,
+      changeFrequency: "monthly",
+    },
+  ];
+
   return [
     ...staticRoutes,
     ...programmeRoutes,
@@ -71,5 +122,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...postRoutes,
     ...categoryRoutes,
     ...authorRoutes,
+    ...cityRoutes,
+    ...stationRoutes,
+    ...planTemplateRoutes,
+    ...comparisonRoutes,
+    ...toolRoutes,
   ];
 }

@@ -65,38 +65,69 @@ export function CookieBanner() {
       <div
         role="dialog"
         aria-label="Cookie preferences"
-        className="fixed inset-x-0 bottom-0 z-[60] pb-[max(1rem,calc(var(--safe-bottom)+1rem))]"
+        className="fixed inset-x-0 bottom-0 z-[60] pb-[max(0.5rem,calc(var(--safe-bottom)+0.5rem))] md:pb-[max(1rem,calc(var(--safe-bottom)+1rem))]"
       >
-        <div className="mx-auto max-w-3xl px-4">
-          <div className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-5 shadow-[0_-12px_60px_-12px_rgba(0,0,0,0.6)] md:p-6">
-            <Eyebrow>Cookies</Eyebrow>
-            <p className="mt-3 text-sm leading-relaxed text-vyrek-text md:text-base">
-              We use cookies to run the site and, with your permission, to
-              understand usage. Analytics and marketing are off until you say
-              otherwise.
-            </p>
-            <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
-              <button
-                type="button"
-                onClick={() => setPrefsOpen(true)}
-                className="h-11 rounded-pill px-4 text-sm text-vyrek-text-secondary transition-colors hover:text-vyrek-text"
-              >
-                Manage preferences
-              </button>
+        <div className="mx-auto max-w-3xl px-3 md:px-4">
+          <div className="rounded-lg border border-vyrek-border bg-vyrek-elevated px-3 py-3 shadow-[0_-12px_60px_-12px_rgba(0,0,0,0.6)] md:px-6 md:py-5">
+            {/* Mobile: ultra-compact single-row layout. Desktop: original
+                three-button card with eyebrow + paragraph. */}
+            <div className="flex items-center gap-2 md:hidden">
+              <p className="flex-1 text-[13px] leading-snug text-vyrek-text">
+                We use cookies.{" "}
+                <button
+                  type="button"
+                  onClick={() => setPrefsOpen(true)}
+                  className="!min-h-0 text-vyrek-text-secondary underline-offset-2 hover:underline"
+                >
+                  Choose
+                </button>
+              </p>
               <button
                 type="button"
                 onClick={rejectAll}
-                className="h-11 rounded-pill border border-vyrek-border bg-transparent px-5 text-sm font-medium text-vyrek-text transition-colors hover:bg-vyrek-overlay active:scale-[0.98]"
+                className="!min-h-0 h-9 shrink-0 rounded-pill border border-vyrek-border bg-transparent px-3 text-xs font-medium text-vyrek-text-secondary transition-colors hover:text-vyrek-text active:scale-[0.97]"
               >
-                Reject all
+                Reject
               </button>
               <button
                 type="button"
                 onClick={acceptAll}
-                className="h-11 rounded-pill bg-vyrek-accent px-5 text-sm font-medium text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.98]"
+                className="!min-h-0 h-9 shrink-0 rounded-pill bg-vyrek-accent px-4 text-xs font-semibold text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.97]"
               >
-                Accept all
+                Accept
               </button>
+            </div>
+
+            <div className="hidden md:block">
+              <Eyebrow>Cookies</Eyebrow>
+              <p className="mt-3 text-sm leading-relaxed text-vyrek-text md:text-base">
+                We use cookies to run the site and, with your permission, to
+                understand usage. Analytics and marketing are off until you say
+                otherwise.
+              </p>
+              <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+                <button
+                  type="button"
+                  onClick={() => setPrefsOpen(true)}
+                  className="h-11 rounded-pill px-4 text-sm text-vyrek-text-secondary transition-colors hover:text-vyrek-text"
+                >
+                  Manage preferences
+                </button>
+                <button
+                  type="button"
+                  onClick={rejectAll}
+                  className="h-11 rounded-pill border border-vyrek-border bg-transparent px-5 text-sm font-medium text-vyrek-text transition-colors hover:bg-vyrek-overlay active:scale-[0.98]"
+                >
+                  Reject all
+                </button>
+                <button
+                  type="button"
+                  onClick={acceptAll}
+                  className="h-11 rounded-pill bg-vyrek-accent px-5 text-sm font-medium text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.98]"
+                >
+                  Accept all
+                </button>
+              </div>
             </div>
           </div>
         </div>

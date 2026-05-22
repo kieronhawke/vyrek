@@ -105,9 +105,45 @@ const PROGRAMMES: ProgrammeDetail[] = [
   },
 ];
 
+const courseListLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  itemListElement: PROGRAMMES.map((p, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    item: {
+      "@type": "Course",
+      name: `Vyrek ${p.name} Hyrox programme`,
+      description: p.audience,
+      provider: {
+        "@type": "Organization",
+        name: "Vyrek",
+        url: "https://vyrek.com",
+      },
+      hasCourseInstance: {
+        "@type": "CourseInstance",
+        courseMode: "online",
+        courseWorkload: "PT4H",
+        duration: "P12W",
+      },
+      offers: {
+        "@type": "Offer",
+        price: "4.99",
+        priceCurrency: "GBP",
+        availability: "https://schema.org/InStock",
+      },
+    },
+  })),
+};
+
 export default function ProgrammesPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+         
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseListLd) }}
+      />
       <MarketingNav />
       <main>
         <section className="pb-12 pt-32 md:pt-40">
