@@ -195,7 +195,7 @@ export async function POST(req: Request) {
     // Don't leak DB errors to the client; log on the server. Return 500 so
     // the client can decide whether to retry, but the auth user already
     // exists at this point so the funnel proceeds either way.
-    // eslint-disable-next-line no-console
+     
     console.error("[/api/account/create] failed", err);
     const message =
       err instanceof Error ? err.message : "unknown server error";

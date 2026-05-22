@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { OptionCard } from "@/components/quiz-v3/option-card";
 import { QuestionHeader } from "@/components/quiz-v3/question-header";
 import { cn } from "@/lib/utils";
@@ -26,30 +26,28 @@ export function CalibrationScreen({
   onWeightChange: (kg: number) => void;
   onUnitChange: (u: WeightUnit) => void;
 }) {
-  const [draft, setDraft] = useState<string>("");
+  // `typed` is the user's in-flight string; `null` means "show the derived
+  // value from props". We clear `typed` on blur so the input snaps back to
+  // the canonical formatted value if the user left mid-edit.
+  const [typed, setTyped] = useState<string | null>(null);
 
-  // Keep the local draft string in sync with parent state. We let the user
-  // type freely and only commit a numeric value upward when valid.
-  useEffect(() => {
-    if (weightKg === undefined) {
-      setDraft("");
-      return;
-    }
-    if (unit === "lb") {
-      const lb = Math.round(weightKg * 2.20462);
-      setDraft(String(lb));
-    } else {
-      setDraft(String(weightKg));
-    }
-  }, [weightKg, unit]);
+  const derived = (() => {
+    if (weightKg === undefined) return "";
+    if (unit === "lb") return String(Math.round(weightKg * 2.20462));
+    return String(weightKg);
+  })();
+
+  const value = typed ?? derived;
 
   const onDraftChange = (raw: string) => {
-    setDraft(raw);
+    setTyped(raw);
     const n = Number(raw);
     if (!Number.isFinite(n) || n <= 0) return;
     const kg = unit === "lb" ? n / 2.20462 : n;
     onWeightChange(Math.round(kg * 10) / 10);
   };
+
+  const onBlur = () => setTyped(null);
 
   return (
     <div>
@@ -94,8 +92,9 @@ export function CalibrationScreen({
           max={unit === "kg" ? 200 : 440}
           step={unit === "kg" ? 0.1 : 1}
           placeholder={unit === "kg" ? "75" : "165"}
-          value={draft}
+          value={value}
           onChange={(e) => onDraftChange(e.target.value)}
+          onBlur={onBlur}
           aria-label="Body weight"
           className="h-14 w-32 rounded-md border border-vyrek-border bg-vyrek-elevated px-4 text-lg font-medium text-vyrek-text outline-none transition-colors focus:border-vyrek-accent"
         />

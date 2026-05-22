@@ -71,7 +71,7 @@ export function WelcomeContent({
   return (
     <main className="flex min-h-svh flex-col bg-vyrek-base pt-[var(--safe-top)]">
       <Container className="flex flex-1 flex-col py-12">
-        <Eyebrow>You&apos;re in</Eyebrow>
+        <Eyebrow>Trial confirmed</Eyebrow>
         <h1 className="mt-3 text-4xl font-black leading-[1] tracking-[-0.04em] text-vyrek-text md:text-5xl">
           You&apos;re in.
         </h1>

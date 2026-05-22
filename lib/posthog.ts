@@ -70,7 +70,7 @@ async function loadPostHog(): Promise<PostHog | null> {
   if (!key) {
     initFailed = true;
     if (process.env.NODE_ENV !== "production") {
-      // eslint-disable-next-line no-console
+       
       console.info(
         "[posthog] NEXT_PUBLIC_POSTHOG_KEY not set — analytics disabled",
       );
@@ -107,7 +107,7 @@ async function loadPostHog(): Promise<PostHog | null> {
       return ph;
     } catch (err) {
       initFailed = true;
-      // eslint-disable-next-line no-console
+       
       console.warn("[posthog] dynamic import failed", err);
       return null;
     } finally {
@@ -126,7 +126,7 @@ export function capture(event: string, properties?: CaptureProperties) {
     try {
       posthog.capture(event, properties);
     } catch (err) {
-      // eslint-disable-next-line no-console
+       
       console.warn("[posthog] capture failed", err);
     }
     return;
@@ -145,7 +145,7 @@ export function identify(distinctId: string, properties?: CaptureProperties) {
     try {
       posthog.identify(distinctId, properties);
     } catch (err) {
-      // eslint-disable-next-line no-console
+       
       console.warn("[posthog] identify failed", err);
     }
     return;

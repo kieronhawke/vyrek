@@ -109,7 +109,7 @@ export async function POST() {
       sessionId: session.id,
     });
   } catch (err) {
-    // eslint-disable-next-line no-console
+     
     console.error("[/api/stripe/create-checkout-session] failed", err);
     return NextResponse.json(
       {

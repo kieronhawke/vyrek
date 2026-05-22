@@ -5,7 +5,10 @@ import {
   getStripeWebhookSecret,
 } from "@/lib/stripe";
 import { supabaseAdmin } from "@/lib/supabase/admin";
-import { sendWelcomeEmail } from "@/lib/email/send";
+import {
+  sendCancellationEmail,
+  sendWelcomeEmail,
+} from "@/lib/email/send";
 
 /**
  * Stripe webhook receiver. The request body MUST be read as raw text for
@@ -52,7 +55,7 @@ export async function POST(req: Request) {
   try {
     event = stripe().webhooks.constructEvent(body, sig, secret);
   } catch (err) {
-    // eslint-disable-next-line no-console
+     
     console.error("[stripe/webhook] signature verification failed", err);
     return NextResponse.json(
       { error: "INVALID_SIGNATURE" },
@@ -123,7 +126,7 @@ export async function POST(req: Request) {
               (session.metadata?.programme as string | undefined) ??
               "your",
           }).catch((err) => {
-            // eslint-disable-next-line no-console
+             
             console.error("[stripe/webhook] welcome email failed", err);
           });
         }
@@ -159,6 +162,31 @@ export async function POST(req: Request) {
             cancelled_at: new Date().toISOString(),
           })
           .eq("stripe_subscription_id", sub.id);
+
+        // Look up the cancelled customer and send a confirmation email.
+        const { data: subRow } = await admin
+          .from("subscriptions")
+          .select("customer_id")
+          .eq("stripe_subscription_id", sub.id)
+          .maybeSingle();
+        if (subRow?.customer_id) {
+          const { data: customer } = await admin
+            .from("customers")
+            .select("email")
+            .eq("id", subRow.customer_id)
+            .maybeSingle();
+          if (customer?.email) {
+            await sendCancellationEmail({ to: customer.email }).catch(
+              (err) => {
+
+                console.error(
+                  "[stripe/webhook] cancellation email failed",
+                  err,
+                );
+              },
+            );
+          }
+        }
         break;
       }
 
@@ -195,7 +223,7 @@ export async function POST(req: Request) {
         if (customer?.email) {
           const { sendPaymentFailedEmail } = await import("@/lib/email/send");
           await sendPaymentFailedEmail({ to: customer.email }).catch((err) => {
-            // eslint-disable-next-line no-console
+             
             console.error(
               "[stripe/webhook] payment-failed email send failed",
               err,
@@ -207,7 +235,7 @@ export async function POST(req: Request) {
     }
   } catch (err) {
     // Log and 200 — we don't want Stripe retrying past a transient DB blip.
-    // eslint-disable-next-line no-console
+     
     console.error("[stripe/webhook] handler error", err);
   }
 

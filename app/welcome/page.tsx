@@ -68,7 +68,7 @@ export default async function WelcomePage({
     // Stripe not configured or session lookup failed. We still render the
     // welcome page rather than blocking the user — the email + plan have
     // already been queued.
-    // eslint-disable-next-line no-console
+     
     console.warn("[/welcome] stripe session lookup failed", err);
   }
 

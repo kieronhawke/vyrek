@@ -66,16 +66,16 @@ export default function QuizDone() {
           {programme ? PROGRAMME_LABEL[programme] : "Calibrating"}
         </SplitHeading>
         <p className="mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
-          Plan generation, dated Week 1 reveal, and the paywalled Weeks 2–12
-          land in the next build. Your answers are saved.
+          Your dated Week 1 is ready. Weeks 2–12 unlock with your membership —
+          first week free.
         </p>
         <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row">
-          <CtaButton href="/pricing">See pricing →</CtaButton>
+          <CtaButton href="/plan">See your plan →</CtaButton>
           <Link
-            href="/"
+            href="/pricing"
             className="h-11 px-3 text-sm text-vyrek-text-secondary underline-offset-4 hover:underline"
           >
-            Back to home
+            See pricing
           </Link>
         </div>
       </Container>

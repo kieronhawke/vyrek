@@ -51,6 +51,20 @@ export function PlanReveal({
   const [openWorkout, setOpenWorkout] = useState<Workout | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
+
+  const showToast = useCallback((msg: string) => {
+    setToast(msg);
+    if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = window.setTimeout(() => setToast(null), 2200);
+  }, []);
+  useEffect(
+    () => () => {
+      if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current);
+    },
+    [],
+  );
   const fired = useRef(false);
 
   useEffect(() => {
@@ -137,12 +151,13 @@ export function PlanReveal({
             workout_type: workout.type,
             method: "clipboard",
           });
+          showToast("Copied to clipboard");
         }
       } catch {
         /* user cancelled — fine */
       }
     },
-    [shareId],
+    [shareId, showToast],
   );
 
   const onStartTrial = useCallback(async () => {
@@ -168,18 +183,26 @@ export function PlanReveal({
           return;
         }
       }
-      // Stripe not wired or session failed — surface to user but don't crash
-      // eslint-disable-next-line no-console
-      console.error("[plan] checkout session create failed", res.status);
-      router.push("/pricing");
+      // 503 = Stripe env not configured yet; 401 = no Supabase session.
+      // Either way we keep the user on this page with a clear message rather
+      // than bouncing them to /pricing.
+      if (res.status === 503) {
+        showToast("Checkout opens soon — first week is free");
+      } else if (res.status === 401) {
+        router.push("/quiz");
+      } else {
+
+        console.error("[plan] checkout session create failed", res.status);
+        showToast("Couldn't open checkout. Try again in a moment.");
+      }
     } catch (err) {
-      // eslint-disable-next-line no-console
+
       console.error("[plan] checkout threw", err);
-      router.push("/pricing");
+      showToast("Couldn't open checkout. Try again in a moment.");
     } finally {
       setCheckoutLoading(false);
     }
-  }, [router, variant, planContext?.programme]);
+  }, [router, variant, planContext?.programme, showToast]);
 
   // Number animation for "60 min" on day cards — count up from 0 to target.
   useEffect(() => {
@@ -300,7 +323,16 @@ export function PlanReveal({
 
           <hr className="my-8 border-t border-vyrek-border-subtle" />
 
-          <WeekTabs active={activeWeek} onSelect={setActiveWeek} />
+          <WeekTabs
+            active={activeWeek}
+            unlockedWeeks={1}
+            onSelect={setActiveWeek}
+            onLockedTap={() => {
+              const el = document.getElementById("paywall-card");
+              el?.scrollIntoView({ behavior: "smooth", block: "center" });
+              capture("paywall_scroll_to", { trigger: "week_tab" });
+            }}
+          />
 
           <h2 className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
             [ WEEK 1 · {format(startDate, "d MMM")} ]
@@ -342,7 +374,10 @@ export function PlanReveal({
                   ))}
                 </div>
 
-                <div className="absolute inset-0 flex items-center justify-center px-3">
+                <div
+                  id="paywall-card"
+                  className="absolute inset-0 flex items-center justify-center px-3"
+                >
                   <div className="w-full max-w-sm">
                     <PaywallCard onStartTrial={onStartTrial} />
                   </div>
@@ -385,6 +420,18 @@ export function PlanReveal({
         onClose={onCloseSheet}
         onShare={onShare}
       />
+
+      {toast ? (
+        <div
+          role="status"
+          aria-live="polite"
+          className="pointer-events-none fixed inset-x-0 bottom-24 z-50 flex justify-center px-5"
+        >
+          <div className="rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text shadow-lg">
+            {toast}
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }

@@ -29,8 +29,10 @@ export function MarketingNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close the drawer whenever the route changes
+  // Close the drawer whenever the route changes. Canonical sync-from-route
+  // pattern — pathname-driven, no external store to subscribe to.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
   }, [pathname]);
 

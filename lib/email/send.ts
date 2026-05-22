@@ -41,7 +41,7 @@ async function send(args: {
   const c = client();
   if (!c) {
     if (process.env.NODE_ENV !== "production") {
-      // eslint-disable-next-line no-console
+       
       console.info(
         "[email] RESEND_API_KEY not set — skipping send to",
         args.to,
@@ -62,13 +62,13 @@ async function send(args: {
         : undefined,
     });
     if (error) {
-      // eslint-disable-next-line no-console
+       
       console.error("[email] resend send failed", error);
       return { ok: false, reason: error.message };
     }
     return { ok: true, id: data?.id };
   } catch (err) {
-    // eslint-disable-next-line no-console
+     
     console.error("[email] resend send threw", err);
     return {
       ok: false,
@@ -125,7 +125,7 @@ export async function sendWelcomeEmail(args: {
   await Promise.all(
     drip.map((d) =>
       send({ to: args.to, ...d }).catch((err) => {
-        // eslint-disable-next-line no-console
+         
         console.error("[email] scheduled drip failed", d.subject, err);
       }),
     ),

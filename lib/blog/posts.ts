@@ -108,7 +108,7 @@ async function parseFile(filename: string): Promise<Post | null> {
 
   const category = (fm.category as Category | undefined) ?? "training";
   if (!CATEGORIES[category]) {
-    // eslint-disable-next-line no-console
+     
     console.warn(`[blog] unknown category '${category}' in ${filename}`);
   }
 

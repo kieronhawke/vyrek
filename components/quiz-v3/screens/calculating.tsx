@@ -18,10 +18,15 @@ import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
  * Five lines reveal in sequence. The user's actual data is interpolated
  * (programme name, race weeks, equipment count) so it feels personal.
  */
+const TOTAL_LINES = 5;
+
 export function CalculatingScreen({ answers }: { answers: QuizAnswers }) {
   const router = useRouter();
   const prefersReducedMotion = usePrefersReducedMotion();
-  const [visibleLines, setVisibleLines] = useState(0);
+  // Lazy init: skip the animated reveal entirely under reduced motion.
+  const [visibleLines, setVisibleLines] = useState<number>(() =>
+    prefersReducedMotion ? TOTAL_LINES : 0,
+  );
 
   const programme = determineProgramme(answers);
   const programmeName = PROGRAMME_DISPLAY[programme];
@@ -40,16 +45,15 @@ export function CalculatingScreen({ answers }: { answers: QuizAnswers }) {
 
   useEffect(() => {
     if (prefersReducedMotion) {
-      setVisibleLines(lines.length);
       const id = window.setTimeout(() => router.push("/plan"), 800);
       return () => window.clearTimeout(id);
     }
 
     const stepMs = 700;
-    const totalRunMs = stepMs * lines.length + 700; // settle pause then route
+    const totalRunMs = stepMs * TOTAL_LINES + 700; // settle pause then route
 
     const timeouts: number[] = [];
-    for (let i = 0; i < lines.length; i++) {
+    for (let i = 0; i < TOTAL_LINES; i++) {
       timeouts.push(
         window.setTimeout(() => setVisibleLines(i + 1), stepMs * i),
       );
@@ -59,8 +63,7 @@ export function CalculatingScreen({ answers }: { answers: QuizAnswers }) {
     return () => {
       timeouts.forEach((id) => window.clearTimeout(id));
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, router]);
 
   return (
     <section className="flex min-h-svh flex-col items-center justify-center bg-vyrek-base px-6 py-16">

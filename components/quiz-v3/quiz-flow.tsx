@@ -233,7 +233,9 @@ function QuizV3Inner() {
   const [accountError, setAccountError] = useState<string | null>(null);
 
   // Track when the current screen mounted, for `time_on_screen_ms`.
-  const screenMountTimeRef = useRef<number>(Date.now());
+  // Initialised to 0 and seeded in the effect below on first commit — the only
+  // readers are event handlers further down, which cannot fire before mount.
+  const screenMountTimeRef = useRef<number>(0);
   useEffect(() => {
     screenMountTimeRef.current = Date.now();
   }, [current?.kind]);
@@ -398,7 +400,7 @@ function QuizV3Inner() {
         const detail = await res.text().catch(() => "");
         // Don't block the funnel — the auth user already exists and the
         // quiz state is in localStorage. Log + advance.
-        // eslint-disable-next-line no-console
+         
         console.error("[account/create] failed", res.status, detail);
       }
 
@@ -421,7 +423,7 @@ function QuizV3Inner() {
       // Advance to calculating cinematic
       advance();
     } catch (err) {
-      // eslint-disable-next-line no-console
+       
       console.error("[account/create] threw", err);
       setAccountError("Couldn't save. Try again in a moment.");
       haptic("error");
@@ -883,7 +885,7 @@ function QuizV3Inner() {
 
   // Exhaustiveness — TypeScript should have narrowed everything above.
   // If we reach here, a new kind was added without a handler.
-  // eslint-disable-next-line no-console
+   
   console.error("[quiz-v3] unhandled screen kind", current.kind);
   // Avoid blank screen
   router.push("/");

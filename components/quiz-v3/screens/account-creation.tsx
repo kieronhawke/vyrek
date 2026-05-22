@@ -75,16 +75,33 @@ export function AccountCreationScreen({
           </div>
         </label>
 
-        <label className="flex items-center gap-3 py-2 text-sm text-vyrek-text-secondary">
-          <input
-            type="checkbox"
-            checked={marketingOptIn}
-            onChange={(e) => onMarketingChange(e.target.checked)}
-            className={cn(
-              "size-5 cursor-pointer rounded border-vyrek-border bg-vyrek-elevated",
-              "appearance-none border checked:border-vyrek-accent checked:bg-vyrek-accent",
-            )}
-          />
+        <label className="flex cursor-pointer items-center gap-3 py-2 text-sm text-vyrek-text-secondary">
+          <span className="relative inline-flex size-5 shrink-0 items-center justify-center">
+            <input
+              type="checkbox"
+              checked={marketingOptIn}
+              onChange={(e) => onMarketingChange(e.target.checked)}
+              className={cn(
+                "peer size-5 cursor-pointer appearance-none rounded border border-vyrek-border bg-vyrek-elevated",
+                "checked:border-vyrek-accent checked:bg-vyrek-accent",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vyrek-accent/40",
+              )}
+            />
+            <svg
+              aria-hidden
+              viewBox="0 0 16 16"
+              className="pointer-events-none absolute size-3.5 text-[#0A0A0A] opacity-0 peer-checked:opacity-100"
+            >
+              <path
+                d="M3 8.5l3.2 3L13 5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
           <span>Email me Vyrek updates (optional)</span>
         </label>
 

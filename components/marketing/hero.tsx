@@ -9,15 +9,24 @@ import { VIDEOS } from "@/lib/video-assets";
 const HERO_VIDEO = VIDEOS.manBattleRopes;
 
 export function Hero() {
-  const headlineRef = useRef<HTMLHeadingElement>(null);
-  const subRef = useRef<HTMLParagraphElement>(null);
-  const ctaWrapRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLAnchorElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
-  const shouldServeVideo = useShouldServeHeavyAssets();
-  // Hold the video element back until after first paint + window.load so
-  // its network fetch never competes with the H1 (the LCP element).
+  const shouldServeHeavy = useShouldServeHeavyAssets();
+  // Two gates on the autoplay video:
+  //   1. `videoReady` — held back until after window.load + idle, so the
+  //      video network fetch never competes with the H1 (the LCP element).
+  //   2. `wideScreen` — only serve the video on >=768px. On mobile the
+  //      late-arriving first frame would become the new LCP candidate and
+  //      drag the metric to ~3.5s. Mobile users see just the poster.
   const [videoReady, setVideoReady] = useState(false);
+  const [wideScreen, setWideScreen] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setWideScreen(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
   useEffect(() => {
     const start = () => {
       const idle =
@@ -30,50 +39,10 @@ export function Hero() {
     else window.addEventListener("load", start, { once: true });
     return () => window.removeEventListener("load", start);
   }, []);
+  const shouldServeVideo = shouldServeHeavy && wideScreen;
 
   // Magnetic CTA — Linear-style pull on fine pointers, no-op on touch.
   useMagnetic(ctaRef, { strength: 0.22, radius: 100 });
-
-  // Character reveal on the headline (GSAP SplitText) + cascade the sub + CTA.
-  useEffect(() => {
-    let cleanup: (() => void) | undefined;
-    let cancelled = false;
-    (async () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      if (!headlineRef.current) return;
-
-      const { default: gsap } = await import("gsap");
-      const { SplitText } = await import("gsap/SplitText");
-      if (cancelled || !headlineRef.current) return;
-      gsap.registerPlugin(SplitText);
-
-      const split = new SplitText(headlineRef.current, {
-        type: "chars,words",
-        wordsClass: "inline-block",
-      });
-      // Subtle slide + fade per char. Short enough that the H1 is fully
-      // settled before LCP measurement closes — and the chars stay
-      // measurable-ish (opacity rises) the whole time.
-      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-      tl.from(split.chars, {
-        y: 14,
-        opacity: 0,
-        duration: 0.55,
-        stagger: 0.03, // 30ms per spec
-      })
-        .from(subRef.current, { opacity: 0, y: 14, duration: 0.5 }, "-=0.3")
-        .from(ctaWrapRef.current, { opacity: 0, y: 14, duration: 0.5 }, "-=0.4");
-
-      cleanup = () => {
-        tl.kill();
-        split.revert();
-      };
-    })();
-    return () => {
-      cancelled = true;
-      cleanup?.();
-    };
-  }, []);
 
   // Dim the backdrop as the user scrolls past 50% of the viewport. The
   // footage stays grayscale throughout — the editorial brief is B&W with the
@@ -144,21 +113,20 @@ export function Hero() {
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
+        {/* H1 deliberately *not* animated — it's the LCP element. Animating
+            it in (via opacity 0 → 1) delays Chrome's LCP timing. The sub +
+            CTA below carry the premium-feel motion instead. */}
         <h1
           id="hero-heading"
-          ref={headlineRef}
           className="font-display max-w-[12ch] text-5xl font-bold uppercase leading-[0.92] tracking-[-0.02em] text-vyrek-text md:text-6xl lg:text-7xl"
         >
           Train like a Hyrox athlete.
         </h1>
-        <p
-          ref={subRef}
-          className="mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:max-w-xl md:text-lg"
-        >
+        <p className="hero-intro mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:max-w-xl md:text-lg">
           Personalised programmes for the world&apos;s fastest growing sport.
           See your Week 1 before you pay.
         </p>
-        <div ref={ctaWrapRef} className="mt-7">
+        <div className="hero-intro hero-intro-late mt-7">
           <Link
             ref={ctaRef}
             href="/quiz"
@@ -168,6 +136,31 @@ export function Hero() {
           </Link>
         </div>
       </div>
+
+      <style jsx>{`
+        .hero-intro {
+          animation: hero-fade-up 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation-delay: 80ms;
+        }
+        .hero-intro-late {
+          animation-delay: 200ms;
+        }
+        @keyframes hero-fade-up {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero-intro {
+            animation: none;
+          }
+        }
+      `}</style>
     </section>
   );
 }

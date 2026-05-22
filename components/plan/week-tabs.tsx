@@ -5,11 +5,16 @@ import { cn } from "@/lib/utils";
 export function WeekTabs({
   total = 12,
   active,
+  unlockedWeeks = 1,
   onSelect,
+  onLockedTap,
 }: {
   total?: number;
   active: number;
+  /** Weeks 1..unlockedWeeks are tappable; the rest are locked and scroll to paywall. */
+  unlockedWeeks?: number;
   onSelect: (week: number) => void;
+  onLockedTap?: () => void;
 }) {
   return (
     <div
@@ -20,25 +25,30 @@ export function WeekTabs({
     >
       {Array.from({ length: total }).map((_, i) => {
         const w = i + 1;
-        const locked = w !== 1 && active !== w;
+        const locked = w > unlockedWeeks;
+        const isActive = active === w;
         return (
           <button
             key={w}
             type="button"
             role="tab"
-            aria-selected={active === w}
-            onClick={() => onSelect(w)}
+            aria-selected={isActive}
+            onClick={() => (locked ? onLockedTap?.() : onSelect(w))}
             className={cn(
-              "snap-start whitespace-nowrap rounded-pill border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] transition-[border,background,color] duration-fast",
-              active === w
+              "snap-start inline-flex items-center gap-1.5 whitespace-nowrap rounded-pill border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] transition-[border,background,color] duration-fast",
+              isActive
                 ? "border-vyrek-accent bg-vyrek-accent text-[#0A0A0A]"
                 : locked
-                  ? "border-vyrek-border-subtle text-vyrek-text-tertiary"
+                  ? "border-vyrek-border-subtle text-vyrek-text-tertiary hover:border-vyrek-border hover:text-vyrek-text-secondary"
                   : "border-vyrek-border text-vyrek-text hover:border-vyrek-border-strong",
             )}
           >
-            Week {w}
-            {w !== 1 ? "  ·  locked" : ""}
+            <span>Week {w}</span>
+            {locked ? (
+              <span aria-hidden className="opacity-60">
+                ◯
+              </span>
+            ) : null}
           </button>
         );
       })}

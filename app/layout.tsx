@@ -9,8 +9,10 @@ import { CookieBanner } from "@/components/legal/cookie-banner";
 const oswald = Oswald({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  // Only weight 700 is used — hero H1, wordmark, section headings.
+  weight: ["700"],
   display: "swap",
+  preload: true,
 });
 
 // Body / UI — Inter is the workhorse for everything not display.
