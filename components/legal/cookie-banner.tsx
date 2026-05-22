@@ -152,8 +152,8 @@ export function CookieBanner() {
               onToggle={() => undefined}
             />
             <PrefRow
-              title="Analytics"
-              description="Helps us see which sections work and which don't (PostHog, anonymised)."
+              title="Analytics + session replay"
+              description="PostHog: anonymous page-view tracking, click heatmaps, and session replay (input fields are masked, no passwords or emails recorded). Helps us spot where people get stuck so we can fix it."
               checked={categories.analytics}
               onToggle={(v) =>
                 setCategories({ ...categories, analytics: v })

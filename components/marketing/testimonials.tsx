@@ -5,8 +5,8 @@ import { SplitHeading } from "@/components/shared/split-heading";
 import { TESTIMONIALS } from "@/lib/testimonials";
 
 export function Testimonials() {
-  // Don't render the section until we have real, consented quotes (ASA rules).
   if (TESTIMONIALS.length === 0) return null;
+  const anyIllustrative = TESTIMONIALS.some((t) => t.illustrative);
 
   return (
     <RevealOnView
@@ -23,6 +23,11 @@ export function Testimonials() {
           >
             What members say
           </SplitHeading>
+          {anyIllustrative ? (
+            <p className="mt-4 inline-block rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+              Pre-launch · illustrative until real consented quotes land
+            </p>
+          ) : null}
         </header>
 
         <ul
@@ -53,13 +58,25 @@ export function Testimonials() {
                 <blockquote className="text-lg font-medium leading-relaxed text-vyrek-text md:text-xl">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
-                <div className="flex flex-col gap-1 text-sm">
-                  <span className="font-medium text-vyrek-text">{t.name}</span>
+                <div className="flex flex-col gap-2 text-sm">
+                  <span className="font-medium text-vyrek-text">
+                    {t.name}
+                    {t.raceTime ? (
+                      <span className="ml-2 font-mono text-xs text-vyrek-accent">
+                        {t.raceTime}
+                      </span>
+                    ) : null}
+                  </span>
                   <Eyebrow>
                     {[t.city, t.programme && `${t.programme} graduate`]
                       .filter(Boolean)
                       .join(" · ")}
                   </Eyebrow>
+                  {t.illustrative ? (
+                    <span className="mt-1 inline-block w-fit rounded-pill border border-vyrek-border bg-vyrek-base/40 px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+                      Pre-launch · illustrative
+                    </span>
+                  ) : null}
                 </div>
               </div>
             </li>

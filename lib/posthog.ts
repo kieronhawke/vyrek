@@ -87,8 +87,27 @@ async function loadPostHog(): Promise<PostHog | null> {
         capture_pageview: true,
         capture_pageleave: true,
         persistence: "localStorage+cookie",
-        disable_session_recording: true,
-        autocapture: false,
+
+        // Session replay (consent-gated by loadPostHog — only fires after
+        // analytics consent). Inputs masked by default; email/password
+        // selectors explicitly masked. Cross-origin iframes excluded.
+        disable_session_recording: false,
+        session_recording: {
+          maskAllInputs: true,
+          maskTextSelector: "[data-mask], input[type='email'], input[type='password']",
+          recordCrossOriginIframes: false,
+        },
+
+        // Autocapture on — Vyrek's UI is link-and-button heavy and we want
+        // heatmaps + element-level drop-off without instrumenting every CTA.
+        // `data-mask` on a node opts that subtree out.
+        autocapture: {
+          dom_event_allowlist: ["click", "change", "submit"],
+          element_attribute_ignorelist: ["data-mask"],
+        },
+
+        // Privacy: respect Do Not Track.
+        respect_dnt: true,
       });
       posthog = ph;
       // Drain queue

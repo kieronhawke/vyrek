@@ -1,7 +1,9 @@
 import { MarketingNav } from "@/components/marketing/nav";
+import { CohortBanner } from "@/components/marketing/cohort-banner";
 import { Hero } from "@/components/marketing/hero";
 import { SocialProofBar } from "@/components/marketing/social-proof-bar";
 import { PlanTeaser } from "@/components/marketing/plan-teaser";
+import { OutcomeStats } from "@/components/marketing/outcome-stats";
 import { Programmes } from "@/components/marketing/programmes";
 import { BentoFeatures } from "@/components/marketing/bento-features";
 import { WeekInLife } from "@/components/marketing/week-in-life";
@@ -17,11 +19,13 @@ import { MarketingFooter } from "@/components/marketing/footer";
 export default function Home() {
   return (
     <>
+      <CohortBanner />
       <MarketingNav />
       <main>
         <Hero />
         <SocialProofBar />
         <PlanTeaser />
+        <OutcomeStats />
         <Programmes />
         <BentoFeatures />
         <WeekInLife />

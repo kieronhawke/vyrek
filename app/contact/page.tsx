@@ -6,8 +6,9 @@ import { Eyebrow } from "@/components/shared/eyebrow";
 import { SplitHeading } from "@/components/shared/split-heading";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Get in touch with Vyrek. We answer every email within 24 hours.",
+  title: "Contact Vyrek — support, press & partnerships",
+  description:
+    "Get in touch with Vyrek. General questions, billing support, press enquiries, athlete features, brand collaborations. We answer every email within 24 hours, Mon–Fri.",
 };
 
 const CONTACTS = [

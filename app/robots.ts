@@ -6,7 +6,18 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/blog/", "/blog/rss.xml"],
+        // /account/refer is a public landing page — explicitly allow.
+        // Other /account/* paths (billing, settings) stay disallowed.
+        allow: [
+          "/",
+          "/blog/",
+          "/blog/rss.xml",
+          "/account/refer",
+          "/hyrox/",
+          "/plans/",
+          "/compare/",
+          "/tools/",
+        ],
         disallow: ["/api/", "/account/", "/checkout/", "/studio/", "/welcome"],
       },
       // Be explicit for the bigger crawlers — gives faster indexing and stops

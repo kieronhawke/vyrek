@@ -245,10 +245,21 @@ export function PlanReveal({
 
   if (!planContext) {
     return (
-      <main className="flex min-h-svh items-center justify-center bg-vyrek-base">
-        <span className="font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-          One moment.
-        </span>
+      <main className="flex min-h-svh flex-col items-center justify-center bg-vyrek-base px-6 text-center">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+          [ YOUR PLAN ]
+        </p>
+        <h1 className="mt-4 max-w-md text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl">
+          Loading your personalised Hyrox plan
+        </h1>
+        <p className="mt-4 max-w-sm text-sm text-vyrek-text-secondary">
+          Reading your quiz answers, generating Week 1.
+        </p>
+        <div className="mt-8 flex items-center gap-2">
+          <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent" />
+          <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent [animation-delay:120ms]" />
+          <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent [animation-delay:240ms]" />
+        </div>
       </main>
     );
   }

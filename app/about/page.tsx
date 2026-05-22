@@ -7,9 +7,9 @@ import { SplitHeading } from "@/components/shared/split-heading";
 import { CtaButton } from "@/components/shared/cta-button";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About Vyrek — UK Hyrox training built by Elite 15 athletes",
   description:
-    "Vyrek is a UK Hyrox-first training platform. Built for the world's fastest growing sport. Direct programming from Elite 15 athletes.",
+    "Vyrek is a UK Hyrox-first training platform. 12-week personalised programmes built by Elite 15 athletes for first-timers, sub-90 chasers, doubles teams, and pros. Direct from the coaches who race it.",
 };
 
 export default function AboutPage() {

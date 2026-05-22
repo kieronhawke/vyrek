@@ -43,10 +43,14 @@ export default function PrivacyPage() {
           token plus the last 4 digits of the card for receipts and disputes.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Usage analytics.</strong> Page
-          views, quiz progress, conversion events, captured by PostHog after
-          you give cookie consent. Pseudonymous — no profile identifiers tied
-          to your name.
+          <strong className="text-vyrek-text">Usage analytics + session replay.</strong>{" "}
+          Page views, quiz progress, click heatmaps, and session replay
+          captured by PostHog after you give cookie consent. Input fields
+          (email, password, anything with a <code>data-mask</code> attribute)
+          are masked at the recording layer — we never see what you typed
+          into a form. Pseudonymous; no profile identifiers tied to your
+          name. You can opt out at any time via the cookie banner or by
+          setting Do Not Track in your browser.
         </ProseLi>
         <ProseLi>
           <strong className="text-vyrek-text">Error reports.</strong> Captured

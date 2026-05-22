@@ -47,11 +47,38 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
   },
   alternates: {
+    canonical: "/",
     types: {
       "application/rss+xml": [
         { url: "/blog/rss.xml", title: "Vyrek Journal RSS" },
       ],
     },
+  },
+  // Default Open Graph + Twitter — every page inherits unless overridden.
+  // Per-route metadata (blog, city pages) sets its own when specific.
+  openGraph: {
+    title: "Vyrek — Train like a Hyrox athlete",
+    description:
+      "Personalised Hyrox training programmes built by Elite 15 athletes. See your Week 1 before you pay.",
+    url: "https://vyrek.com",
+    siteName: "Vyrek",
+    type: "website",
+    locale: "en_GB",
+    images: [
+      {
+        url: "/media/images/programme-first-race.jpg",
+        width: 1920,
+        height: 1080,
+        alt: "Vyrek — personalised Hyrox training",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Vyrek — Train like a Hyrox athlete",
+    description:
+      "Personalised Hyrox training programmes built by Elite 15 athletes.",
+    images: ["/media/images/programme-first-race.jpg"],
   },
 };
 

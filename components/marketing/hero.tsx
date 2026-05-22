@@ -123,8 +123,8 @@ export function Hero() {
           Train like a Hyrox athlete.
         </h1>
         <p className="hero-intro mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:max-w-xl md:text-lg">
-          Personalised programmes for the world&apos;s fastest growing sport.
-          See your Week 1 before you pay.
+          From first-timers to sub-60 athletes — one personalised plan for
+          the world&apos;s fastest growing sport. See your Week 1 before you pay.
         </p>
         <div className="hero-intro hero-intro-late mt-7">
           <Link
