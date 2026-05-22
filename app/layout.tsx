@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Oswald, Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CookieBanner } from "@/components/legal/cookie-banner";
+import { CommandPalette } from "@/components/marketing/command-palette";
 
 // Display — condensed heavy sans for headings and the wordmark.
 // Marchon's brand voice uses Druk Cond Super; Oswald 700 is the closest
@@ -74,6 +75,7 @@ export default function RootLayout({
     >
       <body>
         {children}
+        <CommandPalette />
         <CookieBanner />
         <script
           type="application/ld+json"

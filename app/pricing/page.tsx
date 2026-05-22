@@ -101,6 +101,37 @@ export default function PricingPage() {
             </div>
           </section>
 
+          {/* Why £4.99? — defuses the "too cheap, must be templated" reaction
+              that experienced racers have when they compare to HAC (£45)
+              or Marchon (£30). Honesty pre-empts skepticism. */}
+          <section className="mx-auto mt-16 max-w-2xl">
+            <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/60 p-6 md:p-8">
+              <Eyebrow>Why £4.99?</Eyebrow>
+              <h2 className="mt-3 text-2xl font-black leading-tight tracking-[-0.04em] text-vyrek-text md:text-3xl">
+                Software-first, not 1:1 coaching.
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+                Vyrek is a personalised programme delivered by software.
+                Programming is written and reviewed weekly by our Elite 15
+                coaching team, then the algorithm calibrates it to your race
+                date, equipment, body weight, injuries, and the sessions
+                you&apos;ve actually logged.
+              </p>
+              <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+                What you get for £4.99/mo: the same programming logic an Elite
+                15 coach would write, applied to your inputs, updated every
+                Sunday. What you don&apos;t get: a human messaging you weekly,
+                video form-checks on demand, or a custom block written for your
+                name. If you want that, you want 1:1 coaching — typically
+                £150–£400/mo elsewhere.
+              </p>
+              <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+                We&apos;re open about the trade. Most members never need 1:1.
+                Some do — and we&apos;ll signpost when.
+              </p>
+            </div>
+          </section>
+
           <section className="mx-auto mt-24 max-w-2xl">
             <h2 className="text-center text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
               Common questions

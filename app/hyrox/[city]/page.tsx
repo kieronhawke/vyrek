@@ -18,6 +18,7 @@ import {
   listLocationSlugs,
   type UkLocation,
 } from "@/lib/uk-locations";
+import { RelatedGrid } from "@/components/shared/related-grid";
 import { siteUrl } from "@/lib/blog/urls";
 
 export const revalidate = 86400;
@@ -332,6 +333,49 @@ export default async function CityPage({
               First week free. Cancel anytime.
             </p>
           </section>
+
+          {/* Cross-link to stations / plans / tools — internal-link density */}
+          <RelatedGrid
+            heading={`Useful for ${loc.name} athletes`}
+            items={[
+              {
+                href: "/hyrox/stations/sled-push",
+                eyebrow: "Station guide",
+                title: "Hyrox sled push technique",
+                body: "Low, long, locked — the technique that wins back 60 seconds.",
+              },
+              {
+                href: "/hyrox/stations/wall-balls",
+                eyebrow: "Station guide",
+                title: "Hyrox wall balls strategy",
+                body: "Plan your set scheme before the gun goes.",
+              },
+              {
+                href: "/plans/sub-90-hyrox-training-plan",
+                eyebrow: "Plan",
+                title: "Sub-90 Hyrox training plan",
+                body: "Break 90 with the diagnostic-led 12-week build.",
+              },
+              {
+                href: "/tools/pace-calculator",
+                eyebrow: "Tool · Free",
+                title: "Hyrox pace calculator",
+                body: "Project your finish time from your 1 km pace.",
+              },
+              {
+                href: "/hyrox/events",
+                eyebrow: "Events",
+                title: "UK Hyrox race calendar",
+                body: "London, Manchester, Birmingham, Glasgow — when to start training.",
+              },
+              {
+                href: "/hyrox/gear/best-hyrox-shoes",
+                eyebrow: "Gear",
+                title: "Best Hyrox shoes",
+                body: "Hybrid trainers, low drop, firm midsole — what to look for.",
+              },
+            ]}
+          />
 
           {/* Related: other cities */}
           <section className="mx-auto mt-20 max-w-3xl border-t border-vyrek-border-subtle pt-12">

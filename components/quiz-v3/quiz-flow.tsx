@@ -441,11 +441,45 @@ function QuizV3Inner() {
   ]);
 
   if (!hydrated || !state || !current) {
+    // Pre-hydration / cold-load fallback. Shows a proper editorial frame
+    // (image + headline + animated dots) instead of a dead "One moment"
+    // string — matters for slow connections, link previews, and crawlers.
     return (
-      <main className="flex min-h-svh items-center justify-center bg-vyrek-base">
-        <span className="font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-          One moment.
-        </span>
+      <main className="relative isolate flex min-h-svh flex-col overflow-hidden bg-vyrek-base">
+        <div aria-hidden className="absolute inset-0 -z-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/media/images/programme-first-race.jpg"
+            alt=""
+            className="h-full w-full object-cover opacity-50 grayscale"
+            loading="eager"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-vyrek-base/60 via-vyrek-base/30 to-vyrek-base/95" />
+        </div>
+        <div className="flex flex-1 flex-col justify-end px-6 pb-[max(2rem,calc(var(--safe-bottom)+2rem))] pt-[max(5rem,calc(var(--safe-top)+4rem))]">
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+            [ THE VYREK QUIZ ]
+          </p>
+          <h1 className="mt-4 max-w-[16ch] text-4xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl">
+            Hyrox training, personalised in three minutes.
+          </h1>
+          <p className="mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            We&apos;ll ask about your race date, experience, equipment, and
+            schedule. You&apos;ll see your dated Week 1 before you pay.
+          </p>
+          <div
+            aria-label="Loading quiz"
+            className="mt-10 flex items-center gap-2"
+          >
+            <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent" />
+            <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent [animation-delay:120ms]" />
+            <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent [animation-delay:240ms]" />
+            <span className="ml-2 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+              Loading
+            </span>
+          </div>
+        </div>
       </main>
     );
   }
@@ -892,17 +926,47 @@ function QuizV3Inner() {
   return null;
 }
 
+function QuizColdLoadFallback() {
+  return (
+    <main className="relative isolate flex min-h-svh flex-col overflow-hidden bg-vyrek-base">
+      <div aria-hidden className="absolute inset-0 -z-10">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/media/images/programme-first-race.jpg"
+          alt=""
+          className="h-full w-full object-cover opacity-50 grayscale"
+          loading="eager"
+          decoding="async"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-vyrek-base/60 via-vyrek-base/30 to-vyrek-base/95" />
+      </div>
+      <div className="flex flex-1 flex-col justify-end px-6 pb-[max(2rem,calc(var(--safe-bottom)+2rem))] pt-[max(5rem,calc(var(--safe-top)+4rem))]">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+          [ THE VYREK QUIZ ]
+        </p>
+        <h1 className="mt-4 max-w-[16ch] text-4xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl">
+          Hyrox training, personalised in three minutes.
+        </h1>
+        <p className="mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+          We&apos;ll ask about your race date, experience, equipment, and
+          schedule. You&apos;ll see your dated Week 1 before you pay.
+        </p>
+        <div aria-label="Loading quiz" className="mt-10 flex items-center gap-2">
+          <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent" />
+          <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent [animation-delay:120ms]" />
+          <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent [animation-delay:240ms]" />
+          <span className="ml-2 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+            Loading
+          </span>
+        </div>
+      </div>
+    </main>
+  );
+}
+
 export default function QuizV3() {
   return (
-    <Suspense
-      fallback={
-        <main className="flex min-h-svh items-center justify-center bg-vyrek-base">
-          <span className="font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-            One moment.
-          </span>
-        </main>
-      }
-    >
+    <Suspense fallback={<QuizColdLoadFallback />}>
       <QuizV3Inner />
     </Suspense>
   );

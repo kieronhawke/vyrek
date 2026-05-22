@@ -6,6 +6,8 @@ import { UK_LOCATIONS } from "@/lib/uk-locations";
 import { STATIONS } from "@/lib/hyrox-stations";
 import { PLAN_TEMPLATES } from "@/lib/plan-templates";
 import { COMPARISONS } from "@/lib/hyrox-comparisons";
+import { HYROX_EVENTS } from "@/lib/hyrox-events";
+import { GEAR_GUIDES } from "@/lib/hyrox-gear";
 
 const SITE_URL = "https://vyrek.com";
 
@@ -27,6 +29,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Programmatic hubs
     { url: `${SITE_URL}/hyrox`, lastModified: now, priority: 0.9, changeFrequency: "weekly" },
     { url: `${SITE_URL}/hyrox/stations`, lastModified: now, priority: 0.9, changeFrequency: "monthly" },
+    { url: `${SITE_URL}/hyrox/events`, lastModified: now, priority: 0.9, changeFrequency: "weekly" },
+    { url: `${SITE_URL}/hyrox/gear`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
     { url: `${SITE_URL}/plans`, lastModified: now, priority: 0.9, changeFrequency: "weekly" },
     { url: `${SITE_URL}/compare`, lastModified: now, priority: 0.7, changeFrequency: "monthly" },
     { url: `${SITE_URL}/tools`, lastModified: now, priority: 0.7, changeFrequency: "monthly" },
@@ -115,6 +119,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
+  const eventRoutes: MetadataRoute.Sitemap = HYROX_EVENTS.map((e) => ({
+    url: `${SITE_URL}/hyrox/events/${e.slug}`,
+    lastModified: now,
+    priority: 0.75,
+    changeFrequency: "weekly",
+  }));
+
+  const gearRoutes: MetadataRoute.Sitemap = GEAR_GUIDES.map((g) => ({
+    url: `${SITE_URL}/hyrox/gear/${g.slug}`,
+    lastModified: now,
+    priority: 0.6,
+    changeFrequency: "monthly",
+  }));
+
   return [
     ...staticRoutes,
     ...programmeRoutes,
@@ -127,5 +145,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...planTemplateRoutes,
     ...comparisonRoutes,
     ...toolRoutes,
+    ...eventRoutes,
+    ...gearRoutes,
   ];
 }
