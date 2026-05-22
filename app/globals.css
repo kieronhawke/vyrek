@@ -1,0 +1,237 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─── Vyrek design tokens (per build brief §6) ──────────────────────── */
+/* The site is dark by default. :root and .dark share the same palette. */
+
+:root,
+.dark {
+  /* Surfaces */
+  --vyrek-bg-base:        #0A0A0A;
+  --vyrek-bg-elevated:    #141414;
+  --vyrek-bg-overlay:     #1C1C1C;
+
+  /* Borders */
+  --vyrek-border-subtle:  #1F1F1F;
+  --vyrek-border-default: #2A2A2A;
+  --vyrek-border-strong:  #3D3D3D;
+
+  /* Text — tertiary lifted from the brief's #5C5C5A (2.95:1) to #8A8A88
+     (~5.7:1) so eyebrow/mono labels pass WCAG AA on the dark surface. */
+  --vyrek-text-primary:   #F5F5F3;
+  --vyrek-text-secondary: #A8A8A6;
+  --vyrek-text-tertiary:  #8A8A88;
+  --vyrek-text-disabled:  #555553;
+
+  /* Accent (single warm orange, used sparingly) */
+  --vyrek-accent:         #FF5A1F;
+  --vyrek-accent-hover:   #FF7A47;
+  --vyrek-accent-muted:   #4A1F0E;
+
+  /* Semantic */
+  --vyrek-success:        #00D26A;
+  --vyrek-warning:        #FFB800;
+  --vyrek-danger:         #FF4646;
+
+  /* Motion */
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:   cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 180ms;
+  --duration-base: 320ms;
+  --duration-slow: 640ms;
+
+  /* Safe areas */
+  --safe-top:    env(safe-area-inset-top);
+  --safe-bottom: env(safe-area-inset-bottom);
+  --safe-left:   env(safe-area-inset-left);
+  --safe-right:  env(safe-area-inset-right);
+
+  /* shadcn semantic tokens, mapped onto Vyrek palette */
+  --background:             var(--vyrek-bg-base);
+  --foreground:             var(--vyrek-text-primary);
+  --card:                   var(--vyrek-bg-elevated);
+  --card-foreground:        var(--vyrek-text-primary);
+  --popover:                var(--vyrek-bg-elevated);
+  --popover-foreground:     var(--vyrek-text-primary);
+  --primary:                var(--vyrek-accent);
+  --primary-foreground:     #0A0A0A;
+  --secondary:              var(--vyrek-bg-overlay);
+  --secondary-foreground:   var(--vyrek-text-primary);
+  --muted:                  var(--vyrek-bg-overlay);
+  --muted-foreground:       var(--vyrek-text-secondary);
+  --accent:                 var(--vyrek-bg-overlay);
+  --accent-foreground:      var(--vyrek-text-primary);
+  --destructive:            var(--vyrek-danger);
+  --destructive-foreground: #FFFFFF;
+  --border:                 var(--vyrek-border-default);
+  --input:                  var(--vyrek-border-default);
+  --ring:                   var(--vyrek-accent);
+  --radius:                 12px;
+
+  --sidebar:                       var(--vyrek-bg-base);
+  --sidebar-foreground:            var(--vyrek-text-primary);
+  --sidebar-primary:               var(--vyrek-accent);
+  --sidebar-primary-foreground:    #0A0A0A;
+  --sidebar-accent:                var(--vyrek-bg-overlay);
+  --sidebar-accent-foreground:     var(--vyrek-text-primary);
+  --sidebar-border:                var(--vyrek-border-default);
+  --sidebar-ring:                  var(--vyrek-accent);
+}
+
+/* ─── Tailwind v4 theme exposure ────────────────────────────────────── */
+
+@theme inline {
+  --color-background:             var(--background);
+  --color-foreground:             var(--foreground);
+  --color-card:                   var(--card);
+  --color-card-foreground:        var(--card-foreground);
+  --color-popover:                var(--popover);
+  --color-popover-foreground:     var(--popover-foreground);
+  --color-primary:                var(--primary);
+  --color-primary-foreground:     var(--primary-foreground);
+  --color-secondary:              var(--secondary);
+  --color-secondary-foreground:   var(--secondary-foreground);
+  --color-muted:                  var(--muted);
+  --color-muted-foreground:       var(--muted-foreground);
+  --color-accent:                 var(--accent);
+  --color-accent-foreground:      var(--accent-foreground);
+  --color-destructive:            var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border:                 var(--border);
+  --color-input:                  var(--input);
+  --color-ring:                   var(--ring);
+
+  /* Vyrek-named colours (bg-vyrek-elevated, text-vyrek-secondary, etc) */
+  --color-vyrek-base:           var(--vyrek-bg-base);
+  --color-vyrek-elevated:       var(--vyrek-bg-elevated);
+  --color-vyrek-overlay:        var(--vyrek-bg-overlay);
+  --color-vyrek-border-subtle:  var(--vyrek-border-subtle);
+  --color-vyrek-border:         var(--vyrek-border-default);
+  --color-vyrek-border-strong:  var(--vyrek-border-strong);
+  --color-vyrek-text:           var(--vyrek-text-primary);
+  --color-vyrek-text-secondary: var(--vyrek-text-secondary);
+  --color-vyrek-text-tertiary:  var(--vyrek-text-tertiary);
+  --color-vyrek-text-disabled:  var(--vyrek-text-disabled);
+  --color-vyrek-accent:         var(--vyrek-accent);
+  --color-vyrek-accent-hover:   var(--vyrek-accent-hover);
+  --color-vyrek-accent-muted:   var(--vyrek-accent-muted);
+  --color-vyrek-success:        var(--vyrek-success);
+  --color-vyrek-warning:        var(--vyrek-warning);
+  --color-vyrek-danger:         var(--vyrek-danger);
+
+  /* Radii per brief */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   24px;
+  --radius-pill: 9999px;
+
+  /* Type scale per brief §6 (overrides Tailwind v4 defaults) */
+  --text-xs:   12px;
+  --text-xs--line-height:   1.4;
+  --text-sm:   14px;
+  --text-sm--line-height:   1.5;
+  --text-base: 16px;
+  --text-base--line-height: 1.6;
+  --text-lg:   20px;
+  --text-lg--line-height:   1.5;
+  --text-xl:   24px;
+  --text-xl--line-height:   1.4;
+  --text-2xl:  32px;
+  --text-2xl--line-height:  1.2;
+  --text-3xl:  48px;
+  --text-3xl--line-height:  1;
+  --text-4xl:  64px;
+  --text-4xl--line-height:  0.95;
+  --text-5xl:  96px;
+  --text-5xl--line-height:  0.92;
+  --text-6xl:  128px;
+  --text-6xl--line-height:  0.88;
+  --text-7xl:  160px;
+  --text-7xl--line-height:  0.85;
+
+  --font-sans:    var(--font-sans);
+  --font-display: var(--font-display);
+  --font-mono:    var(--font-mono);
+
+  --color-sidebar:                    var(--sidebar);
+  --color-sidebar-foreground:         var(--sidebar-foreground);
+  --color-sidebar-primary:            var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent:             var(--sidebar-accent);
+  --color-sidebar-accent-foreground:  var(--sidebar-accent-foreground);
+  --color-sidebar-border:             var(--sidebar-border);
+  --color-sidebar-ring:               var(--sidebar-ring);
+}
+
+/* ─── View Transitions (cross-document) ─────────────────────────────── */
+/* Browsers that support CSS view-transitions (Chrome / Edge / Opera, Safari TP)
+ * fade between routes automatically. Browsers without it just navigate. */
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 320ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+/* ─── Global resets and mobile fixes ────────────────────────────────── */
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+html {
+  height: 100svh;
+  background: var(--vyrek-bg-base);
+  color-scheme: dark;
+}
+
+body {
+  background: var(--vyrek-bg-base);
+  color: var(--vyrek-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
+  font-variant-numeric: tabular-nums;
+  min-height: 100svh;
+}
+
+/* Headings default to the Oswald display family — the brief's "athletic
+ * editorial" voice. Per-component classes (font-bold, tracking-*, etc.)
+ * layer on top normally. */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+/* iOS: 16px input font-size prevents auto-zoom on focus */
+input, textarea, select {
+  font-size: 16px;
+}
+
+/* 48px tap targets (iOS HIG / WCAG AAA), per brief §6 */
+button, a, [role="button"] {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
