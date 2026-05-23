@@ -53,8 +53,9 @@ function H3({ children, id, ...rest }: React.HTMLAttributes<HTMLHeadingElement>)
 }
 
 function P({ children }: { children?: ReactNode }) {
+  // Brief 8.3: shrink desktop body to text-base with leading-relaxed; mobile keeps text-base but tighter line height.
   return (
-    <p className="mt-5 text-base leading-[1.75] text-vyrek-text md:text-lg">
+    <p className="mt-5 text-base leading-[1.65] text-vyrek-text md:leading-relaxed">
       {children}
     </p>
   );
@@ -62,7 +63,7 @@ function P({ children }: { children?: ReactNode }) {
 
 function UL({ children }: { children?: ReactNode }) {
   return (
-    <ul className="mt-5 list-disc space-y-2 pl-6 text-base leading-[1.75] text-vyrek-text marker:text-vyrek-accent md:text-lg">
+    <ul className="mt-5 list-disc space-y-2 pl-6 text-base leading-[1.65] text-vyrek-text marker:text-vyrek-accent md:leading-relaxed">
       {children}
     </ul>
   );
@@ -70,7 +71,7 @@ function UL({ children }: { children?: ReactNode }) {
 
 function OL({ children }: { children?: ReactNode }) {
   return (
-    <ol className="mt-5 list-decimal space-y-2 pl-6 text-base leading-[1.75] text-vyrek-text marker:text-vyrek-accent marker:font-mono md:text-lg">
+    <ol className="mt-5 list-decimal space-y-2 pl-6 text-base leading-[1.65] text-vyrek-text marker:text-vyrek-accent marker:font-mono md:leading-relaxed">
       {children}
     </ol>
   );
@@ -82,7 +83,7 @@ function LI({ children }: { children?: ReactNode }) {
 
 function Blockquote({ children }: { children?: ReactNode }) {
   return (
-    <blockquote className="mt-6 rounded-md border-l-4 border-vyrek-accent bg-vyrek-elevated px-5 py-4 text-base italic leading-relaxed text-vyrek-text md:text-lg">
+    <blockquote className="mt-6 rounded-md border-l-4 border-vyrek-accent bg-vyrek-elevated px-5 py-4 text-base italic leading-[1.65] text-vyrek-text md:leading-relaxed">
       {children}
     </blockquote>
   );
