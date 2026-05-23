@@ -124,7 +124,7 @@ test.describe("Quiz V3 — happy path UI walk", () => {
     // === Screen 14: Partner ===
     // "Solo" has detail "Just me", "Solo for now, partner later" also starts
     // with "Solo". Use the detail to disambiguate.
-    await pickSingle(page, /^solo\b.*just me/is);
+    await pickSingle(page, /^solo\b[\s\S]*just me/i);
     await clickContinue(page);
 
     // === Screen 15: Injuries ===

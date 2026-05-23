@@ -39,7 +39,10 @@ const results = [];
 
 for (const c of checks) {
   try {
-    const q = sb.from(c.table).select(c.column ?? "*", { count: "exact", head: true });
+    // Pull at most one row so the PostgREST cache is exercised properly.
+    // `head: true` was returning false-positives when the table existed in
+    // metadata but the actual columns / schema cache were stale.
+    const q = sb.from(c.table).select(c.column ?? "*").limit(1);
     const { error } = await q;
     if (error) {
       results.push({ name: c.name, ok: false, detail: error.message });
