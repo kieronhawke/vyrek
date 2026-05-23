@@ -16,13 +16,27 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function LoginPage() {
-  // If already signed in, send them straight to the plan.
+function safeNext(next: string | undefined): string {
+  if (!next) return "/app/today";
+  if (!next.startsWith("/") || next.startsWith("//")) return "/app/today";
+  return next;
+}
+
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ next?: string }>;
+}) {
+  const sp = await searchParams;
+  const next = safeNext(sp.next);
+
+  // If already signed in, send them where they were trying to go (or
+  // to the member app by default).
   const sb = await supabaseServer();
   const {
     data: { user },
   } = await sb.auth.getUser();
-  if (user) redirect("/plan");
+  if (user) redirect(next);
 
   return (
     <>

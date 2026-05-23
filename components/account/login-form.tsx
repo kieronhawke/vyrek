@@ -1,11 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
+
+function safeNext(next: string | null): string {
+  if (!next) return "/app/today";
+  // Allow only same-origin paths.
+  if (!next.startsWith("/") || next.startsWith("//")) return "/app/today";
+  return next;
+}
 
 export function CustomerLoginForm() {
   const router = useRouter();
+  const sp = useSearchParams();
+  const next = safeNext(sp.get("next"));
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -27,7 +37,7 @@ export function CustomerLoginForm() {
         setBusy(false);
         return;
       }
-      router.push("/plan");
+      router.push(next);
       router.refresh();
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Sign-in failed.");

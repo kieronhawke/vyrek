@@ -77,6 +77,14 @@ export function MarketingFooter() {
               MADE IN UK
             </Eyebrow>
           </div>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/login"
+              className="inline-flex h-10 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 text-sm text-vyrek-text-secondary transition-colors hover:border-vyrek-border-strong hover:text-vyrek-text"
+            >
+              Member sign in →
+            </Link>
+          </div>
         </div>
       </Container>
     </footer>
