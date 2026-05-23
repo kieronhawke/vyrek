@@ -3,14 +3,14 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export const runtime = "nodejs";
 
+const SUB_RE = /^[a-z0-9][a-z0-9._-]{0,63}$/i;
+
 /**
- * Partner attribution endpoint. Visiting vyrek.com/p/<slug> looks up the
- * partner, sets a 90-day first-party cookie carrying the partner id, and
- * 302s the visitor to the landing page (or to ?to= if provided).
- *
- * The cookie is read at account creation and at first paid invoice to
- * attribute the customer to the partner. No third-party trackers; the
- * cookie is httpOnly so the client never touches it.
+ * Partner attribution endpoint. Visiting vyrek.com/p/<slug>(?sub=campaign):
+ *  - looks up the partner
+ *  - logs a partner_clicks row (used for CTR + conversion funnel)
+ *  - sets a 90-day vyrek_partner first-party cookie (httpOnly)
+ *  - 302s to `to` (default /). Onsite-only.
  */
 export async function GET(
   req: Request,
@@ -19,9 +19,10 @@ export async function GET(
   const { slug } = await ctx.params;
   const url = new URL(req.url);
   const to = url.searchParams.get("to") || "/";
-
-  // Defensive: never let `to` be an offsite URL.
   const dest = to.startsWith("/") ? to : "/";
+
+  const sub = (url.searchParams.get("sub") ?? "").trim();
+  const subId = sub && SUB_RE.test(sub) ? sub.toLowerCase() : null;
 
   let partnerId: string | null = null;
   try {
@@ -31,18 +32,29 @@ export async function GET(
       .select("id, suspended_at")
       .eq("partner_code", slug)
       .maybeSingle();
+    if (data && !data.suspended_at) partnerId = data.id as string;
 
-    if (data && !data.suspended_at) {
-      partnerId = data.id as string;
+    if (partnerId) {
+      await admin
+        .from("partner_clicks")
+        .insert({
+          partner_id: partnerId,
+          sub_id: subId,
+          ip:
+            req.headers.get("x-forwarded-for") ??
+            req.headers.get("x-real-ip") ??
+            null,
+          user_agent: req.headers.get("user-agent") ?? null,
+          referer: req.headers.get("referer") ?? null,
+          country: req.headers.get("x-vercel-ip-country") ?? null,
+        });
     }
   } catch (err) {
-    // Database lookups failing should not break a partner link; just fall
-    // through with no attribution rather than 500-ing on the visitor.
-    console.warn("[/p/<slug>] partner lookup failed", err);
+    // Click logging must never break the partner link.
+    console.warn("[/p/<slug>] click log failed", err);
   }
 
   const res = NextResponse.redirect(new URL(dest, url.origin), 302);
-
   if (partnerId) {
     res.cookies.set("vyrek_partner", partnerId, {
       httpOnly: true,
@@ -51,7 +63,15 @@ export async function GET(
       path: "/",
       maxAge: 60 * 60 * 24 * 90,
     });
+    if (subId) {
+      res.cookies.set("vyrek_partner_sub", subId, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        path: "/",
+        maxAge: 60 * 60 * 24 * 90,
+      });
+    }
   }
-
   return res;
 }

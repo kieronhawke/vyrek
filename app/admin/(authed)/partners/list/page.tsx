@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { format } from "date-fns";
 import { PageHeader, Table, Badge, NoticeCard } from "@/components/admin/ui";
 import { listPartners } from "@/lib/admin/queries";
@@ -43,9 +44,13 @@ export default async function AdminPartnersListPage() {
           ]}
           empty="No partners yet. Approve an application to create one."
           rows={res.data.map((p) => [
-            <span key="n" className="text-vyrek-text">
+            <Link
+              key="n"
+              href={`/admin/partners/p/${p.id}`}
+              className="text-vyrek-accent hover:underline"
+            >
               {p.name}
-            </span>,
+            </Link>,
             <span key="c" className="font-mono text-xs text-vyrek-text-secondary">
               vyrek.com/p/{p.partner_code}
             </span>,

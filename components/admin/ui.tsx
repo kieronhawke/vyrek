@@ -41,17 +41,22 @@ export function Stat({
   value,
   delta,
   hint,
+  sparkline,
 }: {
   label: string;
   value: string | number;
   delta?: string;
   hint?: string;
+  sparkline?: ReactNode;
 }) {
   return (
     <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
-      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
-        {label}
-      </p>
+      <div className="flex items-start justify-between gap-3">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          {label}
+        </p>
+        {sparkline ? <div className="shrink-0">{sparkline}</div> : null}
+      </div>
       <p className="mt-3 text-3xl font-black tracking-[-0.02em] text-vyrek-text tabular-nums md:text-4xl">
         {value}
       </p>

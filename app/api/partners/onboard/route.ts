@@ -3,6 +3,7 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
 import { verifyOnboardingToken } from "@/lib/partners/tokens";
 import { encryptPii, lastFour } from "@/lib/partners/crypto";
 import { setPartnerSessionCookie } from "@/lib/partners/session";
+import { logEvent } from "@/lib/admin/events";
 
 export const runtime = "nodejs";
 
@@ -192,6 +193,14 @@ export async function POST(req: Request) {
     // we display it by re-deriving from the supplied value at onboarding
     // time client-side if needed. Logged once here for completeness.)
     void lastFour(acctNumber);
+
+    await logEvent({
+      actor: "system",
+      action: "partner.onboarded",
+      targetKind: "partner",
+      targetId: inserted.id,
+      metadata: { partnerCode: slug, applicationId },
+    });
 
     // Sign them straight in so they land on a working dashboard.
     const res = NextResponse.json({ ok: true, partnerId: inserted.id });

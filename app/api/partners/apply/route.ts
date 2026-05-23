@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { logEvent } from "@/lib/admin/events";
 
 export const runtime = "nodejs";
 
@@ -53,19 +54,23 @@ export async function POST(req: Request) {
 
   try {
     const admin = supabaseAdmin();
-    const { error } = await admin.from("partner_applications").insert({
-      email: body.email,
-      name: body.name,
-      country: body.country,
-      platform: body.platform,
-      follower_count: body.followerCount,
-      content_description: body.contentDescription,
-      why_vyrek: body.whyVyrek,
-      primary_url: body.primaryUrl,
-      past_affiliate: body.pastAffiliate || null,
-      promotion_methods: body.promotionMethods,
-      status: "pending",
-    });
+    const { data: inserted, error } = await admin
+      .from("partner_applications")
+      .insert({
+        email: body.email,
+        name: body.name,
+        country: body.country,
+        platform: body.platform,
+        follower_count: body.followerCount,
+        content_description: body.contentDescription,
+        why_vyrek: body.whyVyrek,
+        primary_url: body.primaryUrl,
+        past_affiliate: body.pastAffiliate || null,
+        promotion_methods: body.promotionMethods,
+        status: "pending",
+      })
+      .select("id")
+      .single();
     if (error) {
       console.error("[/api/partners/apply] insert failed", error);
       return NextResponse.json(
@@ -73,6 +78,17 @@ export async function POST(req: Request) {
         { status: 500 },
       );
     }
+    await logEvent({
+      actor: "system",
+      action: "partner.application.submitted",
+      targetKind: "partner_application",
+      targetId: inserted.id,
+      metadata: {
+        platform: body.platform,
+        followerCount: body.followerCount,
+        country: body.country,
+      },
+    });
   } catch (e) {
     console.error("[/api/partners/apply] unexpected", e);
     return NextResponse.json(

@@ -7,6 +7,7 @@ import {
   determineRaceDate,
   type QuizAnswers,
 } from "@/lib/quiz-flow";
+import { logEvent } from "@/lib/admin/events";
 
 /**
  * Account creation endpoint. V3 quiz Screen 15.
@@ -176,6 +177,7 @@ export async function POST(req: Request) {
     try {
       const cookieStore = await cookies();
       const partnerId = cookieStore.get("vyrek_partner")?.value;
+      const subId = cookieStore.get("vyrek_partner_sub")?.value ?? null;
       if (partnerId) {
         const { data: partner } = await sb
           .from("partners")
@@ -192,6 +194,7 @@ export async function POST(req: Request) {
                 partner_id: partnerId,
                 customer_id: resolvedCustomerId,
                 status: "trial",
+                sub_id: subId,
                 attribution_ip:
                   req.headers.get("x-forwarded-for") ??
                   req.headers.get("x-real-ip") ??
@@ -210,6 +213,14 @@ export async function POST(req: Request) {
       // Attribution failures must NEVER block signup.
       console.error("[/api/account/create] partner attribution failed", err);
     }
+
+    await logEvent({
+      actor: "system",
+      action: "customer.signed_up",
+      targetKind: "customer",
+      targetId: resolvedCustomerId,
+      metadata: { programme, email },
+    });
 
     return NextResponse.json({
       ok: true,

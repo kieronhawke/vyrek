@@ -8,6 +8,7 @@ import {
   sendApprovalEmail,
   partnerOnboardingUrl,
 } from "@/lib/partners/emails";
+import { logEvent } from "@/lib/admin/events";
 
 /**
  * Server actions called from admin UI. Every action re-checks admin
@@ -83,6 +84,14 @@ export async function approvePartnerApplication(
       emailReason = e instanceof Error ? e.message : "send failed";
     }
 
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "partner.application.approved",
+      targetKind: "partner_application",
+      targetId: applicationId,
+      metadata: { emailSent, emailReason: emailReason ?? null },
+    });
+
     revalidatePath("/admin/partners");
     revalidatePath(`/admin/partners/${applicationId}`);
     revalidatePath("/admin/partners/list");
@@ -110,6 +119,13 @@ export async function rejectPartnerApplication(
       })
       .eq("id", applicationId);
     if (error) throw error;
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "partner.application.rejected",
+      targetKind: "partner_application",
+      targetId: applicationId,
+      metadata: { reason },
+    });
     revalidatePath("/admin/partners");
     revalidatePath(`/admin/partners/${applicationId}`);
     return { ok: true };
@@ -135,6 +151,13 @@ export async function requestApplicationInfo(
       })
       .eq("id", applicationId);
     if (error) throw error;
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "partner.application.needs_info",
+      targetKind: "partner_application",
+      targetId: applicationId,
+      metadata: { note },
+    });
     revalidatePath("/admin/partners");
     revalidatePath(`/admin/partners/${applicationId}`);
     return { ok: true };
@@ -150,7 +173,7 @@ export async function suspendPartner(
   reason: string,
 ): Promise<ActionResult> {
   try {
-    await assertAdmin();
+    const { user } = await assertAdmin();
     const sb = supabaseAdmin();
     const { error } = await sb
       .from("partners")
@@ -160,8 +183,15 @@ export async function suspendPartner(
       })
       .eq("id", partnerId);
     if (error) throw error;
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "partner.suspended",
+      targetKind: "partner",
+      targetId: partnerId,
+      metadata: { reason },
+    });
     revalidatePath("/admin/partners/list");
-    revalidatePath(`/admin/partners/${partnerId}`);
+    revalidatePath(`/admin/partners/p/${partnerId}`);
     return { ok: true };
   } catch (e) {
     return fail(e);
@@ -172,15 +202,21 @@ export async function unsuspendPartner(
   partnerId: string,
 ): Promise<ActionResult> {
   try {
-    await assertAdmin();
+    const { user } = await assertAdmin();
     const sb = supabaseAdmin();
     const { error } = await sb
       .from("partners")
       .update({ suspended_at: null, suspension_reason: null })
       .eq("id", partnerId);
     if (error) throw error;
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "partner.unsuspended",
+      targetKind: "partner",
+      targetId: partnerId,
+    });
     revalidatePath("/admin/partners/list");
-    revalidatePath(`/admin/partners/${partnerId}`);
+    revalidatePath(`/admin/partners/p/${partnerId}`);
     return { ok: true };
   } catch (e) {
     return fail(e);
@@ -192,15 +228,22 @@ export async function setPartnerTier(
   tier: "starter" | "growth" | "elite",
 ): Promise<ActionResult> {
   try {
-    await assertAdmin();
+    const { user } = await assertAdmin();
     const sb = supabaseAdmin();
     const { error } = await sb
       .from("partners")
       .update({ tier })
       .eq("id", partnerId);
     if (error) throw error;
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "partner.tier.set",
+      targetKind: "partner",
+      targetId: partnerId,
+      metadata: { tier },
+    });
     revalidatePath("/admin/partners/list");
-    revalidatePath(`/admin/partners/${partnerId}`);
+    revalidatePath(`/admin/partners/p/${partnerId}`);
     return { ok: true };
   } catch (e) {
     return fail(e);
@@ -213,7 +256,7 @@ export async function createPayoutForPartner(
   partnerId: string,
 ): Promise<ActionResult & { payoutId?: string; amount_pence?: number }> {
   try {
-    await assertAdmin();
+    const { user } = await assertAdmin();
     const sb = supabaseAdmin();
 
     const { data: partner, error: pErr } = await sb
@@ -253,8 +296,16 @@ export async function createPayoutForPartner(
       .update({ pending_payout_pence: 0 })
       .eq("id", partnerId);
 
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "partner.payout.queued",
+      targetKind: "partner_payout",
+      targetId: payout.id,
+      metadata: { partnerId, amount_pence: amount },
+    });
+
     revalidatePath("/admin/payouts");
-    revalidatePath(`/admin/partners/${partnerId}`);
+    revalidatePath(`/admin/partners/p/${partnerId}`);
     return { ok: true, payoutId: payout.id, amount_pence: amount };
   } catch (e) {
     return fail(e);
@@ -266,7 +317,7 @@ export async function markPayoutPaid(
   bacsReference: string,
 ): Promise<ActionResult> {
   try {
-    await assertAdmin();
+    const { user } = await assertAdmin();
     const sb = supabaseAdmin();
     const { error } = await sb
       .from("partner_payouts")
@@ -277,6 +328,13 @@ export async function markPayoutPaid(
       })
       .eq("id", payoutId);
     if (error) throw error;
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "partner.payout.paid",
+      targetKind: "partner_payout",
+      targetId: payoutId,
+      metadata: { bacsReference },
+    });
     revalidatePath("/admin/payouts");
     return { ok: true };
   } catch (e) {
@@ -289,7 +347,7 @@ export async function markPayoutFailed(
   reason: string,
 ): Promise<ActionResult> {
   try {
-    await assertAdmin();
+    const { user } = await assertAdmin();
     const sb = supabaseAdmin();
     const { error } = await sb
       .from("partner_payouts")
@@ -299,6 +357,13 @@ export async function markPayoutFailed(
       })
       .eq("id", payoutId);
     if (error) throw error;
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "partner.payout.failed",
+      targetKind: "partner_payout",
+      targetId: payoutId,
+      metadata: { reason },
+    });
     revalidatePath("/admin/payouts");
     return { ok: true };
   } catch (e) {
@@ -312,7 +377,7 @@ export async function cancelSubscriptionImmediately(
   stripeSubscriptionId: string,
 ): Promise<ActionResult> {
   try {
-    await assertAdmin();
+    const { user } = await assertAdmin();
     // Cancel in Stripe via dynamic import so the module doesn't load
     // unless this code path runs.
     const { stripe } = await import("@/lib/stripe");
@@ -328,6 +393,14 @@ export async function cancelSubscriptionImmediately(
         cancellation_reason: "admin-cancelled",
       })
       .eq("stripe_subscription_id", stripeSubscriptionId);
+
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "subscription.cancelled",
+      targetKind: "subscription",
+      targetId: stripeSubscriptionId,
+      metadata: { source: "admin" },
+    });
 
     revalidatePath("/admin/subscriptions");
     return { ok: true };

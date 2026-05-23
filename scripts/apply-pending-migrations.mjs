@@ -15,6 +15,7 @@ const ROOT = join(__dirname, "..");
 const files = [
   "supabase/migrations/0002_quiz_v3.sql",
   "supabase/migrations/0003_partner_programme.sql",
+  "supabase/migrations/0004_admin_observability.sql",
 ];
 
 console.log(`-- Vyrek consolidated pending migrations`);

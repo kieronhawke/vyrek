@@ -98,6 +98,90 @@ export async function overviewStats(): Promise<{
   };
 }
 
+/**
+ * 30-day daily counts for the overview sparklines. Returns an array of
+ * 30 numbers (newest last). Robust against missing tables — returns 30
+ * zeros so the UI still renders.
+ */
+export async function dailySignups30d(): Promise<number[]> {
+  try {
+    const sb = supabaseAdmin();
+    const since = new Date();
+    since.setDate(since.getDate() - 29);
+    since.setHours(0, 0, 0, 0);
+    const { data, error } = await sb
+      .from("customers")
+      .select("created_at")
+      .gte("created_at", since.toISOString());
+    if (error) return new Array(30).fill(0);
+    return bucketByDay(
+      (data ?? []).map((r) => (r as { created_at: string }).created_at),
+      since,
+      30,
+    );
+  } catch {
+    return new Array(30).fill(0);
+  }
+}
+
+export async function dailyTrialStarts30d(): Promise<number[]> {
+  try {
+    const sb = supabaseAdmin();
+    const since = new Date();
+    since.setDate(since.getDate() - 29);
+    since.setHours(0, 0, 0, 0);
+    const { data, error } = await sb
+      .from("subscriptions")
+      .select("created_at, status")
+      .gte("created_at", since.toISOString());
+    if (error) return new Array(30).fill(0);
+    return bucketByDay(
+      (data ?? []).map((r) => (r as { created_at: string }).created_at),
+      since,
+      30,
+    );
+  } catch {
+    return new Array(30).fill(0);
+  }
+}
+
+export async function dailyPartnerClicks30d(): Promise<number[]> {
+  try {
+    const sb = supabaseAdmin();
+    const since = new Date();
+    since.setDate(since.getDate() - 29);
+    since.setHours(0, 0, 0, 0);
+    const { data, error } = await sb
+      .from("partner_clicks")
+      .select("created_at")
+      .gte("created_at", since.toISOString());
+    if (error) return new Array(30).fill(0);
+    return bucketByDay(
+      (data ?? []).map((r) => (r as { created_at: string }).created_at),
+      since,
+      30,
+    );
+  } catch {
+    return new Array(30).fill(0);
+  }
+}
+
+function bucketByDay(
+  isoStrings: string[],
+  since: Date,
+  buckets: number,
+): number[] {
+  const out = new Array(buckets).fill(0) as number[];
+  const sinceMs = since.getTime();
+  const day = 24 * 60 * 60 * 1000;
+  for (const iso of isoStrings) {
+    const t = new Date(iso).getTime();
+    const idx = Math.floor((t - sinceMs) / day);
+    if (idx >= 0 && idx < buckets) out[idx]++;
+  }
+  return out;
+}
+
 export async function recentSignups(limit = 8): Promise<
   Result<
     Array<{
@@ -371,11 +455,17 @@ export async function listPartners(opts: {
 
 export async function getPartner(id: string): Promise<
   Result<{
-    partner: AdminPartner;
+    partner: AdminPartner & {
+      suspension_reason?: string | null;
+      address?: string | null;
+      vat_number?: string | null;
+      application_id?: string | null;
+    };
     referrals: Array<{
       id: string;
       customer_id: string;
       status: string;
+      sub_id: string | null;
       signed_up_at: string | null;
       first_paid_at: string | null;
       recurring_earnings_pence: number | null;
@@ -389,6 +479,8 @@ export async function getPartner(id: string): Promise<
       status: string;
       paid_at: string | null;
     }>;
+    clicks30d: number;
+    clickThroughRate: number | null; // 0..1 over the last 30 days
   }>
 > {
   try {
@@ -396,7 +488,7 @@ export async function getPartner(id: string): Promise<
     const { data: partner, error: pErr } = await sb
       .from("partners")
       .select(
-        "id, email, name, partner_code, tier, total_referrals, active_subscribers, lifetime_earnings_pence, pending_payout_pence, suspended_at, created_at",
+        "id, email, name, partner_code, tier, total_referrals, active_subscribers, lifetime_earnings_pence, pending_payout_pence, suspended_at, suspension_reason, address, vat_number, application_id, created_at",
       )
       .eq("id", id)
       .maybeSingle();
@@ -406,7 +498,7 @@ export async function getPartner(id: string): Promise<
     const { data: referrals } = await sb
       .from("partner_referrals")
       .select(
-        "id, customer_id, status, signed_up_at, first_paid_at, recurring_earnings_pence",
+        "id, customer_id, status, sub_id, signed_up_at, first_paid_at, recurring_earnings_pence",
       )
       .eq("partner_id", id)
       .order("signed_up_at", { ascending: false });
@@ -419,14 +511,44 @@ export async function getPartner(id: string): Promise<
       .eq("partner_id", id)
       .order("created_at", { ascending: false });
 
+    // Clicks last 30 days + CTR
+    const since = new Date();
+    since.setDate(since.getDate() - 30);
+    let clicks30d = 0;
+    let signups30d = 0;
+    try {
+      const { count: clickCount } = await sb
+        .from("partner_clicks")
+        .select("*", { count: "exact", head: true })
+        .eq("partner_id", id)
+        .gte("created_at", since.toISOString());
+      clicks30d = clickCount ?? 0;
+      const { count: refCount } = await sb
+        .from("partner_referrals")
+        .select("*", { count: "exact", head: true })
+        .eq("partner_id", id)
+        .gte("signed_up_at", since.toISOString());
+      signups30d = refCount ?? 0;
+    } catch {
+      // partner_clicks may not exist yet; ignore.
+    }
+    const clickThroughRate =
+      clicks30d > 0 ? signups30d / clicks30d : null;
+
     return {
       ok: true,
       data: {
-        partner: partner as AdminPartner,
+        partner: partner as AdminPartner & {
+          suspension_reason?: string | null;
+          address?: string | null;
+          vat_number?: string | null;
+          application_id?: string | null;
+        },
         referrals: (referrals ?? []) as Array<{
           id: string;
           customer_id: string;
           status: string;
+          sub_id: string | null;
           signed_up_at: string | null;
           first_paid_at: string | null;
           recurring_earnings_pence: number | null;
@@ -440,6 +562,8 @@ export async function getPartner(id: string): Promise<
           status: string;
           paid_at: string | null;
         }>,
+        clicks30d,
+        clickThroughRate,
       },
     };
   } catch (e) {

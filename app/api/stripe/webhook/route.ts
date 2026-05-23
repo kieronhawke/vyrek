@@ -15,6 +15,7 @@ import {
   isInClawbackWindow,
   type Tier,
 } from "@/lib/partners/commission";
+import { logEvent } from "@/lib/admin/events";
 
 /**
  * Stripe webhook receiver. The request body MUST be read as raw text for
@@ -108,6 +109,14 @@ export async function POST(req: Request) {
         // Mark any open abandoned-plan record recovered.
         await admin.from("abandoned_plans").update({ recovered_at: new Date().toISOString() }).eq("customer_id", customerId).is("recovered_at", null);
 
+        await logEvent({
+          actor: "system",
+          action: "subscription.trial_started",
+          targetKind: "subscription",
+          targetId: subscriptionId,
+          metadata: { customerId, status },
+        });
+
         // Send welcome email
         const { data: customer } = await admin.from("customers").select("email").eq("id", customerId).maybeSingle();
         if (customer?.email) {
@@ -161,6 +170,14 @@ export async function POST(req: Request) {
               },
             );
           }
+
+          await logEvent({
+            actor: "system",
+            action: "subscription.cancelled",
+            targetKind: "subscription",
+            targetId: sub.id,
+            metadata: { customerId: subRow.customer_id, source: "stripe" },
+          });
 
           // Partner attribution: flip referral to cancelled. If inside the
           // 30-day clawback window, reverse the accrued commission.
@@ -301,6 +318,20 @@ export async function POST(req: Request) {
               (partner.lifetime_earnings_pence ?? 0) + commission,
           })
           .eq("id", partner.id);
+
+        await logEvent({
+          actor: "system",
+          action: isFirstPaid
+            ? "partner.referral.activated"
+            : "subscription.activated",
+          targetKind: isFirstPaid ? "partner_referral" : "subscription",
+          targetId: isFirstPaid ? ref.id : subscriptionId,
+          metadata: {
+            partnerId: partner.id,
+            commission_pence: commission,
+            tier: promotedTier,
+          },
+        });
 
         break;
       }
