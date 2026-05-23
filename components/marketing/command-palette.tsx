@@ -33,7 +33,7 @@ const STATIC_ITEMS: CommandItem[] = [
   { label: "How it works", href: "/how-it-works", group: "Company", keywords: "method process" },
   { label: "About", href: "/about", group: "Company" },
   { label: "Press & brand", href: "/press", group: "Company" },
-  { label: "Refer & earn £20", href: "/account/refer", group: "Company", keywords: "referral friend" },
+  { label: "Partner Programme", href: "/partners", group: "Company", keywords: "affiliate referral commission earn" },
   // Settings
   { label: "Contact", href: "/contact", group: "Help" },
 ];

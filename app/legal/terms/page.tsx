@@ -191,15 +191,40 @@ export default function TermsPage() {
         reasonably foreseen.
       </ProseP>
 
-      <ProseH2>Partner Programme</ProseH2>
+      <ProseH2>Member referrals</ProseH2>
       <ProseP>
-        If you are accepted onto the Vyrek Partner Programme, separate
-        Partner T&amp;Cs apply alongside these terms. Headline points:
+        Any Vyrek member can refer a friend from their account. When the
+        friend you refer converts from trial to a paid subscription, you earn
+        £20.
+      </ProseP>
+      <ProseUl>
+        <ProseLi>
+          The £20 is paid by BACS to the account details you supply in your
+          account, no earlier than 30 days after the referee&apos;s first paid
+          invoice clears (to cover dispute windows).
+        </ProseLi>
+        <ProseLi>
+          Maximum 50 successful referrals per calendar year per member.
+        </ProseLi>
+        <ProseLi>
+          Self-referrals do not count. We check email and payment method.
+        </ProseLi>
+        <ProseLi>
+          We may withhold or reverse the £20 for fraud, chargebacks, or breach
+          of these terms.
+        </ProseLi>
+      </ProseUl>
+
+      <ProseH2>Partner Programme (creators, coaches, communities)</ProseH2>
+      <ProseP>
+        Separate from the member referral above. If you are accepted onto the
+        Vyrek Partner Programme, separate Partner T&amp;Cs apply alongside
+        these terms. Headline points:
       </ProseP>
       <ProseUl>
         <ProseLi>
           Commission is flat tiered recurring (30% / 40% / 50% based on active
-          referrals). There is no flat sign-up bounty.
+          referrals). There is no flat sign-up bounty under this programme.
         </ProseLi>
         <ProseLi>
           Commission accrues only after the referee&apos;s first paid invoice
