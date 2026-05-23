@@ -371,6 +371,77 @@ export async function markPayoutFailed(
   }
 }
 
+// ─── Customer actions ───────────────────────────────────
+
+export async function sendCustomerPasswordReset(
+  customerEmail: string,
+): Promise<ActionResult & { link?: string }> {
+  try {
+    const { user } = await assertAdmin();
+    const sb = supabaseAdmin();
+    const { data, error } = await sb.auth.admin.generateLink({
+      type: "recovery",
+      email: customerEmail.trim().toLowerCase(),
+    });
+    if (error) throw error;
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "customer.signed_up",
+      targetKind: "customer",
+      metadata: {
+        event: "password_reset_link_generated",
+        email: customerEmail,
+      },
+    });
+    return { ok: true, link: data?.properties?.action_link ?? undefined };
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+export async function refundLastStripeInvoice(
+  stripeSubscriptionId: string,
+): Promise<
+  ActionResult & { refundId?: string; amount_pence?: number }
+> {
+  try {
+    const { user } = await assertAdmin();
+    const { stripe } = await import("@/lib/stripe");
+    const s = stripe();
+    const sub = await s.subscriptions.retrieve(stripeSubscriptionId);
+    const latestInvoiceId =
+      typeof sub.latest_invoice === "string"
+        ? sub.latest_invoice
+        : sub.latest_invoice?.id;
+    if (!latestInvoiceId) {
+      return { ok: false, error: "no invoice on this subscription" };
+    }
+    const invoice = await s.invoices.retrieve(latestInvoiceId);
+    const chargeId =
+      typeof (invoice as unknown as { charge?: string }).charge === "string"
+        ? (invoice as unknown as { charge: string }).charge
+        : null;
+    if (!chargeId) {
+      return { ok: false, error: "invoice has no charge to refund" };
+    }
+    const refund = await s.refunds.create({ charge: chargeId });
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "subscription.cancelled",
+      targetKind: "subscription",
+      targetId: stripeSubscriptionId,
+      metadata: {
+        event: "invoice_refunded",
+        refundId: refund.id,
+        amount_pence: refund.amount,
+      },
+    });
+    return { ok: true, refundId: refund.id, amount_pence: refund.amount };
+  } catch (e) {
+    return fail(e);
+  }
+}
+
 // ─── Subscription actions ───────────────────────────────
 
 export async function cancelSubscriptionImmediately(

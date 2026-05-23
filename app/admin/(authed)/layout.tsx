@@ -13,11 +13,13 @@ export const dynamic = "force-dynamic";
 
 const NAV: { href: string; label: string; group: string }[] = [
   { href: "/admin", label: "Overview", group: "Today" },
+  { href: "/admin/live", label: "Live on site", group: "Today" },
   { href: "/admin/customers", label: "Customers", group: "Members" },
   { href: "/admin/subscriptions", label: "Subscriptions", group: "Members" },
   { href: "/admin/partners", label: "Applications", group: "Partners" },
   { href: "/admin/partners/list", label: "Partners", group: "Partners" },
   { href: "/admin/payouts", label: "Payouts", group: "Partners" },
+  { href: "/admin/blog", label: "Blog posts", group: "Content" },
   { href: "/admin/waitlist", label: "Waitlist", group: "Marketing" },
   { href: "/admin/quiz", label: "Quiz responses", group: "Marketing" },
 ];

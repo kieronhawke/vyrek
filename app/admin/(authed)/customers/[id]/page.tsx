@@ -9,6 +9,7 @@ import {
 } from "@/components/admin/ui";
 import { getCustomer } from "@/lib/admin/queries";
 import { CancelSubscriptionButton } from "@/components/admin/cancel-subscription-button";
+import { CustomerActions } from "@/components/admin/customer-actions";
 
 export const dynamic = "force-dynamic";
 
@@ -152,6 +153,17 @@ export default async function AdminCustomerDetailPage({
               ? format(new Date(s.created_at), "dd MMM yyyy, HH:mm")
               : "—",
           ])}
+        />
+      </section>
+
+      {/* Customer actions */}
+      <section className="mt-10">
+        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          Account actions
+        </h2>
+        <CustomerActions
+          email={customer.email}
+          stripeSubscriptionId={latestSub?.stripe_subscription_id ?? null}
         />
       </section>
 
