@@ -94,30 +94,27 @@ export function PostCard({
     );
   }
 
+  // Default card: type-only with a category accent stripe. Drop the
+  // hero image because we only have ~5 stock photos across ~50 posts
+  // and grids of repeated images look like a placeholder bug. Linear /
+  // Notion / Substack all ship type-first card grids for the same
+  // reason. Hero image is still used on the article page itself.
   return (
     <Link
       href={`/blog/${post.slug}`}
       className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated transition-[border,transform,box-shadow] duration-base ease-out hover:-translate-y-0.5 hover:border-vyrek-border-strong hover:shadow-[0_20px_40px_-20px_rgba(0,0,0,0.5)] active:scale-[0.995]"
     >
-      <div className="relative aspect-[16/10] overflow-hidden bg-vyrek-overlay">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={post.heroImage}
-          alt={post.heroAlt}
-          loading="lazy"
-          decoding="async"
-          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-vyrek-base/40 via-transparent to-transparent opacity-0 transition-opacity duration-base group-hover:opacity-100"
-        />
-      </div>
-      <div className="flex flex-1 flex-col gap-4 p-5">
+      {/* Top accent stripe communicates category at a glance, replaces
+          the image footprint without leaving the card visually flat. */}
+      <div
+        aria-hidden
+        className="h-1 w-full bg-vyrek-accent/70 transition-colors duration-base group-hover:bg-vyrek-accent"
+      />
+      <div className="flex flex-1 flex-col gap-4 p-6 md:p-7">
         <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
           {categoryLabel}
         </p>
-        <h2 className="text-balance text-lg font-bold leading-tight tracking-[-0.015em] text-vyrek-text transition-colors duration-fast group-hover:text-vyrek-text md:text-xl">
+        <h2 className="text-balance text-lg font-bold leading-tight tracking-[-0.015em] text-vyrek-text md:text-xl">
           {post.title}
         </h2>
         <p className="text-sm leading-relaxed text-vyrek-text-secondary">
@@ -126,7 +123,7 @@ export function PostCard({
         <div className="mt-auto flex items-center gap-3 text-xs text-vyrek-text-tertiary">
           <time dateTime={post.publishedAt}>{dateLabel}</time>
           <span aria-hidden>·</span>
-          <span>{post.readingMinutes} min</span>
+          <span>{post.readingMinutes} min read</span>
         </div>
       </div>
     </Link>

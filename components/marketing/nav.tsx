@@ -61,11 +61,21 @@ export function MarketingNav() {
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
 
+  // Context-aware primary CTA. On partner routes the page is for
+  // creators / coaches, so "Start training" sends the wrong signal.
+  // Swap to "Apply to join" pointing at the partner application.
+  const onPartnerRoute = pathname.startsWith("/partners");
+  const ctaHref = onPartnerRoute ? "/partners/apply" : "/quiz";
+  const ctaLabel = onPartnerRoute ? "Apply to join" : "Start training";
+
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-colors duration-base ease-out",
-        "pt-[var(--safe-top)]",
+        // top:var(--vyrek-consent-h) keeps the nav docked below the
+        // cookie strip when it's visible. Falls back to 0 (the CSS
+        // variable default) the rest of the time.
+        "fixed inset-x-0 z-50 transition-[colors,top] duration-base ease-out",
+        "top-[var(--vyrek-consent-h,0px)] pt-[var(--safe-top)]",
       )}
     >
       <div
@@ -113,10 +123,10 @@ export function MarketingNav() {
             </Link>
             <Link
               ref={ctaRef}
-              href="/quiz"
+              href={ctaHref}
               className="hidden h-10 items-center justify-center gap-2 rounded-pill bg-vyrek-accent px-4 text-sm font-semibold uppercase tracking-wide text-[#0A0A0A] transition-[background,opacity] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98] will-change-transform sm:inline-flex"
             >
-              Start training
+              {ctaLabel}
             </Link>
 
             <button
@@ -159,8 +169,10 @@ export function MarketingNav() {
         // `inert` (when closed) prevents the focusable links inside
         // from being reachable by keyboard navigation while the drawer
         // is hidden. Without it, Lighthouse + screen readers flag
-        // aria-hidden-focus violations.
-        {...(!open ? { inert: "" as unknown as boolean } : {})}
+        // aria-hidden-focus violations. React 19 accepts the boolean
+        // form; older variants needed "" which then warned. true is
+        // safe.
+        inert={!open}
         className={cn(
           "fixed inset-x-0 top-0 z-40 origin-top md:hidden",
           "pt-[calc(var(--safe-top)+4rem)]",
@@ -204,10 +216,10 @@ export function MarketingNav() {
             </Link>
             <div className="mx-2 mt-2 border-t border-vyrek-border-subtle" />
             <Link
-              href="/quiz"
+              href={ctaHref}
               className="m-2 inline-flex h-12 items-center justify-center rounded-pill bg-vyrek-accent px-5 text-base font-medium tracking-tight text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.98]"
             >
-              Start training →
+              {ctaLabel} →
             </Link>
           </nav>
           <div className="border-t border-vyrek-border-subtle bg-vyrek-base/40 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">

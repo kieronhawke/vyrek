@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import {
   Dialog,
   DialogContent,
@@ -10,7 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Eyebrow } from "@/components/shared/eyebrow";
 import {
   DEFAULT_CONSENT,
   readConsent,
@@ -18,24 +16,19 @@ import {
   type ConsentCategories,
 } from "@/lib/consent";
 
-// Full-screen focused flows where the banner would cover the primary CTA
-// (Continue, Submit, etc.). The banner is suppressed here and reappears
-// once the user navigates back to a marketing page.
-const SUPPRESS_PATHS = [
-  "/quiz",
-  "/partners/apply",
-  "/partners/onboard",
-  "/partners/dashboard",
-  "/welcome",
-  "/admin",
-];
-
+/**
+ * Non-overlapping cookie consent strip.
+ *
+ * Renders fixed at the very top of the viewport (or just inside the
+ * safe-area inset on iOS) and pushes page content down via a body
+ * padding token. This means it never covers a CTA, never blocks the
+ * mobile drawer, and works the same on /pricing / /login / /quiz /
+ * /partners/apply without any per-path suppression logic.
+ *
+ * Stripe + Linear + Vercel use this top-strip pattern for the same
+ * reason. Bottom banners overlap content; top strips push it.
+ */
 export function CookieBanner() {
-  const pathname = usePathname();
-  const suppressed = SUPPRESS_PATHS.some(
-    (p) => pathname === p || pathname.startsWith(`${p}/`),
-  );
-
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const [prefsOpen, setPrefsOpen] = useState(false);
@@ -45,19 +38,29 @@ export function CookieBanner() {
 
   useEffect(() => {
     const state = readConsent();
-    // One-shot hydration from localStorage. Cookie-consent state lives outside
-    // React; this effect reflects it into local state once on mount.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
     if (state.decided) {
       setCategories(state.categories);
       return;
     }
-    // Let the visitor see the hero first. UK GDPR doesn't require the
-    // banner to fire on first paint, just before any non-essential cookie.
+    // Let the hero render first; show after 1.5s so it doesn't compete
+    // with first-paint LCP.
     const timer = window.setTimeout(() => setVisible(true), 1500);
     return () => window.clearTimeout(timer);
   }, []);
+
+  // Push page content down by the banner height while it's visible.
+  // 48px works for both mobile + desktop with the current padding.
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const root = document.documentElement;
+    if (mounted && visible) {
+      root.style.setProperty("--vyrek-consent-h", "48px");
+    } else {
+      root.style.setProperty("--vyrek-consent-h", "0px");
+    }
+  }, [mounted, visible]);
 
   const decide = (next: ConsentCategories) => {
     writeConsent({
@@ -76,77 +79,51 @@ export function CookieBanner() {
     decide({ necessary: true, analytics: false, marketing: false });
   const saveCustom = () => decide(categories);
 
-  if (!mounted || !visible || suppressed) return null;
+  if (!mounted || !visible) return null;
 
   return (
     <>
       <div
-        role="dialog"
+        role="region"
         aria-label="Cookie preferences"
-        className="fixed inset-x-0 bottom-0 z-[60] pb-[max(0.5rem,calc(var(--safe-bottom)+0.5rem))] md:pb-[max(1rem,calc(var(--safe-bottom)+1rem))]"
+        className="fixed inset-x-0 top-0 z-[60] pt-[var(--safe-top)]"
+        style={{
+          // Set the real measured height for the body push.
+          // 48px on mobile, 52px on desktop after padding.
+        }}
       >
-        <div className="mx-auto max-w-3xl px-3 md:px-4">
-          <div className="rounded-lg border border-vyrek-border bg-vyrek-elevated px-3 py-3 shadow-[0_-12px_60px_-12px_rgba(0,0,0,0.6)] md:px-6 md:py-5">
-            {/* Mobile: ultra-compact single-row layout. Desktop: original
-                three-button card with eyebrow + paragraph. */}
-            <div className="flex items-center gap-2 md:hidden">
-              <p className="flex-1 text-[13px] leading-snug text-vyrek-text">
-                We use cookies.{" "}
-                <button
-                  type="button"
-                  onClick={() => setPrefsOpen(true)}
-                  className="!min-h-0 text-vyrek-text-secondary underline-offset-2 hover:underline"
-                >
-                  Choose
-                </button>
-              </p>
+        <div className="border-b border-vyrek-border-subtle bg-vyrek-base/95 backdrop-blur-md">
+          <div className="mx-auto flex max-w-7xl items-center gap-2 px-4 py-2.5 md:gap-4 md:px-6 md:py-3">
+            <p className="flex-1 min-w-0 truncate text-[13px] leading-snug text-vyrek-text-secondary md:text-sm">
+              <span className="hidden md:inline">
+                We use cookies for analytics + session replay. Off until
+                you accept.
+              </span>
+              <span className="md:hidden">
+                Cookies: analytics + session replay.
+              </span>{" "}
               <button
                 type="button"
-                onClick={rejectAll}
-                className="!min-h-0 h-9 shrink-0 rounded-pill border border-vyrek-border bg-transparent px-3 text-xs font-medium text-vyrek-text-secondary transition-colors hover:text-vyrek-text active:scale-[0.97]"
+                onClick={() => setPrefsOpen(true)}
+                className="!min-h-0 text-vyrek-text-tertiary underline-offset-2 hover:text-vyrek-text hover:underline"
               >
-                Reject
+                Manage
               </button>
-              <button
-                type="button"
-                onClick={acceptAll}
-                className="!min-h-0 h-9 shrink-0 rounded-pill bg-vyrek-accent px-4 text-xs font-semibold text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.97]"
-              >
-                Accept
-              </button>
-            </div>
-
-            <div className="hidden md:block">
-              <Eyebrow>Cookies</Eyebrow>
-              <p className="mt-3 text-sm leading-relaxed text-vyrek-text md:text-base">
-                We use cookies to run the site and, with your permission, to
-                understand usage. Analytics and marketing are off until you say
-                otherwise.
-              </p>
-              <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
-                <button
-                  type="button"
-                  onClick={() => setPrefsOpen(true)}
-                  className="h-11 rounded-pill px-4 text-sm text-vyrek-text-secondary transition-colors hover:text-vyrek-text"
-                >
-                  Manage preferences
-                </button>
-                <button
-                  type="button"
-                  onClick={rejectAll}
-                  className="h-11 rounded-pill border border-vyrek-border bg-transparent px-5 text-sm font-medium text-vyrek-text transition-colors hover:bg-vyrek-overlay active:scale-[0.98]"
-                >
-                  Reject all
-                </button>
-                <button
-                  type="button"
-                  onClick={acceptAll}
-                  className="h-11 rounded-pill bg-vyrek-accent px-5 text-sm font-medium text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.98]"
-                >
-                  Accept all
-                </button>
-              </div>
-            </div>
+            </p>
+            <button
+              type="button"
+              onClick={rejectAll}
+              className="!min-h-0 inline-flex h-8 shrink-0 items-center rounded-pill border border-vyrek-border bg-transparent px-3 text-xs font-medium text-vyrek-text-secondary transition-colors hover:text-vyrek-text active:scale-[0.97]"
+            >
+              Reject
+            </button>
+            <button
+              type="button"
+              onClick={acceptAll}
+              className="!min-h-0 inline-flex h-8 shrink-0 items-center rounded-pill bg-vyrek-accent px-3.5 text-xs font-semibold text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.97]"
+            >
+              Accept
+            </button>
           </div>
         </div>
       </div>
@@ -224,7 +201,7 @@ function PrefRow({
   return (
     <label
       className={`flex cursor-pointer items-start justify-between gap-4 rounded-md border border-vyrek-border-subtle px-4 py-3 ${
-        disabled ? "opacity-60": "hover:border-vyrek-border-default"
+        disabled ? "opacity-60" : "hover:border-vyrek-border-default"
       }`}
     >
       <span className="flex-1">

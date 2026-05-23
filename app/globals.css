@@ -48,6 +48,11 @@
   --safe-left:   env(safe-area-inset-left);
   --safe-right:  env(safe-area-inset-right);
 
+  /* Cookie consent strip pushes everything down by this much while
+     visible. Set by components/legal/cookie-banner.tsx on mount; 0
+     when not visible so layouts collapse cleanly. */
+  --vyrek-consent-h: 0px;
+
   /* shadcn semantic tokens, mapped onto Vyrek palette */
   --background:             var(--vyrek-bg-base);
   --foreground:             var(--vyrek-text-primary);
@@ -221,11 +226,24 @@ a:focus-visible,
 [role="button"]:focus-visible {
   outline-offset: 4px;
 }
+/* Form fields commonly set outline:none locally so they can style the
+   border. Layer a box-shadow ring on top so the focus signal is
+   always visible to keyboard users. */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  box-shadow: 0 0 0 2px var(--vyrek-accent), 0 0 0 4px rgba(255, 90, 31, 0.18);
+  border-color: var(--vyrek-accent);
+}
 
 body {
   background: var(--vyrek-bg-base);
   color: var(--vyrek-text-primary);
   font-family: var(--font-sans);
+  /* Push everything down by the cookie strip height while visible.
+     Transitions for a clean slide. */
+  padding-top: var(--vyrek-consent-h, 0px);
+  transition: padding-top var(--duration-base, 320ms) var(--ease-out);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-y: none;
