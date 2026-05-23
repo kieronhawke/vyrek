@@ -24,7 +24,10 @@ import {
 const SUPPRESS_PATHS = [
   "/quiz",
   "/partners/apply",
+  "/partners/onboard",
+  "/partners/dashboard",
   "/welcome",
+  "/admin",
 ];
 
 export function CookieBanner() {
