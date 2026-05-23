@@ -84,7 +84,7 @@ export async function sendWelcomeEmail(args: {
   const firstWorkoutDate = addDays(new Date(), 0); // first session = today / next training day
   const immediate = send({
     to: args.to,
-    subject: "You're in. Day 1 is ready.",
+    subject: "You're in.",
     react: WelcomeEmail({
       trialEndsAt: args.trialEndsAt,
       firstWorkoutDate,

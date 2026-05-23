@@ -116,7 +116,7 @@ export function WelcomeContent({
                 Add Vyrek to your home screen
               </p>
               <p className="mt-1 text-sm text-vyrek-text-secondary">
-                Easier to open Tuesday morning if it&apos;s right there.
+                Easier to open on day 1 if it&apos;s right there.
               </p>
               {installPrompt ? (
                 <button
@@ -140,7 +140,7 @@ export function WelcomeContent({
             </span>
             <div className="flex-1">
               <p className="text-base font-medium text-vyrek-text">
-                Open Tuesday morning
+                Open it on {format(firstWorkoutDate, "EEEE")} morning
               </p>
               <p className="mt-1 text-sm text-vyrek-text-secondary">
                 We&apos;ll send you the session via email too.
