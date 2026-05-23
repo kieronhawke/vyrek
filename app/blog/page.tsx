@@ -91,12 +91,16 @@ export default async function BlogIndexPage() {
       <MarketingNav />
       <main className="pb-24 pt-28 md:pt-36">
         <Container>
-          <Breadcrumb
-            trail={[
-              { name: "Home", url: "/" },
-              { name: "Journal", url: "/blog" },
-            ]}
-          />
+          {/* Brief 7.1: Home / Journal tabs live in the mobile hamburger;
+              keep desktop breadcrumb only */}
+          <div className="hidden md:block">
+            <Breadcrumb
+              trail={[
+                { name: "Home", url: "/" },
+                { name: "Journal", url: "/blog" },
+              ]}
+            />
+          </div>
           <JournalHero postCount={all.length} />
 
           {featured ? (
