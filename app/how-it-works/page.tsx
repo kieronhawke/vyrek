@@ -12,7 +12,15 @@ export const metadata: Metadata = {
     "Vyrek in four steps: quiz, Week 1 reveal, free trial, then train and adapt. See exactly what you get.",
 };
 
-const STEPS = [
+type Step = {
+  number: string;
+  label: string;
+  image: string;
+  body: string[];
+  cta?: { label: string; href: string };
+};
+
+const STEPS: Step[] = [
   {
     number: "01",
     label: "Take the quiz",
@@ -36,17 +44,20 @@ const STEPS = [
     label: "Start your trial",
     image: "/media/images/programme-first-race.jpg",
     body: [
-      "Seven days free. £8.99 per month after that, billed in pounds sterling through Stripe. Apple Pay and Google Pay work at checkout.",
-      "We email you on day 6 to remind you the trial ends tomorrow. Cancel any time in two taps from your account, no questions asked. The trial is built so accidental charges don't happen.",
+      "7 days free. No commitment.",
+      "From day 1, your assigned Elite 15 coach is monitoring your progress, ready to answer questions about your training, your form, your race strategy.",
+      "You can cancel anytime in the app. Two taps.",
     ],
+    cta: { label: "Find your plan →", href: "/quiz" },
   },
   {
     number: "04",
     label: "Train and adapt",
     image: "/media/images/bento-progress.jpg",
     body: [
-      "Every Sunday at 6pm, your next seven days appear, calibrated to what you logged the week before. Hit your sessions, the volume builds; miss a few, the plan reshuffles without guilt.",
-      "Twelve weeks to your race. Every workout has video form checks where they matter. The plan is yours; the work is yours; the structure is ours.",
+      "Every Sunday, your plan rebuilds based on what you logged.",
+      "Hit a session feeling strong? Next week pushes harder. Missed two sessions? We rebuild with more recovery.",
+      "Your plan is never the same plan twice.",
     ],
   },
 ];
@@ -104,6 +115,13 @@ export default function HowItWorksPage() {
                       <p key={p.slice(0, 40)}>{p}</p>
                     ))}
                   </div>
+                  {step.cta ? (
+                    <div className="mt-8">
+                      <CtaButton href={step.cta.href} size="md">
+                        {step.cta.label}
+                      </CtaButton>
+                    </div>
+                  ) : null}
                 </div>
                 <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated">
                   <img
