@@ -106,6 +106,12 @@ export function MarketingNav() {
 
           <div className="flex items-center gap-2">
             <Link
+              href="/login"
+              className="hidden h-10 items-center px-3 text-sm text-vyrek-text-secondary transition-colors hover:text-vyrek-text md:inline-flex"
+            >
+              sign in
+            </Link>
+            <Link
               ref={ctaRef}
               href="/quiz"
               className="hidden h-10 items-center justify-center gap-2 rounded-pill bg-vyrek-accent px-4 text-sm font-semibold uppercase tracking-wide text-[#0A0A0A] transition-[background,opacity] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98] will-change-transform sm:inline-flex"
@@ -179,6 +185,18 @@ export function MarketingNav() {
                 </span>
               </Link>
             ))}
+            <Link
+              href="/login"
+              className="flex items-center justify-between rounded-md px-4 py-3 text-base text-vyrek-text-secondary transition-colors hover:bg-vyrek-overlay hover:text-vyrek-text"
+            >
+              <span>sign in</span>
+              <span
+                aria-hidden
+                className="font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+              >
+                →
+              </span>
+            </Link>
             <div className="mx-2 mt-2 border-t border-vyrek-border-subtle" />
             <Link
               href="/quiz"

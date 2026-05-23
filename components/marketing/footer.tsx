@@ -9,7 +9,8 @@ const COLUMNS = [
     links: [
       { label: "Programmes", href: "/programmes" },
       { label: "How it works", href: "/how-it-works" },
-      { label: "Refer & earn", href: "/account/refer" },
+      { label: "Refer a friend", href: "/account/refer" },
+      { label: "Partner programme", href: "/partners" },
     ],
   },
   {
