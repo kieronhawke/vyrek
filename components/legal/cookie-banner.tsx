@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   Dialog,
   DialogContent,
@@ -17,7 +18,21 @@ import {
   type ConsentCategories,
 } from "@/lib/consent";
 
+// Full-screen focused flows where the banner would cover the primary CTA
+// (Continue, Submit, etc.). The banner is suppressed here and reappears
+// once the user navigates back to a marketing page.
+const SUPPRESS_PATHS = [
+  "/quiz",
+  "/partners/apply",
+  "/welcome",
+];
+
 export function CookieBanner() {
+  const pathname = usePathname();
+  const suppressed = SUPPRESS_PATHS.some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`),
+  );
+
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const [prefsOpen, setPrefsOpen] = useState(false);
@@ -58,7 +73,7 @@ export function CookieBanner() {
     decide({ necessary: true, analytics: false, marketing: false });
   const saveCustom = () => decide(categories);
 
-  if (!mounted || !visible) return null;
+  if (!mounted || !visible || suppressed) return null;
 
   return (
     <>
