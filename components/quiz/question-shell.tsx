@@ -55,7 +55,7 @@ export function QuestionShell({
           >
             ←
           </Link>
-        ) : (
+        ): (
           <span className="h-10 w-10" />
         )}
         <ProgressArc current={current} total={total} />
@@ -69,7 +69,7 @@ export function QuestionShell({
         </button>
       </header>
 
-      {/* Question area — scrollable if it overflows */}
+      {/* Question area, scrollable if it overflows */}
       <div className="flex-1 overflow-y-auto px-5 pb-32">
         <div className="mx-auto max-w-md pt-4">
           <h1 className="text-2xl font-black leading-tight tracking-[-0.04em] text-vyrek-text md:text-3xl">
@@ -83,7 +83,7 @@ export function QuestionShell({
           {preview && (
             <div className="mt-5">
               <Eyebrow className="!text-vyrek-text-tertiary">
-                {`PROGRAMME MATCHING : ${preview}`}
+                {`PROGRAMME MATCHING: ${preview}`}
               </Eyebrow>
             </div>
           )}
@@ -91,7 +91,7 @@ export function QuestionShell({
         </div>
       </div>
 
-      {/* Bottom bar — sticky above safe area */}
+      {/* Bottom bar, sticky above safe area */}
       <footer className="sticky bottom-0 border-t border-vyrek-border-subtle bg-vyrek-base/90 pb-[max(1rem,var(--safe-bottom))] pt-4 backdrop-blur-md">
         <div className="mx-auto flex max-w-md items-center justify-end gap-3 px-5">
           <button

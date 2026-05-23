@@ -12,7 +12,7 @@ const OPTIONS: Array<{
   { value: "solo", label: "Solo", detail: "Just me" },
   {
     value: "doubles",
-    label: "Doubles — partner confirmed",
+    label: "Doubles, partner confirmed",
     detail: "Training together",
   },
   {

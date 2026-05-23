@@ -12,7 +12,7 @@ import {
 
 /**
  * Stripe webhook receiver. The request body MUST be read as raw text for
- * signature verification — Next.js App Router gives us that via req.text(),
+ * signature verification. Next.js App Router gives us that via req.text(),
  * we just need to avoid touching req.json() upstream.
  *
  * Events handled:
@@ -72,8 +72,7 @@ export async function POST(req: Request) {
         const customerId = session.client_reference_id;
         const subscriptionId =
           typeof session.subscription === "string"
-            ? session.subscription
-            : session.subscription?.id;
+            ? session.subscription: session.subscription?.id;
 
         if (!customerId || !subscriptionId) break;
 
@@ -84,44 +83,31 @@ export async function POST(req: Request) {
         const status = sub.status;
         const trialEndUnix = sub.trial_end;
         const periodEndUnix =
-          (sub as unknown as { current_period_end?: number })
-            .current_period_end ?? null;
+          (sub as unknown as { current_period_end?: number }).current_period_end ?? null;
 
-        await admin
-          .from("subscriptions")
-          .upsert(
+        await admin.from("subscriptions").upsert(
             {
               id: subscriptionId,
               customer_id: customerId,
               stripe_subscription_id: subscriptionId,
               status,
               trial_end: trialEndUnix
-                ? new Date(trialEndUnix * 1000).toISOString()
-                : null,
+                ? new Date(trialEndUnix * 1000).toISOString(): null,
               current_period_end: periodEndUnix
-                ? new Date(periodEndUnix * 1000).toISOString()
-                : null,
+                ? new Date(periodEndUnix * 1000).toISOString(): null,
             },
             { onConflict: "stripe_subscription_id" },
           );
 
         // Mark any open abandoned-plan record recovered.
-        await admin
-          .from("abandoned_plans")
-          .update({ recovered_at: new Date().toISOString() })
-          .eq("customer_id", customerId)
-          .is("recovered_at", null);
+        await admin.from("abandoned_plans").update({ recovered_at: new Date().toISOString() }).eq("customer_id", customerId).is("recovered_at", null);
 
         // Send welcome email
-        const { data: customer } = await admin
-          .from("customers")
-          .select("email")
-          .eq("id", customerId)
-          .maybeSingle();
+        const { data: customer } = await admin.from("customers").select("email").eq("id", customerId).maybeSingle();
         if (customer?.email) {
           await sendWelcomeEmail({
             to: customer.email,
-            trialEndsAt: trialEndUnix ? new Date(trialEndUnix * 1000) : null,
+            trialEndsAt: trialEndUnix ? new Date(trialEndUnix * 1000): null,
             programmeName:
               (session.metadata?.programme as string | undefined) ??
               "your",
@@ -136,45 +122,28 @@ export async function POST(req: Request) {
       case "customer.subscription.updated": {
         const sub = event.data.object as Stripe.Subscription;
         const periodEndUnix =
-          (sub as unknown as { current_period_end?: number })
-            .current_period_end ?? null;
-        await admin
-          .from("subscriptions")
-          .update({
+          (sub as unknown as { current_period_end?: number }).current_period_end ?? null;
+        await admin.from("subscriptions").update({
             status: sub.status,
             current_period_end: periodEndUnix
-              ? new Date(periodEndUnix * 1000).toISOString()
-              : null,
+              ? new Date(periodEndUnix * 1000).toISOString(): null,
             trial_end: sub.trial_end
-              ? new Date(sub.trial_end * 1000).toISOString()
-              : null,
-          })
-          .eq("stripe_subscription_id", sub.id);
+              ? new Date(sub.trial_end * 1000).toISOString(): null,
+          }).eq("stripe_subscription_id", sub.id);
         break;
       }
 
       case "customer.subscription.deleted": {
         const sub = event.data.object as Stripe.Subscription;
-        await admin
-          .from("subscriptions")
-          .update({
+        await admin.from("subscriptions").update({
             status: "canceled",
             cancelled_at: new Date().toISOString(),
-          })
-          .eq("stripe_subscription_id", sub.id);
+          }).eq("stripe_subscription_id", sub.id);
 
         // Look up the cancelled customer and send a confirmation email.
-        const { data: subRow } = await admin
-          .from("subscriptions")
-          .select("customer_id")
-          .eq("stripe_subscription_id", sub.id)
-          .maybeSingle();
+        const { data: subRow } = await admin.from("subscriptions").select("customer_id").eq("stripe_subscription_id", sub.id).maybeSingle();
         if (subRow?.customer_id) {
-          const { data: customer } = await admin
-            .from("customers")
-            .select("email")
-            .eq("id", subRow.customer_id)
-            .maybeSingle();
+          const { data: customer } = await admin.from("customers").select("email").eq("id", subRow.customer_id).maybeSingle();
           if (customer?.email) {
             await sendCancellationEmail({ to: customer.email }).catch(
               (err) => {
@@ -209,17 +178,9 @@ export async function POST(req: Request) {
           (invoice as unknown as { subscription?: string }).subscription ??
           null;
         if (!subscriptionId) break;
-        const { data: sub } = await admin
-          .from("subscriptions")
-          .select("customer_id")
-          .eq("stripe_subscription_id", subscriptionId)
-          .maybeSingle();
+        const { data: sub } = await admin.from("subscriptions").select("customer_id").eq("stripe_subscription_id", subscriptionId).maybeSingle();
         if (!sub) break;
-        const { data: customer } = await admin
-          .from("customers")
-          .select("email")
-          .eq("id", sub.customer_id)
-          .maybeSingle();
+        const { data: customer } = await admin.from("customers").select("email").eq("id", sub.customer_id).maybeSingle();
         if (customer?.email) {
           const { sendPaymentFailedEmail } = await import("@/lib/email/send");
           await sendPaymentFailedEmail({ to: customer.email }).catch((err) => {
@@ -234,7 +195,7 @@ export async function POST(req: Request) {
       }
     }
   } catch (err) {
-    // Log and 200 — we don't want Stripe retrying past a transient DB blip.
+    // Log and 200, we don't want Stripe retrying past a transient DB blip.
      
     console.error("[stripe/webhook] handler error", err);
   }

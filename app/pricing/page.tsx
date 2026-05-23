@@ -16,8 +16,8 @@ import { PRICING } from "@/lib/pricing";
 import { FAQS } from "@/lib/faqs";
 
 export const metadata: Metadata = {
-  title: "Pricing — £4.99/mo Hyrox training, first week free",
-  description: `Vyrek Hyrox membership is ${PRICING.monthlyDisplay}/month with a 7-day free trial. All four programmes included — First Race, Sub-90, Doubles, Pro. Cancel anytime in two taps, no minimum term.`,
+  title: "Pricing, £8.99/mo Hyrox training, first week free",
+  description: `Vyrek Hyrox membership is ${PRICING.monthlyDisplay}/month with a 7-day free trial. All four programmes included. First Race, Sub-90, Doubles, Pro. Cancel anytime in two taps, no minimum term.`,
 };
 
 // 4 most common questions for the mini-FAQ on the pricing page.
@@ -48,7 +48,7 @@ export default function PricingPage() {
 
           <section className="mx-auto mt-16 max-w-xl">
             <div className="pricing-card shimmer relative overflow-hidden rounded-lg border border-vyrek-border-strong bg-vyrek-elevated p-8 md:p-10">
-              {/* Soft accent gradient on the top edge — Apple's pricing-card flourish */}
+              {/* Soft accent gradient on the top edge. Apple's pricing-card flourish */}
               <div
                 aria-hidden
                 className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-vyrek-accent/60 to-transparent"
@@ -101,12 +101,12 @@ export default function PricingPage() {
             </div>
           </section>
 
-          {/* Why £4.99? — defuses the "too cheap, must be templated" reaction
+          {/* Why £8.99?, defuses the "too cheap, must be templated" reaction
               that experienced racers have when they compare to HAC (£45)
               or Marchon (£30). Honesty pre-empts skepticism. */}
           <section className="mx-auto mt-16 max-w-2xl">
             <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/60 p-6 md:p-8">
-              <Eyebrow>Why £4.99?</Eyebrow>
+              <Eyebrow>Why £8.99?</Eyebrow>
               <h2 className="mt-3 text-balance text-xl font-black leading-tight tracking-[-0.04em] text-vyrek-text sm:text-2xl md:text-3xl">
                 Software-first, not 1:1 coaching.
               </h2>
@@ -118,16 +118,16 @@ export default function PricingPage() {
                 you&apos;ve actually logged.
               </p>
               <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
-                What you get for £4.99/mo: the same programming logic an Elite
+                What you get for £8.99/mo: the same programming logic an Elite
                 15 coach would write, applied to your inputs, updated every
                 Sunday. What you don&apos;t get: a human messaging you weekly,
                 video form-checks on demand, or a custom block written for your
-                name. If you want that, you want 1:1 coaching — typically
+                name. If you want that, you want 1:1 coaching, typically
                 £150–£400/mo elsewhere.
               </p>
               <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
                 We&apos;re open about the trade. Most members never need 1:1.
-                Some do — and we&apos;ll signpost when.
+                Some do, and we&apos;ll signpost when.
               </p>
             </div>
           </section>

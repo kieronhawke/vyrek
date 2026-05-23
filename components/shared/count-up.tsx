@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Apple-style number counter — animates from 0 (or a chosen start value) to
+ * Apple-style number counter, animates from 0 (or a chosen start value) to
  * the target when the element scrolls into view, with an ease-out curve.
  *
  * - SSR-safe: renders the final value as the initial markup so the layout
@@ -36,7 +36,7 @@ export function CountUp({
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
-      // Already initialised to `value` via useState — no setState needed.
+      // Already initialised to `value` via useState, no setState needed.
       return;
     }
 

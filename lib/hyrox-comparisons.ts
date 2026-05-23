@@ -26,7 +26,7 @@ export const COMPARISONS: ComparisonDef[] = [
     title: "Hyrox vs CrossFit: which is harder, and which is right for you?",
     hook: "Hyrox and CrossFit look similar from the outside. They're built on different principles. The honest comparison.",
     intro: [
-      "Hyrox is a fixed-format hybrid race: 8 stations, 8 × 1 km runs, in the same order every time. CrossFit is open-format functional fitness — workouts change daily, the movements span everything from Olympic lifting to gymnastics.",
+      "Hyrox is a fixed-format hybrid race: 8 stations, 8 × 1 km runs, in the same order every time. CrossFit is open-format functional fitness, workouts change daily, the movements span everything from Olympic lifting to gymnastics.",
       "If you want a measurable race you can train backwards from, Hyrox. If you want a daily fitness practice with variety, CrossFit. They're complementary as much as they're competing.",
     ],
     rows: [
@@ -38,11 +38,11 @@ export const COMPARISONS: ComparisonDef[] = [
       { axis: "Race scene", hyrox: "Global, fixed-format, predictable", other: "CrossFit Games, Semifinals, Opens" },
     ],
     verdict:
-      "If you're race-motivated and want a clear finish-time goal, Hyrox is simpler to train for and easier to measure. If you want daily variety and don't mind learning complex movements, CrossFit. Many athletes do both — CrossFit for the off-season, Hyrox for the race build.",
+      "If you're race-motivated and want a clear finish-time goal, Hyrox is simpler to train for and easier to measure. If you want daily variety and don't mind learning complex movements, CrossFit. Many athletes do both. CrossFit for the off-season, Hyrox for the race build.",
     faqs: [
       {
         q: "Is Hyrox easier than CrossFit?",
-        a: "Easier to start, just as hard to finish well. Hyrox movements are simpler — no Olympic lifts, no gymnastics — but the aerobic demand over 60-120 minutes is significant. CrossFit favours short-burst capacity; Hyrox favours sustained aerobic + station endurance.",
+        a: "Easier to start, just as hard to finish well. Hyrox movements are simpler, no Olympic lifts, no gymnastics, but the aerobic demand over 60-120 minutes is significant. CrossFit favours short-burst capacity; Hyrox favours sustained aerobic + station endurance.",
       },
       {
         q: "Can I train for both Hyrox and CrossFit?",
@@ -57,15 +57,15 @@ export const COMPARISONS: ComparisonDef[] = [
     title: "Hyrox vs Spartan Race: which one suits you?",
     hook: "Hyrox is indoor, fixed-format, race-clock. Spartan is outdoor, obstacle-course, weather-dependent. How they differ.",
     intro: [
-      "Hyrox happens in arenas — climate-controlled floors, identical lanes, same stations every race. Spartan happens outdoors — mountain courses, mud, weather, varied obstacles.",
+      "Hyrox happens in arenas, climate-controlled floors, identical lanes, same stations every race. Spartan happens outdoors, mountain courses, mud, weather, varied obstacles.",
       "Both reward functional strength and endurance. The day-of-race experience is very different.",
     ],
     rows: [
       { axis: "Venue", hyrox: "Indoor arena", other: "Outdoor course (mountain, beach, urban)" },
       { axis: "Distance options", hyrox: "Single format (open / pro / doubles)", other: "Sprint (5 km), Super (10 km), Beast (21 km), Ultra (50 km)" },
       { axis: "Obstacles", hyrox: "8 fixed stations, predictable order", other: "20-60 varied obstacles, unknown order" },
-      { axis: "Weather dependent", hyrox: "No", other: "Yes — significantly" },
-      { axis: "Train indoors only?", hyrox: "Yes", other: "Partially — outdoor practice needed" },
+      { axis: "Weather dependent", hyrox: "No", other: "Yes, significantly" },
+      { axis: "Train indoors only?", hyrox: "Yes", other: "Partially, outdoor practice needed" },
       { axis: "Predictability", hyrox: "Same race format every time", other: "Course changes per event" },
     ],
     verdict:
@@ -73,7 +73,7 @@ export const COMPARISONS: ComparisonDef[] = [
     faqs: [
       {
         q: "Is Spartan harder than Hyrox?",
-        a: "Different hard. Spartan adds weather, terrain, and unknown obstacles — mentally more taxing. Hyrox is harder per minute on the clock — sustained, predictable, no respite.",
+        a: "Different hard. Spartan adds weather, terrain, and unknown obstacles, mentally more taxing. Hyrox is harder per minute on the clock, sustained, predictable, no respite.",
       },
     ],
   },
@@ -84,8 +84,8 @@ export const COMPARISONS: ComparisonDef[] = [
     title: "Hyrox vs Marathon: two endurance events, different sports",
     hook: "Both are 60-180 minutes of effort. The training is almost nothing alike.",
     intro: [
-      "A marathon is 42.2 km of running. The training is 4-5 months of progressive running volume — typically 50-100 km per week — with race pace dialed into the body.",
-      "Hyrox is 10 km of running broken across 8 hybrid station efforts. Training looks more like CrossFit with serious aerobic emphasis — 30-40 km running per week plus 3-4 station sessions.",
+      "A marathon is 42.2 km of running. The training is 4-5 months of progressive running volume, typically 50-100 km per week, with race pace dialed into the body.",
+      "Hyrox is 10 km of running broken across 8 hybrid station efforts. Training looks more like CrossFit with serious aerobic emphasis. 30-40 km running per week plus 3-4 station sessions.",
     ],
     rows: [
       { axis: "Distance", hyrox: "~10 km running + 8 stations", other: "42.2 km running only" },
@@ -100,7 +100,7 @@ export const COMPARISONS: ComparisonDef[] = [
     faqs: [
       {
         q: "Can a marathon runner do Hyrox?",
-        a: "Yes — usually well. Marathon runners have the aerobic engine; what they need is station-specific strength and the muscular endurance for sled push, wall balls, and farmers carries. 8-12 weeks of station integration is typical for a first Hyrox.",
+        a: "Yes, usually well. Marathon runners have the aerobic engine; what they need is station-specific strength and the muscular endurance for sled push, wall balls, and farmers carries. 8-12 weeks of station integration is typical for a first Hyrox.",
       },
     ],
   },
@@ -137,18 +137,18 @@ export const COMPARISONS: ComparisonDef[] = [
     title: "Hyrox vs F45: class-based training vs race-specific programming",
     hook: "F45 is a class. Hyrox is a race. The training needed for each is fundamentally different.",
     intro: [
-      "F45 is a structured 45-minute group class — varied workouts, group atmosphere, designed for general fitness. Hyrox is a competitive race with a fixed format you train backwards from.",
+      "F45 is a structured 45-minute group class, varied workouts, group atmosphere, designed for general fitness. Hyrox is a competitive race with a fixed format you train backwards from.",
       "If you want general fitness with social motivation, F45. If you want a measurable race goal, Hyrox.",
     ],
     rows: [
       { axis: "Format", hyrox: "Periodised 12-week race build", other: "45-min group class, varied daily" },
       { axis: "Outcome measured by", hyrox: "Finish time on race day", other: "Class attendance, perceived effort" },
       { axis: "Training environment", hyrox: "Gym, programmed sessions", other: "F45 studio" },
-      { axis: "Cost", hyrox: "£4.99/mo (Vyrek) + gym", other: "£100-180/mo F45 membership" },
-      { axis: "Race option", hyrox: "Yes — global calendar", other: "F45 Playoffs (limited)" },
+      { axis: "Cost", hyrox: "£8.99/mo (Vyrek) + gym", other: "£100-180/mo F45 membership" },
+      { axis: "Race option", hyrox: "Yes, global calendar", other: "F45 Playoffs (limited)" },
     ],
     verdict:
-      "F45 is great for adherence and group energy. Hyrox is better if you want a clear race outcome. You can do F45 and Hyrox-train at the same time — just don't expect F45 alone to prepare you for a Hyrox finish in the time you're hoping for.",
+      "F45 is great for adherence and group energy. Hyrox is better if you want a clear race outcome. You can do F45 and Hyrox-train at the same time, just don't expect F45 alone to prepare you for a Hyrox finish in the time you're hoping for.",
     faqs: [
       {
         q: "Can F45 prepare me for Hyrox?",

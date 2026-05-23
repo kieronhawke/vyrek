@@ -20,7 +20,7 @@ export default function RefundsPage() {
     <LegalLayout eyebrow="Refunds" title="Refund policy">
       <ProseP>
         Vyrek is a digital subscription service. The trial is designed to
-        protect against accidental charges — no payment is taken until day 8.
+        protect against accidental charges, no payment is taken until day 8.
         This policy explains the few situations where we issue a refund and
         how to request one.
       </ProseP>
@@ -68,7 +68,7 @@ export default function RefundsPage() {
       <ProseUl>
         <ProseLi>
           You opened your plan and used the service, then changed your mind
-          mid-month. Cancel anytime — access continues until the end of the
+          mid-month. Cancel anytime, access continues until the end of the
           billing period.
         </ProseLi>
         <ProseLi>

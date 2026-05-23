@@ -4,19 +4,19 @@ import "./globals.css";
 import { CookieBanner } from "@/components/legal/cookie-banner";
 import { CommandPalette } from "@/components/marketing/command-palette";
 
-// Display — condensed heavy sans for headings and the wordmark.
+// Display, condensed heavy sans for headings and the wordmark.
 // Marchon's brand voice uses Druk Cond Super; Oswald 700 is the closest
 // free analog (athletic, narrow, strong vertical stress).
 const oswald = Oswald({
   variable: "--font-display",
   subsets: ["latin"],
-  // Only weight 700 is used — hero H1, wordmark, section headings.
+  // Only weight 700 is used, hero H1, wordmark, section headings.
   weight: ["700"],
   display: "swap",
   preload: true,
 });
 
-// Body / UI — Inter is the workhorse for everything not display.
+// Body / UI. Inter is the workhorse for everything not display.
 const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
@@ -35,7 +35,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://vyrek.com"),
   title: {
-    default: "Vyrek — Train like a Hyrox athlete",
+    default: "Vyrek. Train like a Hyrox athlete",
     template: "%s · Vyrek",
   },
   description:
@@ -54,10 +54,10 @@ export const metadata: Metadata = {
       ],
     },
   },
-  // Default Open Graph + Twitter — every page inherits unless overridden.
+  // Default Open Graph + Twitter, every page inherits unless overridden.
   // Per-route metadata (blog, city pages) sets its own when specific.
   openGraph: {
-    title: "Vyrek — Train like a Hyrox athlete",
+    title: "Vyrek. Train like a Hyrox athlete",
     description:
       "Personalised Hyrox training programmes built by Elite 15 athletes. See your Week 1 before you pay.",
     url: "https://vyrek.com",
@@ -69,13 +69,13 @@ export const metadata: Metadata = {
         url: "/media/images/programme-first-race.jpg",
         width: 1920,
         height: 1080,
-        alt: "Vyrek — personalised Hyrox training",
+        alt: "Vyrek, personalised Hyrox training",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vyrek — Train like a Hyrox athlete",
+    title: "Vyrek. Train like a Hyrox athlete",
     description:
       "Personalised Hyrox training programmes built by Elite 15 athletes.",
     images: ["/media/images/programme-first-race.jpg"],
@@ -119,10 +119,6 @@ export default function RootLayout({
                 logo: "https://vyrek.com/logo-primary.svg",
                 description:
                   "Personalised Hyrox training programmes built by Elite 15 athletes.",
-                sameAs: [
-                  "https://instagram.com/vyrek",
-                  "https://tiktok.com/@vyrek",
-                ],
                 contactPoint: [
                   {
                     "@type": "ContactPoint",

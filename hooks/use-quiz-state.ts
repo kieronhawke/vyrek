@@ -17,10 +17,10 @@ function generateUuid(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
     return crypto.randomUUID();
   }
-  // Fallback (older Safari) — RFC4122 v4 from Math.random
+  // Fallback (older Safari), RFC4122 v4 from Math.random
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
     const r = (Math.random() * 16) | 0;
-    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    const v = c === "x" ? r: (r & 0x3) | 0x8;
     return v.toString(16);
   });
 }
@@ -74,9 +74,8 @@ export function useQuizState() {
     (id: string, value: QuizAnswers[string]) => {
       setState((prev) => {
         if (!prev) return prev;
-        const next: QuizState = {
-          ...prev,
-          answers: { ...prev.answers, [id]: value },
+        const next: QuizState = {...prev,
+          answers: {...prev.answers, [id]: value },
           updatedAt: new Date().toISOString(),
         };
         writeState(next);
@@ -89,9 +88,8 @@ export function useQuizState() {
   const setAnswers = useCallback((patch: QuizAnswers) => {
     setState((prev) => {
       if (!prev) return prev;
-      const next: QuizState = {
-        ...prev,
-        answers: { ...prev.answers, ...patch },
+      const next: QuizState = {...prev,
+        answers: {...prev.answers,...patch },
         updatedAt: new Date().toISOString(),
       };
       writeState(next);

@@ -1,5 +1,4 @@
 import { MarketingNav } from "@/components/marketing/nav";
-import { CohortBanner } from "@/components/marketing/cohort-banner";
 import { Hero } from "@/components/marketing/hero";
 import { SocialProofBar } from "@/components/marketing/social-proof-bar";
 import { PlanTeaser } from "@/components/marketing/plan-teaser";
@@ -19,7 +18,6 @@ import { MarketingFooter } from "@/components/marketing/footer";
 export default function Home() {
   return (
     <>
-      <CohortBanner />
       <MarketingNav />
       <main>
         <Hero />

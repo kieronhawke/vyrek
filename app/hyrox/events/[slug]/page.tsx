@@ -37,7 +37,7 @@ export async function generateMetadata({
   const e = getEvent(slug);
   if (!e) return { title: "Not found" };
   const url = `${siteUrl()}/hyrox/events/${e.slug}`;
-  const title = `${e.name} — venue, logistics, 12-week prep`;
+  const title = `${e.name}, venue, logistics, 12-week prep`;
   const description = `Everything you need for ${e.name}: ${e.venue.name} logistics, divisions, transport, hotels, and a 12-week training prep window.`;
   return {
     title,
@@ -75,8 +75,7 @@ export default async function EventPage({
     startDate: e.startDate,
     endDate: e.endDate,
     eventStatus: e.past
-      ? "https://schema.org/EventScheduled"
-      : "https://schema.org/EventScheduled",
+      ? "https://schema.org/EventScheduled": "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     location: {
       "@type": "Place",
@@ -166,8 +165,7 @@ export default async function EventPage({
               <span className="rounded-pill border border-vyrek-accent/40 bg-vyrek-accent/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-accent">
                 {format(new Date(e.startDate), "EEE d MMM yyyy")}
                 {e.endDate !== e.startDate
-                  ? ` – ${format(new Date(e.endDate), "EEE d MMM yyyy")}`
-                  : ""}
+                  ? ` – ${format(new Date(e.endDate), "EEE d MMM yyyy")}`: ""}
               </span>
               <span className="rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-secondary">
                 {e.venue.name}, {e.venue.city}
@@ -196,7 +194,7 @@ export default async function EventPage({
                     Open in Google Maps ↗
                   </a>
                 </>
-              ) : null}
+              ): null}
             </address>
             <ul role="list" className="mt-6 space-y-2 text-base leading-relaxed text-vyrek-text-secondary">
               {e.logistics.map((l) => (

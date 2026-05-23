@@ -3,7 +3,7 @@
 import { readConsent } from "@/lib/consent";
 
 /**
- * Lazy, consent-gated PostHog wrapper. `posthog-js` is ~124KB minified —
+ * Lazy, consent-gated PostHog wrapper. `posthog-js` is ~124KB minified,
  * we don't want it blocking the initial quiz bundle. Init happens the first
  * time capture()/identify() fires AND analytics consent is granted; earlier
  * calls are queued. If consent is denied, calls are silently dropped.
@@ -34,7 +34,7 @@ function consented(): boolean {
   }
 }
 
-// Listen for consent changes — flush the queue if the user just opted in,
+// Listen for consent changes, flush the queue if the user just opted in,
 // or wipe state if they opted out.
 if (typeof window !== "undefined") {
   window.addEventListener("vyrek:consent-changed", () => {
@@ -72,7 +72,7 @@ async function loadPostHog(): Promise<PostHog | null> {
     if (process.env.NODE_ENV !== "production") {
        
       console.info(
-        "[posthog] NEXT_PUBLIC_POSTHOG_KEY not set — analytics disabled",
+        "[posthog] NEXT_PUBLIC_POSTHOG_KEY not set, analytics disabled",
       );
     }
     return null;
@@ -88,7 +88,7 @@ async function loadPostHog(): Promise<PostHog | null> {
         capture_pageleave: true,
         persistence: "localStorage+cookie",
 
-        // Session replay (consent-gated by loadPostHog — only fires after
+        // Session replay (consent-gated by loadPostHog, only fires after
         // analytics consent). Inputs masked by default; email/password
         // selectors explicitly masked. Cross-origin iframes excluded.
         disable_session_recording: false,
@@ -98,7 +98,7 @@ async function loadPostHog(): Promise<PostHog | null> {
           recordCrossOriginIframes: false,
         },
 
-        // Autocapture on — Vyrek's UI is link-and-button heavy and we want
+        // Autocapture on. Vyrek's UI is link-and-button heavy and we want
         // heatmaps + element-level drop-off without instrumenting every CTA.
         // `data-mask` on a node opts that subtree out.
         autocapture: {
@@ -151,7 +151,7 @@ export function capture(event: string, properties?: CaptureProperties) {
     return;
   }
   if (initFailed) return;
-  // Without consent, drop the event — we don't queue it, since the user
+  // Without consent, drop the event, we don't queue it, since the user
   // hasn't opted in yet. Once they consent, we start capturing forward only.
   if (!consented()) return;
   queue.push({ type: "capture", event, properties });

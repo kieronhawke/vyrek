@@ -13,9 +13,9 @@ export function Hero() {
   const backdropRef = useRef<HTMLDivElement>(null);
   const shouldServeHeavy = useShouldServeHeavyAssets();
   // Two gates on the autoplay video:
-  //   1. `videoReady` — held back until after window.load + idle, so the
+  //   1. `videoReady`, held back until after window.load + idle, so the
   //      video network fetch never competes with the H1 (the LCP element).
-  //   2. `wideScreen` — only serve the video on >=768px. On mobile the
+  //   2. `wideScreen`, only serve the video on >=768px. On mobile the
   //      late-arriving first frame would become the new LCP candidate and
   //      drag the metric to ~3.5s. Mobile users see just the poster.
   const [videoReady, setVideoReady] = useState(false);
@@ -30,8 +30,7 @@ export function Hero() {
   useEffect(() => {
     const start = () => {
       const idle =
-        (window as Window & { requestIdleCallback?: typeof requestIdleCallback })
-          .requestIdleCallback;
+        (window as Window & { requestIdleCallback?: typeof requestIdleCallback }).requestIdleCallback;
       if (idle) idle(() => setVideoReady(true), { timeout: 1500 });
       else window.setTimeout(() => setVideoReady(true), 300);
     };
@@ -41,11 +40,11 @@ export function Hero() {
   }, []);
   const shouldServeVideo = shouldServeHeavy && wideScreen;
 
-  // Magnetic CTA — Linear-style pull on fine pointers, no-op on touch.
+  // Magnetic CTA. Linear-style pull on fine pointers, no-op on touch.
   useMagnetic(ctaRef, { strength: 0.22, radius: 100 });
 
   // Dim the backdrop as the user scrolls past 50% of the viewport. The
-  // footage stays grayscale throughout — the editorial brief is B&W with the
+  // footage stays grayscale throughout, the editorial brief is B&W with the
   // single accent orange handling all the colour work.
   useEffect(() => {
     const el = backdropRef.current;
@@ -88,7 +87,7 @@ export function Hero() {
         className="absolute inset-0 -z-10 will-change-[filter]"
         style={{ filter: "grayscale(1) brightness(1)" }}
       >
-        {/* hero-poster.jpg was a near-black video still — useless on mobile
+        {/* hero-poster.jpg was a near-black video still, useless on mobile
             where the autoplay video is gated off. Use the coach-portrait
             shot instead; it's the same person the desktop video shows. */}
         <img
@@ -116,7 +115,7 @@ export function Hero() {
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
-        {/* H1 deliberately *not* animated — it's the LCP element. Animating
+        {/* H1 deliberately *not* animated, it's the LCP element. Animating
             it in (via opacity 0 → 1) delays Chrome's LCP timing. The sub +
             CTA below carry the premium-feel motion instead. */}
         <h1
@@ -126,7 +125,7 @@ export function Hero() {
           Train like a Hyrox athlete.
         </h1>
         <p className="hero-intro mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:max-w-xl md:text-lg">
-          From first-timers to sub-60 athletes — one personalised plan for
+          From first-timers to sub-60 athletes, one personalised plan for
           the world&apos;s fastest growing sport. See your Week 1 before you pay.
         </p>
         <div className="hero-intro hero-intro-late mt-7">
@@ -138,7 +137,7 @@ export function Hero() {
             Find your plan →
           </Link>
         </div>
-        {/* Trust pill — kept under the CTA per Runna / Whoop. Honest claims
+        {/* Trust pill, kept under the CTA per Runna / Whoop. Honest claims
             only: programming credentials + price + cancellation. */}
         <div className="hero-intro hero-intro-late mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-vyrek-text-secondary md:text-sm">
           <span className="inline-flex items-center gap-1.5">
@@ -148,18 +147,16 @@ export function Hero() {
             <span>Built by Elite 15 coaches</span>
           </span>
           <span aria-hidden className="text-vyrek-text-tertiary">·</span>
-          <span>£4.99/mo</span>
+          <span>£8.99/mo</span>
           <span aria-hidden className="text-vyrek-text-tertiary">·</span>
           <span>Cancel anytime</span>
         </div>
       </div>
 
-      <style jsx>{`
-        .hero-intro {
+      <style jsx>{`.hero-intro {
           animation: hero-fade-up 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
           animation-delay: 80ms;
-        }
-        .hero-intro-late {
+        }.hero-intro-late {
           animation-delay: 200ms;
         }
         @keyframes hero-fade-up {
@@ -172,8 +169,7 @@ export function Hero() {
             transform: translateY(0);
           }
         }
-        @media (prefers-reduced-motion: reduce) {
-          .hero-intro {
+        @media (prefers-reduced-motion: reduce) {.hero-intro {
             animation: none;
           }
         }

@@ -9,14 +9,14 @@ import { capture } from "@/lib/posthog";
 
 /**
  * Referral hub. The bounty only pays out once the referred friend's trial
- * has converted to paid — we surface that rule honestly. Until the member
+ * has converted to paid, we surface that rule honestly. Until the member
  * is signed in (Supabase session), we render the page in "preview" mode
  * with a sample code so the layout, share copy, and terms are all visible.
  */
 
 const SAMPLE_CODE = "DEMO-W2X4-RX9P";
 const SHARE_TEXT =
-  "I'm using Vyrek for Hyrox training. £4.99/mo, first week free — use my link and I'll get £20 if you stay past your trial.";
+  "I'm using Vyrek for Hyrox training. £8.99/mo, first week free, use my link and I'll get £20 if you stay past your trial.";
 
 type ReferralState = {
   code: string;
@@ -66,8 +66,7 @@ export function ReferPanel() {
   const code = state?.code ?? SAMPLE_CODE;
   const origin =
     typeof window === "undefined"
-      ? "https://vyrek.com"
-      : window.location.origin;
+      ? "https://vyrek.com": window.location.origin;
   const referralUrl = `${origin}/?ref=${code}`;
 
   const onCopy = useCallback(
@@ -89,7 +88,7 @@ export function ReferPanel() {
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
-          title: "Vyrek — Hyrox training",
+          title: "Vyrek. Hyrox training",
           text: SHARE_TEXT,
           url: referralUrl,
         });
@@ -124,7 +123,7 @@ export function ReferPanel() {
                 <span aria-hidden>●</span>
                 Preview · sign in to see your real code
               </div>
-            ) : (
+            ): (
               <Eyebrow>Your code</Eyebrow>
             )}
 
@@ -147,7 +146,7 @@ export function ReferPanel() {
                 disabled={loading}
                 className="inline-flex h-11 items-center justify-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-overlay px-5 text-sm font-medium text-vyrek-text transition-[border,background] duration-fast hover:border-vyrek-border-strong disabled:opacity-50"
               >
-                {copied === "code" ? "Copied ✓" : "Copy code"}
+                {copied === "code" ? "Copied ✓": "Copy code"}
               </button>
             </div>
 
@@ -167,7 +166,7 @@ export function ReferPanel() {
                 disabled={loading}
                 className="inline-flex h-12 shrink-0 items-center justify-center rounded-pill border border-vyrek-border bg-vyrek-overlay px-5 text-sm font-medium text-vyrek-text transition-[border,background] duration-fast hover:border-vyrek-border-strong disabled:opacity-50"
               >
-                {copied === "url" ? "Copied ✓" : "Copy link"}
+                {copied === "url" ? "Copied ✓": "Copy link"}
               </button>
               <button
                 type="button"
@@ -202,7 +201,7 @@ export function ReferPanel() {
                 </Link>{" "}
                 to claim your real code.
               </p>
-            ) : null}
+            ): null}
           </section>
 
           {/* How it works */}
@@ -254,7 +253,7 @@ export function ReferPanel() {
               <li>
                 <strong className="text-vyrek-text">Eligibility.</strong> You
                 must be a Vyrek member with at least one paid month on file
-                before payouts release. (Active trials still earn referrals —
+                before payouts release. (Active trials still earn referrals,
                 they just don&apos;t pay out until you&apos;ve converted yourself.)
               </li>
               <li>

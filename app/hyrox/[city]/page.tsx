@@ -38,8 +38,8 @@ export async function generateMetadata({
   const loc = getLocationBySlug(city);
   if (!loc) return { title: "Not found" };
   const url = `${siteUrl()}/hyrox/${loc.slug}`;
-  const title = `Hyrox training in ${loc.name} — personalised 12-week plans`;
-  const description = `Personalised Hyrox training programmes for ${loc.name} athletes. Built by Elite 15 coaches, dated Week 1 before you pay, £4.99/month. Find your plan in three minutes.`;
+  const title = `Hyrox training in ${loc.name}, personalised 12-week plans`;
+  const description = `Personalised Hyrox training programmes for ${loc.name} athletes. Built by Elite 15 coaches, dated Week 1 before you pay, £8.99/month. Find your plan in three minutes.`;
   return {
     title,
     description,
@@ -62,25 +62,24 @@ function buildFaqs(loc: UkLocation) {
   return [
     {
       q: `Is there a Hyrox gym in ${loc.name}?`,
-      a: `Yes — ${loc.name} has a growing network of affiliate gyms running Hyrox-pattern classes. Vyrek isn't a gym; we're a personalised training platform you can use alongside any gym. Members in ${loc.name} train at their usual gym (or at home) and follow a programme built around the exact equipment they have available.`,
+      a: `Yes, ${loc.name} has a growing network of affiliate gyms running Hyrox-pattern classes. Vyrek isn't a gym; we're a personalised training platform you can use alongside any gym. Members in ${loc.name} train at their usual gym (or at home) and follow a programme built around the exact equipment they have available.`,
     },
     {
       q: `What's the nearest Hyrox race to ${loc.name}?`,
       a: venue
-        ? `${venue.name} in ${venue.city} hosts annual Hyrox race weekends and is the closest major venue to ${loc.name}. Vyrek programmes auto-calibrate to your chosen race date — you tell us when you're racing, we build the 12 weeks backwards from it.`
-        : `${loc.name} athletes typically race at ExCeL London, Birmingham NEC, or Manchester Central. All three host Hyrox weekends annually. Vyrek programmes auto-calibrate to your chosen race date.`,
+        ? `${venue.name} in ${venue.city} hosts annual Hyrox race weekends and is the closest major venue to ${loc.name}. Vyrek programmes auto-calibrate to your chosen race date, you tell us when you're racing, we build the 12 weeks backwards from it.`: `${loc.name} athletes typically race at ExCeL London, Birmingham NEC, or Manchester Central. All three host Hyrox weekends annually. Vyrek programmes auto-calibrate to your chosen race date.`,
     },
     {
       q: `How much does Hyrox coaching cost in ${loc.name}?`,
-      a: `Local 1:1 Hyrox coaching in ${loc.name} typically ranges from £60–£150 per hour. Vyrek's online programme is £4.99 per month with a 7-day free trial — the same level of programming as you'd get from an Elite 15 coach, dated and personalised, at a fraction of the cost.`,
+      a: `Local 1:1 Hyrox coaching in ${loc.name} typically ranges from £60–£150 per hour. Vyrek's online programme is £8.99 per month with a 7-day free trial, the same level of programming as you'd get from an Elite 15 coach, dated and personalised, at a fraction of the cost.`,
     },
     {
       q: `Can I train for Hyrox in ${loc.name} as a beginner?`,
-      a: `Yes. Vyrek's First Race programme is built for total Hyrox beginners — three minutes of quiz, you see your Week 1 immediately. We calibrate to your current fitness, equipment, and the race date you're working towards. No CrossFit background needed.`,
+      a: `Yes. Vyrek's First Race programme is built for total Hyrox beginners, three minutes of quiz, you see your Week 1 immediately. We calibrate to your current fitness, equipment, and the race date you're working towards. No CrossFit background needed.`,
     },
     {
       q: `Do I need a special gym to train for Hyrox in ${loc.name}?`,
-      a: `No. Vyrek programmes adapt to your equipment — full commercial gym, standard PureGym/Nuffield-style facility, or home setup. The quiz asks what you have access to, and your plan only includes exercises you can actually do. You can train for a Hyrox finish from any ${loc.name} gym.`,
+      a: `No. Vyrek programmes adapt to your equipment, full commercial gym, standard PureGym/Nuffield-style facility, or home setup. The quiz asks what you have access to, and your plan only includes exercises you can actually do. You can train for a Hyrox finish from any ${loc.name} gym.`,
     },
   ];
 }
@@ -124,7 +123,7 @@ export default async function CityPage({
   const localBusinessLd = {
     "@context": "https://schema.org",
     "@type": "SportsActivityLocation",
-    name: `Vyrek Hyrox Training — ${loc.name}`,
+    name: `Vyrek Hyrox Training, ${loc.name}`,
     description: `Personalised Hyrox training programmes for ${loc.name} athletes. Online platform delivered by Elite 15 coaches.`,
     url,
     areaServed: {
@@ -139,7 +138,7 @@ export default async function CityPage({
     },
     offers: {
       "@type": "Offer",
-      price: "4.99",
+      price: "8.99",
       priceCurrency: "GBP",
       availability: "https://schema.org/InStock",
     },
@@ -196,7 +195,7 @@ export default async function CityPage({
             </SplitHeading>
             <p className="mt-6 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
               Personalised 12-week Hyrox programmes for athletes in {loc.name}.
-              See your Week 1 dated and ready in three minutes — before you
+              See your Week 1 dated and ready in three minutes, before you
               pay a penny.
             </p>
 
@@ -218,7 +217,7 @@ export default async function CityPage({
             <Eyebrow>The {loc.name} Hyrox scene</Eyebrow>
             <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
               {loc.context ??
-                `${loc.name} has a growing community of Hyrox athletes training across its local gyms. Vyrek programmes adapt to whatever equipment your gym has — full commercial setup, standard chain gym, or home weights — and recalibrate every Sunday based on the sessions you've logged.`}
+                `${loc.name} has a growing community of Hyrox athletes training across its local gyms. Vyrek programmes adapt to whatever equipment your gym has, full commercial setup, standard chain gym, or home weights, and recalibrate every Sunday based on the sessions you've logged.`}
             </p>
             {loc.nearestVenue ? (
               <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
@@ -227,10 +226,10 @@ export default async function CityPage({
                   {loc.nearestVenue.name}
                 </span>{" "}
                 in {loc.nearestVenue.city}. Your Vyrek programme builds backwards
-                from your chosen race date — pick the day, we&apos;ll dial in the 12
+                from your chosen race date, pick the day, we&apos;ll dial in the 12
                 weeks before it.
               </p>
-            ) : null}
+            ): null}
           </section>
 
           {/* Programmes for this city */}
@@ -263,7 +262,7 @@ export default async function CityPage({
                 {
                   slug: "doubles",
                   tag: "Doubles",
-                  body: `Paired programming for ${loc.name} doubles teams — handoff strategy, split decisions, paired interval work.`,
+                  body: `Paired programming for ${loc.name} doubles teams, handoff strategy, split decisions, paired interval work.`,
                 },
                 {
                   slug: "pro",
@@ -322,7 +321,7 @@ export default async function CityPage({
               Find your {loc.name} plan.
             </h2>
             <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
-              Three-minute quiz. Dated Week 1 before you pay. £4.99/month.
+              Three-minute quiz. Dated Week 1 before you pay. £8.99/month.
             </p>
             <div className="mt-8">
               <CtaButton href="/quiz" size="lg">
@@ -334,7 +333,7 @@ export default async function CityPage({
             </p>
           </section>
 
-          {/* Cross-link to stations / plans / tools — internal-link density */}
+          {/* Cross-link to stations / plans / tools, internal-link density */}
           <RelatedGrid
             heading={`Useful for ${loc.name} athletes`}
             items={[
@@ -342,7 +341,7 @@ export default async function CityPage({
                 href: "/hyrox/stations/sled-push",
                 eyebrow: "Station guide",
                 title: "Hyrox sled push technique",
-                body: "Low, long, locked — the technique that wins back 60 seconds.",
+                body: "Low, long, locked, the technique that wins back 60 seconds.",
               },
               {
                 href: "/hyrox/stations/wall-balls",
@@ -366,13 +365,13 @@ export default async function CityPage({
                 href: "/hyrox/events",
                 eyebrow: "Events",
                 title: "UK Hyrox race calendar",
-                body: "London, Manchester, Birmingham, Glasgow — when to start training.",
+                body: "London, Manchester, Birmingham, Glasgow, when to start training.",
               },
               {
                 href: "/hyrox/gear/best-hyrox-shoes",
                 eyebrow: "Gear",
                 title: "Best Hyrox shoes",
-                body: "Hybrid trainers, low drop, firm midsole — what to look for.",
+                body: "Hybrid trainers, low drop, firm midsole, what to look for.",
               },
             ]}
           />
@@ -381,7 +380,7 @@ export default async function CityPage({
           <section className="mx-auto mt-20 max-w-3xl border-t border-vyrek-border-subtle pt-12">
             <Eyebrow>More UK locations</Eyebrow>
             <p className="mt-3 text-sm text-vyrek-text-secondary">
-              Vyrek serves athletes across the UK — see the full list of
+              Vyrek serves athletes across the UK, see the full list of
               cities and boroughs.
             </p>
             <div className="mt-5">

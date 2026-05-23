@@ -47,7 +47,7 @@ export default function PrivacyPage() {
           Page views, quiz progress, click heatmaps, and session replay
           captured by PostHog after you give cookie consent. Input fields
           (email, password, anything with a <code>data-mask</code> attribute)
-          are masked at the recording layer — we never see what you typed
+          are masked at the recording layer, we never see what you typed
           into a form. Pseudonymous; no profile identifiers tied to your
           name. You can opt out at any time via the cookie banner or by
           setting Do Not Track in your browser.
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
         <ProseLi>Deliver your training plan and remember your progress.</ProseLi>
         <ProseLi>Process your subscription and send receipts.</ProseLi>
         <ProseLi>
-          Improve the product — find where the funnel breaks, where members get
+          Improve the product, find where the funnel breaks, where members get
           stuck, which workouts get skipped.
         </ProseLi>
         <ProseLi>
@@ -81,19 +81,19 @@ export default function PrivacyPage() {
       <ProseH2>Legal basis</ProseH2>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Contract performance</strong> —
+          <strong className="text-vyrek-text">Contract performance</strong>,
           we cannot deliver your plan without your quiz answers and email.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Consent</strong> — analytics
+          <strong className="text-vyrek-text">Consent</strong>, analytics
           cookies, marketing emails (you opt in; you can opt out anytime).
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Legitimate interest</strong> —
+          <strong className="text-vyrek-text">Legitimate interest</strong>,
           security, fraud prevention, error monitoring.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Legal obligation</strong> —
+          <strong className="text-vyrek-text">Legal obligation</strong>,
           payment records, retained 7 years for HMRC.
         </ProseLi>
       </ProseUl>
@@ -101,20 +101,20 @@ export default function PrivacyPage() {
       <ProseH2>How long we keep it</ProseH2>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Training data</strong> — kept
+          <strong className="text-vyrek-text">Training data</strong>, kept
           while your subscription is active, plus 90 days after cancellation in
           case you come back. Then deleted.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Analytics</strong> — 12 months,
+          <strong className="text-vyrek-text">Analytics</strong>. 12 months,
           then aggregated and the row-level events are deleted.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Payment records</strong> — 7
+          <strong className="text-vyrek-text">Payment records</strong>. 7
           years, per HMRC requirements.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Support emails</strong> — 2
+          <strong className="text-vyrek-text">Support emails</strong>. 2
           years, then deleted.
         </ProseLi>
       </ProseUl>
@@ -126,7 +126,7 @@ export default function PrivacyPage() {
         <ProseLi>Correct anything wrong.</ProseLi>
         <ProseLi>Delete your data (subject to legal retention rules above).</ProseLi>
         <ProseLi>
-          Export your data in a portable format (JSON, CSV — your choice).
+          Export your data in a portable format (JSON, CSV, your choice).
         </ProseLi>
         <ProseLi>
           Restrict what we do with it while a request is being processed.
@@ -151,35 +151,34 @@ export default function PrivacyPage() {
           rel="noreferrer"
         >
           ico.org.uk/make-a-complaint
-        </a>
-        .
+        </a>.
       </ProseP>
 
       <ProseH2>Who we share data with</ProseH2>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Stripe</strong> (payments) —
+          <strong className="text-vyrek-text">Stripe</strong> (payments),
           card processing, billing, customer portal. Data stays inside the EEA
           / UK regions.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Supabase</strong> (database) —
+          <strong className="text-vyrek-text">Supabase</strong> (database),
           your account and training data, hosted in EU regions.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Resend</strong> (email) —
+          <strong className="text-vyrek-text">Resend</strong> (email),
           transactional emails only. EU sub-processors.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">PostHog</strong> (analytics) —
+          <strong className="text-vyrek-text">PostHog</strong> (analytics),
           EU-hosted, only loaded after consent.
         </ProseLi>
         <ProseLi>
           <strong className="text-vyrek-text">Sentry</strong> (error
-          monitoring) — EU-hosted, scrubs PII.
+          monitoring). EU-hosted, scrubs PII.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Sanity</strong> (CMS) — only for
+          <strong className="text-vyrek-text">Sanity</strong> (CMS), only for
           editors who log in at /studio.
         </ProseLi>
       </ProseUl>

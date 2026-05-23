@@ -30,7 +30,7 @@ import {
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Vyrek Journal — Hyrox training, technique, race-day guides",
+  title: "Vyrek Journal. Hyrox training, technique, race-day guides",
   description:
     "Practical Hyrox content from Elite 15 athletes. Training plans, station-by-station technique, nutrition, and race-day pacing. Plain English, no fluff.",
   alternates: {
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
         url: `${siteUrl()}/media/images/bento-plan.jpg`,
         width: 1200,
         height: 630,
-        alt: "Vyrek Journal — Hyrox training insights",
+        alt: "Vyrek Journal. Hyrox training insights",
       },
     ],
   },
@@ -103,7 +103,7 @@ export default async function BlogIndexPage() {
             <section className="mt-14">
               <PostCard post={featured} variant="featured" />
             </section>
-          ) : null}
+          ): null}
 
           <section className="mt-14">
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -121,7 +121,7 @@ export default async function BlogIndexPage() {
                     >
                       {c.label} · {counts[slug]}
                     </Link>
-                  ) : null,
+                  ): null,
                 )}
               </nav>
             </div>

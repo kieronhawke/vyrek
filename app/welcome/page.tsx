@@ -6,13 +6,13 @@ import { determineStartDate } from "@/lib/quiz-flow";
 import { WelcomeContent } from "@/components/welcome/welcome-content";
 
 export const metadata: Metadata = {
-  title: "Welcome — Vyrek",
+  title: "Welcome. Vyrek",
   description: "Your Vyrek trial is live. Day 1 starts tomorrow.",
   robots: { index: false, follow: false },
 };
 
 /**
- * Welcome page — confirms the Stripe trial signup completed. Server-side
+ * Welcome page, confirms the Stripe trial signup completed. Server-side
  * verifies session_id (anyone hitting /welcome without a valid session_id
  * gets redirected to /pricing).
  */
@@ -31,7 +31,7 @@ export default async function WelcomePage({
   let programmeName = "First Race";
 
   // Verify the session via Stripe. If Stripe isn't configured (no env vars)
-  // we still render the page with sensible defaults — the trial dates
+  // we still render the page with sensible defaults, the trial dates
   // become approximate but the user lands somewhere coherent.
   try {
     const s = stripe();
@@ -46,8 +46,7 @@ export default async function WelcomePage({
     if (session.subscription) {
       const subId =
         typeof session.subscription === "string"
-          ? session.subscription
-          : session.subscription.id;
+          ? session.subscription: session.subscription.id;
       const sub = await s.subscriptions.retrieve(subId);
       if (sub.trial_end) {
         trialEndsAt = new Date(sub.trial_end * 1000);
@@ -66,7 +65,7 @@ export default async function WelcomePage({
     }
   } catch (err) {
     // Stripe not configured or session lookup failed. We still render the
-    // welcome page rather than blocking the user — the email + plan have
+    // welcome page rather than blocking the user, the email + plan have
     // already been queued.
      
     console.warn("[/welcome] stripe session lookup failed", err);

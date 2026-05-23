@@ -26,7 +26,7 @@ function readServe(): boolean {
 
 /**
  * Tells callers whether to skip heavy assets (hero video, autoplaying media).
- * SSR-safe — defaults to "serve" until we know otherwise so the markup is
+ * SSR-safe, defaults to "serve" until we know otherwise so the markup is
  * deterministic; the hook upgrades on the client via `useSyncExternalStore`.
  */
 export function useShouldServeHeavyAssets(): boolean {

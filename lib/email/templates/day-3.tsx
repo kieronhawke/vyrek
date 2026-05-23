@@ -52,7 +52,7 @@ export function Day3Email() {
             }}
           >
             Most members say day 3 is the hardest. The legs feel it. The plan
-            doesn&apos;t care. Keep going — you&apos;ve got this.
+            doesn&apos;t care. Keep going, you&apos;ve got this.
           </Text>
 
           <hr style={hrRule} />

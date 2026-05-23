@@ -36,11 +36,11 @@ const INJURY_LABEL: Record<string, string> = {
   knee: "Knee",
   shoulder: "Shoulder",
   "achilles-calf": "Achilles / calf",
-  other: "Other — noted in app",
+  other: "Other, noted in app",
 };
 
 /**
- * Screen 14 — a review, not a question. Renders the user's answers in the
+ * Screen 14, a review, not a question. Renders the user's answers in the
  * editorial style of a training journal, plus a single CTA into the email
  * gate. Uses the Phase B2 §3.4 date helpers.
  */

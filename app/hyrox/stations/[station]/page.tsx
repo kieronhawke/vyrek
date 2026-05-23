@@ -82,7 +82,7 @@ export default async function StationPage({
     ],
   };
 
-  // HowTo schema — the technique cues become steps.
+  // HowTo schema, the technique cues become steps.
   const howToLd = {
     "@context": "https://schema.org",
     "@type": "HowTo",
@@ -297,8 +297,8 @@ export default async function StationPage({
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {(() => {
                 const idx = STATIONS.findIndex((x) => x.slug === s.slug);
-                const prev = idx > 0 ? STATIONS[idx - 1] : null;
-                const next = idx < STATIONS.length - 1 ? STATIONS[idx + 1] : null;
+                const prev = idx > 0 ? STATIONS[idx - 1]: null;
+                const next = idx < STATIONS.length - 1 ? STATIONS[idx + 1]: null;
                 return (
                   <>
                     {prev ? (
@@ -313,7 +313,7 @@ export default async function StationPage({
                           {prev.name}
                         </p>
                       </Link>
-                    ) : (
+                    ): (
                       <span />
                     )}
                     {next ? (
@@ -328,7 +328,7 @@ export default async function StationPage({
                           {next.name}
                         </p>
                       </Link>
-                    ) : null}
+                    ): null}
                   </>
                 );
               })()}

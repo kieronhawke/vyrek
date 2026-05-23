@@ -1,5 +1,5 @@
 /**
- * Topic hubs — audience-cluster landing pages that pull together
+ * Topic hubs, audience-cluster landing pages that pull together
  * relevant blog posts, plans, station guides, gear, and cities.
  *
  * These are pure curation: the data references already-published
@@ -15,7 +15,7 @@ export type TopicHub = {
   eyebrow: string;
   hook: string;
   intro: string[];
-  /** Curated content pulls — references real URLs. */
+  /** Curated content pulls, references real URLs. */
   blogSlugs: string[]; // matches content/blog/{slug}.mdx
   planSlugs: string[]; // matches lib/plan-templates.ts
   stationSlugs?: string[]; // matches lib/hyrox-stations.ts
@@ -26,7 +26,7 @@ export type TopicHub = {
 export const TOPIC_HUBS: TopicHub[] = [
   {
     slug: "womens-hyrox",
-    title: "Hyrox for women — programmes, stations, race-day",
+    title: "Hyrox for women, programmes, stations, race-day",
     eyebrow: "Topic · Women's Hyrox",
     hook: "Personalised Hyrox training for women athletes. Calibrated loads, race-specific work, programmes for first-timers to Pro qualifiers.",
     intro: [
@@ -49,17 +49,17 @@ export const TOPIC_HUBS: TopicHub[] = [
       },
       {
         q: "Should women train differently from men for Hyrox?",
-        a: "Structurally no — periodisation is the same. The differences are calibrated loads and a slight shift in strength-to-running ratio depending on your baseline. Vyrek's quiz handles this calibration automatically.",
+        a: "Structurally no, periodisation is the same. The differences are calibrated loads and a slight shift in strength-to-running ratio depending on your baseline. Vyrek's quiz handles this calibration automatically.",
       },
     ],
   },
   {
     slug: "masters-hyrox",
-    title: "Masters Hyrox — over-40 programmes and recovery-first training",
+    title: "Masters Hyrox, over-40 programmes and recovery-first training",
     eyebrow: "Topic · Masters (40+)",
     hook: "Sustainable Hyrox programming for masters athletes. More deloads, more Zone 2, joint-aware substitutions, real recovery built in.",
     intro: [
-      "Hyrox is the same race at 30, 40, 50, or 60 — but the recovery rate is not the same. Masters programming uses the standard 12-week structure with three differences: more deload weeks, more aerobic volume at Zone 2, and tighter rules around high-impact movements when you flag a relevant injury history.",
+      "Hyrox is the same race at 30, 40, 50, or 60, but the recovery rate is not the same. Masters programming uses the standard 12-week structure with three differences: more deload weeks, more aerobic volume at Zone 2, and tighter rules around high-impact movements when you flag a relevant injury history.",
       "You can finish Hyrox over 40, over 50, over 60. The athletes who do it consistently are the ones who treat recovery as part of the training, not a luxury.",
     ],
     blogSlugs: [
@@ -82,17 +82,17 @@ export const TOPIC_HUBS: TopicHub[] = [
       },
       {
         q: "Are there Hyrox masters divisions?",
-        a: "Yes — 40-44, 45-49, 50-54, 55-59, and 60+ for both men's and women's. Standards are identical to open; the rankings are split by age bracket.",
+        a: "Yes. 40-44, 45-49, 50-54, 55-59, and 60+ for both men's and women's. Standards are identical to open; the rankings are split by age bracket.",
       },
     ],
   },
   {
     slug: "doubles-hyrox",
-    title: "Hyrox doubles — paired training, splits, and handoff strategy",
+    title: "Hyrox doubles, paired training, splits, and handoff strategy",
     eyebrow: "Topic · Doubles",
     hook: "Hyrox doubles is the fastest-growing division. Different race, different strategy. Programmes, splits, partner-pacing, handoff drills.",
     intro: [
-      "Hyrox doubles isn't two solo races — it's its own race with paired running, split station work, and handoff strategy. Teams that train together for 8+ weeks consistently beat better-matched pairs that meet at the start line.",
+      "Hyrox doubles isn't two solo races, it's its own race with paired running, split station work, and handoff strategy. Teams that train together for 8+ weeks consistently beat better-matched pairs that meet at the start line.",
       "Vyrek's Doubles programme is designed for pairs training together most of the time, with solo-mode sessions for the weeks you can't sync up.",
     ],
     blogSlugs: ["hyrox-doubles-strategy", "hyrox-transitions-and-flow", "hyrox-race-day-warm-up"],
@@ -105,21 +105,21 @@ export const TOPIC_HUBS: TopicHub[] = [
       },
       {
         q: "Do both partners need to be the same fitness level for doubles?",
-        a: "Helps, but isn't required. A bigger fitness gap requires more strategic station splits — the stronger athlete absorbs more of the load on their stronger stations. Running pace is set by the slower partner.",
+        a: "Helps, but isn't required. A bigger fitness gap requires more strategic station splits, the stronger athlete absorbs more of the load on their stronger stations. Running pace is set by the slower partner.",
       },
       {
         q: "How long should I train as a doubles team before racing?",
-        a: "8-12 weeks minimum for the partnership to feel rehearsed. The handoffs, pacing decisions, and station splits all need repetition under fatigue — not just talked through.",
+        a: "8-12 weeks minimum for the partnership to feel rehearsed. The handoffs, pacing decisions, and station splits all need repetition under fatigue, not just talked through.",
       },
     ],
   },
   {
     slug: "first-race-hyrox",
-    title: "First Hyrox — your complete preparation guide",
+    title: "First Hyrox, your complete preparation guide",
     eyebrow: "Topic · First Race",
     hook: "Everything for your first Hyrox. Programme, gear, race-day, the stations, the schedule, the warm-up, the mistakes to avoid.",
     intro: [
-      "Vyrek's First Race programme is built for someone who's never raced Hyrox and may not have done a CrossFit-style workout before. The 12 weeks build aerobic capacity, station competence, and race-pattern familiarity — in that order.",
+      "Vyrek's First Race programme is built for someone who's never raced Hyrox and may not have done a CrossFit-style workout before. The 12 weeks build aerobic capacity, station competence, and race-pattern familiarity, in that order.",
       "You don't need to be a sub-25 runner. You don't need a CrossFit gym. You need 4 hours a week and a willingness to follow a plan written by Elite 15 coaches.",
     ],
     blogSlugs: [
@@ -146,11 +146,11 @@ export const TOPIC_HUBS: TopicHub[] = [
     faqs: [
       {
         q: "Is 12 weeks enough for my first Hyrox?",
-        a: "Yes — for anyone with a basic running and strength baseline. If you can run 5 km without stopping and squat your bodyweight, 12 weeks is plenty for a first-time finish in the 100-110 minute range.",
+        a: "Yes, for anyone with a basic running and strength baseline. If you can run 5 km without stopping and squat your bodyweight, 12 weeks is plenty for a first-time finish in the 100-110 minute range.",
       },
       {
         q: "Do I need a CrossFit gym to train for Hyrox?",
-        a: "No. Vyrek programmes adapt to your equipment — full commercial gym, standard PureGym/Nuffield-style facility, or home setup. The quiz asks what you have access to.",
+        a: "No. Vyrek programmes adapt to your equipment, full commercial gym, standard PureGym/Nuffield-style facility, or home setup. The quiz asks what you have access to.",
       },
       {
         q: "What's a realistic first-Hyrox finish time?",

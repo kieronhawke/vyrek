@@ -3,7 +3,7 @@
 import { ContinueButton } from "@/components/quiz-v3/continue-button";
 
 /**
- * Screen 3 — Reassurance interstitial #1. Full-bleed portrait, testimonial,
+ * Screen 3. Reassurance interstitial #1. Full-bleed portrait, testimonial,
  * stat, then Continue. Marchon-verified pattern, Vyrek-themed.
  */
 export function ReassuranceScreen1({ onContinue }: { onContinue: () => void }) {

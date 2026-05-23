@@ -32,7 +32,7 @@ import { PartnerScreen } from "@/components/quiz-v3/screens/partner";
 import { InjuriesScreen } from "@/components/quiz-v3/screens/injuries";
 import { validateAccountForm } from "@/components/quiz-v3/screens/account-creation";
 
-// Heavy screens that pull in third-party JS (react-day-picker, gsap) — defer
+// Heavy screens that pull in third-party JS (react-day-picker, gsap), defer
 // them so the initial /quiz bundle stays light. Each is reached only after
 // the user has spent at least a few seconds on earlier screens, so the
 // network fetch overlaps with reading the previous screen.
@@ -224,8 +224,7 @@ function QuizV3Inner() {
   );
   const screens = useMemo(() => visibleScreens(answers), [answers]);
   const screenIndex = state
-    ? Math.max(0, Math.min(state.screenIndex, screens.length - 1))
-    : 0;
+    ? Math.max(0, Math.min(state.screenIndex, screens.length - 1)): 0;
   const current = screens[screenIndex];
 
   // Submit / loading flags for account creation.
@@ -233,7 +232,7 @@ function QuizV3Inner() {
   const [accountError, setAccountError] = useState<string | null>(null);
 
   // Track when the current screen mounted, for `time_on_screen_ms`.
-  // Initialised to 0 and seeded in the effect below on first commit — the only
+  // Initialised to 0 and seeded in the effect below on first commit, the only
   // readers are event handlers further down, which cannot fire before mount.
   const screenMountTimeRef = useRef<number>(0);
   useEffect(() => {
@@ -389,8 +388,7 @@ function QuizV3Inner() {
               ...state.answers,
               raceDate:
                 state.answers.raceDate instanceof Date
-                  ? state.answers.raceDate.toISOString()
-                  : state.answers.raceDate,
+                  ? state.answers.raceDate.toISOString(): state.answers.raceDate,
             },
           },
         }),
@@ -398,7 +396,7 @@ function QuizV3Inner() {
 
       if (!res.ok) {
         const detail = await res.text().catch(() => "");
-        // Don't block the funnel — the auth user already exists and the
+        // Don't block the funnel, the auth user already exists and the
         // quiz state is in localStorage. Log + advance.
          
         console.error("[account/create] failed", res.status, detail);
@@ -443,7 +441,7 @@ function QuizV3Inner() {
   if (!hydrated || !state || !current) {
     // Pre-hydration / cold-load fallback. Shows a proper editorial frame
     // (image + headline + animated dots) instead of a dead "One moment"
-    // string — matters for slow connections, link previews, and crawlers.
+    // string, matters for slow connections, link previews, and crawlers.
     return (
       <main className="relative isolate flex min-h-svh flex-col overflow-hidden bg-vyrek-base">
         <div aria-hidden className="absolute inset-0 -z-10">
@@ -506,7 +504,7 @@ function QuizV3Inner() {
   }
 
   // ── Question screens (in shell)
-  const backHandler = screenIndex > 0 ? back : undefined;
+  const backHandler = screenIndex > 0 ? back: undefined;
 
   if (current.kind === "primary-intent") {
     const intent = state.answers.intent ?? [];
@@ -794,8 +792,7 @@ function QuizV3Inner() {
             setAnswer("equipment", (curr) => {
               const arr = curr ?? [];
               return arr.includes(v)
-                ? arr.filter((x) => x !== v)
-                : [...arr, v];
+                ? arr.filter((x) => x !== v): [...arr, v];
             });
           }}
         />
@@ -917,7 +914,7 @@ function QuizV3Inner() {
     );
   }
 
-  // Exhaustiveness — TypeScript should have narrowed everything above.
+  // Exhaustiveness. TypeScript should have narrowed everything above.
   // If we reach here, a new kind was added without a handler.
    
   console.error("[quiz-v3] unhandled screen kind", current.kind);

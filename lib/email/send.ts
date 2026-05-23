@@ -43,7 +43,7 @@ async function send(args: {
     if (process.env.NODE_ENV !== "production") {
        
       console.info(
-        "[email] RESEND_API_KEY not set — skipping send to",
+        "[email] RESEND_API_KEY not set, skipping send to",
         args.to,
         "·",
         args.subject,
@@ -58,8 +58,7 @@ async function send(args: {
       subject: args.subject,
       react: args.react,
       scheduledAt: args.scheduledAt
-        ? args.scheduledAt.toISOString()
-        : undefined,
+        ? args.scheduledAt.toISOString(): undefined,
     });
     if (error) {
        
@@ -72,7 +71,7 @@ async function send(args: {
     console.error("[email] resend send threw", err);
     return {
       ok: false,
-      reason: err instanceof Error ? err.message : "unknown",
+      reason: err instanceof Error ? err.message: "unknown",
     };
   }
 }
@@ -93,7 +92,7 @@ export async function sendWelcomeEmail(args: {
     }),
   });
 
-  // Schedule the trial drip — Resend supports scheduledAt natively.
+  // Schedule the trial drip. Resend supports scheduledAt natively.
   const now = Date.now();
   const drip = [
     {
@@ -116,7 +115,7 @@ export async function sendWelcomeEmail(args: {
       scheduledAt: new Date(now + 5 * 24 * 60 * 60 * 1000),
     },
     {
-      subject: "Tomorrow: £4.99.",
+      subject: "Tomorrow: £8.99.",
       react: Day6Email(),
       scheduledAt: new Date(now + 6 * 24 * 60 * 60 * 1000),
     },

@@ -8,7 +8,7 @@
  * (when VYREK_BOT_AUTOPUBLISH=true).
  *
  * Templates use only the structured data already in `HYROX_EVENTS` plus
- * a few short hand-written copy fragments per milestone. No LLM call —
+ * a few short hand-written copy fragments per milestone. No LLM call,
  * deterministic output that a human editor can polish in 60 seconds.
  */
 
@@ -40,7 +40,7 @@ export type CoveragePost = {
     seoDescription: string;
     faqs?: { q: string; a: string }[];
   };
-  /** Markdown/MDX body (no frontmatter — added by writer). */
+  /** Markdown/MDX body (no frontmatter, added by writer). */
   body: string;
 };
 
@@ -103,9 +103,9 @@ export function generateCoveragePost(
   > = {
     "T-14": () => ({
       frontmatter: {
-        title: `${event.name}: two weeks out — what to dial in this week`,
+        title: `${event.name}: two weeks out, what to dial in this week`,
         slug: `${event.slug}-two-weeks-out`,
-        excerpt: `Two weeks to ${event.name}. The training block is mostly behind you — these are the seven things to lock down now.`,
+        excerpt: `Two weeks to ${event.name}. The training block is mostly behind you, these are the seven things to lock down now.`,
         category: "race-day",
         tags: [event.venue.city, "race week", "taper", "preparation"],
         publishedAt,
@@ -113,7 +113,7 @@ export function generateCoveragePost(
         author: "james-wright",
         heroImage: "/media/images/programme-pro.jpg",
         heroAlt: `${event.name} preview`,
-        seoTitle: `${event.name} — two weeks out · prep checklist`,
+        seoTitle: `${event.name}, two weeks out · prep checklist`,
         seoDescription: `Two-week prep for ${event.name}. What to taper, what to test, what to confirm before race day.`,
         faqs: [
           {
@@ -129,7 +129,7 @@ export function generateCoveragePost(
       body: [
         `Two weeks to ${event.name}. Whatever fitness you have, you have. The job between now and the start line is to deliver it intact.`,
         ``,
-        `This is the second-to-last week of the build. By next Monday you should be in full taper — volume cut by ~40%, intensity maintained. Here's what to lock down now.`,
+        `This is the second-to-last week of the build. By next Monday you should be in full taper, volume cut by ~40%, intensity maintained. Here's what to lock down now.`,
         ``,
         `## 1. Confirm the logistics`,
         ``,
@@ -144,7 +144,7 @@ export function generateCoveragePost(
         ``,
         `## 3. Taper-week is not zero-week`,
         ``,
-        `Cut volume by ~40% this week, then another 30% next week. **Keep intensity** — two short race-pace sessions and one easy long aerobic. The fitness banks. The fatigue clears.`,
+        `Cut volume by ~40% this week, then another 30% next week. **Keep intensity**, two short race-pace sessions and one easy long aerobic. The fitness banks. The fatigue clears.`,
         ``,
         `## 4. Sleep this week and next`,
         ``,
@@ -156,7 +156,7 @@ export function generateCoveragePost(
         ``,
         `## 6. Race-day plan on paper`,
         ``,
-        `Write the warm-up timeline (we have a [90-minute protocol](/blog/hyrox-race-day-warm-up)), your pacing strategy (goal 1 km pace + station splits — use the [pace calculator](/tools/pace-calculator)), and your wall-ball set scheme (most racers break to 25-25-25-25).`,
+        `Write the warm-up timeline (we have a [90-minute protocol](/blog/hyrox-race-day-warm-up)), your pacing strategy (goal 1 km pace + station splits, use the [pace calculator](/tools/pace-calculator)), and your wall-ball set scheme (most racers break to 25-25-25-25).`,
         ``,
         `## 7. Nothing new`,
         ``,
@@ -170,9 +170,9 @@ export function generateCoveragePost(
 
     "T-7": () => ({
       frontmatter: {
-        title: `${event.name}: 7 days out — final-week briefing`,
+        title: `${event.name}: 7 days out, final-week briefing`,
         slug: `${event.slug}-seven-days-out`,
-        excerpt: `Seven days to ${event.name}. Full taper week. Here's exactly what to do — and what not to do — between now and the start gun.`,
+        excerpt: `Seven days to ${event.name}. Full taper week. Here's exactly what to do, and what not to do, between now and the start gun.`,
         category: "race-day",
         tags: [event.venue.city, "race week", "taper"],
         publishedAt,
@@ -180,7 +180,7 @@ export function generateCoveragePost(
         author: "james-wright",
         heroImage: "/media/images/programme-sub-90.jpg",
         heroAlt: `Final week prep for ${event.name}`,
-        seoTitle: `${event.name} — final week prep`,
+        seoTitle: `${event.name}, final week prep`,
         seoDescription: `7-day countdown to ${event.name}. Taper structure, fuelling, sleep, kit check, race-morning protocol.`,
         faqs: [
           {
@@ -202,15 +202,15 @@ export function generateCoveragePost(
         ``,
         `Cut training volume by 50% vs your normal week. **Keep intensity in two short sessions:** Tuesday a 3 × 800 m at race pace, Thursday a 20-minute Hyrox-pattern (run + one station, run + one station). One easy 30-minute Zone 2 jog Wednesday. Everything else is rest.`,
         ``,
-        `## Thursday + Friday — carb-load`,
+        `## Thursday + Friday, carb-load`,
         ``,
         `Two days of elevated carbs: 8-10 g per kg of bodyweight per day. Familiar foods. No alcohol. Hydrate steadily.`,
         ``,
-        `## Saturday — travel + arrival`,
+        `## Saturday, travel + arrival`,
         ``,
         `If you're travelling to ${event.venue.city}, do it Saturday not Sunday morning. Drop bags at the hotel, walk the venue from the outside if it's open, find a familiar dinner spot. Bed by 9 PM.`,
         ``,
-        `## Race morning — the 90-minute protocol`,
+        `## Race morning, the 90-minute protocol`,
         ``,
         `Use our [full 90-minute warm-up protocol](/blog/hyrox-race-day-warm-up). The five blocks:`,
         ``,
@@ -235,7 +235,7 @@ export function generateCoveragePost(
         ``,
         `---`,
         ``,
-        `**One more week.** If you've followed a Vyrek programme to this point, the taper is already built into your plan. If you haven't — [start your next race build now](/quiz). The next race is always closer than you think.`,
+        `**One more week.** If you've followed a Vyrek programme to this point, the taper is already built into your plan. If you haven't. [start your next race build now](/quiz). The next race is always closer than you think.`,
       ].join("\n"),
     }),
 
@@ -255,7 +255,7 @@ export function generateCoveragePost(
         seoDescription: `Race-day briefing for ${event.name}: kit, breakfast, arrival time, warm-up timing, mental cues.`,
       },
       body: [
-        `${event.name} starts tomorrow. Here's the briefing — what to pack, what to eat, when to arrive.`,
+        `${event.name} starts tomorrow. Here's the briefing, what to pack, what to eat, when to arrive.`,
         ``,
         `## Pack tonight`,
         ``,
@@ -305,7 +305,7 @@ export function generateCoveragePost(
       frontmatter: {
         title: `${event.name} recap: what went down`,
         slug: `${event.slug}-recap`,
-        excerpt: `${event.name} is done. Early recap — division winners, conditions on the day, standout splits. (We'll update with full results as they land.)`,
+        excerpt: `${event.name} is done. Early recap, division winners, conditions on the day, standout splits. (We'll update with full results as they land.)`,
         category: "race-day",
         tags: [event.venue.city, "race recap", "results"],
         publishedAt,
@@ -319,7 +319,7 @@ export function generateCoveragePost(
       body: [
         `${event.name} is in the books. Here's the early recap.`,
         ``,
-        `*Full results, splits, and athlete commentary land in the next 48 hours. We'll update this post as data arrives — bookmark and come back.*`,
+        `*Full results, splits, and athlete commentary land in the next 48 hours. We'll update this post as data arrives, bookmark and come back.*`,
         ``,
         `## The venue`,
         ``,
@@ -330,13 +330,13 @@ export function generateCoveragePost(
         `- **Open winners' times.** Anything under 60 minutes in men's open or 70 minutes in women's open is podium-grade. We'll publish exact splits when official.`,
         `- **Pro division qualification times.** This is where the Worlds qualification race plays out.`,
         `- **Doubles records.** ${event.venue.city} has produced some of the fastest UK doubles times.`,
-        `- **First-race finishers.** Always the biggest cohort. The story isn't the elite top 10 — it's the 90-minute finisher whose first build worked.`,
+        `- **First-race finishers.** Always the biggest cohort. The story isn't the elite top 10, it's the 90-minute finisher whose first build worked.`,
         ``,
         `## Divisions racing today`,
         ``,
         event.divisions.map((d) => `- ${d}`).join("\n"),
         ``,
-        `## If you raced — what's next`,
+        `## If you raced, what's next`,
         ``,
         `Two days of complete rest. Walk only. Eat. Sleep.`,
         ``,
@@ -344,7 +344,7 @@ export function generateCoveragePost(
         ``,
         `Day 5-7: easy Zone 2 runs back in. No intervals. No stations.`,
         ``,
-        `Week 2 post-race: back to your plan. If your race went well and you're targeting another, [your next 12-week build starts on the next Tuesday](/quiz). If it didn't go well, run the [breaking-a-plateau diagnostic](/blog/breaking-hyrox-plateau) — most race-day disappointments trace back to one specific limiter.`,
+        `Week 2 post-race: back to your plan. If your race went well and you're targeting another, [your next 12-week build starts on the next Tuesday](/quiz). If it didn't go well, run the [breaking-a-plateau diagnostic](/blog/breaking-hyrox-plateau), most race-day disappointments trace back to one specific limiter.`,
         ``,
         `## If you spectated`,
         ``,
@@ -360,7 +360,7 @@ export function generateCoveragePost(
       frontmatter: {
         title: `${event.name}: 4 patterns we noticed`,
         slug: `${event.slug}-patterns`,
-        excerpt: `A week on from ${event.name}. The four patterns that show up across the results — what to learn for your next race.`,
+        excerpt: `A week on from ${event.name}. The four patterns that show up across the results, what to learn for your next race.`,
         category: "training",
         tags: [event.venue.city, "race lessons", "training"],
         publishedAt,
@@ -368,49 +368,48 @@ export function generateCoveragePost(
         author: "james-wright",
         heroImage: "/media/images/coach-james-wright.jpg",
         heroAlt: `${event.name} lessons`,
-        seoTitle: `${event.name} — 4 patterns we noticed`,
+        seoTitle: `${event.name}. 4 patterns we noticed`,
         seoDescription: `One week on from ${event.name}. Four patterns from the results: pacing, station drop-off, transitions, race-day kit.`,
       },
       body: [
         `${event.name} happened a week ago. Now that the results are clean and the post-race posts have settled, here are the four patterns we noticed across the field.`,
         ``,
-        `## Pattern 1 — Pacing kills the back half`,
+        `## Pattern 1. Pacing kills the back half`,
         ``,
-        `As usual, the gap between first-kilometre pace and last-kilometre pace correlated almost perfectly with finishing position. Athletes who positive-split by 45+ seconds per km finished in the back third. Athletes who held within 15 seconds finished in the top half — regardless of absolute fitness.`,
+        `As usual, the gap between first-kilometre pace and last-kilometre pace correlated almost perfectly with finishing position. Athletes who positive-split by 45+ seconds per km finished in the back third. Athletes who held within 15 seconds finished in the top half, regardless of absolute fitness.`,
         ``,
         `**Lesson:** the [breaking-a-plateau diagnostic](/blog/breaking-hyrox-plateau) is the right starting point for most second-time racers. Pacing discipline is free time.`,
         ``,
-        `## Pattern 2 — Sled push remains the leveller`,
+        `## Pattern 2. Sled push remains the leveller`,
         ``,
-        `Among finishers of similar overall time, the variance on sled push was massive — 90 seconds vs 3 minutes for the same total time bracket. The athletes who pushed the sled fast had clean technique (low, long, locked); the slow ones tried to muscle it.`,
+        `Among finishers of similar overall time, the variance on sled push was massive. 90 seconds vs 3 minutes for the same total time bracket. The athletes who pushed the sled fast had clean technique (low, long, locked); the slow ones tried to muscle it.`,
         ``,
         `**Lesson:** [the sled push technique guide](/hyrox/stations/sled-push) is non-negotiable reading.`,
         ``,
-        `## Pattern 3 — Wall balls broke more races than expected`,
+        `## Pattern 3. Wall balls broke more races than expected`,
         ``,
         `${event.venue.city} had unusually warm conditions for the final station for many of the later waves. Athletes who'd planned to go unbroken cracked at rep 40-60. The ones who pre-planned a 25-25-25-25 break came in noticeably stronger.`,
         ``,
         `**Lesson:** plan your wall-ball set scheme before the gun. [Read more](/hyrox/stations/wall-balls).`,
         ``,
-        `## Pattern 4 — Transitions cost more than people think`,
+        `## Pattern 4. Transitions cost more than people think`,
         ``,
-        `Watching the broadcast back, the gap between athletes of similar fitness was often in the *seconds between* — stations and runs. Athletes who didn't pause at station entry, who walk-jogged the first 20m after stations, banked 60-90 seconds vs those who stopped and reset.`,
+        `Watching the broadcast back, the gap between athletes of similar fitness was often in the *seconds between*, stations and runs. Athletes who didn't pause at station entry, who walk-jogged the first 20m after stations, banked 60-90 seconds vs those who stopped and reset.`,
         ``,
         `**Lesson:** the [transitions guide](/blog/hyrox-transitions-and-flow) covers this in depth.`,
         ``,
         `## What to do this week`,
         ``,
-        `If you raced and your finish disappointed you, take the [plateau diagnostic](/blog/breaking-hyrox-plateau) honestly. If you raced and want to chase a sharper time, your next 12-week build starts next Tuesday — [start your plan](/quiz).`,
+        `If you raced and your finish disappointed you, take the [plateau diagnostic](/blog/breaking-hyrox-plateau) honestly. If you raced and want to chase a sharper time, your next 12-week build starts next Tuesday. [start your plan](/quiz).`,
         ``,
-        `If you didn't race and watching this one made you want to — pick the next UK event from the [calendar](/hyrox/events) and start backwards from there.`,
+        `If you didn't race and watching this one made you want to, pick the next UK event from the [calendar](/hyrox/events) and start backwards from there.`,
       ].join("\n"),
     }),
   };
 
   const partial = generators[milestone]();
   return {
-    slug: partial.frontmatter.slug,
-    ...partial,
+    slug: partial.frontmatter.slug,...partial,
   };
 }
 
@@ -432,16 +431,13 @@ export function postToMdx(post: CoveragePost): string {
     `heroImage: ${JSON.stringify(fm.heroImage)}`,
     `heroAlt: ${JSON.stringify(fm.heroAlt)}`,
     `seoTitle: ${JSON.stringify(fm.seoTitle)}`,
-    `seoDescription: ${JSON.stringify(fm.seoDescription)}`,
-    ...(fm.faqs && fm.faqs.length
+    `seoDescription: ${JSON.stringify(fm.seoDescription)}`,...(fm.faqs && fm.faqs.length
       ? [
-          "faqs:",
-          ...fm.faqs.flatMap((f) => [
+          "faqs:",...fm.faqs.flatMap((f) => [
             `  - q: ${JSON.stringify(f.q)}`,
             `    a: ${JSON.stringify(f.a)}`,
           ]),
-        ]
-      : []),
+        ]: []),
     "---",
     "",
   ].join("\n");

@@ -11,7 +11,7 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "Hyrox compared — CrossFit, Spartan, marathon, triathlon, F45",
+  title: "Hyrox compared. CrossFit, Spartan, marathon, triathlon, F45",
   description:
     "Honest comparisons of Hyrox vs other fitness disciplines. Pick the right race or training programme for you.",
   alternates: { canonical: `${siteUrl()}/compare` },
@@ -34,7 +34,7 @@ export default function CompareIndex() {
             </SplitHeading>
             <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
               Honest comparisons of Hyrox against the other major endurance and
-              hybrid disciplines. Use them to pick the right race — or to make
+              hybrid disciplines. Use them to pick the right race, or to make
               the case to your gym buddy.
             </p>
           </div>

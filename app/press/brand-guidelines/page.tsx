@@ -9,7 +9,7 @@ import { SplitHeading } from "@/components/shared/split-heading";
 export const metadata: Metadata = {
   title: "Brand guidelines",
   description:
-    "Vyrek brand guidelines — wordmark, monogram, palette, typography, tone of voice.",
+    "Vyrek brand guidelines, wordmark, monogram, palette, typography, tone of voice.",
   robots: { index: true, follow: true },
 };
 
@@ -18,7 +18,7 @@ const PALETTE = [
   {
     name: "Vyrek Elevated",
     hex: "#141414",
-    note: "Cards, panels, sheets — one notch up from base.",
+    note: "Cards, panels, sheets, one notch up from base.",
   },
   {
     name: "Vyrek Accent",
@@ -40,7 +40,7 @@ const PALETTE = [
 const DOS = [
   "Use the accent orange for emphasis, not decoration. One accent per view.",
   "Set body type in Inter. Set display headings in Oswald 700.",
-  "Keep generous negative space — Vyrek's voice is restrained, not crowded.",
+  "Keep generous negative space. Vyrek's voice is restrained, not crowded.",
   "Refer to athletes as athletes. Members as members. Programmes as programmes (UK spelling).",
 ];
 
@@ -48,7 +48,7 @@ const DONTS = [
   "Don't recolour the wordmark. The monogram is black or white only.",
   "Don't pair Vyrek with a second accent colour. Add a tint of the same orange instead.",
   "Don't soften the voice with marketing fluff. No 'unleash your potential', no 'crush your goals'.",
-  "Don't claim outcomes Vyrek can't verify — finishing times, weight loss, transformations.",
+  "Don't claim outcomes Vyrek can't verify, finishing times, weight loss, transformations.",
 ];
 
 export default function BrandGuidelinesPage() {
@@ -68,14 +68,13 @@ export default function BrandGuidelinesPage() {
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
               The short version. Everything a journalist, partner, or
               collaborator needs to render Vyrek correctly. Full identity pack
-              available on request — email{" "}
+              available on request, email{" "}
               <a
                 href="mailto:press@vyrek.com"
                 className="text-vyrek-text underline-offset-4 hover:underline"
               >
                 press@vyrek.com
-              </a>
-              .
+              </a>.
             </p>
 
             <section className="mt-16 border-t border-vyrek-border-subtle pt-10">
@@ -86,7 +85,7 @@ export default function BrandGuidelinesPage() {
               <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
                 The wordmark spells VYREK in Oswald 700 with a –2% letter-spacing
                 adjustment. Use it on press articles, partner pages, and at
-                widths above 96px. The monogram is the &ldquo;V&rdquo; mark on its own —
+                widths above 96px. The monogram is the &ldquo;V&rdquo; mark on its own,
                 use it for app icons, social avatars, favicons, and watermarks.
               </p>
               <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -131,7 +130,7 @@ export default function BrandGuidelinesPage() {
               </h2>
               <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
                 Vyrek is a dark interface with a single warm accent. We don&apos;t
-                pair the orange with a second hue — secondary emphasis comes
+                pair the orange with a second hue, secondary emphasis comes
                 from value (lighter or darker) or from saturation tints of the
                 same accent.
               </p>
@@ -170,7 +169,7 @@ export default function BrandGuidelinesPage() {
               <dl className="mt-6 space-y-4">
                 <div className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-5">
                   <dt className="font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-                    Display — Oswald 700
+                    Display. Oswald 700
                   </dt>
                   <dd className="mt-2 font-display text-3xl font-bold uppercase leading-[0.95] tracking-[-0.02em] text-vyrek-text md:text-4xl">
                     Train like a Hyrox athlete.
@@ -178,7 +177,7 @@ export default function BrandGuidelinesPage() {
                 </div>
                 <div className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-5">
                   <dt className="font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-                    Body — Inter 400–700
+                    Body. Inter 400-700
                   </dt>
                   <dd className="mt-2 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
                     The workhorse for everything that isn&apos;t a heading. We
@@ -188,7 +187,7 @@ export default function BrandGuidelinesPage() {
                 </div>
                 <div className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-5">
                   <dt className="font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-                    Mono — Geist Mono 500
+                    Mono. Geist Mono 500
                   </dt>
                   <dd className="mt-2 font-mono text-sm uppercase tracking-[0.22em] text-vyrek-text">
                     [ TECHNICAL MARKS · LABELS · TAGS ]
@@ -203,7 +202,7 @@ export default function BrandGuidelinesPage() {
                 Direct. UK English. No hype.
               </h2>
               <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
-                Picture a coach&apos;s notebook — short lines, factual,
+                Picture a coach&apos;s notebook, short lines, factual,
                 slightly understated. Use specific numbers where they exist.
                 Avoid superlatives. Spell things the British way (programme,
                 colour, optimise).

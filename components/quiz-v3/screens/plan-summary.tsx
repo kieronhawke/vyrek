@@ -17,7 +17,7 @@ import {
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 /**
- * Screen 14 — Animated plan summary. Staggered reveal proves the system
+ * Screen 14. Animated plan summary. Staggered reveal proves the system
  * worked. Respects prefers-reduced-motion (shows everything immediately).
  */
 export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
@@ -38,7 +38,7 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
     const cta = root.querySelector<HTMLElement>("[data-summary-cta]");
 
     if (prefersReducedMotion) {
-      // Show everything immediately, no animation — no need to load gsap.
+      // Show everything immediately, no animation, no need to load gsap.
       for (const el of lines) {
         el.style.opacity = "1";
         el.style.transform = "none";
@@ -65,10 +65,9 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
     let tl: ReturnType<typeof GsapType.timeline> | null = null;
 
     // Lazy-load gsap so it doesn't bloat the main quiz bundle. The summary
-    // screen is reached towards the end of the funnel — by the time it
+    // screen is reached towards the end of the funnel, by the time it
     // mounts, gsap fetches in parallel with the user reading the summary.
-    import("gsap")
-      .then(({ gsap }) => {
+    import("gsap").then(({ gsap }) => {
         if (cancelled) return;
         // Reset transforms to gsap-managed.
         gsap.set(lines, { opacity: 0, y: 12, clearProps: "transform" });
@@ -113,8 +112,7 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
             "+=0.3",
           );
         }
-      })
-      .catch(() => {
+      }).catch(() => {
         // If gsap fails to load, fall back to a CSS transition so users
         // still see the lines appear rather than a permanently-hidden screen.
         for (const el of lines) {
@@ -136,14 +134,11 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
   }, [prefersReducedMotion]);
 
   const partnerLabel = answers.partner
-    ? PARTNER_LABEL[answers.partner]
-    : "Solo";
+    ? PARTNER_LABEL[answers.partner]: "Solo";
   const locationLabel = answers.location
-    ? LOCATION_LABEL[answers.location]
-    : "Standard commercial gym";
+    ? LOCATION_LABEL[answers.location]: "Standard commercial gym";
   const injuryLabel = answers.injuries
-    ? INJURY_LABEL[answers.injuries]
-    : "No injuries";
+    ? INJURY_LABEL[answers.injuries]: "No injuries";
 
   return (
     <div ref={containerRef}>

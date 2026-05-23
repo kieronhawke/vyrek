@@ -6,9 +6,9 @@ import type { ComponentProps, ReactNode } from "react";
 /**
  * Baseline scroll-trigger for every section (brief Stage spec). Fades in
  * with a 12px Y offset when the element enters the viewport. Honours
- * `prefers-reduced-motion` automatically — Motion checks the media query.
+ * `prefers-reduced-motion` automatically. Motion checks the media query.
  *
- * Use this around major blocks. Don't nest — the inner reveal won't fire
+ * Use this around major blocks. Don't nest, the inner reveal won't fire
  * until both viewports overlap, which produces a stutter.
  */
 export function RevealOnView({

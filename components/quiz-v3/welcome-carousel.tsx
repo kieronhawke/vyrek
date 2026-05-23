@@ -27,8 +27,8 @@ export const WELCOME_SLIDES: WelcomeSlide[] = [
 ];
 
 /**
- * Screen 1 — Instagram-story-style carousel. The only auto-advancing screen
- * in the V3 flow. Swipe, tap, or wait — each slide is 4s, total 12s for the
+ * Screen 1. Instagram-story-style carousel. The only auto-advancing screen
+ * in the V3 flow. Swipe, tap, or wait, each slide is 4s, total 12s for the
  * full sequence. Bottom CTA skips remaining slides.
  */
 export function WelcomeCarousel({
@@ -104,8 +104,7 @@ export function WelcomeCarousel({
                     i === index
                       ? ({
                           animationDuration: `${SLIDE_DURATION_MS}ms`,
-                        } as React.CSSProperties)
-                      : undefined
+                        } as React.CSSProperties): undefined
                   }
                 />
               </span>
@@ -157,8 +156,7 @@ export function WelcomeCarousel({
         </button>
       </div>
 
-      <style jsx>{`
-        .story-bar-active {
+      <style jsx>{`.story-bar-active {
           animation-name: fill-bar;
           animation-timing-function: linear;
           animation-fill-mode: forwards;

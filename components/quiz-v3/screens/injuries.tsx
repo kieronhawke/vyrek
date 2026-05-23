@@ -10,7 +10,7 @@ const OPTIONS: Array<{ value: InjuryValue; label: string }> = [
   { value: "knee", label: "Knee" },
   { value: "shoulder", label: "Shoulder" },
   { value: "achilles-calf", label: "Achilles or calf" },
-  { value: "other", label: "Other — I'll note in the app later" },
+  { value: "other", label: "Other. I'll note in the app later" },
 ];
 
 export function InjuriesScreen({

@@ -36,23 +36,23 @@ export default function CookiesPage() {
       </ProseP>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">vyrek:consent:v1</strong> —
+          <strong className="text-vyrek-text">vyrek:consent:v1</strong>,
           localStorage. Remembers your cookie banner choices so we do not ask
           again every visit.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">vyrek:quiz:state</strong> —
+          <strong className="text-vyrek-text">vyrek:quiz:state</strong>,
           localStorage. Remembers your quiz progress so you can refresh or come
           back later.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">vyrek:customer:uuid</strong> —
+          <strong className="text-vyrek-text">vyrek:customer:uuid</strong>,
           localStorage. A randomised, anonymous identifier for your quiz
           session. Becomes linked to your account when you complete the email
           gate.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">__Host-next-auth.csrf-token</strong> —
+          <strong className="text-vyrek-text">__Host-next-auth.csrf-token</strong>,
           session cookie. CSRF protection on form submissions. Cleared when you
           close the browser.
         </ProseLi>
@@ -66,7 +66,7 @@ export default function CookiesPage() {
       </ProseP>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">ph_*</strong> — PostHog
+          <strong className="text-vyrek-text">ph_*</strong>. PostHog
           analytics. Pseudonymous session and event tracking. EU-hosted, no
           third-party data brokers.
         </ProseLi>
@@ -81,7 +81,7 @@ export default function CookiesPage() {
       <ProseH2>Third-party cookies</ProseH2>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Stripe</strong> — only set during
+          <strong className="text-vyrek-text">Stripe</strong>, only set during
           checkout. Required for card payments to work and for fraud screening.
           Stripe&apos;s cookie policy:{" "}
           <a
@@ -91,11 +91,10 @@ export default function CookiesPage() {
             rel="noreferrer"
           >
             stripe.com/cookies-policy/legal
-          </a>
-          .
+          </a>.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Sanity</strong> — only set on{" "}
+          <strong className="text-vyrek-text">Sanity</strong>, only set on{" "}
           <span className="font-mono text-sm">/studio</span> for content
           editors. Public visitors never see Sanity cookies.
         </ProseLi>
@@ -112,7 +111,7 @@ export default function CookiesPage() {
           Chrome, and Firefox all let you do this.
         </ProseLi>
         <ProseLi>
-          Use private/incognito browsing — most cookies do not persist past
+          Use private/incognito browsing, most cookies do not persist past
           the session.
         </ProseLi>
       </ProseUl>

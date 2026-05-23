@@ -201,7 +201,7 @@ export default async function ComparePage({
               Ready to race?
             </h2>
             <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
-              Three-minute quiz. Dated Week 1 before you pay. £4.99/month.
+              Three-minute quiz. Dated Week 1 before you pay. £8.99/month.
             </p>
             <div className="mt-8">
               <CtaButton href="/quiz" size="lg">

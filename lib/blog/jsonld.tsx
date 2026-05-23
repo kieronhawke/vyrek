@@ -38,10 +38,6 @@ export function organizationJsonLd() {
     logo: `${siteUrl()}/logo-primary.svg`,
     description:
       "Personalised Hyrox training programmes built by Elite 15 athletes.",
-    sameAs: [
-      "https://instagram.com/vyrek",
-      "https://tiktok.com/@vyrek",
-    ],
   };
 }
 

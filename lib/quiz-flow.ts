@@ -1,5 +1,5 @@
 /**
- * Vyrek Quiz V3 — types, programme matching, and date helpers.
+ * Vyrek Quiz V3, types, programme matching, and date helpers.
  *
  * The 15-screen Marchon-Runna hybrid. See /docs/vyrek-quiz-v3-brief.md and
  * /docs/vyrek-quiz-v3-addendum.md for the spec.
@@ -132,7 +132,7 @@ const ONE_DAY_MS = 1000 * 60 * 60 * 24;
  * same day they finish the quiz).
  */
 export function determineStartDate(today: Date = new Date()): Date {
-  const day = today.getDay(); // 0 Sun … 2 Tue … 6 Sat
+  const day = today.getDay(); // 0 Sun ... 2 Tue ... 6 Sat
   const daysUntilTuesday = (2 - day + 7) % 7 || 7;
   const tuesday = new Date(today);
   tuesday.setHours(0, 0, 0, 0);
@@ -166,7 +166,7 @@ export function calculateWeeksUntilRace(
 export type ProgrammeFromUrl = "first-race" | "sub-90" | "doubles" | "pro";
 
 /**
- * `/quiz?intent=first-hyrox` — pre-selects Screen 2 option, doesn't skip
+ * `/quiz?intent=first-hyrox`, pre-selects Screen 2 option, doesn't skip
  * the screen (user still confirms). Maps URL intents into our internal set.
  */
 export function applyIntentPreSelect(
@@ -246,7 +246,7 @@ export const INJURY_LABEL: Record<InjuryValue, string> = {
   knee: "Knee",
   shoulder: "Shoulder",
   "achilles-calf": "Achilles or calf",
-  other: "Other — noted in app",
+  other: "Other, noted in app",
 };
 
 /**

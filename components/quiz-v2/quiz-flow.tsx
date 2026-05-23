@@ -60,8 +60,7 @@ function QuizFlowInner() {
   // Clamp the persisted screen index to the now-visible list. Important
   // because answering an early question can shrink/grow the list.
   const screenIndex = state
-    ? Math.max(0, Math.min(state.screenIndex, screens.length - 1))
-    : 0;
+    ? Math.max(0, Math.min(state.screenIndex, screens.length - 1)): 0;
   const currentScreen: Screen | undefined = screens[screenIndex];
 
   // Local draft state for inputs that need a Continue button.
@@ -83,7 +82,7 @@ function QuizFlowInner() {
     if (currentScreen?.kind === "multi-select") {
       const id = currentScreen.id;
       const existing = answers[id];
-      setMultiDraft(Array.isArray(existing) ? (existing as string[]) : []);
+      setMultiDraft(Array.isArray(existing) ? (existing as string[]): []);
     }
     if (currentScreen?.kind === "calendar") {
       setCalendarDraft(answers.raceDate);
@@ -146,7 +145,7 @@ function QuizFlowInner() {
     setEmailError(null);
     setSubmitting(true);
     try {
-      // /api/email-gate is not implemented yet — fall back silently so the
+      // /api/email-gate is not implemented yet, fall back silently so the
       // flow still routes to the plan reveal. Real wire-up is a follow-on
       // task per the night-of report.
       await fetch("/api/email-gate", {
@@ -158,7 +157,7 @@ function QuizFlowInner() {
           answers: state?.answers,
         }),
       }).catch(() => {
-        // network/route missing is OK in dev — proceed to plan reveal anyway
+        // network/route missing is OK in dev, proceed to plan reveal anyway
       });
       haptic("success");
       router.push("/quiz/done");
@@ -181,7 +180,7 @@ function QuizFlowInner() {
   const oneIndexed = screenIndex + 1;
   const hasAnswers = Object.keys(answers).length > 0;
 
-  // Welcome and interstitials run full-bleed — no shell chrome.
+  // Welcome and interstitials run full-bleed, no shell chrome.
   if (currentScreen.kind === "welcome") {
     return (
       <WelcomeCarousel
@@ -202,7 +201,7 @@ function QuizFlowInner() {
     );
   }
 
-  // Single-select — auto-advance, no Continue button
+  // Single-select, auto-advance, no Continue button
   if (currentScreen.kind === "single-select") {
     const id = currentScreen.id;
     const value = answers[id] as string | undefined;
@@ -210,7 +209,7 @@ function QuizFlowInner() {
       <QuizShell
         currentScreen={oneIndexed}
         totalScreens={total}
-        onBack={screenIndex > 0 ? back : undefined}
+        onBack={screenIndex > 0 ? back: undefined}
         hasAnswers={hasAnswers}
       >
         <ScreenQuestion
@@ -228,13 +227,13 @@ function QuizFlowInner() {
     );
   }
 
-  // Multi-select — Continue button enabled once ≥1 chip on
+  // Multi-select. Continue button enabled once ≥1 chip on
   if (currentScreen.kind === "multi-select") {
     return (
       <QuizShell
         currentScreen={oneIndexed}
         totalScreens={total}
-        onBack={screenIndex > 0 ? back : undefined}
+        onBack={screenIndex > 0 ? back: undefined}
         hasAnswers={hasAnswers}
         footer={
           <button
@@ -257,7 +256,7 @@ function QuizFlowInner() {
             onHaptic={() => haptic("light")}
             onToggle={(v) =>
               setMultiDraft((curr) =>
-                curr.includes(v) ? curr.filter((x) => x !== v) : [...curr, v],
+                curr.includes(v) ? curr.filter((x) => x !== v): [...curr, v],
               )
             }
           />
@@ -266,13 +265,13 @@ function QuizFlowInner() {
     );
   }
 
-  // Calendar — Continue or Skip
+  // Calendar. Continue or Skip
   if (currentScreen.kind === "calendar") {
     return (
       <QuizShell
         currentScreen={oneIndexed}
         totalScreens={total}
-        onBack={screenIndex > 0 ? back : undefined}
+        onBack={screenIndex > 0 ? back: undefined}
         hasAnswers={hasAnswers}
         footer={
           <div className="flex w-full items-center justify-between gap-3">
@@ -304,13 +303,13 @@ function QuizFlowInner() {
     );
   }
 
-  // Summary — single CTA, no Back-hidden but Skip-less
+  // Summary, single CTA, no Back-hidden but Skip-less
   if (currentScreen.kind === "summary") {
     return (
       <QuizShell
         currentScreen={oneIndexed}
         totalScreens={total}
-        onBack={screenIndex > 0 ? back : undefined}
+        onBack={screenIndex > 0 ? back: undefined}
         hasAnswers={hasAnswers}
         footer={
           <button
@@ -327,13 +326,13 @@ function QuizFlowInner() {
     );
   }
 
-  // Email gate — final screen, submit POSTs to /api/email-gate (best-effort)
+  // Email gate, final screen, submit POSTs to /api/email-gate (best-effort)
   if (currentScreen.kind === "email-gate") {
     return (
       <QuizShell
         currentScreen={oneIndexed}
         totalScreens={total}
-        onBack={screenIndex > 0 ? back : undefined}
+        onBack={screenIndex > 0 ? back: undefined}
         hasAnswers={hasAnswers}
         footer={
           <button
@@ -355,7 +354,7 @@ function QuizFlowInner() {
     );
   }
 
-  // Exhaustiveness — TypeScript narrows this branch out, runtime fall-through
+  // Exhaustiveness. TypeScript narrows this branch out, runtime fall-through
   // would mean a brand-new Screen kind was added without a handler.
   const exhaustive: never = currentScreen;
   void exhaustive;

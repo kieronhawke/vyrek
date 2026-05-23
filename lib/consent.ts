@@ -1,7 +1,7 @@
 /**
  * UK GDPR cookie consent state.
  *
- * Defaults to all non-necessary categories OFF — the regulator requires
+ * Defaults to all non-necessary categories OFF, the regulator requires
  * explicit opt-in, not opt-out. Persisted in localStorage under a versioned
  * key so we can invalidate consent when the categories change.
  */
@@ -9,7 +9,7 @@
 export const CONSENT_STORAGE_KEY = "vyrek:consent:v1";
 
 export type ConsentCategories = {
-  necessary: true; // always true — cookies required for the site to function
+  necessary: true; // always true, cookies required for the site to function
   analytics: boolean;
   marketing: boolean;
 };

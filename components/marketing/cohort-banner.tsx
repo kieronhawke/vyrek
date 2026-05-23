@@ -4,7 +4,7 @@ import Link from "next/link";
 
 /**
  * Top-of-page announcement bar with rolling "next training block starts X"
- * urgency. Anchored to "next Tuesday" — Vyrek programmes start on Tuesdays.
+ * urgency. Anchored to "next Tuesday". Vyrek programmes start on Tuesdays.
  * Pattern from Tonal / HAC ("OUR 2026 HYROX MEMBERSHIP IS NOW LIVE!").
  *
  * Server-rendered with the next-Tuesday date so the message is honest

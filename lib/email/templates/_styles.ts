@@ -1,5 +1,5 @@
 /**
- * Shared style tokens for Vyrek transactional emails. Inline styles only —
+ * Shared style tokens for Vyrek transactional emails. Inline styles only,
  * email clients (especially Outlook) ignore <style> sheets and CSS classes.
  */
 

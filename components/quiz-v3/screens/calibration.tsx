@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import type { SexValue, WeightUnit } from "@/lib/quiz-flow";
 
 /**
- * Screen 8b — Calibration. Sex (men/women, framed as Hyrox standards) plus
+ * Screen 8b. Calibration. Sex (men/women, framed as Hyrox standards) plus
  * body weight (kg/lb). Sex sets sled/wall-ball/farmers loads; weight sets
  * sandbag lunge load as a % of body weight.
  */
@@ -43,7 +43,7 @@ export function CalibrationScreen({
     setTyped(raw);
     const n = Number(raw);
     if (!Number.isFinite(n) || n <= 0) return;
-    const kg = unit === "lb" ? n / 2.20462 : n;
+    const kg = unit === "lb" ? n / 2.20462: n;
     onWeightChange(Math.round(kg * 10) / 10);
   };
 
@@ -88,10 +88,10 @@ export function CalibrationScreen({
         <input
           type="number"
           inputMode="decimal"
-          min={unit === "kg" ? 30 : 65}
-          max={unit === "kg" ? 200 : 440}
-          step={unit === "kg" ? 0.1 : 1}
-          placeholder={unit === "kg" ? "75" : "165"}
+          min={unit === "kg" ? 30: 65}
+          max={unit === "kg" ? 200: 440}
+          step={unit === "kg" ? 0.1: 1}
+          placeholder={unit === "kg" ? "75": "165"}
           value={value}
           onChange={(e) => onDraftChange(e.target.value)}
           onBlur={onBlur}
@@ -108,8 +108,7 @@ export function CalibrationScreen({
               className={cn(
                 "flex h-full min-h-0 items-center justify-center rounded px-4 text-sm font-medium transition-colors",
                 unit === u
-                  ? "bg-vyrek-accent text-[#0A0A0A]"
-                  : "text-vyrek-text-secondary hover:text-vyrek-text",
+                  ? "bg-vyrek-accent text-[#0A0A0A]": "text-vyrek-text-secondary hover:text-vyrek-text",
               )}
             >
               {u}
@@ -119,7 +118,7 @@ export function CalibrationScreen({
       </div>
 
       <p className="mt-3 text-xs text-vyrek-text-tertiary">
-        Stored as kilograms internally. Display in {unit === "kg" ? "kg" : "lb"}.
+        Stored as kilograms internally. Display in {unit === "kg" ? "kg": "lb"}.
       </p>
     </div>
   );

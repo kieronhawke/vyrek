@@ -26,15 +26,14 @@ export default function GlobalError({
             That didn&apos;t work.
           </h1>
           <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
-            Something on our side broke. Try again — and if it keeps happening,
+            Something on our side broke. Try again, and if it keeps happening,
             email{" "}
             <a
               href="mailto:hello@vyrek.com"
               className="text-vyrek-text underline-offset-4 hover:underline"
             >
               hello@vyrek.com
-            </a>
-            .
+            </a>.
           </p>
           {error.digest && (
             <Eyebrow className="mt-4 !text-vyrek-text-tertiary">

@@ -26,7 +26,7 @@ export type StationDef = {
   };
   /** Common faults that cost time. */
   faults: string[];
-  /** Coaching cues — what the athlete should be thinking about. */
+  /** Coaching cues, what the athlete should be thinking about. */
   cues: string[];
   /** Training drills that build the station. */
   drills: { name: string; detail: string }[];
@@ -41,7 +41,7 @@ export const STATIONS: StationDef[] = [
     slug: "ski-erg",
     name: "Ski Erg",
     order: 1,
-    oneLiner: "1,000 metres on a SkiErg machine — the opening station.",
+    oneLiner: "1,000 metres on a SkiErg machine, the opening station.",
     spec: { mensOpen: "1,000 m", womensOpen: "1,000 m", distance: "1,000 m" },
     goalSplits: {
       sub60: "3:25",
@@ -50,9 +50,9 @@ export const STATIONS: StationDef[] = [
       finishFirst: "5:00",
     },
     faults: [
-      "Going out at 100% in the first 200 m — every other station is harder.",
+      "Going out at 100% in the first 200 m, every other station is harder.",
       "Pulling only with arms and shoulders instead of driving with the legs.",
-      "Standing tall — defeats the hip drive that powers the stroke.",
+      "Standing tall, defeats the hip drive that powers the stroke.",
     ],
     cues: [
       "Hinge from the hips on every stroke. Knees soft, chest down.",
@@ -79,7 +79,7 @@ export const STATIONS: StationDef[] = [
     faqs: [
       {
         q: "How do I pace the Hyrox Ski Erg?",
-        a: "Aim for 5-10 seconds slower than your 2 km PR. The Ski Erg is the opener — going too hard here cooks your back end. Save 5% effort for the first kilometre of running.",
+        a: "Aim for 5-10 seconds slower than your 2 km PR. The Ski Erg is the opener, going too hard here cooks your back end. Save 5% effort for the first kilometre of running.",
       },
       {
         q: "Is the Ski Erg arms or legs?",
@@ -87,7 +87,7 @@ export const STATIONS: StationDef[] = [
       },
     ],
     summary:
-      "1,000 m, hip-driven. The race opens with the Ski Erg — pace it 5-10 sec slower than your 2 km PR or you'll pay for it at station 4.",
+      "1,000 m, hip-driven. The race opens with the Ski Erg, pace it 5-10 sec slower than your 2 km PR or you'll pay for it at station 4.",
   },
   {
     slug: "sled-push",
@@ -106,14 +106,14 @@ export const STATIONS: StationDef[] = [
       finishFirst: "2:45",
     },
     faults: [
-      "Standing too tall — pushes the sled into the floor, not across it.",
-      "Long strides — force vector goes vertical, not horizontal.",
-      "Stopping mid-lane — every stop resets static friction; the next start is the hardest moment of the whole station.",
+      "Standing too tall, pushes the sled into the floor, not across it.",
+      "Long strides, force vector goes vertical, not horizontal.",
+      "Stopping mid-lane, every stop resets static friction; the next start is the hardest moment of the whole station.",
     ],
     cues: [
       "Low, long, locked: 30° body angle, arms extended at the elbow, neutral spine.",
       "Short, fast strides under the hip. Toes down, ball of foot to forefoot.",
-      "First 3 metres at 85% — get it moving, then settle into rhythm.",
+      "First 3 metres at 85%, get it moving, then settle into rhythm.",
     ],
     drills: [
       {
@@ -135,7 +135,7 @@ export const STATIONS: StationDef[] = [
     faqs: [
       {
         q: "How heavy is the Hyrox sled push?",
-        a: "152 kg for men's open division, 102 kg for women's open. Doubles and pro divisions have separate weights — check the official Hyrox standards for your category.",
+        a: "152 kg for men's open division, 102 kg for women's open. Doubles and pro divisions have separate weights, check the official Hyrox standards for your category.",
       },
       {
         q: "Why does the sled feel impossible at the start?",
@@ -158,14 +158,14 @@ export const STATIONS: StationDef[] = [
       finishFirst: "3:20",
     },
     faults: [
-      "Pulling with the upper body only — the legs should be in a wide squat absorbing the load.",
-      "Standing up between pulls — wastes time and breaks rhythm.",
-      "Letting the rope drag along the floor between pulls — friction adds up.",
+      "Pulling with the upper body only, the legs should be in a wide squat absorbing the load.",
+      "Standing up between pulls, wastes time and breaks rhythm.",
+      "Letting the rope drag along the floor between pulls, friction adds up.",
     ],
     cues: [
       "Wide stance, low squat, chest up. Hand-over-hand with constant tension.",
       "Pull the rope to your hip, then immediately reach for the next grip.",
-      "Breathe in time with the pull — out on contraction, in on reach.",
+      "Breathe in time with the pull, out on contraction, in on reach.",
     ],
     drills: [
       {
@@ -188,13 +188,13 @@ export const STATIONS: StationDef[] = [
       },
     ],
     summary:
-      "103 kg / 78 kg over 50 m, hand-over-hand. Wide stance, low squat, constant tension. The legs absorb the load — the arms transmit it.",
+      "103 kg / 78 kg over 50 m, hand-over-hand. Wide stance, low squat, constant tension. The legs absorb the load, the arms transmit it.",
   },
   {
     slug: "burpee-broad-jumps",
     name: "Burpee Broad Jumps",
     order: 4,
-    oneLiner: "Burpee, jump forward, repeat — 80 metres of compounding fatigue.",
+    oneLiner: "Burpee, jump forward, repeat. 80 metres of compounding fatigue.",
     spec: { mensOpen: "80 m", womensOpen: "80 m", distance: "80 m" },
     goalSplits: {
       sub60: "3:15",
@@ -203,14 +203,14 @@ export const STATIONS: StationDef[] = [
       finishFirst: "6:00",
     },
     faults: [
-      "Short jumps — under 1 m means more reps, more burpees, more time.",
-      "Pausing too long between reps — the burpee broad jump has no rhythm to coast on.",
-      "Skipping the arm swing — costs 15-20 cm per jump, free distance left on the floor.",
+      "Short jumps, under 1 m means more reps, more burpees, more time.",
+      "Pausing too long between reps, the burpee broad jump has no rhythm to coast on.",
+      "Skipping the arm swing, costs 15-20 cm per jump, free distance left on the floor.",
     ],
     cues: [
       "Breathe out on the descent, in on the stand, out on the jump.",
-      "Arm swing initiates the jump — never an afterthought.",
-      "Tight midline — body lands as one unit, not feet-then-hips-then-chest.",
+      "Arm swing initiates the jump, never an afterthought.",
+      "Tight midline, body lands as one unit, not feet-then-hips-then-chest.",
     ],
     drills: [
       {
@@ -240,7 +240,7 @@ export const STATIONS: StationDef[] = [
     slug: "rowing",
     name: "Rowing",
     order: 5,
-    oneLiner: "1,000 metres on a Concept2 rower — the halfway station.",
+    oneLiner: "1,000 metres on a Concept2 rower, the halfway station.",
     spec: { mensOpen: "1,000 m", womensOpen: "1,000 m", distance: "1,000 m" },
     goalSplits: {
       sub60: "3:35",
@@ -250,13 +250,13 @@ export const STATIONS: StationDef[] = [
     },
     faults: [
       "Yanking the handle at the catch instead of driving the legs first.",
-      "Rushing the slide — disrupts breathing and burns extra calories.",
-      "Setting damper too high — feels powerful but slows you down.",
+      "Rushing the slide, disrupts breathing and burns extra calories.",
+      "Setting damper too high, feels powerful but slows you down.",
     ],
     cues: [
       "Legs, then back, then arms on the drive. Arms, body, legs on the recovery.",
       "Damper at 5-6 for most athletes; not 10.",
-      "Pace the row 5-10 sec slower than your fresh 2 km — you've got more race after this.",
+      "Pace the row 5-10 sec slower than your fresh 2 km, you've got more race after this.",
     ],
     drills: [
       {
@@ -275,7 +275,7 @@ export const STATIONS: StationDef[] = [
       },
       {
         q: "What damper setting for Hyrox rowing?",
-        a: "5-6 for most athletes. Higher feels powerful but increases drag — you waste effort overcoming the machine instead of moving the chain.",
+        a: "5-6 for most athletes. Higher feels powerful but increases drag, you waste effort overcoming the machine instead of moving the chain.",
       },
     ],
     summary:
@@ -298,9 +298,9 @@ export const STATIONS: StationDef[] = [
       finishFirst: "2:45",
     },
     faults: [
-      "Death-grip from the start — grip fails by metre 120.",
-      "Long strides — destabilises the carry, wastes vertical energy.",
-      "Hunching forward — loads the upper traps and degrades posture.",
+      "Death-grip from the start, grip fails by metre 120.",
+      "Long strides, destabilises the carry, wastes vertical energy.",
+      "Hunching forward, loads the upper traps and degrades posture.",
     ],
     cues: [
       "Hand deep on the handle, full grip not hook. Lightest pressure that holds.",
@@ -347,13 +347,13 @@ export const STATIONS: StationDef[] = [
       finishFirst: "6:30",
     },
     faults: [
-      "Letting the sandbag droop forward — pulls the spine into flexion.",
-      "Stepping too long — front knee crashes over the toe.",
-      "Rushing the cadence — back to the floor too fast loses control on the next step.",
+      "Letting the sandbag droop forward, pulls the spine into flexion.",
+      "Stepping too long, front knee crashes over the toe.",
+      "Rushing the cadence, back to the floor too fast loses control on the next step.",
     ],
     cues: [
       "Bag high across the upper back, hands gripping in front of the shoulders.",
-      "Knee tracks over the toe — never beyond. Back knee gently to the floor.",
+      "Knee tracks over the toe, never beyond. Back knee gently to the floor.",
       "Steady cadence, breathe with each step. No racing.",
     ],
     drills: [
@@ -383,7 +383,7 @@ export const STATIONS: StationDef[] = [
     slug: "wall-balls",
     name: "Wall Balls",
     order: 8,
-    oneLiner: "100 wall ball reps to a 10 ft target — the final station.",
+    oneLiner: "100 wall ball reps to a 10 ft target, the final station.",
     spec: {
       mensOpen: "9 kg ball, 10 ft target, 100 reps",
       womensOpen: "6 kg ball, 9 ft target, 75 reps (or 100 for open)",
@@ -396,13 +396,13 @@ export const STATIONS: StationDef[] = [
       finishFirst: "7:30",
     },
     faults: [
-      "Going unbroken from the start — you'll cook by rep 40.",
-      "Short squats — half-rep penalties, plus poor target catch.",
-      "Throwing only with arms — drains the shoulders fast.",
+      "Going unbroken from the start, you'll cook by rep 40.",
+      "Short squats, half-rep penalties, plus poor target catch.",
+      "Throwing only with arms, drains the shoulders fast.",
     ],
     cues: [
       "Full squat depth, drive through the heels, ball leaves the chest at the top.",
-      "Pick a set scheme before you start — 25-25-25-25 or 30-25-25-20 or fives.",
+      "Pick a set scheme before you start. 25-25-25-25 or 30-25-25-20 or fives.",
       "Breathe out on the throw, in on the catch. Steady rhythm beats heroic sets.",
     ],
     drills: [
@@ -423,7 +423,7 @@ export const STATIONS: StationDef[] = [
       },
       {
         q: "What's the best wall ball set scheme?",
-        a: "Most age-group athletes break to 25-25-25-25 or 30-25-25-20. Unbroken is for elite. The fastest finishers aren't the ones who go unbroken — they're the ones whose breaks are shortest and most consistent.",
+        a: "Most age-group athletes break to 25-25-25-25 or 30-25-25-20. Unbroken is for elite. The fastest finishers aren't the ones who go unbroken, they're the ones whose breaks are shortest and most consistent.",
       },
     ],
     summary:

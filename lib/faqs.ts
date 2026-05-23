@@ -1,5 +1,5 @@
 /**
- * FAQ copy — verbatim from build brief §8.12.
+ * FAQ copy, verbatim from build brief §8.12.
  * Phase G migrates these to Sanity for non-coder editing.
  */
 
@@ -34,7 +34,7 @@ export const FAQS: Faq[] = [
   {
     question: "What happens after my trial ends?",
     answer:
-      "On day 8, you're charged £4.99/month. Cancel anytime in two taps.",
+      "On day 8, you're charged £8.99/month. Cancel anytime in two taps.",
   },
   {
     question: "Can I cancel during the trial?",

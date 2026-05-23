@@ -68,7 +68,7 @@ export function ReferralCodeInput() {
           )}
         />
         {status === "checking" && (
-          <span className="text-xs text-vyrek-text-tertiary">Checking…</span>
+          <span className="text-xs text-vyrek-text-tertiary">Checking...</span>
         )}
         {status === "valid" && (
           <span className="text-xs text-vyrek-success">✓ Applied</span>

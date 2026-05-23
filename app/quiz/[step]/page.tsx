@@ -48,15 +48,14 @@ export default function QuizStep({
     if (!state) return [];
     const merged =
       draft === null || draft === undefined
-        ? state.answers
-        : { ...state.answers, [step]: draft };
+        ? state.answers: { ...state.answers, [step]: draft };
     return visibleQuestions(merged);
   }, [state, draft, step]);
   const currentIndex = visible.findIndex((q) => q.id === step);
 
   // Hydrate the draft from saved answers when the step or state changes.
   // Synchronising React state with the saved-answers store on navigation
-  // between quiz steps — the canonical place for this kind of cross-route
+  // between quiz steps, the canonical place for this kind of cross-route
   // state restore is an effect, even though the ESLint rule frowns at it.
   useEffect(() => {
     if (!state || !question) return;
@@ -117,8 +116,7 @@ export default function QuizStep({
   const canAdvance =
     question.optional ||
     (question.type === "multi-select"
-      ? Array.isArray(draft) && draft.length > 0
-      : draft !== null && draft !== "");
+      ? Array.isArray(draft) && draft.length > 0: draft !== null && draft !== "");
 
   const preview =
     PROGRAMME_LABEL[
@@ -131,12 +129,12 @@ export default function QuizStep({
       total={totalSteps}
       question={question.question}
       helper={question.helper}
-      preview={currentIndex >= 1 ? preview : undefined}
-      backHref={prevStep ? `/quiz/${prevStep.id}` : "/quiz"}
+      preview={currentIndex >= 1 ? preview: undefined}
+      backHref={prevStep ? `/quiz/${prevStep.id}`: "/quiz"}
       hasAnswers={Object.keys(state.answers).length > 0}
       onNext={onNext}
       nextDisabled={!canAdvance}
-      nextLabel={isLast ? "See plan →" : "Next →"}
+      nextLabel={isLast ? "See plan →": "Next →"}
     >
       {question.type === "single-select" && (
         <ul role="list" className="space-y-3">
@@ -158,14 +156,13 @@ export default function QuizStep({
       {question.type === "multi-select" && (
         <MultiSelectList
           options={question.options}
-          selected={Array.isArray(draft) ? draft : []}
+          selected={Array.isArray(draft) ? draft: []}
           onToggle={(value) => {
             haptic("light");
             setDraft((current) => {
-              const arr = Array.isArray(current) ? current : [];
+              const arr = Array.isArray(current) ? current: [];
               return arr.includes(value)
-                ? arr.filter((v) => v !== value)
-                : [...arr, value];
+                ? arr.filter((v) => v !== value): [...arr, value];
             });
           }}
         />
@@ -173,7 +170,7 @@ export default function QuizStep({
 
       {question.type === "slider" && (
         <SliderInput
-          value={typeof draft === "number" ? draft : question.default}
+          value={typeof draft === "number" ? draft: question.default}
           onChange={(v) => setDraft(v)}
           min={question.min}
           max={question.max}
@@ -185,7 +182,7 @@ export default function QuizStep({
         <div className="space-y-4">
           <input
             type="date"
-            value={typeof draft === "string" ? draft : ""}
+            value={typeof draft === "string" ? draft: ""}
             onChange={(e) => setDraft(e.target.value)}
             className="h-14 w-full rounded-md border border-vyrek-border bg-vyrek-elevated px-4 text-base text-vyrek-text outline-none focus:border-vyrek-accent"
           />
@@ -199,7 +196,7 @@ export default function QuizStep({
             }}
             className="block w-full text-sm text-vyrek-text-secondary underline-offset-4 hover:underline"
           >
-            No race booked — skip
+            No race booked, skip
           </button>
         </div>
       )}

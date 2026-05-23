@@ -52,7 +52,7 @@ export function CancellationEmail() {
             }}
           >
             Your Vyrek membership is cancelled. Nothing more will be charged.
-            If you change your mind, the door is open — your answers stay
+            If you change your mind, the door is open, your answers stay
             saved.
           </Text>
 

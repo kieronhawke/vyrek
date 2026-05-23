@@ -38,7 +38,7 @@ const PROGRAMMES: ProgrammeDetail[] = [
     ],
     doing: [
       "Easy aerobic runs that build the engine without breaking the legs.",
-      "Hyrox-specific intervals — short bouts of station work between runs.",
+      "Hyrox-specific intervals, short bouts of station work between runs.",
       "Full-body strength, biased to push, pull, and grip endurance.",
       "Weekly race-format simulation that rehearses the day.",
     ],
@@ -77,7 +77,7 @@ const PROGRAMMES: ProgrammeDetail[] = [
       "Either of you can complete a Hyrox solo.",
     ],
     doing: [
-      "Handoff drills — clean transitions between partner work.",
+      "Handoff drills, clean transitions between partner work.",
       "Split-station strategy practised across the 12-week block.",
       "Solo sessions that match each partner&apos;s strength gaps.",
       "Partner race simulations every third week.",
@@ -128,7 +128,7 @@ const courseListLd = {
       },
       offers: {
         "@type": "Offer",
-        price: "4.99",
+        price: "8.99",
         priceCurrency: "GBP",
         availability: "https://schema.org/InStock",
       },
@@ -173,7 +173,7 @@ export default function ProgrammesPage() {
             <Container>
               <div
                 className={`mx-auto grid max-w-6xl items-start gap-10 md:grid-cols-2 md:gap-16 ${
-                  i % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""
+                  i % 2 === 1 ? "md:[&>*:first-child]:order-2": ""
                 }`}
               >
                 <div>
@@ -234,7 +234,7 @@ export default function ProgrammesPage() {
                     src={p.image}
                     alt=""
                     className="absolute inset-0 h-full w-full object-cover grayscale"
-                    loading={i === 0 ? "eager" : "lazy"}
+                    loading={i === 0 ? "eager": "lazy"}
                     decoding="async"
                   />
                   <div

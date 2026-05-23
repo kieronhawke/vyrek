@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 /**
  * Visual-rhythm components for MDX. Authors drop these inline in posts to
  * break up long stretches of body copy with callouts, pull quotes, and key
- * stats. Each component is intentionally minimal — they reuse the Vyrek
+ * stats. Each component is intentionally minimal, they reuse the Vyrek
  * design tokens and don't override the prose font sizing.
  */
 
@@ -60,7 +60,7 @@ export function Callout({
           s.eyebrow,
         )}
       >
-        [ {s.label}{title ? ` · ${title}` : ""} ]
+        [ {s.label}{title ? ` · ${title}`: ""} ]
       </p>
       <div className="mt-3 text-base leading-relaxed text-vyrek-text md:text-lg [&>p:first-child]:mt-0 [&>p]:mt-3">
         {children}
@@ -88,10 +88,9 @@ export function PullQuote({
         </span>
       </blockquote>
       {attribution ? (
-        <figcaption className="mt-3 pl-6 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
-          — {attribution}
+        <figcaption className="mt-3 pl-6 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">, {attribution}
         </figcaption>
-      ) : null}
+      ): null}
     </figure>
   );
 }
@@ -117,7 +116,7 @@ export function Stat({
         <p className="mt-3 max-w-md text-sm leading-relaxed text-vyrek-text-secondary md:text-base">
           {caption}
         </p>
-      ) : null}
+      ): null}
     </div>
   );
 }
@@ -135,7 +134,7 @@ export function KeyTakeaways({
   items?: string[];
   children?: ReactNode;
 }) {
-  const list = Array.isArray(items) ? items : null;
+  const list = Array.isArray(items) ? items: null;
   return (
     <aside
       aria-label="Key takeaways"
@@ -159,7 +158,7 @@ export function KeyTakeaways({
             </li>
           ))}
         </ul>
-      ) : (
+      ): (
         <div className="mt-4 text-base leading-relaxed text-vyrek-text md:text-lg [&_ul]:mt-0 [&_ul]:list-none [&_ul]:space-y-3 [&_ul]:pl-0 [&_li]:flex [&_li]:items-start [&_li]:gap-3 [&_li]:pl-0 [&_li]:before:mt-2.5 [&_li]:before:size-1.5 [&_li]:before:shrink-0 [&_li]:before:rounded-full [&_li]:before:bg-vyrek-accent">
           {children}
         </div>

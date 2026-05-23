@@ -10,7 +10,7 @@ import {
 
 /**
  * Tailwind-prose-flavoured styles for MDX content. We don't use the
- * `@tailwindcss/typography` plugin — the brief's design tokens are bespoke,
+ * `@tailwindcss/typography` plugin, the brief's design tokens are bespoke,
  * so we hand-tune each element to the Vyrek palette.
  *
  * Authors can use these custom components inline in MDX:
@@ -26,7 +26,7 @@ function isExternal(href?: string): boolean {
 }
 
 function H2({ children, id, ...rest }: React.HTMLAttributes<HTMLHeadingElement>) {
-  // No nested anchor — the entire heading text IS the accessible name.
+  // No nested anchor, the entire heading text IS the accessible name.
   // rehype-autolink-headings (`behavior: "wrap"`) handles the click target;
   // we keep the visual style here.
   return (
@@ -93,13 +93,13 @@ function A({ children, href, ...rest }: AnchorAttrs) {
   return (
     <a
       href={href}
-      target={ext ? "_blank" : undefined}
-      rel={ext ? "noopener noreferrer" : undefined}
+      target={ext ? "_blank": undefined}
+      rel={ext ? "noopener noreferrer": undefined}
       className="text-vyrek-accent underline decoration-vyrek-accent/40 underline-offset-4 transition-colors hover:decoration-vyrek-accent"
       {...rest}
     >
       {children}
-      {ext ? <span aria-hidden> ↗</span> : null}
+      {ext ? <span aria-hidden> ↗</span>: null}
     </a>
   );
 }
@@ -166,7 +166,7 @@ function Img({
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={typeof src === "string" ? src : undefined}
+      src={typeof src === "string" ? src: undefined}
       alt={alt ?? ""}
       loading="lazy"
       decoding="async"
@@ -193,7 +193,7 @@ export const proseComponents: MDXRemoteProps["components"] = {
   th: Th,
   td: Td,
   img: Img,
-  // Custom MDX components — drop into any .mdx file
+  // Custom MDX components, drop into any.mdx file
   Callout,
   PullQuote,
   Stat,

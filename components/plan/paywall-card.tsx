@@ -20,10 +20,10 @@ export function PaywallCard({
         [ MEMBERS ONLY ]
       </p>
       <h3 className="mt-3 text-2xl font-black leading-tight tracking-[-0.02em] text-vyrek-text">
-        Unlock weeks 2–12
+        Unlock weeks 2-12
       </h3>
       <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
-        First week free. £4.99/mo after. Cancel anytime.
+        First week free. £8.99/mo after. Cancel anytime.
       </p>
       <button
         type="button"

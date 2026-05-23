@@ -6,7 +6,7 @@ import "react-day-picker/style.css";
 import { QuestionHeader } from "@/components/quiz-v3/question-header";
 
 /**
- * Screen 6 — Race date picker. shadcn-style Calendar via react-day-picker,
+ * Screen 6. Race date picker. shadcn-style Calendar via react-day-picker,
  * already a dependency.
  */
 export function RaceDateScreen({
@@ -44,50 +44,40 @@ export function RaceDateScreen({
             {format(value, "EEEE d MMMM yyyy")}
           </span>
         </p>
-      ) : null}
+      ): null}
 
-      <style jsx global>{`
-        .rdp-vyrek .rdp-root {
+      <style jsx global>{`.rdp-vyrek.rdp-root {
           --rdp-accent-color: var(--vyrek-accent);
           --rdp-accent-background-color: rgba(255, 90, 31, 0.18);
           --rdp-day_button-width: 40px;
           --rdp-day_button-height: 40px;
           --rdp-day_button-border-radius: 999px;
           color: var(--vyrek-text-primary);
-        }
-        .rdp-vyrek .rdp-month_caption {
+        }.rdp-vyrek.rdp-month_caption {
           color: var(--vyrek-text-primary);
           font-weight: 600;
-        }
-        .rdp-vyrek .rdp-weekday {
+        }.rdp-vyrek.rdp-weekday {
           color: var(--vyrek-text-tertiary);
           font-family: var(--font-mono);
           font-size: 10px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-        }
-        .rdp-vyrek .rdp-day .rdp-day_button {
+        }.rdp-vyrek.rdp-day.rdp-day_button {
           color: var(--vyrek-text-primary);
           background: transparent;
-        }
-        .rdp-vyrek .rdp-day:not(.rdp-disabled) .rdp-day_button:hover {
+        }.rdp-vyrek.rdp-day:not(.rdp-disabled).rdp-day_button:hover {
           background: var(--vyrek-bg-overlay);
-        }
-        .rdp-vyrek .rdp-selected .rdp-day_button {
+        }.rdp-vyrek.rdp-selected.rdp-day_button {
           background: var(--vyrek-accent) !important;
           color: #0a0a0a !important;
-        }
-        .rdp-vyrek .rdp-today .rdp-day_button {
+        }.rdp-vyrek.rdp-today.rdp-day_button {
           color: var(--vyrek-accent);
-        }
-        .rdp-vyrek .rdp-disabled .rdp-day_button {
+        }.rdp-vyrek.rdp-disabled.rdp-day_button {
           color: var(--vyrek-text-disabled);
           opacity: 0.4;
-        }
-        .rdp-vyrek .rdp-nav button {
+        }.rdp-vyrek.rdp-nav button {
           color: var(--vyrek-text-secondary);
-        }
-        .rdp-vyrek .rdp-nav button:hover {
+        }.rdp-vyrek.rdp-nav button:hover {
           color: var(--vyrek-text-primary);
         }
       `}</style>

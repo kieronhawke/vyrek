@@ -6,9 +6,9 @@ import { Eyebrow } from "@/components/shared/eyebrow";
 import { SplitHeading } from "@/components/shared/split-heading";
 
 export const metadata: Metadata = {
-  title: "Contact Vyrek — support, press & partnerships",
+  title: "Contact Vyrek, support, press & partnerships",
   description:
-    "Get in touch with Vyrek. General questions, billing support, press enquiries, athlete features, brand collaborations. We answer every email within 24 hours, Mon–Fri.",
+    "Get in touch with Vyrek. General questions, billing support, press enquiries, athlete features, brand collaborations. We answer every email within 24 hours, Mon-Fri.",
 };
 
 const CONTACTS = [
@@ -74,34 +74,11 @@ export default function ContactPage() {
               ))}
             </div>
 
-            <div className="mt-16 grid grid-cols-1 gap-10 border-t border-vyrek-border-subtle pt-10 md:grid-cols-2">
-              <div>
-                <Eyebrow>Response time</Eyebrow>
-                <p className="mt-3 text-base text-vyrek-text md:text-lg">
-                  We reply within 24 hours, Monday to Friday.
-                </p>
-              </div>
-              <div>
-                <Eyebrow>Social</Eyebrow>
-                <div className="mt-3 flex flex-col gap-2">
-                  <a
-                    href="https://instagram.com/vyrek"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-base text-vyrek-text underline-offset-4 hover:underline"
-                  >
-                    Instagram ↗
-                  </a>
-                  <a
-                    href="https://tiktok.com/@vyrek"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-base text-vyrek-text underline-offset-4 hover:underline"
-                  >
-                    TikTok ↗
-                  </a>
-                </div>
-              </div>
+            <div className="mt-16 border-t border-vyrek-border-subtle pt-10">
+              <Eyebrow>Response time</Eyebrow>
+              <p className="mt-3 text-base text-vyrek-text md:text-lg">
+                We reply within 24 hours, Monday to Friday.
+              </p>
             </div>
 
             <div className="mt-12 border-t border-vyrek-border-subtle pt-10">

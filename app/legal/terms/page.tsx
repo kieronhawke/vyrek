@@ -21,7 +21,7 @@ export default function TermsPage() {
       <ProseP>
         These terms govern your use of Vyrek. By taking the trial or
         subscribing, you accept them. They are written in plain English on
-        purpose — if something is unclear, write to{" "}
+        purpose, if something is unclear, write to{" "}
         <ProseEmailLink email="support@vyrek.com" /> and we will clarify.
       </ProseP>
 
@@ -45,7 +45,7 @@ export default function TermsPage() {
           method at the start of the trial; nothing is debited until day 8.
         </ProseLi>
         <ProseLi>
-          The price is £4.99 per month, billed monthly in advance in pounds
+          The price is £8.99 per month, billed monthly in advance in pounds
           sterling, through Stripe.
         </ProseLi>
         <ProseLi>
@@ -83,7 +83,7 @@ export default function TermsPage() {
       <ProseP>
         Your statutory rights under the Consumer Rights Act 2015 remain
         unaffected. If the service is not as described or not delivered with
-        reasonable skill, contact us — we will put it right or refund.
+        reasonable skill, contact us, we will put it right or refund.
       </ProseP>
 
       <ProseH2>How you use the service</ProseH2>

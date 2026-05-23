@@ -14,7 +14,6 @@ type CommandItem = {
 const STATIC_ITEMS: CommandItem[] = [
   // Primary actions
   { label: "Find your plan (start quiz)", href: "/quiz", group: "Actions", hint: "→", keywords: "quiz start training plan" },
-  { label: "See pricing", href: "/pricing", group: "Actions", keywords: "price subscription cost membership" },
   { label: "See your plan", href: "/plan", group: "Actions", keywords: "week 1 plan" },
   // Programmes
   { label: "First Race programme", href: "/quiz?program=first-race", group: "Programmes", keywords: "first race beginner" },
@@ -86,7 +85,7 @@ export function CommandPalette() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // Focus input on open. Each setState is intentional — Esc/open-toggle is
+  // Focus input on open. Each setState is intentional. Esc/open-toggle is
   // an external trigger, not a sync reflection of some other render-time
   // value, so the canonical sync-from-event pattern applies.
   useEffect(() => {
@@ -119,10 +118,7 @@ export function CommandPalette() {
         fuzzyScore(q, it.keywords ?? ""),
         fuzzyScore(q, it.group),
       ),
-    }))
-      .filter((x) => x.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .map((x) => x.it);
+    })).filter((x) => x.score > 0).sort((a, b) => b.score - a.score).map((x) => x.it);
   }, [query]);
 
   // Group results by their group label, preserving the result-order ranking.
@@ -168,16 +164,8 @@ export function CommandPalette() {
 
   return (
     <>
-      {/* Floating hint chip — only visible on >=lg, never on touch */}
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        aria-label="Open command palette"
-        className="fixed bottom-4 right-4 z-40 hidden h-10 items-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-elevated/90 px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-secondary shadow-lg backdrop-blur-md transition-colors hover:text-vyrek-text lg:inline-flex"
-      >
-        <span aria-hidden>⌘K</span>
-        <span>Search</span>
-      </button>
+      {/* Keyboard shortcut only (Cmd/Ctrl+K, "/"). No floating UI chip;
+          brief Part 1.1 requires removal. */}
 
       {open ? (
         <div
@@ -199,7 +187,7 @@ export function CommandPalette() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={onKeyDownInput}
-              placeholder="Search routes, programmes, cities, stations…"
+              placeholder="Search routes, programmes, cities, stations..."
               className="h-14 w-full border-b border-vyrek-border-subtle bg-transparent px-5 text-base text-vyrek-text placeholder:text-vyrek-text-tertiary focus:outline-none"
               aria-label="Search"
             />
@@ -208,7 +196,7 @@ export function CommandPalette() {
                 <li className="px-3 py-6 text-center text-sm text-vyrek-text-tertiary">
                   No matches. Try &ldquo;sub 90&rdquo;, &ldquo;london&rdquo;, &ldquo;wall ball&rdquo;.
                 </li>
-              ) : (
+              ): (
                 Object.entries(grouped).map(([group, items]) => (
                   <li key={group}>
                     <p className="px-3 pb-1 pt-3 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
@@ -224,11 +212,11 @@ export function CommandPalette() {
                               type="button"
                               onClick={() => onSelect(flatIdx)}
                               onMouseEnter={() => setActive(flatIdx)}
-                              className={`flex w-full items-center justify-between gap-3 rounded-md px-3 py-2.5 text-left text-sm transition-colors ${isActive ? "bg-vyrek-overlay text-vyrek-text" : "text-vyrek-text-secondary hover:text-vyrek-text"}`}
+                              className={`flex w-full items-center justify-between gap-3 rounded-md px-3 py-2.5 text-left text-sm transition-colors ${isActive ? "bg-vyrek-overlay text-vyrek-text": "text-vyrek-text-secondary hover:text-vyrek-text"}`}
                             >
                               <span>{it.label}</span>
                               <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-                                {isActive ? "↵" : it.hint ?? ""}
+                                {isActive ? "↵": it.hint ?? ""}
                               </span>
                             </button>
                           </li>
@@ -245,7 +233,7 @@ export function CommandPalette() {
             </div>
           </div>
         </div>
-      ) : null}
+      ): null}
     </>
   );
 }

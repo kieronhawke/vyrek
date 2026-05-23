@@ -1,7 +1,7 @@
 /**
  * Coach hub data (brief §8.9). James is the founding coach. The other two
  * tiles describe the *methodology* behind the programming rather than faking
- * additional coaches — ASA-safe and on-brand.
+ * additional coaches. ASA-safe and on-brand.
  */
 
 export type CoachTile = {
@@ -13,13 +13,13 @@ export type CoachTile = {
   socials?: { instagram?: string; tiktok?: string };
   /** Looping background video (Pexels CDN) used on the public hub tile. */
   video?: { src: string; poster?: string };
-  /** Static portrait image — preferred over video where available. */
+  /** Static portrait image, preferred over video where available. */
   image?: string;
   /** Marks the tile as a methodology/principle card rather than a person. */
   kind?: "coach" | "principle";
 };
 
-// Backwards-compat alias — older components still import `Coach`.
+// Backwards-compat alias, older components still import `Coach`.
 export type Coach = CoachTile;
 
 export const COACHES: CoachTile[] = [
@@ -46,7 +46,7 @@ export const COACHES: CoachTile[] = [
     name: "Built in-house",
     role: "PROGRAMMING",
     credentials: ["WRITTEN WEEKLY", "NO OUTSOURCED TEMPLATES"],
-    bio: "Every Vyrek workout is written and reviewed by our coaching team each week. We don't sell a generic template library and call it personalised — your plan is regenerated whenever the inputs change (logged sessions, race date, injury status). When new evidence lands from a major race weekend, the next Sunday's recalibration carries it.",
+    bio: "Every Vyrek workout is written and reviewed by our coaching team each week. We don't sell a generic template library and call it personalised, your plan is regenerated whenever the inputs change (logged sessions, race date, injury status). When new evidence lands from a major race weekend, the next Sunday's recalibration carries it.",
     kind: "principle",
   },
   {

@@ -23,7 +23,7 @@ export function Faq() {
       className="border-t border-vyrek-border-subtle py-24 md:py-32"
     >
       <Container>
-        {/* FAQPage JSON-LD — search engines render these as rich results. */}
+        {/* FAQPage JSON-LD, search engines render these as rich results. */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

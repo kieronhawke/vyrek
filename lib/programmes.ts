@@ -10,7 +10,7 @@ export type Programme = {
   audience: string;
   weeks: number;
   difficulty: "Beginner" | "Intermediate" | "Advanced" | "Partner";
-  /** Background image (Pexels poster — DEMO, swap for Hyrox station imagery). */
+  /** Background image (Pexels poster. DEMO, swap for Hyrox station imagery). */
   image: string;
 };
 

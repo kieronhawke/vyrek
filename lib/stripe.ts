@@ -12,7 +12,7 @@ export function stripe(): Stripe {
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) {
     throw new Error(
-      "STRIPE_SECRET_KEY is not set — add it to .env.local (test mode: starts with sk_test_)",
+      "STRIPE_SECRET_KEY is not set, add it to.env.local (test mode: starts with sk_test_)",
     );
   }
   cached = new Stripe(key, {
@@ -27,7 +27,7 @@ export function getStripePriceId(): string {
   const id = process.env.STRIPE_PRICE_ID_MONTHLY;
   if (!id) {
     throw new Error(
-      "STRIPE_PRICE_ID_MONTHLY is not set — create a £4.99/mo Price in Stripe and add the price_… id",
+      "STRIPE_PRICE_ID_MONTHLY is not set, create a £8.99/mo Price in Stripe and add the price_... id",
     );
   }
   return id;
@@ -37,7 +37,7 @@ export function getStripeWebhookSecret(): string {
   const s = process.env.STRIPE_WEBHOOK_SECRET;
   if (!s) {
     throw new Error(
-      "STRIPE_WEBHOOK_SECRET is not set — copy the whsec_… from your Stripe webhook endpoint",
+      "STRIPE_WEBHOOK_SECRET is not set, copy the whsec_... from your Stripe webhook endpoint",
     );
   }
   return s;

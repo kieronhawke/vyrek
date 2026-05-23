@@ -12,7 +12,7 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "Hyrox training plans — by goal time and athlete",
+  title: "Hyrox training plans, by goal time and athlete",
   description:
     "Personalised Hyrox training plans by goal time (sub-60, sub-75, sub-90, sub-100) and audience (beginner, women, over-40, doubles). 12 weeks, dated, Elite 15 programming.",
   alternates: { canonical: `${siteUrl()}/plans` },
@@ -38,7 +38,7 @@ export default function PlansIndex() {
             </SplitHeading>
             <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
               Every Vyrek subscription includes all programmes. The plans below
-              are example shapes — start the quiz and we&apos;ll build the
+              are example shapes, start the quiz and we&apos;ll build the
               version that fits your race date, equipment, and current fitness.
             </p>
             <div className="mt-8">

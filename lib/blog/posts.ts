@@ -1,7 +1,7 @@
 /**
  * Blog post loader. Reads MDX files from /content/blog at build time, parses
  * frontmatter, and returns a typed list. Designed to be swap-out-able for a
- * future Sanity-backed implementation — the public API (Post type, listPosts,
+ * future Sanity-backed implementation, the public API (Post type, listPosts,
  * getPost, etc.) stays the same.
  *
  * Server-only: imports `fs`. Don't call from client components.
@@ -74,7 +74,7 @@ export const CATEGORIES: Record<
   },
   nutrition: {
     label: "Nutrition",
-    description: "What to eat before, during, and after — without the noise.",
+    description: "What to eat before, during, and after, without the noise.",
   },
   "race-day": {
     label: "Race day",
@@ -119,7 +119,7 @@ async function parseFile(filename: string): Promise<Post | null> {
     title: (fm.title as string) ?? slug,
     excerpt: (fm.excerpt as string) ?? "",
     category,
-    tags: Array.isArray(fm.tags) ? (fm.tags as string[]) : [],
+    tags: Array.isArray(fm.tags) ? (fm.tags as string[]): [],
     publishedAt:
       (fm.publishedAt as string) ?? new Date().toISOString().slice(0, 10),
     updatedAt: fm.updatedAt as string | undefined,
@@ -130,7 +130,7 @@ async function parseFile(filename: string): Promise<Post | null> {
     heroAlt: (fm.heroAlt as string) ?? "",
     seoTitle: fm.seoTitle as string | undefined,
     seoDescription: fm.seoDescription as string | undefined,
-    faqs: Array.isArray(fm.faqs) ? (fm.faqs as Faq[]) : undefined,
+    faqs: Array.isArray(fm.faqs) ? (fm.faqs as Faq[]): undefined,
     readingMinutes: Math.max(1, Math.ceil(rt.minutes)),
     words: Math.round(rt.words),
     featured: fm.featured === true,
@@ -149,7 +149,7 @@ export function listPosts(): Promise<Post[]> {
       await Promise.all(files.map((f) => parseFile(f)))
     ).filter((p): p is Post => p !== null);
     // Newest first
-    posts.sort((a, b) => (a.publishedAt > b.publishedAt ? -1 : 1));
+    posts.sort((a, b) => (a.publishedAt > b.publishedAt ? -1: 1));
     return posts;
   })();
   return cached;
@@ -195,7 +195,7 @@ export async function listRelatedPosts(
     score += sharedTags * 2;
     return { p, score };
   });
-  scored.sort((a, b) => b.score - a.score || (a.p.publishedAt < b.p.publishedAt ? 1 : -1));
+  scored.sort((a, b) => b.score - a.score || (a.p.publishedAt < b.p.publishedAt ? 1: -1));
   return scored.slice(0, limit).map((s) => s.p);
 }
 
@@ -206,7 +206,7 @@ export async function listFeaturedPosts(limit = 1): Promise<PostMeta[]> {
   return posts.slice(0, limit);
 }
 
-/** Helper for sitemap/RSS — every post slug. */
+/** Helper for sitemap/RSS, every post slug. */
 export async function allSlugs(): Promise<string[]> {
   const posts = await listPostMeta();
   return posts.map((p) => p.slug);

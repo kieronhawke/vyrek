@@ -1,5 +1,5 @@
 /**
- * Quiz V2 screen definitions — preserved as a fallback at /quiz/v2.
+ * Quiz V2 screen definitions, preserved as a fallback at /quiz/v2.
  *
  * V3 is the primary `/quiz` route. V2 stays around as a rollback target
  * until V3 has been verified live; it can be deleted in a follow-up cleanup.
@@ -119,7 +119,7 @@ export const SCREENS: Screen[] = [
     kind: "calendar",
     id: "raceDate",
     question: "Got a race booked?",
-    helper: "We'll build your plan around the date. Or skip — we'll suggest one.",
+    helper: "We'll build your plan around the date. Or skip, we'll suggest one.",
     skipLabel: "No race booked →",
   },
   {
@@ -173,7 +173,7 @@ export const SCREENS: Screen[] = [
       {
         value: "60",
         label: "60 min",
-        detail: "Recommended — covers warm-up, main and cool-down",
+        detail: "Recommended, covers warm-up, main and cool-down",
       },
       { value: "90", label: "90 min or more", detail: "Big block training" },
     ],
@@ -243,7 +243,7 @@ export const SCREENS: Screen[] = [
       { value: "knee", label: "Knee" },
       { value: "shoulder", label: "Shoulder" },
       { value: "achilles-calf", label: "Achilles or calf" },
-      { value: "other", label: "Other — I'll note in the app later" },
+      { value: "other", label: "Other. I'll note in the app later" },
     ],
   },
   { kind: "summary" },

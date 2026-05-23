@@ -8,29 +8,29 @@ import {
 } from "@/lib/race-coverage";
 
 /**
- * Daily cron — scans HYROX_EVENTS, generates templated race coverage posts
+ * Daily cron, scans HYROX_EVENTS, generates templated race coverage posts
  * when an event hits a milestone (T-14, T-7, T-1, T+1, T+7).
  *
  * Vercel serverless functions have a read-only filesystem, so this route
  * **does not write files**. Instead it returns the generated MDX in the
  * JSON response. Two consumer paths:
  *
- *   1. **Manual review (default)** — an editor reads the response (via
+ *   1. **Manual review (default)**, an editor reads the response (via
  *      Vercel logs or a Slack webhook) and copy-pastes the MDX into a new
  *      file in `content/blog/`, then commits.
  *
- *   2. **GitHub commit** — if `GITHUB_TOKEN` + `GITHUB_REPO` env vars are
+ *   2. **GitHub commit**, if `GITHUB_TOKEN` + `GITHUB_REPO` env vars are
  *      set, the route uses the GitHub Contents API to commit the new MDX
  *      file directly to the main branch (or a draft branch if
  *      `VYREK_BOT_BRANCH` is set). This triggers a Vercel deploy.
  *
- *   3. **Slack notification** — if `SLACK_WEBHOOK_URL` is set, posts a
+ *   3. **Slack notification**, if `SLACK_WEBHOOK_URL` is set, posts a
  *      summary to Slack so editors see what was generated.
  *
  * Authentication: requires `CRON_SECRET` env var to match the
  * `Authorization: Bearer <CRON_SECRET>` header Vercel Cron sends.
  *
- * Schedule: declared in `vercel.json` — daily at 06:00 UTC.
+ * Schedule: declared in `vercel.json`, daily at 06:00 UTC.
  */
 
 export const dynamic = "force-dynamic";
@@ -59,7 +59,7 @@ async function commitToGitHub(
   }
   const apiUrl = `https://api.github.com/repos/${repo}/contents/${path}`;
   const body = {
-    message: `bot: race coverage — ${path.split("/").pop()}`,
+    message: `bot: race coverage, ${path.split("/").pop()}`,
     content: Buffer.from(contents, "utf8").toString("base64"),
     branch,
   };
@@ -90,7 +90,7 @@ async function notifySlack(generated: Generated[], todayLabel: string) {
   const lines = generated.map(
     (g) =>
       `• *${g.milestone}* · ${g.event} → \`content/blog/${g.slug}.mdx\`` +
-      (g.github ? ` (GitHub: ${g.github.ok ? "✅" : "❌ " + g.github.error})` : ""),
+      (g.github ? ` (GitHub: ${g.github.ok ? "✅": "❌ " + g.github.error})`: ""),
   );
   const text = `*Vyrek race-coverage bot* (${todayLabel})\n${lines.join("\n")}`;
   try {
@@ -110,7 +110,7 @@ export async function GET(req: Request) {
     return NextResponse.json(
       {
         ok: false,
-        error: "CRON_SECRET not configured — see docs/marketing-seo-strategy.md",
+        error: "CRON_SECRET not configured, see docs/marketing-seo-strategy.md",
       },
       { status: 503 },
     );
@@ -123,7 +123,7 @@ export async function GET(req: Request) {
   // Optional override for testing: ?date=2026-03-07 acts as "today".
   const url = new URL(req.url);
   const dateParam = url.searchParams.get("date");
-  const today = dateParam ? new Date(dateParam) : new Date();
+  const today = dateParam ? new Date(dateParam): new Date();
   const todayLabel = today.toISOString().slice(0, 10);
   const autoCommit = process.env.VYREK_BOT_AUTOPUBLISH === "true";
 
@@ -161,7 +161,7 @@ export async function GET(req: Request) {
       ...g,
       // Trim MDX in the response to avoid log spam; full content is in the
       // bot's GitHub commit (when enabled) and Slack notification.
-      mdx: g.mdx.slice(0, 200) + "…",
+      mdx: g.mdx.slice(0, 200) + "...",
     })),
   });
 }

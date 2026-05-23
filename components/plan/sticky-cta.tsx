@@ -15,7 +15,7 @@ export function StickyCta({
         disabled={loading}
         className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-pill bg-vyrek-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,opacity,transform] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {loading ? "One moment…" : "Start training — 7 days free →"}
+        {loading ? "One moment...": "Start training. 7 days free →"}
       </button>
     </div>
   );

@@ -1,6 +1,6 @@
 /**
  * Goal-time and audience plan templates. Drives the /plans/[slug]
- * programmatic pages — one per high-intent keyword cluster.
+ * programmatic pages, one per high-intent keyword cluster.
  */
 
 export type PlanTemplate = {
@@ -20,7 +20,7 @@ export type PlanTemplate = {
   whoFor: string[];
   /** Prerequisites (4-6 bullets). */
   prerequisites: string[];
-  /** Sample week — 4-7 sessions. */
+  /** Sample week. 4-7 sessions. */
   sampleWeek: { day: string; session: string; detail: string }[];
   /** Page FAQs. */
   faqs: { q: string; a: string }[];
@@ -91,7 +91,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
       },
       {
         q: "Do I need to train every day for sub-60?",
-        a: "Six days a week is typical. The seventh is a true rest day — not a 'light' day. Recovery is when adaptation happens. Without it, the volume just accumulates fatigue.",
+        a: "Six days a week is typical. The seventh is a true rest day, not a 'light' day. Recovery is when adaptation happens. Without it, the volume just accumulates fatigue.",
       },
     ],
   },
@@ -161,7 +161,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     eyebrow: "Sub-90 · benchmark",
     programmeSlug: "sub-90",
     intro: [
-      "A sub-90 Hyrox is the benchmark age-group finish — strong, consistent, race-tested. Most athletes who break 90 do so on their second or third race after a structured build.",
+      "A sub-90 Hyrox is the benchmark age-group finish, strong, consistent, race-tested. Most athletes who break 90 do so on their second or third race after a structured build.",
       "Vyrek's Sub-90 programme starts with a diagnostic block: three race-simulation sessions across weeks 1-3 that identify whether your limiter is aerobic capacity, station strength, or pacing discipline. The next 9 weeks target whichever one's holding you back.",
     ],
     whoFor: [
@@ -244,7 +244,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     faqs: [
       {
         q: "Can I break 100 on 4 days a week?",
-        a: "Yes. Most sub-100 finishers train 4 sessions a week. The structure matters more than the count — one long aerobic, one tempo, one Hyrox-pattern hybrid, one strength.",
+        a: "Yes. Most sub-100 finishers train 4 sessions a week. The structure matters more than the count, one long aerobic, one tempo, one Hyrox-pattern hybrid, one strength.",
       },
     ],
   },
@@ -258,7 +258,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     eyebrow: "First Race",
     programmeSlug: "first-race",
     intro: [
-      "Vyrek's First Race programme is built for total Hyrox beginners — athletes who've never raced and may not have done a CrossFit-style workout before. The 12 weeks build aerobic capacity, station competence, and race-pattern familiarity, in that order.",
+      "Vyrek's First Race programme is built for total Hyrox beginners, athletes who've never raced and may not have done a CrossFit-style workout before. The 12 weeks build aerobic capacity, station competence, and race-pattern familiarity, in that order.",
       "You don't need to be a sub-25 runner. You don't need a CrossFit gym. You need 4 hours a week and a willingness to follow a plan written by Elite 15 coaches.",
     ],
     whoFor: [
@@ -297,11 +297,11 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     faqs: [
       {
         q: "Is 12 weeks enough to train for my first Hyrox?",
-        a: "Yes — for anyone with a basic running and strength baseline. If you can run 5 km without stopping and squat your bodyweight, 12 weeks is plenty for a first-time finish in the 100-110 minute range.",
+        a: "Yes, for anyone with a basic running and strength baseline. If you can run 5 km without stopping and squat your bodyweight, 12 weeks is plenty for a first-time finish in the 100-110 minute range.",
       },
       {
         q: "Do I need to be a CrossFit athlete to train for Hyrox?",
-        a: "No. Hyrox is more accessible than CrossFit — the movements are simpler (no Olympic lifts, no gymnastics) and the format is predictable. A consistent runner with basic strength training can finish their first Hyrox in 12 weeks.",
+        a: "No. Hyrox is more accessible than CrossFit, the movements are simpler (no Olympic lifts, no gymnastics) and the format is predictable. A consistent runner with basic strength training can finish their first Hyrox in 12 weeks.",
       },
     ],
   },
@@ -314,7 +314,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     programmeSlug: "first-race",
     intro: [
       "Vyrek programmes auto-calibrate to women's open standards: 102 kg sled push, 78 kg sled pull, 16 kg farmers carry, 6 kg wall ball to a 9 ft target. Sandbag lunge weight scales as a percentage of your body weight.",
-      "The training plan is the same structure — aerobic base, race-specific intensity, peak and taper — with loads dialled to your category and bodyweight.",
+      "The training plan is the same structure, aerobic base, race-specific intensity, peak and taper, with loads dialled to your category and bodyweight.",
     ],
     whoFor: [
       "Women preparing for their first Hyrox.",
@@ -356,7 +356,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
       },
       {
         q: "Should I train differently from male athletes?",
-        a: "Structurally no — the periodisation is the same. The differences are calibrated loads and a slightly different ratio of strength-to-running emphasis depending on your baseline. Vyrek auto-applies this from the quiz.",
+        a: "Structurally no, the periodisation is the same. The differences are calibrated loads and a slightly different ratio of strength-to-running emphasis depending on your baseline. Vyrek auto-applies this from the quiz.",
       },
     ],
   },
@@ -364,11 +364,11 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     slug: "hyrox-training-plan-over-40",
     kind: "audience",
     title: "Hyrox training plan for over-40 athletes",
-    hook: "Masters Hyrox programming — recovery-first, sustainable, race-ready. Built around your real-world recovery rate.",
+    hook: "Masters Hyrox programming, recovery-first, sustainable, race-ready. Built around your real-world recovery rate.",
     eyebrow: "Masters",
     programmeSlug: "first-race",
     intro: [
-      "Hyrox over 40 isn't a different sport — it's the same race with more attention paid to recovery. The Vyrek masters programming uses the same structure as our standard plans, with three differences: more deload weeks, more Zone 2 volume, and tighter rules around joint-loaded movements.",
+      "Hyrox over 40 isn't a different sport, it's the same race with more attention paid to recovery. The Vyrek masters programming uses the same structure as our standard plans, with three differences: more deload weeks, more Zone 2 volume, and tighter rules around joint-loaded movements.",
       "You can finish a Hyrox over 40, over 50, over 60. The athletes who do it consistently are the ones who treat recovery as part of the training, not a luxury.",
     ],
     whoFor: [
@@ -423,8 +423,8 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     eyebrow: "Doubles",
     programmeSlug: "doubles",
     intro: [
-      "Hyrox doubles is the fastest-growing division. It's also a different race from solo — paired running, split station work, fast handoffs, partner-conversation strategy.",
-      "Vyrek's Doubles programme assumes you train as a pair most of the time. Sessions are designed for two athletes — one runs while the other does a station, then swap. Calibration handles each athlete's individual loads plus the team's combined targets.",
+      "Hyrox doubles is the fastest-growing division. It's also a different race from solo, paired running, split station work, fast handoffs, partner-conversation strategy.",
+      "Vyrek's Doubles programme assumes you train as a pair most of the time. Sessions are designed for two athletes, one runs while the other does a station, then swap. Calibration handles each athlete's individual loads plus the team's combined targets.",
     ],
     whoFor: [
       "Doubles teams preparing for their first paired race.",

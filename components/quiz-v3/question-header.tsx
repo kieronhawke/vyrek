@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 
 /**
- * Standard question header — title + optional helper text. Sits at the top
+ * Standard question header, title + optional helper text. Sits at the top
  * of every single-select/multi-select/input screen, above the options.
  */
 export function QuestionHeader({
@@ -22,7 +22,7 @@ export function QuestionHeader({
         <p className="mt-2 text-sm leading-relaxed text-vyrek-text-secondary md:text-base">
           {helper}
         </p>
-      ) : null}
+      ): null}
     </header>
   );
 }

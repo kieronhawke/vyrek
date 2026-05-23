@@ -13,7 +13,6 @@ const LINKS = [
   { href: "/programmes", label: "Programmes" },
   { href: "/how-it-works", label: "How it works" },
   { href: "/blog", label: "Journal" },
-  { href: "/pricing", label: "Pricing" },
 ];
 
 export function MarketingNav() {
@@ -30,7 +29,7 @@ export function MarketingNav() {
   }, []);
 
   // Close the drawer whenever the route changes. Canonical sync-from-route
-  // pattern — pathname-driven, no external store to subscribe to.
+  // pattern, pathname-driven, no external store to subscribe to.
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
@@ -56,7 +55,7 @@ export function MarketingNav() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // Subtle magnetic pull on the CTA — fine pointers only
+  // Subtle magnetic pull on the CTA, fine pointers only
   useMagnetic(ctaRef, { strength: 0.18, radius: 80 });
 
   const isActive = (href: string) =>
@@ -73,14 +72,13 @@ export function MarketingNav() {
         className={cn(
           "h-16 transition-[background,backdrop-filter,border-color] duration-base ease-out",
           scrolled || open
-            ? "border-b border-vyrek-border-subtle bg-vyrek-base/85 backdrop-blur-xl"
-            : "border-b border-transparent bg-transparent",
+            ? "border-b border-vyrek-border-subtle bg-vyrek-base/85 backdrop-blur-xl": "border-b border-transparent bg-transparent",
         )}
       >
         <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-3 px-5 md:px-8">
           <Link
             href="/"
-            aria-label="Vyrek — home"
+            aria-label="Vyrek, home"
             className="inline-flex items-center"
           >
             <Wordmark size="md" />
@@ -94,12 +92,11 @@ export function MarketingNav() {
               <Link
                 key={link.href}
                 href={link.href}
-                aria-current={isActive(link.href) ? "page" : undefined}
+                aria-current={isActive(link.href) ? "page": undefined}
                 className={cn(
                   "inline-flex h-10 items-center px-3 text-sm transition-colors",
                   isActive(link.href)
-                    ? "text-vyrek-text"
-                    : "text-vyrek-text-secondary hover:text-vyrek-text",
+                    ? "text-vyrek-text": "text-vyrek-text-secondary hover:text-vyrek-text",
                 )}
               >
                 {link.label}
@@ -121,7 +118,7 @@ export function MarketingNav() {
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-controls="mobile-nav-drawer"
-              aria-label={open ? "Close navigation" : "Open navigation"}
+              aria-label={open ? "Close navigation": "Open navigation"}
               className="inline-flex size-11 items-center justify-center rounded-pill border border-vyrek-border bg-vyrek-elevated text-vyrek-text transition-colors hover:border-vyrek-border-strong md:hidden"
             >
               <span aria-hidden className="relative block size-4">
@@ -149,7 +146,7 @@ export function MarketingNav() {
         </div>
       </div>
 
-      {/* Mobile drawer — slides down beneath the nav bar */}
+      {/* Mobile drawer, slides down beneath the nav bar */}
       <div
         id="mobile-nav-drawer"
         aria-hidden={!open}
@@ -157,7 +154,7 @@ export function MarketingNav() {
           "fixed inset-x-0 top-0 z-40 origin-top md:hidden",
           "pt-[calc(var(--safe-top)+4rem)]",
           "transition-[transform,opacity] duration-base ease-out",
-          open ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0",
+          open ? "translate-y-0 opacity-100": "pointer-events-none -translate-y-2 opacity-0",
         )}
       >
         <div className="mx-5 mt-2 overflow-hidden rounded-2xl border border-vyrek-border bg-vyrek-elevated shadow-2xl">
@@ -166,12 +163,11 @@ export function MarketingNav() {
               <Link
                 key={link.href}
                 href={link.href}
-                aria-current={isActive(link.href) ? "page" : undefined}
+                aria-current={isActive(link.href) ? "page": undefined}
                 className={cn(
                   "flex items-center justify-between rounded-md px-4 py-3 text-base transition-colors",
                   isActive(link.href)
-                    ? "bg-vyrek-overlay text-vyrek-text"
-                    : "text-vyrek-text-secondary hover:bg-vyrek-overlay hover:text-vyrek-text",
+                    ? "bg-vyrek-overlay text-vyrek-text": "text-vyrek-text-secondary hover:bg-vyrek-overlay hover:text-vyrek-text",
                 )}
               >
                 <span>{link.label}</span>
@@ -205,7 +201,7 @@ export function MarketingNav() {
         onClick={() => setOpen(false)}
         className={cn(
           "fixed inset-0 z-30 bg-black/40 backdrop-blur-sm transition-opacity duration-base md:hidden",
-          open ? "opacity-100" : "pointer-events-none opacity-0",
+          open ? "opacity-100": "pointer-events-none opacity-0",
         )}
       />
     </header>

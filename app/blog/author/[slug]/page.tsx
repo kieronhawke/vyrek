@@ -31,11 +31,11 @@ export async function generateMetadata({
   const author = AUTHORS[slug];
   if (!author) return { title: "Not found" };
   return {
-    title: `${author.name} — Vyrek Journal`,
+    title: `${author.name}. Vyrek Journal`,
     description: author.bio,
     alternates: { canonical: authorUrl(slug) },
     openGraph: {
-      title: `${author.name} — Vyrek Journal`,
+      title: `${author.name}. Vyrek Journal`,
       description: author.bio,
       url: authorUrl(slug),
       siteName: "Vyrek",
@@ -93,7 +93,7 @@ export default async function AuthorPage({
                 </li>
               ))}
             </ul>
-          ) : (
+          ): (
             <p className="mt-12 text-base text-vyrek-text-secondary">
               No posts from this author yet.
             </p>

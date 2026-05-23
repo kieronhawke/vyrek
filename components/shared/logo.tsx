@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Inline SVG monogram — V glyph on a rounded square. Used at small sizes
+ * Inline SVG monogram. V glyph on a rounded square. Used at small sizes
  * where the wordmark would be unreadable (app icons, very tight nav slots,
  * favicons via /public/logo-monogram.svg). currentColor inherits from
  * parent.
@@ -44,7 +44,7 @@ export function Monogram({
 }
 
 /**
- * VYREK wordmark — rendered as live HTML text in Oswald 700 (`font-display`)
+ * VYREK wordmark, rendered as live HTML text in Oswald 700 (`font-display`)
  * so it inherits text colour and scales cleanly. Use this everywhere the
  * brand name shows in the document flow (nav, hero, footer chrome).
  */

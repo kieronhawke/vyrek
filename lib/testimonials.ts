@@ -18,7 +18,7 @@ export type Testimonial = {
   raceTime?: string;
   city?: string;
   programme?: string;
-  /** Portrait image path — referenced in components/marketing/testimonials.tsx */
+  /** Portrait image path, referenced in components/marketing/testimonials.tsx */
   image?: string;
   /** Pre-launch illustrative flag. Renders a "Pre-launch · illustrative"
    * chip on the card so visitors don't mistake the quote for a real

@@ -1,6 +1,6 @@
 /**
  * UK Hyrox race events. Drives the /hyrox/events/[slug] programmatic pages
- * with full Event schema (a moat — competitors emit zero Event JSON-LD).
+ * with full Event schema (a moat, competitors emit zero Event JSON-LD).
  *
  * Dates are placeholder approximations based on the 2024-26 calendar
  * cadence (each major UK venue typically gets one event per season).
@@ -9,13 +9,13 @@
 
 export type HyroxEvent = {
   slug: string;
-  /** Display name, e.g. "Hyrox London — March 2026". */
+  /** Display name, e.g. "Hyrox London. March 2026". */
   name: string;
   /** Short eyebrow, e.g. "London · ExCeL". */
   eyebrow: string;
   /** ISO date (start). */
   startDate: string;
-  /** ISO date (end — usually one day later for two-day race weekend). */
+  /** ISO date (end, usually one day later for two-day race weekend). */
   endDate: string;
   /** Venue identity. */
   venue: {
@@ -29,7 +29,7 @@ export type HyroxEvent = {
   };
   /** One paragraph venue intro. */
   about: string;
-  /** Transport notes — tube/train/car, parking, hotels. */
+  /** Transport notes, tube/train/car, parking, hotels. */
   logistics: string[];
   /** Divisions running at this event. */
   divisions: string[];
@@ -37,14 +37,14 @@ export type HyroxEvent = {
   prepWindow: string;
   /** Local FAQs. */
   faqs: { q: string; a: string }[];
-  /** Marks past events — sets eventStatus and disables future-tense copy. */
+  /** Marks past events, sets eventStatus and disables future-tense copy. */
   past?: boolean;
 };
 
 export const HYROX_EVENTS: HyroxEvent[] = [
   {
     slug: "london-excel-march-2026",
-    name: "Hyrox London — March 2026",
+    name: "Hyrox London. March 2026",
     eyebrow: "London · ExCeL",
     startDate: "2026-03-21",
     endDate: "2026-03-22",
@@ -62,7 +62,7 @@ export const HYROX_EVENTS: HyroxEvent[] = [
     logistics: [
       "DLR: Custom House for ExCeL or Prince Regent are both 2-3 min walk.",
       "Elizabeth Line: Custom House station is direct from central London.",
-      "Parking: ExCeL has paid parking on-site (book ahead — sells out for race weekends).",
+      "Parking: ExCeL has paid parking on-site (book ahead, sells out for race weekends).",
       "Hotels: Aloft, Crowne Plaza, and Sunborn are walking distance. Hotels in Canary Wharf are 10 min by DLR.",
       "Bag drop opens 90 min before your wave; warm-up area is upstairs from check-in.",
     ],
@@ -78,7 +78,7 @@ export const HYROX_EVENTS: HyroxEvent[] = [
     faqs: [
       {
         q: "How do I get to ExCeL for Hyrox London?",
-        a: "The DLR (Custom House or Prince Regent) is the fastest route from central London — both stations are a 2-3 minute walk from the venue entrance. The Elizabeth Line also stops at Custom House. Driving is possible but parking sells out for race weekends.",
+        a: "The DLR (Custom House or Prince Regent) is the fastest route from central London, both stations are a 2-3 minute walk from the venue entrance. The Elizabeth Line also stops at Custom House. Driving is possible but parking sells out for race weekends.",
       },
       {
         q: "What hotels are near Hyrox London ExCeL?",
@@ -92,7 +92,7 @@ export const HYROX_EVENTS: HyroxEvent[] = [
   },
   {
     slug: "manchester-central-april-2026",
-    name: "Hyrox Manchester — April 2026",
+    name: "Hyrox Manchester. April 2026",
     eyebrow: "Manchester · Central",
     startDate: "2026-04-18",
     endDate: "2026-04-19",
@@ -106,7 +106,7 @@ export const HYROX_EVENTS: HyroxEvent[] = [
       googleMapsUrl: "https://maps.google.com/?q=Manchester+Central",
     },
     about:
-      "Manchester Central is the Northern Hyrox flagship — 5 minutes from Piccadilly station, walking distance from most city-centre hotels. Strong local community of athletes from Manchester, Leeds, Liverpool, and surrounding areas.",
+      "Manchester Central is the Northern Hyrox flagship. 5 minutes from Piccadilly station, walking distance from most city-centre hotels. Strong local community of athletes from Manchester, Leeds, Liverpool, and surrounding areas.",
     logistics: [
       "Train: Manchester Piccadilly is 10 min walk; Oxford Road is 5 min.",
       "Tram: St Peter's Square is the closest stop, 3 min walk.",
@@ -124,7 +124,7 @@ export const HYROX_EVENTS: HyroxEvent[] = [
     faqs: [
       {
         q: "How do I get to Manchester Central for Hyrox?",
-        a: "Manchester Piccadilly is a 10-minute walk; the Metrolink stops at St Peter's Square (3-min walk). Driving is fine but parking on race weekend sells fast — book an NCP space ahead.",
+        a: "Manchester Piccadilly is a 10-minute walk; the Metrolink stops at St Peter's Square (3-min walk). Driving is fine but parking on race weekend sells fast, book an NCP space ahead.",
       },
       {
         q: "Is Hyrox Manchester busier than London?",
@@ -134,7 +134,7 @@ export const HYROX_EVENTS: HyroxEvent[] = [
   },
   {
     slug: "birmingham-nec-october-2026",
-    name: "Hyrox Birmingham — October 2026",
+    name: "Hyrox Birmingham. October 2026",
     eyebrow: "Birmingham · NEC",
     startDate: "2026-10-17",
     endDate: "2026-10-18",
@@ -166,13 +166,13 @@ export const HYROX_EVENTS: HyroxEvent[] = [
     faqs: [
       {
         q: "Is the NEC easy to get to for Hyrox?",
-        a: "Yes — Birmingham International rail station is a 5-min walk from the venue (direct trains from London Euston in ~75 min), and the M42 is right outside. Parking is plentiful but book ahead.",
+        a: "Yes. Birmingham International rail station is a 5-min walk from the venue (direct trains from London Euston in ~75 min), and the M42 is right outside. Parking is plentiful but book ahead.",
       },
     ],
   },
   {
     slug: "glasgow-ovo-november-2026",
-    name: "Hyrox Glasgow — November 2026",
+    name: "Hyrox Glasgow. November 2026",
     eyebrow: "Glasgow · OVO Hydro",
     startDate: "2026-11-14",
     endDate: "2026-11-15",
@@ -186,7 +186,7 @@ export const HYROX_EVENTS: HyroxEvent[] = [
       googleMapsUrl: "https://maps.google.com/?q=OVO+Hydro+Glasgow",
     },
     about:
-      "The OVO Hydro is the Scottish Hyrox flagship — a 12,500-capacity arena right on the Clyde, 10 min from Glasgow Central. Natural home for Scottish athletes plus a strong contingent travelling up from Newcastle, Edinburgh, and the Borders.",
+      "The OVO Hydro is the Scottish Hyrox flagship, a 12,500-capacity arena right on the Clyde, 10 min from Glasgow Central. Natural home for Scottish athletes plus a strong contingent travelling up from Newcastle, Edinburgh, and the Borders.",
     logistics: [
       "Train: Glasgow Exhibition Centre station is on-site (5 min walk).",
       "Glasgow Central is 15 min walk along the Clyde or a short taxi.",
@@ -203,7 +203,7 @@ export const HYROX_EVENTS: HyroxEvent[] = [
     faqs: [
       {
         q: "When is Hyrox Glasgow 2026?",
-        a: "The expected race weekend is 14-15 November 2026 at the OVO Hydro. Hyrox typically confirms dates 6-9 months in advance — check the official Hyrox calendar for final confirmation.",
+        a: "The expected race weekend is 14-15 November 2026 at the OVO Hydro. Hyrox typically confirms dates 6-9 months in advance, check the official Hyrox calendar for final confirmation.",
       },
     ],
   },

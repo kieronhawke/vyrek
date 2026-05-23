@@ -8,7 +8,7 @@ import { SplitHeading } from "@/components/shared/split-heading";
 export const metadata: Metadata = {
   title: "Press & media",
   description:
-    "Vyrek press and media kit — logos, brand assets, media contact.",
+    "Vyrek press and media kit, logos, brand assets, media contact.",
 };
 
 const ASSETS = [
@@ -81,8 +81,7 @@ export default function PressPage() {
                       <a
                         href={asset.href}
                         {...(isPage
-                          ? {}
-                          : { target: "_blank", rel: "noreferrer", download: true })}
+                          ? {}: { target: "_blank", rel: "noreferrer", download: true })}
                         className="group flex h-full flex-col gap-2 rounded-lg border border-vyrek-border bg-vyrek-elevated p-5 transition-[border,transform] duration-fast ease-out hover:-translate-y-0.5 hover:border-vyrek-border-strong active:scale-[0.99]"
                       >
                         <span className="text-base font-bold text-vyrek-text">
@@ -92,7 +91,7 @@ export default function PressPage() {
                           {asset.note}
                         </span>
                         <span className="mt-2 inline-flex items-center gap-1 text-sm text-vyrek-accent">
-                          {isPage ? "Open →" : "Download ↗"}
+                          {isPage ? "Open →": "Download ↗"}
                         </span>
                       </a>
                     </li>
@@ -145,7 +144,7 @@ export default function PressPage() {
                     <p
                       className="text-sm leading-relaxed text-vyrek-text-secondary"
                       // The strings above include `&apos;` for JSX safety;
-                      // dangerouslySetInnerHTML would be overkill — the entity
+                      // dangerouslySetInnerHTML would be overkill, the entity
                       // resolves at render. Plain text is fine.
                     >
                       {item.body.replace(/&apos;/g, "’")}
@@ -166,7 +165,7 @@ export default function PressPage() {
                 Programmes are 12 weeks, designed by Elite 15 athletes,
                 recalibrate every Sunday based on logged sessions. Founding
                 coach: James Wright, top 50 at the 2025 World Championships.
-                Subscription is £4.99 per month with a 7-day free trial.
+                Subscription is £8.99 per month with a 7-day free trial.
               </p>
             </section>
           </div>

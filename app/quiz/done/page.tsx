@@ -24,7 +24,7 @@ export default function QuizDone() {
     return matchProgramme(state.answers);
   }, [state]);
 
-  // Demo cinematic — slight pulse on the dot for a few seconds.
+  // Demo cinematic, slight pulse on the dot for a few seconds.
   useEffect(() => {
     const id = window.setTimeout(() => undefined, 100);
     return () => window.clearTimeout(id);
@@ -63,10 +63,10 @@ export default function QuizDone() {
           key={programme ?? "calibrating"}
           className="mt-3 text-3xl font-black leading-tight tracking-[-0.05em] text-vyrek-text md:text-4xl lg:text-5xl"
         >
-          {programme ? PROGRAMME_LABEL[programme] : "Calibrating"}
+          {programme ? PROGRAMME_LABEL[programme]: "Calibrating"}
         </SplitHeading>
         <p className="mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
-          Your dated Week 1 is ready. Weeks 2–12 unlock with your membership —
+          Your dated Week 1 is ready. Weeks 2-12 unlock with your membership,
           first week free.
         </p>
         <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row">

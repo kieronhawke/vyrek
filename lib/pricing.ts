@@ -5,10 +5,10 @@
  */
 
 export const PRICING = {
-  monthlyPence: 499,
-  monthlyDisplay: "£4.99",
+  monthlyPence: 899,
+  monthlyDisplay: "£8.99",
   trialDays: 7,
-  anchorCopy: "Less than a coffee a week",
+  anchorCopy: "Roughly two coffees a month",
   ctaLabel: "Start training →",
   inclusions: [
     "Personalised 12-week programme",

@@ -13,7 +13,7 @@ import {
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 /**
- * Screen 16 — Cinematic transitional ~3.5s, then route to /plan.
+ * Screen 16. Cinematic transitional ~3.5s, then route to /plan.
  *
  * Five lines reveal in sequence. The user's actual data is interpolated
  * (programme name, race weeks, equipment count) so it feels personal.
@@ -25,7 +25,7 @@ export function CalculatingScreen({ answers }: { answers: QuizAnswers }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   // Lazy init: skip the animated reveal entirely under reduced motion.
   const [visibleLines, setVisibleLines] = useState<number>(() =>
-    prefersReducedMotion ? TOTAL_LINES : 0,
+    prefersReducedMotion ? TOTAL_LINES: 0,
   );
 
   const programme = determineProgramme(answers);
@@ -78,8 +78,8 @@ export function CalculatingScreen({ answers }: { answers: QuizAnswers }) {
             key={i}
             className="font-mono text-sm uppercase tracking-[0.16em] text-vyrek-text-secondary transition-opacity duration-500"
             style={{
-              opacity: i < visibleLines ? 1 : 0,
-              transform: i < visibleLines ? "translateY(0)" : "translateY(4px)",
+              opacity: i < visibleLines ? 1: 0,
+              transform: i < visibleLines ? "translateY(0)": "translateY(4px)",
             }}
           >
             {line}

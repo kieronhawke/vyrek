@@ -6,7 +6,7 @@ import { Eyebrow } from "@/components/shared/eyebrow";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
- * Screen 15 — capture the email before plan reveal. Single input, 16px
+ * Screen 15, capture the email before plan reveal. Single input, 16px
  * font-size (prevents iOS auto-zoom), trust line below, mono helper.
  */
 export function EmailGateScreen({

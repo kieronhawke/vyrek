@@ -3,7 +3,7 @@ import { listPostMeta } from "@/lib/blog/posts";
 import { siteUrl, postUrl } from "@/lib/blog/urls";
 
 /**
- * JSON Feed v1.1 — modern alternative to RSS. Consumed by Feedbin,
+ * JSON Feed v1.1, modern alternative to RSS. Consumed by Feedbin,
  * NetNewsWire, and other contemporary readers. Mirrors the RSS feed
  * content but in spec-compliant JSON.
  *
@@ -23,7 +23,7 @@ export async function GET() {
     date_published: new Date(p.publishedAt).toISOString(),
     date_modified: new Date(p.updatedAt ?? p.publishedAt).toISOString(),
     tags: p.tags,
-    image: p.heroImage.startsWith("http") ? p.heroImage : `${siteUrl()}${p.heroImage}`,
+    image: p.heroImage.startsWith("http") ? p.heroImage: `${siteUrl()}${p.heroImage}`,
     authors: [{ name: p.author.name }],
   }));
   const body = {

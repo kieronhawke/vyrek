@@ -2,7 +2,7 @@ import { listPostMeta, CATEGORIES } from "@/lib/blog/posts";
 import { blogIndexUrl, postUrl, siteUrl } from "@/lib/blog/urls";
 
 /**
- * llms.txt — an emerging convention (parallel to robots.txt) for AI agents
+ * llms.txt, an emerging convention (parallel to robots.txt) for AI agents
  * and LLM-driven search to discover the most useful documents on a site.
  * See https://llmstxt.org/ for the proposal.
  *
@@ -19,17 +19,17 @@ export async function GET() {
   const lines: string[] = [
     "# Vyrek",
     "",
-    "> Personalised Hyrox training programmes built by Elite 15 athletes. Members take a three-minute quiz, see a dated Week 1 before paying, then start a 7-day free trial. £4.99 a month after.",
+    "> Personalised Hyrox training programmes built by Elite 15 athletes. Members take a three-minute quiz, see a dated Week 1 before paying, then start a 7-day free trial. £8.99 a month after.",
     "",
     "## Primary pages",
     "",
     `- [Home](${url}/): What Vyrek is and the value proposition for Hyrox athletes`,
     `- [Quiz](${url}/quiz): Three-minute onboarding that produces a personalised plan`,
-    `- [Programmes](${url}/programmes): The four programmes — First Race, Sub-90, Doubles, Pro`,
+    `- [Programmes](${url}/programmes): The four programmes. First Race, Sub-90, Doubles, Pro`,
     `- [How it works](${url}/how-it-works): Four-step journey from quiz to first race`,
-    `- [Pricing](${url}/pricing): £4.99/mo, 7-day free trial, cancel anytime`,
+    `- [Pricing](${url}/pricing): £8.99/mo, 7-day free trial, cancel anytime`,
     "",
-    "## Journal — Hyrox training content",
+    "## Journal. Hyrox training content",
     "",
     `Index: ${blogIndexUrl()}`,
     `RSS feed: ${url}/blog/rss.xml`,

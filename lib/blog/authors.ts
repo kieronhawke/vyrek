@@ -28,11 +28,8 @@ export const AUTHORS: Record<string, Author> = {
     slug: "vyrek-team",
     name: "The Vyrek team",
     role: "Coaches and editors",
-    bio: "The Vyrek programming team — Elite 15 athletes and S&C coaches who've raced Hyrox at every level.",
+    bio: "The Vyrek programming team. Elite 15 athletes and S&C coaches who've raced Hyrox at every level.",
     photo: "/media/images/bento-coaches.jpg",
-    sameAs: [
-      "https://instagram.com/vyrek",
-      "https://tiktok.com/@vyrek",
-    ],
+    sameAs: [],
   },
 };

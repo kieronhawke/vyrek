@@ -36,7 +36,7 @@ export async function generateMetadata({
   const p = getPlanTemplate(slug);
   if (!p) return { title: "Not found" };
   const url = `${siteUrl()}/plans/${p.slug}`;
-  const title = `${p.title} — 12 weeks, personalised by Vyrek`;
+  const title = `${p.title}. 12 weeks, personalised by Vyrek`;
   return {
     title,
     description: p.hook,
@@ -97,7 +97,7 @@ export default async function PlanTemplatePage({
     },
     offers: {
       "@type": "Offer",
-      price: "4.99",
+      price: "8.99",
       priceCurrency: "GBP",
       availability: "https://schema.org/InStock",
     },
@@ -168,7 +168,7 @@ export default async function PlanTemplatePage({
                 href="/pricing"
                 className="inline-flex h-12 items-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-elevated px-5 text-sm font-medium text-vyrek-text transition-colors hover:border-vyrek-border-strong"
               >
-                £4.99/mo — see pricing
+                £8.99/mo, see pricing
               </Link>
             </div>
           </div>
@@ -259,7 +259,7 @@ export default async function PlanTemplatePage({
               Get your personalised version.
             </h2>
             <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
-              Three-minute quiz. Dated Week 1 before you pay. £4.99/month.
+              Three-minute quiz. Dated Week 1 before you pay. £8.99/month.
             </p>
             <div className="mt-8">
               <CtaButton href={`/quiz?program=${p.programmeSlug}`} size="lg">
@@ -272,9 +272,7 @@ export default async function PlanTemplatePage({
           <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
             <Eyebrow>Other plans</Eyebrow>
             <ul role="list" className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {PLAN_TEMPLATES.filter((x) => x.slug !== p.slug)
-                .slice(0, 4)
-                .map((x) => (
+              {PLAN_TEMPLATES.filter((x) => x.slug !== p.slug).slice(0, 4).map((x) => (
                   <li key={x.slug}>
                     <Link
                       href={`/plans/${x.slug}`}

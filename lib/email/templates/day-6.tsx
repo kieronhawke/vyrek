@@ -39,10 +39,10 @@ export function Day6Email({
   return (
     <Html>
       <Head />
-      <Preview>Tomorrow: £4.99. Cancel anytime.</Preview>
+      <Preview>Tomorrow: £8.99. Cancel anytime.</Preview>
       <Body style={bodyStyle}>
         <Container style={containerStyle}>
-          <Text style={monoEyebrow}>[ DAY 06 · TOMORROW: £4.99 ]</Text>
+          <Text style={monoEyebrow}>[ DAY 06 · TOMORROW: £8.99 ]</Text>
           <Heading
             style={{
               color: TEXT,
@@ -54,7 +54,7 @@ export function Day6Email({
               margin: "16px 0 8px",
             }}
           >
-            Tomorrow: £4.99.
+            Tomorrow: £8.99.
           </Heading>
           <Text
             style={{
@@ -65,7 +65,7 @@ export function Day6Email({
               margin: 0,
             }}
           >
-            Your trial converts tomorrow. £4.99 a month for the next 11 weeks
+            Your trial converts tomorrow. £8.99 a month for the next 11 weeks
             of programming. Cancel from your account any time.
           </Text>
 
@@ -81,7 +81,7 @@ export function Day6Email({
               margin: 0,
             }}
           >
-            Week 2 — what&apos;s waiting:
+            Week 2, what&apos;s waiting:
           </Text>
 
           <Section style={{ marginTop: 12 }}>

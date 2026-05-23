@@ -37,7 +37,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const cat = CATEGORIES[slug as Category];
   if (!cat) return { title: "Not found" };
-  const title = `${cat.label} — Vyrek Journal`;
+  const title = `${cat.label}. Vyrek Journal`;
   return {
     title,
     description: cat.description,
@@ -106,9 +106,9 @@ export default async function CategoryPage({
                 </li>
               ))}
             </ul>
-          ) : (
+          ): (
             <p className="mt-10 text-base text-vyrek-text-secondary">
-              No posts in this category yet — check back soon.
+              No posts in this category yet, check back soon.
             </p>
           )}
 

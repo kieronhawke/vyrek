@@ -1,13 +1,13 @@
 /**
- * Vyrek plan generator — Phase 2 / docs/vyrek-phase-d-e-brief.md.
+ * Vyrek plan generator. Phase 2 / docs/vyrek-phase-d-e-brief.md.
  *
  * Pure, deterministic functions that build a 7-day Week-1 schedule given
  * the user's quiz answers. Week 1 is what /plan reveals before paywall;
  * Weeks 2-12 use the same building blocks but live server-side only.
  *
  * Calibration:
- *   - Sled push / wall ball / farmers carry — fixed by sex (Hyrox standards)
- *   - Sandbag lunge — % of body weight
+ *   - Sled push / wall ball / farmers carry, fixed by sex (Hyrox standards)
+ *   - Sandbag lunge, % of body weight
  *
  * Adaptation:
  *   - Equipment list filters out exercises requiring missing kit
@@ -37,7 +37,7 @@ export type Block = {
   reps?: string;
   duration?: string;
   notes?: string;
-  /** Calibrated load — kg for the underlying value, with display unit */
+  /** Calibrated load, kg for the underlying value, with display unit */
   load?: { weight: number; unit: WeightUnit };
 };
 
@@ -90,10 +90,10 @@ export function deriveCalibration(answers: QuizAnswers): Calibration {
   const isMens = answers.sex === "men";
   const bodyKg = answers.weight ?? 75;
   return {
-    sledKg: isMens ? 152 : 102,
-    wallBallKg: isMens ? 9 : 6,
-    farmersKg: isMens ? 24 : 16,
-    sandbagKg: Math.round(bodyKg * (isMens ? 0.3 : 0.25)),
+    sledKg: isMens ? 152: 102,
+    wallBallKg: isMens ? 9: 6,
+    farmersKg: isMens ? 24: 16,
+    sandbagKg: Math.round(bodyKg * (isMens ? 0.3: 0.25)),
     unit: answers.weightUnit ?? "kg",
   };
 }
@@ -191,7 +191,7 @@ function buildHyroxWorkout(
       name: "Heavy carry",
       reps: "4 × 40m",
       load: { weight: cal.farmersKg, unit: cal.unit },
-      notes: "Farmers carry — substituted in for sled.",
+      notes: "Farmers carry, substituted in for sled.",
     });
   }
   if (wallBack && hasKit(answers, "wall-ball")) {
@@ -206,7 +206,7 @@ function buildHyroxWorkout(
       name: "Goblet squats",
       reps: "3 × 15",
       load: { weight: cal.farmersKg, unit: cal.unit },
-      notes: "Wall ball substitute — controlled tempo.",
+      notes: "Wall ball substitute, controlled tempo.",
     });
   }
 
@@ -231,8 +231,7 @@ function buildHyroxWorkout(
                   reps: "2 × 10m",
                   notes: "Half race weight.",
                 },
-              ]
-            : []),
+              ]: []),
         ],
       },
       { section: "main", durationMin: main, blocks: mainBlocks },
@@ -477,7 +476,7 @@ export function generateWeek1(
 }
 
 /**
- * Generate weeks 2-12 — placeholder that scales Week 1 by adding intensity
+ * Generate weeks 2-12, placeholder that scales Week 1 by adding intensity
  * each week. Real periodisation library lands in Phase F. Critical: this
  * function is only ever called server-side (from /api/plan/[week]).
  */
@@ -499,8 +498,7 @@ export function generateWeekN(
       ...w,
       title:
         w.type === "rest"
-          ? w.title
-          : `${w.title} · Week ${week} (+${(week - 1) * 5}% volume)`,
+          ? w.title: `${w.title} · Week ${week} (+${(week - 1) * 5}% volume)`,
     })),
   };
 }

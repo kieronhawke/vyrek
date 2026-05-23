@@ -5,11 +5,11 @@ import { SplitHeading } from "@/components/shared/split-heading";
 import { CountUp } from "@/components/shared/count-up";
 
 /**
- * Outcome stats block — pattern from Hybrid Athlete Club / Marchon:
+ * Outcome stats block, pattern from Hybrid Athlete Club / Marchon:
  * a row of large counters that signal scale + outcomes.
  *
- * Numbers below are honest *programme-construction* stats — verifiable
- * facts about what's been built — not invented member outcomes.
+ * Numbers below are honest *programme-construction* stats, verifiable
+ * facts about what's been built, not invented member outcomes.
  * When real outcome data is available ("82% hit their goal time"), swap
  * the entries and add a footnote.
  */
@@ -55,10 +55,10 @@ export function OutcomeStats() {
             id="outcome-stats-heading"
             className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
           >
-            What you get for £4.99 a month.
+            What you get for £8.99 a month.
           </SplitHeading>
         </header>
-        {/* Use a plain grid + dl pairs as siblings — wrapping <dt>/<dd>
+        {/* Use a plain grid + dl pairs as siblings, wrapping <dt>/<dd>
             inside an arbitrary <div> inside <dl> breaks the
             definition-list semantic rule. Each stat becomes its own
             self-contained card via div wrapper, not a dl child. */}

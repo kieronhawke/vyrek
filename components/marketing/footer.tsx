@@ -9,7 +9,6 @@ const COLUMNS = [
     links: [
       { label: "Programmes", href: "/programmes" },
       { label: "How it works", href: "/how-it-works" },
-      { label: "Pricing", href: "/pricing" },
       { label: "Refer & earn", href: "/account/refer" },
     ],
   },
@@ -76,24 +75,6 @@ export function MarketingFooter() {
             <Eyebrow bare className="text-vyrek-text-tertiary">
               MADE IN UK
             </Eyebrow>
-          </div>
-          <div className="flex gap-5 text-sm text-vyrek-text-secondary">
-            <a
-              href="https://instagram.com/vyrek"
-              target="_blank"
-              rel="noreferrer"
-              className="transition-colors hover:text-vyrek-text"
-            >
-              Instagram
-            </a>
-            <a
-              href="https://tiktok.com/@vyrek"
-              target="_blank"
-              rel="noreferrer"
-              className="transition-colors hover:text-vyrek-text"
-            >
-              TikTok
-            </a>
           </div>
         </div>
       </Container>

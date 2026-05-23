@@ -29,7 +29,7 @@ export function ContinueButton({
         "disabled:cursor-not-allowed disabled:opacity-40",
       )}
     >
-      {loading ? "One moment…" : label}
+      {loading ? "One moment..." : label}
     </button>
   );
 }

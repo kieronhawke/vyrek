@@ -11,7 +11,7 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "Hyrox gear guides — shoes, gloves, knee sleeves, belts, socks",
+  title: "Hyrox gear guides, shoes, gloves, knee sleeves, belts, socks",
   description:
     "Honest Hyrox gear guides. What kit actually helps, what's marketing, and what experienced racers ignore. Independent reviews from Elite 15 coaches.",
   alternates: { canonical: `${siteUrl()}/hyrox/gear` },

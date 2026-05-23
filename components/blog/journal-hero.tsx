@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 /**
- * Top of /blog — eyebrow + headline + sub + dual CTA. Establishes the
+ * Top of /blog, eyebrow + headline + sub + dual CTA. Establishes the
  * editorial tone before the featured post card.
  */
 export function JournalHero({ postCount }: { postCount: number }) {

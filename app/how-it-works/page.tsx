@@ -36,7 +36,7 @@ const STEPS = [
     label: "Start your trial",
     image: "/media/images/programme-first-race.jpg",
     body: [
-      "Seven days free. £4.99 per month after that, billed in pounds sterling through Stripe. Apple Pay and Google Pay work at checkout.",
+      "Seven days free. £8.99 per month after that, billed in pounds sterling through Stripe. Apple Pay and Google Pay work at checkout.",
       "We email you on day 6 to remind you the trial ends tomorrow. Cancel any time in two taps from your account, no questions asked. The trial is built so accidental charges don't happen.",
     ],
   },

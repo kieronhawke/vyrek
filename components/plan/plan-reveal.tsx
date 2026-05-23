@@ -25,7 +25,7 @@ import { capture } from "@/lib/posthog";
 /**
  * Client-side plan reveal. Reads V3 quiz state from localStorage, generates
  * Week 1 deterministically, and renders the page. Weeks 2-12 stay blurred
- * with a paywall card — the actual workout data for those weeks is *never*
+ * with a paywall card, the actual workout data for those weeks is *never*
  * sent down to this component; it must be fetched from `/api/plan/[week]`
  * which enforces subscription server-side.
  *
@@ -132,8 +132,7 @@ export function PlanReveal({
     async (workout: Workout) => {
       const text = `${workout.day}'s training: ${workout.title}. ${workout.durationMin} min. From my Vyrek plan.`;
       const url = shareId
-        ? `${window.location.origin}/plan/share/${shareId}`
-        : window.location.href;
+        ? `${window.location.origin}/plan/share/${shareId}`: window.location.href;
       try {
         if ((navigator as Navigator).share) {
           await (navigator as Navigator).share({
@@ -154,7 +153,7 @@ export function PlanReveal({
           showToast("Copied to clipboard");
         }
       } catch {
-        /* user cancelled — fine */
+        /* user cancelled, fine */
       }
     },
     [shareId, showToast],
@@ -162,7 +161,7 @@ export function PlanReveal({
 
   const onStartTrial = useCallback(async () => {
     if (variant === "share") {
-      // Public share view — viral CTA goes to /quiz, not checkout
+      // Public share view, viral CTA goes to /quiz, not checkout
       router.push("/quiz");
       return;
     }
@@ -187,7 +186,7 @@ export function PlanReveal({
       // Either way we keep the user on this page with a clear message rather
       // than bouncing them to /pricing.
       if (res.status === 503) {
-        showToast("Checkout opens soon — first week is free");
+        showToast("Checkout opens soon, first week is free");
       } else if (res.status === 401) {
         router.push("/quiz");
       } else {
@@ -204,7 +203,7 @@ export function PlanReveal({
     }
   }, [router, variant, planContext?.programme, showToast]);
 
-  // Number animation for "60 min" on day cards — count up from 0 to target.
+  // Number animation for "60 min" on day cards, count up from 0 to target.
   useEffect(() => {
     if (typeof window === "undefined") return;
     const els = document.querySelectorAll<HTMLElement>("[data-day-duration]");
@@ -283,7 +282,7 @@ export function PlanReveal({
           aria-hidden
           className="inline-flex size-9 items-center justify-center rounded-full border border-vyrek-border bg-vyrek-elevated font-mono text-xs uppercase tracking-[0.12em] text-vyrek-text"
         >
-          {variant === "share" ? "★" : "JW"}
+          {variant === "share" ? "★": "JW"}
         </span>
       </header>
 
@@ -297,8 +296,7 @@ export function PlanReveal({
             12 weeks. Built around your race on{" "}
             <span className="text-vyrek-text">
               {format(raceDate, "EEEE, d MMMM yyyy")}
-            </span>
-            .
+            </span>.
           </p>
 
           <dl className="mt-6 grid grid-cols-3 gap-3 rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-3 text-center">
@@ -395,7 +393,7 @@ export function PlanReveal({
                 </div>
               </div>
             </>
-          ) : (
+          ): (
             <>
               <hr className="my-8 border-t border-vyrek-border-subtle" />
               <div className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 text-center">
@@ -422,7 +420,7 @@ export function PlanReveal({
 
       {variant === "owner" ? (
         <StickyCta onClick={onStartTrial} loading={checkoutLoading} />
-      ) : null}
+      ): null}
 
       <DayDetailSheet
         workout={openWorkout}
@@ -442,7 +440,7 @@ export function PlanReveal({
             {toast}
           </div>
         </div>
-      ) : null}
+      ): null}
     </main>
   );
 }

@@ -1,7 +1,7 @@
-# Vyrek — Competitive Analysis
+# Vyrek. Competitive Analysis
 
 **Date:** 2026-05-22
-**Scope:** Three direct competitors for a UK Hyrox training app — Runna, Marchon, Hybrid Athlete Club.
+**Scope:** Three direct competitors for a UK Hyrox training app. Runna, Marchon, Hybrid Athlete Club.
 **Use:** Reference document for positioning, pricing, and onboarding decisions.
 
 All prices in GBP unless noted. Pricing verified May 2026; subject to change. Where a fact could not be verified from primary sources, it is marked *unverified*.
@@ -13,19 +13,19 @@ All prices in GBP unless noted. Pricing verified May 2026; subject to change. Wh
 **URL:** runna.com (acquired by Strava in 2025)
 
 ### One-line positioning
-"Personalised running plans coached by experts" — primarily marathon, half-marathon, 10K, 5K. Running-first, not Hyrox.
+"Personalised running plans coached by experts", primarily marathon, half-marathon, 10K, 5K. Running-first, not Hyrox.
 
 ### Pricing
 - Monthly: **£15.99/month** (GBP, UK-billed)
 - Annual: **£99.99/year** (~£8.33/month equivalent)
 - Combined Strava + Runna annual: **£119.99/year**
 - Trial: **7-day free trial** (some referral codes extend to 14 days)
-- Single tier — no Core/Pro split
+- Single tier, no Core/Pro split
 
 Source: [Runna pricing page](https://www.runna.com/pricing), [Running Westward Ho review 2026](https://www.runningwestwardho.co.uk/post/runna-free-trial)
 
 ### Onboarding length
-**~25 screens** in the mobile onboarding flow — covers fitness level, running history, race goal, weekly availability, route hilliness, device sync. Considered thorough but a friction point for some users.
+**~25 screens** in the mobile onboarding flow, covers fitness level, running history, race goal, weekly availability, route hilliness, device sync. Considered thorough but a friction point for some users.
 
 Source: [Uiland UX teardown](https://uiland.design/screens/runna/screens/b7d405f1-038c-4c19-9787-b1cc3f41e2d2/flows/onboarding), [Reteno Runna flow gallery](https://gallery.reteno.com/flows/app-screens-runna)
 
@@ -39,7 +39,7 @@ Source: [Uiland UX teardown](https://uiland.design/screens/runna/screens/b7d405f
 Native iOS + Android. Apple Watch, Garmin, Fitbit, Coros integrations. Deep Strava sync since the 2025 acquisition.
 
 ### Coach / authority signal
-"Elite coaches with Olympic-level experience" — generic. No prominent named coach on the marketing site; the founders (Dom Maskell, Ben Parker) have running pedigree but aren't centrepieces of the brand.
+"Elite coaches with Olympic-level experience", generic. No prominent named coach on the marketing site; the founders (Dom Maskell, Ben Parker) have running pedigree but aren't centrepieces of the brand.
 
 ### UK-specific content
 Founded in London, UK-headquartered. Race goals heavily skew to UK majors (London, Manchester, Brighton). No Hyrox.
@@ -50,10 +50,10 @@ Founded in London, UK-headquartered. Race goals heavily skew to UK majors (Londo
 - Strong UK brand awareness, big paid acquisition spend
 
 ### Weaknesses / gaps Vyrek can exploit
-- **No Hyrox programme at all** — Vyrek owns this lane
+- **No Hyrox programme at all**. Vyrek owns this lane
 - Onboarding is long (25 screens) and ends in a hard paywall
-- Plan is invisible until payment — opposite of plan-before-pay
-- Single discipline (running) — ignores strength and station work
+- Plan is invisible until payment, opposite of plan-before-pay
+- Single discipline (running), ignores strength and station work
 
 ---
 
@@ -62,7 +62,7 @@ Founded in London, UK-headquartered. Race goals heavily skew to UK majors (Londo
 **URL:** online.marchon.co.uk (UK-based; also marchon-global.com)
 
 ### One-line positioning
-"Become your fittest, fastest, strongest" — broad hybrid fitness platform with Hyrox as one of ~9 programme tracks.
+"Become your fittest, fastest, strongest", broad hybrid fitness platform with Hyrox as one of ~9 programme tracks.
 
 ### Pricing
 - **Core monthly:** £29.99/month (2 programme changes/month, 3-month minimum after trial)
@@ -74,7 +74,7 @@ Founded in London, UK-headquartered. Race goals heavily skew to UK majors (Londo
 Source: [Marchon pricing page](https://online.marchon.co.uk/pricing/plan), [Marchon on App Store](https://apps.apple.com/us/app/marchon-training/id6443470301)
 
 ### Onboarding length
-Quiz-gated funnel at `/onboarding/quiz` — exact screen count not public, but users must complete the quiz and create an account before pricing is revealed. *Unverified screen count.*
+Quiz-gated funnel at `/onboarding/quiz`, exact screen count not public, but users must complete the quiz and create an account before pricing is revealed. *Unverified screen count.*
 
 ### Plan visibility before payment
 **Gated.** No dated plan shown pre-payment. The 7-day trial is the only preview mechanism, and it requires card capture.
@@ -85,10 +85,10 @@ Nine programmes: Gain, Shape, Hybrid, Perform, Compete, Compete+, Train, **Hyrox
 Source: [Marchon programmes](https://online.marchon.co.uk/programs)
 
 ### Mobile / native posture
-Native iOS app (iOS 17+, Apple Watch, iPad, Vision Pro). 4.8★ / ~240 ratings on US App Store — small footprint. Website is the funnel, app is the delivery.
+Native iOS app (iOS 17+, Apple Watch, iPad, Vision Pro). 4.8★ / ~240 ratings on US App Store, small footprint. Website is the funnel, app is the delivery.
 
 ### Coach / authority signal
-Founded by **Ollie (Ollie Marchon)**, co-founder of the PFCA. Brand-led, not coach-faced — site uses "world-class coaches" without naming individuals or listing Hyrox credentials.
+Founded by **Ollie (Ollie Marchon)**, co-founder of the PFCA. Brand-led, not coach-faced, site uses "world-class coaches" without naming individuals or listing Hyrox credentials.
 
 Source: [PFCA about page](https://www.thepfca.com/about)
 
@@ -101,11 +101,11 @@ UK-headquartered, GBP billing, UK Hyrox race calendar awareness. Strong UK brand
 - Founder credibility in functional fitness space
 
 ### Weaknesses / gaps Vyrek can exploit
-- **Hyrox is 2 of 9 programmes** — they're not Hyrox-first
+- **Hyrox is 2 of 9 programmes**, they're not Hyrox-first
 - **Pricing complexity:** Core vs Pro vs annual vs one-off plans + 3-month Core lock-in
 - No plan-before-pay; quiz funnels to paywall
 - **No doubles programme**, no beginner "first race" track
-- Coach faces are anonymous — no Elite-15 athlete persona to rally around
+- Coach faces are anonymous, no Elite-15 athlete persona to rally around
 
 ---
 
@@ -114,7 +114,7 @@ UK-headquartered, GBP billing, UK Hyrox race calendar awareness. Strong UK brand
 **URL:** hybridathleteclub.com (UK-based)
 
 ### One-line positioning
-"Everyday Athletes, Proven Progress" — Hyrox-specialist coaching with race-specific and daily programmes.
+"Everyday Athletes, Proven Progress". Hyrox-specialist coaching with race-specific and daily programmes.
 
 ### Pricing
 - Monthly Hyrox membership: **£44.99/month** (£11.24/week framing)
@@ -126,7 +126,7 @@ UK-headquartered, GBP billing, UK Hyrox race calendar awareness. Strong UK brand
 Source: [Hyrox membership page](https://hybridathleteclub.com/product/individual-hyrox-program/)
 
 ### Onboarding length
-Onboarding handled through a Fitr.training redirect (`hybridathleteclub.fitr.training`) — uses the third-party Fitr coaching platform for delivery. Screen count not measurable from the marketing site. *Unverified.*
+Onboarding handled through a Fitr.training redirect (`hybridathleteclub.fitr.training`), uses the third-party Fitr coaching platform for delivery. Screen count not measurable from the marketing site. *Unverified.*
 
 ### Plan visibility before payment
 **Partially gated.** Membership detail (what's included, programme structure) is visible on the product page, but the actual dated plan only appears once the trial starts on Fitr.
@@ -134,17 +134,17 @@ Onboarding handled through a Fitr.training redirect (`hybridathleteclub.fitr.tra
 ### Programmes / specialisations
 - Race Ready (event-specific, up to 20 weeks pre-race; London, Manchester, etc. each have dedicated pages)
 - RoxDaily (year-round, no race booked)
-- **Hyrox Doubles** — dedicated partner programme
+- **Hyrox Doubles**, dedicated partner programme
 - 4-Week Station Improvement (short, one-off)
 - Webinars and race-week strategy add-ons
 
 Source: [Doubles programme](https://hybridathleteclub.com/product/hyrox-doubles-program/)
 
 ### Mobile / native posture
-**Delivered via Fitr.training** — third-party coaching app (iOS + Android). No own-brand native app. WordPress + WooCommerce marketing site.
+**Delivered via Fitr.training**, third-party coaching app (iOS + Android). No own-brand native app. WordPress + WooCommerce marketing site.
 
 ### Coach / authority signal
-Led by **James Kelly** (`@jamesdeag`) — Elite-15 Hyrox athlete and coach. Founder is the brand. Strong personal Instagram presence.
+Led by **James Kelly** (`@jamesdeag`). Elite-15 Hyrox athlete and coach. Founder is the brand. Strong personal Instagram presence.
 
 Source: [Hybrid Athlete Club Instagram](https://www.instagram.com/hybrid.athlete.club/), [James Kelly Instagram](https://www.instagram.com/jamesdeag/)
 
@@ -157,7 +157,7 @@ UK-native, GBP, race-specific programmes for UK Hyrox events (London, Manchester
 - Race-specific programming for UK events
 
 ### Weaknesses / gaps Vyrek can exploit
-- **No own app** — delivered through generic Fitr.training, breaks brand and limits UX control
+- **No own app**, delivered through generic Fitr.training, breaks brand and limits UX control
 - **£44.99/month is the highest of the three** with no annual option to soften it
 - WordPress marketing site, no plan-before-pay, no editorial polish
 - Programme catalogue is fragmented across one-off products + memberships
@@ -169,7 +169,7 @@ UK-native, GBP, race-specific programmes for UK Hyrox events (London, Manchester
 
 Where Vyrek wins versus all three:
 
-- **Plan-before-pay.** Runna, Marchon, and Hybrid Athlete Club all gate the dated plan behind payment or trial start. Vyrek shows a real dated Week 1 free; only Weeks 2–12 require trial. This inverts the funnel — the user sees value before card capture.
+- **Plan-before-pay.** Runna, Marchon, and Hybrid Athlete Club all gate the dated plan behind payment or trial start. Vyrek shows a real dated Week 1 free; only Weeks 2-12 require trial. This inverts the funnel, the user sees value before card capture.
 
 - **Hyrox-first, UK-native.** Runna has zero Hyrox. Marchon treats Hyrox as 2 of 9 tracks. Hybrid Athlete Club is Hyrox-only but lacks a native app and beginner ladder. Vyrek is purpose-built for UK Hyrox with four programmes covering the full athlete ladder: First Race (beginner 12-week), Sub-90 (intermediate), Doubles (partner), Pro (sub-75).
 

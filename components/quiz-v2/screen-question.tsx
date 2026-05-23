@@ -3,7 +3,7 @@ import { Eyebrow } from "@/components/shared/eyebrow";
 
 /**
  * Shared headline+helper block used at the top of any question screen
- * (single-select, multi-select, calendar). Stays a server component — no
+ * (single-select, multi-select, calendar). Stays a server component, no
  * hooks involved.
  */
 export function ScreenQuestion({

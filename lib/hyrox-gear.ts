@@ -4,7 +4,7 @@
  * programmatic pages with FAQPage + ItemList schema.
  *
  * Recommendations are descriptive (categories, attributes) not specific
- * affiliate-product listings — keeps the page honest pre-launch. Add
+ * affiliate-product listings, keeps the page honest pre-launch. Add
  * actual product links once affiliate accounts are set up.
  */
 
@@ -35,14 +35,14 @@ export const GEAR_GUIDES: GearGuide[] = [
     eyebrow: "Shoes",
     hook: "Hyrox runs across 8 km of indoor flooring plus station-based lateral movement. The right shoe is a flat-ish hybrid trainer, not a marathon racer.",
     intro: [
-      "Hyrox isn't a road race and it isn't a CrossFit workout. It's 8 × 1 km runs across rubberised indoor flooring, alternating with sled work, jumping, lunging, and lifting. The shoe has to handle all of it — which is why pure racing flats and pure lifting shoes both fail you.",
+      "Hyrox isn't a road race and it isn't a CrossFit workout. It's 8 × 1 km runs across rubberised indoor flooring, alternating with sled work, jumping, lunging, and lifting. The shoe has to handle all of it, which is why pure racing flats and pure lifting shoes both fail you.",
       "The honest answer is a hybrid trainer: low-drop, firm-but-not-flat, with enough lateral stability to push a sled and enough cushion to absorb 8 km of running. Most Hyrox racers settle on the same handful of models within a season.",
     ],
     whatToLookFor: [
       "Low drop (4-8 mm). Too high and the sled push loads your forefoot awkwardly.",
       "Firm midsole. Soft super-cushioned shoes compress under the sled and waste your push.",
       "Lateral stability. A shoe that lets you sidestep, pivot, and lunge without rolling.",
-      "Grippy non-marking outsole — venues require non-marking soles.",
+      "Grippy non-marking outsole, venues require non-marking soles.",
       "Breathable upper. You'll be in them for 60-120 minutes; sweat builds up fast.",
       "Comfortable enough to run 1 km in repeatedly under fatigue.",
     ],
@@ -55,7 +55,7 @@ export const GEAR_GUIDES: GearGuide[] = [
     faqs: [
       {
         q: "What shoes are best for Hyrox?",
-        a: "A hybrid trainer with low drop (4-8 mm), firm midsole, lateral stability, and grippy non-marking outsole. Popular categories include Nike Metcon, Reebok Nano, NoBull Trainer, Tyr CXT, and similar — all share the firm-but-not-flat profile that handles both running and station work.",
+        a: "A hybrid trainer with low drop (4-8 mm), firm midsole, lateral stability, and grippy non-marking outsole. Popular categories include Nike Metcon, Reebok Nano, NoBull Trainer, Tyr CXT, and similar, all share the firm-but-not-flat profile that handles both running and station work.",
       },
       {
         q: "Can I race Hyrox in running shoes?",
@@ -63,11 +63,11 @@ export const GEAR_GUIDES: GearGuide[] = [
       },
       {
         q: "Should Hyrox shoes be tight or loose?",
-        a: "Slightly snug — thumb's width at the toe, no movement at the heel. Loose laces during sled pushes is one of the most common pre-race mistakes.",
+        a: "Slightly snug, thumb's width at the toe, no movement at the heel. Loose laces during sled pushes is one of the most common pre-race mistakes.",
       },
     ],
     summary:
-      "Hybrid trainers with low drop, firm midsole, and lateral stability. Avoid soft running shoes and weightlifting shoes — both fail at the stations.",
+      "Hybrid trainers with low drop, firm midsole, and lateral stability. Avoid soft running shoes and weightlifting shoes, both fail at the stations.",
   },
   {
     slug: "best-hyrox-gloves",
@@ -76,20 +76,20 @@ export const GEAR_GUIDES: GearGuide[] = [
     hook: "Gloves help on sled pull and farmers carry. They hurt on wall balls and rowing. The honest verdict on whether to wear them.",
     intro: [
       "Gloves are the most over-recommended piece of Hyrox kit. Beginner advice says always wear them; experienced racers almost never do for full races. The real answer depends on the station.",
-      "On the sled pull (rope, hand-over-hand) gloves protect the hands and grip better in sweat. On the farmers carry (kettlebell handle) most racers prefer bare hands — the friction is what stops you dropping. On rowing, wall ball, and burpee broad jumps, gloves are pure friction loss.",
+      "On the sled pull (rope, hand-over-hand) gloves protect the hands and grip better in sweat. On the farmers carry (kettlebell handle) most racers prefer bare hands, the friction is what stops you dropping. On rowing, wall ball, and burpee broad jumps, gloves are pure friction loss.",
     ],
     whatToLookFor: [
-      "Thin palm — under 2 mm. Anything thicker reduces handle feel on kettlebells.",
+      "Thin palm, under 2 mm. Anything thicker reduces handle feel on kettlebells.",
       "Fingerless or three-quarter fingers. Full-finger gloves grip poorly.",
       "Open palm or mesh top. Sweat needs to escape.",
       "Tacky palm material (silicone, leather, or rubberised) for rope work.",
       "Lightweight enough to slip on/off mid-race if you change your mind.",
     ],
     whatToAvoid: [
-      "Lifting gloves with thick padded palms — kills handle feel.",
-      "Full-finger CrossFit gloves — too thick on the rope.",
-      "Hand-grips designed for pull-ups — wrong shape for kettlebells.",
-      "Cheap one-size gloves — fit matters enormously for a 60-min race.",
+      "Lifting gloves with thick padded palms, kills handle feel.",
+      "Full-finger CrossFit gloves, too thick on the rope.",
+      "Hand-grips designed for pull-ups, wrong shape for kettlebells.",
+      "Cheap one-size gloves, fit matters enormously for a 60-min race.",
     ],
     faqs: [
       {
@@ -111,7 +111,7 @@ export const GEAR_GUIDES: GearGuide[] = [
     hook: "Knee sleeves help on heavy sled work and sandbag lunges. They restrict on running. The trade-off explained.",
     intro: [
       "Knee sleeves are common in CrossFit but rare in Hyrox. The reason is simple: Hyrox is mostly running, and a tight sleeve restricts blood flow and limits stride mechanics over 8 km.",
-      "If you have a known knee issue or feel insecure on heavy sled and sandbag lunge work, a thin 5 mm sleeve can give psychological and mild mechanical support without disrupting the running. Avoid the 7 mm powerlifting sleeves — they're built for one-rep maxes, not aerobic endurance.",
+      "If you have a known knee issue or feel insecure on heavy sled and sandbag lunge work, a thin 5 mm sleeve can give psychological and mild mechanical support without disrupting the running. Avoid the 7 mm powerlifting sleeves, they're built for one-rep maxes, not aerobic endurance.",
     ],
     whatToLookFor: [
       "Thin neoprene (3-5 mm), not powerlifting thickness (7 mm).",
@@ -120,8 +120,8 @@ export const GEAR_GUIDES: GearGuide[] = [
       "Breathable backing if available.",
     ],
     whatToAvoid: [
-      "7 mm powerlifting sleeves — too restrictive for race-long use.",
-      "Wraps (elastic bandages) — wrong tool, can cut circulation.",
+      "7 mm powerlifting sleeves, too restrictive for race-long use.",
+      "Wraps (elastic bandages), wrong tool, can cut circulation.",
       "Asymmetric or expensive 'recovery' sleeves with marketing claims about blood flow.",
     ],
     faqs: [
@@ -131,11 +131,11 @@ export const GEAR_GUIDES: GearGuide[] = [
       },
       {
         q: "Can I race Hyrox with a knee strap?",
-        a: "Yes if it's medically advised, but mention it to event staff at check-in. Make sure it doesn't slip during running — re-secure between stations if needed.",
+        a: "Yes if it's medically advised, but mention it to event staff at check-in. Make sure it doesn't slip during running, re-secure between stations if needed.",
       },
     ],
     summary:
-      "Thin 3-5 mm sleeves only if you need them mechanically. Most healthy racers skip them — the running disadvantage outweighs the station support.",
+      "Thin 3-5 mm sleeves only if you need them mechanically. Most healthy racers skip them, the running disadvantage outweighs the station support.",
   },
   {
     slug: "best-hyrox-belt",
@@ -143,28 +143,28 @@ export const GEAR_GUIDES: GearGuide[] = [
     eyebrow: "Belt",
     hook: "Belts help on heavy sled pulls and sandbag lunges. They restrict on running and burpee broad jumps. The trade-off.",
     intro: [
-      "A lifting belt is over-used in Hyrox training and under-used on race day for good reasons. In training, you don't always need it — but for the few minutes you're under heavy sled or sandbag load, it can preserve your back across a 12-week build.",
+      "A lifting belt is over-used in Hyrox training and under-used on race day for good reasons. In training, you don't always need it, but for the few minutes you're under heavy sled or sandbag load, it can preserve your back across a 12-week build.",
       "On race day most racers don't wear a belt. It restricts breathing on the run, gets in the way on the burpee broad jump, and the load on any single Hyrox movement is sub-maximal for an experienced lifter. The exception is a known back issue.",
     ],
     whatToLookFor: [
-      "Soft, flexible (nylon or velcro) — not a stiff powerlifting belt.",
+      "Soft, flexible (nylon or velcro), not a stiff powerlifting belt.",
       "Quick-release buckle if you might take it off mid-race.",
       "Lightweight and breathable.",
-      "Right size for your waist — too loose is useless.",
+      "Right size for your waist, too loose is useless.",
     ],
     whatToAvoid: [
-      "Stiff 10 mm powerlifting belt — too restrictive for race use.",
-      "Belts with metal prong buckles — slow to remove mid-event.",
-      "Wearing a belt for every single set in training — your core needs to work without it.",
+      "Stiff 10 mm powerlifting belt, too restrictive for race use.",
+      "Belts with metal prong buckles, slow to remove mid-event.",
+      "Wearing a belt for every single set in training, your core needs to work without it.",
     ],
     faqs: [
       {
         q: "Do I need a lifting belt for Hyrox?",
-        a: "No — most racers don't wear one on race day. Useful in training for the heaviest sled and lunge sets. If you have a known back issue, a soft velcro belt is a reasonable race-day compromise.",
+        a: "No, most racers don't wear one on race day. Useful in training for the heaviest sled and lunge sets. If you have a known back issue, a soft velcro belt is a reasonable race-day compromise.",
       },
     ],
     summary:
-      "Soft velcro belt for the heaviest training sets only. Most racers don't wear one on race day — restricts breathing and gets in the way on burpees.",
+      "Soft velcro belt for the heaviest training sets only. Most racers don't wear one on race day, restricts breathing and gets in the way on burpees.",
   },
   {
     slug: "best-hyrox-socks",
@@ -172,19 +172,19 @@ export const GEAR_GUIDES: GearGuide[] = [
     eyebrow: "Socks",
     hook: "Wrong socks cause blisters by km 5. Right socks are thin, snug, and have at least some anti-slip backing.",
     intro: [
-      "Socks are the most ignored piece of Hyrox kit and a leading cause of mid-race blisters. After two sleds, three runs, and a sandbag lunge, your foot is hot, sweating, and moving around inside the shoe — any sock looseness becomes friction, friction becomes a blister.",
+      "Socks are the most ignored piece of Hyrox kit and a leading cause of mid-race blisters. After two sleds, three runs, and a sandbag lunge, your foot is hot, sweating, and moving around inside the shoe, any sock looseness becomes friction, friction becomes a blister.",
       "Get this right once and you won't think about it again.",
     ],
     whatToLookFor: [
-      "Thin merino or synthetic blend — not pure cotton.",
+      "Thin merino or synthetic blend, not pure cotton.",
       "Snug fit at the arch and ankle.",
       "Optional: light cushioning at heel and ball.",
       "Some anti-slip backing helps in shoes that run a touch loose.",
     ],
     whatToAvoid: [
-      "Pure cotton socks — hold sweat, slip, blister.",
+      "Pure cotton socks, hold sweat, slip, blister.",
       "Brand-new socks on race day. Wear them in training first.",
-      "Thick padded marathon socks — combine with hybrid trainers to make the shoe feel awkward.",
+      "Thick padded marathon socks, combine with hybrid trainers to make the shoe feel awkward.",
     ],
     faqs: [
       {

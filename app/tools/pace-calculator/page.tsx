@@ -12,12 +12,12 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "Hyrox pace calculator — predict your finish time",
+  title: "Hyrox pace calculator, predict your finish time",
   description:
-    "Free Hyrox pace calculator. Enter your 1 km pace and station splits — get your projected finish time, kilometre breakdown, and pacing strategy.",
+    "Free Hyrox pace calculator. Enter your 1 km pace and station splits, get your projected finish time, kilometre breakdown, and pacing strategy.",
   alternates: { canonical: `${siteUrl()}/tools/pace-calculator` },
   openGraph: {
-    title: "Hyrox pace calculator — Vyrek",
+    title: "Hyrox pace calculator. Vyrek",
     description:
       "Free Hyrox pace calculator: project your finish time from your 1 km pace and station splits.",
     url: `${siteUrl()}/tools/pace-calculator`,
@@ -115,7 +115,7 @@ export default function PaceCalculatorPage() {
               A Hyrox race is 8 × 1 km runs alternated with 8 stations. The
               calculator sums your projected run time (8 × your 1 km pace) and
               your station splits to give the total race time. It doesn&apos;t
-              model the second-half fade that most racers feel — see the pacing
+              model the second-half fade that most racers feel, see the pacing
               strategy notes below to add a realistic cushion.
             </p>
           </section>

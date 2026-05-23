@@ -8,7 +8,7 @@ type Options = {
 };
 
 /**
- * Linear-style magnetic pull — the element drifts toward the cursor when
+ * Linear-style magnetic pull, the element drifts toward the cursor when
  * the cursor is within `radius` px of its center. No-op on coarse pointers
  * (touch) and when the user prefers reduced motion.
  */

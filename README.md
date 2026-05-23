@@ -11,13 +11,13 @@ Personalised Hyrox training programmes built by Elite 15 athletes. Marketing sit
 - **Resend + React Email** for transactional + drip
 - **PostHog** for analytics (consent-gated, lazy-loaded)
 - **MDX** for the blog (`content/blog/*.mdx`), with custom `Callout / PullQuote / Stat / StatGrid / KeyTakeaways` components
-- **Sanity** stubbed for Phase G — schemas are intentionally empty
+- **Sanity** stubbed for Phase G, schemas are intentionally empty
 
 ## Getting started
 
 ```bash
 pnpm install
-cp .env.example .env.local
+cp.env.example.env.local
 # Fill in env vars (see "Environment" below)
 pnpm dev
 ```
@@ -69,7 +69,7 @@ docs/                       Build briefs and competitive analysis
 
 ## Environment
 
-Copy `.env.example` to `.env.local` and fill in. Without the optional ones, the funnel still works — they just degrade gracefully:
+Copy `.env.example` to `.env.local` and fill in. Without the optional ones, the funnel still works, they just degrade gracefully:
 
 | Var | Required? | What happens if missing |
 |---|---|---|
@@ -77,7 +77,7 @@ Copy `.env.example` to `.env.local` and fill in. Without the optional ones, the 
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | yes | Client cannot sign up users |
 | `SUPABASE_SECRET_KEY` | yes | Server cannot persist customer/quiz rows |
 | `STRIPE_SECRET_KEY` | for checkout | `/api/stripe/create-checkout-session` returns 503 with a friendly message |
-| `STRIPE_PRICE_ID_MONTHLY` | for checkout | Same — 503 with message |
+| `STRIPE_PRICE_ID_MONTHLY` | for checkout | Same, 503 with message |
 | `STRIPE_WEBHOOK_SECRET` | for webhook | `/api/stripe/webhook` returns 503 |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | for client | UI checkout button still works (server creates session) |
 | `RESEND_API_KEY` | for email | All `sendXxxEmail` calls log "skipping" and return `ok: false` |
@@ -125,9 +125,9 @@ publishedAt: "2026-05-22"
 author: "james-wright"           # or vyrek-team (lib/blog/authors.ts)
 heroImage: "/media/images/programme-first-race.jpg"
 heroAlt: "Alt text for the hero image"
-seoTitle: "Optional — overrides <title> tag"
-seoDescription: "Optional — overrides <meta description>"
-faqs:                            # optional — triggers FAQPage rich result
+seoTitle: "Optional, overrides <title> tag"
+seoDescription: "Optional, overrides <meta description>"
+faqs:                            # optional, triggers FAQPage rich result
   - q: "Question?"
     a: "Answer."
 ---
@@ -141,16 +141,16 @@ Use any standard Markdown, plus these custom MDX components:
 - Two
 </KeyTakeaways>
 
-<Callout tone="tip" title="...">  ...children...  </Callout>
+<Callout tone="tip" title="...">...children...  </Callout>
 
-<PullQuote attribution="Name">  ...children...  </PullQuote>
+<PullQuote attribution="Name">...children...  </PullQuote>
 
 <StatGrid>
   <Stat value="12" label="WEEKS" caption="..." />
 </StatGrid>
 ```
 
-Next build picks it up automatically — sitemap, RSS, llms.txt, related-post scoring, category counts.
+Next build picks it up automatically, sitemap, RSS, llms.txt, related-post scoring, category counts.
 
 ## Deploying
 

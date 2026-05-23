@@ -28,7 +28,7 @@ export function BentoFeatures() {
         </header>
 
         <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {/* Large card — spans both columns on desktop */}
+          {/* Large card, spans both columns on desktop */}
           <Card className="md:col-span-2">
             <CardCopy
               headline="A dated weekly plan, built around your life."
@@ -43,7 +43,7 @@ export function BentoFeatures() {
                   <div className="flex h-32 w-full items-end justify-center md:h-40">
                     {DAY_LOAD[i] === 0 ? (
                       <div className="h-1 w-full rounded-pill bg-vyrek-border-strong" />
-                    ) : (
+                    ): (
                       <div
                         className="w-full rounded-md bg-gradient-to-t from-vyrek-accent/40 to-vyrek-accent"
                         style={{ height: `${DAY_LOAD[i] * 100}%` }}
@@ -58,7 +58,7 @@ export function BentoFeatures() {
             </div>
           </Card>
 
-          {/* Medium — Elite 15 */}
+          {/* Medium. Elite 15 */}
           <Card className="relative isolate overflow-hidden">
             <LoopingVideo
               src={VIDEOS.womanBoxJumps.src}
@@ -87,7 +87,7 @@ export function BentoFeatures() {
                   >
                     <div className="absolute inset-0 bg-[radial-gradient(80%_80%_at_50%_30%,rgba(255,90,31,0.18)_0%,rgba(20,20,20,0)_55%)]" />
                     <span
-                      className={`absolute bottom-2 left-2 font-mono text-[9px] uppercase tracking-[0.18em] ${i === 0 ? "text-vyrek-text-secondary" : "text-vyrek-text-tertiary"}`}
+                      className={`absolute bottom-2 left-2 font-mono text-[9px] uppercase tracking-[0.18em] ${i === 0 ? "text-vyrek-text-secondary": "text-vyrek-text-tertiary"}`}
                     >
                       {tile.name}
                     </span>
@@ -97,7 +97,7 @@ export function BentoFeatures() {
             </div>
           </Card>
 
-          {/* Medium — Adapts as you improve */}
+          {/* Medium. Adapts as you improve */}
           <Card>
             <CardCopy
               headline="Adapts as you improve."

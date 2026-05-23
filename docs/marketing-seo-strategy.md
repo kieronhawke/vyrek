@@ -1,4 +1,4 @@
-# Vyrek — Marketing + SEO Strategy
+# Vyrek. Marketing + SEO Strategy
 
 **Last updated:** 2026-05-22
 **Owner:** Founder + content team
@@ -25,7 +25,7 @@ These are aggressive but achievable given the **125+ programmatic pages already 
 
 ## Three strategic pillars
 
-### Pillar 1 — Be first to publish
+### Pillar 1. Be first to publish
 
 Every Hyrox race weekend has a 7-day pre-race attention spike (search volume on "hyrox [city]" peaks in the run-up). If Vyrek owns the first-page result for that query at T-7, we capture organic + ad-adjacent traffic for the cohort already converting.
 
@@ -34,11 +34,11 @@ Every Hyrox race weekend has a 7-day pre-race attention spike (search volume on 
 - **T-7 days:** Final-week prep guide ("7 days out from Hyrox Manchester: taper, fuelling, kit check")
 - **T-1 day:** Race-day briefing ("Race-day kit checklist for Hyrox Birmingham")
 - **T+1 day:** Recap + winning splits ("Hyrox Glasgow 2026: men's open winning time, division splits")
-- **T+7 days:** Lessons + photos ("What we learned from Hyrox London — 4 patterns")
+- **T+7 days:** Lessons + photos ("What we learned from Hyrox London. 4 patterns")
 
 **This is automated.** See `app/api/cron/race-coverage/route.ts` (built this round). Vercel Cron triggers daily; the route scans `HYROX_EVENTS` and decides whether any of the above should publish today.
 
-### Pillar 2 — Topical depth (own the question, not just the keyword)
+### Pillar 2. Topical depth (own the question, not just the keyword)
 
 For every Hyrox-adjacent question, Vyrek should be one of three things on Google's results page:
 1. The clearest answer (featured snippet)
@@ -46,33 +46,33 @@ For every Hyrox-adjacent question, Vyrek should be one of three things on Google
 3. The trustworthy source (cited by gear roundups, Reddit, race-prep threads)
 
 This means:
-- Every station gets a 1,500-word guide (✅ done — 8 stations)
-- Every UK city gets a localised landing (✅ done — 103 cities/boroughs)
-- Every comparison ("Hyrox vs X") gets a comparison page (✅ done — 5 comparisons)
-- Every goal time gets a plan template (✅ done — 4 sub-X templates)
-- Every audience gets an audience-specific page (✅ done — 4 audience plans)
-- Every event gets an event page (✅ done — 4 events)
-- Every gear category gets a buyer's guide (✅ done — 5 gear guides)
+- Every station gets a 1,500-word guide (✅ done. 8 stations)
+- Every UK city gets a localised landing (✅ done. 103 cities/boroughs)
+- Every comparison ("Hyrox vs X") gets a comparison page (✅ done. 5 comparisons)
+- Every goal time gets a plan template (✅ done. 4 sub-X templates)
+- Every audience gets an audience-specific page (✅ done. 4 audience plans)
+- Every event gets an event page (✅ done. 4 events)
+- Every gear category gets a buyer's guide (✅ done. 5 gear guides)
 
 **The next 6 months adds:**
 - Race recap pages for every UK weekend (~4-6 / year)
-- Athlete profile pages (once consent collected) — `/athletes/[slug]`
+- Athlete profile pages (once consent collected), `/athletes/[slug]`
 - Coach 1:1 booking pages once the offering exists
-- Training club partner pages — `/clubs/[slug]`
+- Training club partner pages, `/clubs/[slug]`
 - Hyrox training PDF lead magnets (gated email opt-in)
 
-### Pillar 3 — Distribution > publishing
+### Pillar 3. Distribution > publishing
 
 The blog ≠ the moat. The moat is **knowing where Hyrox racers spend their attention and being in those rooms with useful content**.
 
 **Channels (in priority order):**
-1. **Reddit** — r/Hyrox (4k+ subs), r/crossfit, r/running. Useful answers + tool links (pace calculator gets shared most).
+1. **Reddit**, r/Hyrox (4k+ subs), r/crossfit, r/running. Useful answers + tool links (pace calculator gets shared most).
 2. **Hyrox UK Facebook group** (large active community). Race-week briefings + the cohort-banner urgency.
-3. **Strava clubs** — set up "Vyrek Athletes" club, post weekly training summaries.
-4. **TikTok** — short race-tip videos (60 sec each), evergreen, station-by-station.
-5. **YouTube Shorts** — same content as TikTok, second distribution.
-6. **Hyrox-adjacent newsletters** — pitch RoxLyfe, HyroxInsider, Hybrid Athlete Club for guest content swaps.
-7. **Email list** — capture via pace calculator + free PDF gate, ship a weekly "Hyrox Roundup" newsletter.
+3. **Strava clubs**, set up "Vyrek Athletes" club, post weekly training summaries.
+4. **TikTok**, short race-tip videos (60 sec each), evergreen, station-by-station.
+5. **YouTube Shorts**, same content as TikTok, second distribution.
+6. **Hyrox-adjacent newsletters**, pitch RoxLyfe, HyroxInsider, Hybrid Athlete Club for guest content swaps.
+7. **Email list**, capture via pace calculator + free PDF gate, ship a weekly "Hyrox Roundup" newsletter.
 
 ---
 
@@ -82,7 +82,7 @@ The blog ≠ the moat. The moat is **knowing where Hyrox racers spend their atte
 
 | Type | Frequency | Owner |
 |---|---|---|
-| Race coverage (preview/recap) | Per UK event (~6-8/year) | **Auto-bot** — see below |
+| Race coverage (preview/recap) | Per UK event (~6-8/year) | **Auto-bot**, see below |
 | Evergreen blog post | 2/week (long-form) | Coach team + freelance |
 | Quick tip post (300-500 words) | 3/week | Editor |
 | Email newsletter | Weekly (Sunday eve) | Editor |
@@ -103,10 +103,10 @@ To add a new event: append to `HYROX_EVENTS` in `lib/hyrox-events.ts`. The bot p
 
 The four highest-volume audience clusters now have dedicated hub pages:
 
-- `/topics/womens-hyrox` — pulls all women-relevant content
-- `/topics/masters-hyrox` — over-40 athletes
-- `/topics/doubles-hyrox` — paired teams
-- `/topics/first-race-hyrox` — first-timers
+- `/topics/womens-hyrox`, pulls all women-relevant content
+- `/topics/masters-hyrox`, over-40 athletes
+- `/topics/doubles-hyrox`, paired teams
+- `/topics/first-race-hyrox`, first-timers
 
 Each hub pulls related blog posts + plan templates + station guides + relevant city/event pages into one indexable surface. Internal-link density compounds.
 
@@ -166,21 +166,21 @@ Already documented at `/press/brand-guidelines`. Summary:
 
 **Quarterly review:**
 - Strategy re-read (this doc)
-- Persona update — has the mix shifted?
-- Competitive landscape — what have Marchon / HAC shipped?
+- Persona update, has the mix shifted?
+- Competitive landscape, what have Marchon / HAC shipped?
 
 ---
 
 ## What's already in place (audit)
 
-✅ **125+ programmatic pages live** — city, station, plan, comparison, event, gear, tool
-✅ **15 blog posts** — average 1,500-2,000 words, FAQ schema, internal-linked
-✅ **Cmd-K command palette** — power-user navigation
-✅ **PostHog session replay + heatmaps** — funnel visibility
-✅ **JSON-LD across the board** — Organization, WebSite, BlogPosting, Course, HowTo, FAQPage, LocalBusiness, Event, SoftwareApplication, BreadcrumbList, ItemList
-✅ **Sitemap 178 URLs** — submitted nightly
+✅ **125+ programmatic pages live**, city, station, plan, comparison, event, gear, tool
+✅ **15 blog posts**, average 1,500-2,000 words, FAQ schema, internal-linked
+✅ **Cmd-K command palette**, power-user navigation
+✅ **PostHog session replay + heatmaps**, funnel visibility
+✅ **JSON-LD across the board**. Organization, WebSite, BlogPosting, Course, HowTo, FAQPage, LocalBusiness, Event, SoftwareApplication, BreadcrumbList, ItemList
+✅ **Sitemap 178 URLs**, submitted nightly
 ✅ **RSS feed** at `/blog/rss.xml`
-✅ **robots.txt** — explicit allow for all programmatic surfaces
+✅ **robots.txt**, explicit allow for all programmatic surfaces
 ✅ **Cookie consent + GDPR-safe analytics**
 ✅ **Mobile 98+ Lighthouse, 100 a11y/bp/seo**
 

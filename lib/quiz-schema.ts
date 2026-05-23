@@ -1,5 +1,5 @@
 /**
- * Quiz schema — questions, options, branching, and entry-point shortcuts.
+ * Quiz schema, questions, options, branching, and entry-point shortcuts.
  *
  * Branching is expressed as a `showIf` predicate. The state hook computes
  * the visible question list against the current answers, so deep links and
@@ -139,14 +139,14 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: "race-date",
     question: "Got a race booked?",
-    helper: "Optional — pick a date or skip",
+    helper: "Optional, pick a date or skip",
     type: "date",
     optional: true,
   },
 ];
 
 /**
- * Programme matching — runs after every answer change to give the user a
+ * Programme matching, runs after every answer change to give the user a
  * "decided so far" preview on each question (brief §9, preview chip).
  */
 export function matchProgramme(state: QuizAnswers): ProgramSlug {
@@ -167,7 +167,7 @@ export function visibleQuestions(state: QuizAnswers): QuizQuestion[] {
 }
 
 /* ------------------------------------------------------------------------- *
- * Phase B2 §3.4 — Runna-modelled quiz helpers.
+ * Phase B2 §3.4. Runna-modelled quiz helpers.
  *
  * These types and functions describe the *new* 15-screen quiz envisaged in
  * Phase B2. The existing v1 quiz above stays in place and continues to drive
@@ -208,7 +208,7 @@ export type RunnaQuizAnswers = {
 
 /**
  * Pick the most appropriate programme given a full set of Runna-style
- * answers. Doubles takes priority — explicit partner intent or partner
+ * answers. Doubles takes priority, explicit partner intent or partner
  * setup always wins. First-time and getting-into both route to First Race.
  * Go-faster routes to Pro for sub-75 athletes, Sub-90 otherwise. Fallback
  * is the conservative First Race.
@@ -228,12 +228,12 @@ export function determineProgramme(answers: RunnaQuizAnswers): ProgramSlug {
 }
 
 /**
- * Default training start date — next Tuesday from today. If today is a
+ * Default training start date, next Tuesday from today. If today is a
  * Tuesday, returns the Tuesday a week from today (never starts the user the
  * same day they take the quiz). UTC-safe; date-only.
  */
 export function determineStartDate(today: Date = new Date()): Date {
-  // 0 = Sunday … 2 = Tuesday … 6 = Saturday
+  // 0 = Sunday ... 2 = Tuesday ... 6 = Saturday
   const day = today.getDay();
   const daysUntilTuesday = (2 - day + 7) % 7 || 7;
   const tuesday = new Date(today);

@@ -8,7 +8,7 @@ import {
 } from "@/lib/quiz-flow";
 
 /**
- * Account creation endpoint — V3 quiz Screen 15.
+ * Account creation endpoint. V3 quiz Screen 15.
  *
  * Expects: { authUserId, email, marketingOptIn, quizState }
  * Where `authUserId` is the Supabase Auth user.id returned from
@@ -49,23 +49,21 @@ function normaliseAnswers(
 ): QuizAnswers {
   const a = raw ?? {};
   return {
-    intent: Array.isArray(a.intent) ? a.intent : [],
+    intent: Array.isArray(a.intent) ? a.intent: [],
     experience: a.experience,
     bestTime: a.bestTime,
     raceDate:
       typeof a.raceDate === "string"
-        ? new Date(a.raceDate)
-        : a.raceDate instanceof Date
-          ? a.raceDate
-          : undefined,
+        ? new Date(a.raceDate): a.raceDate instanceof Date
+          ? a.raceDate: undefined,
     activity: a.activity,
     sex: a.sex,
-    weight: typeof a.weight === "number" ? a.weight : undefined,
+    weight: typeof a.weight === "number" ? a.weight: undefined,
     weightUnit: a.weightUnit,
     days: a.days,
     sessionLength: a.sessionLength,
     location: a.location,
-    equipment: Array.isArray(a.equipment) ? a.equipment : undefined,
+    equipment: Array.isArray(a.equipment) ? a.equipment: undefined,
     partner: a.partner,
     injuries: a.injuries,
   };
@@ -112,27 +110,19 @@ export async function POST(req: Request) {
     //    same email but no auth_user_id (legacy quiz-v2 customer), claim it.
     const referralCode = generateReferralCode();
     const customerId = quizUuid && UUID_RE.test(quizUuid)
-      ? quizUuid
-      : crypto.randomUUID();
+      ? quizUuid: crypto.randomUUID();
 
     // Try to find an existing customer by email first (carry over from
     // previous email-gate-only entries).
-    const { data: existing } = await sb
-      .from("customers")
-      .select("id, referral_code")
-      .eq("email", email)
-      .maybeSingle();
+    const { data: existing } = await sb.from("customers").select("id, referral_code").eq("email", email).maybeSingle();
 
     let resolvedCustomerId: string;
     if (existing?.id) {
-      const { error: updateErr } = await sb
-        .from("customers")
-        .update({
+      const { error: updateErr } = await sb.from("customers").update({
           auth_user_id: authUserId,
           marketing_opt_in: marketingOptIn,
           doubles_upgrade_interest: answers.partner === "solo-partner-later",
-        })
-        .eq("id", existing.id);
+        }).eq("id", existing.id);
       if (updateErr) throw updateErr;
       resolvedCustomerId = existing.id;
     } else {
@@ -154,9 +144,7 @@ export async function POST(req: Request) {
       raceDate: answers.raceDate?.toISOString() ?? null,
     };
 
-    const { data: qr, error: qrErr } = await sb
-      .from("quiz_responses")
-      .insert({
+    const { data: qr, error: qrErr } = await sb.from("quiz_responses").insert({
         customer_id: resolvedCustomerId,
         email,
         answers: answersJson,
@@ -167,9 +155,7 @@ export async function POST(req: Request) {
         weight_unit: answers.weightUnit ?? null,
         programme,
         partner_mode: answers.partner ?? null,
-      })
-      .select("id")
-      .single();
+      }).select("id").single();
 
     if (qrErr) throw qrErr;
 
@@ -198,7 +184,7 @@ export async function POST(req: Request) {
      
     console.error("[/api/account/create] failed", err);
     const message =
-      err instanceof Error ? err.message : "unknown server error";
+      err instanceof Error ? err.message: "unknown server error";
     return NextResponse.json(
       { ok: false, reason: "persist-failed", detail: message },
       { status: 500 },

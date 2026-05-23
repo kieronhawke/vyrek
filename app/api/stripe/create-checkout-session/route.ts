@@ -4,7 +4,7 @@ import { supabaseServer } from "@/lib/supabase/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 /**
- * Create a Stripe Checkout session for the £4.99/mo subscription with a
+ * Create a Stripe Checkout session for the £8.99/mo subscription with a
  * 7-day free trial. Called from the plan reveal "Start training" button.
  *
  * Requires an authenticated Supabase session (the user finished the V3

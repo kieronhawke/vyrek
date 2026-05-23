@@ -6,7 +6,7 @@ import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
 
 export const metadata: Metadata = {
-  title: "Lost lap — Page not found",
+  title: "Lost lap. Page not found",
   description:
     "That page isn't here. Take the quiz, see your plan, or read the journal.",
   robots: { index: false, follow: true },
@@ -34,7 +34,7 @@ const TRAILS = [
   {
     label: "Pricing",
     href: "/pricing",
-    note: "£4.99/month after the 7-day trial. Cancel anytime.",
+    note: "£8.99/month after the 7-day trial. Cancel anytime.",
     eyebrow: "→ Pricing",
   },
 ];

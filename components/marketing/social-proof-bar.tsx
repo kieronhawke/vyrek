@@ -2,7 +2,7 @@ import { Container } from "@/components/shared/container";
 import { CountUp } from "@/components/shared/count-up";
 import { getActiveStats } from "@/lib/stats";
 
-// Press logo wordmarks — DEMO placeholders. Replace with real partner
+// Press logo wordmarks. DEMO placeholders. Replace with real partner
 // logos only after written endorsement is secured (UK ASA / CAP 3.7).
 const PRESS_PLACEHOLDERS = ["MENS HEALTH", "RUNNERS WORLD", "WIT FITNESS", "HYROX MAG"];
 
@@ -37,7 +37,7 @@ export function SocialProofBar() {
 
           <div
             className="flex items-center gap-5 md:gap-7"
-            aria-label="Press placeholder — replace with real partners before launch"
+            aria-label="Press placeholder, replace with real partners before launch"
           >
             {/*
               These are intentionally rendered as monospace wordmarks (not as

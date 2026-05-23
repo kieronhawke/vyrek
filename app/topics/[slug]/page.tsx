@@ -70,9 +70,7 @@ export default async function TopicHubPage({
   const allPosts = await listPostMeta();
   const posts = allPosts.filter((p) => t.blogSlugs.includes(p.slug));
   const plans = PLAN_TEMPLATES.filter((p) => t.planSlugs.includes(p.slug));
-  const stations = (t.stationSlugs ?? [])
-    .map((s) => STATIONS.find((x) => x.slug === s))
-    .filter((x): x is NonNullable<typeof x> => Boolean(x));
+  const stations = (t.stationSlugs ?? []).map((s) => STATIONS.find((x) => x.slug === s)).filter((x): x is NonNullable<typeof x> => Boolean(x));
 
   const breadcrumbLd = {
     "@context": "https://schema.org",
@@ -169,7 +167,7 @@ export default async function TopicHubPage({
                 ))}
               </ul>
             </section>
-          ) : null}
+          ): null}
 
           {/* Blog posts */}
           {posts.length > 0 ? (
@@ -196,7 +194,7 @@ export default async function TopicHubPage({
                 ))}
               </ul>
             </section>
-          ) : null}
+          ): null}
 
           {/* Stations */}
           {stations.length > 0 ? (
@@ -220,13 +218,13 @@ export default async function TopicHubPage({
                 ))}
               </ul>
             </section>
-          ) : null}
+          ): null}
 
           {/* FAQs */}
           <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10" aria-labelledby="topic-faq-heading">
             <Eyebrow>FAQs</Eyebrow>
             <h2 id="topic-faq-heading" className="sr-only">
-              {t.eyebrow} — frequently asked questions
+              {t.eyebrow}, frequently asked questions
             </h2>
             <div className="mt-6">
               <Accordion>
@@ -266,7 +264,7 @@ export default async function TopicHubPage({
               Build your plan.
             </h2>
             <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
-              Three-minute quiz. Dated Week 1 before you pay. £4.99/month.
+              Three-minute quiz. Dated Week 1 before you pay. £8.99/month.
             </p>
             <div className="mt-8">
               <CtaButton href="/quiz" size="lg">

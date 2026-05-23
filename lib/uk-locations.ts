@@ -11,17 +11,17 @@
  */
 
 export type UkLocation = {
-  /** URL slug — lowercase, hyphenated. */
+  /** URL slug, lowercase, hyphenated. */
   slug: string;
   /** Display name (proper case). */
   name: string;
-  /** Region — used in copy ("in the North West", "in South Wales"). */
+  /** Region, used in copy ("in the North West", "in South Wales"). */
   region: string;
   /** Approximate population, in thousands. Drives one line of copy. */
   populationK: number;
   /** Nearest Hyrox race venue + city. */
   nearestVenue?: { name: string; city: string };
-  /** Short paragraph of local context — gym density, transport links,
+  /** Short paragraph of local context, gym density, transport links,
    * notable Hyrox community details. Falls back to a generic templated
    * line if absent. */
   context?: string;
@@ -44,7 +44,7 @@ export const UK_LOCATIONS: UkLocation[] = [
     populationK: 8900,
     nearestVenue: EXCEL,
     context:
-      "London is the centre of UK Hyrox — ExCeL hosts multiple race weekends a year, the largest affiliate-gym network in the country, and a deep pool of coaches working at every level from First Race to Pro.",
+      "London is the centre of UK Hyrox. ExCeL hosts multiple race weekends a year, the largest affiliate-gym network in the country, and a deep pool of coaches working at every level from First Race to Pro.",
   },
   {
     slug: "manchester",
@@ -62,7 +62,7 @@ export const UK_LOCATIONS: UkLocation[] = [
     populationK: 1145,
     nearestVenue: NEC,
     context:
-      "Birmingham's NEC and Utilita Arena both host Hyrox weekends. Strong affiliate-gym coverage across the city centre, Solihull, and Edgbaston — easy commute from across the Midlands.",
+      "Birmingham's NEC and Utilita Arena both host Hyrox weekends. Strong affiliate-gym coverage across the city centre, Solihull, and Edgbaston, easy commute from across the Midlands.",
   },
   {
     slug: "glasgow",
@@ -134,7 +134,7 @@ export const UK_LOCATIONS: UkLocation[] = [
     populationK: 337,
     nearestVenue: NEC,
     context:
-      "Nottingham athletes have easy access to Birmingham NEC race weekends. Local Hyrox scene grew through 2024–2025 with the city centre and West Bridgford emerging as the strongest gym clusters.",
+      "Nottingham athletes have easy access to Birmingham NEC race weekends. Local Hyrox scene grew through 2024-2025 with the city centre and West Bridgford emerging as the strongest gym clusters.",
   },
   {
     slug: "cardiff",
@@ -152,7 +152,7 @@ export const UK_LOCATIONS: UkLocation[] = [
     populationK: 369,
     nearestVenue: NEC,
     context:
-      "Leicester is 45 minutes from Birmingham NEC — a natural training catchment for Midlands Hyrox racers. Affiliate gyms cluster in the city centre and surrounding suburbs.",
+      "Leicester is 45 minutes from Birmingham NEC, a natural training catchment for Midlands Hyrox racers. Affiliate gyms cluster in the city centre and surrounding suburbs.",
   },
   {
     slug: "coventry",
@@ -206,7 +206,7 @@ export const UK_LOCATIONS: UkLocation[] = [
     populationK: 269,
     nearestVenue: EXCEL,
     context:
-      "Southampton sits on the South Coast Hyrox corridor — strong local affiliate scene with a regular weekend commute to ExCeL races.",
+      "Southampton sits on the South Coast Hyrox corridor, strong local affiliate scene with a regular weekend commute to ExCeL races.",
   },
   {
     slug: "reading",
@@ -341,7 +341,7 @@ export const UK_LOCATIONS: UkLocation[] = [
     populationK: 277,
     nearestVenue: EXCEL,
     context:
-      "Brighton's Hyrox scene clusters around the seafront and Hove — a strong recreational running base and a steady weekend commute to ExCeL.",
+      "Brighton's Hyrox scene clusters around the seafront and Hove, a strong recreational running base and a steady weekend commute to ExCeL.",
   },
   {
     slug: "hove",

@@ -12,12 +12,12 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "Hyrox training — UK cities and boroughs",
+  title: "Hyrox training. UK cities and boroughs",
   description:
     "Vyrek Hyrox programmes for every UK city and London borough. Personalised 12-week plans built by Elite 15 coaches. Find your local Hyrox training in three minutes.",
   alternates: { canonical: `${siteUrl()}/hyrox` },
   openGraph: {
-    title: "Hyrox training across the UK — Vyrek",
+    title: "Hyrox training across the UK. Vyrek",
     description:
       "Find personalised Hyrox training programmes for every UK city. Built by Elite 15 coaches. Free trial.",
     url: `${siteUrl()}/hyrox`,
@@ -51,9 +51,7 @@ export default function HyroxLocationsPage() {
     "@type": "ItemList",
     name: "Hyrox training locations across the UK",
     numberOfItems: total,
-    itemListElement: Object.values(grouped)
-      .flat()
-      .map((loc, i) => ({
+    itemListElement: Object.values(grouped).flat().map((loc, i) => ({
         "@type": "ListItem",
         position: i + 1,
         url: `${siteUrl()}/hyrox/${loc.slug}`,
@@ -87,7 +85,7 @@ export default function HyroxLocationsPage() {
             </SplitHeading>
             <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
               Vyrek programmes are designed for your city, your equipment, and
-              your race date. Find your local landing page below — or skip
+              your race date. Find your local landing page below, or skip
               straight to the quiz and we&apos;ll build your Week 1 in three
               minutes.
             </p>

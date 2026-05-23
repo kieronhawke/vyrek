@@ -35,7 +35,7 @@ export function CookieBanner() {
       setCategories(state.categories);
       return;
     }
-    // Let the visitor see the hero first — UK GDPR doesn't require the
+    // Let the visitor see the hero first. UK GDPR doesn't require the
     // banner to fire on first paint, just before any non-essential cookie.
     const timer = window.setTimeout(() => setVisible(true), 1500);
     return () => window.clearTimeout(timer);
@@ -206,7 +206,7 @@ function PrefRow({
   return (
     <label
       className={`flex cursor-pointer items-start justify-between gap-4 rounded-md border border-vyrek-border-subtle px-4 py-3 ${
-        disabled ? "opacity-60" : "hover:border-vyrek-border-default"
+        disabled ? "opacity-60": "hover:border-vyrek-border-default"
       }`}
     >
       <span className="flex-1">

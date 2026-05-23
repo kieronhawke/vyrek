@@ -3,7 +3,7 @@
 import { ContinueButton } from "@/components/quiz-v3/continue-button";
 
 /**
- * Screen 7 — Padding interstitial #2. Headline + 3-photo grid + Continue.
+ * Screen 7. Padding interstitial #2. Headline + 3-photo grid + Continue.
  */
 export function ReassuranceScreen2({ onContinue }: { onContinue: () => void }) {
   return (
@@ -53,7 +53,7 @@ export function ReassuranceScreen2({ onContinue }: { onContinue: () => void }) {
 
           <p className="mt-8 text-base leading-relaxed text-vyrek-text-secondary">
             You don&apos;t need more hours in the gym. You need better
-            programming — where every block has a purpose, and every session
+            programming, where every block has a purpose, and every session
             builds on the last.
           </p>
         </div>

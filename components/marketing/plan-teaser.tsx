@@ -14,7 +14,7 @@ type PreviewDay = {
   intensity: string;
 };
 
-// Static preview content — Phase G replaces with a tour through real Week 1
+// Static preview content. Phase G replaces with a tour through real Week 1
 // data generated from the user's quiz answers.
 const PREVIEW: PreviewDay[] = [
   { day: "Mon", date: "21 May", duration: "45 min", intensity: "Z2" },
@@ -23,12 +23,12 @@ const PREVIEW: PreviewDay[] = [
   { day: "Thu", date: "24 May", duration: "45 min", intensity: "Threshold" },
   { day: "Fri", date: "25 May", duration: "30 min", intensity: "Recovery" },
   { day: "Sat", date: "26 May", duration: "90 min", intensity: "Race sim" },
-  { day: "Sun", date: "27 May", duration: "—", intensity: "Rest" },
+  { day: "Sun", date: "27 May", duration: ",", intensity: "Rest" },
 ];
 
 const STEPS = [
   { label: "01", text: "Take the three-minute quiz" },
-  { label: "02", text: "See your real Week 1 — every workout, every day" },
+  { label: "02", text: "See your real Week 1, every workout, every day" },
   { label: "03", text: "Start your trial. First week free." },
 ];
 
@@ -94,7 +94,7 @@ function PhoneMockup({ days }: { days: PreviewDay[] }) {
   return (
     <div
       className="relative w-full max-w-[300px] shrink-0"
-      aria-hidden /* decorative — content is summarised in step list */
+      aria-hidden /* decorative, content is summarised in step list */
     >
       <div className="relative aspect-[9/19] overflow-hidden rounded-[44px] border border-vyrek-border-strong bg-vyrek-elevated shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
         {/* Notch */}

@@ -41,7 +41,7 @@ import {
 
 export const revalidate = 3600;
 
-// Block unknown slugs from rendering as dynamic 200s — a request for a
+// Block unknown slugs from rendering as dynamic 200s, a request for a
 // slug that wasn't in generateStaticParams returns a real 404, not the
 // not-found page with a 200 status (better for SEO + crawlers).
 export const dynamicParams = false;
@@ -137,7 +137,7 @@ export default async function BlogPostPage({
       />
       {post.faqs && post.faqs.length ? (
         <JsonLd data={faqPageJsonLd(post.faqs)} />
-      ) : null}
+      ): null}
 
       <ReadingProgress />
       <MarketingNav />
@@ -149,7 +149,7 @@ export default async function BlogPostPage({
               { name: "Home", url: "/" },
               { name: "Journal", url: "/blog" },
               { name: categoryLabel, url: `/blog/category/${post.category}` },
-              { name: post.title.slice(0, 30) + (post.title.length > 30 ? "…" : ""), url: `/blog/${post.slug}` },
+              { name: post.title.slice(0, 30) + (post.title.length > 30 ? "...": ""), url: `/blog/${post.slug}` },
             ]}
           />
 
@@ -229,7 +229,7 @@ export default async function BlogPostPage({
 
                 {post.faqs && post.faqs.length ? (
                   <FaqSection faqs={post.faqs} />
-                ) : null}
+                ): null}
 
                 <div className="mt-12 border-t border-vyrek-border-subtle pt-8">
                   <div className="flex flex-wrap items-center justify-between gap-4">
@@ -244,7 +244,7 @@ export default async function BlogPostPage({
                           </li>
                         ))}
                       </ul>
-                    ) : null}
+                    ): null}
                   </div>
                 </div>
 

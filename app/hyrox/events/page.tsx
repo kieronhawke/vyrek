@@ -13,7 +13,7 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "Hyrox UK events — race calendar, venues, prep windows",
+  title: "Hyrox UK events, race calendar, venues, prep windows",
   description:
     "Hyrox UK race calendar: ExCeL London, Manchester Central, NEC Birmingham, OVO Hydro Glasgow. Venue logistics, divisions, and when to start your 12-week build.",
   alternates: { canonical: `${siteUrl()}/hyrox/events` },

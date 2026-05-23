@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
 /**
- * Technical mono mark in brackets — e.g. `[ BEGINNER / 12 WEEKS ]`.
+ * Technical mono mark in brackets, e.g. `[ BEGINNER / 12 WEEKS ]`.
  * Geist Mono 500, tracking 0.18em, uppercase, secondary text.
  */
 export function Eyebrow({
@@ -12,7 +12,7 @@ export function Eyebrow({
 }: {
   children: ReactNode;
   className?: string;
-  /** Skip the [ ] brackets — useful when you want plain mono mark text */
+  /** Skip the [ ] brackets, useful when you want plain mono mark text */
   bare?: boolean;
 }) {
   return (
@@ -22,7 +22,7 @@ export function Eyebrow({
         className,
       )}
     >
-      {bare ? children : <>[ {children} ]</>}
+      {bare ? children: <>[ {children} ]</>}
     </span>
   );
 }

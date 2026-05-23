@@ -50,7 +50,7 @@ export function PrimaryIntentScreen({
 }
 
 /**
- * Toggle helper — pass in current selection + a tap value. Adds the tap,
+ * Toggle helper, pass in current selection + a tap value. Adds the tap,
  * removes if already present, replaces oldest if at max.
  */
 export function applyIntentToggle(
@@ -64,6 +64,6 @@ export function applyIntentToggle(
   if (current.length < max) {
     return [...current, value];
   }
-  // At max — replace the oldest (front of the array).
+  // At max, replace the oldest (front of the array).
   return [...current.slice(1), value];
 }

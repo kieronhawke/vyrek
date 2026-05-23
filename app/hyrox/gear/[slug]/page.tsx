@@ -158,7 +158,7 @@ export default async function GearPage({
           >
             <Eyebrow>FAQs</Eyebrow>
             <h2 id="gear-faq-heading" className="sr-only">
-              {g.eyebrow} — frequently asked questions
+              {g.eyebrow}, frequently asked questions
             </h2>
             <div className="mt-6">
               <Accordion>

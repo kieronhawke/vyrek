@@ -17,12 +17,12 @@ const PRINCIPLES = [
   {
     tag: "Progression",
     title: "Twelve weeks, three phases, taper baked in from day one.",
-    body: "Weeks 1–4 build aerobic capacity and station competence. Weeks 5–8 layer in race-pace intensity. Weeks 9–11 sharpen the day — race simulations, transition rehearsals, recovery dialled tight. Week 12 is taper: less volume, same intensity, fresh legs.",
+    body: "Weeks 1-4 build aerobic capacity and station competence. Weeks 5-8 layer in race-pace intensity. Weeks 9-11 sharpen the day, race simulations, transition rehearsals, recovery dialled tight. Week 12 is taper: less volume, same intensity, fresh legs.",
   },
   {
     tag: "Honesty",
     title: "No 'transformations'. Just the work.",
-    body: "Vyrek doesn't sell physique outcomes or before-and-after promises. We sell a finishing time you can put on a watch, and the structured weeks that get you there. If the programme isn't working, the Sunday recalibration changes it — or you cancel in two taps. No lock-ins, no shame.",
+    body: "Vyrek doesn't sell physique outcomes or before-and-after promises. We sell a finishing time you can put on a watch, and the structured weeks that get you there. If the programme isn't working, the Sunday recalibration changes it, or you cancel in two taps. No lock-ins, no shame.",
   },
 ];
 

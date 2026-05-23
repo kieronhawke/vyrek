@@ -17,7 +17,7 @@ import {
  *    it up if checkout never completes.
  *
  * Returns the customer + quiz response IDs. On any database error, returns
- * 200 with a `persisted: false` flag — the client-side quiz V2 is happy to
+ * 200 with a `persisted: false` flag, the client-side quiz V2 is happy to
  * proceed to the plan reveal regardless (best-effort capture), so we keep
  * the funnel moving rather than blocking on a flaky write.
  *
@@ -32,7 +32,7 @@ type Body = {
   path?: string;
 };
 
-// Tighter than `[^\s@]+@[^\s@]+\.[^\s@]+` — rejects characters that have no
+// Tighter than `[^\s@]+@[^\s@]+\.[^\s@]+`, rejects characters that have no
 // business in a real RFC-5321 address (`<>&"`) so injection-style values are
 // rejected at the gate, not later in the system.
 const EMAIL_RE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,24}$/;
@@ -59,8 +59,7 @@ function normaliseAnswers(answers: Body["answers"]): RunnaQuizAnswers {
     bestTime: a.bestTime,
     raceDate:
       typeof a.raceDate === "string"
-        ? new Date(a.raceDate)
-        : (a.raceDate as Date | undefined),
+        ? new Date(a.raceDate): (a.raceDate as Date | undefined),
     raceSuggestion: a.raceSuggestion,
     days: (a.days ?? 4) as RunnaQuizAnswers["days"],
     sessionLength: (a.sessionLength ??
@@ -110,7 +109,7 @@ export async function POST(req: Request) {
   try {
     const sb = supabaseAdmin();
 
-    // Insert-or-fetch the customer row. Schema requires `id` (UUID) — we use
+    // Insert-or-fetch the customer row. Schema requires `id` (UUID), we use
     // the client-generated UUID when present so the row is stable across
     // resumed quiz sessions; otherwise mint a fresh one.
     const customerRow = {
@@ -119,36 +118,28 @@ export async function POST(req: Request) {
       referral_code: generateReferralCode(),
     };
 
-    const { data: upserted, error: upsertErr } = await sb
-      .from("customers")
-      .upsert(customerRow, { onConflict: "email", ignoreDuplicates: false })
-      .select("id")
-      .single();
+    const { data: upserted, error: upsertErr } = await sb.from("customers").upsert(customerRow, { onConflict: "email", ignoreDuplicates: false }).select("id").single();
 
     if (upsertErr) throw upsertErr;
     customerId = upserted?.id ?? customerRow.id;
 
     // Snapshot the quiz answers + computed programme + entry path.
-    const { data: qr, error: qrErr } = await sb
-      .from("quiz_responses")
-      .insert({
+    const { data: qr, error: qrErr } = await sb.from("quiz_responses").insert({
         customer_id: customerId,
         email,
-        // raceDate is a Date — Supabase serialises to ISO string via JSON
+        // raceDate is a Date. Supabase serialises to ISO string via JSON
         answers: {
           ...answers,
           raceDate: answers.raceDate?.toISOString() ?? null,
         },
         program: programme,
         path,
-      })
-      .select("id")
-      .single();
+      }).select("id").single();
 
     if (qrErr) throw qrErr;
     quizResponseId = qr?.id ?? null;
 
-    // Queue the recovery email — `recovered_at` stays null until checkout
+    // Queue the recovery email, `recovered_at` stays null until checkout
     // completes. A scheduled job at +1hr looks for null `recovered_at` rows.
     await sb.from("abandoned_plans").insert({
       email,

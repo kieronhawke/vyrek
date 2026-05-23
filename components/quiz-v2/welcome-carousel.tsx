@@ -9,7 +9,7 @@ const SLIDE_DURATION_MS = 4000;
 type TouchTarget = HTMLElement;
 
 /**
- * Screen 1 — Instagram-story-style carousel. 3 full-bleed slides advance
+ * Screen 1. Instagram-story-style carousel. 3 full-bleed slides advance
  * automatically every 4 seconds, swipeable, with thin top progress bars.
  *
  * Tap anywhere to advance to the next slide. Bottom CTA skips remaining
@@ -93,8 +93,7 @@ export function WelcomeCarousel({
                     i === index
                       ? ({
                           animationDuration: `${SLIDE_DURATION_MS}ms`,
-                        } as React.CSSProperties)
-                      : undefined
+                        } as React.CSSProperties): undefined
                   }
                 />
               </span>
@@ -148,8 +147,7 @@ export function WelcomeCarousel({
         </button>
       </div>
 
-      <style jsx>{`
-        .story-bar-active {
+      <style jsx>{`.story-bar-active {
           animation-name: fill-bar;
           animation-timing-function: linear;
           animation-fill-mode: forwards;

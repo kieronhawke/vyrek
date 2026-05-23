@@ -1,6 +1,6 @@
 /**
  * Circular progress indicator for the quiz. Top-right of the question shell.
- * Inline SVG — no JS animation needed; CSS transitions on stroke-dashoffset.
+ * Inline SVG, no JS animation needed; CSS transitions on stroke-dashoffset.
  */
 export function ProgressArc({
   current,
