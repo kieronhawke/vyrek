@@ -45,7 +45,7 @@ export function Hero() {
 
   // Dim the backdrop as the user scrolls past 50% of the viewport. The
   // footage stays grayscale throughout, the editorial brief is B&W with the
-  // single accent orange handling all the colour work.
+  // single chartreuse accent handling all the colour work.
   useEffect(() => {
     const el = backdropRef.current;
     if (!el) return;

@@ -68,7 +68,7 @@ async function send(args: {
 const BG = "#0a0a0a";
 const TEXT = "#f5f5f5";
 const DIM = "#a3a3a3";
-const ACCENT = "#ff5a1f";
+const ACCENT = "#a3e635";
 const SURFACE = "#1a1a1a";
 
 function shell(inner: string): string {

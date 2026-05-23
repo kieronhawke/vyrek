@@ -48,7 +48,7 @@ export function RaceDateScreen({
 
       <style jsx global>{`.rdp-vyrek.rdp-root {
           --rdp-accent-color: var(--vyrek-accent);
-          --rdp-accent-background-color: rgba(255, 90, 31, 0.18);
+          --rdp-accent-background-color: rgba(163, 230, 53, 0.20);
           --rdp-day_button-width: 40px;
           --rdp-day_button-height: 40px;
           --rdp-day_button-border-radius: 999px;

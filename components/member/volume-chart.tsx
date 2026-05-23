@@ -56,7 +56,7 @@ export function VolumeChart({ data }: { data: WeekVolume[] }) {
                 y={base - runH}
                 width={barW}
                 height={runH}
-                fill="#FF6B2B"
+                fill="#A3E635"
                 opacity={0.95}
                 rx={1.5}
               />
@@ -65,7 +65,7 @@ export function VolumeChart({ data }: { data: WeekVolume[] }) {
                 y={base - runH - strH}
                 width={barW}
                 height={strH}
-                fill="#F5A77E"
+                fill="#BEF264"
                 opacity={0.95}
                 rx={1.5}
               />
@@ -74,7 +74,7 @@ export function VolumeChart({ data }: { data: WeekVolume[] }) {
                 y={base - runH - strH - staH}
                 width={barW}
                 height={staH}
-                fill="#F8DAC6"
+                fill="#DDF5B9"
                 opacity={0.9}
                 rx={1.5}
               />

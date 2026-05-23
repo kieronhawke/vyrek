@@ -22,8 +22,8 @@ const PALETTE = [
   },
   {
     name: "Vyrek Accent",
-    hex: "#FF5A1F",
-    note: "Single warm accent. Used sparingly on CTAs, focus, highlights.",
+    hex: "#A3E635",
+    note: "Single chartreuse accent. Used sparingly on CTAs, focus, highlights.",
   },
   {
     name: "Vyrek Text",
@@ -38,7 +38,7 @@ const PALETTE = [
 ];
 
 const DOS = [
-  "Use the accent orange for emphasis, not decoration. One accent per view.",
+  "Use the chartreuse accent for emphasis, not decoration. One accent per view.",
   "Set body type in Inter. Set display headings in Oswald 700.",
   "Keep generous negative space. Vyrek's voice is restrained, not crowded.",
   "Refer to athletes as athletes. Members as members. Programmes as programmes (UK spelling).",
@@ -46,7 +46,7 @@ const DOS = [
 
 const DONTS = [
   "Don't recolour the wordmark. The monogram is black or white only.",
-  "Don't pair Vyrek with a second accent colour. Add a tint of the same orange instead.",
+  "Don't pair Vyrek with a second accent colour. Add a tint of the same chartreuse instead.",
   "Don't soften the voice with marketing fluff. No 'unleash your potential', no 'crush your goals'.",
   "Don't claim outcomes Vyrek can't verify, finishing times, weight loss, transformations.",
 ];

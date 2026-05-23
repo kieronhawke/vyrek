@@ -46,7 +46,7 @@ export async function GET(
       >
         <div
           style={{
-            color: "#FF5A1F",
+            color: "#A3E635",
             fontSize: 22,
             letterSpacing: "0.22em",
             textTransform: "uppercase",

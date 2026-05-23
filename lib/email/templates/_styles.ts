@@ -9,7 +9,7 @@ export const BORDER = "#2A2A2A";
 export const TEXT = "#F5F5F3";
 export const TEXT_DIM = "#A8A8A6";
 export const TEXT_FAINT = "#8A8A88";
-export const ACCENT = "#FF5A1F";
+export const ACCENT = "#A3E635";
 
 export const TECH_MARK = "[ VYREK · FITNESS / 2026 · MADE IN UK ]";
 

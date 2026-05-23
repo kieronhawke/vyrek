@@ -14,8 +14,8 @@ const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
   <defs>
     <radialGradient id="glow" cx="50%" cy="120%" r="80%">
-      <stop offset="0%"  stop-color="#FF5A1F" stop-opacity="0.35"/>
-      <stop offset="40%" stop-color="#4A1F0E" stop-opacity="0.20"/>
+      <stop offset="0%"  stop-color="#A3E635" stop-opacity="0.35"/>
+      <stop offset="40%" stop-color="#1A3D08" stop-opacity="0.20"/>
       <stop offset="80%" stop-color="#0A0A0A" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="vignette" x1="0" x2="0" y1="0" y2="1">

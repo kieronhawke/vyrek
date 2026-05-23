@@ -15,8 +15,8 @@ export function AdaptsChart() {
     <svg viewBox="0 0 200 80" aria-hidden className="h-32 w-full md:h-40">
       <defs>
         <linearGradient id="adapt-fill" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="#FF5A1F" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="#FF5A1F" stopOpacity="0" />
+          <stop offset="0%" stopColor="#A3E635" stopOpacity="0.35" />
+          <stop offset="100%" stopColor="#A3E635" stopOpacity="0" />
         </linearGradient>
       </defs>
       <motion.path
@@ -30,7 +30,7 @@ export function AdaptsChart() {
       <motion.path
         d={PATH}
         fill="none"
-        stroke="#FF5A1F"
+        stroke="#A3E635"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -50,7 +50,7 @@ export function AdaptsChart() {
           cx={x}
           cy={y}
           r="2.5"
-          fill="#FF5A1F"
+          fill="#A3E635"
           initial={{ opacity: 0, scale: 0 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "0px 0px -10% 0px" }}

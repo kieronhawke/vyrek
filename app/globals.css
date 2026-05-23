@@ -25,15 +25,22 @@
   --vyrek-text-tertiary:  #8A8A88;
   --vyrek-text-disabled:  #555553;
 
-  /* Accent (single warm orange, used sparingly) */
-  --vyrek-accent:         #FF5A1F;
-  --vyrek-accent-hover:   #FF7A47;
-  --vyrek-accent-muted:   #4A1F0E;
+  /* Accent (chartreuse, used sparingly).
+     accent       : primary action fill / mono brackets / active states
+     accent-hover : darker variant for hover, pressed
+     accent-glow  : lighter highlight for focus rings on subtle surfaces
+     accent-muted : low-saturation backdrop for callout pills + bg tints */
+  --vyrek-accent:         #A3E635;
+  --vyrek-accent-hover:   #84CC16;
+  --vyrek-accent-glow:    #BEF264;
+  --vyrek-accent-muted:   #1A3D08;
 
-  /* Semantic */
-  --vyrek-success:        #00D26A;
-  --vyrek-warning:        #FFB800;
-  --vyrek-danger:         #FF4646;
+  /* Semantic.
+     Success uses white plus a checkmark icon, not green: chartreuse owns
+     green in this palette and a second green would confuse the brand. */
+  --vyrek-success:        #FFFFFF;
+  --vyrek-warning:        #F59E0B;
+  --vyrek-danger:         #EF4444;
 
   /* Motion */
   --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
@@ -121,6 +128,7 @@
   --color-vyrek-text-disabled:  var(--vyrek-text-disabled);
   --color-vyrek-accent:         var(--vyrek-accent);
   --color-vyrek-accent-hover:   var(--vyrek-accent-hover);
+  --color-vyrek-accent-glow:    var(--vyrek-accent-glow);
   --color-vyrek-accent-muted:   var(--vyrek-accent-muted);
   --color-vyrek-success:        var(--vyrek-success);
   --color-vyrek-warning:        var(--vyrek-warning);
@@ -232,7 +240,7 @@ a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  box-shadow: 0 0 0 2px var(--vyrek-accent), 0 0 0 4px rgba(255, 90, 31, 0.18);
+  box-shadow: 0 0 0 2px var(--vyrek-accent), 0 0 0 4px rgba(163, 230, 53, 0.20);
   border-color: var(--vyrek-accent);
 }
 
@@ -300,7 +308,7 @@ button, a, [role="button"] {
   border-color: var(--vyrek-border-strong);
   box-shadow:
     0 18px 38px -22px rgba(0, 0, 0, 0.55),
-    0 1px 0 0 rgba(255, 90, 31, 0.18) inset;
+    0 1px 0 0 rgba(163, 230, 53, 0.20) inset;
 }
 
 .image-zoom img {
