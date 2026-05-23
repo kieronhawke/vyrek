@@ -66,7 +66,11 @@ try {
   await page.fill('input[type="email"]', ADMIN_EMAIL);
   await page.fill('input[type="password"]', ADMIN_PASSWORD);
   await page.click('button[type="submit"]');
-  await page.waitForURL(/\/admin($|\?|\/)/, { timeout: 20000 });
+  // Wait for the redirect AWAY from login to land us on the admin shell.
+  await page.waitForURL((u) => !u.pathname.endsWith("/admin/login"), {
+    timeout: 20000,
+  });
+  await page.waitForLoadState("networkidle");
   console.log("admin signed in");
   for (const p of ADMIN_PAGES) {
     await page.goto(`${BASE}${p.path}`, { waitUntil: "networkidle", timeout: 30000 });
