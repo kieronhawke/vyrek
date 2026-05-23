@@ -57,14 +57,14 @@ export default async function AdminCustomersPage({
               {c.email}
             </Link>,
             <span key="stripe" className="font-mono text-xs text-vyrek-text-secondary">
-              {c.stripe_customer_id ?? "—"}
+              {c.stripe_customer_id ?? "-"}
             </span>,
             <span key="ref" className="font-mono text-xs">
-              {c.referral_code ?? "—"}
+              {c.referral_code ?? "-"}
             </span>,
             c.created_at
               ? format(new Date(c.created_at), "dd MMM yyyy, HH:mm")
-              : "—",
+              : "-",
           ])}
         />
       )}

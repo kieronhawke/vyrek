@@ -98,7 +98,7 @@ export default async function AdminPayoutsPage({
             </span>,
             <Badge key="s" tone={statusTone(p.status)}>{p.status}</Badge>,
             <span key="b" className="font-mono text-xs text-vyrek-text-secondary">
-              {p.bacs_reference ?? "—"}
+              {p.bacs_reference ?? "-"}
             </span>,
             p.status === "pending" ? (
               <MarkPayoutPaidButton key="m" payoutId={p.id} />
@@ -108,7 +108,7 @@ export default async function AdminPayoutsPage({
               </span>
             ) : (
               <span key="d" className="text-vyrek-text-tertiary">
-                —
+                , 
               </span>
             ),
           ])}

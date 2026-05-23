@@ -20,10 +20,10 @@ function sid(): string {
  * - pings /api/presence/ping on mount + on every pathname change
  * - keeps pinging every 30s while the tab is visible
  * - pauses while the tab is hidden (saves ~70% of pings, matches what
- *   real users care about — they're not actively on the site)
+ *   real users care about, they're not actively on the site)
  * - sends a beacon DELETE on pagehide so the count drops immediately
  *
- * Renders nothing. Failures are silent — presence is not load-bearing.
+ * Renders nothing. Failures are silent, presence is not load-bearing.
  */
 export function PresencePing() {
   const pathname = usePathname();

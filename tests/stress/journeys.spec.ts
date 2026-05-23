@@ -7,7 +7,7 @@ import { test, expect, type Page } from "@playwright/test";
  * Tests fail loud if a journey can't complete to the email gate. Console
  * errors are captured per journey and reported in the test name.
  *
- * Runs at desktop-1440 only by default — viewports are covered by the
+ * Runs at desktop-1440 only by default, viewports are covered by the
  * existing page-coverage matrix.
  */
 
@@ -230,7 +230,7 @@ async function runJourney(page: Page, j: Journey, errors: string[]) {
     await clickContinue(page);
   }
 
-  // Partner (skipped if doubles already chosen — quiz infers)
+  // Partner (skipped if doubles already chosen, quiz infers)
   const isDoubles = /doubles/i.test(String(j.intent));
   if (!isDoubles) {
     await pickOption(page, j.partner);
@@ -327,7 +327,7 @@ test.describe("Form edge cases", () => {
     // the table yet; we only care that the client-side validation passed.
     await page.getByRole("button", { name: /submit application/i }).click();
     await page.waitForTimeout(1500);
-    // Either success screen OR a server error — both prove validation
+    // Either success screen OR a server error, both prove validation
     // accepted the input.
     const hasSuccess = await page
       .getByRole("heading", { name: /thanks/i })

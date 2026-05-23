@@ -102,7 +102,7 @@ export function blogPostingJsonLd(post: PostMeta) {
 
 /**
  * HowTo schema for technique posts. Google often shows HowTo results as
- * featured snippets or rich list cards for "how to" queries — a huge
+ * featured snippets or rich list cards for "how to" queries, a huge
  * leverage point for posts that walk through a movement step by step.
  *
  * Input: list of steps with name + (optional) text. Typically built by

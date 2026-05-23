@@ -41,7 +41,7 @@ export default async function AccountPage() {
                 Member since{" "}
                 {ctx.customer?.created_at
                   ? format(new Date(ctx.customer.created_at), "MMM yyyy")
-                  : "—"}
+                  : "-"}
               </p>
             </div>
           </div>
@@ -57,7 +57,7 @@ export default async function AccountPage() {
                 Referral code
               </dt>
               <dd className="mt-1 font-mono text-xs text-vyrek-text">
-                {ctx.customer?.referral_code ?? "—"}
+                {ctx.customer?.referral_code ?? "-"}
               </dd>
             </div>
           </dl>

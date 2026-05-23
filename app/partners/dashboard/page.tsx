@@ -95,7 +95,7 @@ export default async function PartnerDashboardPage({
     );
   }
 
-  // Signed in — load the dashboard data.
+  // Signed in, load the dashboard data.
   type Partner = {
     id: string;
     email: string;
@@ -324,7 +324,7 @@ export default async function PartnerDashboardPage({
                             ? formatDistanceToNow(new Date(r.signed_up_at), {
                                 addSuffix: true,
                               })
-                            : "—"}
+                            : "-"}
                         </Td>
                         <Td>
                           {r.first_paid_at
@@ -332,7 +332,7 @@ export default async function PartnerDashboardPage({
                                 new Date(r.first_paid_at),
                                 "dd MMM yyyy",
                               )
-                            : "—"}
+                            : "-"}
                         </Td>
                         <Td align="right" className="tabular-nums">
                           {gbp(r.recurring_earnings_pence ?? 0)}
@@ -385,7 +385,7 @@ export default async function PartnerDashboardPage({
                         </Td>
                         <Td>
                           <span className="font-mono text-xs text-vyrek-text-secondary">
-                            {p.bacs_reference ?? "—"}
+                            {p.bacs_reference ?? "-"}
                           </span>
                         </Td>
                       </tr>

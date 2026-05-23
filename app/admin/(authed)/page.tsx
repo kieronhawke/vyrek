@@ -21,7 +21,7 @@ function gbp(pence: number): string {
 function statValue(
   r: { ok: true; data: number } | { ok: false; reason: string },
 ): string {
-  return r.ok ? r.data.toLocaleString("en-GB") : "—";
+  return r.ok ? r.data.toLocaleString("en-GB") : "-";
 }
 
 function sum(arr: number[]): number {
@@ -87,7 +87,7 @@ export default async function AdminOverviewPage() {
           value={sum(last7Signups).toLocaleString("en-GB")}
           delta={
             signupsDelta === null
-              ? "—"
+              ? "-"
               : `${signupsDelta >= 0 ? "+" : ""}${signupsDelta}% vs prior 7d`
           }
           sparkline={<Sparkline values={last7Signups} />}
@@ -105,7 +105,7 @@ export default async function AdminOverviewPage() {
         />
         <Stat
           label="Monthly recurring revenue"
-          value={s.mrr_pence.ok ? gbp(s.mrr_pence.data) : "—"}
+          value={s.mrr_pence.ok ? gbp(s.mrr_pence.data) : "-"}
           hint="paid × £8.99"
         />
         <Stat label="Cancelled" value={statValue(s.cancelled)} hint="Lifetime." />
@@ -215,7 +215,7 @@ export default async function AdminOverviewPage() {
                           ? formatDistanceToNow(new Date(c.created_at), {
                               addSuffix: true,
                             })
-                          : "—"}
+                          : "-"}
                       </span>
                     </Link>
                   </li>

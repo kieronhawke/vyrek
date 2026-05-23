@@ -136,11 +136,11 @@ export default async function AdminPartnerDetailPage({
             <Row k="Email" v={partner.email} mono />
             <Row
               k="Address"
-              v={partner.address ?? "—"}
+              v={partner.address ?? "-"}
             />
             <Row
               k="VAT number"
-              v={partner.vat_number ?? "—"}
+              v={partner.vat_number ?? "-"}
               mono
             />
             <Row
@@ -148,7 +148,7 @@ export default async function AdminPartnerDetailPage({
               v={
                 partner.created_at
                   ? format(new Date(partner.created_at), "dd MMM yyyy")
-                  : "—"
+                  : "-"
               }
             />
             {partner.application_id ? (
@@ -192,14 +192,14 @@ export default async function AdminPartnerDetailPage({
           rows={referrals.map((r) => [
             <Badge key="s" tone={refStatusTone(r.status)}>{r.status}</Badge>,
             <span key="sub" className="font-mono text-xs text-vyrek-text-secondary">
-              {r.sub_id ?? "—"}
+              {r.sub_id ?? "-"}
             </span>,
             r.signed_up_at
               ? format(new Date(r.signed_up_at), "dd MMM yyyy")
-              : "—",
+              : "-",
             r.first_paid_at
               ? format(new Date(r.first_paid_at), "dd MMM yyyy")
-              : "—",
+              : "-",
             <span key="e" className="tabular-nums">
               {gbp(r.recurring_earnings_pence ?? 0)}
             </span>,
@@ -224,7 +224,7 @@ export default async function AdminPartnerDetailPage({
             </span>,
             <Badge key="s" tone={payoutStatusTone(p.status)}>{p.status}</Badge>,
             <span key="ref" className="font-mono text-xs text-vyrek-text-secondary">
-              {p.bacs_reference ?? "—"}
+              {p.bacs_reference ?? "-"}
             </span>,
           ])}
         />

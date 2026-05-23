@@ -65,7 +65,7 @@ export function MemberSubscriptionPanel({
         <div className="flex justify-between gap-3">
           <dt className="text-vyrek-text-tertiary">Stripe subscription</dt>
           <dd className="font-mono text-xs text-vyrek-text">
-            {subscription.stripe_subscription_id ?? "—"}
+            {subscription.stripe_subscription_id ?? "-"}
           </dd>
         </div>
       </dl>

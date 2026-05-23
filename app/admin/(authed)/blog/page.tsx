@@ -50,7 +50,7 @@ export default async function AdminBlogPage() {
           value={
             posts[0]
               ? format(new Date(posts[0].publishedAt), "dd MMM")
-              : "—"
+              : "-"
           }
           hint={posts[0]?.title.slice(0, 30) ?? undefined}
         />

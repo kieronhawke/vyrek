@@ -8,7 +8,7 @@ import type { ComponentProps, ReactNode } from "react";
  * element enters the viewport. Honours `prefers-reduced-motion` automatically.
  *
  * Important: opacity stays at 1 throughout. Earlier versions used
- * `opacity: 0 -> 1` which baked an opacity:0 into the SSR'd HTML — meaning
+ * `opacity: 0 -> 1` which baked an opacity:0 into the SSR'd HTML, meaning
  * the content was invisible until JS hydrated and the IntersectionObserver
  * fired, which broke no-JS rendering, Lighthouse / SEO crawlers' first
  * paint, and in-page Find. Y-only keeps the polish while leaving content

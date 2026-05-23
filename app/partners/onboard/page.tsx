@@ -50,7 +50,7 @@ export default async function PartnersOnboardPage({
     );
   }
 
-  // Check if a partner row already exists for this application — they've
+  // Check if a partner row already exists for this application, they've
   // already onboarded.
   let alreadyOnboarded = false;
   try {

@@ -161,7 +161,7 @@ export const DEMO_RECENT_SESSIONS: LoggedSession[] = [
     durationMin: 68,
     rpe: 9,
     splitVsPrev: "-22s",
-    notes: "Wall ball broken into 25s — held the cadence.",
+    notes: "Wall ball broken into 25s, held the cadence.",
   },
   {
     id: "s3",
@@ -536,7 +536,7 @@ export const DEMO_ATHLETES: Athlete[] = [
   },
 ];
 
-// Additional athletes (mock) — combined with DEMO_ATHLETES via DEMO_ATHLETES_ALL.
+// Additional athletes (mock), combined with DEMO_ATHLETES via DEMO_ATHLETES_ALL.
 const DEMO_ATHLETES_EXTRA: Athlete[] = [
   {
     slug: "theo-richardson",
@@ -1017,7 +1017,7 @@ export const DEMO_STATIONS: Station[] = [
     goldStandard: "Open Men 1:50-2:10 · Open Women 2:30-3:00",
     technique: [
       "Heels back, hips low, pull hand over hand. Don't grip the rope, hook it.",
-      "Walk the sled back to start — don't run, you'll trip.",
+      "Walk the sled back to start, don't run, you'll trip.",
       "Switch grip every 5-6 pulls to spread the forearm load.",
     ],
     failurePattern: "Death-grip on the rope, forearms cook by metre 25, has to drop the rope.",
@@ -1073,7 +1073,7 @@ export const DEMO_STATIONS: Station[] = [
     goldStandard: "Open Men 3:40-4:15 · Open Women 4:20-5:00",
     technique: [
       "Bag on the shoulders, not the neck. Hands hooked over the top.",
-      "Knee taps the floor lightly — don't crash it.",
+      "Knee taps the floor lightly, don't crash it.",
       "When the legs start to lock, shorten the stride by 10cm. Cadence stays the same.",
     ],
     failurePattern: "Has to stop and rest the legs because the early stride was too long.",

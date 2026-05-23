@@ -19,7 +19,7 @@ export async function GET(
   const { slug } = await ctx.params;
   const url = new URL(req.url);
   const to = url.searchParams.get("to") || "/";
-  // Reject protocol-relative (//evil.com) — these pass startsWith("/")
+  // Reject protocol-relative (//evil.com), these pass startsWith("/")
   // but resolve cross-origin when fed to new URL(). Security audit M-3.
   const dest = to.startsWith("/") && !to.startsWith("//") ? to : "/";
 

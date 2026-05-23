@@ -83,7 +83,7 @@ export default function BrandGuidelinesPage() {
                 Wordmark and monogram.
               </h2>
               <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
-                The wordmark spells VYREK in Oswald 700 with a –2% letter-spacing
+                The wordmark spells VYREK in Oswald 700 with a , 2% letter-spacing
                 adjustment. Use it on press articles, partner pages, and at
                 widths above 96px. The monogram is the &ldquo;V&rdquo; mark on its own,
                 use it for app icons, social avatars, favicons, and watermarks.

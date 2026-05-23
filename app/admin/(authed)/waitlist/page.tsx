@@ -53,7 +53,7 @@ export default async function AdminWaitlistPage() {
               {r.email}
             </span>,
             <span key="s" className="font-mono text-xs text-vyrek-text-secondary">
-              {r.source ?? "—"}
+              {r.source ?? "-"}
             </span>,
             format(new Date(r.created_at), "dd MMM yyyy, HH:mm"),
           ])}

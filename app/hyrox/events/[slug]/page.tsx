@@ -165,7 +165,7 @@ export default async function EventPage({
               <span className="rounded-pill border border-vyrek-accent/40 bg-vyrek-accent/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-accent">
                 {format(new Date(e.startDate), "EEE d MMM yyyy")}
                 {e.endDate !== e.startDate
-                  ? ` – ${format(new Date(e.endDate), "EEE d MMM yyyy")}`: ""}
+                  ? `, ${format(new Date(e.endDate), "EEE d MMM yyyy")}`: ""}
               </span>
               <span className="rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-secondary">
                 {e.venue.name}, {e.venue.city}

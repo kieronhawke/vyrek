@@ -71,7 +71,7 @@ function buildFaqs(loc: UkLocation) {
     },
     {
       q: `How much does Hyrox coaching cost in ${loc.name}?`,
-      a: `Local 1:1 Hyrox coaching in ${loc.name} typically ranges from £60–£150 per hour. Vyrek's online programme is £8.99 per month with a 7-day free trial, the same level of programming as you'd get from an Elite 15 coach, dated and personalised, at a fraction of the cost.`,
+      a: `Local 1:1 Hyrox coaching in ${loc.name} typically ranges from £60, £150 per hour. Vyrek's online programme is £8.99 per month with a 7-day free trial, the same level of programming as you'd get from an Elite 15 coach, dated and personalised, at a fraction of the cost.`,
     },
     {
       q: `Can I train for Hyrox in ${loc.name} as a beginner?`,

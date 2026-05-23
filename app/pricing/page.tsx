@@ -123,7 +123,7 @@ export default function PricingPage() {
                 Sunday. What you don&apos;t get: a human messaging you weekly,
                 video form-checks on demand, or a custom block written for your
                 name. If you want that, you want 1:1 coaching, typically
-                £150–£400/mo elsewhere.
+                £150, £400/mo elsewhere.
               </p>
               <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
                 We&apos;re open about the trade. Most members never need 1:1.

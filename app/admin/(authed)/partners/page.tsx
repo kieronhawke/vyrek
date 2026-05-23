@@ -87,7 +87,7 @@ export default async function AdminPartnerApplicationsPage({
           rows={res.data.map((a) => [
             a.created_at
               ? format(new Date(a.created_at), "dd MMM HH:mm")
-              : "—",
+              : "-",
             <Link
               key="n"
               href={`/admin/partners/${a.id}`}

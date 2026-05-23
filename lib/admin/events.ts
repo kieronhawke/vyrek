@@ -19,7 +19,7 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
  *   subscription.activated
  *   customer.signed_up
  *
- * Failures are swallowed — the event log must never break the originating
+ * Failures are swallowed, the event log must never break the originating
  * action.
  */
 

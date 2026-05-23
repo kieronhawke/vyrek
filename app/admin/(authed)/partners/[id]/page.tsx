@@ -69,7 +69,7 @@ export default async function AdminApplicationDetailPage({
             <Row k="Follower count" v={a.follower_count} />
             <Row
               k="Promotion methods"
-              v={(a.promotion_methods ?? []).join(", ") || "—"}
+              v={(a.promotion_methods ?? []).join(", ") || "-"}
             />
           </dl>
         </Card>

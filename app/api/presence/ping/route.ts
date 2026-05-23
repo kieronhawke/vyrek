@@ -14,7 +14,7 @@ const MAX_REFERER_LEN = 512;
  * Heartbeat ping for live-presence. Called from every public page on
  * mount + every 30s while the tab is visible. Idempotent upsert.
  *
- * No auth required — anonymous visitors are tracked too. If the
+ * No auth required, anonymous visitors are tracked too. If the
  * visitor is signed in via Supabase Auth, we attach their email so the
  * admin can see who's where.
  *
@@ -64,7 +64,7 @@ export async function POST(req: Request) {
       customerId = c?.id ?? null;
     }
   } catch {
-    // RLS or missing auth — fall through anonymous.
+    // RLS or missing auth, fall through anonymous.
   }
 
   try {

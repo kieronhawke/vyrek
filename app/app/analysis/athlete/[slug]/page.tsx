@@ -47,7 +47,7 @@ export default async function AthleteDetailPage({
       <div className="mt-6 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-vyrek-border bg-vyrek-border-subtle">
         <Stat label="Personal best" value={athlete.pb} accent />
         <Stat label="Total races" value={String(athlete.raceCount)} />
-        <Stat label="Best finish" value={athlete.recentRaces[0]?.rank ?? "—"} />
+        <Stat label="Best finish" value={athlete.recentRaces[0]?.rank ?? "-"} />
       </div>
 
       <section className="mt-8">
@@ -103,7 +103,7 @@ export default async function AthleteDetailPage({
         </p>
         <p className="mt-2 text-sm leading-relaxed text-vyrek-text-secondary">
           Compare your own splits side by side. The biggest gain for most
-          athletes at this level is the {weakestStation(athlete)} — that&apos;s
+          athletes at this level is the {weakestStation(athlete)}, that&apos;s
           where {athlete.name.split(" ")[0]} spends the most time relative to
           the front of the pack.
         </p>

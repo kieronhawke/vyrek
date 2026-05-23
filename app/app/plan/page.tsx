@@ -13,7 +13,7 @@ const PHASE_TONE: Record<string, string> = {
 };
 
 const TYPE_ICON: Record<string, string> = {
-  rest: "—",
+  rest: "-",
   run: "🏃",
   intervals: "⚡",
   strength: "🏋️",

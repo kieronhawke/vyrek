@@ -70,13 +70,13 @@ export default async function AdminCustomerDetailPage({
             <div className="flex justify-between gap-3">
               <dt className="text-vyrek-text-tertiary">Stripe customer</dt>
               <dd className="font-mono text-xs text-vyrek-text">
-                {customer.stripe_customer_id ?? "—"}
+                {customer.stripe_customer_id ?? "-"}
               </dd>
             </div>
             <div className="flex justify-between gap-3">
               <dt className="text-vyrek-text-tertiary">Referral code</dt>
               <dd className="font-mono text-xs text-vyrek-text">
-                {customer.referral_code ?? "—"}
+                {customer.referral_code ?? "-"}
               </dd>
             </div>
           </dl>
@@ -97,7 +97,7 @@ export default async function AdminCustomerDetailPage({
                   <dd className="text-vyrek-text">
                     {latestSub.trial_end
                       ? format(new Date(latestSub.trial_end), "dd MMM yyyy")
-                      : "—"}
+                      : "-"}
                   </dd>
                 </div>
                 <div className="flex justify-between gap-3">
@@ -105,13 +105,13 @@ export default async function AdminCustomerDetailPage({
                   <dd className="text-vyrek-text">
                     {latestSub.current_period_end
                       ? format(new Date(latestSub.current_period_end), "dd MMM yyyy")
-                      : "—"}
+                      : "-"}
                   </dd>
                 </div>
                 <div className="flex justify-between gap-3">
                   <dt className="text-vyrek-text-tertiary">Stripe sub</dt>
                   <dd className="font-mono text-xs text-vyrek-text">
-                    {latestSub.stripe_subscription_id ?? "—"}
+                    {latestSub.stripe_subscription_id ?? "-"}
                   </dd>
                 </div>
               </dl>
@@ -142,16 +142,16 @@ export default async function AdminCustomerDetailPage({
           empty="No subscriptions."
           rows={subscriptions.map((s) => [
             <Badge key="s" tone={statusTone(s.status)}>{s.status}</Badge>,
-            s.trial_end ? format(new Date(s.trial_end), "dd MMM yyyy") : "—",
+            s.trial_end ? format(new Date(s.trial_end), "dd MMM yyyy") : "-",
             s.current_period_end
               ? format(new Date(s.current_period_end), "dd MMM yyyy")
-              : "—",
+              : "-",
             <span key="ss" className="font-mono text-xs text-vyrek-text-secondary">
-              {s.stripe_subscription_id ?? "—"}
+              {s.stripe_subscription_id ?? "-"}
             </span>,
             s.created_at
               ? format(new Date(s.created_at), "dd MMM yyyy, HH:mm")
-              : "—",
+              : "-",
           ])}
         />
       </section>
@@ -176,12 +176,12 @@ export default async function AdminCustomerDetailPage({
           <Card>
             <div className="flex items-center justify-between">
               <p className="font-semibold text-vyrek-text">
-                Programme: {latestQuiz.program ?? "—"}
+                Programme: {latestQuiz.program ?? "-"}
               </p>
               <span className="font-mono text-xs text-vyrek-text-tertiary">
                 {latestQuiz.created_at
                   ? format(new Date(latestQuiz.created_at), "dd MMM yyyy, HH:mm")
-                  : "—"}
+                  : "-"}
               </span>
             </div>
             <pre className="mt-4 max-h-96 overflow-auto rounded-md border border-vyrek-border-subtle bg-vyrek-base/40 p-4 text-xs leading-relaxed text-vyrek-text-secondary">

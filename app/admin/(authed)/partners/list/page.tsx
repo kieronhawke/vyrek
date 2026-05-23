@@ -66,7 +66,7 @@ export default async function AdminPartnersListPage() {
             </span>,
             p.created_at
               ? format(new Date(p.created_at), "dd MMM yyyy")
-              : "—",
+              : "-",
           ])}
         />
       )}

@@ -13,7 +13,7 @@ type Result<T> = Ok<T> | Err;
 
 function fail(e: unknown): Err {
   // Supabase errors are PostgrestError-shaped plain objects, not Error
-  // instances — read `.message` defensively rather than instanceof-gating.
+  // instances, read `.message` defensively rather than instanceof-gating.
   let msg = "unknown error";
   if (typeof e === "string") msg = e;
   else if (e && typeof e === "object") {
@@ -100,7 +100,7 @@ export async function overviewStats(): Promise<{
 
 /**
  * 30-day daily counts for the overview sparklines. Returns an array of
- * 30 numbers (newest last). Robust against missing tables — returns 30
+ * 30 numbers (newest last). Robust against missing tables, returns 30
  * zeros so the UI still renders.
  */
 export async function dailySignups30d(): Promise<number[]> {

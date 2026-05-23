@@ -24,9 +24,9 @@ pnpm test:visual --headed
 
 ## What's covered
 
-- `pages.spec.ts` — page coverage matrix. Loads every public page,
+- `pages.spec.ts`, page coverage matrix. Loads every public page,
   asserts no console errors, captures a full-page screenshot per viewport.
-- `smoke-quiz.spec.ts` — quick smoke checks (quiz entry, partner apply form).
+- `smoke-quiz.spec.ts`, quick smoke checks (quiz entry, partner apply form).
 
 ## What's deferred
 

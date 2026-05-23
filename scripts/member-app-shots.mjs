@@ -20,9 +20,13 @@ await mkdir(OUT, { recursive: true });
 const TABS = [
   { name: "today", path: "/app/today" },
   { name: "plan", path: "/app/plan" },
+  { name: "plan-stations", path: "/app/plan/stations" },
   { name: "nutrition", path: "/app/nutrition" },
   { name: "analysis", path: "/app/analysis" },
+  { name: "athlete", path: "/app/analysis/athlete/james-wright" },
+  { name: "race", path: "/app/analysis/race/hyrox-london-jun-2026" },
   { name: "account", path: "/app/account" },
+  { name: "account-pr", path: "/app/account/pr" },
 ];
 
 const VPS = [

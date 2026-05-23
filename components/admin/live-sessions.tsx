@@ -223,7 +223,7 @@ export function LiveSessions({ initial }: { initial: Session[] }) {
                       </Td>
                       <Td>
                         <span className="font-mono text-xs uppercase text-vyrek-text-secondary">
-                          {s.country ?? "—"}
+                          {s.country ?? "-"}
                         </span>
                       </Td>
                       <Td>

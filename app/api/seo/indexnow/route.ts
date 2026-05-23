@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 /**
- * IndexNow ping (used by Bing, Yandex, Naver, Seznam — Google is also
+ * IndexNow ping (used by Bing, Yandex, Naver, Seznam, Google is also
  * piloting it). Bulk-submit up to 10,000 URLs in one POST.
  *
  * Pre-reqs:
@@ -16,7 +16,7 @@ export const runtime = "nodejs";
  *     -d '{"urls":["https://vyrek.com/blog/your-new-post"]}'
  *
  * The endpoint also accepts a GET with no body and submits every blog
- * post + every static route — useful as a one-shot "refresh
+ * post + every static route, useful as a one-shot "refresh
  * everything" after a sitemap rebuild.
  */
 

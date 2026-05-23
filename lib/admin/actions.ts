@@ -64,7 +64,7 @@ export async function approvePartnerApplication(
       .eq("id", applicationId);
 
     // Mint the onboarding token and email it. The partner row itself
-    // isn't created until the applicant finishes /partners/onboard — that
+    // isn't created until the applicant finishes /partners/onboard, that
     // way they pick their own slug and supply bank details directly,
     // bypassing the encryption-of-empty-strings problem.
     const token = mintOnboardingToken(applicationId);

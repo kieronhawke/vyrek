@@ -50,7 +50,7 @@ async function clickContinue(page: Page) {
   await page.waitForTimeout(700);
 }
 
-test.describe("Quiz V3 — happy path UI walk", () => {
+test.describe("Quiz V3, happy path UI walk", () => {
   test.setTimeout(120_000);
 
   test("walks all visible screens to the account creation gate", async ({
@@ -63,7 +63,7 @@ test.describe("Quiz V3 — happy path UI walk", () => {
     page.on("console", (msg) => {
       if (msg.type() === "error") {
         const text = msg.text();
-        // Ignore the expected /api/account/create 400 console error — we
+        // Ignore the expected /api/account/create 400 console error, we
         // probe that explicitly later and the test won't reach the real
         // submission until Supabase migrations are applied.
         if (text.includes("/api/account/create")) return;
@@ -84,9 +84,9 @@ test.describe("Quiz V3 — happy path UI walk", () => {
     await pickSingle(page, "Never raced");
     await clickContinue(page);
 
-    // === Screen 5: Best time — SKIPPED because experience = "never raced" ===
+    // === Screen 5: Best time, SKIPPED because experience = "never raced" ===
 
-    // === Screen 6: Race date — pick "No race booked" skip ===
+    // === Screen 6: Race date, pick "No race booked" skip ===
     {
       const skip = page.getByRole("button", { name: /no race booked/i }).first();
       await expect(skip).toBeVisible({ timeout: 8000 });

@@ -7,7 +7,7 @@ import { createServerClient } from "@supabase/ssr";
  * (user existence, email allowlist for admin, customer lookup for
  * members). This middleware adds defence-in-depth at the edge so:
  *
- *   - Unauthenticated /admin/* visits never reach the layout — they
+ *   - Unauthenticated /admin/* visits never reach the layout, they
  *     bounce to /admin/login immediately.
  *   - Unauthenticated /app/* visits bounce to /login?next=<path>.
  *

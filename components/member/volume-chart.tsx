@@ -4,7 +4,7 @@ import type { WeekVolume } from "@/lib/member/demo";
  * Inline SVG stacked-bar chart for weekly training volume. Server-rendered.
  *
  * Each week is a column with three stacked segments (running km, strength
- * min, stations min). The y-axis is in "load units" — running km is x3
+ * min, stations min). The y-axis is in "load units", running km is x3
  * because a km counts for more than a minute of lifting in this rough
  * weighting. The point isn't precision, it's the shape.
  */

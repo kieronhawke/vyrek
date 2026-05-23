@@ -91,17 +91,17 @@ export default async function AdminSubscriptionsPage({
               </Link>
             ) : (
               <span key="c" className="text-vyrek-text-tertiary">
-                —
+                , 
               </span>
             ),
             <Badge key="s" tone={statusTone(s.status)}>{s.status}</Badge>,
-            s.trial_end ? format(new Date(s.trial_end), "dd MMM yyyy") : "—",
+            s.trial_end ? format(new Date(s.trial_end), "dd MMM yyyy") : "-",
             s.current_period_end
               ? format(new Date(s.current_period_end), "dd MMM yyyy")
-              : "—",
+              : "-",
             s.created_at
               ? format(new Date(s.created_at), "dd MMM yyyy")
-              : "—",
+              : "-",
           ])}
         />
       )}

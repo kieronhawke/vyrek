@@ -19,7 +19,7 @@ const IV_LEN = 12;
 
 function keyMaterial(): string {
   // SECURITY: require a dedicated PII secret. Sharing the Supabase
-  // service-role key defeats encryption-at-rest separation — anyone
+  // service-role key defeats encryption-at-rest separation, anyone
   // with that key (a leaked .env, a future log, a Vercel team
   // member) would be able to decrypt every bank detail. Security
   // audit C-4. Fallback only kept for dev / preview environments
@@ -44,7 +44,7 @@ function keyMaterial(): string {
 function derivedKey(): Buffer {
   const km = keyMaterial();
   // Salt is intentionally static so the same secret derives the same
-  // key — we don't store per-row keys; we store per-row IVs.
+  // key, we don't store per-row keys; we store per-row IVs.
   return scryptSync(km, "vyrek:partners:v1", 32);
 }
 

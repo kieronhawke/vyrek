@@ -38,7 +38,7 @@ function validate(b: Body): string | null {
 }
 
 export async function POST(req: Request) {
-  // Rate limit per IP — 5 applications per hour. Email is added to the
+  // Rate limit per IP, 5 applications per hour. Email is added to the
   // key after validation so a single attacker can't farm many emails.
   const ip = requestIp(req);
   const r = await limiters.partnerApply.limit(`ip:${ip}`);
