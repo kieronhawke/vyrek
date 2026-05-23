@@ -20,9 +20,13 @@ export default function PrivacyPage() {
     <LegalLayout eyebrow="Privacy" title="Privacy policy">
       <ProseP>
         Vyrek is a Hyrox training platform operated from the United Kingdom.
-        This policy explains what data we collect, why we collect it, and the
-        rights you have over it under the UK GDPR and the Data Protection Act
-        2018.
+        This policy explains what data we collect, why we collect it, where it
+        lives, how long we keep it, and the rights you have over it under the
+        UK GDPR and the Data Protection Act 2018.
+      </ProseP>
+      <ProseP>
+        We are the data controller. Our contact for data matters is{" "}
+        <ProseEmailLink email="privacy@vyrek.com" />.
       </ProseP>
 
       <ProseH2>What we collect</ProseH2>
@@ -38,12 +42,19 @@ export default function PrivacyPage() {
           training days, equipment, injuries. Used to generate your plan.
         </ProseLi>
         <ProseLi>
+          <strong className="text-vyrek-text">Training data.</strong> The
+          sessions you mark complete, the splits, weights, and RPE values you
+          log, and any notes you attach. Used to recalibrate your plan each
+          Sunday.
+        </ProseLi>
+        <ProseLi>
           <strong className="text-vyrek-text">Payment data.</strong> Processed
           by Stripe. We never see or store your card number; Stripe gives us a
           token plus the last 4 digits of the card for receipts and disputes.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Usage analytics + session replay.</strong>{" "}
+          <strong className="text-vyrek-text">Usage analytics + session
+          replay.</strong>{" "}
           Page views, quiz progress, click heatmaps, and session replay
           captured by PostHog after you give cookie consent. Input fields
           (email, password, anything with a <code>data-mask</code> attribute)
@@ -69,55 +80,175 @@ export default function PrivacyPage() {
         <ProseLi>Deliver your training plan and remember your progress.</ProseLi>
         <ProseLi>Process your subscription and send receipts.</ProseLi>
         <ProseLi>
-          Improve the product, find where the funnel breaks, where members get
+          Improve the product. Find where the funnel breaks, where members get
           stuck, which workouts get skipped.
         </ProseLi>
         <ProseLi>
           Send the small number of transactional emails the product needs:
           welcome, trial-ending reminder, payment-failed, cancellation.
         </ProseLi>
+        <ProseLi>
+          Detect fraud and protect the service from abuse.
+        </ProseLi>
       </ProseUl>
 
       <ProseH2>Legal basis</ProseH2>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Contract performance</strong>,
-          we cannot deliver your plan without your quiz answers and email.
+          <strong className="text-vyrek-text">Contract performance.</strong>{" "}
+          We cannot deliver your plan without your quiz answers and email.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Consent</strong>, analytics
-          cookies, marketing emails (you opt in; you can opt out anytime).
+          <strong className="text-vyrek-text">Consent.</strong> Analytics
+          cookies, session replay, marketing emails. You opt in; you can opt
+          out anytime.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Legitimate interest</strong>,
-          security, fraud prevention, error monitoring.
+          <strong className="text-vyrek-text">Legitimate interest.</strong>{" "}
+          Security, fraud prevention, error monitoring, product analytics in
+          aggregate.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Legal obligation</strong>,
-          payment records, retained 7 years for HMRC.
+          <strong className="text-vyrek-text">Legal obligation.</strong> Payment
+          records, retained 7 years for HMRC.
         </ProseLi>
       </ProseUl>
 
       <ProseH2>How long we keep it</ProseH2>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Training data</strong>, kept
-          while your subscription is active, plus 90 days after cancellation in
-          case you come back. Then deleted.
+          <strong className="text-vyrek-text">Account and training data.</strong>{" "}
+          Kept while your subscription is active, plus 90 days after
+          cancellation in case you come back. Then deleted.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Analytics</strong>. 12 months,
-          then aggregated and the row-level events are deleted.
+          <strong className="text-vyrek-text">Quiz answers without an
+          account.</strong> 30 days, then deleted.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Payment records</strong>. 7
-          years, per HMRC requirements.
+          <strong className="text-vyrek-text">Session replay.</strong> 30 days
+          rolling window. Then deleted.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Support emails</strong>. 2
-          years, then deleted.
+          <strong className="text-vyrek-text">Analytics events.</strong> 12
+          months at row level. After 12 months we aggregate and the
+          individual events are deleted.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Payment records.</strong> 7 years
+          per HMRC requirements.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Support emails.</strong> 2 years,
+          then deleted.
         </ProseLi>
       </ProseUl>
+
+      <ProseH2>Who we share data with</ProseH2>
+      <ProseP>
+        We use a small number of trusted processors to deliver the service. We
+        do not sell your data. We do not share it with marketing networks. The
+        processors below are bound by data processing agreements and process
+        only what they need to.
+      </ProseP>
+      <ProseUl>
+        <ProseLi>
+          <strong className="text-vyrek-text">Stripe (payments).</strong>{" "}
+          Card processing, billing, customer portal, fraud screening. Data
+          stays inside the EEA and UK regions. Privacy:{" "}
+          <a
+            className="text-vyrek-text underline underline-offset-4 hover:text-vyrek-accent"
+            href="https://stripe.com/privacy"
+            target="_blank"
+            rel="noreferrer"
+          >
+            stripe.com/privacy
+          </a>
+          .
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Supabase (database + auth).</strong>{" "}
+          Your account, quiz answers, and training data. EU regions
+          (Frankfurt). Privacy:{" "}
+          <a
+            className="text-vyrek-text underline underline-offset-4 hover:text-vyrek-accent"
+            href="https://supabase.com/privacy"
+            target="_blank"
+            rel="noreferrer"
+          >
+            supabase.com/privacy
+          </a>
+          .
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Resend (email).</strong>{" "}
+          Transactional emails only (welcome, trial reminders, payment
+          notices). EU sub-processors.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">PostHog (analytics + session
+          replay).</strong> EU-hosted, only loaded after consent. Inputs and
+          marked fields are masked at recording layer.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Sentry (error monitoring).</strong>{" "}
+          EU-hosted. Scrubs PII before storing. Used to find crashes.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Sanity (CMS).</strong> Only
+          touched by Vyrek editors at /studio. Public visitors never interact
+          with Sanity.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Vercel (hosting + CDN).</strong>{" "}
+          Serves the web app. Logs HTTP-level metadata (IP, user agent,
+          referrer) for 30 days for security and abuse prevention.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Upstash (rate limiting).</strong>{" "}
+          Tracks request counts by IP to block abusive traffic. Keys expire
+          within 24 hours.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Crisp (live chat, when
+          enabled).</strong> If you message us through the chat widget on
+          /contact, your message and email are processed by Crisp. EU-hosted.
+        </ProseLi>
+      </ProseUl>
+
+      <ProseH2>International transfers</ProseH2>
+      <ProseP>
+        Most of our processors run in the EEA or UK. Where any data leaves the
+        UK (for example, a US-based sub-processor used by one of the providers
+        above), the transfer is covered either by the UK adequacy regulations
+        for the destination country, or by Standard Contractual Clauses
+        (UK IDTA addendum) and supplementary technical measures. We do not
+        permit transfers to jurisdictions without an adequate level of
+        protection.
+      </ProseP>
+
+      <ProseH2>Cookies</ProseH2>
+      <ProseP>
+        We use a small set of cookies and similar storage. Strictly necessary
+        items are always on; analytics and session replay are opt-in via the
+        cookie banner. For the full list, including names, providers, and
+        durations, see our{" "}
+        <a
+          className="text-vyrek-text underline underline-offset-4 hover:text-vyrek-accent"
+          href="/legal/cookies"
+        >
+          Cookie policy
+        </a>
+        .
+      </ProseP>
+
+      <ProseH2>Children</ProseH2>
+      <ProseP>
+        Vyrek is intended for people aged 16 and over. We do not knowingly
+        collect data from anyone under 16. If you believe a child has signed
+        up, email <ProseEmailLink email="privacy@vyrek.com" /> and we will
+        delete the account.
+      </ProseP>
 
       <ProseH2>Your rights under UK GDPR</ProseH2>
       <ProseP>You can ask us to:</ProseP>
@@ -135,11 +266,18 @@ export default function PrivacyPage() {
           Object to processing based on legitimate interest. We will weigh and
           respond.
         </ProseLi>
+        <ProseLi>
+          Withdraw consent at any time for the things we asked consent for
+          (analytics, marketing). Withdrawal does not affect processing that
+          happened before the withdrawal.
+        </ProseLi>
       </ProseUl>
       <ProseP>
-        Email <ProseEmailLink email="privacy@vyrek.com" /> with the request.
-        We reply within 24 hours and complete most requests within a calendar
-        month, as the UK GDPR requires.
+        To exercise any of these rights, email{" "}
+        <ProseEmailLink email="privacy@vyrek.com" /> from the address on your
+        account. We reply within 24 hours and complete most requests within a
+        calendar month, as the UK GDPR requires. There is no fee unless the
+        request is manifestly unfounded or excessive.
       </ProseP>
       <ProseP>
         If you are not happy with how we handled your request, you can
@@ -151,39 +289,27 @@ export default function PrivacyPage() {
           rel="noreferrer"
         >
           ico.org.uk/make-a-complaint
-        </a>.
+        </a>
+        . We would rather you came to us first; almost every concern can be
+        resolved faster directly than through a regulator.
       </ProseP>
 
-      <ProseH2>Who we share data with</ProseH2>
-      <ProseUl>
-        <ProseLi>
-          <strong className="text-vyrek-text">Stripe</strong> (payments),
-          card processing, billing, customer portal. Data stays inside the EEA
-          / UK regions.
-        </ProseLi>
-        <ProseLi>
-          <strong className="text-vyrek-text">Supabase</strong> (database),
-          your account and training data, hosted in EU regions.
-        </ProseLi>
-        <ProseLi>
-          <strong className="text-vyrek-text">Resend</strong> (email),
-          transactional emails only. EU sub-processors.
-        </ProseLi>
-        <ProseLi>
-          <strong className="text-vyrek-text">PostHog</strong> (analytics),
-          EU-hosted, only loaded after consent.
-        </ProseLi>
-        <ProseLi>
-          <strong className="text-vyrek-text">Sentry</strong> (error
-          monitoring). EU-hosted, scrubs PII.
-        </ProseLi>
-        <ProseLi>
-          <strong className="text-vyrek-text">Sanity</strong> (CMS), only for
-          editors who log in at /studio.
-        </ProseLi>
-      </ProseUl>
+      <ProseH2>Security</ProseH2>
       <ProseP>
-        We do not sell your data. We do not share it for marketing purposes.
+        Data is encrypted in transit (TLS 1.2+) and at rest on Supabase and
+        Vercel. Access to production systems is limited to a small number of
+        named team members, gated by SSO with mandatory two-factor
+        authentication, and audited. Card data never touches our servers,
+        only Stripe sees it.
+      </ProseP>
+
+      <ProseH2>Changes to this policy</ProseH2>
+      <ProseP>
+        We may update this policy as the service evolves or as new processors
+        come online. Material changes (a new processor handling personal data,
+        a new category of data collected, a change to retention) are notified
+        by email to active members at least 14 days before the change takes
+        effect. The bottom of this page always shows the last updated date.
       </ProseP>
 
       <ProseH3>Contact</ProseH3>

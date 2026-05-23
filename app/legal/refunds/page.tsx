@@ -12,55 +12,79 @@ import {
 export const metadata: Metadata = {
   title: "Refund policy",
   description:
-    "When Vyrek refunds, and when we do not. UK Consumer Contracts Regulations explained in plain English.",
+    "Vyrek refunds, in plain English. Friendly first, then the legal detail.",
 };
 
 export default function RefundsPage() {
   return (
     <LegalLayout eyebrow="Refunds" title="Refund policy">
       <ProseP>
-        Vyrek is a digital subscription service. The trial is designed to
-        protect against accidental charges, no payment is taken until day 8.
-        This policy explains the few situations where we issue a refund and
-        how to request one.
-      </ProseP>
-
-      <ProseH2>The statutory position</ProseH2>
-      <ProseP>
-        Under the UK Consumer Contracts (Information, Cancellation and
-        Additional Charges) Regulations 2013, distance-sold services normally
-        carry a 14-day cooling-off period. For digital services that you
-        access immediately, this right ends as soon as you start using the
-        service (Regulation 37(1)(a)).
+        We want every Vyrek member to feel good about their subscription.
       </ProseP>
       <ProseP>
-        At the email gate, before you see your plan, we ask you to acknowledge
-        that the service starts as soon as you view your Week 1. That means
-        the statutory cooling-off period does not apply once you have opened
-        your plan.
+        If you signed up by accident, or you are not happy within the first
+        48 hours of being charged, email us at{" "}
+        <ProseEmailLink email="support@vyrek.com" /> and we will refund you.
+        No questions.
+      </ProseP>
+      <ProseP>
+        The free trial protects against accidental charges: you are never
+        billed until day 8, so you have a full week to decide.
       </ProseP>
 
-      <ProseH2>When we refund</ProseH2>
+      <ProseH2>How to request a refund</ProseH2>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Accidental charges.</strong> If
-          you intended to cancel during the trial but the charge went through,
-          email us within 48 hours of the charge. If you have not opened a
-          plan since the charge, we refund in full.
+          Email <ProseEmailLink email="support@vyrek.com" /> from the email
+          address on your Vyrek account.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">
-            Service not as described.
-          </strong>{" "}
-          If the platform fails to deliver what we describe (Week 1, dated
-          plan, weekly recalibration), tell us. We will fix it; if we
-          cannot, you get a pro-rata refund for the unused portion of the
-          month.
+          Include the last 4 digits of the card we charged (Stripe shows
+          those on your receipt).
+        </ProseLi>
+        <ProseLi>
+          Briefly explain the reason. A single sentence is fine.
+        </ProseLi>
+      </ProseUl>
+      <ProseP>
+        We reply within 24 hours, Monday to Friday. Refunds land on the
+        original card within 5 to 10 business days, depending on your bank.
+      </ProseP>
+
+      <ProseH2>The legal bit</ProseH2>
+      <ProseP>
+        Under the UK Consumer Contracts (Information, Cancellation and
+        Additional Charges) Regulations 2013, digital services accessed
+        during the cooling-off period waive the statutory right to cancel.
+      </ProseP>
+      <ProseP>
+        By starting your free trial, you agree to access the service
+        immediately. This means we cannot offer a full refund for time you
+        have already used the service.
+      </ProseP>
+      <ProseP>
+        The 48-hour accidental-charge refund above is a goodwill policy that
+        goes beyond our legal obligation. We offer it because it is the right
+        thing to do, not because we have to.
+      </ProseP>
+
+      <ProseH2>When we always refund</ProseH2>
+      <ProseUl>
+        <ProseLi>
+          <strong className="text-vyrek-text">Accidental charges.</strong> You
+          meant to cancel during the trial but the charge went through and
+          you have not opened a plan since. Refunded in full.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Service not as described.</strong>{" "}
+          The platform failed to deliver what we describe (Week 1, dated plan,
+          weekly recalibration). We fix it; if we cannot, you get a pro-rata
+          refund for the unused portion of the month.
         </ProseLi>
         <ProseLi>
           <strong className="text-vyrek-text">Payment errors.</strong> Double
-          charges, currency conversion errors, or any error attributable to us
-          or to Stripe, refunded in full.
+          charges, currency conversion errors, or anything attributable to us
+          or to Stripe. Refunded in full.
         </ProseLi>
       </ProseUl>
 
@@ -72,37 +96,17 @@ export default function RefundsPage() {
           billing period.
         </ProseLi>
         <ProseLi>
-          You forgot to cancel before day 8 and you have used the service. You
-          keep access until the end of the month.
+          You forgot to cancel before day 8 and you have used the service.
+          You keep access until the end of the month.
         </ProseLi>
       </ProseUl>
-
-      <ProseH2>How to request a refund</ProseH2>
-      <ProseUl>
-        <ProseLi>
-          Email <ProseEmailLink email="support@vyrek.com" /> from the email
-          address on your account.
-        </ProseLi>
-        <ProseLi>
-          Include the date of the charge and the last four digits of the card
-          (Stripe gives you those on your receipt).
-        </ProseLi>
-        <ProseLi>
-          Briefly explain the reason. We reply within 24 hours, Monday to
-          Friday.
-        </ProseLi>
-      </ProseUl>
-      <ProseP>
-        Refunds land on the original card within 5 to 10 business days,
-        depending on your bank.
-      </ProseP>
 
       <ProseH2>Chargebacks</ProseH2>
       <ProseP>
-        If a charge looks wrong, please email us first. We resolve almost
-        every case faster than a chargeback would. Lodging a chargeback without
-        contacting us first may delay your refund and may suspend your
-        account while Stripe investigates.
+        If a charge looks wrong, please email us first. We resolve nearly
+        every issue within 24 hours, faster than a chargeback would. Lodging
+        a chargeback without contacting us first may delay your refund and
+        may suspend your account while Stripe investigates.
       </ProseP>
 
       <ProseH3>Contact</ProseH3>
