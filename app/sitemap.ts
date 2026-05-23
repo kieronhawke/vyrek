@@ -10,7 +10,8 @@ import { HYROX_EVENTS } from "@/lib/hyrox-events";
 import { GEAR_GUIDES } from "@/lib/hyrox-gear";
 import { TOPIC_HUBS } from "@/lib/topic-hubs";
 
-const SITE_URL = "https://vyrek.com";
+import { siteUrl as canonicalSiteUrl } from "@/lib/site-url";
+const SITE_URL = canonicalSiteUrl();
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();

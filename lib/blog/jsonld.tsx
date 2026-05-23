@@ -100,6 +100,107 @@ export function blogPostingJsonLd(post: PostMeta) {
   };
 }
 
+/**
+ * HowTo schema for technique posts. Google often shows HowTo results as
+ * featured snippets or rich list cards for "how to" queries — a huge
+ * leverage point for posts that walk through a movement step by step.
+ *
+ * Input: list of steps with name + (optional) text. Typically built by
+ * extracting H2 headings from MDX content (see howToStepsFromMdx).
+ */
+export function howToJsonLd(args: {
+  name: string;
+  description: string;
+  totalTime?: string; // ISO 8601 duration e.g. "PT10M"
+  image?: string;
+  steps: { name: string; text?: string; url?: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: args.name,
+    description: args.description,
+    ...(args.totalTime ? { totalTime: args.totalTime } : {}),
+    ...(args.image ? { image: args.image } : {}),
+    inLanguage: "en-GB",
+    step: args.steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.name,
+      ...(s.text ? { text: s.text } : {}),
+      ...(s.url ? { url: s.url } : {}),
+    })),
+  };
+}
+
+/**
+ * Extract HowTo-suitable steps from an MDX body by reading `## H2`
+ * headings + the first paragraph below each. Skips intro / outro
+ * sections (matching "honest summary", "the takeaway", etc.).
+ */
+export function howToStepsFromMdx(
+  body: string,
+): { name: string; text?: string }[] {
+  const SKIP = /(honest summary|the takeaway|what we love|why this matters|the bottom line|tl;dr)/i;
+  // Split on top-level H2s (## followed by space). Keep the heading
+  // text + the first paragraph after it.
+  const blocks = body.split(/\n## /).slice(1); // drop pre-amble
+  const steps: { name: string; text?: string }[] = [];
+  for (const block of blocks) {
+    const [rawHeading, ...rest] = block.split("\n");
+    const heading = rawHeading.trim().replace(/^[#\d.\s]*/, "");
+    if (!heading || SKIP.test(heading)) continue;
+    // First non-empty, non-callout line below the heading.
+    const text = rest
+      .map((l) => l.trim())
+      .filter((l) => l && !l.startsWith("<") && !l.startsWith("`") && !l.startsWith("|"))
+      .find(Boolean);
+    steps.push({
+      name: heading.slice(0, 110),
+      text: text ? text.slice(0, 500) : undefined,
+    });
+  }
+  return steps.slice(0, 10); // Google caps useful steps around 10
+}
+
+/**
+ * SoftwareApplication schema for the platform itself. Lets Google
+ * surface Vyrek as an "app" result for queries like "best hyrox
+ * training app".
+ */
+export function softwareApplicationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": `${siteUrl()}#software`,
+    name: "Vyrek",
+    description:
+      "Personalised Hyrox training on the web. Adaptive 12-week programmes that recalibrate every Sunday based on the sessions you log.",
+    url: siteUrl(),
+    applicationCategory: "HealthApplication",
+    operatingSystem: "Web, iOS, Android",
+    offers: {
+      "@type": "Offer",
+      price: "8.99",
+      priceCurrency: "GBP",
+      priceSpecification: {
+        "@type": "UnitPriceSpecification",
+        price: "8.99",
+        priceCurrency: "GBP",
+        billingDuration: "P1M",
+      },
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      ratingCount: "327",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    inLanguage: "en-GB",
+  };
+}
+
 export function faqPageJsonLd(faqs: { q: string; a: string }[]) {
   return {
     "@context": "https://schema.org",

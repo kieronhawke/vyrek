@@ -12,6 +12,7 @@ import { Testimonials } from "@/components/marketing/testimonials";
 import { Faq } from "@/components/marketing/faq";
 import { FinalCta } from "@/components/marketing/final-cta";
 import { MarketingFooter } from "@/components/marketing/footer";
+import { StickyMobileCta } from "@/components/marketing/sticky-mobile-cta";
 
 export default function Home() {
   return (
@@ -32,6 +33,7 @@ export default function Home() {
         <FinalCta />
       </main>
       <MarketingFooter />
+      <StickyMobileCta />
     </>
   );
 }

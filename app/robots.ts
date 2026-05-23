@@ -1,7 +1,12 @@
 import type { MetadataRoute } from "next";
+import { siteUrl as canonicalSiteUrl } from "@/lib/site-url";
 
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl = "https://vyrek.com";
+  // Pull from the shared canonical so robots.txt's Host: + Sitemap:
+  // always match the live production host. Critical for indexing:
+  // Google fetches robots.txt first; if Host: disagrees with the
+  // host serving pages, indexing collapses.
+  const siteUrl = canonicalSiteUrl();
 
   // Private surfaces that should never appear in search results. The
   // per-page Metadata.robots.index=false is the primary defence (search

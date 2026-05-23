@@ -6,6 +6,7 @@ import { Eyebrow } from "@/components/shared/eyebrow";
 import { SplitHeading } from "@/components/shared/split-heading";
 import { CtaButton } from "@/components/shared/cta-button";
 import { RevealOnView } from "@/components/shared/reveal-on-view";
+import { siteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
   title: "Programmes",
@@ -171,7 +172,7 @@ const courseListLd = {
       provider: {
         "@type": "Organization",
         name: "Vyrek",
-        url: "https://vyrek.com",
+        url: siteUrl(),
       },
       hasCourseInstance: {
         "@type": "CourseInstance",

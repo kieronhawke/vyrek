@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { siteUrl } from "@/lib/site-url";
 
 /**
  * Lazy server-side Stripe client. Throws if STRIPE_SECRET_KEY is missing,
@@ -18,7 +19,7 @@ export function stripe(): Stripe {
   cached = new Stripe(key, {
     // Pin to the SDK's bundled API version. Stripe rolls these forward
     // safely; we can move to a newer version explicitly when we're ready.
-    appInfo: { name: "Vyrek", url: "https://vyrek.com" },
+    appInfo: { name: "Vyrek", url: siteUrl() },
   });
   return cached;
 }

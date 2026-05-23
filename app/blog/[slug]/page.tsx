@@ -36,6 +36,8 @@ import {
   authorPersonJsonLd,
   faqPageJsonLd,
   organizationJsonLd,
+  howToJsonLd,
+  howToStepsFromMdx,
   JsonLd,
 } from "@/lib/blog/jsonld";
 
@@ -138,6 +140,26 @@ export default async function BlogPostPage({
       {post.faqs && post.faqs.length ? (
         <JsonLd data={faqPageJsonLd(post.faqs)} />
       ): null}
+      {/* HowTo schema for technique posts. Google often shows HowTo
+          schema as a featured rich-result for "how to <X>" queries;
+          this is the highest-leverage schema for our station posts. */}
+      {post.category === "technique" ? (() => {
+        const steps = howToStepsFromMdx(post.content);
+        if (steps.length < 3) return null;
+        return (
+          <JsonLd
+            data={howToJsonLd({
+              name: post.title,
+              description: post.excerpt,
+              image: post.heroImage.startsWith("http")
+                ? post.heroImage
+                : `${siteUrl()}${post.heroImage}`,
+              totalTime: `PT${Math.max(5, Math.round(post.readingMinutes))}M`,
+              steps,
+            })}
+          />
+        );
+      })(): null}
 
       <ReadingProgress />
       <MarketingNav />

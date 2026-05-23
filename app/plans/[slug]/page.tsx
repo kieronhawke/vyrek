@@ -111,6 +111,35 @@ export default async function PlanTemplatePage({
       acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
   };
+  // Product schema: makes Google render the £8.99 price + 4.9 star
+  // rating in the SERP card for queries like "sub-90 hyrox training
+  // plan price". Pairs with Course; both can co-exist.
+  const productLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: p.title,
+    description: p.hook,
+    brand: { "@type": "Brand", name: "Vyrek" },
+    offers: {
+      "@type": "Offer",
+      price: "8.99",
+      priceCurrency: "GBP",
+      url,
+      availability: "https://schema.org/InStock",
+      priceValidUntil: new Date(
+        Date.now() + 365 * 24 * 60 * 60 * 1000,
+      )
+        .toISOString()
+        .slice(0, 10),
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      ratingCount: "327",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
 
   return (
     <>
@@ -126,8 +155,13 @@ export default async function PlanTemplatePage({
       />
       <script
         type="application/ld+json"
-         
+
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
+      <script
+        type="application/ld+json"
+
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
       />
 
       <MarketingNav />

@@ -4,6 +4,12 @@ import "./globals.css";
 import { CookieBanner } from "@/components/legal/cookie-banner";
 import { CommandPalette } from "@/components/marketing/command-palette";
 import { PresencePing } from "@/components/presence/presence-ping";
+import { siteUrl } from "@/lib/site-url";
+
+// Pre-compute once at module-eval time. siteUrl() reads env vars set
+// by Vercel; in the prod build these are baked into the bundle. All
+// JSON-LD @id and canonical URLs use this single value.
+const SITE = siteUrl();
 
 // Display, condensed heavy sans for headings and the wordmark.
 // Marchon's brand voice uses Druk Cond Super; Oswald 700 is the closest
@@ -34,7 +40,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vyrek.com"),
+  metadataBase: new URL(SITE),
   title: {
     default: "Vyrek. Train like a Hyrox athlete",
     template: "%s · Vyrek",
@@ -61,7 +67,7 @@ export const metadata: Metadata = {
     title: "Vyrek. Train like a Hyrox athlete",
     description:
       "Personalised Hyrox training programmes built by Elite 15 athletes. See your Week 1 before you pay.",
-    url: "https://vyrek.com",
+    url: SITE,
     siteName: "Vyrek",
     type: "website",
     locale: "en_GB",
@@ -117,8 +123,8 @@ export default function RootLayout({
                 "@context": "https://schema.org",
                 "@type": "Organization",
                 name: "Vyrek",
-                url: "https://vyrek.com",
-                logo: "https://vyrek.com/logo-primary.svg",
+                url: SITE,
+                logo: `${SITE}/logo-primary.svg`,
                 description:
                   "Personalised Hyrox training programmes built by Elite 15 athletes.",
                 contactPoint: [
@@ -141,13 +147,47 @@ export default function RootLayout({
                 "@context": "https://schema.org",
                 "@type": "WebSite",
                 name: "Vyrek",
-                url: "https://vyrek.com",
+                url: SITE,
                 potentialAction: {
                   "@type": "SearchAction",
                   target:
-                    "https://vyrek.com/quiz?program={search_term_string}",
+                    `${SITE}/quiz?program={search_term_string}`,
                   "query-input": "required name=search_term_string",
                 },
+              },
+              // SoftwareApplication: lets Google surface Vyrek as an
+              // "app" rich-result for queries like "best Hyrox training
+              // app". Also pulls in the rating + price for the SERP
+              // card.
+              {
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "@id": `${SITE}#software`,
+                name: "Vyrek",
+                description:
+                  "Personalised Hyrox training. Adaptive 12-week programmes that recalibrate every Sunday based on the sessions you log.",
+                url: SITE,
+                applicationCategory: "HealthApplication",
+                operatingSystem: "Web, iOS, Android",
+                offers: {
+                  "@type": "Offer",
+                  price: "8.99",
+                  priceCurrency: "GBP",
+                  priceSpecification: {
+                    "@type": "UnitPriceSpecification",
+                    price: "8.99",
+                    priceCurrency: "GBP",
+                    billingDuration: "P1M",
+                  },
+                },
+                aggregateRating: {
+                  "@type": "AggregateRating",
+                  ratingValue: "4.9",
+                  ratingCount: "327",
+                  bestRating: "5",
+                  worstRating: "1",
+                },
+                inLanguage: "en-GB",
               },
             ]),
           }}

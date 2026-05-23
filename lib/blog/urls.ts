@@ -1,18 +1,11 @@
 /**
- * Canonical URL helpers for the blog. Centralised so every link
- * (canonical, OG image, sitemap, RSS, JSON-LD) agrees on the host.
+ * Canonical URL helpers for the blog. Re-exports the shared
+ * `siteUrl()` from lib/site-url so every link (canonical, OG image,
+ * sitemap, RSS, JSON-LD, robots) agrees on the host. Change the
+ * NEXT_PUBLIC_SITE_URL env var to flip the canonical host.
  */
-
-export function siteUrl(): string {
-  const env =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : "https://vyrek.com");
-  return env.replace(/\/$/, "");
-}
+export { siteUrl } from "@/lib/site-url";
+import { siteUrl } from "@/lib/site-url";
 
 export function postUrl(slug: string): string {
   return `${siteUrl()}/blog/${slug}`;

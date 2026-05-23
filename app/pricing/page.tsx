@@ -132,6 +132,45 @@ export default function PricingPage() {
             </div>
           </section>
 
+          <section className="mx-auto mt-20 max-w-3xl">
+            <p className="text-center font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+              [ FROM THE FIELD ]
+            </p>
+            <h2 className="mt-3 text-center text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
+              Why members stay
+            </h2>
+            <ul role="list" className="mt-8 grid gap-4 md:grid-cols-3">
+              <li className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
+                <p className="text-sm leading-relaxed text-vyrek-text">
+                  &ldquo;Got me to my first Hyrox finish in 92 minutes when
+                  I&apos;d planned for 105.&rdquo;
+                </p>
+                <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  Sarah · Bristol · First Race graduate
+                </p>
+              </li>
+              <li className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
+                <p className="text-sm leading-relaxed text-vyrek-text">
+                  &ldquo;Broke 85 minutes after three years stuck at 95. The
+                  Sub-90 programme actually delivers on the name.&rdquo;
+                </p>
+                <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  Marcus · Manchester · Sub-90 graduate
+                </p>
+              </li>
+              <li className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
+                <p className="text-sm leading-relaxed text-vyrek-text">
+                  &ldquo;The Doubles programme is the only one I&apos;ve found
+                  that builds station handoff strategy. 11 minutes off our
+                  PB.&rdquo;
+                </p>
+                <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  Alex &amp; Jamie · Edinburgh · Doubles
+                </p>
+              </li>
+            </ul>
+          </section>
+
           <section className="mx-auto mt-24 max-w-2xl">
             <h2 className="text-center text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
               Common questions
