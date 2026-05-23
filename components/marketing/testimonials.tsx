@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { RevealOnView } from "@/components/shared/reveal-on-view";
@@ -40,13 +41,13 @@ export function Testimonials() {
             >
               {t.image && (
                 <div className="relative aspect-[5/4] w-full overflow-hidden bg-vyrek-base">
-                  <img
+                  <Image
                     src={t.image}
                     alt=""
                     aria-hidden
-                    className="absolute inset-0 h-full w-full object-cover grayscale"
-                    loading="lazy"
-                    decoding="async"
+                    fill
+                    sizes="(min-width: 768px) 33vw, 88vw"
+                    className="object-cover grayscale"
                   />
                   <div
                     aria-hidden

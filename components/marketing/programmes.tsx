@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -112,14 +113,14 @@ function ProgrammeCard({
         variant === "desktop" && "aspect-[5/3]",
       )}
     >
-      {/* B&W station imagery backdrop */}
-      <img
+      {/* B&W station imagery backdrop. next/image so Vercel serves
+          viewport-sized WebP/AVIF instead of the raw 400-600 KB JPEG. */}
+      <Image
         src={programme.image}
         alt=""
-        aria-hidden
-        className="absolute inset-0 -z-20 h-full w-full grayscale object-cover transition-transform duration-slow ease-out group-hover:scale-[1.04]"
-        loading="lazy"
-        decoding="async"
+        fill
+        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 78vw"
+        className="-z-20 grayscale object-cover transition-transform duration-slow ease-out group-hover:scale-[1.04]"
       />
       {/* Type legibility wash + accent tint that intensifies on hover */}
       <div
