@@ -10,9 +10,9 @@ import { Wordmark } from "@/components/shared/logo";
 const SCROLL_THRESHOLD = 100; // px past which the nav adopts its solid state
 
 const LINKS = [
-  { href: "/programmes", label: "Programmes" },
-  { href: "/how-it-works", label: "How it works" },
-  { href: "/blog", label: "Journal" },
+  { href: "/programmes", label: "programmes" },
+  { href: "/how-it-works", label: "how it works" },
+  { href: "/blog", label: "journal" },
 ];
 
 export function MarketingNav() {

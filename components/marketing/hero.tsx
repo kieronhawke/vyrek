@@ -120,7 +120,7 @@ export function Hero() {
             CTA below carry the premium-feel motion instead. */}
         <h1
           id="hero-heading"
-          className="font-display max-w-[14ch] text-[2.6rem] font-bold uppercase leading-[0.92] tracking-[-0.02em] text-vyrek-text sm:text-5xl md:text-6xl lg:text-7xl"
+          className="font-display max-w-[14ch] text-3xl font-bold uppercase leading-[0.92] tracking-[-0.02em] text-vyrek-text sm:text-5xl md:text-6xl lg:text-7xl"
         >
           Train like a Hyrox athlete.
         </h1>
@@ -134,22 +134,8 @@ export function Hero() {
             href="/quiz"
             className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-pill bg-vyrek-accent px-6 text-base font-semibold uppercase tracking-wide text-[#0A0A0A] transition-[background,opacity] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98] will-change-transform sm:w-auto sm:min-w-[14rem]"
           >
-            Find your plan →
+            Find your plan
           </Link>
-        </div>
-        {/* Trust pill, kept under the CTA per Runna / Whoop. Honest claims
-            only: programming credentials + price + cancellation. */}
-        <div className="hero-intro hero-intro-late mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-vyrek-text-secondary md:text-sm">
-          <span className="inline-flex items-center gap-1.5">
-            <span aria-label="5 out of 5 stars" className="text-vyrek-accent">
-              ★★★★★
-            </span>
-            <span>Built by Elite 15 coaches</span>
-          </span>
-          <span aria-hidden className="text-vyrek-text-tertiary">·</span>
-          <span>£8.99/mo</span>
-          <span aria-hidden className="text-vyrek-text-tertiary">·</span>
-          <span>Cancel anytime</span>
         </div>
       </div>
 

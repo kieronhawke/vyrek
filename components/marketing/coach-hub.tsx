@@ -69,6 +69,44 @@ function CoachTile({
     .slice(0, 2)
     .join("");
 
+  // Brief 2.7: "Joining 2026" placeholders are silhouette portraits, not
+  // interactive sheets (they don't have a real person to reveal).
+  if (coach.role === "JOINING 2026") {
+    return (
+      <div
+        className="relative isolate flex aspect-[5/4] flex-col justify-between overflow-hidden rounded-lg border border-dashed border-vyrek-border bg-vyrek-elevated/40 p-6 sm:aspect-[4/5]"
+        aria-label={`Coach placeholder, ${coach.role.toLowerCase()}`}
+      >
+        {/* Silhouette portrait: gradient + circle for head + trapezoid shoulders */}
+        <div aria-hidden className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-vyrek-overlay via-vyrek-elevated to-vyrek-base" />
+          <svg
+            viewBox="0 0 200 240"
+            className="absolute inset-x-0 bottom-0 mx-auto h-3/4 w-3/4 text-vyrek-text/15"
+            fill="currentColor"
+            aria-hidden
+          >
+            <circle cx="100" cy="80" r="40" />
+            <path d="M 30 240 Q 30 150 100 150 Q 170 150 170 240 Z" />
+          </svg>
+        </div>
+        <Eyebrow className="relative z-10 !text-vyrek-accent">
+          {coach.role}
+        </Eyebrow>
+        <div className="relative z-10">
+          <h3 className="text-2xl font-black tracking-[-0.04em] text-vyrek-text-tertiary">
+            {coach.name}
+          </h3>
+          {coach.bio ? (
+            <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
+              {coach.bio}
+            </p>
+          ) : null}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger

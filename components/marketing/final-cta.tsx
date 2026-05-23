@@ -4,6 +4,11 @@ import { CtaButton } from "@/components/shared/cta-button";
 import { RevealOnView } from "@/components/shared/reveal-on-view";
 import { SplitHeading } from "@/components/shared/split-heading";
 
+/**
+ * Brief 2.15: final CTA block. Centred, large, no price, no
+ * "cancel anytime" copy. Trial framing only.
+ */
+
 export function FinalCta() {
   return (
     <RevealOnView
@@ -18,18 +23,15 @@ export function FinalCta() {
             id="final-cta-heading"
             className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.05em] text-vyrek-text md:text-4xl lg:text-5xl"
           >
-            Ready to find your plan?
+            Train like a Hyrox athlete.
           </SplitHeading>
-          <p className="mt-5 max-w-xl text-base text-vyrek-text-secondary md:text-lg">
-            Three-minute quiz. Real Week 1 before you pay.
-          </p>
           <div className="mt-10">
             <CtaButton href="/quiz" size="lg">
-              Find your plan →
+              Find your plan
             </CtaButton>
           </div>
           <p className="mt-5 font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-            First week free. Cancel anytime.
+            7-day free trial. No card needed to start.
           </p>
         </div>
       </Container>

@@ -1,37 +1,47 @@
+import Image from "next/image";
 import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { RevealOnView } from "@/components/shared/reveal-on-view";
 import { SplitHeading } from "@/components/shared/split-heading";
 
+/**
+ * Brief 2.10: "A week in your life".
+ *
+ * Replaces the text-only vignettes with a day-by-day timeline. Each vignette
+ * pairs an image with copy and a time-stamp. On mobile the layout stacks
+ * vertically alternating image-text-image-text. On desktop the three
+ * vignettes sit in a horizontal row with images above.
+ */
+
 type Vignette = {
   stamp: string;
-  lines: string[];
+  title: string;
+  body: string;
+  image: string;
+  alt: string;
 };
 
 const VIGNETTES: Vignette[] = [
   {
-    stamp: "Tuesday, 6:15am",
-    lines: [
-      "Day 2. Hyrox-specific session.",
-      "Run + sled push intervals.",
-      "45 minutes. Log it in the app.",
-    ],
+    stamp: "Tuesday, 6:15 am",
+    title: "Day 2. Hyrox-specific session.",
+    body: "Run plus sled push intervals. 45 minutes. Log it in the app.",
+    image: "/media/images/programme-first-race.jpg",
+    alt: "Athlete running and pushing a sled in a gym",
   },
   {
-    stamp: "Thursday, 7:30pm",
-    lines: [
-      "Strength block.",
-      "Compound lifts + Hyrox-relevant accessories.",
-      "60 minutes. Video form checks on key sets.",
-    ],
+    stamp: "Thursday, 7:30 pm",
+    title: "Strength block.",
+    body: "Compound lifts and Hyrox-relevant accessories. 60 minutes. Video form checks on key sets.",
+    image: "/media/images/programme-sub-90.jpg",
+    alt: "Athlete lifting in a gym during a strength block",
   },
   {
-    stamp: "Saturday, 8:00am",
-    lines: [
-      "Race simulation. The big one.",
-      "8 stations + 8 × 1km run.",
-      "90 minutes. The session that builds belief.",
-    ],
+    stamp: "Saturday, 8:00 am",
+    title: "Race simulation. The big one.",
+    body: "8 stations and 8 by 1km run. 90 minutes. The session that builds belief.",
+    image: "/media/images/programme-pro.jpg",
+    alt: "Athlete mid race-simulation",
   },
 ];
 
@@ -47,30 +57,44 @@ export function WeekInLife() {
           <Eyebrow>A week with Vyrek</Eyebrow>
           <SplitHeading
             id="week-heading"
-            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+            className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
           >
-            A week in your life with Vyrek
+            A week in your life.
           </SplitHeading>
         </header>
 
-        <ol className="mx-auto mt-14 grid max-w-6xl gap-8 md:grid-cols-3 md:gap-10">
+        <ol
+          role="list"
+          className="mx-auto mt-14 grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3 md:gap-6"
+        >
           {VIGNETTES.map((v) => (
             <li
               key={v.stamp}
-              className="relative border-l border-vyrek-border-default pl-6 md:border-l-0 md:border-t md:pl-0 md:pt-8"
+              className="flex flex-col gap-4 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5 md:p-6"
             >
-              <span
-                aria-hidden
-                className="absolute -left-[5px] top-1 block h-2.5 w-2.5 rounded-full bg-vyrek-accent md:-top-[5px] md:left-0"
-              />
-              <Eyebrow bare className="text-vyrek-text-secondary">
-                {v.stamp.toUpperCase()}
-              </Eyebrow>
-              <div className="mt-3 space-y-1 text-lg leading-relaxed text-vyrek-text md:text-xl">
-                {v.lines.map((line) => (
-                  <p key={line}>{line}</p>
-                ))}
+              <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-vyrek-overlay">
+                <Image
+                  src={v.image}
+                  alt={v.alt}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="object-cover grayscale"
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-t from-vyrek-elevated/80 via-transparent to-transparent"
+                />
+                <span className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-base/80 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text">
+                  <span aria-hidden className="size-1.5 rounded-full bg-vyrek-accent" />
+                  {v.stamp}
+                </span>
               </div>
+              <h3 className="text-lg font-bold leading-tight tracking-[-0.02em] text-vyrek-text md:text-xl">
+                {v.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-vyrek-text-secondary md:text-base">
+                {v.body}
+              </p>
             </li>
           ))}
         </ol>
