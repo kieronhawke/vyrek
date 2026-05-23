@@ -140,17 +140,20 @@ export function WelcomeCarousel({
         />
       </button>
 
-      <div className="relative z-10 flex min-h-svh flex-col justify-end px-6 pb-[max(2rem,calc(var(--safe-bottom)+2rem))]">
+      {/* pointer-events-none on the wrapper lets the next-slide button
+          underneath receive taps on empty space; the heading + CTA opt back
+          in with pointer-events-auto so they remain interactive. */}
+      <div className="pointer-events-none relative z-10 flex min-h-svh flex-col justify-end px-6 pb-[max(2rem,calc(var(--safe-bottom)+2rem))]">
         <h1
           id="welcome-heading"
-          className="max-w-[14ch] text-4xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+          className="pointer-events-auto max-w-[14ch] text-4xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
         >
           {slide?.headline}
         </h1>
         <button
           type="button"
           onClick={onAdvance}
-          className="mt-8 inline-flex h-14 w-full items-center justify-center rounded-pill bg-vyrek-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,transform] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98]"
+          className="pointer-events-auto mt-8 inline-flex h-14 w-full items-center justify-center rounded-pill bg-vyrek-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,transform] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98]"
         >
           Find your plan →
         </button>

@@ -4,12 +4,15 @@ import * as motion from "motion/react-client";
 import type { ComponentProps, ReactNode } from "react";
 
 /**
- * Baseline scroll-trigger for every section (brief Stage spec). Fades in
- * with a 12px Y offset when the element enters the viewport. Honours
- * `prefers-reduced-motion` automatically. Motion checks the media query.
+ * Baseline scroll-trigger for every section. Slides up 12px when the
+ * element enters the viewport. Honours `prefers-reduced-motion` automatically.
  *
- * Use this around major blocks. Don't nest, the inner reveal won't fire
- * until both viewports overlap, which produces a stutter.
+ * Important: opacity stays at 1 throughout. Earlier versions used
+ * `opacity: 0 -> 1` which baked an opacity:0 into the SSR'd HTML — meaning
+ * the content was invisible until JS hydrated and the IntersectionObserver
+ * fired, which broke no-JS rendering, Lighthouse / SEO crawlers' first
+ * paint, and in-page Find. Y-only keeps the polish while leaving content
+ * always visible.
  */
 export function RevealOnView({
   children,
@@ -26,8 +29,8 @@ export function RevealOnView({
   const Tag = motion[as] as typeof motion.div;
   return (
     <Tag
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ y: 12 }}
+      whileInView={{ y: 0 }}
       viewport={{ once: true, margin: "0px 0px -8% 0px" }}
       transition={{ delay, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className={className}

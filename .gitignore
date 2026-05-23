@@ -44,6 +44,11 @@ next-env.d.ts
 /.screenshots
 /.lighthouse
 .github-pending/
+/scripts/audit-shots/
+/scripts/scroll-shots/
+/test-results/
+/tests/visual/report/
+/playwright-report/
 
 # Internal brief documents (keep locally, not in public repo)
 /docs/vyrek-*.md

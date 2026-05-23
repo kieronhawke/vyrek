@@ -9,15 +9,17 @@ import { test, expect } from "@playwright/test";
  * provisioning + email gate handling).
  */
 
-test("quiz entry: first screen renders + Start CTA is reachable", async ({
+test("quiz entry: welcome carousel renders + Find your plan CTA is reachable", async ({
   page,
 }) => {
   await page.goto("/quiz", { waitUntil: "networkidle" });
 
-  // The quiz landing has a clear primary CTA labelled with "Start" or "Find
-  // your plan" depending on the variant. Accept either to stay robust.
-  const start = page.getByRole("link", { name: /start training|find your plan|start/i }).first();
-  await expect(start).toBeVisible();
+  // The quiz is a client component that mounts the welcome carousel
+  // immediately. The primary CTA is a <button>Find your plan</button>.
+  const findYourPlan = page
+    .getByRole("button", { name: /find your plan/i })
+    .first();
+  await expect(findYourPlan).toBeVisible();
 });
 
 test("partners apply: form renders + required fields present", async ({

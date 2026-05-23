@@ -50,18 +50,44 @@ export function CtaButton(props: CtaButtonAsLink | CtaButtonAsButton) {
   );
 
   if ("href" in props && props.href) {
-    const { href, ...rest } = props;
+    // Strip our custom props (tone, size, fullWidth, className, children)
+    // so they don't bleed onto the underlying <a> as DOM attributes.
+    const {
+      href,
+      tone: _t,
+      size: _s,
+      fullWidth: _f,
+      className: _c,
+      children: _ch,
+      ...linkRest
+    } = props;
+    void _t;
+    void _s;
+    void _f;
+    void _c;
+    void _ch;
     return (
-      <Link href={href} {...rest} className={classes}>
+      <Link href={href} {...linkRest} className={classes}>
         {children}
       </Link>
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { href: _h, fullWidth: _f, tone: _t, size: _s, ...buttonRest } = props as CtaButtonAsButton & {
-    href?: undefined;
-  };
+  const {
+    href: _h,
+    tone: _bt,
+    size: _bs,
+    fullWidth: _bf,
+    className: _bc,
+    children: _bch,
+    ...buttonRest
+  } = props as CtaButtonAsButton & { href?: undefined };
+  void _h;
+  void _bt;
+  void _bs;
+  void _bf;
+  void _bc;
+  void _bch;
   return (
     <button {...buttonRest} className={classes}>
       {children}
