@@ -70,6 +70,25 @@ export default async function AccountPage() {
         <MemberSubscriptionPanel subscription={ctx.subscription} />
       </section>
 
+      {/* PRs */}
+      <section className="mb-8">
+        <SectionEyebrow title="Performance" />
+        <Link
+          href="/app/account/pr"
+          className="flex items-center justify-between gap-3 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-4 transition-colors hover:border-vyrek-border-strong"
+        >
+          <div>
+            <p className="text-sm font-semibold text-vyrek-text">
+              Personal records
+            </p>
+            <p className="mt-1 text-xs text-vyrek-text-tertiary">
+              Strength, cardio, and station bests. Updated when you log a session.
+            </p>
+          </div>
+          <span className="font-mono text-xs text-vyrek-accent">→</span>
+        </Link>
+      </section>
+
       {/* Quick links */}
       <section className="mb-8">
         <SectionEyebrow title="Earn + refer" />

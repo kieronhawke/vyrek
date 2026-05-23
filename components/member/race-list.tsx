@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import type { Race } from "@/lib/member/demo";
 
@@ -117,49 +118,40 @@ export function RaceList({ races }: { races: Race[] }) {
       {/* Race list */}
       <ul role="list" className="space-y-2">
         {races.map((r) => (
-          <li
-            key={r.slug}
-            className="flex items-center gap-3 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/60 px-3 py-3"
-          >
-            <div className="shrink-0 text-center">
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
-                {monthShort(r.date)}
-              </p>
-              <p className="text-lg font-black tabular-nums leading-none text-vyrek-text">
-                {dayOfMonth(r.date)}
-              </p>
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-vyrek-text">
-                {r.event}
-              </p>
-              <p className="truncate font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-                {r.city}, {r.country} · {r.weeksFromNow}w
-              </p>
-              <p className="mt-1 truncate text-xs text-vyrek-text-tertiary">
-                {r.categories.join(" · ")}
-              </p>
-            </div>
-            {r.registrationOpen ? (
-              r.registrationUrl ? (
-                <a
-                  href={r.registrationUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="shrink-0 inline-flex h-9 items-center rounded-pill bg-vyrek-accent px-3 text-xs font-semibold text-[#0A0A0A]"
-                >
-                  Enter ↗
-                </a>
-              ) : (
+          <li key={r.slug}>
+            <Link
+              href={`/app/analysis/race/${r.slug}`}
+              className="flex items-center gap-3 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/60 px-3 py-3 transition-colors hover:border-vyrek-border-strong active:scale-[0.99]"
+            >
+              <div className="shrink-0 text-center">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+                  {monthShort(r.date)}
+                </p>
+                <p className="text-lg font-black tabular-nums leading-none text-vyrek-text">
+                  {dayOfMonth(r.date)}
+                </p>
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-semibold text-vyrek-text">
+                  {r.event}
+                </p>
+                <p className="truncate font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  {r.city}, {r.country} · {r.weeksFromNow}w
+                </p>
+                <p className="mt-1 truncate text-xs text-vyrek-text-tertiary">
+                  {r.categories.join(" · ")}
+                </p>
+              </div>
+              {r.registrationOpen ? (
                 <span className="shrink-0 inline-flex h-9 items-center rounded-pill border border-vyrek-accent/40 bg-vyrek-accent/10 px-3 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-accent">
                   Open
                 </span>
-              )
-            ) : (
-              <span className="shrink-0 inline-flex h-9 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-                Soon
-              </span>
-            )}
+              ) : (
+                <span className="shrink-0 inline-flex h-9 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  Soon
+                </span>
+              )}
+            </Link>
           </li>
         ))}
       </ul>

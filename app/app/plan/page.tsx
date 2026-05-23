@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { assertMember } from "@/lib/member/auth";
-import { DEMO_WEEKS, DEMO_WEEK, DEMO_VIDEOS, programmeLabel } from "@/lib/member/demo";
+import { DEMO_WEEKS, DEMO_WEEK, DEMO_VIDEOS_ALL, DEMO_STATIONS, programmeLabel } from "@/lib/member/demo";
 import { SectionEyebrow } from "@/components/member/section-eyebrow";
 
 export const dynamic = "force-dynamic";
@@ -138,11 +138,42 @@ export default async function PlanPage() {
         </ol>
       </section>
 
+      {/* Hyrox stations library */}
+      <section className="mb-8">
+        <SectionEyebrow title="Hyrox stations" right={`${DEMO_STATIONS.length} stations`} />
+        <Link
+          href="/app/plan/stations"
+          className="group block rounded-2xl border border-vyrek-border bg-vyrek-elevated/60 p-5 transition-colors hover:border-vyrek-border-strong"
+        >
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-base font-semibold text-vyrek-text">
+                Stations playbook
+              </p>
+              <p className="mt-1 text-sm text-vyrek-text-secondary">
+                Spec, technique, failure pattern for every station. Tap to drill in.
+              </p>
+            </div>
+            <span className="shrink-0 text-vyrek-accent">→</span>
+          </div>
+          <div className="mt-4 grid grid-cols-4 gap-1.5 sm:grid-cols-8">
+            {DEMO_STATIONS.map((s) => (
+              <span
+                key={s.slug}
+                className="rounded-md border border-vyrek-border-subtle bg-vyrek-base/60 px-1.5 py-1 text-center font-mono text-[9px] uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+              >
+                {String(s.number).padStart(2, "0")}
+              </span>
+            ))}
+          </div>
+        </Link>
+      </section>
+
       {/* Coach videos */}
       <section className="mb-2">
-        <SectionEyebrow title="Coach library" right="6 videos" />
+        <SectionEyebrow title="Coach library" right={`${DEMO_VIDEOS_ALL.length} videos`} />
         <ul role="list" className="grid grid-cols-2 gap-3">
-          {DEMO_VIDEOS.map((v) => (
+          {DEMO_VIDEOS_ALL.map((v) => (
             <li key={v.id}>
               <Link
                 href="#"

@@ -3,12 +3,15 @@ import {
   DEMO_TODAY,
   DEMO_RECENT_SESSIONS,
   DEMO_COMMUNITY,
+  DEMO_VOLUME,
   programmeLabel,
 } from "@/lib/member/demo";
 import { TodayWorkoutCard } from "@/components/member/today-workout-card";
 import { RecentSessionList } from "@/components/member/recent-session-list";
 import { CommunityFeed } from "@/components/member/community-feed";
 import { SectionEyebrow } from "@/components/member/section-eyebrow";
+import { RaceCountdown } from "@/components/member/race-countdown";
+import { VolumeChart } from "@/components/member/volume-chart";
 
 export const dynamic = "force-dynamic";
 
@@ -35,7 +38,16 @@ export default async function TodayPage() {
         </p>
       </header>
 
+      <div className="mb-5">
+        <RaceCountdown />
+      </div>
+
       <TodayWorkoutCard workout={DEMO_TODAY} />
+
+      <section className="mt-10">
+        <SectionEyebrow title="Training load" right={`Week ${DEMO_TODAY.weekNumber}`} />
+        <VolumeChart data={DEMO_VOLUME} />
+      </section>
 
       <section className="mt-10">
         <SectionEyebrow title="This week" right={`${DEMO_TODAY.weekNumber} / 12`} />
@@ -44,7 +56,7 @@ export default async function TodayPage() {
 
       <section className="mt-10">
         <SectionEyebrow title="Community" right="Live" />
-        <CommunityFeed posts={DEMO_COMMUNITY.slice(0, 5)} />
+        <CommunityFeed posts={DEMO_COMMUNITY.slice(0, 6)} />
       </section>
     </div>
   );

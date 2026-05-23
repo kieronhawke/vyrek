@@ -1,7 +1,7 @@
 import { assertMember } from "@/lib/member/auth";
 import {
-  DEMO_ATHLETES,
-  DEMO_RACES,
+  DEMO_ATHLETES_ALL,
+  DEMO_RACES_ALL,
 } from "@/lib/member/demo";
 import { SectionEyebrow } from "@/components/member/section-eyebrow";
 import { AthleteSearch } from "@/components/member/athlete-search";
@@ -27,22 +27,19 @@ export default async function AnalysisPage() {
         </p>
       </header>
 
-      {/* Athlete search */}
       <section className="mb-10">
-        <SectionEyebrow title="Athlete search" right={`${DEMO_ATHLETES.length} indexed`} />
-        <AthleteSearch athletes={DEMO_ATHLETES} />
+        <SectionEyebrow title="Athlete search" right={`${DEMO_ATHLETES_ALL.length} indexed`} />
+        <AthleteSearch athletes={DEMO_ATHLETES_ALL} />
       </section>
 
-      {/* Pace calculator */}
       <section className="mb-10">
         <SectionEyebrow title="Race calculator" />
         <PaceCalculatorCard />
       </section>
 
-      {/* Race tracker */}
       <section className="mb-10">
-        <SectionEyebrow title="Upcoming races" right={`${DEMO_RACES.length} listed`} />
-        <RaceList races={DEMO_RACES} />
+        <SectionEyebrow title="Upcoming races" right={`${DEMO_RACES_ALL.length} listed`} />
+        <RaceList races={DEMO_RACES_ALL} />
       </section>
     </div>
   );
