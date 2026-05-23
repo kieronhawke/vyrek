@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { supabaseServer } from "@/lib/supabase/server";
 import { MarketingNav } from "@/components/marketing/nav";
@@ -54,12 +55,12 @@ export default async function LoginPage({
             <CustomerLoginForm />
             <p className="mt-12 text-center text-sm text-vyrek-text-tertiary">
               First time here?{" "}
-              <a
+              <Link
                 href="/quiz"
                 className="text-vyrek-accent underline underline-offset-4"
               >
                 Find your plan in 3 minutes
-              </a>
+              </Link>
               .
             </p>
           </div>

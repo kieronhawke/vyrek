@@ -92,7 +92,6 @@ export function CommandPalette() {
     if (open) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setQuery("");
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActive(0);
       window.setTimeout(() => inputRef.current?.focus(), 30);
     }

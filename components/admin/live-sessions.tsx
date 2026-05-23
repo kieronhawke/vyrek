@@ -20,6 +20,16 @@ export function LiveSessions({ initial }: { initial: Session[] }) {
   const [sessions, setSessions] = useState<Session[]>(initial);
   const [stale, setStale] = useState(false);
   const [pulseTick, setPulseTick] = useState(0);
+  // `now` is read during render to compute session ages. It's set on each
+  // poll tick (so ages refresh) and on a 1s timer (so a session that's been
+  // idle for 30s shows the right number even between fetches). Keeping it
+  // in state makes render pure and lets React 19's purity lint pass.
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const id = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(id);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -195,10 +205,10 @@ export function LiveSessions({ initial }: { initial: Session[] }) {
               <tbody>
                 {sessions.map((s) => {
                   const ageS = Math.round(
-                    (Date.now() - new Date(s.last_seen).getTime()) / 1000,
+                    (now - new Date(s.last_seen).getTime()) / 1000,
                   );
                   const sessAgeS = Math.round(
-                    (Date.now() - new Date(s.started_at).getTime()) / 1000,
+                    (now - new Date(s.started_at).getTime()) / 1000,
                   );
                   return (
                     <tr

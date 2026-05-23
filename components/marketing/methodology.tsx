@@ -58,7 +58,7 @@ export function Methodology() {
             >
               <span
                 aria-hidden
-                className="pointer-events-none absolute right-5 top-5 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary opacity-60"
+                className="pointer-events-none absolute right-5 top-5 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary"
               >
                 0{i + 1}
               </span>

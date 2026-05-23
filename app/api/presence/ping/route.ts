@@ -26,10 +26,14 @@ export async function POST(req: Request) {
   // Rate limit by IP: 60 pings/min. A normal visitor pings ~2/min
   // (every 30s when visible + extras on pathname change). 60/min is
   // 30x typical use; anything beyond is a bot. Security audit C-2.
+  //
+  // When rate-limited we return 200 with `{ ok: false, rateLimited: true }`
+  // (not 429) so the browser doesn't log a console.error on every drop.
+  // Presence is fire-and-forget; the client just needs to know to back off.
   const ip = requestIp(req);
   const r = await limiters.presencePing.limit(`ip:${ip}`);
   if (!r.success) {
-    return NextResponse.json({ ok: false }, { status: 429 });
+    return NextResponse.json({ ok: false, rateLimited: true }, { status: 200 });
   }
 
   let body: Body;

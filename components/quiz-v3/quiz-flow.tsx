@@ -595,18 +595,21 @@ function QuizV3Inner() {
         onBack={backHandler}
         hasAnswers={hasAnswers}
         footer={
-          <div className="flex w-full items-center gap-3">
+          <div className="flex w-full items-stretch gap-3">
             <button
               type="button"
               onClick={() => {
                 setAnswer("raceDate", undefined);
                 continueWithHaptic(null);
               }}
-              className="text-sm text-vyrek-text-secondary underline-offset-4 hover:underline"
+              // Made into a real secondary button (was a tertiary text link).
+              // When no date is picked, this is the only enabled action and
+              // it needs visual weight that signals "this is a fine choice".
+              className="inline-flex h-14 flex-1 items-center justify-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-5 text-base font-medium text-vyrek-text transition-colors hover:border-vyrek-border-strong active:scale-[0.98]"
             >
-              No race booked →
+              No race yet
             </button>
-            <div className="ml-auto flex-1">
+            <div className="flex-1">
               <ContinueButton
                 disabled={!value}
                 onClick={() => continueWithHaptic(value?.toISOString())}

@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import Link from "next/link";
 import type { MemberContext } from "@/lib/member/auth";
 
 function statusTone(status: string) {
@@ -19,12 +20,12 @@ export function MemberSubscriptionPanel({
         <p className="text-sm text-vyrek-text-secondary">
           No active subscription. Start your free trial in three minutes.
         </p>
-        <a
+        <Link
           href="/quiz"
           className="mt-4 inline-flex h-11 items-center justify-center rounded-pill bg-vyrek-accent px-5 text-sm font-semibold text-[#0A0A0A]"
         >
           Start trial →
-        </a>
+        </Link>
       </div>
     );
   }

@@ -42,6 +42,8 @@ export function StickyMobileCta({
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    // Sync pathname from window on mount. Set once, never re-runs.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPathname(window.location.pathname);
   }, []);
 

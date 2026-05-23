@@ -340,7 +340,7 @@ export async function listSubscriptions(opts: {
     // Join customer emails in one extra round trip (Supabase doesn't
     // support .select() joins without FK metadata).
     const ids = Array.from(new Set(subs.map((s) => s.customer_id).filter(Boolean)));
-    let emailMap = new Map<string, string>();
+    const emailMap = new Map<string, string>();
     if (ids.length) {
       const { data: customers } = await sb
         .from("customers")
@@ -605,7 +605,7 @@ export async function listPayouts(opts: {
     const rows = (data ?? []) as AdminPayout[];
 
     const ids = Array.from(new Set(rows.map((r) => r.partner_id)));
-    let map = new Map<string, { email: string; name: string }>();
+    const map = new Map<string, { email: string; name: string }>();
     if (ids.length) {
       const { data: partners } = await sb
         .from("partners")

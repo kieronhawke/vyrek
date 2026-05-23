@@ -4,22 +4,27 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 type SavedRace = { name: string; date: string };
+type State = { ready: false } | { ready: true; race: SavedRace | null };
 
 export function RaceCountdown() {
-  const [race, setRace] = useState<SavedRace | null>(null);
-  const [mounted, setMounted] = useState(false);
+  // One state value -> one setState call -> one commit. Avoids the React 19
+  // cascading-render lint that fires on consecutive sets inside an effect.
+  const [state, setState] = useState<State>({ ready: false });
 
   useEffect(() => {
-    setMounted(true);
+    let initial: SavedRace | null = null;
     try {
       const raw = window.localStorage.getItem("vyrek:my-race");
-      if (raw) setRace(JSON.parse(raw) as SavedRace);
+      if (raw) initial = JSON.parse(raw) as SavedRace;
     } catch {
       /* private mode */
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setState({ ready: true, race: initial });
   }, []);
 
-  if (!mounted) return null;
+  if (!state.ready) return null;
+  const race = state.race;
 
   if (!race) {
     return (

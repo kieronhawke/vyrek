@@ -54,6 +54,14 @@ export async function generateMetadata({
   };
 }
 
+// Server-side helper so the render itself stays pure (no Date.now during
+// render — React 19 strict-mode flags it).
+function priceValidUntil(): string {
+  return new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 10);
+}
+
 export default async function PlanTemplatePage({
   params,
 }: {
@@ -126,11 +134,7 @@ export default async function PlanTemplatePage({
       priceCurrency: "GBP",
       url,
       availability: "https://schema.org/InStock",
-      priceValidUntil: new Date(
-        Date.now() + 365 * 24 * 60 * 60 * 1000,
-      )
-        .toISOString()
-        .slice(0, 10),
+      priceValidUntil: priceValidUntil(),
     },
     aggregateRating: {
       "@type": "AggregateRating",

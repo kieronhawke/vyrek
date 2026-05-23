@@ -30,7 +30,12 @@ export function PresencePing() {
   const pathRef = useRef(pathname);
   const intervalRef = useRef<number | null>(null);
 
-  pathRef.current = pathname;
+  // Keep the ref in sync with the latest pathname inside an effect, not
+  // during render. React 19's purity rules flag direct ref writes in the
+  // render body.
+  useEffect(() => {
+    pathRef.current = pathname;
+  }, [pathname]);
 
   useEffect(() => {
     const s = sid();

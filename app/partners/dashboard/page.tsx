@@ -126,6 +126,7 @@ export default async function PartnerDashboardPage({
     bacs_reference: string | null;
   }> = [];
   let loadErr: string | null = null;
+  let suspendedMessage: string | null = null;
 
   try {
     const sb = supabaseAdmin();
@@ -138,40 +139,39 @@ export default async function PartnerDashboardPage({
       .maybeSingle();
     if (pErr) throw pErr;
     if (!p) {
-      return (
-        <Suspended message="We couldn't find your partner profile. Sign in again." />
-      );
-    }
-    if (p.suspended_at) {
-      return (
-        <Suspended message="Your account has been suspended. Email partners@vyrek.com." />
-      );
-    }
-    partner = p as Partner;
+      suspendedMessage = "We couldn't find your partner profile. Sign in again.";
+    } else if (p.suspended_at) {
+      suspendedMessage = "Your account has been suspended. Email partners@vyrek.com.";
+    } else {
+      partner = p as Partner;
 
-    const { data: refs } = await sb
-      .from("partner_referrals")
-      .select(
-        "id, status, signed_up_at, first_paid_at, recurring_earnings_pence",
-      )
-      .eq("partner_id", partnerId)
-      .order("signed_up_at", { ascending: false })
-      .limit(20);
-    referrals = (refs ?? []) as typeof referrals;
+      const { data: refs } = await sb
+        .from("partner_referrals")
+        .select(
+          "id, status, signed_up_at, first_paid_at, recurring_earnings_pence",
+        )
+        .eq("partner_id", partnerId)
+        .order("signed_up_at", { ascending: false })
+        .limit(20);
+      referrals = (refs ?? []) as typeof referrals;
 
-    const { data: pos } = await sb
-      .from("partner_payouts")
-      .select(
-        "id, amount_pence, period_start, period_end, status, paid_at, bacs_reference",
-      )
-      .eq("partner_id", partnerId)
-      .order("created_at", { ascending: false })
-      .limit(12);
-    payouts = (pos ?? []) as typeof payouts;
+      const { data: pos } = await sb
+        .from("partner_payouts")
+        .select(
+          "id, amount_pence, period_start, period_end, status, paid_at, bacs_reference",
+        )
+        .eq("partner_id", partnerId)
+        .order("created_at", { ascending: false })
+        .limit(12);
+      payouts = (pos ?? []) as typeof payouts;
+    }
   } catch (e) {
     loadErr = e instanceof Error ? e.message : "Could not load dashboard.";
   }
 
+  if (suspendedMessage) {
+    return <Suspended message={suspendedMessage} />;
+  }
   if (!partner) {
     return (
       <Suspended message={loadErr ?? "Could not load your dashboard."} />
