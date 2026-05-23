@@ -124,7 +124,7 @@ export default function PartnersPage() {
           <div aria-hidden className="absolute inset-0 -z-10">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/media/images/bento-coaches.jpg"
+              src="/media/images/v2/bento-coaches.jpg"
               alt=""
               className="absolute inset-0 h-full w-full object-cover grayscale"
               loading="eager"

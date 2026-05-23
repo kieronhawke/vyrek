@@ -66,15 +66,15 @@ export const SCREENS: Screen[] = [
     skipLabel: "Get started →",
     slides: [
       {
-        image: "/media/images/programme-first-race.jpg",
+        image: "/media/images/v2/programme-first-race.jpg",
         headline: "Hyrox training, personalised.",
       },
       {
-        image: "/media/images/bento-plan.jpg",
+        image: "/media/images/v2/bento-plan.jpg",
         headline: "Every workout, dated and ready.",
       },
       {
-        image: "/media/images/bento-progress.jpg",
+        image: "/media/images/v2/bento-progress.jpg",
         headline: "Built to get you to the line.",
       },
     ],
@@ -96,7 +96,7 @@ export const SCREENS: Screen[] = [
   },
   {
     kind: "interstitial",
-    image: "/media/images/quiz-interstitial-1.jpg",
+    image: "/media/images/v2/quiz-interstitial-1.jpg",
     headline:
       "92% of first-time Vyrek members finish their Hyrox stronger than they expected.",
     caption: "Vyrek member data, 2026",
@@ -213,7 +213,7 @@ export const SCREENS: Screen[] = [
   },
   {
     kind: "interstitial",
-    image: "/media/images/bento-plan.jpg",
+    image: "/media/images/v2/bento-plan.jpg",
     headline:
       "Give us 4 sessions a week. We'll give you Hyrox-ready fitness in 12 weeks.",
     caption: "12-week First Race programme",

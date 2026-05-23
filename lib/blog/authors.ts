@@ -18,7 +18,7 @@ export const AUTHORS: Record<string, Author> = {
     name: "James Wright",
     role: "Founding coach · Elite 15 athlete",
     bio: "James races at Elite 15. Top 50 at the 2025 Hyrox World Championships. Programmed for over 200 first-time finishers before Vyrek launched.",
-    photo: "/media/images/coach-james-wright.jpg",
+    photo: "/media/images/v2/coach-james-wright.jpg",
     sameAs: [
       "https://instagram.com/jameswright.hyrox",
       "https://www.linkedin.com/in/jameswright-hyrox",
@@ -29,7 +29,7 @@ export const AUTHORS: Record<string, Author> = {
     name: "The Vyrek team",
     role: "Coaches and editors",
     bio: "The Vyrek programming team. Elite 15 athletes and S&C coaches who've raced Hyrox at every level.",
-    photo: "/media/images/bento-coaches.jpg",
+    photo: "/media/images/v2/bento-coaches.jpg",
     sameAs: [],
   },
 };

@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     locale: "en_GB",
     images: [
       {
-        url: "/media/images/programme-first-race.jpg",
+        url: "/media/images/v2/programme-first-race.jpg",
         width: 1920,
         height: 1080,
         alt: "Vyrek, personalised Hyrox training",
@@ -85,7 +85,7 @@ export const metadata: Metadata = {
     title: "Vyrek. Train like a Hyrox athlete",
     description:
       "Personalised Hyrox training programmes built by Elite 15 athletes.",
-    images: ["/media/images/programme-first-race.jpg"],
+    images: ["/media/images/v2/programme-first-race.jpg"],
   },
 };
 

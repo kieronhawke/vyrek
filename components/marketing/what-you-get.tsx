@@ -18,7 +18,7 @@ const CARDS = [
     title: "An Elite 15 athlete on your programme.",
     body:
       "Reviews your weekly progress, answers questions, and adjusts your training as you improve.",
-    image: "/media/images/coach-james-wright.jpg",
+    image: "/media/images/v2/coach-james-wright.jpg",
     alt: "Vyrek coach in training",
   },
   {
@@ -26,7 +26,7 @@ const CARDS = [
     title: "Every workout, dated to your race.",
     body:
       "No guessing what to do next. Open the app, see today's session, hit it, log it. Your plan adapts each Sunday.",
-    image: "/media/images/bento-plan.jpg",
+    image: "/media/images/v2/bento-plan.jpg",
     alt: "A weekly Hyrox plan laid out by day",
   },
   {
@@ -34,7 +34,7 @@ const CARDS = [
     title: "Built backwards from the 8 stations.",
     body:
       "Sled push, ski erg, wall balls, sandbag lunges. Every block has a purpose.",
-    image: "/media/images/programme-sub-90.jpg",
+    image: "/media/images/v2/programme-sub-90.jpg",
     alt: "Athlete training on Hyrox stations",
   },
   {
@@ -42,7 +42,7 @@ const CARDS = [
     title: "Track your splits, your sled times, your wall ball cycles.",
     body:
       "Every week your data sharpens the next plan.",
-    image: "/media/images/bento-progress.jpg",
+    image: "/media/images/v2/bento-progress.jpg",
     alt: "Athlete logging session data",
   },
 ];

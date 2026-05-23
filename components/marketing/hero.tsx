@@ -91,7 +91,7 @@ export function Hero() {
             where the autoplay video is gated off. Use the coach-portrait
             shot instead; it's the same person the desktop video shows. */}
         <img
-          src="/media/images/coach-james-wright.jpg"
+          src="/media/images/v2/coach-james-wright.jpg"
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
           loading="eager"

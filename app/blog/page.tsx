@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     locale: "en_GB",
     images: [
       {
-        url: `${siteUrl()}/media/images/bento-plan.jpg`,
+        url: `${siteUrl()}/media/images/v2/bento-plan.jpg`,
         width: 1200,
         height: 630,
         alt: "Vyrek Journal. Hyrox training insights",

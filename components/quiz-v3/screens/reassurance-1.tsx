@@ -14,7 +14,7 @@ export function ReassuranceScreen1({ onContinue }: { onContinue: () => void }) {
     >
       <div className="absolute inset-0 z-0">
         <img
-          src="/media/images/quiz-interstitial-1.jpg"
+          src="/media/images/v2/quiz-interstitial-1.jpg"
           alt=""
           className="h-full w-full object-cover"
           loading="eager"

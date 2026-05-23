@@ -126,7 +126,7 @@ async function parseFile(filename: string): Promise<Post | null> {
     authorSlug,
     author,
     heroImage:
-      (fm.heroImage as string) ?? "/media/images/programme-first-race.jpg",
+      (fm.heroImage as string) ?? "/media/images/v2/programme-first-race.jpg",
     heroAlt: (fm.heroAlt as string) ?? "",
     seoTitle: fm.seoTitle as string | undefined,
     seoDescription: fm.seoDescription as string | undefined,

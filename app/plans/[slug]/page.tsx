@@ -186,6 +186,16 @@ export default async function PlanTemplatePage({
             >
               {p.title}
             </SplitHeading>
+            <figure className="-mx-4 mt-8 overflow-hidden rounded-2xl md:mx-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`/media/images/v2/programme-${p.programmeSlug}.jpg`}
+                alt={`${p.title}. Athlete training for the ${p.programmeSlug.replace("-", " ")} programme.`}
+                className="aspect-[21/10] w-full object-cover"
+                loading="eager"
+                decoding="async"
+              />
+            </figure>
             {p.intro.map((para, i) => (
               <p
                 key={i}

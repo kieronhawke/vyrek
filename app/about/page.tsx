@@ -46,7 +46,7 @@ export default function AboutPage() {
         >
           <div aria-hidden className="absolute inset-0 -z-10">
             <img
-              src="/media/images/bento-coaches.jpg"
+              src="/media/images/v2/bento-coaches.jpg"
               alt=""
               className="absolute inset-0 h-full w-full object-cover grayscale"
               loading="eager"
@@ -95,6 +95,16 @@ export default function AboutPage() {
                   not programming, it was that programming this thorough did
                   not scale beyond people he could text directly.
                 </p>
+                <figure className="-mx-4 my-8 overflow-hidden rounded-2xl md:mx-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/media/images/v2/about-coaching.jpg"
+                    alt="A coach demonstrating a movement to an athlete on a training floor."
+                    className="aspect-[16/10] w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
                 <p>
                   Vyrek is the version of that spreadsheet that scales: dated
                   workouts, adaptive Sunday rebuilds, weekly coach review, all
@@ -146,6 +156,17 @@ export default function AboutPage() {
                   hoped for it.
                 </p>
               </div>
+
+              <figure className="-mx-4 mt-10 overflow-hidden rounded-2xl md:mx-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/media/images/v2/about-outdoor.jpg"
+                  alt="An athlete running along a UK trail at dawn, mid-effort."
+                  className="aspect-[21/9] w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
 
               {/* Growth timeline graphic */}
               <ol

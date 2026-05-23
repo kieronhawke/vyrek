@@ -447,7 +447,7 @@ function QuizV3Inner() {
         <div aria-hidden className="absolute inset-0 -z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/media/images/programme-first-race.jpg"
+            src="/media/images/v2/programme-first-race.jpg"
             alt=""
             className="h-full w-full object-cover opacity-50 grayscale"
             loading="eager"
@@ -929,7 +929,7 @@ function QuizColdLoadFallback() {
       <div aria-hidden className="absolute inset-0 -z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/media/images/programme-first-race.jpg"
+          src="/media/images/v2/programme-first-race.jpg"
           alt=""
           className="h-full w-full object-cover opacity-50 grayscale"
           loading="eager"

@@ -39,7 +39,7 @@ const PROGRAMMES: ProgrammeDetail[] = [
     tag: "BEGINNER / 12 WEEKS",
     audience:
       "For athletes who have never raced a Hyrox. Twelve weeks to your first finish line, built so the work compounds without breaking you.",
-    image: "/media/images/programme-first-race.jpg",
+    image: "/media/images/v2/programme-first-race.jpg",
     who: [
       "You have never raced a Hyrox.",
       "You have a base of running or gym fitness, even if patchy.",
@@ -70,7 +70,7 @@ const PROGRAMMES: ProgrammeDetail[] = [
     tag: "INTERMEDIATE / 12 WEEKS",
     audience:
       "For athletes who have completed at least one Hyrox and want to break the 90-minute barrier. Higher volume, sharper intensity, targeted pacing work.",
-    image: "/media/images/programme-sub-90.jpg",
+    image: "/media/images/v2/programme-sub-90.jpg",
     who: [
       "You have raced one or more Hyrox events.",
       "Your current PB is between 90 and 105 minutes.",
@@ -101,7 +101,7 @@ const PROGRAMMES: ProgrammeDetail[] = [
     tag: "PARTNER / 12 WEEKS",
     audience:
       "Train with a partner. Race together. One plan that synchronises two athletes through the same 12 weeks, with shared and split sessions.",
-    image: "/media/images/programme-doubles.jpg",
+    image: "/media/images/v2/programme-doubles.jpg",
     who: [
       "You have a training partner committed to the same race.",
       "You can train together at least 1 to 2 days a week.",
@@ -132,7 +132,7 @@ const PROGRAMMES: ProgrammeDetail[] = [
     tag: "ADVANCED / 12 WEEKS",
     audience:
       "For sub-75 athletes chasing podiums. Designed alongside the programming our founding coach uses for his own Elite 15 race blocks.",
-    image: "/media/images/programme-pro.jpg",
+    image: "/media/images/v2/programme-pro.jpg",
     who: [
       "Your current Hyrox PB is under 75 minutes.",
       "You can train 5 to 6 days a week.",

@@ -25,19 +25,19 @@ export const VIDEOS = {
     // hit on the LCP-critical hero. Original at Pexels:
     // https://www.pexels.com/video/{id}/
     src: "/hero.mp4",
-    poster: "/posters/18573489.jpg",
+    poster: "/media/images/v2/programme-pro.jpg",
     description: "Man performing battle ropes in a dark gym, hero backdrop",
   },
   manWorkingOut: {
     id: "6296583",
     src: "https://videos.pexels.com/video-files/6296583/6296583-uhd_2560_1080_25fps.mp4",
-    poster: "/posters/6296583.jpg",
+    poster: "/media/images/v2/coach-james-wright.jpg",
     description: "Man training, coach tile",
   },
   womanBoxJumps: {
     id: "7674511",
     src: "https://videos.pexels.com/video-files/7674511/7674511-uhd_2732_1440_25fps.mp4",
-    poster: "/posters/7674511.jpg",
+    poster: "/media/images/v2/programme-first-race.jpg",
     description: "Woman box jumps. Elite 15 bento card atmosphere",
   },
   womanRopes: {

@@ -34,10 +34,10 @@ export const COACHES: CoachTile[] = [
     ],
     bio: "James Wright is a UK Hyrox athlete competing at the Elite 15 level. Top 50 finish at the 2025 World Championships in Chicago. Eight seasons of competitive functional fitness before transitioning to Hyrox in 2023. Coaches the programming for Vyrek's First Race, Sub-90, and Pro programmes.",
     // Socials will be linked when verified accounts are published.
-    image: "/media/images/coach-james-wright.jpg",
+    image: "/media/images/v2/coach-james-wright.jpg",
     video: {
       src: "https://videos.pexels.com/video-files/6296583/6296583-uhd_2560_1080_25fps.mp4",
-      poster: "/posters/6296583.jpg",
+      poster: "/media/images/v2/coach-james-wright.jpg",
     },
     kind: "coach",
   },
