@@ -165,7 +165,6 @@ export default function PressPage() {
                 Programmes are 12 weeks, designed by Elite 15 athletes,
                 recalibrate every Sunday based on logged sessions. Founding
                 coach: James Wright, top 50 at the 2025 World Championships.
-                Subscription is £8.99 per month with a 7-day free trial.
               </p>
             </section>
           </div>

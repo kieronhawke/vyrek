@@ -8,7 +8,7 @@ import { SplitHeading } from "@/components/shared/split-heading";
 export const metadata: Metadata = {
   title: "Contact Vyrek, support, press & partnerships",
   description:
-    "Get in touch with Vyrek. General questions, billing support, press enquiries, athlete features, brand collaborations. We answer every email within 24 hours, Mon-Fri.",
+    "Get in touch with Vyrek. General questions, billing support, press enquiries, athlete features, brand collaborations. We reply within 24 hours, Monday to Friday.",
 };
 
 const CONTACTS = [
@@ -47,7 +47,8 @@ export default function ContactPage() {
               Get in touch.
             </SplitHeading>
             <p className="mt-5 text-base text-vyrek-text-secondary md:text-lg">
-              We answer every email.
+              The Vyrek team typically replies within 24 hours, Monday to
+              Friday. For urgent training questions, message us in the app.
             </p>
 
             <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-3">
