@@ -81,13 +81,17 @@ test("partners: apply button reaches the form", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /apply to join/i })).toBeVisible();
 });
 
-test("partners: dashboard link reaches the sign-in placeholder", async ({
+test("partners: dashboard link reaches the magic-link sign-in form", async ({
   page,
 }) => {
   await page.goto("/partners");
   await page.getByRole("link", { name: /partner login/i }).click();
   await page.waitForURL("**/partners/dashboard");
-  await expect(page.getByRole("heading", { name: /sign in/i })).toBeVisible();
+  // The dashboard renders the magic-link form for unauthenticated visitors.
+  await expect(
+    page.getByRole("heading", { name: /open your dashboard/i }),
+  ).toBeVisible();
+  await expect(page.getByLabel(/partner email/i)).toBeVisible();
 });
 
 test("programmes: each programme has a Start CTA going to quiz", async ({

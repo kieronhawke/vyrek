@@ -156,6 +156,11 @@ export function MarketingNav() {
       <div
         id="mobile-nav-drawer"
         aria-hidden={!open}
+        // `inert` (when closed) prevents the focusable links inside
+        // from being reachable by keyboard navigation while the drawer
+        // is hidden. Without it, Lighthouse + screen readers flag
+        // aria-hidden-focus violations.
+        {...(!open ? { inert: "" as unknown as boolean } : {})}
         className={cn(
           "fixed inset-x-0 top-0 z-40 origin-top md:hidden",
           "pt-[calc(var(--safe-top)+4rem)]",

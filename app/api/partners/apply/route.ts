@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { logEvent } from "@/lib/admin/events";
+import { limiters, requestIp } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -37,6 +38,17 @@ function validate(b: Body): string | null {
 }
 
 export async function POST(req: Request) {
+  // Rate limit per IP — 5 applications per hour. Email is added to the
+  // key after validation so a single attacker can't farm many emails.
+  const ip = requestIp(req);
+  const r = await limiters.partnerApply.limit(`ip:${ip}`);
+  if (!r.success) {
+    return NextResponse.json(
+      { ok: false, error: "Too many applications. Try again in an hour." },
+      { status: 429, headers: { "Retry-After": "3600" } },
+    );
+  }
+
   let body: Body;
   try {
     body = (await req.json()) as Body;
@@ -50,6 +62,28 @@ export async function POST(req: Request) {
   const err = validate(body);
   if (err) {
     return NextResponse.json({ ok: false, error: err }, { status: 400 });
+  }
+
+  // Cap free-text lengths at sensible maxes to prevent DB bloat / log
+  // spam.  Frontend already enforces these via maxLength but the API
+  // must enforce too. Security audit C-1.
+  if ((body.contentDescription ?? "").length > 600) {
+    return NextResponse.json(
+      { ok: false, error: "Content description is too long." },
+      { status: 400 },
+    );
+  }
+  if ((body.whyVyrek ?? "").length > 1000) {
+    return NextResponse.json(
+      { ok: false, error: "Why Vyrek is too long." },
+      { status: 400 },
+    );
+  }
+  if ((body.primaryUrl ?? "").length > 400) {
+    return NextResponse.json(
+      { ok: false, error: "URL is too long." },
+      { status: 400 },
+    );
   }
 
   try {

@@ -19,7 +19,9 @@ export async function GET(
   const { slug } = await ctx.params;
   const url = new URL(req.url);
   const to = url.searchParams.get("to") || "/";
-  const dest = to.startsWith("/") ? to : "/";
+  // Reject protocol-relative (//evil.com) — these pass startsWith("/")
+  // but resolve cross-origin when fed to new URL(). Security audit M-3.
+  const dest = to.startsWith("/") && !to.startsWith("//") ? to : "/";
 
   const sub = (url.searchParams.get("sub") ?? "").trim();
   const subId = sub && SUB_RE.test(sub) ? sub.toLowerCase() : null;

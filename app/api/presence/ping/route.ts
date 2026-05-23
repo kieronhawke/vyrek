@@ -1,11 +1,14 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { supabaseServer } from "@/lib/supabase/server";
+import { limiters, requestIp } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
 const SESSION_ID_RE = /^[a-z0-9-]{6,64}$/i;
 const MAX_PATH_LEN = 256;
+const MAX_UA_LEN = 512;
+const MAX_REFERER_LEN = 512;
 
 /**
  * Heartbeat ping for live-presence. Called from every public page on
@@ -20,6 +23,15 @@ const MAX_PATH_LEN = 256;
 type Body = { sid?: string; path?: string };
 
 export async function POST(req: Request) {
+  // Rate limit by IP: 60 pings/min. A normal visitor pings ~2/min
+  // (every 30s when visible + extras on pathname change). 60/min is
+  // 30x typical use; anything beyond is a bot. Security audit C-2.
+  const ip = requestIp(req);
+  const r = await limiters.presencePing.limit(`ip:${ip}`);
+  if (!r.success) {
+    return NextResponse.json({ ok: false }, { status: 429 });
+  }
+
   let body: Body;
   try {
     body = (await req.json()) as Body;
@@ -63,8 +75,9 @@ export async function POST(req: Request) {
         id: sid,
         path,
         country: req.headers.get("x-vercel-ip-country"),
-        user_agent: req.headers.get("user-agent"),
-        referrer: req.headers.get("referer"),
+        // Cap header lengths to bound row size in Postgres `text`.
+        user_agent: (req.headers.get("user-agent") ?? "").slice(0, MAX_UA_LEN) || null,
+        referrer: (req.headers.get("referer") ?? "").slice(0, MAX_REFERER_LEN) || null,
         customer_id: customerId,
         customer_email: customerEmail,
         started_at: now, // ignored on conflict (only inserted on first ping)

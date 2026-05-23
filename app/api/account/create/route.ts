@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { supabaseServer } from "@/lib/supabase/server";
 import {
   determineProgramme,
   determineStartDate,
@@ -97,6 +98,22 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { ok: false, reason: "invalid-auth-user-id" },
       { status: 400 },
+    );
+  }
+
+  // SECURITY: verify the caller actually holds the Supabase session for
+  // the authUserId they're claiming. Without this check, any signed-in
+  // user could pass another user's UUID and either claim that user's
+  // customer row (email match) or pre-empt their future signup. See
+  // 2026-05-23 security audit C-3.
+  const sessionClient = await supabaseServer();
+  const {
+    data: { user: sessionUser },
+  } = await sessionClient.auth.getUser();
+  if (!sessionUser || sessionUser.id !== authUserId) {
+    return NextResponse.json(
+      { ok: false, reason: "auth-user-id-mismatch" },
+      { status: 401 },
     );
   }
 

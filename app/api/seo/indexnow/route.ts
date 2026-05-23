@@ -26,6 +26,21 @@ function indexNowKey(): string | null {
   return process.env.INDEXNOW_KEY?.trim() || null;
 }
 
+/**
+ * Bearer auth check. Either ADMIN bearer or CRON_SECRET. Without this,
+ * the endpoint was a free SEO-quota burn target. Security audit H-6.
+ */
+function authorised(req: Request): boolean {
+  const auth = req.headers.get("authorization") ?? "";
+  const bearer = auth.startsWith("Bearer ") ? auth.slice(7).trim() : "";
+  if (!bearer) return false;
+  const cronSecret = process.env.CRON_SECRET?.trim();
+  if (cronSecret && bearer === cronSecret) return true;
+  const indexnowAdmin = process.env.INDEXNOW_ADMIN_TOKEN?.trim();
+  if (indexnowAdmin && bearer === indexnowAdmin) return true;
+  return false;
+}
+
 async function submit(urls: string[]): Promise<{
   ok: boolean;
   submitted: number;
@@ -66,6 +81,9 @@ async function submit(urls: string[]): Promise<{
 }
 
 export async function POST(req: Request) {
+  if (!authorised(req)) {
+    return NextResponse.json({ ok: false, error: "unauthorised" }, { status: 401 });
+  }
   let body: { urls?: string[] };
   try {
     body = (await req.json()) as { urls?: string[] };
@@ -90,9 +108,12 @@ export async function POST(req: Request) {
 
 /**
  * GET = re-submit every blog post + every primary route. Useful
- * after a content batch.
+ * after a content batch. Also requires authorisation.
  */
-export async function GET() {
+export async function GET(req: Request) {
+  if (!authorised(req)) {
+    return NextResponse.json({ ok: false, error: "unauthorised" }, { status: 401 });
+  }
   const { listPostMeta } = await import("@/lib/blog/posts");
   const posts = await listPostMeta();
   const urls = [
