@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useMagnetic } from "@/hooks/use-magnetic";
@@ -87,16 +88,18 @@ export function Hero() {
         className="absolute inset-0 -z-10 will-change-[filter]"
         style={{ filter: "grayscale(1) brightness(1)" }}
       >
-        {/* hero-poster.jpg was a near-black video still, useless on mobile
-            where the autoplay video is gated off. Use the coach-portrait
-            shot instead; it's the same person the desktop video shows. */}
-        <img
+        {/* Hero backdrop. Uses next/image so Vercel serves a resized
+            WebP/AVIF (~40-60 KB at viewport size) instead of the raw
+            336 KB JPEG that the previous <img> tag was loading and
+            cratering LCP. priority=true keeps it preloaded as the LCP
+            candidate. */}
+        <Image
           src="/media/images/v2/coach-james-wright.jpg"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover"
-          loading="eager"
-          decoding="async"
-          fetchPriority="high"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
         {shouldServeVideo && videoReady && (
           <video

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
@@ -45,13 +46,13 @@ export default function AboutPage() {
           className="relative isolate flex min-h-[68svh] flex-col justify-end overflow-hidden bg-vyrek-base pb-16 pt-[max(7rem,calc(var(--safe-top)+6rem))]"
         >
           <div aria-hidden className="absolute inset-0 -z-10">
-            <img
+            <Image
               src="/media/images/v2/bento-coaches.jpg"
               alt=""
-              className="absolute inset-0 h-full w-full object-cover grayscale"
-              loading="eager"
-              decoding="async"
-              fetchPriority="high"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover grayscale"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-vyrek-base/70 via-vyrek-base/55 to-vyrek-base" />
           </div>
