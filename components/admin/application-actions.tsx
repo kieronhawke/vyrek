@@ -16,7 +16,7 @@ export function ApplicationActions({ applicationId }: { applicationId: string })
   const [reason, setReason] = useState("");
 
   function approve() {
-    if (!confirm("Approve this application and create a partner record?")) return;
+    if (!confirm("Approve this application and email the onboarding link?")) return;
     setError(null);
     setFeedback(null);
     startTransition(async () => {
@@ -24,9 +24,13 @@ export function ApplicationActions({ applicationId }: { applicationId: string })
       if (!res.ok) {
         setError(res.error);
       } else {
-        setFeedback(
-          `Approved. Partner code: ${res.partnerCode ?? "—"}. Send the onboarding email next.`,
-        );
+        const emailLine = res.emailSent
+          ? "Onboarding email sent."
+          : `Onboarding email NOT sent (${res.emailReason ?? "unknown"}). Copy the link manually.`;
+        const linkLine = res.onboardingUrl
+          ? `Onboarding link: ${res.onboardingUrl}`
+          : "";
+        setFeedback(`Approved. ${emailLine} ${linkLine}`.trim());
         router.refresh();
       }
     });

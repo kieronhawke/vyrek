@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import {
   determineProgramme,
@@ -168,6 +169,47 @@ export async function POST(req: Request) {
       program: programme,
       scheduled_for: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
     });
+
+    // 4. Partner attribution. Read the vyrek_partner cookie set by /p/<slug>
+    //    and create a pending referral. Self-referrals (where the partner's
+    //    own email matches the referee's) are dropped silently.
+    try {
+      const cookieStore = await cookies();
+      const partnerId = cookieStore.get("vyrek_partner")?.value;
+      if (partnerId) {
+        const { data: partner } = await sb
+          .from("partners")
+          .select("id, email, suspended_at")
+          .eq("id", partnerId)
+          .maybeSingle();
+        if (partner && !partner.suspended_at) {
+          const selfReferral =
+            (partner.email ?? "").trim().toLowerCase() === email;
+          if (!selfReferral) {
+            await sb
+              .from("partner_referrals")
+              .insert({
+                partner_id: partnerId,
+                customer_id: resolvedCustomerId,
+                status: "trial",
+                attribution_ip:
+                  req.headers.get("x-forwarded-for") ??
+                  req.headers.get("x-real-ip") ??
+                  null,
+                attribution_user_agent:
+                  req.headers.get("user-agent") ?? null,
+              })
+              .select("id")
+              .maybeSingle();
+            // unique (partner_id, customer_id) will silently no-op if the
+            // same person comes back through the funnel.
+          }
+        }
+      }
+    } catch (err) {
+      // Attribution failures must NEVER block signup.
+      console.error("[/api/account/create] partner attribution failed", err);
+    }
 
     return NextResponse.json({
       ok: true,

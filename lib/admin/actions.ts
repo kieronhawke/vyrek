@@ -3,6 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { assertAdmin } from "@/lib/admin/auth";
+import { mintOnboardingToken } from "@/lib/partners/tokens";
+import {
+  sendApprovalEmail,
+  partnerOnboardingUrl,
+} from "@/lib/partners/emails";
 
 /**
  * Server actions called from admin UI. Every action re-checks admin
@@ -22,23 +27,17 @@ function fail(e: unknown): ActionResult {
   };
 }
 
-function generatePartnerCode(name: string, email: string): string {
-  // Slug from name with email-prefix fallback, plus a short random suffix
-  // to avoid collisions.
-  const base = (name || email.split("@")[0])
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 24);
-  const suffix = Math.random().toString(36).slice(2, 6);
-  return `${base || "partner"}-${suffix}`;
-}
-
 // ─── Partner application actions ────────────────────────
 
 export async function approvePartnerApplication(
   applicationId: string,
-): Promise<ActionResult & { partnerId?: string; partnerCode?: string }> {
+): Promise<
+  ActionResult & {
+    onboardingUrl?: string;
+    emailSent?: boolean;
+    emailReason?: string;
+  }
+> {
   try {
     const { user } = await assertAdmin();
     const sb = supabaseAdmin();
@@ -54,22 +53,6 @@ export async function approvePartnerApplication(
       return { ok: false, error: `application already ${app.status}` };
     }
 
-    const partnerCode = generatePartnerCode(app.name, app.email);
-
-    const { data: partner, error: insErr } = await sb
-      .from("partners")
-      .insert({
-        application_id: applicationId,
-        email: app.email,
-        name: app.name,
-        partner_code: partnerCode,
-        tier: "starter",
-        terms_accepted_at: new Date().toISOString(),
-      })
-      .select("id")
-      .single();
-    if (insErr) throw insErr;
-
     await sb
       .from("partner_applications")
       .update({
@@ -79,11 +62,32 @@ export async function approvePartnerApplication(
       })
       .eq("id", applicationId);
 
+    // Mint the onboarding token and email it. The partner row itself
+    // isn't created until the applicant finishes /partners/onboard — that
+    // way they pick their own slug and supply bank details directly,
+    // bypassing the encryption-of-empty-strings problem.
+    const token = mintOnboardingToken(applicationId);
+    const onboardingUrl = partnerOnboardingUrl(token);
+
+    let emailSent = false;
+    let emailReason: string | undefined;
+    try {
+      const result = await sendApprovalEmail({
+        to: app.email,
+        name: app.name,
+        onboardingUrl,
+      });
+      emailSent = result.ok;
+      if (!result.ok) emailReason = result.reason;
+    } catch (e) {
+      emailReason = e instanceof Error ? e.message : "send failed";
+    }
+
     revalidatePath("/admin/partners");
     revalidatePath(`/admin/partners/${applicationId}`);
     revalidatePath("/admin/partners/list");
 
-    return { ok: true, partnerId: partner.id, partnerCode };
+    return { ok: true, onboardingUrl, emailSent, emailReason };
   } catch (e) {
     return fail(e);
   }

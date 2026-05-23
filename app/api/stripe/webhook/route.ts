@@ -9,6 +9,12 @@ import {
   sendCancellationEmail,
   sendWelcomeEmail,
 } from "@/lib/email/send";
+import {
+  commissionPence,
+  tierForActiveCount,
+  isInClawbackWindow,
+  type Tier,
+} from "@/lib/partners/commission";
 
 /**
  * Stripe webhook receiver. The request body MUST be read as raw text for
@@ -155,6 +161,62 @@ export async function POST(req: Request) {
               },
             );
           }
+
+          // Partner attribution: flip referral to cancelled. If inside the
+          // 30-day clawback window, reverse the accrued commission.
+          const { data: ref } = await admin
+            .from("partner_referrals")
+            .select(
+              "id, partner_id, status, first_paid_at, recurring_earnings_pence",
+            )
+            .eq("customer_id", subRow.customer_id)
+            .maybeSingle();
+          if (ref) {
+            const wasActive = ref.status === "paid";
+            const clawback = isInClawbackWindow(ref.first_paid_at)
+              ? ref.recurring_earnings_pence ?? 0
+              : 0;
+            const newStatus = clawback > 0 ? "clawed_back" : "cancelled";
+
+            await admin
+              .from("partner_referrals")
+              .update({
+                status: newStatus,
+                cancelled_at: new Date().toISOString(),
+              })
+              .eq("id", ref.id);
+
+            if (ref.partner_id) {
+              const { data: partner } = await admin
+                .from("partners")
+                .select(
+                  "id, active_subscribers, pending_payout_pence, lifetime_earnings_pence",
+                )
+                .eq("id", ref.partner_id)
+                .maybeSingle();
+              if (partner) {
+                const newActive = Math.max(
+                  0,
+                  (partner.active_subscribers ?? 0) - (wasActive ? 1 : 0),
+                );
+                await admin
+                  .from("partners")
+                  .update({
+                    tier: tierForActiveCount(newActive),
+                    active_subscribers: newActive,
+                    pending_payout_pence: Math.max(
+                      0,
+                      (partner.pending_payout_pence ?? 0) - clawback,
+                    ),
+                    lifetime_earnings_pence: Math.max(
+                      0,
+                      (partner.lifetime_earnings_pence ?? 0) - clawback,
+                    ),
+                  })
+                  .eq("id", partner.id);
+              }
+            }
+          }
         }
         break;
       }
@@ -167,8 +229,79 @@ export async function POST(req: Request) {
       }
 
       case "invoice.payment_succeeded": {
-        // First paid invoice = trial converted. Future hook: trigger referral
-        // bounty if customer was referred.
+        const invoice = event.data.object as Stripe.Invoice;
+        const subscriptionId =
+          (invoice as unknown as { subscription?: string }).subscription ??
+          null;
+        const amountPence = invoice.amount_paid ?? 0;
+        if (!subscriptionId || amountPence <= 0) break;
+
+        // Resolve our customer id from the subscription.
+        const { data: subRow } = await admin
+          .from("subscriptions")
+          .select("customer_id")
+          .eq("stripe_subscription_id", subscriptionId)
+          .maybeSingle();
+        if (!subRow?.customer_id) break;
+
+        // Is this customer referred by a partner?
+        const { data: ref } = await admin
+          .from("partner_referrals")
+          .select(
+            "id, partner_id, status, first_paid_at, recurring_earnings_pence",
+          )
+          .eq("customer_id", subRow.customer_id)
+          .maybeSingle();
+        if (!ref) break;
+
+        // Pull the partner so we can credit the right tier.
+        const { data: partner } = await admin
+          .from("partners")
+          .select(
+            "id, tier, active_subscribers, pending_payout_pence, lifetime_earnings_pence, total_referrals",
+          )
+          .eq("id", ref.partner_id)
+          .maybeSingle();
+        if (!partner) break;
+
+        const tier = (partner.tier ?? "starter") as Tier;
+        const commission = commissionPence({
+          invoiceAmountPence: amountPence,
+          tier,
+        });
+
+        const isFirstPaid = !ref.first_paid_at;
+        const newActive =
+          (partner.active_subscribers ?? 0) + (isFirstPaid ? 1 : 0);
+        const newTotal =
+          (partner.total_referrals ?? 0) + (isFirstPaid ? 1 : 0);
+        const promotedTier = tierForActiveCount(newActive);
+
+        await admin
+          .from("partner_referrals")
+          .update({
+            status: "paid",
+            first_paid_at: isFirstPaid
+              ? new Date().toISOString()
+              : ref.first_paid_at,
+            recurring_earnings_pence:
+              (ref.recurring_earnings_pence ?? 0) + commission,
+          })
+          .eq("id", ref.id);
+
+        await admin
+          .from("partners")
+          .update({
+            tier: promotedTier,
+            active_subscribers: newActive,
+            total_referrals: newTotal,
+            pending_payout_pence:
+              (partner.pending_payout_pence ?? 0) + commission,
+            lifetime_earnings_pence:
+              (partner.lifetime_earnings_pence ?? 0) + commission,
+          })
+          .eq("id", partner.id);
+
         break;
       }
 
