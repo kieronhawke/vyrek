@@ -1,0 +1,85 @@
+import { NextResponse } from "next/server";
+import { supabaseAdmin } from "@/lib/supabase/admin";
+
+export const runtime = "nodejs";
+
+type Body = {
+  name?: string;
+  email?: string;
+  country?: string;
+  platform?: string;
+  followerCount?: string;
+  contentDescription?: string;
+  whyVyrek?: string;
+  primaryUrl?: string;
+  pastAffiliate?: string;
+  promotionMethods?: string[];
+  termsAccepted?: boolean;
+};
+
+function validate(b: Body): string | null {
+  if (!b.name || b.name.length < 2) return "Please enter your name.";
+  if (!b.email || !/.+@.+\..+/.test(b.email)) return "Please enter a valid email.";
+  if (!b.country) return "Please enter your country.";
+  if (!b.platform) return "Please choose a primary platform.";
+  if (!b.followerCount) return "Please choose a follower count range.";
+  if (!b.contentDescription || b.contentDescription.length < 5)
+    return "Please describe your content briefly.";
+  if (!b.whyVyrek || b.whyVyrek.length < 5)
+    return "Please tell us why Vyrek fits your audience.";
+  if (!b.primaryUrl || !/^https?:\/\//.test(b.primaryUrl))
+    return "Please paste a full URL (including https://).";
+  if (!Array.isArray(b.promotionMethods) || b.promotionMethods.length === 0)
+    return "Pick at least one promotion method.";
+  if (!b.termsAccepted) return "Please accept the Partner Terms to apply.";
+  return null;
+}
+
+export async function POST(req: Request) {
+  let body: Body;
+  try {
+    body = (await req.json()) as Body;
+  } catch {
+    return NextResponse.json(
+      { ok: false, error: "Invalid JSON" },
+      { status: 400 },
+    );
+  }
+
+  const err = validate(body);
+  if (err) {
+    return NextResponse.json({ ok: false, error: err }, { status: 400 });
+  }
+
+  try {
+    const admin = supabaseAdmin();
+    const { error } = await admin.from("partner_applications").insert({
+      email: body.email,
+      name: body.name,
+      country: body.country,
+      platform: body.platform,
+      follower_count: body.followerCount,
+      content_description: body.contentDescription,
+      why_vyrek: body.whyVyrek,
+      primary_url: body.primaryUrl,
+      past_affiliate: body.pastAffiliate || null,
+      promotion_methods: body.promotionMethods,
+      status: "pending",
+    });
+    if (error) {
+      console.error("[/api/partners/apply] insert failed", error);
+      return NextResponse.json(
+        { ok: false, error: "Could not save your application. Please try again." },
+        { status: 500 },
+      );
+    }
+  } catch (e) {
+    console.error("[/api/partners/apply] unexpected", e);
+    return NextResponse.json(
+      { ok: false, error: "Server error. Please try again." },
+      { status: 500 },
+    );
+  }
+
+  return NextResponse.json({ ok: true });
+}
