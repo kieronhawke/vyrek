@@ -11,9 +11,14 @@ const OPTIONS: Array<{
   recommended?: boolean;
 }> = [
   {
+    value: 2,
+    label: "2 days",
+    detail: "Just getting started. Slow, sustainable base building.",
+  },
+  {
     value: 3,
     label: "3 days",
-    detail: "Minimum effective dose. Race-ready in 16 weeks.",
+    detail: "Solid foundation. Race-ready in 16 weeks.",
   },
   {
     value: 4,
@@ -24,12 +29,12 @@ const OPTIONS: Array<{
   {
     value: 5,
     label: "5 days",
-    detail: "Faster progress. Higher recovery demand.",
+    detail: "Faster progress. More recovery demand.",
   },
   {
     value: 6,
     label: "6 days",
-    detail: "Advanced volume. Used to high load.",
+    detail: "Advanced volume. For experienced athletes.",
   },
 ];
 
@@ -44,7 +49,7 @@ export function FrequencyScreen({
     <div>
       <QuestionHeader
         question="How many days a week can you train?"
-        helper="Most members train 4 days. Pick what you'll actually do."
+        helper="Be honest about what you can stick to."
       />
       <ul role="list" className="space-y-3">
         {OPTIONS.map((opt) => (

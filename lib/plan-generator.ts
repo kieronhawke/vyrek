@@ -112,6 +112,7 @@ export function displayWeight(weightKg: number, unit: WeightUnit): string {
  * first hyrox session on Tuesday (not on Monday last week).
  */
 const PATTERNS: Record<number, WorkoutType[]> = {
+  2: ["hyrox", "rest", "rest", "rest", "rest", "run", "rest"],
   3: ["hyrox", "rest", "strength", "rest", "rest", "run", "rest"],
   4: ["hyrox", "rest", "strength", "rest", "hyrox", "run", "rest"],
   5: ["hyrox", "rest", "strength", "run", "hyrox", "recovery", "rest"],
@@ -501,4 +502,126 @@ export function generateWeekN(
           ? w.title: `${w.title} · Week ${week} (+${(week - 1) * 5}% volume)`,
     })),
   };
+}
+
+// ─── Benefit copy per programme (brief 3.6) ─────────────────────────────
+//
+// Sales-pitch language for Screen 14 (plan summary). Each programme gets
+// the same 5-row structure with copy tuned to the audience.
+
+export type Benefit = { number: string; title: string; body: string };
+
+const BENEFITS: Record<Programme, Benefit[]> = {
+  "first-race": [
+    {
+      number: "01",
+      title: "Your personal Elite 15 coach",
+      body: "James Wright, Top 50 World Championships finisher. Reviews your weekly progress. Answers your questions in the app.",
+    },
+    {
+      number: "02",
+      title: "12 weeks of dated training",
+      body: "Sessions calibrated to your sled load, wall ball, and farmers carry weights. Every workout has a calendar slot.",
+    },
+    {
+      number: "03",
+      title: "Adaptive Sunday rebuilds",
+      body: "Every Sunday we recalibrate based on what you logged. Your plan gets sharper each week.",
+    },
+    {
+      number: "04",
+      title: "Hyrox station mastery",
+      body: "Race-specific blocks for all 8 stations. You'll feel ready at the start line.",
+    },
+    {
+      number: "05",
+      title: "Community of racers",
+      body: "Train alongside other Vyrek members. Share splits, swap tips, find race partners.",
+    },
+  ],
+  "sub-90": [
+    {
+      number: "01",
+      title: "Your personal Elite 15 coach",
+      body: "Reviews your splits weekly, identifies pacing issues, points at the limiter holding you above 90.",
+    },
+    {
+      number: "02",
+      title: "12 weeks calibrated to sub-90",
+      body: "Race-pace intervals, station efficiency drills, transition rehearsals. Every block tuned for the time barrier.",
+    },
+    {
+      number: "03",
+      title: "Adaptive Sunday rebuilds",
+      body: "Plan recalibrates on logged sessions. If a station is your bottleneck, next week targets it.",
+    },
+    {
+      number: "04",
+      title: "Hyrox station mastery",
+      body: "Focused on time-saving at your slowest stations. Pacing strategy baked into every Hyrox-pattern session.",
+    },
+    {
+      number: "05",
+      title: "Community of competitive racers",
+      body: "Swap pacing strategies with members chasing the same time.",
+    },
+  ],
+  doubles: [
+    {
+      number: "01",
+      title: "Your personal Elite 15 coach",
+      body: "Reviews both athletes' progress weekly. Spots handoff inefficiencies. Adjusts the partner split.",
+    },
+    {
+      number: "02",
+      title: "12 weeks of synchronised programming",
+      body: "Sessions designed for two athletes. Paired intervals, partner-aware recovery.",
+    },
+    {
+      number: "03",
+      title: "Joint progress tracking",
+      body: "Both partners' logs in one view. Surface where the team needs work.",
+    },
+    {
+      number: "04",
+      title: "Station handoff strategy",
+      body: "Partner timing drills, station-split rehearsal, race-day choreography.",
+    },
+    {
+      number: "05",
+      title: "Doubles community",
+      body: "Find new partners or race teams in the Vyrek community.",
+    },
+  ],
+  pro: [
+    {
+      number: "01",
+      title: "Coached by an Elite 15 podium contender",
+      body: "Specific to Pro-division standards. Programming written for sub-75 / Pro-qualifying targets.",
+    },
+    {
+      number: "02",
+      title: "12 weeks of high-volume race prep",
+      body: "Higher weekly mileage, race-pace density, station-specific overload. Designed for athletes used to the load.",
+    },
+    {
+      number: "03",
+      title: "Weekly video form review",
+      body: "Upload your sled push, wall ball, and lift form. Coach reviews and replies in the app.",
+    },
+    {
+      number: "04",
+      title: "Sub-75 pacing strategy",
+      body: "Per-kilometre split targets and station-time benchmarks. Optimised for podium contention.",
+    },
+    {
+      number: "05",
+      title: "Elite training community",
+      body: "Train alongside other Pro-division members. Exclusive race meetups.",
+    },
+  ],
+};
+
+export function getBenefits(programme: Programme): Benefit[] {
+  return BENEFITS[programme];
 }

@@ -5,26 +5,27 @@ import { format } from "date-fns";
 import type { gsap as GsapType } from "gsap";
 import {
   PROGRAMME_TAG,
-  LOCATION_LABEL,
-  PARTNER_LABEL,
-  INJURY_LABEL,
   determineProgramme,
   determineStartDate,
   determineRaceDate,
   calculateWeeksUntilRace,
   type QuizAnswers,
 } from "@/lib/quiz-flow";
+import { getBenefits } from "@/lib/plan-generator";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 /**
- * Screen 14. Animated plan summary. Staggered reveal proves the system
- * worked. Respects prefers-reduced-motion (shows everything immediately).
+ * Screen 14 (brief 3.5 + 3.6). Sales-pitch plan summary.
+ *
+ * Programme name, race-date anchor, 5 numbered benefits, dates footer.
+ * Benefits stagger in 250ms apart. Respects prefers-reduced-motion.
  */
 export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const programme = determineProgramme(answers);
+  const benefits = getBenefits(programme);
   const startDate = determineStartDate();
   const raceDate = determineRaceDate(startDate, answers.raceDate);
   const weeksUntil = calculateWeeksUntilRace(raceDate);
@@ -35,95 +36,42 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
     const lines = Array.from(
       root.querySelectorAll<HTMLElement>("[data-summary-line]"),
     );
-    const cta = root.querySelector<HTMLElement>("[data-summary-cta]");
 
     if (prefersReducedMotion) {
-      // Show everything immediately, no animation, no need to load gsap.
       for (const el of lines) {
         el.style.opacity = "1";
         el.style.transform = "none";
       }
-      if (cta) {
-        cta.style.opacity = "1";
-        cta.style.transform = "none";
-      }
       return;
     }
 
-    // Initial state set synchronously via inline styles so the animation has
-    // something to interpolate from even before gsap finishes loading.
     for (const el of lines) {
       el.style.opacity = "0";
       el.style.transform = "translateY(12px)";
-    }
-    if (cta) {
-      cta.style.opacity = "0";
-      cta.style.transform = "translateY(12px) scale(0.98)";
     }
 
     let cancelled = false;
     let tl: ReturnType<typeof GsapType.timeline> | null = null;
 
-    // Lazy-load gsap so it doesn't bloat the main quiz bundle. The summary
-    // screen is reached towards the end of the funnel, by the time it
-    // mounts, gsap fetches in parallel with the user reading the summary.
-    import("gsap").then(({ gsap }) => {
+    import("gsap")
+      .then(({ gsap }) => {
         if (cancelled) return;
-        // Reset transforms to gsap-managed.
         gsap.set(lines, { opacity: 0, y: 12, clearProps: "transform" });
-        if (cta) {
-          gsap.set(cta, {
-            opacity: 0,
-            y: 12,
-            scale: 0.98,
-            clearProps: "transform",
-          });
-        }
-
         tl = gsap.timeline();
         tl.to(lines, {
           opacity: 1,
           y: 0,
-          duration: 0.32,
+          duration: 0.45,
           ease: "power2.out",
-          stagger: 0.16,
+          stagger: 0.25,
         });
-        if (cta) {
-          tl.to(
-            cta,
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.4,
-              ease: "back.out(1.2)",
-            },
-            "-=0.1",
-          );
-          tl.to(
-            cta,
-            {
-              scale: 1.02,
-              duration: 0.6,
-              ease: "power1.inOut",
-              yoyo: true,
-              repeat: 1,
-            },
-            "+=0.3",
-          );
-        }
-      }).catch(() => {
-        // If gsap fails to load, fall back to a CSS transition so users
-        // still see the lines appear rather than a permanently-hidden screen.
+      })
+      .catch(() => {
         for (const el of lines) {
-          el.style.transition = "opacity 320ms ease, transform 320ms ease";
+          el.style.transition =
+            "opacity 320ms ease, transform 320ms ease";
           el.style.opacity = "1";
           el.style.transform = "none";
-        }
-        if (cta) {
-          cta.style.transition = "opacity 400ms ease, transform 400ms ease";
-          cta.style.opacity = "1";
-          cta.style.transform = "none";
         }
       });
 
@@ -132,13 +80,6 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
       if (tl) tl.kill();
     };
   }, [prefersReducedMotion]);
-
-  const partnerLabel = answers.partner
-    ? PARTNER_LABEL[answers.partner]: "Solo";
-  const locationLabel = answers.location
-    ? LOCATION_LABEL[answers.location]: "Standard commercial gym";
-  const injuryLabel = answers.injuries
-    ? INJURY_LABEL[answers.injuries]: "No injuries";
 
   return (
     <div ref={containerRef}>
@@ -153,41 +94,76 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
         data-summary-line
         className="mt-3 text-balance text-3xl font-black leading-tight tracking-[-0.04em] text-vyrek-text md:text-4xl"
       >
-        {PROGRAMME_TAG[programme]}
+        {PROGRAMME_TAG[programme]} Programme
       </h1>
 
-      <ul className="mt-8 space-y-2 text-base leading-relaxed text-vyrek-text">
-        <li data-summary-line>12 weeks</li>
-        <li data-summary-line>{answers.days ?? 4} sessions per week</li>
-        <li data-summary-line>{answers.sessionLength ?? "60"} min sessions</li>
-        <li data-summary-line>{locationLabel}</li>
-        <li data-summary-line>{partnerLabel}</li>
-        <li data-summary-line>{injuryLabel}</li>
-      </ul>
+      <p
+        data-summary-line
+        className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg"
+      >
+        Built around your race on{" "}
+        <span className="text-vyrek-text">
+          {format(raceDate, "EEEE, d MMMM yyyy")}
+        </span>
+        .
+      </p>
 
       <div
         data-summary-line
-        className="my-6 h-px w-full bg-vyrek-border-subtle"
+        className="my-8 h-px w-full bg-vyrek-border-subtle"
       />
 
-      <div data-summary-line className="text-base text-vyrek-text-secondary">
-        Starting{" "}
-        <span className="text-vyrek-text">
-          {format(startDate, "EEEE d MMMM yyyy")}
-        </span>
-      </div>
-      <div data-summary-line className="mt-1 text-base text-vyrek-text-secondary">
-        Race-ready:{" "}
-        <span className="text-vyrek-text">
-          {format(raceDate, "EEEE d MMMM yyyy")}
-        </span>
-        <span className="mt-1 block text-sm text-vyrek-text-tertiary">
-          {weeksUntil} weeks to your race
-        </span>
-      </div>
+      <p
+        data-summary-line
+        className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary"
+      >
+        What&apos;s included
+      </p>
 
-      <div className="mt-10" data-summary-cta-wrapper>
-        {/* CTA rendered by orchestrator footer; this wrapper just helps position */}
+      <ol role="list" className="mt-5 space-y-4">
+        {benefits.map((b) => (
+          <li
+            key={b.number}
+            data-summary-line
+            className="flex gap-4 rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-5"
+          >
+            <span className="shrink-0 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-vyrek-accent">
+              [ {b.number} ]
+            </span>
+            <div>
+              <p className="text-base font-bold text-vyrek-text">{b.title}</p>
+              <p className="mt-1 text-sm leading-relaxed text-vyrek-text-secondary">
+                {b.body}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div
+        data-summary-line
+        className="my-8 h-px w-full bg-vyrek-border-subtle"
+      />
+
+      <div
+        data-summary-line
+        className="space-y-1 text-base text-vyrek-text-secondary"
+      >
+        <p>
+          Starting{" "}
+          <span className="text-vyrek-text">
+            {format(startDate, "EEEE d MMMM yyyy")}
+          </span>
+        </p>
+        <p>
+          Race-ready:{" "}
+          <span className="text-vyrek-text">
+            {format(raceDate, "EEEE d MMMM yyyy")}
+          </span>
+        </p>
+        <p className="text-sm text-vyrek-text-tertiary">
+          {weeksUntil} weeks to your race
+        </p>
       </div>
     </div>
   );

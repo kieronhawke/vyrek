@@ -38,7 +38,7 @@ export type ActivityValue =
 export type SexValue = "men" | "women";
 export type WeightUnit = "kg" | "lb";
 
-export type DaysValue = 3 | 4 | 5 | 6;
+export type DaysValue = 2 | 3 | 4 | 5 | 6;
 export type SessionLengthValue = "30" | "45" | "60" | "90";
 export type LocationValue = "gym-full" | "gym-standard" | "home";
 export type PartnerValue = "solo" | "doubles" | "solo-partner-later";

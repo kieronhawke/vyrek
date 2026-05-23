@@ -42,7 +42,7 @@ export function ReassuranceScreen2({ onContinue }: { onContinue: () => void }) {
             </div>
             <div className="aspect-square overflow-hidden rounded-lg bg-vyrek-elevated">
               <img
-                src="/media/images/quiz-interstitial-1.jpg"
+                src="/media/images/bento-progress.jpg"
                 alt=""
                 className="h-full w-full object-cover"
                 loading="lazy"
