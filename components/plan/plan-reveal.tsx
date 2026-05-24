@@ -17,6 +17,7 @@ import { generateWeek1, type Plan, type Workout } from "@/lib/plan-generator";
 import { DayCard } from "@/components/plan/day-card";
 import { DayDetailSheet } from "@/components/plan/day-detail-sheet";
 import { PaywallCard } from "@/components/plan/paywall-card";
+import { PlanValueSection } from "@/components/plan/plan-value-section";
 // StickyCta removed in Fix 1 — was duplicating the PaywallCard CTA and
 // reading as a "buy now" pop-up over the user's own Week 1. Single paywall
 // card at the bottom (post-value-section) carries the conversion now.
@@ -359,43 +360,20 @@ export function PlanReveal({
 
           {variant === "owner" ? (
             <>
-              <hr className="my-8 border-t border-vyrek-border-subtle" />
+              {/* Value section above paywall: users see what they unlock
+                  before the unlock prompt. Stagger fades in on scroll. */}
+              <PlanValueSection />
 
-              <div className="relative">
-                {/* Blurred faux week 2 to suggest there's more */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none select-none space-y-3 opacity-40 blur-md"
-                >
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-4"
-                    >
-                      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-                        Day {i + 1}
-                      </p>
-                      <p className="mt-2 text-base font-semibold text-vyrek-text">
-                        ████████████████████████
-                      </p>
-                      <p className="mt-1 text-sm text-vyrek-text-secondary">
-                        ██ min · ████████
-                      </p>
-                    </div>
-                  ))}
-                </div>
+              <hr className="my-10 border-t border-vyrek-border-subtle" />
 
-                <div
-                  id="paywall-card"
-                  className="absolute inset-0 flex items-center justify-center px-3"
-                >
-                  <div className="w-full max-w-sm">
-                    <PaywallCard
-                      onStartTrial={onStartTrial}
-                      loading={checkoutLoading}
-                    />
-                  </div>
-                </div>
+              <div
+                id="paywall-card"
+                className="mx-auto w-full max-w-sm"
+              >
+                <PaywallCard
+                  onStartTrial={onStartTrial}
+                  loading={checkoutLoading}
+                />
               </div>
             </>
           ): (
