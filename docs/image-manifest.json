@@ -1,0 +1,390 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "Vyrek image manifest (post Part 1.4 swap)",
+  "generatedAt": "2026-05-24",
+  "description": "Every image currently in use on the site. usedOn lists the pages or component surfaces that pull the file. Files in /public/media/images/v2/ with 0 call sites are listed at the bottom (inventory but not deployed).",
+  "totals": {
+    "deployedFiles": 28,
+    "unusedFiles": 4,
+    "totalReferences": 124,
+    "newRealPhotos": 2
+  },
+  "images": [
+    {
+      "path": "/media/images/v2/programme-first-race.jpg",
+      "format": "jpg",
+      "bytes": 573425,
+      "width": 1920,
+      "callSites": 20,
+      "usedOn": [
+        "/ (Programmes carousel, Week-in-life vignette, fallback)",
+        "/programmes (First Race card)",
+        "/plans/hyrox-training-plan-beginner",
+        "/plans/sub-100-hyrox-training-plan",
+        "/quiz V3 welcome carousel slide 1 + calculating screen",
+        "/blog: 11 posts use this as their hero (first-race + station + beginner topics)",
+        "/api/og/blog/[slug] default OG image",
+        "Member app /app/plan coach video v9",
+        "app/layout.tsx OG meta + Twitter image (canonical)"
+      ],
+      "subjectTags": ["female", "outdoor-track", "30-39", "golden-hour"],
+      "altSummary": "First-time runner on outdoor track, golden hour"
+    },
+    {
+      "path": "/media/images/v2/programme-pro.jpg",
+      "format": "jpg",
+      "bytes": 482131,
+      "width": 1920,
+      "callSites": 18,
+      "usedOn": [
+        "/programmes Pro card",
+        "/quiz V3 reassurance + plan summary surfaces",
+        "/ Week-in-life vignette 3",
+        "/blog: 9 posts (pro / elite / sub-60 topics)",
+        "Member app coach videos v1 + v8 + v13"
+      ],
+      "subjectTags": ["male", "30-39", "sled", "elite-intensity"],
+      "altSummary": "Elite athlete pushing a weighted sled, full commitment"
+    },
+    {
+      "path": "/media/images/v2/programme-sub-90.jpg",
+      "format": "jpg",
+      "bytes": 394940,
+      "width": 1920,
+      "callSites": 17,
+      "usedOn": [
+        "/ WhatYouGet bento + Methodology card 1 + Programmes carousel + Week-in-life vignette 2",
+        "/programmes Sub-90 card",
+        "/blog: 8 posts (sub-90 / training-block / threshold topics)",
+        "Member app coach videos v2 + v7 + v14"
+      ],
+      "subjectTags": ["male", "20-39", "sled", "intense"],
+      "altSummary": "Athlete pushing a weighted sled, mid-effort"
+    },
+    {
+      "path": "/media/images/v2/bento-plan.jpg",
+      "format": "jpg",
+      "bytes": 237935,
+      "width": 1920,
+      "callSites": 11,
+      "usedOn": [
+        "/ WhatYouGet bento card 2",
+        "/how-it-works step 2",
+        "/quiz V3 welcome carousel slide 2 + reassurance-2 tile 1",
+        "/blog default OG + 4 posts (planning / week-structure topics)",
+        "Member app coach video v12"
+      ],
+      "subjectTags": ["hand-only", "phone", "training-app"],
+      "altSummary": "Hand holding a phone showing a training plan"
+    },
+    {
+      "path": "/media/images/v2/bento-progress.jpg",
+      "format": "jpg",
+      "bytes": 379959,
+      "width": 1920,
+      "callSites": 10,
+      "usedOn": [
+        "/ WhatYouGet bento card 4 + Methodology card 3",
+        "/how-it-works step 4",
+        "/quiz V3 welcome carousel slide 3 + reassurance-2 tile 3",
+        "/blog: 3 posts (progression / metrics topics)",
+        "Member app coach video v4"
+      ],
+      "subjectTags": ["watch", "metrics", "post-session"],
+      "altSummary": "Athlete checking watch metrics after a session"
+    },
+    {
+      "path": "/media/images/v2/coach-james-wright.jpg",
+      "format": "jpg",
+      "bytes": 336452,
+      "width": 1920,
+      "callSites": 7,
+      "usedOn": [
+        "/ Hero backdrop (LCP element, kept)",
+        "/blog: 2 posts (race-day / pacing topics) + author photo on every blog post by james-wright",
+        "lib/blog/authors.ts james-wright photo",
+        "lib/race-coverage.ts heroImage on T+7 recap posts"
+      ],
+      "subjectTags": ["male", "30-39", "white", "gym", "focused"],
+      "altSummary": "Male coach in his thirties, focused expression"
+    },
+    {
+      "path": "/media/images/v2/programme-doubles.jpg",
+      "format": "jpg",
+      "bytes": 403021,
+      "width": 1920,
+      "callSites": 5,
+      "usedOn": [
+        "/programmes Doubles card",
+        "/quiz V3 reassurance-2 tile 2",
+        "/blog: 2 posts (doubles / handoff topics)",
+        "Member app coach video v5"
+      ],
+      "subjectTags": ["mixed-gender", "partners", "gym"],
+      "altSummary": "Two athletes training together, gym floor"
+    },
+    {
+      "path": "/media/images/v2/bento-coaches.jpg",
+      "format": "jpg",
+      "bytes": 226815,
+      "width": 1920,
+      "callSites": 4,
+      "usedOn": [
+        "/about hero backdrop",
+        "/partners hero backdrop",
+        "/api/og/blog/[slug] for vyrek-team-authored posts",
+        "lib/blog/authors.ts vyrek-team photo"
+      ],
+      "subjectTags": ["mixed-gender", "coach-and-athlete", "instructive"],
+      "altSummary": "Coach demonstrating a movement to an athlete"
+    },
+    {
+      "path": "/media/images/v2/about-outdoor.jpg",
+      "format": "jpg",
+      "bytes": 568135,
+      "width": 1920,
+      "callSites": 3,
+      "usedOn": [
+        "/about Why-Hyrox inline figure",
+        "/ Methodology card 4 (Honesty)",
+        "Member app coach video v13"
+      ],
+      "subjectTags": ["solo", "outdoor", "trail", "aspirational"],
+      "altSummary": "Athlete running on a UK trail at dawn"
+    },
+    {
+      "path": "/media/images/v2/quiz-interstitial-1.jpg",
+      "format": "jpg",
+      "bytes": 238635,
+      "width": 1920,
+      "callSites": 3,
+      "usedOn": [
+        "/how-it-works step 1",
+        "/quiz V3 reassurance-1",
+        "Member app coach video v3"
+      ],
+      "subjectTags": ["pre-run", "shoes", "calm"],
+      "altSummary": "Calm pre-run scene, athlete tying shoes"
+    },
+    {
+      "path": "/media/images/v2/testimonial-marcus.jpg",
+      "format": "jpg",
+      "bytes": 604666,
+      "width": 1920,
+      "callSites": 2,
+      "usedOn": [
+        "/ Testimonials carousel — Marcus (Sub-90)",
+        "Member app coach video v6 (race day timeline)"
+      ],
+      "subjectTags": ["male", "30-39", "sled", "race-pace"],
+      "altSummary": "Male athlete on the sled, sub-90 effort"
+    },
+    {
+      "path": "/media/images/v2/testimonial-sarah.jpg",
+      "format": "jpg",
+      "bytes": 485692,
+      "width": 1920,
+      "callSites": 2,
+      "usedOn": [
+        "/ Testimonials carousel — Sarah (First Race)",
+        "Future: Race-day post hero"
+      ],
+      "subjectTags": ["female", "30-39", "uk-street", "runner"],
+      "altSummary": "Female runner in her thirties on a UK street"
+    },
+    {
+      "path": "/media/images/v2/quiz-interstitial-2.jpg",
+      "format": "jpg",
+      "bytes": 450260,
+      "width": 1920,
+      "callSites": 2,
+      "usedOn": [
+        "/ Methodology card 2 (Calibration)",
+        "Member app coach video v2 + v14 (wall ball)"
+      ],
+      "subjectTags": ["wall-ball", "focused", "execution"],
+      "altSummary": "Wall ball mid-rep, focused throw"
+    },
+    {
+      "path": "/media/images/v2/testimonial-doubles.jpg",
+      "format": "jpg",
+      "bytes": 357470,
+      "width": 1920,
+      "callSites": 2,
+      "usedOn": [
+        "/ Testimonials carousel — Alex+Jamie (Doubles)",
+        "/partners Who's-earning Communities card"
+      ],
+      "subjectTags": ["mixed-gender", "partners", "celebratory"],
+      "altSummary": "Two partners high-fiving after a workout"
+    },
+    {
+      "path": "/media/images/v2/about-coaching.jpg",
+      "format": "jpg",
+      "bytes": 635756,
+      "width": 1920,
+      "callSites": 1,
+      "usedOn": ["/about Story-section inline figure"],
+      "subjectTags": ["mixed-gender", "coaching", "training-floor"],
+      "altSummary": "Hyrox-style training environment"
+    },
+    {
+      "path": "/media/images/v2/diverse-2.jpg",
+      "format": "jpg",
+      "bytes": 568437,
+      "width": 1920,
+      "callSites": 1,
+      "usedOn": ["/ Coach hub — Coach 3 placeholder (dimmed grayscale)"],
+      "subjectTags": ["mixed-age", "athletes"],
+      "altSummary": "Mixed-age athletes mid-workout"
+    },
+    {
+      "path": "/media/images/v2/diverse-1.jpg",
+      "format": "jpg",
+      "bytes": 374946,
+      "width": 1920,
+      "callSites": 1,
+      "usedOn": ["/ Coach hub — Coach 2 placeholder (dimmed grayscale)"],
+      "subjectTags": ["female", "lifting", "collaborative"],
+      "altSummary": "Two women lifting together"
+    },
+    {
+      "path": "/media/images/v2/how-step-3.jpg",
+      "format": "jpg",
+      "bytes": 563954,
+      "width": 1920,
+      "callSites": 1,
+      "usedOn": ["Member app coach video v5 (sandbag lunge)"],
+      "subjectTags": ["functional-fitness", "intense"],
+      "altSummary": "Functional fitness intensity"
+    },
+    {
+      "path": "/media/images/v2/how-step-2.jpg",
+      "format": "jpg",
+      "bytes": 491081,
+      "width": 1920,
+      "callSites": 1,
+      "usedOn": ["Member app coach video v14 (wall ball variant)"],
+      "subjectTags": ["wall-ball"],
+      "altSummary": "Wall ball rep, programming in action"
+    },
+    {
+      "path": "/media/images/v2/video-burpee.jpg",
+      "format": "jpg",
+      "bytes": 480975,
+      "width": 1920,
+      "callSites": 1,
+      "usedOn": ["Member app coach video v9 (burpee broad jump)"],
+      "subjectTags": ["burpee", "mid-air", "dynamic"],
+      "altSummary": "Burpee broad jump, mid-air"
+    },
+    {
+      "path": "/media/images/v2/video-sled-pull.jpg",
+      "format": "jpg",
+      "bytes": 478789,
+      "width": 1920,
+      "callSites": 1,
+      "usedOn": ["Member app coach video v8 (sled pull)"],
+      "subjectTags": ["sled-pull", "strength"],
+      "altSummary": "Sled pull, hand-over-hand"
+    },
+    {
+      "path": "/media/images/v2/quiz-interstitial-3.jpg",
+      "format": "jpg",
+      "bytes": 463816,
+      "width": 1920,
+      "callSites": 1,
+      "usedOn": ["Member app coach video v10 (rowing)"],
+      "subjectTags": ["rower", "controlled"],
+      "altSummary": "Indoor rower, controlled stroke"
+    },
+    {
+      "path": "/media/images/v2/video-ski-erg.jpg",
+      "format": "jpg",
+      "bytes": 420242,
+      "width": 1920,
+      "callSites": 1,
+      "usedOn": ["Member app coach video v7 (ski erg)"],
+      "subjectTags": ["ski-erg", "technical"],
+      "altSummary": "Ski-erg / rowing-style indoor cardio"
+    },
+    {
+      "path": "/media/images/v2/video-farmers.jpg",
+      "format": "jpg",
+      "bytes": 384550,
+      "width": 1920,
+      "callSites": 1,
+      "usedOn": ["Member app coach video v11 (farmer's carry)"],
+      "subjectTags": ["farmers-carry", "strength"],
+      "altSummary": "Loaded carry walk"
+    },
+    {
+      "path": "/media/images/v2/video-recovery.jpg",
+      "format": "jpg",
+      "bytes": 277025,
+      "width": 1920,
+      "callSites": 1,
+      "usedOn": ["Member app coach video v4 (mobility)"],
+      "subjectTags": ["recovery", "stretch", "calm"],
+      "altSummary": "Post-session mobility stretch"
+    },
+    {
+      "path": "/media/images/v2/about-portrait.jpg",
+      "format": "jpg",
+      "bytes": 206926,
+      "width": 1920,
+      "callSites": 1,
+      "usedOn": ["/partners Who's-earning Creators card"],
+      "subjectTags": ["male", "portrait", "gym"],
+      "altSummary": "Athlete portrait, gym backdrop"
+    },
+    {
+      "path": "/media/images/v2/coach-james-wright-warm.jpg",
+      "format": "jpg",
+      "bytes": 113085,
+      "width": 1024,
+      "callSites": 1,
+      "usedOn": ["/ Coach hub — James Wright tile (NEW Part 1.4)"],
+      "subjectTags": ["male", "30-39", "white", "gym", "smiling", "warm"],
+      "altSummary": "Founding coach James Wright in his gym, full body shot",
+      "source": "/photos/h1.jpeg (Adobe Stock, watermarked)"
+    },
+    {
+      "path": "/media/images/v2/partners-coach-warm.jpg",
+      "format": "jpg",
+      "bytes": 109639,
+      "width": 1024,
+      "callSites": 1,
+      "usedOn": ["/partners Who's-earning Coaches card (NEW Part 1.4)"],
+      "subjectTags": ["male", "30-39", "white", "gym", "smiling", "warm"],
+      "altSummary": "Coach in a commercial gym, partner-friendly framing",
+      "source": "/photos/h2.jpeg (Adobe Stock, watermarked, same shoot as h1)"
+    }
+  ],
+  "unusedFiles": [
+    {
+      "path": "/media/images/v2/coach-hannah-ward.jpg",
+      "bytes": 515643,
+      "tags": ["female", "20-39", "track", "ready"],
+      "intendedSlot": "Coach 2 portrait once a real second coach lands"
+    },
+    {
+      "path": "/media/images/v2/how-step-4.jpg",
+      "bytes": 373067,
+      "tags": ["lifting", "heavy"],
+      "intendedSlot": "Future blog inline illustration backup"
+    },
+    {
+      "path": "/media/images/v2/how-step-1.jpg",
+      "bytes": 273681,
+      "tags": ["phone", "quiz"],
+      "intendedSlot": "Future blog inline illustration backup"
+    },
+    {
+      "path": "/media/images/v2/hero-poster.jpg",
+      "bytes": 248307,
+      "tags": ["sled", "low-light", "cinematic"],
+      "intendedSlot": "Part 3 /results hub hero background"
+    }
+  ]
+}

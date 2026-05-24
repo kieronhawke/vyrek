@@ -241,7 +241,10 @@ export default function PartnersPage() {
             >
               {FOR.map((f, i) => {
                 const portrait = [
-                  "/media/images/v2/coach-james-wright.jpg",
+                  // Coaches card uses h2 (real Adobe Stock from /photos)
+                  // so the partner-acquisition page leads with a real
+                  // person; the other two stay on Pexels stock.
+                  "/media/images/v2/partners-coach-warm.jpg",
                   "/media/images/v2/about-portrait.jpg",
                   "/media/images/v2/testimonial-doubles.jpg",
                 ][i];

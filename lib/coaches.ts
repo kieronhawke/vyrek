@@ -34,10 +34,15 @@ export const COACHES: CoachTile[] = [
     ],
     bio: "James Wright is a UK Hyrox athlete competing at the Elite 15 level. Top 50 finish at the 2025 World Championships in Chicago. Eight seasons of competitive functional fitness before transitioning to Hyrox in 2023. Coaches the programming for Vyrek's First Race, Sub-90, and Pro programmes.",
     // Socials will be linked when verified accounts are published.
-    image: "/media/images/v2/coach-james-wright.jpg",
+    //
+    // Image + poster moved off the all-purpose Pexels coach shot to h1
+    // (the real Adobe Stock photoshoot in /photos). Warmer register
+    // suits the Coach hub tile; the Hero still uses the Pexels shot
+    // for its colder cinematic backdrop.
+    image: "/media/images/v2/coach-james-wright-warm.jpg",
     video: {
       src: "https://videos.pexels.com/video-files/6296583/6296583-uhd_2560_1080_25fps.mp4",
-      poster: "/media/images/v2/coach-james-wright.jpg",
+      poster: "/media/images/v2/coach-james-wright-warm.jpg",
     },
     kind: "coach",
   },
