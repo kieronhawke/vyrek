@@ -6,6 +6,7 @@ import { Programmes } from "@/components/marketing/programmes";
 import { DatedWeeklyPlan } from "@/components/marketing/dated-weekly-plan";
 import { AdaptAsYouImprove } from "@/components/marketing/adapt-as-you-improve";
 import { WeekInLife } from "@/components/marketing/week-in-life";
+import { PlanDeepDive } from "@/components/marketing/plan-deep-dive";
 import { CoachHub } from "@/components/marketing/coach-hub";
 import { Methodology } from "@/components/marketing/methodology";
 import { Testimonials } from "@/components/marketing/testimonials";
@@ -26,6 +27,7 @@ export default function Home() {
         <DatedWeeklyPlan />
         <AdaptAsYouImprove />
         <WeekInLife />
+        <PlanDeepDive />
         <CoachHub />
         <Methodology />
         <Testimonials />

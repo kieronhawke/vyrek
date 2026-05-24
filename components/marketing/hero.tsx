@@ -128,7 +128,7 @@ export function Hero() {
             matter-of-fact (verb "built", no superlatives). */}
         <h1
           id="hero-heading"
-          className="font-display max-w-[16ch] text-3xl font-bold uppercase leading-[0.92] tracking-[-0.02em] text-vyrek-text sm:text-5xl md:text-6xl lg:text-7xl"
+          className="font-display max-w-[16ch] text-3xl font-black uppercase leading-[0.92] tracking-[-0.02em] text-vyrek-text sm:text-5xl md:text-6xl lg:text-7xl"
         >
           Hyrox training,<br />built around your race.
         </h1>

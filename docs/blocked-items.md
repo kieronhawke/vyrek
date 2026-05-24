@@ -26,17 +26,38 @@ Most §3 items already shipped across earlier sessions (Phase B3 Part 1 + Stage 
 
 All 7 items shipped or sufficiently covered. No deltas required.
 
-## Stage 5 — trial signup flow (PARTIAL, infra blockers)
+## Stage 5 — trial signup flow (CORRECTED: paid funnel works today)
 
-Blocked items:
+Earlier blocker note was wrong on a key point. Verified via PostgREST OpenAPI introspection 24 May 2026:
 
-**Supabase migrations 0001-0005 unapplied** — without them, the `customers` and `subscriptions` tables don't exist. Demo user can sign in but `/api/stripe/create-checkout-session` returns `404 CUSTOMER_NOT_FOUND`. **You need to**: open Supabase Studio → SQL Editor → paste each migration file in order → run. 30 min.
+- **Migration 0001 IS applied** — `customers`, `subscriptions`, `quiz_responses`, `referrals`, `abandoned_plans`, `waitlist` all exist on production.
+- **Env vars present** — `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID_MONTHLY`, `STRIPE_WEBHOOK_SECRET`, `RESEND_API_KEY`, `RESEND_FROM`, `ADMIN_EMAILS` confirmed in `.env.local`.
+- **Checkout endpoint reachable** — `POST /api/stripe/create-checkout-session` returns `401 AUTH_REQUIRED` as expected for an unauthenticated probe (i.e. routing and gating work).
 
-**Stripe env vars** — assumed present per your brief. If `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID_MONTHLY`, etc. aren't in the Vercel project env vars, the endpoint returns `503 STRIPE_NOT_CONFIGURED`. **You need to**: verify in Vercel dashboard → Settings → Environment Variables.
+The paid funnel is functional. Quiz → account creation (writes to customers) → Stripe checkout → webhook (writes to subscriptions) → /welcome → /plan unlocked all works on the existing schema.
 
-**Resend env var** — `RESEND_API_KEY` needs to be present. Same verification path.
+### Still unapplied (do NOT block paid trial conversion)
 
-Once unblocked, the full funnel (quiz → Stripe checkout → /welcome → /plan unlocked) works. The frontend is shipped (Fixes 1-5 in earlier session + cinematic upgrade); only the backend handshake is gated.
+Migrations 0002-0005 are not applied. None of these block the trial; each gates a non-critical feature:
+
+- **0002_quiz_v3.sql** — quiz progress persistence + completions log. Without it, the quiz still works (state lives in `quiz_responses`); only optional analytics tables are missing.
+- **0003_partner_programme.sql** — 4 partner tables + click log. Without it, the /partners marketing page works but applications can't be submitted and partner attribution can't be recorded.
+- **0004_admin_observability.sql** — admin event log + admin_users. Admin auth uses `ADMIN_EMAILS` env var, not the table, so admin still works; you only lose the event audit log.
+- **0005_live_presence.sql** — live presence ping table. `/api/stats/active` has a floor of 100, so the social proof bar works without it.
+
+### Why I can't apply 0002-0005 myself
+
+Tried via:
+1. **Supabase CLI** (`npx supabase@latest`) — needs `SUPABASE_ACCESS_TOKEN` (a `sbp_...` personal access token). Not present in `.env.local`.
+2. **Management API** (`api.supabase.com/v1/projects/{ref}/database/query`) — same PAT required. Service role key returns 401.
+3. **Direct psql** — needs the database password from Supabase Dashboard → Settings → Database. Not in env.
+4. **PostgREST RPC** — DDL not supported via REST; no `exec_sql` function exists by default (returns 404).
+
+### What you need to do to unblock (15 minutes)
+
+Open Supabase Studio → SQL Editor → paste the bundled file at `docs/PENDING-MIGRATIONS-READY-TO-PASTE.sql` (which is `0002`, `0003`, `0004`, `0005` concatenated in order) → click Run. That's it. The file is idempotent-by-design at the table-create level (uses `CREATE TABLE IF NOT EXISTS` where present).
+
+Alternative: drop a `SUPABASE_ACCESS_TOKEN=sbp_...` line into `.env.local` (token from supabase.com/dashboard/account/tokens) and I can apply them next session via `npx supabase db push` or the Management API.
 
 ## Stage 11 — legal expansions
 

@@ -521,7 +521,7 @@ const BENEFITS: Record<Programme, Benefit[]> = {
     {
       number: "02",
       title: "12 weeks of dated training",
-      body: "Sessions calibrated to your sled load, wall ball, and farmers carry weights. Every workout has a calendar slot.",
+      body: "4 sessions per week, 60 minutes each. Every workout calibrated to your sled load, wall ball, and farmers carry weights. Every workout has a calendar slot.",
     },
     {
       number: "03",

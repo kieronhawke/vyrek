@@ -63,40 +63,56 @@ export function WeekInLife() {
           </SplitHeading>
         </header>
 
+        {/* Mobile (default): single column where each row alternates the
+            order of image vs text — image-text, text-image, image-text.
+            Desktop (md+): three-column horizontal row of card-style tiles. */}
         <ol
           role="list"
-          className="mx-auto mt-14 grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3 md:gap-6"
+          className="mx-auto mt-14 grid max-w-6xl grid-cols-1 gap-10 md:grid-cols-3 md:gap-6"
         >
-          {VIGNETTES.map((v) => (
-            <li
-              key={v.stamp}
-              className="flex flex-col gap-4 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5 md:p-6"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-vyrek-overlay">
-                <Image
-                  src={v.image}
-                  alt={v.alt}
-                  fill
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  className="object-cover grayscale"
-                />
+          {VIGNETTES.map((v, i) => {
+            const reverseOnMobile = i % 2 === 1;
+            return (
+              <li
+                key={v.stamp}
+                className="md:flex md:flex-col md:gap-4 md:rounded-lg md:border md:border-vyrek-border-subtle md:bg-vyrek-elevated md:p-6"
+              >
                 <div
-                  aria-hidden
-                  className="absolute inset-0 bg-gradient-to-t from-vyrek-elevated/80 via-transparent to-transparent"
-                />
-                <span className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-base/80 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text">
-                  <span aria-hidden className="size-1.5 rounded-full bg-vyrek-accent" />
-                  {v.stamp}
-                </span>
-              </div>
-              <h3 className="text-lg font-bold leading-tight tracking-[-0.02em] text-vyrek-text md:text-xl">
-                {v.title}
-              </h3>
-              <p className="text-sm leading-relaxed text-vyrek-text-secondary md:text-base">
-                {v.body}
-              </p>
-            </li>
-          ))}
+                  className={`grid grid-cols-1 gap-4 md:contents ${
+                    reverseOnMobile
+                      ? "[&>*:first-child]:order-2 md:[&>*:first-child]:order-none"
+                      : ""
+                  }`}
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-vyrek-overlay">
+                    <Image
+                      src={v.image}
+                      alt={v.alt}
+                      fill
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                      className="object-cover grayscale"
+                    />
+                    <div
+                      aria-hidden
+                      className="absolute inset-0 bg-gradient-to-t from-vyrek-elevated/80 via-transparent to-transparent"
+                    />
+                    <span className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-base/80 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text">
+                      <span aria-hidden className="size-1.5 rounded-full bg-vyrek-accent" />
+                      {v.stamp}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold leading-tight tracking-[-0.02em] text-vyrek-text md:text-xl">
+                      {v.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-vyrek-text-secondary md:text-base">
+                      {v.body}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
         </ol>
       </Container>
     </RevealOnView>

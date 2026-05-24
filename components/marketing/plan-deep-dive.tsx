@@ -11,7 +11,7 @@ const EXAMPLE_WEEK = [
   { day: "Thu", workout: "Threshold intervals", duration: "45 min", zone: "Z4" },
   { day: "Fri", workout: "Active recovery", duration: "30 min", zone: "Mobility" },
   { day: "Sat", workout: "Race simulation", duration: "90 min", zone: "8 stations" },
-  { day: "Sun", workout: "Rest", duration: ",", zone: "," },
+  { day: "Sun", workout: "Rest", duration: "", zone: "" },
 ];
 
 export function PlanDeepDive() {
