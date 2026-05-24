@@ -58,12 +58,16 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
         if (cancelled) return;
         gsap.set(lines, { opacity: 0, y: 12, clearProps: "transform" });
         tl = gsap.timeline();
+        // Stagger was 0.25s × ~9 lines = 2.25s total — too slow for a
+        // funnel screen people are trying to scan. Tightened to 60ms
+        // per line so the whole summary lands in under 900ms even on
+        // the longest variant.
         tl.to(lines, {
           opacity: 1,
           y: 0,
-          duration: 0.45,
+          duration: 0.35,
           ease: "power2.out",
-          stagger: 0.25,
+          stagger: 0.06,
         });
       })
       .catch(() => {
