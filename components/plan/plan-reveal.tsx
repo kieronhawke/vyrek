@@ -17,7 +17,9 @@ import { generateWeek1, type Plan, type Workout } from "@/lib/plan-generator";
 import { DayCard } from "@/components/plan/day-card";
 import { DayDetailSheet } from "@/components/plan/day-detail-sheet";
 import { PaywallCard } from "@/components/plan/paywall-card";
-import { StickyCta } from "@/components/plan/sticky-cta";
+// StickyCta removed in Fix 1 — was duplicating the PaywallCard CTA and
+// reading as a "buy now" pop-up over the user's own Week 1. Single paywall
+// card at the bottom (post-value-section) carries the conversion now.
 import { WeekTabs } from "@/components/plan/week-tabs";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { capture } from "@/lib/posthog";
@@ -417,10 +419,6 @@ export function PlanReveal({
           )}
         </div>
       </div>
-
-      {variant === "owner" ? (
-        <StickyCta onClick={onStartTrial} loading={checkoutLoading} />
-      ): null}
 
       <DayDetailSheet
         workout={openWorkout}
