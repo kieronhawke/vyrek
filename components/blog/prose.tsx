@@ -1,6 +1,14 @@
 import type { ReactNode } from "react";
 import type { MDXRemoteProps } from "next-mdx-remote/rsc";
 import {
+  RaceAnalytics,
+  Leaderboard,
+  TipCallout,
+  ComparisonTable,
+  WorkoutDemoVideo,
+  SledCalculator,
+} from "@/components/blog/mdx-blocks";
+import {
   Callout,
   PullQuote,
   Stat,
@@ -200,4 +208,11 @@ export const proseComponents: MDXRemoteProps["components"] = {
   Stat,
   StatGrid,
   KeyTakeaways,
+  // Stage 9 (PART 8) modular blocks
+  RaceAnalytics,
+  Leaderboard,
+  TipCallout,
+  ComparisonTable,
+  WorkoutDemoVideo,
+  SledCalculator,
 };

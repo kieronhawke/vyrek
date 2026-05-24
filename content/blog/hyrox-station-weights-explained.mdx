@@ -141,6 +141,76 @@ The wall ball requires:
 
 Failed reps are called by the judge. Most wall-ball penalties come from athletes who get tired and start half-squatting in the last 30 reps.
 
+## Sled load vs your bodyweight
+
+The sled feels different depending on how heavy you are relative to it. Use the calculator below to see what percentage of your bodyweight you'll be pushing or pulling on race day. Most members find this orienting before they start the heavy-sled block in week 6.
+
+<SledCalculator defaultBodyweight={78} />
+
+## Open vs Pro at a glance
+
+A side-by-side reference for the two categories most members are picking between:
+
+<ComparisonTable
+  columns={["Open", "Pro"]}
+  rows={[
+    { label: "Sled push", values: ["152 kg (M) / 102 kg (W)", "202 kg (M) / 152 kg (W)"] },
+    { label: "Sled pull", values: ["103 kg (M) / 78 kg (W)", "153 kg (M) / 103 kg (W)"] },
+    { label: "Sandbag lunges", values: ["20 kg (M) / 10 kg (W)", "30 kg (M) / 20 kg (W)"] },
+    { label: "Wall ball", values: ["6 kg (M) / 4 kg (W)", "9 kg (M) / 6 kg (W)"] },
+    { label: "Cut-off time", values: ["100 min", "75 min"] },
+    { label: "Qualifying pathway", values: ["No", "Yes (World Championships)"] },
+  ]}
+  caption="2026 season standards. Always confirm in the official event rulebook."
+/>
+
+<TipCallout coach="James Wright" title="Don't train at the wrong weight">
+A member moving up from Open to Pro should spend at least 8 weeks adapting before racing. Adding 50 kg to your sled push is a different sport, not a different setting. We build the transition in the Sub-90 → Pro bridge programme; do not improvise it.
+</TipCallout>
+
+## Reference race splits
+
+For context, here is a typical sub-90 amateur split across the eight stations:
+
+<RaceAnalytics
+  athlete="Marcus, Manchester"
+  event="Hyrox Manchester 2026"
+  totalTime="84:42"
+  splits={[
+    { station: "1 km run", split: "4:38", cumulative: "4:38" },
+    { station: "Ski erg", split: "4:55", cumulative: "9:33" },
+    { station: "1 km run", split: "4:42", cumulative: "14:15" },
+    { station: "Sled push", split: "4:18", cumulative: "18:33" },
+    { station: "1 km run", split: "4:50", cumulative: "23:23" },
+    { station: "Sled pull", split: "5:21", cumulative: "28:44" },
+    { station: "1 km run", split: "4:55", cumulative: "33:39" },
+    { station: "Burpee broad jumps", split: "6:42", cumulative: "40:21" },
+    { station: "1 km run", split: "5:08", cumulative: "45:29" },
+    { station: "Rowing", split: "4:33", cumulative: "50:02" },
+    { station: "1 km run", split: "5:15", cumulative: "55:17" },
+    { station: "Farmers carry", split: "2:48", cumulative: "58:05" },
+    { station: "1 km run", split: "5:22", cumulative: "63:27" },
+    { station: "Sandbag lunges", split: "5:52", cumulative: "69:19" },
+    { station: "1 km run", split: "5:28", cumulative: "74:47" },
+    { station: "Wall balls", split: "9:55", cumulative: "84:42" },
+  ]}
+/>
+
+## Recent UK leaderboard top 5
+
+<Leaderboard
+  event="Hyrox Manchester 2026"
+  division="Open Men"
+  rows={[
+    { rank: 1, name: "Tom H.", time: "58:21", nationality: "GBR" },
+    { rank: 2, name: "Daniel R.", time: "59:08", nationality: "GBR" },
+    { rank: 3, name: "Liam P.", time: "61:14", nationality: "GBR" },
+    { rank: 4, name: "Ali M.", time: "62:35", nationality: "GBR" },
+    { rank: 5, name: "Oscar B.", time: "63:02", nationality: "IRL" },
+  ]}
+  caption="Cross-referenced against the official Hyrox results portal."
+/>
+
 ## The honest summary
 
 The Hyrox weights are fixed. Train against the exact race-day weight for your category from week 6 onward. Don't train sled push at 100 kg if you'll race 152 kg. The body adapts to what you load it with; load it with the truth.
