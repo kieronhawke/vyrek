@@ -36,6 +36,18 @@ const ASSETS = [
     note: "Voice, palette, typography. Single-page reference.",
     available: true,
   },
+  {
+    label: "Founder bio (Markdown)",
+    href: "/press/founder-bio.md",
+    note: "James Wright biography. Racing record, background, contact.",
+    available: true,
+  },
+  {
+    label: "Product screenshots",
+    href: "/press/screenshots",
+    note: "Press-approved imagery from the app and marketing site.",
+    available: true,
+  },
 ];
 
 export default function PressPage() {
@@ -67,7 +79,7 @@ export default function PressPage() {
                 </a>
               </p>
               <p className="mt-2 text-sm text-vyrek-text-secondary md:text-base">
-                We reply within 24 hours, Monday to Friday.
+                We reply within 4 hours, Monday to Friday.
               </p>
             </section>
 
@@ -152,8 +164,21 @@ export default function PressPage() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-                [ Published coverage will appear here as we&apos;re featured. ]
+            </section>
+
+            <section className="mt-16 border-t border-vyrek-border-subtle pt-10">
+              <Eyebrow>Recent coverage</Eyebrow>
+              <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
+                Coverage coming soon. Vyrek launched in early 2026 and we are
+                actively talking to UK fitness media. If you publish a piece
+                that mentions us, email{" "}
+                <a
+                  href="mailto:press@vyrek.com"
+                  className="underline underline-offset-4 hover:text-vyrek-accent"
+                >
+                  press@vyrek.com
+                </a>{" "}
+                and we will add it here.
               </p>
             </section>
 

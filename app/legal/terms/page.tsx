@@ -219,6 +219,73 @@ export default function TermsPage() {
         invoice.
       </ProseP>
 
+      <ProseH2>Recurring billing and payment authorisation</ProseH2>
+      <ProseP>
+        By starting a paid subscription you authorise Vyrek (via Stripe) to
+        charge your saved payment method the monthly subscription fee
+        (currently £8.99 in GBP) on a recurring monthly cycle. The first
+        charge happens at the end of the 7-day free trial; subsequent
+        charges happen on the same calendar day each month thereafter
+        (or the closest valid day for months with fewer days).
+      </ProseP>
+      <ProseP>
+        You can change your payment method at any time in Account → Billing.
+        Updated card details apply to the next scheduled charge. If a charge
+        fails, Stripe retries on a schedule (typically 1, 3, and 5 days
+        later); after the final retry fails we suspend access until billing
+        is restored. We notify you by email on the first failure so you can
+        intervene before suspension.
+      </ProseP>
+      <ProseP>
+        Prices may change with at least 30 days notice by email to active
+        subscribers. Any price change applies from your next billing cycle
+        on or after the announced effective date. You can cancel before the
+        new price applies if you do not wish to continue at the new rate.
+      </ProseP>
+
+      <ProseH2>Unacceptable use — extended scenarios</ProseH2>
+      <ProseP>
+        The general rules in &quot;How you use the service&quot; above cover
+        the spirit of acceptable use; the list below names specific patterns
+        that result in account suspension without warning.
+      </ProseP>
+      <ProseUl>
+        <ProseLi>
+          <strong className="text-vyrek-text">Account sharing at scale.</strong>{" "}
+          One account per person. Sharing a login with a partner or training
+          buddy is fine occasionally; we treat persistent multi-device usage
+          from materially different geographies on the same account as a
+          shared account and may suspend.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Bulk export or scraping.</strong>{" "}
+          Automated scripts that pull workout content, blog posts, or
+          partner-facing materials in bulk are not permitted. The marketing
+          site, blog, and partner-public surfaces are open to good-faith
+          crawlers (we publish a robots.txt and sitemap); anything beyond
+          that needs prior written permission.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Reverse engineering or
+          redistribution.</strong> You may not lift programmes, workouts,
+          or coaching content out of the service and republish them under
+          your own brand. Sharing a single session with a friend in
+          conversation is fine; redistribution is not.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Multi-account schemes for
+          referrals.</strong> Creating multiple accounts to refer yourself or
+          to game partner commissions voids any earned referral payout and
+          is a permanent suspension trigger.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Threats or abuse to staff or
+          coaches.</strong> We are happy to disagree about training,
+          billing, or any other aspect of the service; abuse aimed at
+          named individuals results in immediate suspension.
+        </ProseLi>
+      </ProseUl>
+
       <ProseH2>Service availability</ProseH2>
       <ProseP>
         We target 99.9% availability for the member app and 99.5% for the
@@ -281,6 +348,57 @@ export default function TermsPage() {
         </ProseLi>
       </ProseUl>
 
+      <ProseH2>Coaching, training advice, and what we are not</ProseH2>
+      <ProseP>
+        Vyrek delivers structured Hyrox training programmes and gives you
+        access to a coach for week-by-week guidance through the in-app
+        messaging surface and (for paid members) a 30-minute onboarding
+        call in your first week. Our coaches are experienced athletes and
+        Elite 15 ranked competitors; they are not medical practitioners,
+        physiotherapists, nutritionists registered with the AfN or BDA,
+        nor sports psychologists.
+      </ProseP>
+      <ProseP>
+        If you need clinical advice (an injury that does not resolve, an
+        underlying condition that affects exercise tolerance, a nutritional
+        intervention beyond general training fuelling), please consult an
+        appropriately qualified professional. Our coaches are happy to
+        signpost you to the relevant specialist and to adjust your plan
+        once a clinician has cleared you to train.
+      </ProseP>
+      <ProseP>
+        We do not provide individualised medical, psychological, or
+        financial advice. We do not certify you to compete; Hyrox itself
+        sets the entry requirements for its events, and you are responsible
+        for ensuring you meet them.
+      </ProseP>
+
+      <ProseH2>Beta features and experimental programmes</ProseH2>
+      <ProseP>
+        We sometimes release beta features (early-access plan tweaks, new
+        in-app tools, experimental programmes) to a subset of members. Beta
+        features are clearly labelled in the app and are excluded from the
+        availability commitment in &quot;Service availability&quot; above.
+        We may change, withdraw, or replace a beta feature at any time
+        without notice. Your subscription fee does not change while you are
+        in a beta.
+      </ProseP>
+
+      <ProseH2>Member-generated content and ownership</ProseH2>
+      <ProseP>
+        You retain ownership of the content you create on Vyrek: workout
+        logs, race notes, profile photo, custom calendar entries. We hold
+        a non-exclusive licence to store, process, and display that content
+        within the service so it can render in your app and feed into your
+        adaptive plan.
+      </ProseP>
+      <ProseP>
+        We do not sell member-generated content, surface it publicly
+        without explicit consent, or use it in marketing. If we want to
+        feature an anonymised stat (eg. average sub-90 finish time across
+        a cohort) we will only do so after stripping identifiers.
+      </ProseP>
+
       <ProseH2>Termination</ProseH2>
       <ProseP>
         You can stop using the service at any time by cancelling. We may
@@ -291,6 +409,23 @@ export default function TermsPage() {
         (intellectual property, liability, governing law) survive.
       </ProseP>
 
+      <ProseH2>Third-party content shared into the service</ProseH2>
+      <ProseP>
+        From time to time we share third-party content into the service:
+        race-day fuel suggestions citing public guidance, technique videos
+        embedded from external creators, links to UK race calendars.
+        Third-party content remains the property of the original creator.
+        We make no warranty about its accuracy or fitness for any purpose
+        beyond illustration, and we are not liable for actions you take in
+        reliance on it.
+      </ProseP>
+      <ProseP>
+        Where we cite a creator or organisation we attribute clearly; if
+        you are a creator and want a citation amended or removed, email{" "}
+        <ProseEmailLink email="press@vyrek.com" /> and we will action within
+        7 days.
+      </ProseP>
+
       <ProseH2>Changes to these terms</ProseH2>
       <ProseP>
         We may update these terms as the service evolves or as the law
@@ -298,6 +433,44 @@ export default function TermsPage() {
         before they take effect. The bottom of this page always shows the
         last updated date. If you do not accept the new terms, cancel before
         they take effect.
+      </ProseP>
+
+      <ProseH2>Service changes and maintenance</ProseH2>
+      <ProseP>
+        The service evolves. We may add features, retire features, change
+        the look of the app, or change the underlying infrastructure
+        without prior notice for non-material changes. For material
+        reductions in functionality (removing an entire programme tier,
+        ending support for a platform, withdrawing the partner programme),
+        we give at least 30 days notice by email and in-app banner.
+      </ProseP>
+      <ProseP>
+        Planned maintenance is scheduled outside peak training times where
+        possible (avoiding 06:00-09:00 and 17:00-21:00 UK time) and
+        announced in advance via the status banner on the contact page. We
+        target maintenance windows under 30 minutes; longer windows are
+        announced 48 hours in advance.
+      </ProseP>
+      <ProseP>
+        If a feature you actively use is retired, we will offer either a
+        successor feature, a one-time export, or a pro-rata refund for the
+        remaining month, at your choice. You will not lose access to data
+        you have created (workout logs, race notes, partner records)
+        because of a feature retirement.
+      </ProseP>
+
+      <ProseH2>Account data export and portability</ProseH2>
+      <ProseP>
+        You can request a full export of your account data at any time by
+        emailing <ProseEmailLink email="support@vyrek.com" />. The export
+        is delivered as a single ZIP file containing your training logs,
+        quiz answers, plan history, account profile, and invoices, in
+        machine-readable JSON. Typical turnaround is 7 days.
+      </ProseP>
+      <ProseP>
+        If the service is materially changed or discontinued, exports
+        remain available for 12 months after the change date without
+        requiring an active subscription.
       </ProseP>
 
       <ProseH2>Governing law and disputes</ProseH2>

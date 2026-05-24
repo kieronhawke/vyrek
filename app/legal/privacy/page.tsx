@@ -333,6 +333,104 @@ export default function PrivacyPage() {
         account to manual planning at no extra cost.
       </ProseP>
 
+      <ProseH2>Third-party processors in detail</ProseH2>
+      <ProseP>
+        We use a small number of named processors to deliver the service. Each
+        one is contracted under a Data Processing Agreement that mirrors the
+        GDPR Article 28 obligations and forbids them from using your data for
+        any purpose other than delivering Vyrek to you.
+      </ProseP>
+      <ProseUl>
+        <ProseLi>
+          <strong className="text-vyrek-text">Supabase (UK + EU regions).</strong>{" "}
+          Hosts authentication, application database, and file uploads.
+          Receives: account email, hashed password, training logs, quiz
+          answers, partner application records.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Vercel (global edge, primary region UK).</strong>{" "}
+          Serves the marketing site and member app. Receives: HTTP request
+          metadata (IP, user agent, referer) needed to route requests and
+          mitigate abuse.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Stripe (UK).</strong> Processes
+          payments and stores card data on its own PCI-compliant systems.
+          Receives: name, email, billing address, card details. Card details
+          never touch Vyrek servers.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Resend (EU).</strong> Sends
+          transactional and lifecycle emails. Receives: name, email, message
+          content (welcome, payment receipts, password resets, partner
+          status).
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Upstash (EU).</strong>{" "}
+          Rate-limit counters and short-lived session tokens. Receives:
+          hashed IP and request fingerprints; no personal data is stored
+          long-term.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Sentry (EU, optional).</strong>{" "}
+          Error tracking. Receives: stack traces, browser metadata, the
+          pseudonymous user ID associated with the session that errored. We
+          do not send body content of requests.
+        </ProseLi>
+      </ProseUl>
+      <ProseP>
+        If we add a new processor that handles personal data we will update
+        this list and notify active members by email at least 14 days before
+        the change takes effect.
+      </ProseP>
+
+      <ProseH2>How to exercise your rights, step by step</ProseH2>
+      <ProseP>
+        UK GDPR gives you the right to access, correct, delete, restrict,
+        port, or object to processing of your data. Here is exactly how to
+        do each, and what to expect.
+      </ProseP>
+      <ProseUl>
+        <ProseLi>
+          <strong className="text-vyrek-text">Access.</strong> Email{" "}
+          <ProseEmailLink email="privacy@vyrek.com" /> from your registered
+          address. We acknowledge within 72 hours and reply in full within
+          30 days (UK GDPR Article 12(3)) with an export of all personal
+          data we hold about you, formatted as JSON or CSV at your choice.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Correction.</strong> Most
+          fields are editable in-app under Account → Profile. For fields
+          you cannot edit (legal name on receipts, historical training
+          logs), email the same address with the correction and any
+          supporting evidence; we update within 7 days.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Deletion.</strong> In-app:
+          Account → Close account. Within 30 days we delete personal data
+          from production systems. Backup copies cycle out within a further
+          30 days, after which the record is unrecoverable. Some categories
+          (invoices, partner payouts) we retain for the legally required
+          period under tax law and explain in the next section.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Restriction or objection.</strong>{" "}
+          Email <ProseEmailLink email="privacy@vyrek.com" />. We will pause
+          the relevant processing within 7 days and confirm when done.
+        </ProseLi>
+        <ProseLi>
+          <strong className="text-vyrek-text">Portability.</strong> The
+          access export is machine-readable JSON suitable for porting to
+          another service. Specify your preferred format in the request if
+          CSV is more useful.
+        </ProseLi>
+      </ProseUl>
+      <ProseP>
+        We do not charge for any request, even repeat requests, unless the
+        request is manifestly unfounded or excessive (UK GDPR Article 12(5)),
+        in which case we will explain in writing first.
+      </ProseP>
+
       <ProseH2>Incident notification</ProseH2>
       <ProseP>
         If we become aware of a personal data breach that is likely to result

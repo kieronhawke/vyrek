@@ -224,6 +224,39 @@ export default function CookiesPage() {
         .
       </ProseP>
 
+      <ProseH2>First-party vs third-party cookies</ProseH2>
+      <ProseP>
+        A first-party cookie is set by the domain you are visiting (vyrek.com
+        or its subdomains). A third-party cookie is set by a different domain
+        embedded into the page (for example, an analytics script loaded from
+        a vendor domain). First-party cookies are restricted to the original
+        site; third-party cookies can in principle be read by the third party
+        across any site that embeds them.
+      </ProseP>
+      <ProseP>
+        Most modern browsers (Safari, Firefox, Brave by default; Chrome
+        gradually) restrict or block third-party cookies. We design the
+        service to work without them: every analytics signal we use is
+        either first-party or pseudonymous, and the checkout flow does not
+        rely on third-party tracking. Blocking third-party cookies in your
+        browser settings has no effect on your Vyrek experience.
+      </ProseP>
+
+      <ProseH2>Consent management</ProseH2>
+      <ProseP>
+        Our cookie banner appears on your first visit and records your
+        choice in a first-party cookie that lasts 12 months. You can
+        re-open the banner at any time from the footer link &quot;Cookie
+        settings&quot; and change your mind. There are no dark patterns: the
+        accept and reject buttons are the same size and visual weight, and
+        rejection takes effect immediately.
+      </ProseP>
+      <ProseP>
+        If you sign in across multiple devices, your consent preference is
+        device-specific (because cookies are device-scoped). You can set the
+        same preference on each device by visiting the banner once.
+      </ProseP>
+
       <ProseH2>Cookie lifetimes</ProseH2>
       <ProseP>
         Session cookies are deleted when you close the browser. Persistent
@@ -231,7 +264,10 @@ export default function CookiesPage() {
         persistent cookie we set is 12 months (the consent record itself), so
         we can avoid showing the banner every time you visit. Everything else
         expires within 30 days. We do not extend any cookie&apos;s lifetime
-        retroactively.
+        retroactively, and we do not refresh cookies on subsequent visits in
+        order to keep them alive past their stated duration. When a cookie
+        expires it is removed by the browser at the next visit; we do not
+        attempt to reconstruct prior state from any other source.
       </ProseP>
 
       <ProseH2>Do Not Track</ProseH2>
