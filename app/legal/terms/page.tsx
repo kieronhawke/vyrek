@@ -243,7 +243,7 @@ export default function TermsPage() {
         new price applies if you do not wish to continue at the new rate.
       </ProseP>
 
-      <ProseH2>Unacceptable use — extended scenarios</ProseH2>
+      <ProseH2>Unacceptable use: extended scenarios</ProseH2>
       <ProseP>
         The general rules in &quot;How you use the service&quot; above cover
         the spirit of acceptable use; the list below names specific patterns

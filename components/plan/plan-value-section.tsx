@@ -36,7 +36,7 @@ const ITEMS: Item[] = [
   {
     number: "04",
     title: "HYROX-SPECIFIC STATION WORK",
-    body: "Built backwards from the 8 stations + 8 km of running. Sled push, sled pull, wall ball, sandbag lunges — every block has a purpose.",
+    body: "Built backwards from the 8 stations + 8 km of running. Sled push, sled pull, wall ball, sandbag lunges. Every block has a purpose.",
   },
   {
     number: "05",

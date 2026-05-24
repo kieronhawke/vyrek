@@ -7,7 +7,7 @@ import { Eyebrow } from "@/components/shared/eyebrow";
 import { SplitHeading } from "@/components/shared/split-heading";
 
 export const metadata: Metadata = {
-  title: "Product screenshots — Vyrek press kit",
+  title: "Product screenshots · Vyrek press kit",
   description:
     "Press-approved product screenshots of the Vyrek app and marketing site. Free to use in editorial coverage with credit.",
   alternates: { canonical: "/press/screenshots" },
@@ -16,13 +16,13 @@ export const metadata: Metadata = {
 const SHOTS = [
   {
     src: "/media/images/v2/hero-cinematic.jpg",
-    title: "Home — hero",
+    title: "Home: hero",
     note: "Landing page hero, mobile crop.",
     credit: "Vyrek",
   },
   {
     src: "/media/images/v2/bento-plan.jpg",
-    title: "Plan — Week 1 grid",
+    title: "Plan: Week 1 grid",
     note: "Day-by-day grid showing a personalised first week.",
     credit: "Vyrek",
   },
@@ -34,13 +34,13 @@ const SHOTS = [
   },
   {
     src: "/media/images/v2/quiz-interstitial-1.jpg",
-    title: "Quiz — interstitial",
+    title: "Quiz: interstitial",
     note: "Mid-funnel reassurance screen from the 15-screen plan-builder quiz.",
     credit: "Vyrek",
   },
   {
     src: "/media/images/v2/coach-james-wright-warm.jpg",
-    title: "Founder portrait — James Wright",
+    title: "Founder portrait: James Wright",
     note: "Approved press headshot. Print and online use, credit Vyrek.",
     credit: "Vyrek",
   },
