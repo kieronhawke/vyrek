@@ -390,7 +390,10 @@ export function PlanReveal({
                   className="absolute inset-0 flex items-center justify-center px-3"
                 >
                   <div className="w-full max-w-sm">
-                    <PaywallCard onStartTrial={onStartTrial} />
+                    <PaywallCard
+                      onStartTrial={onStartTrial}
+                      loading={checkoutLoading}
+                    />
                   </div>
                 </div>
               </div>
