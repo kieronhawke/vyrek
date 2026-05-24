@@ -18,14 +18,21 @@ export function CountUp({
   start = 0,
   durationMs = 900,
   className,
-  format = (n) => n.toLocaleString("en-GB"),
+  suffix = "",
+  // `format` is a callable so server components can't pass it across the
+  // boundary (functions don't serialise). Use `suffix` for the common case
+  // (" athletes", "+", "%"). If a caller really needs custom formatting,
+  // they must wrap CountUp inside their own client component.
+  format,
 }: {
   value: number;
   start?: number;
   durationMs?: number;
   className?: string;
+  suffix?: string;
   format?: (n: number) => string;
 }) {
+  const fmt = format ?? ((n: number) => n.toLocaleString("en-GB") + suffix);
   const ref = useRef<HTMLSpanElement>(null);
   const [shown, setShown] = useState<number>(value);
 
@@ -74,7 +81,7 @@ export function CountUp({
 
   return (
     <span ref={ref} className={cn("tabular-nums", className)}>
-      {format(shown)}
+      {fmt(shown)}
     </span>
   );
 }

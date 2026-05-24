@@ -192,10 +192,8 @@ export default function AboutPage() {
                       <p className="mt-2 text-lg font-bold tracking-[-0.02em] text-vyrek-text md:text-xl">
                         <CountUp
                           value={g.value}
+                          suffix={g.suffix}
                           durationMs={1500}
-                          format={(n) =>
-                            n.toLocaleString("en-GB") + g.suffix
-                          }
                         />
                       </p>
                     </div>
