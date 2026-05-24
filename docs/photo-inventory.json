@@ -1,0 +1,295 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "Vyrek photo inventory",
+  "description": "Per Brief v2 §1.1. Two photo sources are catalogued here. Source A is the new /photos folder you added (2 usable files; 53 ChatGPT-generated files excluded per your Q1 answer). Source B is the existing /public/media/images/v2/ Pexels stock library shipped in Stage 2 Part A.",
+  "generatedAt": "2026-05-24",
+  "policy": {
+    "aiGenerated": "EXCLUDED — per brief Hard Do-Not and user Q1 answer",
+    "licence": "Photos folder: Adobe Stock (h1 watermark visible). Pexels v2/: Pexels License, royalty-free, attribution optional."
+  },
+  "photos": [
+    {
+      "id": "h1",
+      "source": "/photos/h1.jpeg",
+      "format": "jpeg",
+      "dimensions": { "w": 1024, "h": 559, "aspect": "landscape ~16:9" },
+      "bytes": 113085,
+      "exifDate": null,
+      "watermark": "Adobe Stock sparkle bottom-right",
+      "subjects": {
+        "people": 8,
+        "primary": { "gender": "male", "ageBracket": "30-39", "ethnicity": "white, European", "build": "lean athletic", "mood": "smiling, warm, confident" },
+        "background": "5-7 other gym-goers in soft focus on treadmills + free weights"
+      },
+      "setting": "Modern commercial gym, daylight through floor-to-ceiling windows. 'TRAIN HARD' and 'FITNESS IS LIFE' wall vinyl visible.",
+      "mood": "Warm, approachable, friendly. Not gritty.",
+      "composition": "Subject centre-frame holding a small barbell + towel, full body shot. Generous head + foot room. Wide depth-of-field, background readable.",
+      "lighting": "Bright natural daylight, balanced indoor LEDs. No dramatic shadows.",
+      "suitabilityTags": ["coach-portrait", "about-page", "bento", "testimonial", "inline-blog"],
+      "doNotUseFor": ["hero-backdrop (warmth is off-brand for the Hyrox gritty aesthetic)", "race-day station imagery"],
+      "notes": "Same photoshoot as h2 — same subject, same gym, slightly different framing."
+    },
+    {
+      "id": "h2",
+      "source": "/photos/h2.jpeg",
+      "format": "jpeg",
+      "dimensions": { "w": 1024, "h": 559, "aspect": "landscape ~16:9" },
+      "bytes": 109639,
+      "exifDate": null,
+      "watermark": "Adobe Stock sparkle bottom-right",
+      "subjects": {
+        "people": 4,
+        "primary": { "gender": "male", "ageBracket": "30-39", "ethnicity": "white, European", "build": "lean athletic", "mood": "smiling, warm, confident" },
+        "background": "3 other gym-goers in soft focus on treadmills"
+      },
+      "setting": "Same gym as h1; tighter framing on the floor, fewer background figures.",
+      "mood": "Warm, approachable, friendly.",
+      "composition": "Subject centre-frame, full body, slightly more breathing room around the figure than h1.",
+      "lighting": "Bright natural daylight, balanced indoor LEDs.",
+      "suitabilityTags": ["coach-portrait", "about-page", "bento", "testimonial", "inline-blog"],
+      "doNotUseFor": ["hero-backdrop", "race-day station imagery"],
+      "notes": "Near-duplicate of h1. Use ONE of the two, keep the other as a backup OR for a different surface."
+    },
+
+    {
+      "id": "v2-programme-first-race", "source": "/public/media/images/v2/programme-first-race.jpg",
+      "format": "jpg", "dimensions": { "w": 1920, "aspect": "landscape" }, "bytes": 573425,
+      "subjects": { "primary": { "gender": "female", "ageBracket": "30-39" } },
+      "setting": "Outdoor track / golden-hour run",
+      "mood": "Aspirational, fresh",
+      "suitabilityTags": ["hero", "programme-card", "inline-blog", "about-page"]
+    },
+    {
+      "id": "v2-programme-sub-90", "source": "/public/media/images/v2/programme-sub-90.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 394940,
+      "subjects": { "primary": { "gender": "male", "ageBracket": "20-39" } },
+      "setting": "Indoor gym, sled push mid-effort",
+      "mood": "Intense, focused",
+      "suitabilityTags": ["programme-card", "results-banner", "inline-blog", "quiz-interstitial"]
+    },
+    {
+      "id": "v2-programme-doubles", "source": "/public/media/images/v2/programme-doubles.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 403021,
+      "subjects": { "people": 2, "primary": { "gender": "mixed" } },
+      "setting": "Gym floor, two athletes training together",
+      "mood": "Collaborative, focused",
+      "suitabilityTags": ["programme-card", "testimonial", "quiz-interstitial"]
+    },
+    {
+      "id": "v2-programme-pro", "source": "/public/media/images/v2/programme-pro.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 482131,
+      "subjects": { "primary": { "gender": "male", "ageBracket": "30-39" } },
+      "setting": "Sled push, full commitment",
+      "mood": "Elite intensity",
+      "suitabilityTags": ["programme-card", "results-banner", "hero"]
+    },
+    {
+      "id": "v2-coach-james-wright", "source": "/public/media/images/v2/coach-james-wright.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 336452,
+      "subjects": { "primary": { "gender": "male", "ageBracket": "30-39" } },
+      "setting": "Gym, focused expression",
+      "mood": "Serious, on-brand",
+      "suitabilityTags": ["coach-portrait", "hero", "about-page"]
+    },
+    {
+      "id": "v2-coach-hannah-ward", "source": "/public/media/images/v2/coach-hannah-ward.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 515643,
+      "subjects": { "primary": { "gender": "female", "ageBracket": "20-39" } },
+      "setting": "Track, starting stance",
+      "mood": "Focused, ready",
+      "suitabilityTags": ["coach-portrait", "about-page"],
+      "usage": "UNUSED in code as of audit"
+    },
+    {
+      "id": "v2-bento-coaches", "source": "/public/media/images/v2/bento-coaches.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 226815,
+      "subjects": { "people": 2, "primary": { "gender": "mixed" } },
+      "setting": "Coach demonstrating a movement to an athlete",
+      "mood": "Instructive, warm",
+      "suitabilityTags": ["bento", "about-page", "hero"]
+    },
+    {
+      "id": "v2-bento-plan", "source": "/public/media/images/v2/bento-plan.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 237935,
+      "subjects": { "primary": { "gender": "unidentified", "ageBracket": "n/a" } },
+      "setting": "Hand holding phone showing training plan",
+      "mood": "Practical, modern",
+      "suitabilityTags": ["bento", "inline-blog", "og-image"]
+    },
+    {
+      "id": "v2-bento-progress", "source": "/public/media/images/v2/bento-progress.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 379959,
+      "subjects": { "primary": { "gender": "unidentified" } },
+      "setting": "Athlete checking watch metrics post-session",
+      "mood": "Data-driven, calm",
+      "suitabilityTags": ["bento", "inline-blog", "results-banner"]
+    },
+    {
+      "id": "v2-testimonial-sarah", "source": "/public/media/images/v2/testimonial-sarah.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 485692,
+      "subjects": { "primary": { "gender": "female", "ageBracket": "30-39" } },
+      "setting": "UK street, runner",
+      "mood": "Determined, fresh",
+      "suitabilityTags": ["testimonial", "athlete-headshot", "inline-blog"]
+    },
+    {
+      "id": "v2-testimonial-marcus", "source": "/public/media/images/v2/testimonial-marcus.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 604666,
+      "subjects": { "primary": { "gender": "male", "ageBracket": "30-39" } },
+      "setting": "Sled push, sub-90 effort",
+      "mood": "Race-pace intensity",
+      "suitabilityTags": ["testimonial", "athlete-headshot", "results-banner"]
+    },
+    {
+      "id": "v2-testimonial-doubles", "source": "/public/media/images/v2/testimonial-doubles.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 357470,
+      "subjects": { "people": 2, "primary": { "gender": "mixed" } },
+      "setting": "Two partners high-fiving after workout",
+      "mood": "Celebratory",
+      "suitabilityTags": ["testimonial", "inline-blog"]
+    },
+    {
+      "id": "v2-quiz-interstitial-1", "source": "/public/media/images/v2/quiz-interstitial-1.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 238635,
+      "subjects": { "primary": { "gender": "unidentified" } },
+      "setting": "Calm pre-run, athlete tying shoes",
+      "mood": "Pre-effort, reassuring",
+      "suitabilityTags": ["quiz-interstitial", "inline-blog"]
+    },
+    {
+      "id": "v2-quiz-interstitial-2", "source": "/public/media/images/v2/quiz-interstitial-2.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 450260,
+      "subjects": { "primary": { "gender": "unidentified" } },
+      "setting": "Wall ball mid-rep",
+      "mood": "Focused execution",
+      "suitabilityTags": ["quiz-interstitial", "inline-blog", "results-banner"]
+    },
+    {
+      "id": "v2-quiz-interstitial-3", "source": "/public/media/images/v2/quiz-interstitial-3.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 463816,
+      "subjects": { "primary": { "gender": "unidentified" } },
+      "setting": "Indoor rower, controlled stroke",
+      "mood": "Measured, technical",
+      "suitabilityTags": ["quiz-interstitial", "inline-blog"]
+    },
+    {
+      "id": "v2-about-coaching", "source": "/public/media/images/v2/about-coaching.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 635756,
+      "subjects": { "people": 2, "primary": { "gender": "mixed" } },
+      "setting": "Hyrox-style training environment",
+      "mood": "Instructive, focused",
+      "suitabilityTags": ["about-page", "bento", "hero"]
+    },
+    {
+      "id": "v2-about-portrait", "source": "/public/media/images/v2/about-portrait.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 206926,
+      "subjects": { "primary": { "gender": "male" } },
+      "setting": "Athlete portrait, gym backdrop",
+      "mood": "Focused",
+      "suitabilityTags": ["about-page", "athlete-headshot", "testimonial"]
+    },
+    {
+      "id": "v2-about-outdoor", "source": "/public/media/images/v2/about-outdoor.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 568135,
+      "subjects": { "primary": { "gender": "unidentified" } },
+      "setting": "Athlete running on a UK trail",
+      "mood": "Aspirational, solitary",
+      "suitabilityTags": ["about-page", "hero", "inline-blog"]
+    },
+    {
+      "id": "v2-how-step-1", "source": "/public/media/images/v2/how-step-1.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 273681,
+      "setting": "Phone in hand showing a quiz screen",
+      "mood": "Practical",
+      "suitabilityTags": ["how-step", "bento"],
+      "usage": "UNUSED in code as of audit"
+    },
+    {
+      "id": "v2-how-step-2", "source": "/public/media/images/v2/how-step-2.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 491081,
+      "setting": "Wall ball rep, programming in action",
+      "mood": "Intense",
+      "suitabilityTags": ["how-step", "quiz-interstitial"]
+    },
+    {
+      "id": "v2-how-step-3", "source": "/public/media/images/v2/how-step-3.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 563954,
+      "setting": "Functional fitness intensity",
+      "mood": "Intense",
+      "suitabilityTags": ["how-step", "results-banner"]
+    },
+    {
+      "id": "v2-how-step-4", "source": "/public/media/images/v2/how-step-4.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 373067,
+      "setting": "Lifting under load, progression",
+      "mood": "Heavy work",
+      "suitabilityTags": ["how-step", "inline-blog"],
+      "usage": "UNUSED in code as of audit"
+    },
+    {
+      "id": "v2-hero-poster", "source": "/public/media/images/v2/hero-poster.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 248307,
+      "setting": "Cinematic sled push, low light",
+      "mood": "Dramatic, gritty",
+      "suitabilityTags": ["hero", "results-banner"],
+      "usage": "UNUSED in code as of audit"
+    },
+    {
+      "id": "v2-video-ski-erg", "source": "/public/media/images/v2/video-ski-erg.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 420242,
+      "setting": "SkiErg / rowing-style indoor cardio",
+      "mood": "Technical",
+      "suitabilityTags": ["video-thumbnail", "results-banner"]
+    },
+    {
+      "id": "v2-video-sled-pull", "source": "/public/media/images/v2/video-sled-pull.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 478789,
+      "setting": "Sled pull, hand-over-hand",
+      "mood": "Strength",
+      "suitabilityTags": ["video-thumbnail"]
+    },
+    {
+      "id": "v2-video-burpee", "source": "/public/media/images/v2/video-burpee.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 480975,
+      "setting": "Burpee broad jump, mid-air",
+      "mood": "Dynamic",
+      "suitabilityTags": ["video-thumbnail"]
+    },
+    {
+      "id": "v2-video-farmers", "source": "/public/media/images/v2/video-farmers.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 384550,
+      "setting": "Loaded carry walk",
+      "mood": "Steady strength",
+      "suitabilityTags": ["video-thumbnail"]
+    },
+    {
+      "id": "v2-video-recovery", "source": "/public/media/images/v2/video-recovery.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 277025,
+      "setting": "Post-session mobility stretch",
+      "mood": "Calm recovery",
+      "suitabilityTags": ["video-thumbnail", "inline-blog"]
+    },
+    {
+      "id": "v2-diverse-1", "source": "/public/media/images/v2/diverse-1.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 374946,
+      "subjects": { "people": 2, "primary": { "gender": "female" } },
+      "setting": "Two women lifting together",
+      "mood": "Collaborative",
+      "suitabilityTags": ["coach-portrait", "about-page", "diverse-rep"]
+    },
+    {
+      "id": "v2-diverse-2", "source": "/public/media/images/v2/diverse-2.jpg",
+      "format": "jpg", "dimensions": { "w": 1920 }, "bytes": 568437,
+      "subjects": { "primary": { "gender": "mixed-age" } },
+      "setting": "Mixed-age athletes mid-workout",
+      "mood": "Inclusive intensity",
+      "suitabilityTags": ["coach-portrait", "about-page", "diverse-rep"]
+    }
+  ],
+  "totals": {
+    "newPhotos": 2,
+    "existingPexels": 30,
+    "totalUsable": 32,
+    "excludedAIGenerated": 53
+  }
+}

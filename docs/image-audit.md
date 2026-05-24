@@ -1,107 +1,153 @@
-# Image audit — Stage 2 Part A
+# Image audit — Brief v2 §1.2
 
-**Generated:** 2026-05-23
-**Scope:** every `<img>`, `<Image>`, `thumbnail:`, `heroImage:`, OG image, and `poster:` reference under `app/`, `components/`, `lib/`, `content/`.
+**Generated:** 2026-05-24
+**Method:** Walked every `<Image>`, `<img>`, and `background-image` reference across `app/`, `components/`, `lib/`, and `content/`. 124 references total, using 26 of 30 v2/ stock files. Verdict per slot.
+
+This audit supersedes the earlier `docs/image-audit.md` from Stage 2 Part A. Both can coexist; this one is the canonical view going forward.
+
+## Verdict legend
+
+- **keep** — image is on-brand, well-placed, no better option in the inventory
+- **replace** — better option exists in the inventory (e.g. swap h1/h2 in, swap a duplicate for an unused v2/ file)
+- **remove** — slot reads worse with an image than without; cut it
+- **rescope** — slot is fine but needs different sizing / aspect / treatment
 
 ---
 
-## Headline finding
+## Hero band (`/`)
 
-The pre-Part-A site used **4 unique JPEGs**, each aliased into **multiple filenames** and reused **multiple times per page**.
+| Slot | Current file | Times reused | Verdict | Note |
+|---|---|---:|---|---|
+| Hero backdrop (`components/marketing/hero.tsx`) | v2/coach-james-wright.jpg | 9 | keep | LCP element, now via next/image. Good fit; not warmed by h1/h2 smile. |
 
-| Hash (sha-prefix) | Bytes | Filenames aliasing it (pre-Part-A) |
+## Home page sections
+
+| Slot | Current file | Verdict | Note |
+|---|---|---|---|
+| WhatYouGet bento card 1 (coach) | v2/coach-james-wright.jpg | keep | shared with hero (intentional) |
+| WhatYouGet bento card 2 (plan) | v2/bento-plan.jpg | keep |  |
+| WhatYouGet bento card 3 (programme) | v2/programme-sub-90.jpg | keep |  |
+| WhatYouGet bento card 4 (progress) | v2/bento-progress.jpg | keep |  |
+| Programmes carousel — First Race | v2/programme-first-race.jpg | keep |  |
+| Programmes carousel — Sub-90 | v2/programme-sub-90.jpg | keep |  |
+| Programmes carousel — Doubles | v2/programme-doubles.jpg | keep |  |
+| Programmes carousel — Pro | v2/programme-pro.jpg | keep |  |
+| Week-in-life vignette 1 | v2/programme-first-race.jpg | keep |  |
+| Week-in-life vignette 2 | v2/programme-sub-90.jpg | keep |  |
+| Week-in-life vignette 3 | v2/programme-pro.jpg | keep |  |
+| Methodology card 1 (Specificity) | v2/programme-sub-90.jpg | keep |  |
+| Methodology card 2 (Calibration) | v2/quiz-interstitial-2.jpg | keep | wall ball mid-rep, on-topic |
+| Methodology card 3 (Progression) | v2/bento-progress.jpg | keep |  |
+| Methodology card 4 (Honesty) | v2/about-outdoor.jpg | keep |  |
+| Testimonial Sarah | v2/testimonial-sarah.jpg | keep |  |
+| Testimonial Marcus | v2/testimonial-marcus.jpg | keep |  |
+| Testimonial Doubles | v2/testimonial-doubles.jpg | keep |  |
+| Coach hub — James Wright tile | v2/coach-james-wright.jpg (poster) | **replace** | **swap to h1 or h2** — warmer feel suits the "founding coach" slot; current photo is on Hero already, dilutes the brand if we have a real person available |
+| Coach hub — Coach 2 placeholder | v2/diverse-1.jpg (dimmed) | keep | clearly "JOINING 2026" |
+| Coach hub — Coach 3 placeholder | v2/diverse-2.jpg (dimmed) | keep |  |
+
+## /about
+
+| Slot | Current file | Verdict | Note |
+|---|---|---|---|
+| Hero backdrop | v2/bento-coaches.jpg | keep | wide gym scene, on-brand |
+| Story-section inline (added Stage 2) | v2/about-coaching.jpg | keep |  |
+| Why-Hyrox inline | v2/about-outdoor.jpg | keep |  |
+
+## /programmes
+
+| Slot | Current file | Verdict | Note |
+|---|---|---|---|
+| Sidebar image × 4 programmes | v2/programme-{slug}.jpg | keep | one per programme, semantic match |
+
+## /plans/[slug]
+
+| Slot | Current file | Verdict | Note |
+|---|---|---|---|
+| Hero (added Stage 2) | v2/programme-{programmeSlug}.jpg | keep | dynamic |
+
+## /partners
+
+| Slot | Current file | Verdict | Note |
+|---|---|---|---|
+| Hero backdrop | v2/bento-coaches.jpg | keep | shared with About hero (intentional, both coach-team imagery) |
+| Who's-earning Coaches card | v2/coach-james-wright.jpg | **replace** | **swap to h2** — warmer/smiling fits "creator/partner" tone better than the focused coach shot |
+| Who's-earning Creators card | v2/about-portrait.jpg | keep |  |
+| Who's-earning Communities card | v2/testimonial-doubles.jpg | keep |  |
+
+## /how-it-works
+
+| Slot | Current file | Verdict | Note |
+|---|---|---|---|
+| Step 1 (Quiz) | v2/quiz-interstitial-1.jpg | keep |  |
+| Step 2 (Plan delivered) | v2/bento-plan.jpg | keep |  |
+| Step 3 (Train) | v2/programme-first-race.jpg | keep |  |
+| Step 4 (Adapt) | v2/bento-progress.jpg | keep |  |
+
+## /quiz V3 surfaces
+
+| Slot | Current file | Verdict | Note |
+|---|---|---|---|
+| Welcome carousel slide 1 | v2/programme-first-race.jpg | keep |  |
+| Welcome carousel slide 2 | v2/bento-plan.jpg | keep |  |
+| Welcome carousel slide 3 | v2/bento-progress.jpg | keep |  |
+| Reassurance-1 | v2/quiz-interstitial-1.jpg | keep |  |
+| Reassurance-2 tile 1 | v2/bento-plan.jpg | keep |  |
+| Reassurance-2 tile 2 | v2/programme-doubles.jpg | keep |  |
+| Reassurance-2 tile 3 | v2/bento-progress.jpg | keep |  |
+| Calculating screen | v2/programme-first-race.jpg | keep |  |
+
+## /blog and /blog/[slug]
+
+| Slot | Current file(s) | Verdict | Note |
+|---|---|---|---|
+| Journal hero | v2/programme-first-race.jpg | keep |  |
+| Default OG image | v2/bento-plan.jpg | keep |  |
+| Post card thumbnails (restored Stage 1.3) | per-post heroImage from frontmatter, mostly programme-* | keep | 30 posts share the 4 programme images by topic cluster — flagged in docs/image-manifest.md as intentional cluster-by-category |
+| Post article hero | per-post heroImage | keep |  |
+| Author photo (footer + inline) | v2/coach-james-wright.jpg or v2/bento-coaches.jpg | keep |  |
+
+## /app/* (member app)
+
+| Slot | Current file(s) | Verdict | Note |
+|---|---|---|---|
+| Coach video thumbnails × 14 | mixed v2/ topic matches | keep | each thumbnail uses a topic-distinct image after Stage 2 Part A fix |
+
+## /api/og/blog/[slug]
+
+| Slot | Current file | Verdict | Note |
+|---|---|---|---|
+| OG card background | v2/programme-first-race.jpg | keep | dynamic OG, served via @vercel/og |
+
+## Currently-unused inventory
+
+These 4 v2/ files exist in the repo but have **zero call sites**:
+
+| File | Role | Recommendation |
 |---|---|---|
-| `a7a8faa8` | 56 KB | bento-coaches.jpg, coach-james-wright.jpg, programme-sub-90.jpg, posters/6296583.jpg |
-| `05ca3b3a` | 109 KB | bento-plan.jpg, programme-first-race.jpg, posters/7674511.jpg |
-| `65bd6489` | 96 KB | bento-progress.jpg, programme-pro.jpg, testimonial-2.jpg, posters/18573489.jpg |
-| `2495e7ee` | 176 KB | programme-doubles.jpg, quiz-interstitial-1.jpg, testimonial-1.jpg, posters/8343383.jpg |
+| v2/coach-hannah-ward.jpg | Coach portrait, female track | **deploy** in the Coach hub once we have a real second coach, OR retire from the manifest |
+| v2/hero-poster.jpg | Cinematic sled, low light | **deploy** as a Results-page hero in Part 3 (matches Results "gritty" brand direction) |
+| v2/how-step-1.jpg | Phone in hand showing quiz | unused since how-it-works was already wired to quiz-interstitial-1; keep as backup |
+| v2/how-step-4.jpg | Lifting under load | unused; keep as backup OR retire |
 
-**Effect:** "James Wright headshot" was the same byte stream as a bento card, a programme thumbnail, and a video poster. Two testimonials shared one JPEG. Three programmes shared one JPEG with the coach. The site looked templated to anyone who scrolled.
+## Files to add from /photos
 
----
+| New file | Slot it fills | Replaces |
+|---|---|---|
+| h1.jpeg | Founding coach poster on home Coach hub | v2/coach-james-wright.jpg (Hero keeps the original) |
+| h2.jpeg | "Coaches" who's-earning card on /partners | v2/coach-james-wright.jpg there |
 
-## After Part A
+Both files are near-duplicates; we use one per role to avoid the "same image twice on one page" anti-pattern. If you'd rather use only one of h1/h2 plus an existing file for the second slot, say so.
 
-- **30 unique 1920×n JPEGs** sourced from Pexels (royalty-free, no attribution required, photo IDs captured in `public/media/images/v2/_attribution.json`)
-- All references in code repointed to `/media/images/v2/<role>.jpg`
-- File-size discipline: average 410 KB per image, max 621 KB (`about-coaching`), all well under the 1.5 MB ceiling
-- Format note: shipped JPEG, not WebP. Vercel's `/_next/image` optimiser serves WebP/AVIF on the wire at request time, which is the canonical Next.js path and out-performs static WebP for variable viewport widths.
-- Diversity: deliberate mix of gender (≈55/45 F/M across people shots), body type, ethnicity, and venue (commercial gym, outdoor trail, studio, indoor erg)
+## Files to add NOTHING for
 
----
-
-## Audit table — current state
-
-Format: **Page | Section | Filename (new role) | Pexels ID | Used elsewhere? | Quality**
-
-| Page | Section | Filename | Pexels ID | Used elsewhere? | Quality |
-|---|---|---|---|---|---|
-| `/` (home) | Hero backdrop | `coach-james-wright.jpg` | 32695885 | hero only | A |
-| `/` (home) | "What you get" bento card 1 | `coach-james-wright.jpg` | 32695885 | also hero | A |
-| `/` (home) | "What you get" bento card 2 | `bento-plan.jpg` | 4944001 | unique | A |
-| `/` (home) | "What you get" bento card 3 | `programme-sub-90.jpg` | 26597325 | also /programmes | A |
-| `/` (home) | "What you get" bento card 4 | `bento-progress.jpg` | 6473732 | also member video v4 | A |
-| `/` (home) | Week-in-life vignette 1 | `programme-first-race.jpg` | 7242918 | also /programmes | A |
-| `/` (home) | Week-in-life vignette 2 | `programme-sub-90.jpg` | 26597325 | also /programmes | A |
-| `/` (home) | Week-in-life vignette 3 | `programme-pro.jpg` | 26597303 | also /programmes | A |
-| `/about` | Hero overlay | `bento-coaches.jpg` | 8401091 | also /partners | A |
-| `/about` | Story inline (new) | `about-coaching.jpg` | 32546039 | unique | A |
-| `/about` | Why Hyrox inline (new) | `about-outdoor.jpg` | 4422913 | unique | A |
-| `/partners` | Hero | `bento-coaches.jpg` | 8401091 | also /about | A |
-| `/how-it-works` | Step 1 | `quiz-interstitial-1.jpg` | 4348640 | also /quiz reassurance-1 | A |
-| `/how-it-works` | Step 2 | `bento-plan.jpg` | 4944001 | also home bento-2 | A |
-| `/how-it-works` | Step 3 | `programme-first-race.jpg` | 7242918 | also /programmes, home week | A |
-| `/how-it-works` | Step 4 | `bento-progress.jpg` | 6473732 | also home bento-4 | A |
-| `/programmes` | First Race card | `programme-first-race.jpg` | 7242918 | re-used (intentional) | A |
-| `/programmes` | Sub-90 card | `programme-sub-90.jpg` | 26597325 | re-used (intentional) | A |
-| `/programmes` | Doubles card | `programme-doubles.jpg` | 4853062 | re-used (intentional) | A |
-| `/programmes` | Pro card | `programme-pro.jpg` | 26597303 | re-used (intentional) | A |
-| `/plans/[slug]` | Hero (new) | `programme-{slug}.jpg` | varies | shared with /programmes | A |
-| `/quiz` welcome | Slide 1 | `programme-first-race.jpg` | 7242918 | re-used | A |
-| `/quiz` welcome | Slide 2 | `bento-plan.jpg` | 4944001 | re-used | A |
-| `/quiz` welcome | Slide 3 | `bento-progress.jpg` | 6473732 | re-used | A |
-| `/quiz` reassurance-1 | Single | `quiz-interstitial-1.jpg` | 4348640 | re-used | A |
-| `/quiz` reassurance-2 | Tile 1 | `bento-plan.jpg` | 4944001 | re-used | A |
-| `/quiz` reassurance-2 | Tile 2 | `programme-doubles.jpg` | 4853062 | re-used | A |
-| `/quiz` reassurance-2 | Tile 3 | `bento-progress.jpg` | 6473732 | re-used | A |
-| `/quiz` flow inline | Pre-result splash | `programme-first-race.jpg` | 7242918 | re-used | A |
-| `/blog` | Default OG | `bento-plan.jpg` | 4944001 | also home + how-step-2 | A |
-| `/blog/[slug]` | Per-post hero | varies, see content/blog | 30 posts share 4 IDs | YES — see Known gaps | B |
-| OG share images | `/api/og/blog/[slug]` | renders `programme-first-race.jpg` | 7242918 | re-used | A |
-| `/app/today` | Workout card | (none yet, text-only) | — | — | C |
-| `/app/plan` coach library | 14 thumbnails | now 14 distinct v2/ images | 14 distinct IDs | unique-per-thumb | A |
-| `/app/account` | (none yet) | — | — | — | C |
-| `/app/analysis/athlete/[slug]` | (none yet) | — | — | — | C |
-| `/app/analysis/race/[slug]` | (none yet) | — | — | — | C |
-
-**Quality grades:** A = fresh unique stock, role-appropriate. B = shared with multiple peers (acceptable for blog hero with category context). C = no imagery yet, candidate for follow-up.
+All other slots have appropriate v2/ imagery. No further new-photo additions proposed. If a slot you care about should have a real photo instead of stock, list it.
 
 ---
 
-## Known gaps (deferred, called out explicitly)
+## Net diffs going into 1.4
 
-1. **Blog post imagery — 30 posts × (1 hero + 2 inline) = 90 unique images required.** Currently each post has 1 hero, shared across topic clusters. Cover images now point to v2/ (no aliased dupes), but inline imagery is not yet wired into the MDX renderer. **Effort estimate:** 6-8 hours for: (a) sourcing ~60 additional Pexels images keyed by post topic, (b) adding an `inlineImages` frontmatter field, (c) inserting `<Figure>` calls at logical breaks in each MDX file.
-2. **Member-app surfaces** (`/app/today`, `/app/account`, `/app/analysis/*`) — text-only by design (Linear/Whoop pattern). Adding imagery would change the visual register. Flag for product decision before adding.
-3. **Programme-page deeper imagery** — `/programmes` shows 4 cards each with 1 image (matches brief minimum). Adding "lifestyle proof" sections (gym scenes, race finish shots) per programme is a follow-up if conversion-test data justifies it.
-4. **Quiz interstitial coverage** — currently 3 interstitial screens use 4 unique tiles. Could add a fourth interstitial with `quiz-interstitial-3.jpg` (already downloaded, currently unused). Pending Phase B3 quiz polish.
-5. **Real coach photos** — Pexels stock cannot show *the actual* James Wright / Hannah Ward. When the team is ready for real headshots, swap roles `coach-james-wright.jpg` and `coach-hannah-ward.jpg` only; everything else is generic stock and stays.
-
----
-
-## What changed in this push
-
-- New: 30 unique JPEGs at `public/media/images/v2/` + `_attribution.json`
-- New: `scripts/fetch-stock-imagery.mjs` (re-runnable, idempotent)
-- New: `scripts/swap-image-refs.mjs` (one-shot path migration, kept for audit trail)
-- Edited: 69 files, 114 path swaps from old aliased filenames → v2/ roles
-- Edited: `lib/member/demo.ts` (14 coach-video thumbnails now use distinct topic-matched images instead of programme-* clones)
-- Edited: `app/about/page.tsx` (added 2 inline figures with descriptive alt text)
-- Edited: `app/plans/[slug]/page.tsx` (added programme-keyed hero image at the top)
-
-## Totals
-
-- Pre: **4 unique images**, aliased into 12+ filenames across the site
-- Post: **30 unique images** wired across pages
-- Net add: **+26 unique images**
-- File-size budget: 30 × ~410 KB = **~12 MB of source assets**, served as WebP/AVIF (≈40-50% smaller) via Vercel image optimisation
-- Alt-text coverage: every new figure has descriptive alt; decorative backdrops use `alt=""`
+- 2 files swapped in from `/photos` (h1, h2)
+- 0 files removed
+- 4 unused v2/ files: 2 promoted to Part 3 Results hero slots, 2 kept as backup
+- 0 duplicate-by-accident swaps needed (the duplicates that exist are intentional category clusters)
