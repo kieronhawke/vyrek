@@ -3,7 +3,10 @@ import Image from "next/image";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
+import { CountUp } from "@/components/shared/count-up";
 import { Eyebrow } from "@/components/shared/eyebrow";
+import { ParallaxBackdrop } from "@/components/shared/parallax-backdrop";
+import { RevealOnView } from "@/components/shared/reveal-on-view";
 import { SplitHeading } from "@/components/shared/split-heading";
 import { CtaButton } from "@/components/shared/cta-button";
 
@@ -29,11 +32,11 @@ const PRINCIPLES = [
 ];
 
 const GROWTH = [
-  { year: "2018", value: "600 athletes" },
-  { year: "2020", value: "20,000" },
-  { year: "2022", value: "160,000" },
-  { year: "2024", value: "650,000" },
-];
+  { year: "2018", value: 600, suffix: " athletes" },
+  { year: "2020", value: 20_000, suffix: "" },
+  { year: "2022", value: 160_000, suffix: "" },
+  { year: "2024", value: 650_000, suffix: "" },
+] as const;
 
 export default function AboutPage() {
   return (
@@ -45,7 +48,10 @@ export default function AboutPage() {
           aria-labelledby="about-heading"
           className="relative isolate flex min-h-[68svh] flex-col justify-end overflow-hidden bg-vyrek-base pb-16 pt-[max(7rem,calc(var(--safe-top)+6rem))]"
         >
-          <div aria-hidden className="absolute inset-0 -z-10">
+          <ParallaxBackdrop
+            intensity={70}
+            className="absolute inset-0 -z-10"
+          >
             <Image
               src="/media/images/v2/bento-coaches.jpg"
               alt=""
@@ -55,7 +61,7 @@ export default function AboutPage() {
               className="object-cover grayscale"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-vyrek-base/70 via-vyrek-base/55 to-vyrek-base" />
-          </div>
+          </ParallaxBackdrop>
           <Container>
             <Eyebrow>About</Eyebrow>
             <SplitHeading
@@ -169,24 +175,31 @@ export default function AboutPage() {
                 />
               </figure>
 
-              {/* Growth timeline graphic */}
+              {/* Growth timeline graphic. Numbers count up the first time
+                  the row scrolls into view (CountUp uses
+                  IntersectionObserver + an ease-out cubic). */}
               <ol
                 role="list"
                 className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4"
                 aria-label="Hyrox global participation by year"
               >
-                {GROWTH.map((g) => (
-                  <li
-                    key={g.year}
-                    className="rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-4"
-                  >
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
-                      {g.year}
-                    </p>
-                    <p className="mt-2 text-lg font-bold tracking-[-0.02em] text-vyrek-text tabular-nums md:text-xl">
-                      {g.value}
-                    </p>
-                  </li>
+                {GROWTH.map((g, i) => (
+                  <RevealOnView key={g.year} as="li" delay={i * 0.08}>
+                    <div className="rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-4">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+                        {g.year}
+                      </p>
+                      <p className="mt-2 text-lg font-bold tracking-[-0.02em] text-vyrek-text md:text-xl">
+                        <CountUp
+                          value={g.value}
+                          durationMs={1500}
+                          format={(n) =>
+                            n.toLocaleString("en-GB") + g.suffix
+                          }
+                        />
+                      </p>
+                    </div>
+                  </RevealOnView>
                 ))}
               </ol>
             </div>
@@ -214,18 +227,17 @@ export default function AboutPage() {
                 role="list"
                 className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3"
               >
-                {PRINCIPLES.map((p) => (
-                  <li
-                    key={p.tag}
-                    className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-6"
-                  >
-                    <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
-                      [ {p.tag} ]
-                    </p>
-                    <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
-                      {p.body}
-                    </p>
-                  </li>
+                {PRINCIPLES.map((p, i) => (
+                  <RevealOnView key={p.tag} as="li" delay={i * 0.12}>
+                    <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-6">
+                      <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+                        [ {p.tag} ]
+                      </p>
+                      <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+                        {p.body}
+                      </p>
+                    </div>
+                  </RevealOnView>
                 ))}
               </ul>
             </div>

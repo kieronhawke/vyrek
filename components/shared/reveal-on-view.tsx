@@ -23,7 +23,7 @@ export function RevealOnView({
 }: {
   children: ReactNode;
   delay?: number;
-  as?: "div" | "section" | "article" | "header" | "footer";
+  as?: "div" | "section" | "article" | "header" | "footer" | "li";
   className?: string;
 } & Omit<ComponentProps<typeof motion.div>, "children" | "className">) {
   const Tag = motion[as] as typeof motion.div;
