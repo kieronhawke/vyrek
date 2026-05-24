@@ -13,6 +13,7 @@ const LINKS = [
   { href: "/programmes", label: "programmes" },
   { href: "/how-it-works", label: "how it works" },
   { href: "/blog", label: "journal" },
+  { href: "/results", label: "results" },
 ];
 
 export function MarketingNav() {

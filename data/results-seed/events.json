@@ -1,0 +1,156 @@
+[
+  {
+    "slug": "s8-2026-hong-kong",
+    "season": "s8",
+    "year": 2026,
+    "name": "HYROX Hong Kong 2026",
+    "nameLocalised": "香港",
+    "venue": {
+      "name": "AsiaWorld-Expo",
+      "city": "Hong Kong",
+      "cityIata": "HKG",
+      "country": "Hong Kong",
+      "countryIso": "hk",
+      "region": "Asia",
+      "lat": 22.3193,
+      "lng": 113.9185
+    },
+    "startDate": "2026-05-22",
+    "endDate": "2026-05-24",
+    "status": "live",
+    "slotCount": 50,
+    "totalAthletes": 15726,
+    "heroImage": "/media/images/v2/hero-cinematic.jpg",
+    "divisions": [
+      { "divisionCode": "hyrox-men", "athleteCount": 1439, "leaderTimeSeconds": 3678, "leaderAthleteSlug": "theo-richardson" },
+      { "divisionCode": "hyrox-women", "athleteCount": 982, "leaderTimeSeconds": 4254, "leaderAthleteSlug": "hannah-ward" },
+      { "divisionCode": "hyrox-doubles-men", "athleteCount": 612, "leaderTimeSeconds": 3422 },
+      { "divisionCode": "hyrox-doubles-women", "athleteCount": 488, "leaderTimeSeconds": 3936 },
+      { "divisionCode": "hyrox-doubles-mixed", "athleteCount": 728, "leaderTimeSeconds": 3712 },
+      { "divisionCode": "hyrox-pro-men", "athleteCount": 211, "leaderTimeSeconds": 3502 },
+      { "divisionCode": "hyrox-elite-men", "athleteCount": 18, "leaderTimeSeconds": 3382 },
+      { "divisionCode": "hyrox-elite-women", "athleteCount": 14, "leaderTimeSeconds": 3856 }
+    ]
+  },
+  {
+    "slug": "s8-2026-london-jun",
+    "season": "s8",
+    "year": 2026,
+    "name": "HYROX London June 2026",
+    "venue": {
+      "name": "ExCeL London",
+      "city": "London",
+      "cityIata": "LHR",
+      "country": "United Kingdom",
+      "countryIso": "gb",
+      "countryIsoRegion": "gb-eng",
+      "region": "Europe",
+      "lat": 51.5079,
+      "lng": 0.0289
+    },
+    "startDate": "2026-06-21",
+    "endDate": "2026-06-22",
+    "status": "upcoming",
+    "slotCount": 42,
+    "totalAthletes": 0,
+    "heroImage": "/media/images/v2/programme-doubles.jpg",
+    "divisions": [
+      { "divisionCode": "hyrox-men", "athleteCount": 0 },
+      { "divisionCode": "hyrox-women", "athleteCount": 0 },
+      { "divisionCode": "hyrox-doubles-men", "athleteCount": 0 },
+      { "divisionCode": "hyrox-doubles-women", "athleteCount": 0 },
+      { "divisionCode": "hyrox-doubles-mixed", "athleteCount": 0 },
+      { "divisionCode": "hyrox-pro-men", "athleteCount": 0 },
+      { "divisionCode": "hyrox-pro-women", "athleteCount": 0 }
+    ]
+  },
+  {
+    "slug": "s8-2026-manchester-may",
+    "season": "s8",
+    "year": 2026,
+    "name": "HYROX Manchester May 2026",
+    "venue": {
+      "name": "Manchester Central",
+      "city": "Manchester",
+      "cityIata": "MAN",
+      "country": "United Kingdom",
+      "countryIso": "gb",
+      "countryIsoRegion": "gb-eng",
+      "region": "Europe",
+      "lat": 53.4778,
+      "lng": -2.2447
+    },
+    "startDate": "2026-05-04",
+    "endDate": "2026-05-05",
+    "status": "finished",
+    "slotCount": 38,
+    "totalAthletes": 8412,
+    "heroImage": "/media/images/v2/station-fresh.jpg",
+    "divisions": [
+      { "divisionCode": "hyrox-men", "athleteCount": 1108, "leaderTimeSeconds": 3592, "leaderAthleteSlug": "tom-bradshaw" },
+      { "divisionCode": "hyrox-women", "athleteCount": 794, "leaderTimeSeconds": 4188 },
+      { "divisionCode": "hyrox-doubles-men", "athleteCount": 502, "leaderTimeSeconds": 3380 },
+      { "divisionCode": "hyrox-doubles-women", "athleteCount": 411, "leaderTimeSeconds": 3894 },
+      { "divisionCode": "hyrox-doubles-mixed", "athleteCount": 644, "leaderTimeSeconds": 3666 },
+      { "divisionCode": "hyrox-pro-men", "athleteCount": 188, "leaderTimeSeconds": 3471 },
+      { "divisionCode": "hyrox-pro-women", "athleteCount": 102, "leaderTimeSeconds": 3922 }
+    ]
+  },
+  {
+    "slug": "s8-2026-glasgow-jul",
+    "season": "s8",
+    "year": 2026,
+    "name": "HYROX Glasgow July 2026",
+    "venue": {
+      "name": "OVO Hydro",
+      "city": "Glasgow",
+      "cityIata": "GLA",
+      "country": "United Kingdom",
+      "countryIso": "gb",
+      "countryIsoRegion": "gb-sct",
+      "region": "Europe",
+      "lat": 55.8606,
+      "lng": -4.2882
+    },
+    "startDate": "2026-07-12",
+    "endDate": "2026-07-13",
+    "status": "upcoming",
+    "slotCount": 32,
+    "totalAthletes": 0,
+    "heroImage": "/media/images/v2/programme-pro.jpg",
+    "divisions": [
+      { "divisionCode": "hyrox-men", "athleteCount": 0 },
+      { "divisionCode": "hyrox-women", "athleteCount": 0 },
+      { "divisionCode": "hyrox-doubles-mixed", "athleteCount": 0 }
+    ]
+  },
+  {
+    "slug": "s8-2026-birmingham-apr",
+    "season": "s8",
+    "year": 2026,
+    "name": "HYROX Birmingham April 2026",
+    "venue": {
+      "name": "NEC Birmingham",
+      "city": "Birmingham",
+      "cityIata": "BHX",
+      "country": "United Kingdom",
+      "countryIso": "gb",
+      "countryIsoRegion": "gb-eng",
+      "region": "Europe",
+      "lat": 52.4499,
+      "lng": -1.7204
+    },
+    "startDate": "2026-04-12",
+    "endDate": "2026-04-13",
+    "status": "finished",
+    "slotCount": 35,
+    "totalAthletes": 7521,
+    "heroImage": "/media/images/v2/programme-first-race.jpg",
+    "divisions": [
+      { "divisionCode": "hyrox-men", "athleteCount": 1042, "leaderTimeSeconds": 3712 },
+      { "divisionCode": "hyrox-women", "athleteCount": 728, "leaderTimeSeconds": 4322 },
+      { "divisionCode": "hyrox-doubles-men", "athleteCount": 458, "leaderTimeSeconds": 3502 },
+      { "divisionCode": "hyrox-doubles-women", "athleteCount": 389, "leaderTimeSeconds": 4016 }
+    ]
+  }
+]
