@@ -129,6 +129,159 @@ export async function sendMagicLinkEmail(args: {
   });
 }
 
+// ─── Rejection ──────────────────────────────────────────
+
+export async function sendRejectionEmail(args: {
+  to: string;
+  name: string;
+  reason?: string;
+}) {
+  const reasonBlock = args.reason
+    ? `<div style="background:${SURFACE};border:1px solid #262626;border-radius:10px;padding:14px;margin-top:24px;">
+        <p style="font-family:'Geist Mono',ui-monospace,monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:${DIM};margin:0;">Why</p>
+        <p style="font-size:14px;line-height:1.6;color:${TEXT};margin:8px 0 0;">${escape(args.reason)}</p>
+      </div>`
+    : "";
+  const inner = `
+    <h1 style="font-size:28px;font-weight:900;letter-spacing:-0.03em;line-height:1.1;margin:16px 0 8px;color:${TEXT};">Not this round, ${escape(args.name)}.</h1>
+    <p style="font-size:16px;line-height:1.6;color:${DIM};margin:0;">Thanks for applying to the Vyrek Partner Programme. We are not able to take your application forward at this time.</p>
+    ${reasonBlock}
+    <p style="font-size:16px;line-height:1.6;color:${DIM};margin:24px 0 0;">We review the partner roster every quarter. If your audience grows or your content shifts, please apply again. We genuinely consider every new application.</p>
+    <p style="font-size:14px;line-height:1.6;color:${DIM};margin:16px 0 0;">If you have a question about this decision, reply directly to this email and we will respond within 4 hours, Monday to Friday.</p>
+  `;
+  return send({
+    to: args.to,
+    subject: "Update on your Vyrek Partner Programme application",
+    html: shell(inner),
+  });
+}
+
+// ─── Payout sent ────────────────────────────────────────
+
+export async function sendPayoutSentEmail(args: {
+  to: string;
+  name: string;
+  amountGbp: number;
+  periodLabel: string;
+  bacsReference: string;
+  dashboardUrl: string;
+}) {
+  const amountStr = `£${args.amountGbp.toFixed(2)}`;
+  const inner = `
+    <h1 style="font-size:28px;font-weight:900;letter-spacing:-0.03em;line-height:1.1;margin:16px 0 8px;color:${TEXT};">Payout sent: ${amountStr}.</h1>
+    <p style="font-size:16px;line-height:1.6;color:${DIM};margin:0;">Hi ${escape(args.name)}, your ${escape(args.periodLabel)} commission has been released by BACS today. It should land in your account within 1-3 business days.</p>
+    <div style="background:${SURFACE};border:1px solid #262626;border-radius:10px;padding:14px;margin-top:24px;">
+      <p style="font-family:'Geist Mono',ui-monospace,monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:${DIM};margin:0;">BACS reference</p>
+      <p style="margin:8px 0 0;font-size:14px;font-family:'Geist Mono',ui-monospace,monospace;color:${ACCENT};word-break:break-all;">${escape(args.bacsReference)}</p>
+    </div>
+    <div style="margin-top:24px;">
+      <a href="${args.dashboardUrl}" style="display:inline-block;background:${ACCENT};color:#0a0a0a;font-weight:600;padding:14px 24px;border-radius:9999px;text-decoration:none;">Open dashboard &rarr;</a>
+    </div>
+    <p style="font-size:13px;line-height:1.6;color:${DIM};margin:24px 0 0;">If the payment hasn't arrived by the end of the third business day, reply to this email and we will trace it with our bank.</p>
+  `;
+  return send({
+    to: args.to,
+    subject: `Vyrek partner payout: ${amountStr} sent today`,
+    html: shell(inner),
+  });
+}
+
+// ─── Monthly statement ──────────────────────────────────
+
+export async function sendMonthlyStatementEmail(args: {
+  to: string;
+  name: string;
+  monthLabel: string;
+  newReferrals: number;
+  activeReferrals: number;
+  earnedGbp: number;
+  pendingGbp: number;
+  dashboardUrl: string;
+}) {
+  const inner = `
+    <h1 style="font-size:28px;font-weight:900;letter-spacing:-0.03em;line-height:1.1;margin:16px 0 8px;color:${TEXT};">${escape(args.monthLabel)} statement.</h1>
+    <p style="font-size:16px;line-height:1.6;color:${DIM};margin:0;">Hi ${escape(args.name)}, here is how the partner account performed last month.</p>
+    <div style="background:${SURFACE};border:1px solid #262626;border-radius:10px;padding:18px;margin-top:24px;">
+      <table style="width:100%;border-collapse:collapse;">
+        <tr>
+          <td style="padding:6px 0;color:${DIM};font-size:13px;">New referrals</td>
+          <td style="padding:6px 0;text-align:right;color:${TEXT};font-weight:700;font-size:14px;font-family:'Geist Mono',ui-monospace,monospace;">${args.newReferrals}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:${DIM};font-size:13px;">Active referrals</td>
+          <td style="padding:6px 0;text-align:right;color:${TEXT};font-weight:700;font-size:14px;font-family:'Geist Mono',ui-monospace,monospace;">${args.activeReferrals}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:${DIM};font-size:13px;">Earned this month</td>
+          <td style="padding:6px 0;text-align:right;color:${ACCENT};font-weight:700;font-size:14px;font-family:'Geist Mono',ui-monospace,monospace;">£${args.earnedGbp.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 0;color:${DIM};font-size:13px;">Pending clearance</td>
+          <td style="padding:6px 0;text-align:right;color:${TEXT};font-weight:700;font-size:14px;font-family:'Geist Mono',ui-monospace,monospace;">£${args.pendingGbp.toFixed(2)}</td>
+        </tr>
+      </table>
+    </div>
+    <div style="margin-top:24px;">
+      <a href="${args.dashboardUrl}" style="display:inline-block;background:${ACCENT};color:#0a0a0a;font-weight:600;padding:14px 24px;border-radius:9999px;text-decoration:none;">View full breakdown &rarr;</a>
+    </div>
+    <p style="font-size:13px;line-height:1.6;color:${DIM};margin:24px 0 0;">Payouts land on the last working day of the month if your pending balance is at least £50.</p>
+  `;
+  return send({
+    to: args.to,
+    subject: `Vyrek partner statement: ${args.monthLabel}`,
+    html: shell(inner),
+  });
+}
+
+// ─── Tier upgrade ───────────────────────────────────────
+
+export async function sendTierUpgradeEmail(args: {
+  to: string;
+  name: string;
+  newTier: "Gold" | "Platinum";
+  newCommissionPct: number;
+  dashboardUrl: string;
+}) {
+  const inner = `
+    <h1 style="font-size:28px;font-weight:900;letter-spacing:-0.03em;line-height:1.1;margin:16px 0 8px;color:${TEXT};">${escape(args.name)}, you&rsquo;ve hit ${args.newTier}.</h1>
+    <p style="font-size:16px;line-height:1.6;color:${DIM};margin:0;">Your commission rate has stepped up to <strong style="color:${ACCENT}">${args.newCommissionPct}%</strong> on all new and renewing referrals from today.</p>
+    <p style="font-size:16px;line-height:1.6;color:${DIM};margin:16px 0 0;">Existing pending referrals continue at the rate they were earned at; the new rate applies to anything that converts from now on.</p>
+    <div style="margin-top:24px;">
+      <a href="${args.dashboardUrl}" style="display:inline-block;background:${ACCENT};color:#0a0a0a;font-weight:600;padding:14px 24px;border-radius:9999px;text-decoration:none;">See the new rates &rarr;</a>
+    </div>
+  `;
+  return send({
+    to: args.to,
+    subject: `Tier upgrade: you&rsquo;re now ${args.newTier}.`,
+    html: shell(inner),
+  });
+}
+
+// ─── Cancellation alert (early cancel within 7 days) ────
+
+export async function sendCancellationAlertEmail(args: {
+  to: string;
+  name: string;
+  referreeEmailMasked: string;
+  daysSinceSignup: number;
+  dashboardUrl: string;
+}) {
+  const inner = `
+    <h1 style="font-size:28px;font-weight:900;letter-spacing:-0.03em;line-height:1.1;margin:16px 0 8px;color:${TEXT};">Heads up: a referral cancelled.</h1>
+    <p style="font-size:16px;line-height:1.6;color:${DIM};margin:0;">Hi ${escape(args.name)}, ${escape(args.referreeEmailMasked)} cancelled after ${args.daysSinceSignup} day${args.daysSinceSignup === 1 ? "" : "s"}.</p>
+    <p style="font-size:14px;line-height:1.6;color:${DIM};margin:16px 0 0;">Because the cancellation falls inside the 30-day clawback window, this referral has been moved to the &quot;clawed back&quot; state and will not contribute to your next payout. If the same referee returns and re-subscribes, the original attribution still applies and the commission resumes.</p>
+    <p style="font-size:14px;line-height:1.6;color:${DIM};margin:16px 0 0;">This is informational. You don&rsquo;t need to do anything.</p>
+    <div style="margin-top:24px;">
+      <a href="${args.dashboardUrl}" style="display:inline-block;background:${ACCENT};color:#0a0a0a;font-weight:600;padding:14px 24px;border-radius:9999px;text-decoration:none;">Open dashboard &rarr;</a>
+    </div>
+  `;
+  return send({
+    to: args.to,
+    subject: "A referral cancelled inside the clawback window",
+    html: shell(inner),
+  });
+}
+
 // ─── Helpers ────────────────────────────────────────────
 
 function escape(s: string): string {

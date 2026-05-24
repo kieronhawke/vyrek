@@ -342,18 +342,56 @@ export async function POST(req: Request) {
           (invoice as unknown as { subscription?: string }).subscription ??
           null;
         if (!subscriptionId) break;
-        const { data: sub } = await admin.from("subscriptions").select("customer_id").eq("stripe_subscription_id", subscriptionId).maybeSingle();
+        const { data: sub } = await admin.from("subscriptions").select("customer_id, created_at").eq("stripe_subscription_id", subscriptionId).maybeSingle();
         if (!sub) break;
         const { data: customer } = await admin.from("customers").select("email").eq("id", sub.customer_id).maybeSingle();
         if (customer?.email) {
           const { sendPaymentFailedEmail } = await import("@/lib/email/send");
           await sendPaymentFailedEmail({ to: customer.email }).catch((err) => {
-             
             console.error(
               "[stripe/webhook] payment-failed email send failed",
               err,
             );
           });
+        }
+
+        // Stage 12 (PART 11.10) — Manual review queue trigger.
+        //
+        // If the payment fails within 7 days of the subscription being
+        // created, this is a high-risk signal: stolen card, payment-method
+        // fraud, or a partner-referral abuse pattern (sign up with bad card,
+        // claim commission, intentionally fail first invoice). Log a
+        // high-priority admin event for human review.
+        try {
+          const createdAtRaw = (sub as unknown as { created_at?: string })
+            .created_at;
+          if (createdAtRaw) {
+            const ageMs = Date.now() - new Date(createdAtRaw).getTime();
+            const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+            if (ageMs <= sevenDaysMs) {
+              const { logEvent } = await import("@/lib/admin/events");
+              await logEvent({
+                actor: "stripe-webhook",
+                action: "subscription.early_payment_failure",
+                targetKind: "subscription",
+                targetId: subscriptionId,
+                metadata: {
+                  severity: "high",
+                  needs_review: true,
+                  customer_id: sub.customer_id,
+                  age_hours: Math.round(ageMs / 3_600_000),
+                  invoice_id: invoice.id,
+                  amount_due: invoice.amount_due,
+                  attempt_count: invoice.attempt_count ?? 1,
+                },
+              }).catch(() => {});
+            }
+          }
+        } catch (err) {
+          console.error(
+            "[stripe/webhook] manual-review queue insert failed",
+            err,
+          );
         }
         break;
       }

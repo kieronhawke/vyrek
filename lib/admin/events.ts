@@ -41,6 +41,7 @@ export type AdminEventAction =
   | "subscription.trial_started"
   | "subscription.activated"
   | "subscription.cancelled"
+  | "subscription.early_payment_failure"
   | "customer.signed_up";
 
 export type LogEventInput = {
@@ -146,6 +147,7 @@ export function eventLabel(action: AdminEventAction): string {
     "subscription.trial_started": "Trial started",
     "subscription.activated": "Subscription activated",
     "subscription.cancelled": "Subscription cancelled",
+    "subscription.early_payment_failure": "Early payment failure (review)",
     "customer.signed_up": "Customer signed up",
   };
   return labels[action] ?? action;

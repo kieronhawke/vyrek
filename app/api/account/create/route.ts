@@ -26,6 +26,48 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+/**
+ * Stage 12 (PART 11.10) — IP velocity rate limit.
+ *
+ * Max 5 account creations per IP per 24h. In-process Map; per Vercel
+ * function instance. Cluster-wide enforcement requires Upstash (env var
+ * `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`) which isn't yet
+ * configured. The instance-local limit still catches the common case
+ * of one IP hammering signups.
+ */
+const IP_LIMIT_PER_24H = 5;
+const ipCounters = new Map<string, number[]>();
+
+function ipFromRequest(req: Request): string {
+  return (
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "unknown"
+  );
+}
+
+function pruneIpCounters(now: number) {
+  const cutoff = now - 24 * 60 * 60 * 1000;
+  for (const [ip, stamps] of ipCounters) {
+    const kept = stamps.filter((t) => t >= cutoff);
+    if (kept.length === 0) ipCounters.delete(ip);
+    else ipCounters.set(ip, kept);
+  }
+}
+
+function checkIpVelocity(ip: string): { ok: boolean; count: number } {
+  const now = Date.now();
+  pruneIpCounters(now);
+  const cutoff = now - 24 * 60 * 60 * 1000;
+  const stamps = (ipCounters.get(ip) ?? []).filter((t) => t >= cutoff);
+  if (stamps.length >= IP_LIMIT_PER_24H) {
+    return { ok: false, count: stamps.length };
+  }
+  stamps.push(now);
+  ipCounters.set(ip, stamps);
+  return { ok: true, count: stamps.length };
+}
+
 function generateReferralCode(): string {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   let out = "";
@@ -98,6 +140,26 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { ok: false, reason: "invalid-auth-user-id" },
       { status: 400 },
+    );
+  }
+
+  // IP velocity rate-limit: max IP_LIMIT_PER_24H signups per source IP per
+  // 24 hours. Blocks the trivial multi-account-from-one-IP referral abuse
+  // pattern. Instance-local enforcement only; see comment on ipCounters.
+  const ip = ipFromRequest(req);
+  const velocity = checkIpVelocity(ip);
+  if (!velocity.ok) {
+    console.warn(
+      `[/api/account/create] IP velocity exceeded for ${ip} (${velocity.count} in 24h)`,
+    );
+    return NextResponse.json(
+      {
+        ok: false,
+        reason: "rate-limited",
+        message:
+          "Too many signups from this network in the last 24 hours. Please try again tomorrow or contact support@vyrek.com if this looks wrong.",
+      },
+      { status: 429 },
     );
   }
 
