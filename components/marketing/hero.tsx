@@ -121,15 +121,21 @@ export function Hero() {
         {/* H1 deliberately *not* animated, it's the LCP element. Animating
             it in (via opacity 0 → 1) delays Chrome's LCP timing. The sub +
             CTA below carry the premium-feel motion instead. */}
+        {/* Hero copy. Was "Train like a Hyrox athlete." which is brand
+            but doesn't carry SEO weight. New line leads with the high
+            intent phrase "Hyrox training" and signals personalisation
+            via "built around your race". Stays Trainer's-Notebook
+            matter-of-fact (verb "built", no superlatives). */}
         <h1
           id="hero-heading"
-          className="font-display max-w-[14ch] text-3xl font-bold uppercase leading-[0.92] tracking-[-0.02em] text-vyrek-text sm:text-5xl md:text-6xl lg:text-7xl"
+          className="font-display max-w-[16ch] text-3xl font-bold uppercase leading-[0.92] tracking-[-0.02em] text-vyrek-text sm:text-5xl md:text-6xl lg:text-7xl"
         >
-          Train like a Hyrox athlete.
+          Hyrox training,<br />built around your race.
         </h1>
         <p className="hero-intro mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:max-w-xl md:text-lg">
           From first-timers to sub-60 athletes, one personalised plan for
-          the world&apos;s fastest growing sport. See your Week 1 before you pay.
+          the world&apos;s fastest growing sport. See your Week 1 before
+          you pay.
         </p>
         <div className="hero-intro hero-intro-late mt-7">
           <Link

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import {
   Sheet,
@@ -69,26 +70,29 @@ function CoachTile({
     .slice(0, 2)
     .join("");
 
-  // Brief 2.7: "Joining 2026" placeholders are silhouette portraits, not
-  // interactive sheets (they don't have a real person to reveal).
+  // "Joining 2026" placeholders. Now render a real stock portrait
+  // (heavily desaturated + dimmed so it reads "person, not yet
+  // introduced" rather than "fake coach"), with a prominent JOINING 2026
+  // chip. Not interactive — no Sheet — because there's nothing to reveal.
   if (coach.role === "JOINING 2026") {
     return (
       <div
-        className="relative isolate flex aspect-[5/4] flex-col justify-between overflow-hidden rounded-lg border border-dashed border-vyrek-border bg-vyrek-elevated/40 p-6 sm:aspect-[4/5]"
+        className="relative isolate flex aspect-[5/4] flex-col justify-between overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 sm:aspect-[4/5]"
         aria-label={`Coach placeholder, ${coach.role.toLowerCase()}`}
       >
-        {/* Silhouette portrait: gradient + circle for head + trapezoid shoulders */}
-        <div aria-hidden className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-vyrek-overlay via-vyrek-elevated to-vyrek-base" />
-          <svg
-            viewBox="0 0 200 240"
-            className="absolute inset-x-0 bottom-0 mx-auto h-3/4 w-3/4 text-vyrek-text/15"
-            fill="currentColor"
-            aria-hidden
-          >
-            <circle cx="100" cy="80" r="40" />
-            <path d="M 30 240 Q 30 150 100 150 Q 170 150 170 240 Z" />
-          </svg>
+        <div aria-hidden className="absolute inset-0 -z-10">
+          {coach.image ? (
+            <Image
+              src={coach.image}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              className="object-cover grayscale opacity-30"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-b from-vyrek-overlay via-vyrek-elevated to-vyrek-base" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-vyrek-base via-vyrek-base/60 to-vyrek-base/30" />
         </div>
         <Eyebrow className="relative z-10 !text-vyrek-accent">
           {coach.role}

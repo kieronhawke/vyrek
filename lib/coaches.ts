@@ -47,6 +47,10 @@ export const COACHES: CoachTile[] = [
     role: "JOINING 2026",
     credentials: [],
     bio: "We are recruiting our second Elite 15 coach now. Profile announced when contracts are signed.",
+    // Placeholder portrait. Heavily desaturated + dimmed in the tile so it
+    // reads as "person, not yet introduced" without misrepresenting the
+    // stock model as a real coach. Swap when contracts are signed.
+    image: "/media/images/v2/diverse-1.jpg",
     kind: "principle",
   },
   {
@@ -55,6 +59,7 @@ export const COACHES: CoachTile[] = [
     role: "JOINING 2026",
     credentials: [],
     bio: "Third coach onboarding in parallel. Programme split across First Race, Sub-90, Doubles, and Pro as the team grows.",
+    image: "/media/images/v2/diverse-2.jpg",
     kind: "principle",
   },
 ];
