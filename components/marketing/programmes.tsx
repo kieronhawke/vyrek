@@ -129,7 +129,7 @@ function ProgrammeCard({
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-[radial-gradient(120%_80%_at_85%_0%,rgba(255,90,31,0.20)_0%,rgba(20,20,20,0)_60%)] opacity-60 transition-opacity duration-base group-hover:opacity-100"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(120%_80%_at_85%_0%,rgba(163,230,53,0.20)_0%,rgba(20,20,20,0)_60%)] opacity-60 transition-opacity duration-base group-hover:opacity-100"
       />
       <div className="relative flex items-start justify-between gap-3">
         <Eyebrow className="whitespace-nowrap">{programme.tag}</Eyebrow>

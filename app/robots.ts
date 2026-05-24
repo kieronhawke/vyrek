@@ -37,7 +37,6 @@ export default function robots(): MetadataRoute.Robots {
           "/",
           "/blog/",
           "/blog/rss.xml",
-          "/account/refer",
           "/hyrox/",
           "/plans/",
           "/compare/",

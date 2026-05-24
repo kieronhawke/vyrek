@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
@@ -252,12 +253,13 @@ export default function ProgrammesPage() {
 
                 <RevealOnView delay={0.08}>
                   <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated md:sticky md:top-32">
-                    <img
+                    <Image
                       src={p.image}
                       alt=""
-                      className="absolute inset-0 h-full w-full object-cover grayscale"
-                      loading={i === 0 ? "eager" : "lazy"}
-                      decoding="async"
+                      fill
+                      sizes="(min-width: 768px) 40vw, 100vw"
+                      priority={i === 0}
+                      className="object-cover grayscale"
                     />
                     <div
                       aria-hidden

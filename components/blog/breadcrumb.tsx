@@ -13,7 +13,7 @@ export function Breadcrumb({
           return (
             <li key={step.url} className="flex items-center gap-2">
               {isLast ? (
-                <span aria-current="page" className="text-vyrek-text-secondary">
+                <span aria-current="page" className="text-vyrek-text">
                   {step.name}
                 </span>
               ) : (
@@ -24,7 +24,9 @@ export function Breadcrumb({
                   >
                     {step.name}
                   </Link>
-                  <span aria-hidden>/</span>
+                  <span aria-hidden className="text-vyrek-text-disabled">
+                    ›
+                  </span>
                 </>
               )}
             </li>

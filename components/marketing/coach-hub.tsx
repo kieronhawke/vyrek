@@ -140,7 +140,7 @@ function CoachTile({
         />
         <div
           aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(120%_85%_at_50%_0%,rgba(255,90,31,0.18)_0%,rgba(20,20,20,0)_60%)]"
+          className="absolute inset-0 bg-[radial-gradient(120%_85%_at_50%_0%,rgba(163,230,53,0.18)_0%,rgba(20,20,20,0)_60%)]"
         />
         <Eyebrow className="relative z-10">{coach.role}</Eyebrow>
         <div className="relative z-10">

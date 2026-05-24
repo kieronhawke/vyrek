@@ -164,24 +164,6 @@ export function WelcomeContent({
 
         <hr className="my-8 border-t border-vyrek-border-subtle" />
 
-        <div className="rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-4">
-          <p className="text-base font-medium text-vyrek-text">
-            Refer a friend. Earn £20.
-          </p>
-          <p className="mt-1 text-sm text-vyrek-text-secondary">
-            One paid month for them. Twenty quid for you. Cash, BACS, or
-            credit.
-          </p>
-          <Link
-            href="/account/refer"
-            className="mt-3 inline-flex h-10 items-center justify-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-overlay px-4 text-sm font-medium text-vyrek-text transition-colors hover:border-vyrek-border-strong"
-          >
-            See how →
-          </Link>
-        </div>
-
-        <hr className="my-8 border-t border-vyrek-border-subtle" />
-
         <Link
           href="/plan"
           className="inline-flex h-14 w-full items-center justify-center rounded-pill bg-vyrek-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,transform] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98]"

@@ -89,26 +89,13 @@ export default async function AccountPage() {
         </Link>
       </section>
 
-      {/* Quick links */}
+      {/* Partner programme link (refer-a-friend was removed; partner
+          programme is the canonical earn path) */}
       <section className="mb-8">
-        <SectionEyebrow title="Earn + refer" />
-        <Link
-          href="/account/refer"
-          className="flex items-center justify-between gap-3 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-4 transition-colors hover:border-vyrek-border-strong"
-        >
-          <div>
-            <p className="text-sm font-semibold text-vyrek-text">
-              Refer a friend, earn £20
-            </p>
-            <p className="mt-1 text-xs text-vyrek-text-tertiary">
-              Paid to your BACS within 5 business days of their first paid invoice.
-            </p>
-          </div>
-          <span className="font-mono text-xs text-vyrek-accent">→</span>
-        </Link>
+        <SectionEyebrow title="Earn" />
         <Link
           href="/partners"
-          className="mt-2 flex items-center justify-between gap-3 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-4 transition-colors hover:border-vyrek-border-strong"
+          className="flex items-center justify-between gap-3 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-4 transition-colors hover:border-vyrek-border-strong"
         >
           <div>
             <p className="text-sm font-semibold text-vyrek-text">

@@ -85,7 +85,7 @@ export function BentoFeatures() {
                     key={tile.name}
                     className="relative aspect-square overflow-hidden rounded-md border border-vyrek-border-subtle bg-vyrek-overlay/80 backdrop-blur-sm"
                   >
-                    <div className="absolute inset-0 bg-[radial-gradient(80%_80%_at_50%_30%,rgba(255,90,31,0.18)_0%,rgba(20,20,20,0)_55%)]" />
+                    <div className="absolute inset-0 bg-[radial-gradient(80%_80%_at_50%_30%,rgba(163,230,53,0.18)_0%,rgba(20,20,20,0)_55%)]" />
                     <span
                       className={`absolute bottom-2 left-2 font-mono text-[9px] uppercase tracking-[0.18em] ${i === 0 ? "text-vyrek-text-secondary": "text-vyrek-text-tertiary"}`}
                     >
