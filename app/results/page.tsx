@@ -15,7 +15,7 @@ import {
 import { EventCard } from "@/components/results/event-card";
 
 export const metadata: Metadata = {
-  title: "Results — HYROX athletes, events, rankings · Vyrek",
+  title: "Results: HYROX athletes, events, rankings · Vyrek",
   description:
     "Browse HYROX events, athletes, splits, rankings. Live and historic data across every venue. Train, race, analyse, beat.",
   alternates: { canonical: "/results" },

@@ -26,7 +26,7 @@ const ITEMS: Item[] = [
   {
     number: "02",
     title: "PRIVATE COACH CALL",
-    body: "30-minute 1-on-1 with an Elite 15 coach in your first week. Goals, kit, schedule, recovery — answered by a person, not a chatbot.",
+    body: "30-minute 1-on-1 with an Elite 15 coach in your first week. Goals, kit, schedule, recovery: answered by a person, not a chatbot.",
   },
   {
     number: "03",

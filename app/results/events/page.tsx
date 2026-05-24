@@ -9,7 +9,7 @@ import { GateModal } from "@/components/results/gate-modal";
 import { listAllEvents, bucketEvents } from "@/lib/results/client";
 
 export const metadata: Metadata = {
-  title: "All HYROX events — browse by date · Vyrek",
+  title: "All HYROX events: browse by date · Vyrek",
   description:
     "Every HYROX event we track. Live, upcoming, finished. Sortable by region, status, division.",
   alternates: { canonical: "/results/events" },
