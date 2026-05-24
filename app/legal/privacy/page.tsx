@@ -302,6 +302,47 @@ export default function PrivacyPage() {
         authentication, and audited. Card data never touches our servers,
         only Stripe sees it.
       </ProseP>
+      <ProseP>
+        Passwords are hashed with bcrypt at a work factor that we review every
+        12 months in line with industry guidance. We do not store password
+        hints, security questions, or any other recoverable secret material on
+        our side. Account recovery uses one-time email links that expire within
+        15 minutes of being issued.
+      </ProseP>
+      <ProseP>
+        Our backups are encrypted and held within the UK and EU. Restores are
+        rehearsed quarterly so that we can confirm both the technical recovery
+        path and the recovery time objective. Deleted records are removed from
+        backups within 30 days of the last scheduled backup that contained
+        them, after which they are unrecoverable.
+      </ProseP>
+
+      <ProseH2>Automated decision-making</ProseH2>
+      <ProseP>
+        Vyrek personalises your training plan automatically using the answers
+        you give in the onboarding quiz and the sessions you log through the
+        app. This is profiling for the purpose of delivering the service, not
+        for any marketing, pricing, or credit decision.
+      </ProseP>
+      <ProseP>
+        No part of the personalisation has legal or similarly significant
+        effects on you, and the output is always a training schedule that you
+        can adjust, ignore, or override. If you would prefer a coach to set
+        your week manually instead of the adaptive engine, email{" "}
+        <ProseEmailLink email="support@vyrek.com" /> and we will switch your
+        account to manual planning at no extra cost.
+      </ProseP>
+
+      <ProseH2>Incident notification</ProseH2>
+      <ProseP>
+        If we become aware of a personal data breach that is likely to result
+        in a risk to your rights and freedoms, we will notify the Information
+        Commissioner&apos;s Office within 72 hours of becoming aware of it, as
+        required by UK GDPR Article 33. If the risk is high, we will also
+        notify affected individuals by email without undue delay, explaining
+        what happened, what data was involved, what we have done to contain
+        the incident, and what (if anything) you need to do.
+      </ProseP>
 
       <ProseH2>Changes to this policy</ProseH2>
       <ProseP>

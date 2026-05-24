@@ -180,6 +180,13 @@ export default function CookiesPage() {
         Always on. Required for the site to function. No opt-out, because the
         site does not work without them.
       </ProseP>
+      <ProseP>
+        These cookies keep you signed in across page loads, remember the
+        choices you made in the onboarding quiz so a refresh does not throw
+        away your progress, hold your shopping basket on the checkout page,
+        and prevent cross-site request forgery on every form. Removing them
+        would make the service unusable, not just inconvenient.
+      </ProseP>
       <CookieTable rows={NECESSARY} />
 
       <ProseH2>Analytics cookies</ProseH2>
@@ -188,6 +195,14 @@ export default function CookiesPage() {
         banner. Used to understand which pages perform, where the funnel
         breaks, which programmes interest people. Pseudonymous; we never
         match analytics events to your real name or email.
+      </ProseP>
+      <ProseP>
+        Analytics data is retained for 14 months and then aggregated into a
+        rolling annual snapshot that contains no individual identifiers. We
+        use it to decide which posts to write next, which programme pages
+        need to be clearer, and where to invest engineering time. We do not
+        sell analytics data to anyone, run remarketing against it, or use it
+        for pricing decisions.
       </ProseP>
       <CookieTable rows={ANALYTICS} />
 
@@ -207,6 +222,16 @@ export default function CookiesPage() {
           stripe.com/cookies-policy/legal
         </a>
         .
+      </ProseP>
+
+      <ProseH2>Cookie lifetimes</ProseH2>
+      <ProseP>
+        Session cookies are deleted when you close the browser. Persistent
+        cookies have a defined expiry, listed in the tables above. The longest
+        persistent cookie we set is 12 months (the consent record itself), so
+        we can avoid showing the banner every time you visit. Everything else
+        expires within 30 days. We do not extend any cookie&apos;s lifetime
+        retroactively.
       </ProseP>
 
       <ProseH2>Do Not Track</ProseH2>

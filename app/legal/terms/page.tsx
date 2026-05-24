@@ -177,6 +177,24 @@ export default function TermsPage() {
         and improve the service.
       </ProseP>
 
+      <ProseH2>Health and safety</ProseH2>
+      <ProseP>
+        Vyrek delivers training programmes online, not medical advice. The
+        sessions are designed for adults in reasonable health. If you have a
+        medical condition, an injury, or any reason to consult a clinician
+        before starting a new training programme, you should do so before
+        joining a plan. You can pause your subscription at any time while you
+        wait for that advice.
+      </ProseP>
+      <ProseP>
+        You are responsible for performing the exercises with appropriate
+        technique, in a safe environment, and at an intensity that reflects
+        your current fitness. If a session feels unsafe, stop it. The app
+        includes a self-report flag on every workout that lets you log the
+        session as skipped, modified, or stopped early; the planner adjusts
+        the following week based on what you record.
+      </ProseP>
+
       <ProseH2>Liability</ProseH2>
       <ProseP>
         Nothing in these terms limits our liability for death or personal
@@ -189,6 +207,27 @@ export default function TermsPage() {
         the claim arose. We are not liable for indirect or consequential
         losses (lost profits, lost opportunities) that could not have been
         reasonably foreseen.
+      </ProseP>
+      <ProseP>
+        We are also not liable for failures caused by events outside our
+        reasonable control. That includes outages of our infrastructure
+        providers (Vercel, Supabase, Stripe, Resend), national or regional
+        internet disruptions, third-party service deprecation, and any other
+        force majeure event. Where such an event prevents you from accessing
+        the service for more than 72 consecutive hours, you may request a
+        pro-rata credit for the lost time and we will apply it to your next
+        invoice.
+      </ProseP>
+
+      <ProseH2>Service availability</ProseH2>
+      <ProseP>
+        We target 99.9% availability for the member app and 99.5% for the
+        marketing site, calculated monthly. We do not commit to a contractual
+        SLA at this price point, but we publish status updates at the bottom
+        of the contact page when incidents affect a meaningful number of
+        members. Planned maintenance is announced in advance via the app and
+        scheduled outside peak training times (06:00-09:00 and 17:00-21:00
+        UK time) wherever possible.
       </ProseP>
 
       <ProseH2>Member referrals</ProseH2>
