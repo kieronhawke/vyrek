@@ -352,12 +352,21 @@ function QuizV3Inner() {
 
       if (authError) {
         const msg = authError.message ?? "";
-        if (
-          msg.toLowerCase().includes("already") ||
-          msg.toLowerCase().includes("registered")
-        ) {
+        const low = msg.toLowerCase();
+        if (low.includes("already") || low.includes("registered")) {
           setAccountError(
             "An account already exists with this email. Log in instead.",
+          );
+        } else if (
+          // Supabase Auth rate-limit (HTTP 429 from signUp). Default cap is
+          // 4 signups per IP per hour. Don't surface the raw message; tell
+          // the user what to do.
+          authError.status === 429 ||
+          low.includes("rate limit") ||
+          low.includes("too many")
+        ) {
+          setAccountError(
+            "Too many sign-ups from your network in the last hour. Wait a few minutes and try again, or sign in if you already have an account.",
           );
         } else {
           setAccountError(msg || "Couldn't save. Try again in a moment.");
