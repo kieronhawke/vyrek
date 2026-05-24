@@ -94,7 +94,7 @@ export function Hero() {
             cratering LCP. priority=true keeps it preloaded as the LCP
             candidate. */}
         <Image
-          src="/media/images/v2/coach-james-wright.jpg"
+          src="/media/images/v2/hero-cinematic.jpg"
           alt=""
           fill
           priority

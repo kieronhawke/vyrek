@@ -18,8 +18,12 @@ const CARDS = [
     title: "An Elite 15 athlete on your programme.",
     body:
       "Reviews your weekly progress, answers questions, and adjusts your training as you improve.",
-    image: "/media/images/v2/coach-james-wright.jpg",
-    alt: "Vyrek coach in training",
+    // Was the cold-stare Pexels coach also used as the home hero
+    // backdrop. Moved to the warm portrait (h1) so the home page
+    // doesn't repeat the same person twice and the "coach you'd
+    // actually DM" register lands.
+    image: "/media/images/v2/coach-james-wright-warm.jpg",
+    alt: "Vyrek coach in his gym",
   },
   {
     tag: "Dated weekly programme",
@@ -34,16 +38,20 @@ const CARDS = [
     title: "Built backwards from the 8 stations.",
     body:
       "Sled push, ski erg, wall balls, sandbag lunges. Every block has a purpose.",
-    image: "/media/images/v2/programme-sub-90.jpg",
-    alt: "Athlete training on Hyrox stations",
+    // Was a sled-push shot users said felt off. New: wall-ball mid-rep,
+    // race-pace station work.
+    image: "/media/images/v2/station-fresh.jpg",
+    alt: "Athlete mid wall-ball rep at race pace",
   },
   {
     tag: "Progression you can see",
     title: "Track your splits, your sled times, your wall ball cycles.",
     body:
       "Every week your data sharpens the next plan.",
-    image: "/media/images/v2/bento-progress.jpg",
-    alt: "Athlete logging session data",
+    // Was a watch-metrics shot. New: phone + watch combo logging data
+    // — reads "your progress, in the app" rather than just "fitness watch".
+    image: "/media/images/v2/metrics-fresh.jpg",
+    alt: "Athlete logging training data on phone and watch",
   },
 ];
 

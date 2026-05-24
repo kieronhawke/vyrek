@@ -1,0 +1,43 @@
+{
+  "source": "pexels.com",
+  "licence": "Pexels License",
+  "fetched": "2026-05-24T09:26:18.249Z",
+  "photos": [
+    {
+      "role": "hero-cinematic",
+      "pexelsId": 1552102,
+      "bytes": 380534,
+      "alt": "Cinematic sled push, low-light Hyrox-style hero"
+    },
+    {
+      "role": "station-fresh",
+      "pexelsId": 34794695,
+      "bytes": 406468,
+      "alt": "Athlete mid wall-ball rep, race-pace effort"
+    },
+    {
+      "role": "metrics-fresh",
+      "pexelsId": 4482934,
+      "bytes": 405404,
+      "alt": "Athlete logging training data on phone + watch"
+    },
+    {
+      "role": "honesty-fresh",
+      "pexelsId": 9602280,
+      "bytes": 353630,
+      "alt": "Athlete working through a heavy set, candid"
+    },
+    {
+      "role": "coach-2",
+      "pexelsId": 8611981,
+      "bytes": 238738,
+      "alt": "Female coach in a gym, smiling, looking at camera"
+    },
+    {
+      "role": "coach-3",
+      "pexelsId": 5878697,
+      "bytes": 543866,
+      "alt": "Black fitness coach portrait, looking at camera"
+    }
+  ]
+}
