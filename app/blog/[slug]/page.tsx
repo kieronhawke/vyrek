@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
@@ -210,15 +211,14 @@ export default async function BlogPostPage({
               </div>
             </header>
 
-            <div className="mx-auto mt-10 aspect-[16/9] max-w-5xl overflow-hidden rounded-lg bg-vyrek-overlay md:mt-14">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            <div className="relative mx-auto mt-10 aspect-[16/9] max-w-5xl overflow-hidden rounded-lg bg-vyrek-overlay md:mt-14">
+              <Image
                 src={post.heroImage}
                 alt={post.heroAlt}
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
-                className="h-full w-full object-cover"
+                fill
+                priority
+                sizes="(min-width: 1024px) 1024px, 100vw"
+                className="object-cover"
               />
             </div>
 
