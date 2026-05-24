@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
@@ -122,29 +123,31 @@ export default function PartnersPage() {
           className="relative isolate flex min-h-[68svh] flex-col justify-end overflow-hidden bg-vyrek-base pb-16 pt-[max(7rem,calc(var(--safe-top)+6rem))]"
         >
           <div aria-hidden className="absolute inset-0 -z-10">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/media/images/v2/bento-coaches.jpg"
               alt=""
-              className="absolute inset-0 h-full w-full object-cover grayscale"
-              loading="eager"
-              decoding="async"
-              fetchPriority="high"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover grayscale"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-vyrek-base/70 via-vyrek-base/55 to-vyrek-base" />
           </div>
           <Container>
             <Eyebrow>Partner Programme</Eyebrow>
+            {/* Hero h1 reduced one step (was text-4xl md:text-6xl). The
+                earnings boxes immediately below carry the heavyweight
+                visual hit; the h1 doesn't need to compete. */}
             <SplitHeading
               id="partners-heading"
               as="h1"
-              className="mt-4 max-w-3xl text-4xl font-black leading-[1.02] tracking-[-0.04em] text-vyrek-text md:text-6xl"
+              className="mt-4 max-w-3xl text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
             >
-              Start making recurring revenue with the Vyrek Partner Programme.
+              Start making recurring revenue with Vyrek.
             </SplitHeading>
             <p className="mt-5 max-w-2xl text-base text-vyrek-text-secondary md:text-lg">
-              Our partners earn an average of £300 per month. Top partners
-              earn over £2,000.
+              Real partners earn a real percentage of every subscription.
+              For as long as the athlete stays.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <CtaButton href="/partners/apply" size="lg">
@@ -157,6 +160,119 @@ export default function PartnersPage() {
                 Partner login
               </Link>
             </div>
+          </Container>
+        </section>
+
+        {/* Earnings examples. GetYourGuide affiliate-page pattern: three
+            concrete claims in plain boxes, each load-bearing. */}
+        <section
+          aria-labelledby="earnings-heading"
+          className="border-t border-vyrek-border-subtle py-20 md:py-24"
+        >
+          <Container>
+            <h2 id="earnings-heading" className="sr-only">
+              What partners earn
+            </h2>
+            <ul
+              role="list"
+              className="mx-auto grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-3 md:gap-5"
+            >
+              <li className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 md:p-7">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+                  [ Top partners ]
+                </p>
+                <p className="mt-4 text-3xl font-black tracking-[-0.02em] text-vyrek-text md:text-4xl">
+                  Over £2,000<span className="text-vyrek-text-tertiary">/mo</span>
+                </p>
+                <p className="mt-3 text-sm text-vyrek-text-secondary">
+                  What our top tier earns from recurring commission.
+                  Built over months, not one-off campaigns.
+                </p>
+              </li>
+              <li className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 md:p-7">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+                  [ Commission ]
+                </p>
+                <p className="mt-4 text-3xl font-black tracking-[-0.02em] text-vyrek-text md:text-4xl">
+                  30-50%<span className="text-vyrek-text-tertiary"> lifetime</span>
+                </p>
+                <p className="mt-3 text-sm text-vyrek-text-secondary">
+                  Of every subscription month your referral pays. For as
+                  long as they stay. No flat sign-up bounty.
+                </p>
+              </li>
+              <li className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 md:p-7">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+                  [ Payouts ]
+                </p>
+                <p className="mt-4 text-3xl font-black tracking-[-0.02em] text-vyrek-text md:text-4xl">
+                  Monthly BACS
+                </p>
+                <p className="mt-3 text-sm text-vyrek-text-secondary">
+                  Paid the first week of every month, once you cross £50.
+                  Below that the balance rolls.
+                </p>
+              </li>
+            </ul>
+          </Container>
+        </section>
+
+        {/* Who's earning — three audience-type cards with real people.
+            Adds the "faces on the page" the partner-page brief flagged
+            as missing. Stock portraits are clearly labelled by role so
+            the photo carries narrative, not just decoration. */}
+        <section
+          aria-labelledby="who-heading"
+          className="border-t border-vyrek-border-subtle py-20 md:py-24"
+        >
+          <Container>
+            <div className="mx-auto max-w-3xl text-center">
+              <Eyebrow>Who&apos;s earning</Eyebrow>
+              <h2
+                id="who-heading"
+                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+              >
+                Coaches, creators, and community leads.
+              </h2>
+            </div>
+            <ul
+              role="list"
+              className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-3"
+            >
+              {FOR.map((f, i) => {
+                const portrait = [
+                  "/media/images/v2/coach-james-wright.jpg",
+                  "/media/images/v2/about-portrait.jpg",
+                  "/media/images/v2/testimonial-doubles.jpg",
+                ][i];
+                return (
+                  <li
+                    key={f.tag}
+                    className="overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated"
+                  >
+                    <div className="relative aspect-[5/4] overflow-hidden bg-vyrek-overlay">
+                      <Image
+                        src={portrait}
+                        alt=""
+                        fill
+                        sizes="(min-width: 640px) 33vw, 100vw"
+                        className="object-cover grayscale"
+                      />
+                      <div
+                        aria-hidden
+                        className="absolute inset-0 bg-gradient-to-t from-vyrek-elevated/80 via-transparent to-transparent"
+                      />
+                      <span className="absolute bottom-3 left-4 inline-flex items-center rounded-pill border border-vyrek-border bg-vyrek-base/85 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text">
+                        {f.tag}
+                      </span>
+                    </div>
+                    <p className="p-5 text-sm leading-relaxed text-vyrek-text-secondary md:text-base">
+                      {f.body}
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
           </Container>
         </section>
 
