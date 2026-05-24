@@ -83,6 +83,33 @@ export default function ContactPage() {
             </div>
 
             <div className="mt-12 border-t border-vyrek-border-subtle pt-10">
+              <Eyebrow>Live chat</Eyebrow>
+              <div className="mt-3 rounded-lg border border-dashed border-vyrek-border bg-vyrek-elevated/60 p-5">
+                <p className="text-base text-vyrek-text">
+                  Coming soon: live chat at the bottom-right of every page.
+                </p>
+                <p className="mt-2 text-sm text-vyrek-text-secondary">
+                  Until then, the inboxes above are the fastest way through.
+                </p>
+                {/*
+                  CRISP EMBED PLACEHOLDER.
+                  When ready, drop the Crisp Live Chat script into
+                  app/layout.tsx <body>:
+
+                    <Script id="crisp" strategy="afterInteractive">{`
+                      window.$crisp=[];window.CRISP_WEBSITE_ID="<id>";
+                      (function(){var d=document;var s=d.createElement("script");
+                      s.src="https://client.crisp.chat/l.js";s.async=1;
+                      d.getElementsByTagName("head")[0].appendChild(s);})();
+                    `}</Script>
+
+                  Get the website ID from app.crisp.chat → Settings →
+                  Website Settings → Setup Instructions.
+                */}
+              </div>
+            </div>
+
+            <div className="mt-12 border-t border-vyrek-border-subtle pt-10">
               <Eyebrow>Office</Eyebrow>
               <p className="mt-3 text-base text-vyrek-text-secondary md:text-lg">
                 Vyrek, United Kingdom.

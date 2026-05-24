@@ -35,8 +35,10 @@ export const TESTIMONIALS: Testimonial[] = [
     raceTime: "92:11",
     city: "Bristol",
     programme: "First Race",
-    image:
-      "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800&q=80&fit=crop&auto=format",
+    // Local v2/ stock (was an external Unsplash URL that bypassed Vercel's
+    // image optimisation pipeline). Same person-on-track shot, just hosted
+    // ourselves so /_next/image can resize + convert to webp on the wire.
+    image: "/media/images/v2/testimonial-sarah.jpg",
     illustrative: true,
   },
   {
@@ -47,8 +49,7 @@ export const TESTIMONIALS: Testimonial[] = [
     raceTime: "84:42",
     city: "Manchester",
     programme: "Sub-90",
-    image:
-      "https://images.unsplash.com/photo-1530143584546-02191bc84eb5?w=800&q=80&fit=crop&auto=format",
+    image: "/media/images/v2/testimonial-marcus.jpg",
     illustrative: true,
   },
   {
@@ -58,8 +59,7 @@ export const TESTIMONIALS: Testimonial[] = [
     name: "A. & J.",
     city: "Edinburgh",
     programme: "Doubles",
-    image:
-      "https://images.unsplash.com/photo-1554284126-aa88f22d8b74?w=800&q=80&fit=crop&auto=format",
+    image: "/media/images/v2/testimonial-doubles.jpg",
     illustrative: true,
   },
 ];

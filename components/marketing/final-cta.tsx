@@ -19,11 +19,15 @@ export function FinalCta() {
       <Container>
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
           <Eyebrow>Start</Eyebrow>
+          {/* Final CTA copy. Was "Train like a Hyrox athlete." which
+              repeated the hero. New line is concrete (matches the 12-week
+              programme structure shown earlier on this same page),
+              non-pushy (no second person), and on-brand specific. */}
           <SplitHeading
             id="final-cta-heading"
             className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.05em] text-vyrek-text md:text-4xl lg:text-5xl"
           >
-            Train like a Hyrox athlete.
+            12 weeks to race-ready.
           </SplitHeading>
           <div className="mt-10">
             <CtaButton href="/quiz" size="lg">
