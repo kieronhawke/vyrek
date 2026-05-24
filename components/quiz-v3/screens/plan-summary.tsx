@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { format } from "date-fns";
 import type { gsap as GsapType } from "gsap";
 import {
-  PROGRAMME_TAG,
+  PROGRAMME_DISPLAY,
   determineProgramme,
   determineStartDate,
   determineRaceDate,
@@ -94,11 +94,16 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
         [ YOUR PLAN ]
       </div>
 
+      {/* PROGRAMME_TAG already ends with "PROGRAMME" (all caps), and the
+          template was appending " Programme" so the h1 read
+          "FIRST RACE PROGRAMME Programme". Switched to PROGRAMME_DISPLAY
+          ("First Race" / "Sub-90" / ...) which is mixed-case and reads
+          well as an h1 with a single trailing " Programme". */}
       <h1
         data-summary-line
         className="mt-3 text-balance text-3xl font-black leading-tight tracking-[-0.04em] text-vyrek-text md:text-4xl"
       >
-        {PROGRAMME_TAG[programme]} Programme
+        {PROGRAMME_DISPLAY[programme]} Programme
       </h1>
 
       <p
