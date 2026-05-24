@@ -30,8 +30,12 @@ const CARDS = [
     title: "Every workout, dated to your race.",
     body:
       "No guessing what to do next. Open the app, see today's session, hit it, log it. Your plan adapts each Sunday.",
-    image: "/media/images/v2/bento-plan.jpg",
-    alt: "A weekly Hyrox plan laid out by day",
+    // 1.1A: replaced the phone-mockup shot. Now shows an athlete with
+    // their training notebook + chartreuse [ WEEK 04 ] overlay so the
+    // "dated weekly" claim is visually anchored.
+    image: "/media/images/v2/workout-dated.jpg",
+    alt: "Athlete planning a training week in a notebook",
+    badge: "WEEK 04",
   },
   {
     tag: "Hyrox-specific programming",
@@ -94,6 +98,14 @@ export function WhatYouGet() {
                   aria-hidden
                   className="absolute inset-0 bg-gradient-to-t from-vyrek-elevated/95 via-vyrek-elevated/30 to-transparent"
                 />
+                {c.badge ? (
+                  <span
+                    aria-hidden
+                    className="absolute right-4 top-4 inline-flex items-center rounded-pill border border-vyrek-accent/40 bg-vyrek-base/70 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-vyrek-accent backdrop-blur-md"
+                  >
+                    [ {c.badge} ]
+                  </span>
+                ) : null}
               </div>
               <div className="flex flex-1 flex-col gap-3 p-6 md:p-8">
                 <Eyebrow>{c.tag}</Eyebrow>

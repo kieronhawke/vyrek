@@ -53,7 +53,10 @@ const STEPS: Step[] = [
   {
     number: "04",
     label: "Train and adapt",
-    image: "/media/images/v2/bento-progress.jpg",
+    // 1.1D: was bento-progress (watch metrics) — read as
+    // "self-tracker" rather than "coach reviews + adapts your plan".
+    // New shot puts athlete + coach reviewing data together.
+    image: "/media/images/v2/adapt-coaching.jpg",
     body: [
       "Every Sunday, your plan rebuilds based on what you logged.",
       "Hit a session feeling strong? Next week pushes harder. Missed two sessions? We rebuild with more recovery.",

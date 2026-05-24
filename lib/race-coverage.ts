@@ -178,7 +178,7 @@ export function generateCoveragePost(
         publishedAt,
         updatedAt: publishedAt,
         author: "james-wright",
-        heroImage: "/media/images/v2/programme-sub-90.jpg",
+        heroImage: "/media/images/v2/programme-sub-90-v2.jpg",
         heroAlt: `Final week prep for ${event.name}`,
         seoTitle: `${event.name}, final week prep`,
         seoDescription: `7-day countdown to ${event.name}. Taper structure, fuelling, sleep, kit check, race-morning protocol.`,

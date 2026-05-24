@@ -71,7 +71,7 @@ const PROGRAMMES: ProgrammeDetail[] = [
     tag: "INTERMEDIATE / 12 WEEKS",
     audience:
       "For athletes who have completed at least one Hyrox and want to break the 90-minute barrier. Higher volume, sharper intensity, targeted pacing work.",
-    image: "/media/images/v2/programme-sub-90.jpg",
+    image: "/media/images/v2/programme-sub-90-v2.jpg",
     who: [
       "You have raced one or more Hyrox events.",
       "Your current PB is between 90 and 105 minutes.",

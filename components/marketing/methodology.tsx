@@ -11,7 +11,7 @@ const PRINCIPLES = [
     tag: "Specificity",
     title: "Eight stations. Eight 1-km runs. One race format.",
     body: "Every programme is built around the Hyrox race architecture, not adapted from generic functional fitness. Sled push and sled pull get explicit progression. Wall ball volume scales to your bodyweight, not a fixed number. Run intervals match station-to-station spacing, not arbitrary track distances.",
-    image: "/media/images/v2/programme-sub-90.jpg",
+    image: "/media/images/v2/programme-sub-90-v2.jpg",
     imageAlt: "Athlete pushing a weighted Hyrox sled across an indoor floor.",
   },
   {

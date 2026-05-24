@@ -56,9 +56,19 @@ export function Testimonials() {
                 </div>
               )}
               <div className="flex flex-1 flex-col justify-between gap-6 p-6 pt-0 md:p-8 md:pt-0">
-                <blockquote className="text-lg font-medium leading-relaxed text-vyrek-text md:text-xl">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
+                <div>
+                  {/* 5-star row above each quote. Geist Mono, chartreuse,
+                      tracking-wide so the stars don't visually run together. */}
+                  <p
+                    aria-label="5 out of 5 stars"
+                    className="mb-4 font-mono text-base tracking-[0.18em] text-vyrek-accent"
+                  >
+                    <span aria-hidden>★★★★★</span>
+                  </p>
+                  <blockquote className="text-lg font-medium leading-relaxed text-vyrek-text md:text-xl">
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
+                </div>
                 <div className="flex flex-col gap-2 text-sm">
                   <span className="font-medium text-vyrek-text">
                     {t.name}

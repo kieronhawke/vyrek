@@ -33,7 +33,7 @@ const VIGNETTES: Vignette[] = [
     stamp: "Thursday, 7:30 pm",
     title: "Strength block.",
     body: "Compound lifts and Hyrox-relevant accessories. 60 minutes. Video form checks on key sets.",
-    image: "/media/images/v2/programme-sub-90.jpg",
+    image: "/media/images/v2/programme-sub-90-v2.jpg",
     alt: "Athlete lifting in a gym during a strength block",
   },
   {

@@ -1,0 +1,25 @@
+{
+  "source": "pexels.com",
+  "licence": "Pexels License",
+  "fetched": "2026-05-24T10:29:16.311Z",
+  "photos": [
+    {
+      "role": "workout-dated",
+      "pexelsId": 6353833,
+      "bytes": 313221,
+      "alt": "Athlete with training notebook / week-planning calendar"
+    },
+    {
+      "role": "programme-sub-90-v2",
+      "pexelsId": 8533787,
+      "bytes": 877082,
+      "alt": "Male sprinter mid-stride on outdoor track"
+    },
+    {
+      "role": "adapt-coaching",
+      "pexelsId": 20523354,
+      "bytes": 375573,
+      "alt": "Athlete reviewing performance data with a coach"
+    }
+  ]
+}

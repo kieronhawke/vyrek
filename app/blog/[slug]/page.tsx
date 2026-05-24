@@ -211,7 +211,10 @@ export default async function BlogPostPage({
               </div>
             </header>
 
-            <div className="relative mx-auto mt-10 aspect-[16/9] max-w-5xl overflow-hidden rounded-lg bg-vyrek-overlay md:mt-14">
+            {/* Hero capped at max-h-[60vh] per Stage 1.3 spec so it
+                doesn't dominate the fold on tall desktop viewports.
+                aspect-[16/9] still governs short viewports. */}
+            <div className="relative mx-auto mt-10 aspect-[16/9] max-h-[60vh] w-full max-w-5xl overflow-hidden rounded-lg bg-vyrek-overlay md:mt-14">
               <Image
                 src={post.heroImage}
                 alt={post.heroAlt}

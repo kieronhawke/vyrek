@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 /**
@@ -87,6 +88,32 @@ export function PlanValueSection() {
       >
         [ WHAT YOU UNLOCK ]
       </h2>
+
+      {/* James Wright coach card. Sits above the 5-item list so the
+          PRIVATE COACH CALL item has a real face attached to it — was
+          missing per user "James Wright image disappeared" feedback. */}
+      <div className="mt-6 flex items-center gap-4 rounded-2xl border border-vyrek-accent/30 bg-vyrek-elevated p-4">
+        <div className="relative size-16 shrink-0 overflow-hidden rounded-full bg-vyrek-overlay">
+          <Image
+            src="/media/images/v2/coach-james-wright-warm.jpg"
+            alt="James Wright, founding coach"
+            fill
+            sizes="64px"
+            className="object-cover"
+          />
+        </div>
+        <div className="min-w-0">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+            [ YOUR COACH ]
+          </p>
+          <p className="mt-1 text-sm font-bold text-vyrek-text">
+            James Wright
+          </p>
+          <p className="mt-0.5 text-xs text-vyrek-text-secondary">
+            Elite 15 athlete · Top 50 World Championships finisher
+          </p>
+        </div>
+      </div>
 
       <ol role="list" className="mt-6 space-y-7">
         {ITEMS.map((item, i) => (
