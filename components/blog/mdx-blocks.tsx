@@ -294,6 +294,18 @@ export function WorkoutDemoVideo({
   const isYouTube = src.includes("youtube.com") || src.includes("youtu.be");
   const isVimeo = src.includes("vimeo.com");
   const isFile = !isYouTube && !isVimeo;
+  // Defer iframe load until the user clicks. YouTube + Vimeo iframes
+  // each ship 400-800 KB of JS that wreck Lighthouse perf even with
+  // loading="lazy"; the play-poster pattern delays that cost to user
+  // intent.
+  const [playing, setPlaying] = useState(false);
+  // Auto-extract a YouTube thumbnail from the embed URL when no
+  // explicit poster is provided.
+  const ytId = isYouTube
+    ? src.match(/(?:embed\/|v=|youtu\.be\/)([A-Za-z0-9_-]{11})/)?.[1]
+    : null;
+  const computedPoster =
+    poster ?? (ytId ? `https://i.ytimg.com/vi/${ytId}/maxresdefault.jpg` : null);
 
   return (
     <figure className="mt-10 overflow-hidden rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated">
@@ -322,15 +334,50 @@ export function WorkoutDemoVideo({
             preload="metadata"
             className="absolute inset-0 h-full w-full object-cover"
           />
-        ) : (
+        ) : playing ? (
           <iframe
-            src={src}
+            src={`${src}${src.includes("?") ? "&" : "?"}autoplay=1`}
             title={title}
-            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            loading="lazy"
             className="absolute inset-0 h-full w-full"
           />
+        ) : (
+          <button
+            type="button"
+            onClick={() => setPlaying(true)}
+            aria-label={`Play ${title}`}
+            className="group absolute inset-0 flex items-center justify-center overflow-hidden"
+          >
+            {computedPoster ? (
+              <img
+                src={computedPoster}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover"
+                onError={(e) => {
+                  // YouTube maxresdefault sometimes 404s — fall back to hqdefault.
+                  if (ytId && !e.currentTarget.dataset.fellback) {
+                    e.currentTarget.dataset.fellback = "1";
+                    e.currentTarget.src = `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`;
+                  }
+                }}
+              />
+            ) : null}
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-vyrek-base/40 transition-colors group-hover:bg-vyrek-base/20"
+            />
+            <span
+              aria-hidden
+              className="relative flex size-16 items-center justify-center rounded-full bg-vyrek-accent text-[#0A0A0A] transition-transform duration-base group-hover:scale-110 md:size-20"
+            >
+              <svg viewBox="0 0 24 24" className="size-7 md:size-9" fill="currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </span>
+          </button>
         )}
       </div>
       {coach ? (
