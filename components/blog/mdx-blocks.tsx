@@ -36,8 +36,10 @@ export function RaceAnalytics({
   athlete: string;
   event: string;
   totalTime: string;
-  splits: RaceSplit[];
+  splits?: RaceSplit[];
 }) {
+  const rows = Array.isArray(splits) ? splits : [];
+  if (!rows.length) return null;
   return (
     <figure className="mt-10 overflow-hidden rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated">
       <header className="flex flex-wrap items-baseline justify-between gap-3 border-b border-vyrek-border-subtle px-5 py-4 md:px-6">
@@ -68,7 +70,7 @@ export function RaceAnalytics({
           </tr>
         </thead>
         <tbody>
-          {splits.map((s) => (
+          {rows.map((s) => (
             <tr
               key={s.station}
               className="border-b border-vyrek-border-subtle last:border-b-0"
@@ -107,9 +109,11 @@ export function Leaderboard({
 }: {
   event: string;
   division: string;
-  rows: LeaderboardRow[];
+  rows?: LeaderboardRow[];
   caption?: string;
 }) {
+  const list = Array.isArray(rows) ? rows : [];
+  if (!list.length) return null;
   return (
     <figure className="mt-10 overflow-hidden rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated">
       <header className="border-b border-vyrek-border-subtle px-5 py-4 md:px-6">
@@ -121,7 +125,7 @@ export function Leaderboard({
         </p>
       </header>
       <ol role="list" className="divide-y divide-vyrek-border-subtle">
-        {rows.map((r) => (
+        {list.map((r) => (
           <li
             key={`${r.rank}-${r.name}`}
             className="grid grid-cols-[40px_1fr_auto] items-center gap-3 px-5 py-3 md:px-6"
@@ -214,17 +218,20 @@ export function ComparisonTable({
   rows,
   caption,
 }: {
-  columns: string[];
-  rows: ComparisonRow[];
+  columns?: string[];
+  rows?: ComparisonRow[];
   caption?: string;
 }) {
+  const cols = Array.isArray(columns) ? columns : [];
+  const rs = Array.isArray(rows) ? rows : [];
+  if (!cols.length || !rs.length) return null;
   return (
     <figure className="mt-10 overflow-x-auto">
       <table className="w-full min-w-[480px] overflow-hidden rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated text-sm md:text-base">
         <thead>
           <tr className="border-b border-vyrek-border-subtle bg-vyrek-base/40">
             <th className="px-4 py-3 text-left font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary md:px-5" />
-            {columns.map((c) => (
+            {cols.map((c) => (
               <th
                 key={c}
                 className="px-4 py-3 text-left font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text md:px-5"
@@ -235,7 +242,7 @@ export function ComparisonTable({
           </tr>
         </thead>
         <tbody>
-          {rows.map((r) => (
+          {rs.map((r) => (
             <tr
               key={r.label}
               className="border-b border-vyrek-border-subtle last:border-b-0"
@@ -246,7 +253,7 @@ export function ComparisonTable({
               >
                 {r.label}
               </th>
-              {r.values.map((v, i) => (
+              {(Array.isArray(r.values) ? r.values : []).map((v, i) => (
                 <td
                   key={`${r.label}-${i}`}
                   className="px-4 py-3 align-top text-vyrek-text md:px-5"
