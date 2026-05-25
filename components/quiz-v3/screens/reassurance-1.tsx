@@ -29,24 +29,15 @@ export function ReassuranceScreen1({ onContinue }: { onContinue: () => void }) {
       <div className="relative z-10 flex min-h-svh flex-col justify-end px-6 pb-[max(1.5rem,var(--safe-bottom))] pt-[var(--safe-top)]">
         <div className="mb-8 max-w-md">
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
-            ★★★★★
+            [ NEXT FEW QUESTIONS ]
           </p>
-          <p className="mt-4 text-balance text-xl font-medium leading-snug text-vyrek-text">
-            &ldquo;Vyrek got me to my first Hyrox finish feeling fresh. 92 minutes
-            when I&apos;d planned for 105.&rdquo;
+          <p className="mt-4 text-balance text-2xl font-bold leading-snug tracking-[-0.02em] text-vyrek-text md:text-3xl">
+            Half the work is honest answers.
           </p>
-          <p className="mt-3 text-sm text-vyrek-text-secondary">
-            Sarah · Bristol
-          </p>
-
-          <hr className="my-6 w-12 border-t border-vyrek-border-default" />
-
-          <p className="text-base leading-relaxed text-vyrek-text">
-            92% of first-time Vyrek members finish their Hyrox stronger than
-            they expected.
-          </p>
-          <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
-            [ VYREK MEMBER DATA · 2026 ]
+          <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary">
+            What you train at home is not what you train at the gym. What you
+            did at 25 is not what you do now. Tell us where you are, not
+            where you wish you were. We adapt every Sunday.
           </p>
         </div>
 

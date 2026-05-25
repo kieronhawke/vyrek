@@ -26,7 +26,7 @@ export function JournalHero({ postCount }: { postCount: number }) {
       </h1>
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-vyrek-text-secondary md:text-xl">
         Practical training plans, station-by-station technique, race-day
-        pacing, recovery science. Written by the same Elite 15 coaches who
+        pacing, recovery science. Written by the Elite 15 coach who
         programme our 12-week plans. Plain English, no fluff.
       </p>
       <div className="mt-8 flex flex-wrap items-center gap-3">

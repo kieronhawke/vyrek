@@ -30,7 +30,7 @@ export async function GET() {
     version: "https://jsonfeed.org/version/1.1",
     title: "Vyrek Journal",
     description:
-      "Practical Hyrox content from Elite 15 athletes. Training, technique, race-day, recovery.",
+      "Practical Hyrox content from an Elite 15 coach. Training, technique, race-day, recovery.",
     home_page_url: `${siteUrl()}/blog`,
     feed_url: `${siteUrl()}/feed.json`,
     language: "en-GB",

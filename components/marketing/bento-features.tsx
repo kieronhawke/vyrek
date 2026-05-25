@@ -71,8 +71,8 @@ export function BentoFeatures() {
             />
             <div className="relative z-10">
               <CardCopy
-                headline="Built by Elite 15 athletes."
-                sub="Programming designed by athletes who race at the top of the sport. One programming team. Four pathways."
+                headline="Programmed by an Elite 15 coach."
+                sub="Programming designed by an athlete who races at the top of the sport. Two more coaches join in 2026 for Doubles and Pro."
               />
               <div className="mt-8 grid grid-cols-4 gap-2">
                 {[

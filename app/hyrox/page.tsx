@@ -14,12 +14,12 @@ export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "Hyrox training. UK cities and boroughs",
   description:
-    "Vyrek Hyrox programmes for every UK city and London borough. Personalised 12-week plans built by Elite 15 coaches. Find your local Hyrox training in three minutes.",
+    "Vyrek Hyrox programmes for every UK city and London borough. Personalised 12-week plans built by an Elite 15 coach. Find your local Hyrox training in three minutes.",
   alternates: { canonical: `${siteUrl()}/hyrox` },
   openGraph: {
     title: "Hyrox training across the UK. Vyrek",
     description:
-      "Find personalised Hyrox training programmes for every UK city. Built by Elite 15 coaches. Free trial.",
+      "Find personalised Hyrox training programmes for every UK city. Built by an Elite 15 coach. Free trial.",
     url: `${siteUrl()}/hyrox`,
     siteName: "Vyrek",
     type: "website",

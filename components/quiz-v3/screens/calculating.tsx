@@ -36,13 +36,12 @@ export function CalculatingScreen({ answers }: { answers: QuizAnswers }) {
   const programmeName = PROGRAMME_DISPLAY[programme];
 
   // Phase 0 = black + monogram only
-  // Phase 1 = "Analysing your answers"
-  // Phase 2 = "Cross-referencing 12,000 athlete data points"
+  // Phase 1 = "Reading your answers"
+  // Phase 2 = "Calibrating loads to your weight"
   // Phase 3 = "Building your {programmeName} programme"
   // Phase 4 = "Plan ready"
   // Phase 5 = white flash
   const [phase, setPhase] = useState(0);
-  const [ticker, setTicker] = useState(8000);
   const [progress, setProgress] = useState(0);
 
   // Routing + phase progression
@@ -79,28 +78,13 @@ export function CalculatingScreen({ answers }: { answers: QuizAnswers }) {
     return () => cancelAnimationFrame(raf);
   }, [prefersReducedMotion]);
 
-  // Corner ticker 8000 -> 12000 during phase 2
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-    if (phase !== 2) return;
-    const start = performance.now();
-    let raf = 0;
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / 900);
-      setTicker(Math.round(8000 + t * 4000));
-      if (t < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [phase, prefersReducedMotion]);
-
   const text =
     phase <= 0
       ? ""
       : phase === 1
-        ? "Analysing your answers"
+        ? "Reading your answers"
         : phase === 2
-          ? "Cross-referencing 12,000 athlete data points"
+          ? "Calibrating loads to your weight"
           : phase === 3
             ? `Building your ${programmeName} programme`
             : "Plan ready";
@@ -133,16 +117,6 @@ export function CalculatingScreen({ answers }: { answers: QuizAnswers }) {
             transition: "opacity 200ms ease",
           }}
         />
-      ) : null}
-
-      {/* Phase 2 ticker — corner top-right */}
-      {phase === 2 ? (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute right-5 top-5 font-mono text-[11px] tabular-nums text-vyrek-text/30"
-        >
-          {ticker.toLocaleString("en-GB")}
-        </div>
       ) : null}
 
       {/* Monogram, fades in immediately */}

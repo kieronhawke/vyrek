@@ -16,8 +16,7 @@ const OPTIONS: Array<{
     label: "Training with a partner (Doubles)",
     icon: "👥",
   },
-  { value: "getting-into", label: "Getting into Hyrox-style training", icon: "🌱" },
-  { value: "building", label: "Building general Hyrox fitness", icon: "💪" },
+  { value: "building", label: "Just getting fitter, Hyrox-style", icon: "💪" },
 ];
 
 export function PrimaryIntentScreen({
@@ -31,7 +30,7 @@ export function PrimaryIntentScreen({
     <div>
       <QuestionHeader
         question="What brings you to Vyrek?"
-        helper="Select 1 to 2 answers"
+        helper="Pick the closest. Tap a second if it also applies."
       />
       <ul role="list" className="space-y-3">
         {OPTIONS.map((opt) => (

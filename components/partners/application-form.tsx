@@ -220,7 +220,7 @@ export function PartnerApplicationForm() {
           <Screen
             eyebrow="Welcome"
             title="Apply to the Vyrek Partner Programme"
-            help="Six minutes start to finish. Eleven simple questions about you and your audience."
+            help="About three minutes. Eleven short questions about you and your audience."
           >
             <p className="mt-6 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
               We&apos;re looking for creators, coaches, and community organisers
@@ -266,7 +266,7 @@ export function PartnerApplicationForm() {
           <Screen
             eyebrow={`Step 4 of ${TOTAL_SCREENS}`}
             title="Which country are you based in?"
-            help="We pay commission in GBP to UK accounts and via PayPal everywhere else."
+            help="Monthly BACS payouts to UK accounts. Other countries on request, processed via Wise."
           >
             <Field
               label="Country"

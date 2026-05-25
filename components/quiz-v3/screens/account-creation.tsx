@@ -26,8 +26,8 @@ export function AccountCreationScreen({
   return (
     <div>
       <QuestionHeader
-        question="Save your plan"
-        helper="Create an account so you can pick this up anytime."
+        question="Save your plan and start Week 1"
+        helper="Free for 7 days. Then £8.99 a month. No card to start. Cancel in two taps from the app."
       />
 
       <div className="space-y-4">
@@ -115,7 +115,8 @@ export function AccountCreationScreen({
         ) : null}
 
         <p className="pt-2 text-xs leading-relaxed text-vyrek-text-tertiary">
-          We won&apos;t spam. Unsubscribe anytime.
+          We won&apos;t spam your inbox. The marketing tick above is optional
+          and you can unsubscribe at any time.
         </p>
       </div>
     </div>

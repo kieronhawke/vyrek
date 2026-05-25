@@ -42,7 +42,7 @@ export async function GET() {
   <channel>
     <title>Vyrek Journal</title>
     <link>${blogIndexUrl()}</link>
-    <description>Practical Hyrox training, technique and race-day guides from Elite 15 coaches.</description>
+    <description>Practical Hyrox training, technique and race-day guides from an Elite 15 coach.</description>
     <language>en-GB</language>
     <atom:link href="${siteUrl()}/blog/rss.xml" rel="self" type="application/rss+xml" />
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>

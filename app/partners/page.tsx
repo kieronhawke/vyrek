@@ -181,14 +181,14 @@ export default function PartnersPage() {
             >
               <li className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 md:p-7">
                 <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
-                  [ Top partners ]
+                  [ Worked example ]
                 </p>
                 <p className="mt-4 text-3xl font-black tracking-[-0.02em] text-vyrek-text md:text-4xl">
-                  Over £2,000<span className="text-vyrek-text-tertiary">/mo</span>
+                  £249<span className="text-vyrek-text-tertiary">/mo</span>
                 </p>
                 <p className="mt-3 text-sm text-vyrek-text-secondary">
-                  What our top tier earns from recurring commission.
-                  Built over months, not one-off campaigns.
+                  100 active referrals on the base 30% tier. Recurring as
+                  long as they stay. See the full breakdown below.
                 </p>
               </li>
               <li className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 md:p-7">
@@ -382,14 +382,14 @@ export default function PartnersPage() {
 
         {/* Who this is for */}
         <section
-          aria-labelledby="who-heading"
+          aria-labelledby="who-this-is-for-heading"
           className="border-t border-vyrek-border-subtle py-24 md:py-32"
         >
           <Container>
             <div className="mx-auto max-w-3xl">
               <Eyebrow>Who this is for</Eyebrow>
               <h2
-                id="who-heading"
+                id="who-this-is-for-heading"
                 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
               >
                 Built for people whose audience already trains.

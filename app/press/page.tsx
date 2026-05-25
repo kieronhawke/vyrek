@@ -188,7 +188,7 @@ export default function PressPage() {
               <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
                 Vyrek is a UK-based Hyrox-first training platform. Members
                 take a three-minute quiz and see a dated Week 1 before paying.
-                Programmes are 12 weeks, designed by Elite 15 athletes,
+                Programmes are 12 weeks, designed by an Elite 15 coach,
                 recalibrate every Sunday based on logged sessions. Founding
                 coach: James Wright, top 50 at the 2025 World Championships.
               </p>

@@ -10,18 +10,18 @@ const OPTIONS: Array<{
   detail: string;
   recommended?: boolean;
 }> = [
-  { value: "30", label: "30 min", detail: "Tight schedule." },
-  { value: "45", label: "45 min", detail: "Standard." },
+  { value: "30", label: "30 min", detail: "Tight on time. We'll cut runs over strength." },
+  { value: "45", label: "45 min", detail: "Most members pick this." },
   {
     value: "60",
     label: "60 min",
-    detail: "Covers warm-up, main and cool-down.",
+    detail: "Full warm-up, main set and cool-down.",
     recommended: true,
   },
   {
     value: "90",
     label: "90 min or more",
-    detail: "Big block training.",
+    detail: "Race-pace blocks fit comfortably.",
   },
 ];
 

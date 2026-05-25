@@ -31,7 +31,7 @@ export const PROGRAMMES: Programme[] = [
     audience: "Completed Hyrox. Break the 90-minute barrier.",
     weeks: 12,
     difficulty: "Intermediate",
-    image: "/media/images/v2/coach-james-wright.jpg",
+    image: "/media/images/v2/programme-sub-90-v2.jpg",
   },
   {
     slug: "doubles",

@@ -126,6 +126,38 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
         data-summary-line
         className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary"
       >
+        Built around your answers
+      </p>
+
+      <ul
+        data-summary-line
+        role="list"
+        className="mt-4 grid grid-cols-2 gap-3 text-sm md:grid-cols-3"
+      >
+        {summariseAnswers(answers).map((row) => (
+          <li
+            key={row.label}
+            className="rounded-md border border-vyrek-border-subtle bg-vyrek-elevated/60 p-3"
+          >
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+              {row.label}
+            </p>
+            <p className="mt-1 font-medium leading-snug text-vyrek-text">
+              {row.value}
+            </p>
+          </li>
+        ))}
+      </ul>
+
+      <div
+        data-summary-line
+        className="my-8 h-px w-full bg-vyrek-border-subtle"
+      />
+
+      <p
+        data-summary-line
+        className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary"
+      >
         What&apos;s included
       </p>
 
@@ -174,6 +206,72 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
           {weeksUntil} weeks to your race
         </p>
       </div>
+
+      <div
+        data-summary-line
+        className="mt-8 rounded-lg border border-vyrek-accent/40 bg-vyrek-accent/[0.06] p-5"
+      >
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+          What you pay
+        </p>
+        <p className="mt-2 text-base font-medium leading-snug text-vyrek-text">
+          Free for 7 days. Then £8.99 a month, cancel in two taps from the
+          app. No card needed to start your trial.
+        </p>
+      </div>
     </div>
   );
+}
+
+const SESSION_LENGTH_LABEL: Record<string, string> = {
+  "30": "30 minutes",
+  "45": "45 minutes",
+  "60": "60 minutes",
+  "90": "90 minutes",
+};
+
+const LOCATION_LABEL: Record<string, string> = {
+  "gym-full": "A full Hyrox gym",
+  "gym-standard": "A standard gym",
+  home: "Home setup",
+};
+
+const INJURY_LABEL: Record<string, string> = {
+  none: "No injuries to plan around",
+  "lower-back": "Lower-back-safe alternatives",
+  knee: "Knee-safe alternatives",
+  shoulder: "Shoulder-safe alternatives",
+  "achilles-calf": "Achilles + calf safe alternatives",
+  other: "Custom alternatives, noted in app",
+};
+
+function summariseAnswers(a: QuizAnswers): { label: string; value: string }[] {
+  const rows: { label: string; value: string }[] = [];
+  if (a.days) rows.push({ label: "Sessions", value: `${a.days} days a week` });
+  if (a.sessionLength)
+    rows.push({
+      label: "Each session",
+      value: SESSION_LENGTH_LABEL[a.sessionLength] ?? a.sessionLength,
+    });
+  if (a.location)
+    rows.push({
+      label: "Where",
+      value: LOCATION_LABEL[a.location] ?? a.location,
+    });
+  if (a.weight)
+    rows.push({
+      label: "Calibrated to",
+      value: `${a.weight} kg`,
+    });
+  if (a.injuries)
+    rows.push({
+      label: "Adjusted for",
+      value: INJURY_LABEL[a.injuries] ?? a.injuries,
+    });
+  if (a.partner && a.partner !== "solo")
+    rows.push({
+      label: "Style",
+      value: a.partner === "doubles" ? "Doubles" : "Solo + partner later",
+    });
+  return rows.slice(0, 6);
 }

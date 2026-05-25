@@ -5,7 +5,6 @@ import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { SplitHeading } from "@/components/shared/split-heading";
 import { EventCarousel, EventGrid } from "@/components/results/event-grid";
-import { GateModal } from "@/components/results/gate-modal";
 import {
   bucketEvents,
   countAthletesAcrossEvents,
@@ -67,25 +66,26 @@ export default function ResultsHubPage() {
           <EventCarousel events={buckets.justFinished} label="JUST FINISHED" />
           <EventCarousel events={buckets.upcoming} label="COMING UP" />
 
-          {/* All-events grid CTA */}
-          <section className="mt-20 border-t border-vyrek-border-subtle pt-10">
-            <header className="mb-4 flex items-baseline justify-between">
-              <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
-                [ EVERY EVENT ]
-              </h2>
-              <a
-                href="/results/events"
-                className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-secondary hover:text-vyrek-text"
-              >
-                Browse all →
-              </a>
-            </header>
-            <EventGrid events={buckets.past.concat(buckets.upcoming).slice(0, 6)} />
-          </section>
+          {/* Past races grid */}
+          {buckets.past.length > 0 ? (
+            <section className="mt-20 border-t border-vyrek-border-subtle pt-10">
+              <header className="mb-4 flex items-baseline justify-between">
+                <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+                  [ RECENT RACES ]
+                </h2>
+                <a
+                  href="/results/events"
+                  className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-secondary hover:text-vyrek-text"
+                >
+                  Browse all →
+                </a>
+              </header>
+              <EventGrid events={buckets.past.slice(0, 6)} />
+            </section>
+          ) : null}
         </Container>
       </main>
       <MarketingFooter />
-      <GateModal />
     </>
   );
 }

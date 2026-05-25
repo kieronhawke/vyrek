@@ -52,17 +52,14 @@ export function CalibrationScreen({
   return (
     <div>
       <QuestionHeader
-        question="Quick calibration"
-        helper="We use this to set the right weights for sled, wall ball, and farmers carries."
+        question="Which Hyrox standards should we calibrate to?"
+        helper="These set the sled, wall ball and farmers carry loads on race day. Pick the open division you'd race in."
       />
 
-      <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-vyrek-text-tertiary">
-        [ Hyrox standards ]
-      </p>
       <ul role="list" className="space-y-3">
         <li>
           <OptionCard
-            label="Men's standards"
+            label="Men's open standards"
             detail="Sled 152kg · Wall ball 9kg · Farmers 24kg"
             selected={sex === "men"}
             onClick={() => onSexChange("men")}
@@ -70,7 +67,7 @@ export function CalibrationScreen({
         </li>
         <li>
           <OptionCard
-            label="Women's standards"
+            label="Women's open standards"
             detail="Sled 102kg · Wall ball 6kg · Farmers 16kg"
             selected={sex === "women"}
             onClick={() => onSexChange("women")}
@@ -118,7 +115,7 @@ export function CalibrationScreen({
       </div>
 
       <p className="mt-3 text-xs text-vyrek-text-tertiary">
-        Stored as kilograms internally. Display in {unit === "kg" ? "kg": "lb"}.
+        Used for sandbag-lunge load only. Never shared, never displayed.
       </p>
     </div>
   );

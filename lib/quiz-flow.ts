@@ -22,7 +22,8 @@ export type ExperienceValue =
   | "raced-many";
 
 export type BestTimeValue =
-  | "under-75"
+  | "under-60"
+  | "60-75"
   | "75-90"
   | "90-105"
   | "over-105"
@@ -95,7 +96,10 @@ export function determineProgramme(answers: QuizAnswers): Programme {
     return "first-race";
   }
 
-  if (intent.includes("go-faster") && answers.bestTime === "under-75") {
+  if (
+    intent.includes("go-faster") &&
+    (answers.bestTime === "under-60" || answers.bestTime === "60-75")
+  ) {
     return "pro";
   }
 
@@ -215,7 +219,7 @@ export function applyProgrammeShortcutV3(
       if (!intent.includes("go-faster")) {
         next.intent = [...intent, "go-faster"];
       }
-      next.bestTime ??= "under-75";
+      next.bestTime ??= "60-75";
       break;
     case "doubles":
       if (!intent.includes("doubles")) {

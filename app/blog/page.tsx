@@ -32,7 +32,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Vyrek Journal. Hyrox training, technique, race-day guides",
   description:
-    "Practical Hyrox content from Elite 15 athletes. Training plans, station-by-station technique, nutrition, and race-day pacing. Plain English, no fluff.",
+    "Practical Hyrox content from an Elite 15 coach. Training plans, station-by-station technique, nutrition, and race-day pacing. Plain English, no fluff.",
   alternates: {
     canonical: blogIndexUrl(),
     types: {
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Vyrek Journal",
     description:
-      "Practical Hyrox content from Elite 15 athletes. Training, technique, race-day, recovery.",
+      "Practical Hyrox content from an Elite 15 coach. Training, technique, race-day, recovery.",
     url: blogIndexUrl(),
     siteName: "Vyrek",
     type: "website",
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Vyrek Journal",
     description:
-      "Practical Hyrox training, technique and race-day guides from Elite 15 coaches.",
+      "Practical Hyrox training, technique and race-day guides from an Elite 15 coach.",
   },
   robots: { index: true, follow: true },
 };

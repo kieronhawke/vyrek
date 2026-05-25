@@ -52,7 +52,8 @@ export function Programmes() {
             Find your programme
           </SplitHeading>
           <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
-            Four 12-week paths. Pick the one that matches your race.
+            Hyrox is a one-hour fitness race: 8 stations, 8 one-kilometre
+            runs. Pick the path that matches yours. Each is a 12-week build.
           </p>
         </header>
 

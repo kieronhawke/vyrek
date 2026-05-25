@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "The 8 Hyrox stations. Vyrek technique guides",
     description:
-      "Station-by-station coaching for every Hyrox race element. Built by Elite 15 athletes.",
+      "Station-by-station coaching for every Hyrox race element. Built by an Elite 15 coach.",
     url: `${siteUrl()}/hyrox/stations`,
     siteName: "Vyrek",
     type: "website",

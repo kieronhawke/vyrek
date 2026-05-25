@@ -5,7 +5,8 @@ import { QuestionHeader } from "@/components/quiz-v3/question-header";
 import type { BestTimeValue } from "@/lib/quiz-flow";
 
 const OPTIONS: Array<{ value: BestTimeValue; label: string }> = [
-  { value: "under-75", label: "Under 75 min" },
+  { value: "under-60", label: "Under 60 min" },
+  { value: "60-75", label: "60 to 75 min" },
   { value: "75-90", label: "75 to 90 min" },
   { value: "90-105", label: "90 to 105 min" },
   { value: "over-105", label: "Over 105 min" },

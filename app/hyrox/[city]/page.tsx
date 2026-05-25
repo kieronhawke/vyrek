@@ -39,7 +39,7 @@ export async function generateMetadata({
   if (!loc) return { title: "Not found" };
   const url = `${siteUrl()}/hyrox/${loc.slug}`;
   const title = `Hyrox training in ${loc.name}, personalised 12-week plans`;
-  const description = `Personalised Hyrox training programmes for ${loc.name} athletes. Built by Elite 15 coaches, dated Week 1 before you pay, £8.99/month. Find your plan in three minutes.`;
+  const description = `Personalised Hyrox training programmes for ${loc.name} athletes. Built by an Elite 15 coach, dated Week 1 before you pay, £8.99/month. Find your plan in three minutes.`;
   return {
     title,
     description,
@@ -124,7 +124,7 @@ export default async function CityPage({
     "@context": "https://schema.org",
     "@type": "SportsActivityLocation",
     name: `Vyrek Hyrox Training, ${loc.name}`,
-    description: `Personalised Hyrox training programmes for ${loc.name} athletes. Online platform delivered by Elite 15 coaches.`,
+    description: `Personalised Hyrox training programmes for ${loc.name} athletes. Online platform delivered by an Elite 15 coach.`,
     url,
     areaServed: {
       "@type": "City",

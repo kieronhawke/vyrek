@@ -141,8 +141,11 @@ const SCREENS: ScreenDef[] = [
   { kind: "equipment", showIf: (a) => a.location === "home" },
   {
     kind: "partner",
-    // Skip if intent already declares doubles (already routed).
-    showIf: (a) => !(a.intent ?? []).includes("doubles"),
+    // Skip in all cases. Primary intent already captures "doubles". For
+    // everyone else the answer is almost always "solo" and the screen
+    // wastes the user's attention. Kept in the SCREENS list so resumed
+    // sessions that already answered it stay valid.
+    showIf: () => false,
   },
   { kind: "injuries" },
   { kind: "plan-summary" },
@@ -942,7 +945,7 @@ function QuizV3Inner() {
         hasAnswers={hasAnswers}
         footer={
           <ContinueButton
-            label="See my plan →"
+            label="Start free trial →"
             loading={creating}
             disabled={creating || !emailDraft || passwordDraft.length < 8}
             onClick={onSubmitAccount}

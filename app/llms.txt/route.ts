@@ -19,7 +19,7 @@ export async function GET() {
   const lines: string[] = [
     "# Vyrek",
     "",
-    "> Personalised Hyrox training programmes built by Elite 15 athletes. Members take a three-minute quiz, see a dated Week 1 before paying, then start a 7-day free trial. £8.99 a month after.",
+    "> Personalised Hyrox training programmes built by an Elite 15 coach. Members take a three-minute quiz, see a dated Week 1 before paying, then start a 7-day free trial. £8.99 a month after.",
     "",
     "## Primary pages",
     "",

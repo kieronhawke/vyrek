@@ -7,7 +7,7 @@ const OBJECTIONS = [
   {
     fear: "I've never raced before",
     response:
-      "First Race programme. 12 weeks. 92% of members finish their first Hyrox stronger than expected.",
+      "First Race programme. 12 weeks. Week 1 starts from where you are, not where you wish you were.",
   },
   {
     fear: "I might get injured",

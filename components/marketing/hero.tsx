@@ -130,21 +130,24 @@ export function Hero() {
           id="hero-heading"
           className="font-display max-w-[16ch] text-3xl font-black uppercase leading-[0.92] tracking-[-0.02em] text-vyrek-text sm:text-5xl md:text-6xl lg:text-7xl"
         >
-          Hyrox training,<br />built around your race.
+          Hyrox training,<br />built for your race.
         </h1>
         <p className="hero-intro mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:max-w-xl md:text-lg">
-          From first-timers to sub-60 athletes, one personalised plan for
-          the world&apos;s fastest growing sport. See your Week 1 before
+          From your first race to chasing podiums. One personalised
+          12-week plan, dated to your race date. See your Week 1 before
           you pay.
         </p>
-        <div className="hero-intro hero-intro-late mt-7">
+        <div className="hero-intro hero-intro-late mt-7 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5">
           <Link
             ref={ctaRef}
             href="/quiz"
             className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-pill bg-vyrek-accent px-6 text-base font-semibold uppercase tracking-wide text-[#0A0A0A] transition-[background,opacity] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98] will-change-transform sm:w-auto sm:min-w-[14rem]"
           >
-            Find your plan
+            See your Week 1 free
           </Link>
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            £8.99/mo · 7-day free trial · no card to start
+          </span>
         </div>
       </div>
 

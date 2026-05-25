@@ -92,10 +92,17 @@ export function EventCard({
         </h3>
         {event.totalAthletes > 0 ? (
           <p className="mt-2 font-mono text-[10px] tabular-nums text-vyrek-text-secondary">
-            {event.totalAthletes.toLocaleString("en-GB")} athletes
-            {event.status === "live" && event.divisions[0]?.leaderTimeSeconds
-              ? ` · leader ${formatSeconds(event.divisions[0].leaderTimeSeconds)}`
-              : ""}
+            <span title="Total racers signed up across all divisions">
+              {event.totalAthletes.toLocaleString("en-GB")} athletes
+            </span>
+            {event.status === "live" && event.divisions[0]?.leaderTimeSeconds ? (
+              <>
+                {" · "}
+                <span title="Fastest finish time so far in this race">
+                  leader {formatSeconds(event.divisions[0].leaderTimeSeconds)}
+                </span>
+              </>
+            ) : null}
           </p>
         ) : null}
       </div>

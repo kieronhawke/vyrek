@@ -29,13 +29,17 @@ export function CoachHub() {
     >
       <Container>
         <header className="mx-auto max-w-2xl text-center">
-          <Eyebrow>Coaches</Eyebrow>
+          <Eyebrow>Coaching</Eyebrow>
           <SplitHeading
             id="coaches-heading"
             className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
           >
-            Built by Elite 15 athletes
+            Programmed by an Elite 15 coach
           </SplitHeading>
+          <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary">
+            James Wright writes the progression Vyrek runs on. Two more
+            coaches join in 2026 to cover Doubles and Pro.
+          </p>
         </header>
 
         <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

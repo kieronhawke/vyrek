@@ -10,20 +10,16 @@ export type WelcomeSlide = {
   headline: string;
 };
 
-const SLIDE_DURATION_MS = 4000;
+const SLIDE_DURATION_MS = 3200;
 
 export const WELCOME_SLIDES: WelcomeSlide[] = [
   {
     image: "/media/images/v2/programme-first-race.jpg",
-    headline: "Hyrox training, personalised.",
+    headline: "Hyrox training, personalised in three minutes.",
   },
   {
     image: "/media/images/v2/bento-plan.jpg",
-    headline: "Every workout, dated and ready.",
-  },
-  {
-    image: "/media/images/v2/bento-progress.jpg",
-    headline: "Built to get you to the line.",
+    headline: "Dated weekly plan, calibrated to your kit and race date.",
   },
 ];
 

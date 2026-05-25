@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     template: "%s · Vyrek",
   },
   description:
-    "Personalised Hyrox training programmes built by Elite 15 athletes. See your Week 1 before you pay.",
+    "Personalised Hyrox training programmes built by an Elite 15 coach. See your Week 1 before you pay.",
   applicationName: "Vyrek",
   appleWebApp: {
     capable: true,
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Vyrek. Train like a Hyrox athlete",
     description:
-      "Personalised Hyrox training programmes built by Elite 15 athletes. See your Week 1 before you pay.",
+      "Personalised Hyrox training programmes built by an Elite 15 coach. See your Week 1 before you pay.",
     url: SITE,
     siteName: "Vyrek",
     type: "website",
@@ -85,7 +85,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Vyrek. Train like a Hyrox athlete",
     description:
-      "Personalised Hyrox training programmes built by Elite 15 athletes.",
+      "Personalised Hyrox training programmes built by an Elite 15 coach.",
     images: ["/media/images/v2/programme-first-race.jpg"],
   },
 };
@@ -129,7 +129,7 @@ export default function RootLayout({
                 url: SITE,
                 logo: `${SITE}/logo-primary.svg`,
                 description:
-                  "Personalised Hyrox training programmes built by Elite 15 athletes.",
+                  "Personalised Hyrox training programmes built by an Elite 15 coach.",
                 contactPoint: [
                   {
                     "@type": "ContactPoint",

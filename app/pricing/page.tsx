@@ -113,8 +113,8 @@ export default function PricingPage() {
               </h2>
               <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
                 Vyrek is a personalised programme delivered by software.
-                Programming is written and reviewed weekly by our Elite 15
-                coaching team, then the algorithm calibrates it to your race
+                Programming is written by our Elite 15 coach and reviewed
+                each week, then the algorithm calibrates it to your race
                 date, equipment, body weight, injuries, and the sessions
                 you&apos;ve actually logged.
               </p>
@@ -135,38 +135,38 @@ export default function PricingPage() {
 
           <section className="mx-auto mt-20 max-w-3xl">
             <p className="text-center font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
-              [ FROM THE FIELD ]
+              [ WHAT YOU GET ]
             </p>
             <h2 className="mt-3 text-center text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
-              Why members stay
+              Inside the £8.99
             </h2>
             <ul role="list" className="mt-8 grid gap-4 md:grid-cols-3">
               <li className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
-                <p className="text-sm leading-relaxed text-vyrek-text">
-                  &ldquo;Got me to my first Hyrox finish in 92 minutes when
-                  I&apos;d planned for 105.&rdquo;
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+                  Programming
                 </p>
-                <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-                  Sarah · Bristol · First Race graduate
-                </p>
-              </li>
-              <li className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
-                <p className="text-sm leading-relaxed text-vyrek-text">
-                  &ldquo;Broke 85 minutes after three years stuck at 95. The
-                  Sub-90 programme actually delivers on the name.&rdquo;
-                </p>
-                <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-                  Marcus · Manchester · Sub-90 graduate
+                <p className="mt-2 text-sm leading-relaxed text-vyrek-text">
+                  A 12-week plan dated to your race. Eight stations, eight
+                  runs, calibrated to your weight and kit. Updated every
+                  Sunday.
                 </p>
               </li>
               <li className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
-                <p className="text-sm leading-relaxed text-vyrek-text">
-                  &ldquo;The Doubles programme is the only one I&apos;ve found
-                  that builds station handoff strategy. 11 minutes off our
-                  PB.&rdquo;
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+                  Coaching logic
                 </p>
-                <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-                  Alex &amp; Jamie · Edinburgh · Doubles
+                <p className="mt-2 text-sm leading-relaxed text-vyrek-text">
+                  The same progression an Elite 15 coach would write, applied
+                  to your inputs. No copy-paste templates. No PDFs.
+                </p>
+              </li>
+              <li className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+                  Cancel in two taps
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-vyrek-text">
+                  7-day free trial, no card needed to start. In the app
+                  forever, no email-the-team friction.
                 </p>
               </li>
             </ul>

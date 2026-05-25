@@ -14,11 +14,10 @@ export function ReassuranceScreen2({ onContinue }: { onContinue: () => void }) {
       <div className="flex-1 overflow-y-auto px-6 pb-8">
         <div className="mx-auto max-w-md pt-8">
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
-            [ 12-WEEK FIRST RACE PROGRAMME ]
+            [ 12-WEEK PROGRAMME ]
           </p>
           <h1 className="mt-4 text-balance text-3xl font-bold leading-tight tracking-[-0.03em] text-vyrek-text md:text-4xl">
-            Give us 4 sessions a week. We&apos;ll give you Hyrox-ready fitness
-            in 12 weeks.
+            Give us a few sessions a week. We&apos;ll dial in the rest.
           </h1>
 
           <div className="mt-8 grid grid-cols-2 gap-3">

@@ -13,7 +13,7 @@ export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "Hyrox gear guides, shoes, gloves, knee sleeves, belts, socks",
   description:
-    "Honest Hyrox gear guides. What kit actually helps, what's marketing, and what experienced racers ignore. Independent reviews from Elite 15 coaches.",
+    "Honest Hyrox gear guides. What kit actually helps, what's marketing, and what experienced racers ignore. Independent reviews from an Elite 15 coach.",
   alternates: { canonical: `${siteUrl()}/hyrox/gear` },
   robots: { index: true, follow: true },
 };
