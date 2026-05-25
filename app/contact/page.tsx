@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Contact Vyrek, support, press & partnerships",
   description:
     "Get in touch with Vyrek. General questions, billing support, press enquiries, athlete features, brand collaborations. We reply within 24 hours, Monday to Friday.",
+  alternates: { canonical: "/contact" },
 };
 
 const CONTACTS = [

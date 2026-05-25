@@ -272,6 +272,31 @@ export function PlanReveal({
 
   return (
     <main className="flex min-h-svh flex-col bg-vyrek-base pt-[var(--safe-top)]">
+      {/* Checkout transition overlay — appears as soon as the user clicks
+          the Start trial CTA so the 1-2s round-trip + 302 to Stripe
+          doesn't read as a broken click on slow networks. */}
+      {checkoutLoading ? (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-vyrek-base/90 backdrop-blur-md"
+        >
+          <div className="flex flex-col items-center gap-4 px-6 text-center">
+            <span
+              aria-hidden
+              className="inline-block size-10 animate-spin rounded-full border-2 border-vyrek-border border-t-vyrek-accent"
+            />
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+              [ TAKING YOU TO STRIPE ]
+            </p>
+            <p className="max-w-xs text-sm leading-relaxed text-vyrek-text-secondary">
+              Your card is processed securely by Stripe. First week is free —
+              you won&apos;t be charged today.
+            </p>
+          </div>
+        </div>
+      ) : null}
+
       <header className="grid h-14 shrink-0 grid-cols-[auto_1fr_auto] items-center gap-3 px-5">
         <Link
           href="/"

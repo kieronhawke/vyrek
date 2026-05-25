@@ -342,6 +342,35 @@ function QuizV3Inner() {
     setCreating(true);
     haptic("medium");
 
+    // Recovery snapshot: write the answers + email under a separate key
+    // so that if Supabase Auth signup succeeds but the server persist
+    // fails (or the page reloads mid-submit), the user can retry without
+    // losing data. The primary quiz state is already persisted by
+    // useQuizStateV3; this is belt-and-braces for the cross-screen leap
+    // out of the quiz domain.
+    try {
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(
+          "vyrek:quiz:v3:account-submit-snapshot",
+          JSON.stringify({
+            email: emailDraft.trim().toLowerCase(),
+            marketingOptIn: marketingDraft,
+            answers: {
+              ...state.answers,
+              raceDate:
+                state.answers.raceDate instanceof Date
+                  ? state.answers.raceDate.toISOString()
+                  : state.answers.raceDate,
+            },
+            uuid: state.uuid,
+            attemptedAt: new Date().toISOString(),
+          }),
+        );
+      }
+    } catch {
+      /* localStorage may be full or unavailable; non-fatal */
+    }
+
     try {
       // 1. Create the Supabase Auth user from the browser.
       const supabase = supabaseBrowser();
@@ -406,9 +435,22 @@ function QuizV3Inner() {
       if (!res.ok) {
         const detail = await res.text().catch(() => "");
         // Don't block the funnel, the auth user already exists and the
-        // quiz state is in localStorage. Log + advance.
-         
+        // quiz state is in localStorage (plus the account-submit-snapshot
+        // recovery key written above). Log + advance. The customer row
+        // can be reconciled later by email match in /api/account/create
+        // on a subsequent submission.
         console.error("[account/create] failed", res.status, detail);
+      } else {
+        // Successful persist — clear the recovery snapshot.
+        try {
+          if (typeof window !== "undefined") {
+            window.localStorage.removeItem(
+              "vyrek:quiz:v3:account-submit-snapshot",
+            );
+          }
+        } catch {
+          /* non-fatal */
+        }
       }
 
       capture("quiz_completed", {

@@ -18,6 +18,7 @@ import { FAQS } from "@/lib/faqs";
 export const metadata: Metadata = {
   title: "Pricing, £8.99/mo Hyrox training, first week free",
   description: `Vyrek Hyrox membership is ${PRICING.monthlyDisplay}/month with a 7-day free trial. All four programmes included. First Race, Sub-90, Doubles, Pro. Cancel anytime in two taps, no minimum term.`,
+  alternates: { canonical: "/pricing" },
 };
 
 // 4 most common questions for the mini-FAQ on the pricing page.

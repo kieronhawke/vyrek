@@ -118,6 +118,7 @@ export function MarketingNav() {
           <div className="flex items-center gap-2">
             <Link
               href="/login"
+              prefetch={false}
               className="hidden h-10 items-center px-3 text-sm text-vyrek-text-secondary transition-colors hover:text-vyrek-text md:inline-flex"
             >
               sign in
@@ -205,6 +206,7 @@ export function MarketingNav() {
             ))}
             <Link
               href="/login"
+              prefetch={false}
               className="flex items-center justify-between rounded-md px-4 py-3 text-base text-vyrek-text-secondary transition-colors hover:bg-vyrek-overlay hover:text-vyrek-text"
             >
               <span>sign in</span>

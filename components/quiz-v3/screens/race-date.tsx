@@ -38,12 +38,42 @@ export function RaceDateScreen({
       </div>
 
       {value ? (
-        <p className="mt-4 text-center text-sm text-vyrek-text-secondary">
-          Race day:{" "}
-          <span className="text-vyrek-text">
-            {format(value, "EEEE d MMMM yyyy")}
-          </span>
-        </p>
+        <div className="mt-4 space-y-2 text-center">
+          <p className="text-sm text-vyrek-text-secondary">
+            Race day:{" "}
+            <span className="text-vyrek-text">
+              {format(value, "EEEE d MMMM yyyy")}
+            </span>
+          </p>
+          {(() => {
+            const daysUntil = Math.round(
+              (value.getTime() - today.getTime()) / (24 * 60 * 60 * 1000),
+            );
+            const weeksUntil = Math.round(daysUntil / 7);
+            if (daysUntil < 7) {
+              return (
+                <p
+                  role="alert"
+                  className="mx-auto max-w-md rounded-md border border-vyrek-warning/40 bg-vyrek-warning/5 px-3 py-2 text-xs leading-relaxed text-vyrek-warning"
+                >
+                  Your race is in {daysUntil === 0 ? "less than a day" : `${daysUntil} day${daysUntil === 1 ? "" : "s"}`}. We&apos;ll switch into a short taper plan rather than a full 12-week block.
+                </p>
+              );
+            }
+            if (weeksUntil < 12) {
+              return (
+                <p className="mx-auto max-w-md rounded-md border border-vyrek-accent/30 bg-vyrek-accent/5 px-3 py-2 text-xs leading-relaxed text-vyrek-text-secondary">
+                  Your race is in {weeksUntil} week{weeksUntil === 1 ? "" : "s"}. We&apos;ll compress the plan to fit — denser block, sharper taper.
+                </p>
+              );
+            }
+            return (
+              <p className="text-xs text-vyrek-text-tertiary">
+                {weeksUntil} weeks to race day. Plenty of runway for the full programme.
+              </p>
+            );
+          })()}
+        </div>
       ): null}
 
       <style jsx global>{`

@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Press & media",
   description:
     "Vyrek press and media kit, logos, brand assets, media contact.",
+  alternates: { canonical: "/press" },
 };
 
 const ASSETS = [

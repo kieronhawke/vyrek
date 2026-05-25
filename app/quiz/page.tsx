@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Quiz. Find your plan",
   description:
     "Three-minute quiz to build your personalised Hyrox training plan. See your Week 1 before you pay.",
+  alternates: { canonical: "/quiz" },
 };
 
 export default function QuizPage() {

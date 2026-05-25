@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   description:
     "Earn 30% to 50% lifetime recurring commission referring athletes to Vyrek. Flat tiered rates, monthly BACS payouts, no spammy gimmicks.",
   robots: { index: true, follow: true },
+  alternates: { canonical: "/partners" },
 };
 
 const STEPS = [
@@ -155,6 +156,7 @@ export default function PartnersPage() {
               </CtaButton>
               <Link
                 href="/partners/dashboard"
+                prefetch={false}
                 className="inline-flex h-12 items-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-elevated px-5 text-sm font-medium text-vyrek-text transition-colors hover:border-vyrek-border-strong"
               >
                 Partner login

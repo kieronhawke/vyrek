@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: "About Vyrek. UK Hyrox training built by Elite 15 athletes",
   description:
     "Vyrek is a UK Hyrox-first training platform. 12-week personalised programmes built by Elite 15 athletes for first-timers, sub-90 chasers, doubles teams, and pros. Direct from the coaches who race it.",
+  alternates: { canonical: "/about" },
 };
 
 const PRINCIPLES = [

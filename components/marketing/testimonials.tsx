@@ -58,13 +58,17 @@ export function Testimonials() {
               <div className="flex flex-1 flex-col justify-between gap-6 p-6 pt-0 md:p-8 md:pt-0">
                 <div>
                   {/* 5-star row above each quote. Geist Mono, chartreuse,
-                      tracking-wide so the stars don't visually run together. */}
-                  <p
+                      tracking-wide so the stars don't visually run together.
+                      role="img" + aria-label is the ARIA-permitted way to
+                      label decorative glyphs as a rating (axe flagged
+                      aria-label on a bare <p> as aria-prohibited-attr). */}
+                  <div
+                    role="img"
                     aria-label="5 out of 5 stars"
                     className="mb-4 font-mono text-base tracking-[0.18em] text-vyrek-accent"
                   >
                     <span aria-hidden>★★★★★</span>
-                  </p>
+                  </div>
                   <blockquote className="text-lg font-medium leading-relaxed text-vyrek-text md:text-xl">
                     &ldquo;{t.quote}&rdquo;
                   </blockquote>

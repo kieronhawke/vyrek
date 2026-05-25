@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -126,14 +127,16 @@ export function WelcomeCarousel({
         aria-label="Next slide"
         className="absolute inset-0 z-0"
       >
-        <img
-          src={slide?.image ?? ""}
-          alt=""
-          className="h-full w-full object-cover"
-          loading="eager"
-          decoding="async"
-          fetchPriority="high"
-        />
+        {slide?.image ? (
+          <Image
+            src={slide.image}
+            alt=""
+            fill
+            priority={index === 0}
+            sizes="100vw"
+            className="object-cover"
+          />
+        ) : null}
         <div
           aria-hidden
           className="absolute inset-0 bg-gradient-to-t from-vyrek-base via-vyrek-base/30 to-transparent"

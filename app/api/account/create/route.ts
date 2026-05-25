@@ -55,13 +55,24 @@ function pruneIpCounters(now: number) {
   }
 }
 
-function checkIpVelocity(ip: string): { ok: boolean; count: number } {
+function checkIpVelocity(ip: string): {
+  ok: boolean;
+  count: number;
+  retryAfterSeconds?: number;
+} {
   const now = Date.now();
   pruneIpCounters(now);
   const cutoff = now - 24 * 60 * 60 * 1000;
   const stamps = (ipCounters.get(ip) ?? []).filter((t) => t >= cutoff);
   if (stamps.length >= IP_LIMIT_PER_24H) {
-    return { ok: false, count: stamps.length };
+    // Retry window opens when the oldest in-window stamp rolls off.
+    const oldest = Math.min(...stamps);
+    const retryAfterMs = Math.max(0, oldest + 24 * 60 * 60 * 1000 - now);
+    return {
+      ok: false,
+      count: stamps.length,
+      retryAfterSeconds: Math.ceil(retryAfterMs / 1000),
+    };
   }
   stamps.push(now);
   ipCounters.set(ip, stamps);
@@ -152,14 +163,21 @@ export async function POST(req: Request) {
     console.warn(
       `[/api/account/create] IP velocity exceeded for ${ip} (${velocity.count} in 24h)`,
     );
+    const retryAfter = velocity.retryAfterSeconds ?? 24 * 60 * 60;
+    const hours = Math.max(1, Math.round(retryAfter / 3600));
     return NextResponse.json(
       {
         ok: false,
         reason: "rate-limited",
-        message:
-          "Too many signups from this network in the last 24 hours. Please try again tomorrow or contact support@vyrek.com if this looks wrong.",
+        retryAfterSeconds: retryAfter,
+        message: `Too many signups from this network in the last 24 hours. Try again in about ${hours} hour${hours === 1 ? "" : "s"}, or email support@vyrek.com if this looks wrong.`,
       },
-      { status: 429 },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(retryAfter),
+        },
+      },
     );
   }
 

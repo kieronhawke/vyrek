@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "How it works",
   description:
     "Vyrek in four steps: quiz, Week 1 reveal, free trial, then train and adapt. See exactly what you get.",
+  alternates: { canonical: "/how-it-works" },
 };
 
 type Step = {

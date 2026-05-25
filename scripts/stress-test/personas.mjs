@@ -129,7 +129,12 @@ export const PERSONAS = [
       await scrollALittle(page, ctx, 3);
       await page.goto(`${ctx.base}/programmes`, { waitUntil: "domcontentloaded" });
       await hesitate(ctx, 800, "scanning programmes");
-      await click(page, ctx, 'a[href*="pro"]', "pro card");
+      // Earlier selector "a[href*='pro']" was fragile — it matched any
+      // anchor whose href contained the substring "pro" (e.g. /programmes
+      // itself), so the click often stayed on the same page and never
+      // reached the quiz. Target the Pro programme's section-local CTA
+      // explicitly instead.
+      await click(page, ctx, 'a[href="/quiz?program=pro"]', "pro start CTA");
       await page.waitForLoadState("domcontentloaded");
       await autoQuiz(page, ctx);
     },

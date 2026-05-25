@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   title: "Programmes",
   description:
     "Four 12-week Hyrox programmes: First Race, Sub-90, Doubles, Pro. Pick where you are. We'll meet you there.",
+  alternates: { canonical: "/programmes" },
 };
 
 type SampleDay = {
