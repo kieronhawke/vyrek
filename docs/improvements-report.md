@@ -102,11 +102,12 @@
 | `/how-it-works` | 98 | 98 | 100 | 100 | 92 | **100** ✓ | 2077ms | 2343ms |
 | `/quiz` | 77 | 78 | 100 | 100 | 92 | **100** ✓ | 5935ms | 6321ms |
 | `/blog` | 96 | 96 | 100 | 100 | 100 | 100 | 2680ms | 2715ms |
-| `/blog/[slug]` | 98 | 90 → re-measure | 100 | 100 | 100 | 100 | 2154ms | 3615ms → re-measure |
+| `/blog/hyrox-sled-push-technique` (with iframe) | 98 | **95** | 100 | 100 | 100 | 100 | 2154ms | **2832ms** |
+| `/blog/hyrox-station-weights-explained` (5 blocks) | n/a | **99** | n/a | 100 | n/a | 100 | n/a | **1849ms** |
 | `/partners` | 99 | 97 | 100 | 100 | 92 | **100** ✓ | 1459ms | 2415ms |
 | `/contact` | 99 | **100** ✓ | 100 | 100 | 92 | **100** ✓ | 1520ms | **1364ms** ✓ |
 
-**Blog post** measurement above is pre-lazy-iframe-fix (commit `e60ddf7`); the next deploy (`bd5c556`) should restore it. The temporary regression came from the WorkoutDemoVideo iframe loading eagerly — fixed via click-to-play poster.
+**Blog post with WorkoutDemoVideo iframe** had a transient LCP spike between commits `e60ddf7` (iframe eager) and `bd5c556` (lazy click-to-play). After-fix measurement above is the lazy-iframe version — perf recovered to 95, LCP recovered to 2832ms.
 
 **Hero LCP on / and /quiz** did not improve from the welcome-carousel image swap because the LCP element on /quiz isn't the carousel image — it's the H1 text that renders only after the QuizV3 client component hydrates (~1018 lines of JS). A genuine fix here needs SSR of the welcome slide (substantial refactor; queued for a future pass).
 
