@@ -4,6 +4,7 @@ import "./globals.css";
 import { CookieBanner } from "@/components/legal/cookie-banner";
 import { CommandPalette } from "@/components/marketing/command-palette";
 import { PresencePing } from "@/components/presence/presence-ping";
+import { MotionConfigProvider } from "@/components/shared/motion-config-provider";
 import { siteUrl } from "@/lib/site-url";
 
 // Pre-compute once at module-eval time. siteUrl() reads env vars set
@@ -108,10 +109,12 @@ export default function RootLayout({
       className={`dark ${oswald.variable} ${inter.variable} ${geistMono.variable}`}
     >
       <body>
-        {children}
-        <CommandPalette />
-        <CookieBanner />
-        <PresencePing />
+        <MotionConfigProvider>
+          {children}
+          <CommandPalette />
+          <CookieBanner />
+          <PresencePing />
+        </MotionConfigProvider>
         <script
           type="application/ld+json"
           // Organization + WebSite JSON-LD lives in the root so it appears
