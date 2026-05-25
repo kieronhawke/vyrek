@@ -45,10 +45,29 @@ next-env.d.ts
 /.lighthouse
 .github-pending/
 /scripts/audit-shots/
+/scripts/audit-shots-v2/
 /scripts/scroll-shots/
+/scripts/4viewport-sweep/
+/scripts/flow-walker/
+/scripts/lighthouse-top8/
+/scripts/lighthouse-blog-post/
+/scripts/a11y-axe/
+/scripts/stress-test/results/
+/scripts/stress-test/lighthouse/
+/scripts/full-stress-test/
+/scripts/live-assess/
 /test-results/
 /tests/visual/report/
 /playwright-report/
+
+# Committed test/audit screenshot dumps — kept locally for diff,
+# untracked because they bloat the repo and slow Vercel clones.
+/docs/colour-migration-screenshots/
+/docs/desktop-audit-screenshots/
+/docs/mobile-audit-screenshots/
+/docs/blog-desktop-screenshots/
+/docs/funnel-walkthrough-screenshots/
+/docs/live-assess/
 
 # Internal brief documents (keep locally, not in public repo)
 /docs/vyrek-*.md
