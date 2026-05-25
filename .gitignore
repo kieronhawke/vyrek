@@ -69,6 +69,10 @@ next-env.d.ts
 /docs/funnel-walkthrough-screenshots/
 /docs/live-assess/
 
+# Source-photo working folders. Drop into /public/ once approved + sized.
+/photos/
+/screenshots/
+
 # Internal brief documents (keep locally, not in public repo)
 /docs/vyrek-*.md
 /docs/NIGHT-OF-*.md
