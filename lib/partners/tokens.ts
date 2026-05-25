@@ -1,15 +1,17 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 /**
- * Onboarding token helpers. Token = base64url(HMAC_SHA256(secret, appId)).
- * No DB column needed; the link sent in the approval email is a deterministic
- * function of the application id + a server secret. Anyone with the secret
- * can mint a token; nobody without it can.
+ * Onboarding token helpers.
  *
- * Secret comes from PARTNER_ONBOARDING_SECRET; falls back to
- * SUPABASE_SECRET_KEY so the link is always signable even before the user
- * sets a dedicated secret.
+ * Token format: `${applicationId}.${expiresAt}.${HMAC(secret, "partner-onboard:" + appId + ":" + expiresAt)}`
+ *
+ * Pre-fix the token was HMAC(appId) with no expiry, so any leaked approval
+ * email could be replayed forever. New tokens carry a 14-day expiry; old
+ * tokens (no expiry segment) are rejected. Secret falls back to
+ * SUPABASE_SECRET_KEY so the link is always signable.
  */
+
+const DEFAULT_TTL_SECONDS = 60 * 60 * 24 * 14;
 
 function secret(): string {
   const s =
@@ -24,14 +26,18 @@ function secret(): string {
   return s;
 }
 
-function sign(applicationId: string): string {
+function sign(applicationId: string, expiresAt: number): string {
   return createHmac("sha256", secret())
-    .update(`partner-onboard:${applicationId}`)
+    .update(`partner-onboard:${applicationId}:${expiresAt}`)
     .digest("base64url");
 }
 
-export function mintOnboardingToken(applicationId: string): string {
-  return `${applicationId}.${sign(applicationId)}`;
+export function mintOnboardingToken(
+  applicationId: string,
+  ttlSeconds: number = DEFAULT_TTL_SECONDS,
+): string {
+  const expiresAt = Math.floor(Date.now() / 1000) + ttlSeconds;
+  return `${applicationId}.${expiresAt}.${sign(applicationId, expiresAt)}`;
 }
 
 export function verifyOnboardingToken(
@@ -40,13 +46,21 @@ export function verifyOnboardingToken(
   if (!token || typeof token !== "string") {
     return { ok: false, reason: "missing token" };
   }
-  const idx = token.indexOf(".");
-  if (idx <= 0) return { ok: false, reason: "malformed token" };
-  const applicationId = token.slice(0, idx);
-  const presented = token.slice(idx + 1);
+  const parts = token.split(".");
+  if (parts.length !== 3) {
+    return { ok: false, reason: "malformed token" };
+  }
+  const [applicationId, expStr, presented] = parts;
+  const expiresAt = Number(expStr);
+  if (!Number.isFinite(expiresAt)) {
+    return { ok: false, reason: "bad expiry" };
+  }
+  if (expiresAt < Math.floor(Date.now() / 1000)) {
+    return { ok: false, reason: "expired" };
+  }
   let expected: string;
   try {
-    expected = sign(applicationId);
+    expected = sign(applicationId, expiresAt);
   } catch (e) {
     return {
       ok: false,

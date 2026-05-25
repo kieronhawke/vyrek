@@ -80,8 +80,13 @@ export const limiters = {
   presencePing: build("rl:p_ping", 60, "1 m"),
   magicLink: build("rl:mlink", 5, "1 h"),
   newsletter: build("rl:news", 5, "1 h"),
+  emailGateIp: build("rl:eg_ip", 20, "1 h"),
+  emailGateEmail: build("rl:eg_em", 5, "1 h"),
+  feedback: build("rl:fb", 20, "1 h"),
+  partnerClick: build("rl:p_click", 60, "1 h"),
   // Authenticated surfaces (lighter throttle)
   accountCreate: build("rl:acct", 10, "1 h"),
+  accountCreateIp: build("rl:acct_ip", 8, "1 d"),
 } as const;
 
 /** Pull an IP for keying. Falls back to "anon". */

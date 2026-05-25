@@ -23,15 +23,17 @@ export async function GET() {
       .order("last_seen", { ascending: false })
       .limit(500);
     if (error) {
+      console.error("[/api/admin/live] supabase error", error);
       return NextResponse.json(
-        { ok: false, reason: error.message },
+        { ok: false, reason: "query-failed" },
         { status: 500 },
       );
     }
     return NextResponse.json({ ok: true, sessions: data ?? [] });
   } catch (e) {
+    console.error("[/api/admin/live] threw", e);
     return NextResponse.json(
-      { ok: false, reason: e instanceof Error ? e.message : "unknown" },
+      { ok: false, reason: "server-error" },
       { status: 500 },
     );
   }

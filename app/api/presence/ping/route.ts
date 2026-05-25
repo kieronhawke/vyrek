@@ -1,7 +1,26 @@
 import { NextResponse } from "next/server";
+import { createHash } from "node:crypto";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { supabaseServer } from "@/lib/supabase/server";
 import { limiters, requestIp } from "@/lib/rate-limit";
+
+/**
+ * Derive the canonical row key for a presence ping. The client-chosen
+ * `sid` could be guessed or scraped, letting a third party overwrite
+ * another visitor's row (sid was the primary key). We mix in the source
+ * IP so the row is bound to the network it was first seen from.
+ *
+ * Returns a hex digest, prefixed `s_` so it sorts before any legacy
+ * caller-supplied sid still in the table.
+ */
+function derivePresenceKey(sid: string, ip: string): string {
+  const h = createHash("sha256");
+  h.update("vyrek:presence:");
+  h.update(sid);
+  h.update(":");
+  h.update(ip);
+  return `s_${h.digest("hex").slice(0, 60)}`;
+}
 
 export const runtime = "nodejs";
 
@@ -74,9 +93,10 @@ export async function POST(req: Request) {
   try {
     const admin = supabaseAdmin();
     const now = new Date().toISOString();
+    const rowKey = derivePresenceKey(sid, ip);
     await admin.from("live_sessions").upsert(
       {
-        id: sid,
+        id: rowKey,
         path,
         country: req.headers.get("x-vercel-ip-country"),
         // Cap header lengths to bound row size in Postgres `text`.
@@ -109,7 +129,8 @@ export async function DELETE(req: Request) {
   }
   try {
     const admin = supabaseAdmin();
-    await admin.from("live_sessions").delete().eq("id", sid);
+    const ip = requestIp(req);
+    await admin.from("live_sessions").delete().eq("id", derivePresenceKey(sid, ip));
   } catch {}
   return NextResponse.json({ ok: true });
 }

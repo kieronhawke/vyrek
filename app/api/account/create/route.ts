@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { supabaseServer } from "@/lib/supabase/server";
+import { limiters, requestIp } from "@/lib/rate-limit";
+import { readPartnerAttributionCookie } from "@/lib/partners/attribution-cookie";
 import {
   determineProgramme,
   determineStartDate,
@@ -26,58 +28,9 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
-/**
- * Stage 12 (PART 11.10) — IP velocity rate limit.
- *
- * Max 5 account creations per IP per 24h. In-process Map; per Vercel
- * function instance. Cluster-wide enforcement requires Upstash (env var
- * `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`) which isn't yet
- * configured. The instance-local limit still catches the common case
- * of one IP hammering signups.
- */
-const IP_LIMIT_PER_24H = 5;
-const ipCounters = new Map<string, number[]>();
-
-function ipFromRequest(req: Request): string {
-  return (
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    req.headers.get("x-real-ip") ??
-    "unknown"
-  );
-}
-
-function pruneIpCounters(now: number) {
-  const cutoff = now - 24 * 60 * 60 * 1000;
-  for (const [ip, stamps] of ipCounters) {
-    const kept = stamps.filter((t) => t >= cutoff);
-    if (kept.length === 0) ipCounters.delete(ip);
-    else ipCounters.set(ip, kept);
-  }
-}
-
-function checkIpVelocity(ip: string): {
-  ok: boolean;
-  count: number;
-  retryAfterSeconds?: number;
-} {
-  const now = Date.now();
-  pruneIpCounters(now);
-  const cutoff = now - 24 * 60 * 60 * 1000;
-  const stamps = (ipCounters.get(ip) ?? []).filter((t) => t >= cutoff);
-  if (stamps.length >= IP_LIMIT_PER_24H) {
-    // Retry window opens when the oldest in-window stamp rolls off.
-    const oldest = Math.min(...stamps);
-    const retryAfterMs = Math.max(0, oldest + 24 * 60 * 60 * 1000 - now);
-    return {
-      ok: false,
-      count: stamps.length,
-      retryAfterSeconds: Math.ceil(retryAfterMs / 1000),
-    };
-  }
-  stamps.push(now);
-  ipCounters.set(ip, stamps);
-  return { ok: true, count: stamps.length };
-}
+// IP velocity rate-limit: enforced via Upstash (limiters.accountCreateIp,
+// 8 signups per IP per 24h). When UPSTASH env vars are unset (local dev)
+// the limiter falls back to an in-process map per lib/rate-limit.ts.
 
 function generateReferralCode(): string {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -154,16 +107,16 @@ export async function POST(req: Request) {
     );
   }
 
-  // IP velocity rate-limit: max IP_LIMIT_PER_24H signups per source IP per
-  // 24 hours. Blocks the trivial multi-account-from-one-IP referral abuse
-  // pattern. Instance-local enforcement only; see comment on ipCounters.
-  const ip = ipFromRequest(req);
-  const velocity = checkIpVelocity(ip);
-  if (!velocity.ok) {
-    console.warn(
-      `[/api/account/create] IP velocity exceeded for ${ip} (${velocity.count} in 24h)`,
+  // IP velocity rate-limit: 8 signups per source IP per 24 hours, enforced
+  // cluster-wide via Upstash (falls back to in-process for local dev).
+  // Blocks the trivial multi-account-from-one-IP referral abuse pattern.
+  const ip = requestIp(req);
+  const velocity = await limiters.accountCreateIp.limit(ip);
+  if (!velocity.success) {
+    const retryAfter = Math.max(
+      60,
+      Math.ceil(((velocity.reset ?? Date.now() + 3_600_000) - Date.now()) / 1000),
     );
-    const retryAfter = velocity.retryAfterSeconds ?? 24 * 60 * 60;
     const hours = Math.max(1, Math.round(retryAfter / 3600));
     return NextResponse.json(
       {
@@ -268,12 +221,16 @@ export async function POST(req: Request) {
       scheduled_for: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
     });
 
-    // 4. Partner attribution. Read the vyrek_partner cookie set by /p/<slug>
-    //    and create a pending referral. Self-referrals (where the partner's
-    //    own email matches the referee's) are dropped silently.
+    // 4. Partner attribution. Read the signed vyrek_partner cookie set by
+    //    /p/<slug>, verify the HMAC + expiry, and create a pending referral.
+    //    Self-referrals (where the partner's own email matches the referee's)
+    //    are dropped silently. Pre-fix, the cookie was unsigned and anyone
+    //    could stamp `vyrek_partner=<any uuid>` to force-attribute referrals.
     try {
       const cookieStore = await cookies();
-      const partnerId = cookieStore.get("vyrek_partner")?.value;
+      const rawCookie = cookieStore.get("vyrek_partner")?.value;
+      const verified = readPartnerAttributionCookie(rawCookie);
+      const partnerId = verified.ok ? verified.partnerId : null;
       const subId = cookieStore.get("vyrek_partner_sub")?.value ?? null;
       if (partnerId) {
         const { data: partner } = await sb
@@ -328,15 +285,12 @@ export async function POST(req: Request) {
       raceDate: raceDate.toISOString(),
     });
   } catch (err) {
-    // Don't leak DB errors to the client; log on the server. Return 500 so
-    // the client can decide whether to retry, but the auth user already
-    // exists at this point so the funnel proceeds either way.
-     
+    // Don't leak DB errors to the client; log server-side only. Return
+    // 500 so the client can decide whether to retry; the auth user
+    // already exists at this point so the funnel proceeds either way.
     console.error("[/api/account/create] failed", err);
-    const message =
-      err instanceof Error ? err.message: "unknown server error";
     return NextResponse.json(
-      { ok: false, reason: "persist-failed", detail: message },
+      { ok: false, reason: "persist-failed" },
       { status: 500 },
     );
   }

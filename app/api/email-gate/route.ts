@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { limiters, requestIp } from "@/lib/rate-limit";
 import {
   determineProgramme,
   type RunnaQuizAnswers,
@@ -91,6 +92,27 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
+
+  // Rate-limit: 20 per IP per hour, 5 per email per hour. Defeats the
+  // "flood every emailable-looking address" attack that would otherwise
+  // pollute customers / quiz_responses / abandoned_plans tables and burn
+  // Resend quota when the +1h recovery worker fires.
+  const ip = requestIp(req);
+  const ipR = await limiters.emailGateIp.limit(ip);
+  if (!ipR.success) {
+    return NextResponse.json(
+      { ok: false, reason: "rate-limited" },
+      { status: 429 },
+    );
+  }
+  const emR = await limiters.emailGateEmail.limit(email);
+  if (!emR.success) {
+    return NextResponse.json(
+      { ok: false, reason: "rate-limited" },
+      { status: 429 },
+    );
+  }
+
   if (uuid && !UUID_RE.test(uuid)) {
     return NextResponse.json(
       { ok: false, reason: "invalid-uuid" },

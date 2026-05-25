@@ -43,8 +43,9 @@ export async function POST(req: Request) {
   try {
     secret = getStripeWebhookSecret();
   } catch (err) {
+    console.error("[stripe/webhook] secret missing", err);
     return NextResponse.json(
-      { error: "WEBHOOK_NOT_CONFIGURED", detail: String(err) },
+      { error: "WEBHOOK_NOT_CONFIGURED" },
       { status: 503 },
     );
   }
@@ -71,6 +72,39 @@ export async function POST(req: Request) {
   }
 
   const admin = supabaseAdmin();
+
+  // Idempotency: insert the event id; if a row already exists (Stripe
+  // retry, dashboard replay) we ack the delivery and skip side effects.
+  // Pre-fix, `invoice.payment_succeeded` would double-credit the partner
+  // ledger on every retry.
+  {
+    const { data: dedup, error: dedupErr } = await admin
+      .from("stripe_events")
+      .insert({ event_id: event.id, event_type: event.type })
+      .select("event_id")
+      .maybeSingle();
+    if (dedupErr) {
+      const code = (dedupErr as { code?: string }).code;
+      if (code === "23505") {
+        console.info(
+          `[stripe/webhook] duplicate event ${event.id} (${event.type}), skipping`,
+        );
+        return NextResponse.json({ received: true, deduped: true });
+      }
+      // If the dedupe table is missing (migration not applied), don't
+      // block the funnel; log and continue. The webhook handler is still
+      // safer than no-handler.
+      if (code === "42P01") {
+        console.warn(
+          "[stripe/webhook] stripe_events table missing; idempotency disabled until 0006 is applied",
+        );
+      } else {
+        console.error("[stripe/webhook] dedupe insert failed", dedupErr);
+      }
+    } else if (!dedup) {
+      console.warn("[stripe/webhook] dedupe returned no row, continuing");
+    }
+  }
 
   try {
     switch (event.type) {

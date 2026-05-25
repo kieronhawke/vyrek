@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { mintPartnerAttributionCookie } from "@/lib/partners/attribution-cookie";
 
 export const runtime = "nodejs";
 
@@ -58,12 +59,13 @@ export async function GET(
 
   const res = NextResponse.redirect(new URL(dest, url.origin), 302);
   if (partnerId) {
-    res.cookies.set("vyrek_partner", partnerId, {
+    const signed = mintPartnerAttributionCookie(partnerId);
+    res.cookies.set("vyrek_partner", signed.value, {
       httpOnly: true,
       secure: true,
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 90,
+      maxAge: signed.maxAgeSeconds,
     });
     if (subId) {
       res.cookies.set("vyrek_partner_sub", subId, {

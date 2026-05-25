@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { timingSafeEqual } from "node:crypto";
 
 export const runtime = "nodejs";
 
@@ -29,15 +30,23 @@ function indexNowKey(): string | null {
 /**
  * Bearer auth check. Either ADMIN bearer or CRON_SECRET. Without this,
  * the endpoint was a free SEO-quota burn target. Security audit H-6.
+ * Comparisons are constant-time to defeat timing side-channels.
  */
+function eqConstantTime(a: string, b: string): boolean {
+  const buf1 = Buffer.from(a);
+  const buf2 = Buffer.from(b);
+  if (buf1.length !== buf2.length) return false;
+  return timingSafeEqual(buf1, buf2);
+}
+
 function authorised(req: Request): boolean {
   const auth = req.headers.get("authorization") ?? "";
   const bearer = auth.startsWith("Bearer ") ? auth.slice(7).trim() : "";
   if (!bearer) return false;
   const cronSecret = process.env.CRON_SECRET?.trim();
-  if (cronSecret && bearer === cronSecret) return true;
+  if (cronSecret && eqConstantTime(bearer, cronSecret)) return true;
   const indexnowAdmin = process.env.INDEXNOW_ADMIN_TOKEN?.trim();
-  if (indexnowAdmin && bearer === indexnowAdmin) return true;
+  if (indexnowAdmin && eqConstantTime(bearer, indexnowAdmin)) return true;
   return false;
 }
 

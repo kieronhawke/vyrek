@@ -23,25 +23,28 @@ function secret(): string {
   return s;
 }
 
-function sign(partnerId: string): string {
+function sign(partnerId: string, expiresAt: number): string {
   return createHmac("sha256", secret())
-    .update(`partner-session:${partnerId}`)
+    .update(`partner-session:${partnerId}:${expiresAt}`)
     .digest("base64url");
 }
 
 export function mintPartnerSessionCookieValue(partnerId: string): string {
-  return `${partnerId}.${sign(partnerId)}`;
+  const expiresAt = Math.floor(Date.now() / 1000) + TTL_SECONDS;
+  return `${partnerId}.${expiresAt}.${sign(partnerId, expiresAt)}`;
 }
 
 export function parsePartnerSessionCookieValue(
   raw: string,
 ): { ok: true; partnerId: string } | { ok: false } {
-  const idx = raw.indexOf(".");
-  if (idx <= 0) return { ok: false };
-  const partnerId = raw.slice(0, idx);
-  const presented = raw.slice(idx + 1);
+  const parts = raw.split(".");
+  if (parts.length !== 3) return { ok: false };
+  const [partnerId, expStr, presented] = parts;
+  const expiresAt = Number(expStr);
+  if (!Number.isFinite(expiresAt)) return { ok: false };
+  if (expiresAt < Math.floor(Date.now() / 1000)) return { ok: false };
   try {
-    const expected = sign(partnerId);
+    const expected = sign(partnerId, expiresAt);
     const a = Buffer.from(presented, "base64url");
     const b = Buffer.from(expected, "base64url");
     if (a.length !== b.length) return { ok: false };

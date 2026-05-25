@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { limiters, requestIp } from "@/lib/rate-limit";
 import { logEvent } from "@/lib/admin/events";
 
 /**
@@ -24,6 +25,14 @@ const ALLOWED_REASONS = new Set([
 ]);
 
 export async function POST(req: Request) {
+  // Rate limit so this can't be hammered to fill admin_events. 20/h/IP.
+  const ip = requestIp(req);
+  const r = await limiters.feedback.limit(ip);
+  if (!r.success) {
+    // Return 200 — feedback drops are non-fatal; the client must not error.
+    return NextResponse.json({ ok: true, rateLimited: true });
+  }
+
   let body: { reason?: string | null; note?: string | null; page?: string };
   try {
     body = (await req.json()) as {
@@ -41,6 +50,10 @@ export async function POST(req: Request) {
       : null;
   const note =
     typeof body.note === "string" ? body.note.trim().slice(0, 280) : null;
+  // Cap `page` length and type so a 1 MB string can't be smuggled into
+  // admin_events.metadata. Security audit H-9.
+  const page =
+    typeof body.page === "string" ? body.page.slice(0, 256) : null;
 
   if (!reason && !note) {
     return NextResponse.json({ ok: true });
@@ -72,7 +85,7 @@ export async function POST(req: Request) {
       source: "stripe-checkout-return",
       reason,
       note,
-      page: body.page ?? null,
+      page,
     },
   }).catch(() => {});
 

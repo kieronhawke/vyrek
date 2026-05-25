@@ -207,7 +207,6 @@ export async function POST(req: Request) {
     return setPartnerSessionCookie(res, inserted.id);
   } catch (e) {
     console.error("[/api/partners/onboard] failed", e);
-    const msg = e instanceof Error ? e.message : "Server error";
-    return NextResponse.json({ ok: false, error: msg }, { status: 500 });
+    return NextResponse.json({ ok: false, error: "Server error" }, { status: 500 });
   }
 }

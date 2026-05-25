@@ -96,6 +96,18 @@ export function useQuizStateV3() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setState(next);
     setHydrated(true);
+
+    // Multi-tab sync: if the user has the quiz open in two tabs, the
+    // last one to write would otherwise overwrite the other tab's
+    // in-memory state with stale data on next interaction. Listen for
+    // storage events and rehydrate so both tabs stay coherent.
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== STORAGE_KEY || !e.newValue) return;
+      const fresh = readState();
+      if (fresh) setState(fresh);
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
   }, []);
 
   const setAnswer = useCallback(

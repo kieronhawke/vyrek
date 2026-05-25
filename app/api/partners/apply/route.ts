@@ -19,16 +19,24 @@ type Body = {
   termsAccepted?: boolean;
 };
 
+// Tight email regex; matches what /api/email-gate accepts so a value
+// good enough for one funnel is good enough for the other.
+const EMAIL_RE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,24}$/;
+
 function validate(b: Body): string | null {
-  if (!b.name || b.name.length < 2) return "Please enter your name.";
-  if (!b.email || !/.+@.+\..+/.test(b.email)) return "Please enter a valid email.";
-  if (!b.country) return "Please enter your country.";
+  if (!b.name || b.name.trim().length < 2) return "Please enter your name.";
+  if ((b.name ?? "").length > 120) return "Name is too long.";
+  if (!b.email || b.email.length > 254 || !EMAIL_RE.test(b.email))
+    return "Please enter a valid email.";
+  if (!b.country || b.country.trim().length < 2)
+    return "Please enter your country.";
+  if ((b.country ?? "").length > 64) return "Country name is too long.";
   if (!b.platform) return "Please choose a primary platform.";
   if (!b.followerCount) return "Please choose a follower count range.";
-  if (!b.contentDescription || b.contentDescription.length < 5)
-    return "Please describe your content briefly.";
-  if (!b.whyVyrek || b.whyVyrek.length < 5)
-    return "Please tell us why Vyrek fits your audience.";
+  if (!b.contentDescription || b.contentDescription.trim().length < 12)
+    return "Tell us a bit more about your content (12+ characters).";
+  if (!b.whyVyrek || b.whyVyrek.trim().length < 20)
+    return "Tell us why Vyrek fits your audience (20+ characters).";
   if (!b.primaryUrl || !/^https?:\/\//.test(b.primaryUrl))
     return "Please paste a full URL (including https://).";
   if (!Array.isArray(b.promotionMethods) || b.promotionMethods.length === 0)

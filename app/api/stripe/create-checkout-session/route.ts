@@ -17,12 +17,9 @@ export async function POST() {
   try {
     priceId = getStripePriceId();
   } catch (err) {
+    console.error("[stripe/checkout] price id missing", err);
     return NextResponse.json(
-      {
-        error: "STRIPE_NOT_CONFIGURED",
-        detail:
-          err instanceof Error ? err.message : "missing stripe env vars",
-      },
+      { error: "STRIPE_NOT_CONFIGURED" },
       { status: 503 },
     );
   }
@@ -111,12 +108,6 @@ export async function POST() {
   } catch (err) {
      
     console.error("[/api/stripe/create-checkout-session] failed", err);
-    return NextResponse.json(
-      {
-        error: "STRIPE_ERROR",
-        detail: err instanceof Error ? err.message : "unknown",
-      },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "STRIPE_ERROR" }, { status: 500 });
   }
 }

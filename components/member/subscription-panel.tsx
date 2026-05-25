@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import Link from "next/link";
 import type { MemberContext } from "@/lib/member/auth";
+import { ManageBillingButton } from "@/components/member/manage-billing-button";
 
 function statusTone(status: string) {
   if (status === "active") return "border-emerald-500/30 bg-emerald-500/10 text-emerald-300";
@@ -63,22 +64,9 @@ export function MemberSubscriptionPanel({
             </dd>
           </div>
         ) : null}
-        <div className="flex justify-between gap-3">
-          <dt className="text-vyrek-text-tertiary">Stripe subscription</dt>
-          <dd className="font-mono text-xs text-vyrek-text">
-            {subscription.stripe_subscription_id ?? "-"}
-          </dd>
-        </div>
       </dl>
       <div className="mt-5 flex flex-wrap gap-2">
-        <a
-          href="https://billing.stripe.com/p/login/test_28o5ms0vU3HhfTOaAA"
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex h-10 items-center rounded-pill border border-vyrek-border bg-vyrek-base px-4 text-sm text-vyrek-text"
-        >
-          Manage billing ↗
-        </a>
+        <ManageBillingButton />
         <a
           href="mailto:support@vyrek.com?subject=Subscription change"
           className="inline-flex h-10 items-center rounded-pill border border-vyrek-border bg-vyrek-base px-4 text-sm text-vyrek-text-secondary"

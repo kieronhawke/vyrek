@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { timingSafeEqual } from "node:crypto";
 import { HYROX_EVENTS } from "@/lib/hyrox-events";
 import {
   milestoneFor,
@@ -116,7 +117,10 @@ export async function GET(req: Request) {
     );
   }
   const auth = req.headers.get("authorization") ?? "";
-  if (auth !== `Bearer ${secret}`) {
+  const expected = `Bearer ${secret}`;
+  const a = Buffer.from(auth);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length || !timingSafeEqual(a, b)) {
     return NextResponse.json({ ok: false, error: "unauthorised" }, { status: 401 });
   }
 
