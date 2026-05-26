@@ -16,9 +16,31 @@ import { PRICING } from "@/lib/pricing";
 import { FAQS } from "@/lib/faqs";
 
 export const metadata: Metadata = {
-  title: "Pricing, £8.99/mo Hyrox training, first week free",
-  description: `Vyrek Hyrox membership is ${PRICING.monthlyDisplay}/month with a 7-day free trial. All four programmes included. First Race, Sub-90, Doubles, Pro. Cancel anytime in two taps, no minimum term.`,
+  title: "Pricing. £8.99/mo Hyrox training, first week free · Vyrek",
+  description: `${PRICING.monthlyDisplay}/month, 7-day free trial. All four programmes included. First Race, Sub-90, Doubles, Pro. Cancel in two taps, no minimum term.`,
   alternates: { canonical: "/pricing" },
+  openGraph: {
+    title: "Pricing, £8.99/mo Hyrox training",
+    description:
+      "Personalised 12-week Hyrox plan, all four programmes, £8.99/mo with a 7-day free trial. Cancel in two taps.",
+    url: "/pricing",
+    type: "website",
+    images: [
+      {
+        url: "/media/images/v2/bento-plan.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Open Vyrek dated weekly plan",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pricing, £8.99/mo Hyrox training",
+    description:
+      "All four programmes, dated weekly plan, £8.99/mo with a 7-day free trial.",
+    images: ["/media/images/v2/bento-plan.jpg"],
+  },
 };
 
 // 4 most common questions for the mini-FAQ on the pricing page.

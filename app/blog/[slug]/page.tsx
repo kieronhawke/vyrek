@@ -192,12 +192,13 @@ export default async function BlogPostPage({
               </p>
               <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-vyrek-text-tertiary">
                 <div className="flex items-center gap-2">
-                  <div className="size-7 overflow-hidden rounded-full bg-vyrek-overlay">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                  <div className="relative size-7 overflow-hidden rounded-full bg-vyrek-overlay">
+                    <Image
                       src={post.author.photo}
-                      alt=""
-                      className="h-full w-full object-cover"
+                      alt={`Portrait of ${post.author.name}`}
+                      fill
+                      sizes="28px"
+                      className="object-cover"
                     />
                   </div>
                   <span>{post.author.name}</span>
@@ -226,9 +227,12 @@ export default async function BlogPostPage({
             </div>
 
             <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_minmax(0,720px)_1fr]">
-              <aside className="lg:col-start-1 lg:row-start-1">
+              <div
+                className="lg:col-start-1 lg:row-start-1"
+                aria-label="Table of contents"
+              >
                 <TableOfContents />
-              </aside>
+              </div>
               <div
                 id="article-body"
                 className="lg:col-start-2 lg:row-start-1"

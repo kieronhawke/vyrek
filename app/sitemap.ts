@@ -44,19 +44,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/legal/refunds`, lastModified: now, priority: 0.3, changeFrequency: "yearly" },
   ];
 
-  const programmeRoutes: MetadataRoute.Sitemap = PROGRAMMES.map((p) => ({
-    url: `${SITE_URL}/quiz?program=${p.slug}`,
-    lastModified: now,
-    priority: 0.7,
-    changeFrequency: "monthly",
-  }));
-
-  const programmeAnchorRoutes: MetadataRoute.Sitemap = PROGRAMMES.map((p) => ({
-    url: `${SITE_URL}/programmes#${p.slug}`,
-    lastModified: now,
-    priority: 0.6,
-    changeFrequency: "monthly",
-  }));
+  // Query-string and anchor variants of canonical pages were removed from
+  // the sitemap on 2026-05-26: Google treats `/quiz?program=first-race`
+  // and `/programmes#first-race` as the same URL as their canonical
+  // parent, so listing them only adds noise and dilutes crawl budget.
+  // Bring them back if per-programme detail pages ship under
+  // /programmes/[slug] (each gets its own canonical URL then).
 
   const posts = await listPostMeta();
   const postRoutes: MetadataRoute.Sitemap = posts.map((p) => ({
@@ -145,8 +138,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
-    ...programmeRoutes,
-    ...programmeAnchorRoutes,
     ...postRoutes,
     ...categoryRoutes,
     ...authorRoutes,

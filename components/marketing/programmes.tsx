@@ -118,7 +118,7 @@ function ProgrammeCard({
           viewport-sized WebP/AVIF instead of the raw 400-600 KB JPEG. */}
       <Image
         src={programme.image}
-        alt=""
+        alt={`${programme.name} programme. ${programme.audience}`}
         fill
         sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 78vw"
         className="-z-20 grayscale object-cover transition-transform duration-slow ease-out group-hover:scale-[1.04]"

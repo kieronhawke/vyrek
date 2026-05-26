@@ -20,6 +20,28 @@ export const metadata: Metadata = {
     "Earn 30% to 50% lifetime recurring commission referring athletes to Vyrek. Flat tiered rates, monthly BACS payouts, no spammy gimmicks.",
   robots: { index: true, follow: true },
   alternates: { canonical: "/partners" },
+  openGraph: {
+    title: "Vyrek Partner Programme. Recurring revenue with Vyrek",
+    description:
+      "30 to 50 percent lifetime recurring commission referring athletes to Vyrek. Monthly BACS payouts. Apply in three minutes.",
+    url: "/partners",
+    type: "website",
+    images: [
+      {
+        url: "/media/images/v2/partners-coach-warm.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Vyrek coach in a gym session",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Vyrek Partner Programme",
+    description:
+      "Earn 30 to 50 percent lifetime commission. Monthly BACS payouts.",
+    images: ["/media/images/v2/partners-coach-warm.jpg"],
+  },
 };
 
 const STEPS = [

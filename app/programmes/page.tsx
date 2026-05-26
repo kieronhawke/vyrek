@@ -10,10 +10,32 @@ import { RevealOnView } from "@/components/shared/reveal-on-view";
 import { siteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
-  title: "Programmes",
+  title: "Hyrox programmes. 12-week plans by an Elite 15 coach · Vyrek",
   description:
-    "Four 12-week Hyrox programmes: First Race, Sub-90, Doubles, Pro. Pick where you are. We'll meet you there.",
+    "Four 12-week Hyrox programmes: First Race, Sub-90, Doubles, Pro. Pick where you are, we'll meet you there. Built by an Elite 15 coach.",
   alternates: { canonical: "/programmes" },
+  openGraph: {
+    title: "Hyrox programmes, 12-week plans by an Elite 15 coach",
+    description:
+      "Four 12-week paths to Hyrox race-ready: First Race, Sub-90, Doubles, Pro.",
+    url: "/programmes",
+    type: "website",
+    images: [
+      {
+        url: "/media/images/v2/programme-pro.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Hyrox athlete mid-station",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hyrox programmes, 12-week plans by an Elite 15 coach",
+    description:
+      "Four 12-week paths: First Race, Sub-90, Doubles, Pro.",
+    images: ["/media/images/v2/programme-pro.jpg"],
+  },
 };
 
 type SampleDay = {
@@ -256,7 +278,7 @@ export default function ProgrammesPage() {
                   <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated md:sticky md:top-32">
                     <Image
                       src={p.image}
-                      alt=""
+                      alt={`${p.name} programme imagery, ${p.audience}`}
                       fill
                       sizes="(min-width: 768px) 40vw, 100vw"
                       priority={i === 0}
