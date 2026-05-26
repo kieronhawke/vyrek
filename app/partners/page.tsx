@@ -205,7 +205,7 @@ export default function PartnersPage() {
                 <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
                   [ Worked example ]
                 </p>
-                <p className="mt-4 text-3xl font-black tracking-[-0.02em] text-vyrek-text md:text-4xl">
+                <p className="mt-4 text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl lg:text-4xl">
                   £249<span className="text-vyrek-text-tertiary">/mo</span>
                 </p>
                 <p className="mt-3 text-sm text-vyrek-text-secondary">
@@ -217,7 +217,7 @@ export default function PartnersPage() {
                 <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
                   [ Commission ]
                 </p>
-                <p className="mt-4 text-3xl font-black tracking-[-0.02em] text-vyrek-text md:text-4xl">
+                <p className="mt-4 text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl lg:text-4xl">
                   30-50%<span className="text-vyrek-text-tertiary"> lifetime</span>
                 </p>
                 <p className="mt-3 text-sm text-vyrek-text-secondary">
@@ -229,7 +229,7 @@ export default function PartnersPage() {
                 <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
                   [ Payouts ]
                 </p>
-                <p className="mt-4 text-3xl font-black tracking-[-0.02em] text-vyrek-text md:text-4xl">
+                <p className="mt-4 text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl lg:text-4xl">
                   Monthly BACS
                 </p>
                 <p className="mt-3 text-sm text-vyrek-text-secondary">

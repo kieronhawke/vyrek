@@ -164,7 +164,12 @@ export function MarketingNav() {
         </div>
       </div>
 
-      {/* Mobile drawer, slides down beneath the nav bar */}
+      {/* Mobile drawer, slides down beneath the nav bar. Padding-top
+          accounts for: cookie banner height (--vyrek-consent-h, 0 when
+          dismissed) + iOS safe-top inset + 4rem nav bar height. Pre-fix
+          the cookie-banner offset was missing, so when the cookie strip
+          was visible the drawer card slid up over the nav bar and hid
+          the logo + close-button hamburger. */}
       <div
         id="mobile-nav-drawer"
         aria-hidden={!open}
@@ -177,7 +182,7 @@ export function MarketingNav() {
         inert={!open}
         className={cn(
           "fixed inset-x-0 top-0 z-40 origin-top md:hidden",
-          "pt-[calc(var(--safe-top)+4rem)]",
+          "pt-[calc(var(--vyrek-consent-h,0px)+var(--safe-top)+4rem)]",
           "transition-[transform,opacity] duration-base ease-out",
           open ? "translate-y-0 opacity-100": "pointer-events-none -translate-y-2 opacity-0",
         )}

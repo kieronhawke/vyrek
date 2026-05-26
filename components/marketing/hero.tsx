@@ -95,9 +95,10 @@ export function Hero() {
             candidate. */}
         <Image
           src="/media/images/v2/hero-cinematic.jpg"
-          alt=""
+          alt="Hyrox athlete mid-session in a training gym"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />

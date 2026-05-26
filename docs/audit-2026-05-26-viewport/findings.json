@@ -1,0 +1,26 @@
+[
+  {
+    "vp": "tablet-portrait",
+    "path": "/partners",
+    "kind": "overflow",
+    "docW": 791,
+    "vpW": 768,
+    "offenders": [
+      {
+        "tag": "HEADER",
+        "cls": "fixed inset-x-0 z-50 transition-[colors,top] duration-base ease-out top-[var(--v",
+        "right": 791
+      },
+      {
+        "tag": "DIV",
+        "cls": "h-16 transition-[background,backdrop-filter,border-color] duration-base ease-out",
+        "right": 791
+      },
+      {
+        "tag": "DIV",
+        "cls": "mx-auto flex h-full max-w-7xl items-center justify-between gap-3 px-5 md:px-8",
+        "right": 791
+      }
+    ]
+  }
+]
