@@ -272,17 +272,32 @@ input, textarea, select {
   font-size: 16px;
 }
 
-/* 48px tap targets (iOS HIG / WCAG AAA), per brief §6 */
+/* 48px tap targets (iOS HIG / WCAG AAA), per brief §6.
+ *
+ * Scoped so inline links inside prose, breadcrumbs, and tag chips can
+ * be smaller — they're surrounded by enough negative space that the
+ * surrounding text doesn't accidentally trap the tap. Targets that
+ * carry the `inline-tap` data attribute opt out explicitly. */
 button, a, [role="button"] {
   min-height: 48px;
   min-width: 48px;
 }
+a.inline, [data-inline-tap], .prose a, nav[aria-label="Breadcrumb"] a {
+  min-height: 0;
+  min-width: 0;
+}
 
+/* Reduced-motion: kill animations + transforms, but KEEP short colour
+ * transitions so hover/focus states still communicate. Pre-fix this
+ * collapsed every transition to 0.01ms which made the focus ring snap
+ * in with no fade and made disabled-state toggling look broken on
+ * macOS Safari with Reduce Motion enabled. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-property: background-color, border-color, color, opacity, box-shadow !important;
+    transition-duration: 120ms !important;
   }
 }
 

@@ -126,7 +126,7 @@ export function MarketingNav() {
             <Link
               ref={ctaRef}
               href={ctaHref}
-              className="hidden h-10 items-center justify-center gap-2 rounded-pill bg-vyrek-accent px-4 text-sm font-semibold uppercase tracking-wide text-[#0A0A0A] transition-[background,opacity] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98] will-change-transform sm:inline-flex"
+              className="hidden h-10 items-center justify-center gap-2 rounded-pill bg-vyrek-accent px-4 text-sm font-semibold uppercase tracking-wide text-[#0A0A0A] transition-[background,opacity] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vyrek-text will-change-transform sm:inline-flex"
             >
               {ctaLabel}
             </Link>
@@ -225,7 +225,7 @@ export function MarketingNav() {
             <div className="mx-2 mt-2 border-t border-vyrek-border-subtle" />
             <Link
               href={ctaHref}
-              className="m-2 inline-flex h-12 items-center justify-center rounded-pill bg-vyrek-accent px-5 text-base font-medium tracking-tight text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.98]"
+              className="m-2 inline-flex h-12 items-center justify-center rounded-pill bg-vyrek-accent px-5 text-base font-medium tracking-tight text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vyrek-text"
             >
               {ctaLabel} →
             </Link>

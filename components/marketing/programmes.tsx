@@ -142,7 +142,7 @@ function ProgrammeCard({
         </span>
       </div>
       <div className="relative mt-12 md:mt-0">
-        <h3 className="font-display text-3xl font-bold uppercase leading-[0.95] tracking-[-0.01em] text-vyrek-text md:text-4xl">
+        <h3 className="font-display text-2xl font-bold uppercase leading-[0.95] tracking-[-0.01em] text-vyrek-text md:text-3xl">
           {programme.name}
         </h3>
         <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary md:text-base">

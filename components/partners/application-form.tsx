@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const DRAFT_KEY = "vyrek:partners:apply:draft:v1";
 
 /**
  * Stage 12 (PART 11.4) — Partner application wizard.
@@ -91,9 +93,57 @@ export function PartnerApplicationForm() {
   const [answers, setAnswers] = useState<Answers>(INITIAL);
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [hydrated, setHydrated] = useState(false);
+
+  // Restore any in-flight draft on mount. The partner application was
+  // previously component-state only; refreshing the tab on step 9 dropped
+  // everything. Now we mirror the quiz pattern and persist as the user
+  // progresses.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const raw = window.localStorage.getItem(DRAFT_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as {
+          answers?: Partial<Answers>;
+          screen?: number;
+        };
+        if (parsed.answers) {
+          setAnswers((prev) => ({ ...prev, ...parsed.answers }));
+        }
+        if (typeof parsed.screen === "number") {
+          setScreen(Math.max(1, Math.min(TOTAL_SCREENS, parsed.screen)));
+        }
+      }
+    } catch {
+      // bad / non-JSON draft, ignore
+    }
+    setHydrated(true);
+  }, []);
+
+  // Persist after every change once hydrated. Skipped before hydration so
+  // we don't overwrite the stored draft with the INITIAL defaults.
+  useEffect(() => {
+    if (!hydrated) return;
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem(
+        DRAFT_KEY,
+        JSON.stringify({ answers, screen }),
+      );
+    } catch {
+      // quota exceeded or disabled; non-fatal
+    }
+  }, [answers, screen, hydrated]);
 
   function update<K extends keyof Answers>(key: K, value: Answers[K]) {
     setAnswers((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function clearDraft() {
+    try {
+      window.localStorage.removeItem(DRAFT_KEY);
+    } catch {}
   }
 
   function togglePromotion(method: string) {
@@ -169,6 +219,7 @@ export function PartnerApplicationForm() {
         return;
       }
       setStatus("success");
+      clearDraft();
     } catch (err) {
       setStatus("error");
       setErrorMessage(

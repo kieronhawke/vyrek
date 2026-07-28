@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import type { ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 
 /**
  * Shared chrome for every quiz V3 screen except the welcome carousel,
@@ -31,12 +31,31 @@ export function QuizShell({
 }) {
   const router = useRouter();
   const pct = Math.max(0, Math.min(1, currentScreen / totalScreens));
+  const [confirmOpen, setConfirmOpen] = useState(false);
+
+  // Close the confirm sheet on Escape.
+  useEffect(() => {
+    if (!confirmOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setConfirmOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [confirmOpen]);
+
+  // Lock body scroll while the sheet is open.
+  useEffect(() => {
+    if (!confirmOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [confirmOpen]);
 
   const onClose = () => {
-    if (
-      hasAnswers &&
-      !window.confirm("Leave quiz? Your progress is saved.")
-    ) {
+    if (hasAnswers) {
+      setConfirmOpen(true);
       return;
     }
     router.push("/");
@@ -98,6 +117,56 @@ export function QuizShell({
           </div>
         </footer>
       )}
+
+      {/* Brand-themed leave-quiz confirm. Previously a native
+          window.confirm which looked like a phishing prompt on iOS
+          Safari. */}
+      {confirmOpen ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="quiz-leave-title"
+          className="fixed inset-0 z-[70] flex items-end justify-center bg-black/60 px-5 pb-[max(1rem,var(--safe-bottom))] pt-[max(1rem,var(--safe-top))] backdrop-blur-sm md:items-center"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setConfirmOpen(false);
+          }}
+        >
+          <div className="w-full max-w-sm rounded-2xl border border-vyrek-border bg-vyrek-elevated p-6 shadow-2xl">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+              [ Leave quiz? ]
+            </p>
+            <h2
+              id="quiz-leave-title"
+              className="mt-3 text-xl font-black tracking-[-0.02em] text-vyrek-text md:text-2xl"
+            >
+              Your answers are saved.
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-vyrek-text-secondary">
+              You can pick this up right where you left off when you come
+              back.
+            </p>
+            <div className="mt-5 flex gap-3">
+              <button
+                type="button"
+                onClick={() => setConfirmOpen(false)}
+                className="inline-flex h-11 flex-1 items-center justify-center rounded-pill bg-vyrek-accent px-4 text-sm font-semibold text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.98]"
+              >
+                Stay
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setConfirmOpen(false);
+                  router.push("/");
+                }}
+                className="inline-flex h-11 flex-1 items-center justify-center rounded-pill border border-vyrek-border bg-vyrek-base px-4 text-sm font-medium text-vyrek-text transition-colors hover:border-vyrek-border-strong active:scale-[0.98]"
+              >
+                Leave
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

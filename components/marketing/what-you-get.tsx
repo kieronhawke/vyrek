@@ -64,7 +64,7 @@ export function WhatYouGet() {
     <RevealOnView
       as="section"
       aria-labelledby="what-you-get-heading"
-      className="border-t border-vyrek-border-subtle py-20 md:py-28"
+      className="border-t border-vyrek-border-subtle py-24 md:py-32"
     >
       <Container>
         <header className="mx-auto max-w-2xl text-center">

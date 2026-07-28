@@ -76,3 +76,9 @@ next-env.d.ts
 # Internal brief documents (keep locally, not in public repo)
 /docs/vyrek-*.md
 /docs/NIGHT-OF-*.md
+
+# Audit artefacts (never commit for repo bloat prevention)
+.lighthouse-live/
+docs/audit-*/
+scripts/*-capture.mjs
+scripts/check-leave-dialog.mjs

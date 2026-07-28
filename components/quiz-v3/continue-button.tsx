@@ -26,7 +26,8 @@ export function ContinueButton({
       className={cn(
         "inline-flex h-14 w-full items-center justify-center gap-2 rounded-pill bg-vyrek-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,opacity,transform] duration-fast ease-out",
         "hover:bg-vyrek-accent-hover active:scale-[0.98]",
-        "disabled:cursor-not-allowed disabled:opacity-40",
+        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vyrek-text",
+        "disabled:cursor-not-allowed disabled:opacity-50",
       )}
     >
       {loading ? "One moment..." : label}
