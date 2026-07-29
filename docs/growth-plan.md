@@ -109,6 +109,11 @@ Two distinct paths through the assessment funnel:
 Both end at the same place: the free call with Ben. This is quiz v4
 (pack's 28-screen dual-branch spec) — next build phase.
 
+**Companion documents:** docs/offer-plan.md (offers + delivery),
+docs/seo-domination-playbook.md (the sequenced Google attack plan),
+docs/capture-funnel-spec.md (quiz v4 screen-by-screen + lead delivery
+to Ben by SMS and email).
+
 **Full offer detail: docs/offer-plan.md** — per-tier spec sheets,
 delivery-time maths for Ben, consultation script, retention engine,
 proof strategy, and the decision list.
