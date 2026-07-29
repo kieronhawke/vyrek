@@ -77,6 +77,7 @@ function parseWindowMs(w: string): number {
 export const limiters = {
   // Public POST surfaces (most abusable)
   partnerApply: build("rl:p_apply", 5, "1 h"),
+  consultation: build("rl:consult", 5, "1 h"),
   presencePing: build("rl:p_ping", 60, "1 m"),
   magicLink: build("rl:mlink", 5, "1 h"),
   newsletter: build("rl:news", 5, "1 h"),

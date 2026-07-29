@@ -19,7 +19,7 @@ export async function GET() {
   const lines: string[] = [
     "# Suth Performance",
     "",
-    "> Personalised Hyrox training programmes built by an Elite 15 coach. Members take a three-minute quiz, see a dated Week 1 before paying, then start a 7-day free trial. £8.99 a month after.",
+    "> Personalised Hyrox training programmes built by an Elite 15 coach. Members take a three-minute quiz, see a dated Week 1, then talk it through with Ben on a free consultation.",
     "",
     "## Primary pages",
     "",
@@ -27,7 +27,7 @@ export async function GET() {
     `- [Quiz](${url}/quiz): Three-minute onboarding that produces a personalised plan`,
     `- [Programmes](${url}/programmes): The four programmes. First Race, Sub-90, Doubles, Pro`,
     `- [How it works](${url}/how-it-works): Four-step journey from quiz to first race`,
-    `- [Pricing](${url}/pricing): £8.99/mo, 7-day free trial, cancel anytime`,
+    `- [Coaching options](${url}/pricing): tailored packages, free consultation first, cancel anytime`,
     "",
     "## Journal. Hyrox training content",
     "",

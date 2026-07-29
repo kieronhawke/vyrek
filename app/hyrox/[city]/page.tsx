@@ -39,7 +39,7 @@ export async function generateMetadata({
   if (!loc) return { title: "Not found" };
   const url = `${siteUrl()}/hyrox/${loc.slug}`;
   const title = `Hyrox training in ${loc.name}, personalised 12-week plans`;
-  const description = `Personalised Hyrox training programmes for ${loc.name} athletes. Built by an Elite 15 coach, dated Week 1 before you pay, £8.99/month. Find your plan in three minutes.`;
+  const description = `Personalised Hyrox training programmes for ${loc.name} athletes. Built by an Elite 15 coach, with a dated Week 1 and a free consultation. Find your plan in three minutes.`;
   return {
     title,
     description,
@@ -71,7 +71,7 @@ function buildFaqs(loc: UkLocation) {
     },
     {
       q: `How much does Hyrox coaching cost in ${loc.name}?`,
-      a: `Local 1:1 Hyrox coaching in ${loc.name} typically ranges from £60, £150 per hour. Suth Performance's online programme is £8.99 per month with a 7-day free trial, the same level of programming as you'd get from an Elite 15 coach, dated and personalised, at a fraction of the cost.`,
+      a: `Local 1:1 Hyrox coaching in ${loc.name} typically ranges from £60 to £150 per hour. Suth Performance delivers Elite 15 level programming online, personalised and dated to your race, at a fraction of that cost. Pricing is tailored to you and starts with a free consultation.`,
     },
     {
       q: `Can I train for Hyrox in ${loc.name} as a beginner?`,
@@ -135,12 +135,6 @@ export default async function CityPage({
       "@type": "Organization",
       name: "Suth Performance",
       url: siteUrl(),
-    },
-    offers: {
-      "@type": "Offer",
-      price: "8.99",
-      priceCurrency: "GBP",
-      availability: "https://schema.org/InStock",
     },
   };
 
@@ -321,7 +315,7 @@ export default async function CityPage({
               Find your {loc.name} plan.
             </h2>
             <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
-              Three-minute quiz. Dated Week 1 before you pay. £8.99/month.
+              Three-minute quiz. Dated Week 1 before you decide. Free consultation with Ben.
             </p>
             <div className="mt-8">
               <CtaButton href="/quiz" size="lg">
@@ -329,7 +323,7 @@ export default async function CityPage({
               </CtaButton>
             </div>
             <p className="mt-4 font-mono text-xs uppercase tracking-[0.18em] text-suth-text-tertiary">
-              First week free. Cancel anytime.
+              Free consultation first. Cancel anytime.
             </p>
           </section>
 

@@ -41,7 +41,7 @@ export function variantCopy(variant: GeoVariant, loc: UkLocation) {
           <br className="hidden md:block" /> built around your race.
         </>
       ),
-      sub: `A personalised 12-week Hyrox programme from HYROX Elite 15 athlete Ben Sutherland. Dated to your race, calibrated to your level and the kit you train with in ${name}. See your Week 1 before you pay.`,
+      sub: `A personalised 12-week Hyrox programme from HYROX Elite 15 athlete Ben Sutherland. Dated to your race, calibrated to your level and the kit you train with in ${name}. See your Week 1 before you decide anything.`,
       heroImage: "/media/images/track/pair-frontal-bw.jpg",
       heroAlt: "Two athletes running side by side on a sunlit track",
       cta: "Start the 3-minute quiz",
@@ -88,7 +88,7 @@ export function variantCopy(variant: GeoVariant, loc: UkLocation) {
     h1: (
       <>
         A personal trainer in {name},
-        <br className="hidden md:block" /> for £8.99 a month.
+        <br className="hidden md:block" /> without the hourly rate.
       </>
     ),
     sub: `Suth Performance is online personal training from HYROX Elite 15 athlete Ben Sutherland. A personalised programme, dated to your calendar, rebuilt every Sunday from what you actually logged. At your ${name} gym or at home.`,
@@ -98,7 +98,7 @@ export function variantCopy(variant: GeoVariant, loc: UkLocation) {
     benefits: [
       {
         title: "A programme written for you",
-        body: "Your level, your equipment, your available days. The quiz takes three minutes and your first week appears before you pay anything.",
+        body: "Your level, your equipment, your available days. The quiz takes three minutes and your first week appears before you decide anything.",
         image: "/media/images/track/solo-watch-bw.jpg",
         alt: "Athlete checking a training watch on the track between reps",
       },
@@ -136,7 +136,7 @@ function buildHyroxFaqs(loc: UkLocation): Faq[] {
   return [
     {
       q: `How do I start Hyrox training in ${loc.name}?`,
-      a: `Take the three-minute quiz. It asks about your race date, experience, available days, and the equipment you can use in ${loc.name}. You see your full Week 1, dated and structured, before you pay anything.`,
+      a: `Take the three-minute quiz. It asks about your race date, experience, available days, and the equipment you can use in ${loc.name}. You see your full Week 1, dated and structured, before you decide anything.`,
     },
     {
       q: `What's the nearest Hyrox race to ${loc.name}?`,
@@ -154,7 +154,7 @@ function buildHyroxFaqs(loc: UkLocation): Faq[] {
     },
     {
       q: "How much does it cost?",
-      a: "£8.99 a month with a 7-day free trial and no card needed to start. You see your first week of training before you pay anything, and you can cancel in two taps from the app.",
+      a: "Pricing is tailored to your goals and there is a cost-effective option for every budget. It starts with a free consultation with Ben, and you see your first week of training before you commit to anything.",
     },
   ];
 }
@@ -163,7 +163,7 @@ function buildPtFaqs(loc: UkLocation): Faq[] {
   return [
     {
       q: `How is this different from hiring a personal trainer in ${loc.name}?`,
-      a: `A local PT charges per session and progress lives in their notebook. Suth Performance gives you a full week-by-week programme, personalised to your equipment and schedule, that recalibrates every Sunday from what you logged. It costs less per month than a single PT session in most of ${loc.name}.`,
+      a: `A local PT charges per session and progress lives in their notebook. Suth Performance gives you a full week-by-week programme, personalised to your equipment and schedule, that recalibrates every Sunday from what you logged. And because it is delivered online, it costs a fraction of what weekly sessions add up to in ${loc.name}.`,
     },
     {
       q: "Who writes the programming?",
@@ -179,7 +179,7 @@ function buildPtFaqs(loc: UkLocation): Faq[] {
     },
     {
       q: "How much does it cost?",
-      a: "£8.99 a month after a 7-day free trial, no card needed to start. You see your first full week of training before paying anything, and you can cancel in two taps.",
+      a: "Pricing is tailored to your goals and level, and it costs a fraction of weekly sessions with a local PT. It starts with a free consultation with Ben, no card and no commitment.",
     },
   ];
 }
@@ -260,7 +260,7 @@ export function GeoLanding({
                   {c.cta}
                 </CtaButton>
                 <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-                  £8.99/mo · 7-day free trial · no card to start
+                  Free consultation with Ben · no card, no commitment
                 </span>
               </div>
             </div>
@@ -388,10 +388,10 @@ export function GeoLanding({
                 </div>
                 <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3">
                   <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-                    Membership
+                    First step
                   </dt>
                   <dd className="mt-1 text-sm font-semibold text-suth-text">
-                    £8.99 a month
+                    Free consultation
                   </dd>
                 </div>
               </dl>
@@ -474,9 +474,9 @@ export function GeoLanding({
                   Suth Performance
                 </p>
                 <p className="mt-4 text-4xl font-black tracking-[-0.03em] text-suth-text">
-                  £8.99
+                  Tailored
                   <span className="ml-2 align-middle font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-                    per month
+                    to you
                   </span>
                 </p>
                 <ul className="mt-5 space-y-2 text-sm leading-relaxed text-suth-text-secondary">
@@ -486,11 +486,11 @@ export function GeoLanding({
                   </li>
                   <li className="flex gap-2">
                     <span aria-hidden className="text-suth-accent">·</span>
-                    Recalibrates every Sunday from your logs
+                    A fraction of what weekly PT sessions add up to
                   </li>
                   <li className="flex gap-2">
                     <span aria-hidden className="text-suth-accent">·</span>
-                    7-day free trial, cancel in two taps
+                    Free consultation first, cancel anytime
                   </li>
                 </ul>
               </div>
@@ -565,7 +565,15 @@ export function GeoLanding({
                 </CtaButton>
               </div>
               <p className="mt-4 text-sm text-suth-text-tertiary">
-                First week free. Cancel anytime.
+                Free consultation first. Cancel anytime. Prefer to talk
+                straight away?{" "}
+                <Link
+                  href="/free-consultation"
+                  className="text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
+                >
+                  Book your free consultation
+                </Link>
+                .
               </p>
               <Link
                 href={c.crossLink.href}

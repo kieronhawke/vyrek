@@ -179,17 +179,6 @@ export function softwareApplicationJsonLd() {
     url: siteUrl(),
     applicationCategory: "HealthApplication",
     operatingSystem: "Web, iOS, Android",
-    offers: {
-      "@type": "Offer",
-      price: "8.99",
-      priceCurrency: "GBP",
-      priceSpecification: {
-        "@type": "UnitPriceSpecification",
-        price: "8.99",
-        priceCurrency: "GBP",
-        billingDuration: "P1M",
-      },
-    },
     // No aggregateRating: no genuine reviews exist yet. Fabricated review
     // markup risks a Google manual action; add only with real ratings.
     inLanguage: "en-GB",

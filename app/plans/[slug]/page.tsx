@@ -55,14 +55,6 @@ export async function generateMetadata({
   };
 }
 
-// Server-side helper so the render itself stays pure (no Date.now during
-// render — React 19 strict-mode flags it).
-function priceValidUntil(): string {
-  return new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
-    .toISOString()
-    .slice(0, 10);
-}
-
 export default async function PlanTemplatePage({
   params,
 }: {
@@ -104,12 +96,6 @@ export default async function PlanTemplatePage({
       courseWorkload: "PT4H",
       duration: "P12W",
     },
-    offers: {
-      "@type": "Offer",
-      price: "8.99",
-      priceCurrency: "GBP",
-      availability: "https://schema.org/InStock",
-    },
   };
   const faqLd = {
     "@context": "https://schema.org",
@@ -119,24 +105,6 @@ export default async function PlanTemplatePage({
       name: f.q,
       acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
-  };
-  // Product schema: surfaces the £8.99 price in SERP cards. No
-  // aggregateRating: we have no real reviews yet, and fabricated review
-  // markup risks a manual action. Add it only when genuine ratings exist.
-  const productLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: p.title,
-    description: p.hook,
-    brand: { "@type": "Brand", name: "Suth Performance" },
-    offers: {
-      "@type": "Offer",
-      price: "8.99",
-      priceCurrency: "GBP",
-      url,
-      availability: "https://schema.org/InStock",
-      priceValidUntil: priceValidUntil(),
-    },
   };
 
   return (
@@ -155,11 +123,6 @@ export default async function PlanTemplatePage({
         type="application/ld+json"
 
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
-      />
-      <script
-        type="application/ld+json"
-
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
       />
 
       <MarketingNav />
@@ -211,7 +174,7 @@ export default async function PlanTemplatePage({
                 href="/pricing"
                 className="inline-flex h-12 items-center gap-2 rounded-pill border border-suth-border bg-suth-elevated px-5 text-sm font-medium text-suth-text transition-colors hover:border-suth-border-strong"
               >
-                £8.99/mo, see pricing
+                See coaching options
               </Link>
             </div>
           </div>
@@ -302,7 +265,7 @@ export default async function PlanTemplatePage({
               Get your personalised version.
             </h2>
             <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
-              Three-minute quiz. Dated Week 1 before you pay. £8.99/month.
+              Three-minute quiz. Dated Week 1 before you decide. Free consultation with Ben.
             </p>
             <div className="mt-8">
               <CtaButton href={`/quiz?program=${p.programmeSlug}`} size="lg">

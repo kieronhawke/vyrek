@@ -1004,7 +1004,7 @@ function QuizV3Inner() {
         hasAnswers={hasAnswers}
         footer={
           <ContinueButton
-            label="Start free trial →"
+            label="Save my plan →"
             loading={creating}
             disabled={creating || !emailDraft || passwordDraft.length < 8}
             onClick={onSubmitAccount}

@@ -35,7 +35,7 @@ export function FinalCta() {
             </CtaButton>
           </div>
           <p className="mt-5 font-mono text-xs uppercase tracking-[0.18em] text-suth-text-tertiary">
-            7-day free trial. No card needed to start.
+            Starts with a free consultation. No card, no commitment.
           </p>
         </div>
       </Container>

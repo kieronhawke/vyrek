@@ -22,7 +22,7 @@ export async function generateMetadata({
   if (!loc) return { title: "Not found" };
   const url = `${siteUrl()}/hyrox-training/${loc.slug}`;
   const title = `Hyrox training in ${loc.name} · personalised 12-week plans`;
-  const description = `Hyrox training in ${loc.name} from a HYROX Elite 15 athlete. A personalised 12-week programme dated to your race, calibrated to your kit. See Week 1 free, £8.99/month after a 7-day trial.`;
+  const description = `Hyrox training in ${loc.name} from a HYROX Elite 15 athlete. A personalised 12-week programme dated to your race, calibrated to your kit. See your Week 1, then talk it through with Ben on a free consultation.`;
   return {
     title,
     description,

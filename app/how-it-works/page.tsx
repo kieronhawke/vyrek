@@ -9,7 +9,7 @@ import { CtaButton } from "@/components/shared/cta-button";
 export const metadata: Metadata = {
   title: "How it works",
   description:
-    "Suth Performance in four steps: quiz, Week 1 reveal, free trial, then train and adapt. See exactly what you get.",
+    "Suth Performance in four steps: quiz, Week 1 reveal, a free call with Ben, then train and adapt. See exactly what you get.",
   alternates: { canonical: "/how-it-works" },
 };
 
@@ -45,7 +45,7 @@ const STEPS: Step[] = [
     label: "Start your trial",
     image: "/media/images/track/pair-frontal-colour.jpg",
     body: [
-      "7 days free. No commitment.",
+      "It starts with a free consultation. No commitment.",
       "From day 1, Ben Sutherland, your Elite 15 coach, is monitoring your progress, ready to answer questions about your training, your form, your race strategy.",
       "You can cancel anytime in the app. Two taps.",
     ],
@@ -161,7 +161,7 @@ export default function HowItWorksPage() {
                 </CtaButton>
               </div>
               <p className="mt-4 text-sm text-suth-text-tertiary">
-                First week free. Cancel anytime.
+                Free consultation first. Cancel anytime.
               </p>
             </div>
           </Container>

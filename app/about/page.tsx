@@ -387,7 +387,7 @@ export default function AboutPage() {
                 </CtaButton>
               </div>
               <p className="mt-4 text-sm text-suth-text-tertiary">
-                First week free. Cancel anytime.
+                Free consultation first. Cancel anytime.
               </p>
             </div>
           </Container>

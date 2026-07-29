@@ -34,7 +34,7 @@ const TRAILS = [
   {
     label: "Pricing",
     href: "/pricing",
-    note: "£8.99/month after the 7-day trial. Cancel anytime.",
+    note: "Free consultation first. Cancel anytime.",
     eyebrow: "→ Pricing",
   },
 ];

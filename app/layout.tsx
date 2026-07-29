@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     template: "%s · Suth Performance",
   },
   description:
-    "Personalised Hyrox training programmes built by an Elite 15 coach. See your Week 1 before you pay.",
+    "Personalised Hyrox training programmes built by an Elite 15 coach. See your Week 1, then talk it through with Ben on a free consultation.",
   applicationName: "Suth Performance",
   appleWebApp: {
     capable: true,
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Suth Performance. Train like a Hyrox athlete",
     description:
-      "Personalised Hyrox training programmes built by an Elite 15 coach. See your Week 1 before you pay.",
+      "Personalised Hyrox training programmes built by an Elite 15 coach. See your Week 1, then talk it through with Ben on a free consultation.",
     url: SITE,
     siteName: "Suth Performance",
     type: "website",
@@ -176,17 +176,6 @@ export default function RootLayout({
                 url: SITE,
                 applicationCategory: "HealthApplication",
                 operatingSystem: "Web, iOS, Android",
-                offers: {
-                  "@type": "Offer",
-                  price: "8.99",
-                  priceCurrency: "GBP",
-                  priceSpecification: {
-                    "@type": "UnitPriceSpecification",
-                    price: "8.99",
-                    priceCurrency: "GBP",
-                    billingDuration: "P1M",
-                  },
-                },
                 inLanguage: "en-GB",
               },
             ]),

@@ -9,7 +9,7 @@ export const FAQS: Faq[] = [
   {
     question: "What is Suth Performance?",
     answer:
-      "Personalised Hyrox training programmes built by Elite 15 athletes. Take the three-minute quiz. See your first week. Start a 7-day free trial.",
+      "Personalised Hyrox training programmes built by Elite 15 athletes. Take the three-minute quiz, see your first week, then talk it through with Ben on a free consultation.",
   },
   {
     question: "Is this just an app?",
@@ -32,13 +32,13 @@ export const FAQS: Faq[] = [
       "None to start. The quiz adapts to whatever you have. Full gym, home setup, or bodyweight.",
   },
   {
-    question: "What happens after my trial ends?",
+    question: "How much does it cost?",
     answer:
-      "On day 8, you're charged £8.99/month. Cancel anytime in two taps.",
+      "Pricing is tailored to your goals and level, and there is a cost-effective option for every budget. It starts with a free consultation with Ben, no card and no commitment.",
   },
   {
-    question: "Can I cancel during the trial?",
-    answer: "Yes. Two taps. No questions. No charge.",
+    question: "Can I cancel?",
+    answer: "Yes. Two taps. No questions asked.",
   },
   {
     question: "Will my plan change as I improve?",

@@ -204,12 +204,6 @@ const courseListLd = {
         courseWorkload: "PT4H",
         duration: "P12W",
       },
-      offers: {
-        "@type": "Offer",
-        price: "8.99",
-        priceCurrency: "GBP",
-        availability: "https://schema.org/InStock",
-      },
     },
   })),
 };

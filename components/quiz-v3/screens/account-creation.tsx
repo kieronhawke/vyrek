@@ -27,7 +27,7 @@ export function AccountCreationScreen({
     <div>
       <QuestionHeader
         question="Save your plan and start Week 1"
-        helper="Free for 7 days. Then £8.99 a month. No card to start. Cancel in two taps from the app."
+        helper="Create your free account to save your plan. Ben will walk you through everything on a free consultation. No card needed."
       />
 
       <div className="space-y-4">

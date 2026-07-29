@@ -215,9 +215,15 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
           What you pay
         </p>
         <p className="mt-2 text-base font-medium leading-snug text-suth-text">
-          Free for 7 days. Then £8.99 a month, cancel in two taps from the
-          app. No card needed to start your trial.
+          It starts with a free consultation with Ben, and pricing is
+          tailored to your goals. No card needed, cancel anytime.
         </p>
+        <a
+          href="/free-consultation"
+          className="mt-3 inline-block text-sm font-medium text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
+        >
+          Book your free consultation →
+        </a>
       </div>
     </div>
   );

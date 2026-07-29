@@ -147,7 +147,7 @@ export function Hero() {
             See your Week 1 free
           </Link>
           <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-            £8.99/mo · 7-day free trial · no card to start
+            Free consultation with Ben · no card, no commitment
           </span>
         </div>
       </div>

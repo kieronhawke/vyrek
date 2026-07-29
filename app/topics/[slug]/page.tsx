@@ -264,7 +264,7 @@ export default async function TopicHubPage({
               Build your plan.
             </h2>
             <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
-              Three-minute quiz. Dated Week 1 before you pay. £8.99/month.
+              Three-minute quiz. Dated Week 1 before you decide. Free consultation with Ben.
             </p>
             <div className="mt-8">
               <CtaButton href="/quiz" size="lg">

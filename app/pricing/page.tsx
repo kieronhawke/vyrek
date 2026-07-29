@@ -1,28 +1,27 @@
 import type { Metadata } from "next";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
-import { CtaButton } from "@/components/shared/cta-button";
-import { ReferralCodeInput } from "@/components/marketing/referral-code-input";
 import { SplitHeading } from "@/components/shared/split-heading";
-import { PRICING } from "@/lib/pricing";
+import { CtaButton } from "@/components/shared/cta-button";
 import { FAQS } from "@/lib/faqs";
+import { faqPageJsonLd, JsonLd } from "@/lib/blog/jsonld";
+import { siteUrl } from "@/lib/blog/urls";
+
+// Pricing is deliberately not published (Kieron, 2026-07-29). Every
+// option routes to a free consultation with Ben; packages are agreed on
+// the call. This page describes the coaching options without numbers.
 
 export const metadata: Metadata = {
-  title: "Pricing. £8.99/mo Hyrox training, first week free · Suth Performance",
-  description: `${PRICING.monthlyDisplay}/month, 7-day free trial. All four programmes included. First Race, Sub-90, Doubles, Pro. Cancel in two taps, no minimum term.`,
+  title: "Coaching options. Personalised Hyrox and fitness coaching",
+  description:
+    "Three ways to train with Suth Performance: the coaching hub, online coaching, and 1:1 with Ben Sutherland. Every option starts with a free consultation.",
   alternates: { canonical: "/pricing" },
   openGraph: {
-    title: "Pricing, £8.99/mo Hyrox training",
+    title: "Coaching options · Suth Performance",
     description:
-      "Personalised 12-week Hyrox plan, all four programmes, £8.99/mo with a 7-day free trial. Cancel in two taps.",
+      "The coaching hub, online coaching, and 1:1 with Ben Sutherland. Every option starts with a free consultation.",
     url: "/pricing",
     type: "website",
     images: [
@@ -36,18 +35,51 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pricing, £8.99/mo Hyrox training",
+    title: "Coaching options · Suth Performance",
     description:
-      "All four programmes, dated weekly plan, £8.99/mo with a 7-day free trial.",
+      "The coaching hub, online coaching, and 1:1 with Ben Sutherland. Every option starts with a free consultation.",
     images: ["/media/images/track/straight-elevated-bw.jpg"],
   },
 };
 
-// 4 most common questions for the mini-FAQ on the pricing page.
-const MINI_FAQ = FAQS.filter((f) =>
+const OPTIONS = [
+  {
+    tag: "THE HUB",
+    title: "Train with structure",
+    body: "A personalised, dated programme that rebuilds every Sunday from what you log, plus the full station video library. For self-starters who want elite structure without the hand-holding.",
+    points: [
+      "Personalised 12-week programme, dated to your calendar",
+      "Full station video library",
+      "Adapts every week from your logged sessions",
+    ],
+  },
+  {
+    tag: "ONLINE COACHING",
+    title: "Ben in your corner",
+    badge: "MOST POPULAR",
+    body: "Everything in the Hub, plus a programme written personally for you, weekly adjustments, private messaging, and a monthly call. Real coaching, without local-PT session prices.",
+    points: [
+      "Programme written for you, not generated",
+      "Weekly review and adjustments from your logs",
+      "Private messaging and a monthly 1:1 call",
+    ],
+  },
+  {
+    tag: "1:1 WITH BEN",
+    title: "The full programme",
+    body: "Ben personally, end to end: programming, weekly calls, race strategy, race-week support. Capacity is genuinely limited by Ben's calendar; places open by application.",
+    points: [
+      "Everything, personally from Ben",
+      "Weekly calls and race-week support",
+      "By application",
+    ],
+  },
+];
+
+const PRICING_FAQS = FAQS.filter((f) =>
   [
-    "What happens after my trial ends?",
-    "Can I cancel during the trial?",
+    "How much does it cost?",
+    "Can I cancel?",
     "What equipment do I need?",
     "Will my plan change as I improve?",
   ].includes(f.question),
@@ -56,166 +88,108 @@ const MINI_FAQ = FAQS.filter((f) =>
 export default function PricingPage() {
   return (
     <>
+      <JsonLd
+        data={faqPageJsonLd(
+          PRICING_FAQS.map((f) => ({ q: f.question, a: f.answer })),
+        )}
+      />
       <MarketingNav />
       <main className="pb-24 pt-32 md:pt-40">
         <Container>
           <header className="mx-auto max-w-2xl text-center">
-            <Eyebrow>Pricing</Eyebrow>
+            <Eyebrow>Coaching options</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.05em] text-suth-text md:text-4xl lg:text-5xl"
+              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.05em] text-suth-text md:text-[44px]"
             >
-              One plan. All programmes.
+              Three ways to train with Ben.
             </SplitHeading>
+            <p className="mt-5 text-base text-suth-text-secondary md:text-lg">
+              Every option is personalised, and every option starts the same
+              way: a free consultation with Ben about where you are and where
+              you want to get to. Pricing is agreed on the call and tailored
+              to your goals, with a cost-effective option for every budget.
+            </p>
           </header>
 
-          <section className="mx-auto mt-16 max-w-xl">
-            <div className="pricing-card shimmer relative overflow-hidden rounded-lg border border-suth-border-strong bg-suth-elevated p-8 md:p-10">
-              {/* Soft accent gradient on the top edge. Apple's pricing-card flourish */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-suth-accent/60 to-transparent"
-              />
-              <div className="text-center">
-                <div className="font-mono text-xs uppercase tracking-[0.18em] text-suth-text-tertiary">
-                  Suth Performance membership
-                </div>
-                <div className="pricing-card-price mt-4 flex items-baseline justify-center gap-2">
-                  <span className="text-4xl font-black tracking-[-0.06em] text-suth-text md:text-5xl">
-                    {PRICING.monthlyDisplay}
+          <section className="mx-auto mt-14 grid max-w-5xl gap-4 md:grid-cols-3 md:gap-5">
+            {OPTIONS.map((o) => (
+              <article
+                key={o.tag}
+                className={`relative flex flex-col rounded-lg border bg-suth-elevated p-7 ${
+                  o.badge
+                    ? "border-suth-accent/50"
+                    : "border-suth-border-subtle"
+                }`}
+              >
+                {o.badge ? (
+                  <span className="absolute right-4 top-4 rounded-pill border border-suth-accent/40 bg-suth-accent/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-accent">
+                    {o.badge}
                   </span>
-                  <span className="text-base text-suth-text-secondary">
-                    /month
-                  </span>
-                </div>
-                <p className="mt-3 text-base text-suth-text">
-                  First week free, then {PRICING.monthlyDisplay}/month
+                ) : null}
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
+                  [ {o.tag} ]
                 </p>
-                <p className="mt-1 text-sm text-suth-text-tertiary">
-                  {PRICING.anchorCopy}
+                <h2 className="mt-3 text-xl font-black tracking-[-0.02em] text-suth-text">
+                  {o.title}
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
+                  {o.body}
                 </p>
-              </div>
-
-              <ul className="mt-10 space-y-3">
-                {PRICING.inclusions.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-base">
-                    <span
-                      aria-hidden
-                      className="mt-2 size-1.5 shrink-0 rounded-full bg-suth-accent"
-                    />
-                    <span className="text-suth-text">{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-8">
-                <CtaButton href="/quiz" fullWidth size="lg">
-                  {PRICING.ctaLabel}
-                </CtaButton>
-              </div>
-
-              <p className="mt-4 text-center text-xs text-suth-text-tertiary">
-                Cancel anytime in two taps. No charge during trial.
-              </p>
-
-              <div className="mt-8 border-t border-suth-border-subtle pt-6">
-                <ReferralCodeInput />
-              </div>
-            </div>
+                <ul role="list" className="mt-5 flex-1 space-y-2">
+                  {o.points.map((p) => (
+                    <li
+                      key={p}
+                      className="flex items-start gap-3 text-sm text-suth-text"
+                    >
+                      <span
+                        aria-hidden
+                        className="mt-2 size-1.5 shrink-0 rounded-full bg-suth-accent"
+                      />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
           </section>
 
-          {/* Why £8.99?, defuses the "too cheap, must be templated" reaction
-              that experienced racers have when they compare to HAC (£45)
-              or Marchon (£30). Honesty pre-empts skepticism. */}
-          <section className="mx-auto mt-16 max-w-2xl">
-            <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated/60 p-6 md:p-8">
-              <Eyebrow>Why £8.99?</Eyebrow>
-              <h2 className="mt-3 text-balance text-xl font-black leading-tight tracking-[-0.04em] text-suth-text sm:text-2xl md:text-3xl">
-                Software-first, not 1:1 coaching.
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
-                Suth Performance is a personalised programme delivered by software.
-                Programming is written by our Elite 15 coach and reviewed
-                each week, then the algorithm calibrates it to your race
-                date, equipment, body weight, injuries, and the sessions
-                you&apos;ve actually logged.
-              </p>
-              <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
-                What you get for £8.99/mo: the same programming logic an Elite
-                15 coach would write, applied to your inputs, updated every
-                Sunday. What you don&apos;t get: a human messaging you weekly,
-                video form-checks on demand, or a custom block written for your
-                name. If you want that, you want 1:1 coaching, typically
-                £150, £400/mo elsewhere.
-              </p>
-              <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
-                We&apos;re open about the trade. Most members never need 1:1.
-                Some do, and we&apos;ll signpost when.
-              </p>
-            </div>
-          </section>
-
-          <section className="mx-auto mt-20 max-w-3xl">
-            <p className="text-center font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
-              [ WHAT YOU GET ]
+          <section className="mx-auto mt-12 max-w-xl text-center">
+            <CtaButton href="/quiz" size="lg">
+              Start with the free quiz →
+            </CtaButton>
+            <p className="mt-4 text-sm text-suth-text-tertiary">
+              Three minutes, then a free consultation with Ben. No card, no
+              commitment. Or{" "}
+              <a
+                href="/free-consultation"
+                className="text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
+              >
+                book the consultation directly
+              </a>
+              .
             </p>
-            <h2 className="mt-3 text-center text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
-              Inside the £8.99
-            </h2>
-            <ul role="list" className="mt-8 grid gap-4 md:grid-cols-3">
-              <li className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-                  Programming
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-suth-text">
-                  A 12-week plan dated to your race. Eight stations, eight
-                  runs, calibrated to your weight and kit. Updated every
-                  Sunday.
-                </p>
-              </li>
-              <li className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-                  Coaching logic
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-suth-text">
-                  The same progression an Elite 15 coach would write, applied
-                  to your inputs. No copy-paste templates. No PDFs.
-                </p>
-              </li>
-              <li className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-                  Cancel in two taps
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-suth-text">
-                  7-day free trial, no card needed to start. In the app
-                  forever, no email-the-team friction.
-                </p>
-              </li>
-            </ul>
           </section>
 
-          <section className="mx-auto mt-24 max-w-2xl">
-            <h2 className="text-center text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
+          <section className="mx-auto mt-20 max-w-2xl">
+            <h2 className="text-2xl font-black tracking-[-0.03em] text-suth-text md:text-3xl">
               Common questions
             </h2>
-            <div className="mt-8">
-              <Accordion>
-                {MINI_FAQ.map((f, i) => (
-                  <AccordionItem
-                    key={f.question}
-                    value={`mini-${i}`}
-                    className="border-b border-suth-border-subtle last:border-b-0"
-                  >
-                    <AccordionTrigger className="py-5 text-left text-base font-medium text-suth-text hover:no-underline md:text-lg">
-                      {f.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="pb-5 text-base leading-relaxed text-suth-text-secondary">
-                      {f.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
+            <dl className="mt-6 space-y-6">
+              {PRICING_FAQS.map((f) => (
+                <div
+                  key={f.question}
+                  className="border-b border-suth-border-subtle pb-6 last:border-b-0"
+                >
+                  <dt className="text-base font-semibold text-suth-text">
+                    {f.question}
+                  </dt>
+                  <dd className="mt-2 text-sm leading-relaxed text-suth-text-secondary">
+                    {f.answer}
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </section>
         </Container>
       </main>

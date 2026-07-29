@@ -21,8 +21,8 @@ export async function generateMetadata({
   const loc = getLocationBySlug(location);
   if (!loc) return { title: "Not found" };
   const url = `${siteUrl()}/personal-trainer/${loc.slug}`;
-  const title = `Personal trainer in ${loc.name} · online coaching, £8.99/month`;
-  const description = `Looking for a personal trainer in ${loc.name}? Get online personal training from a HYROX Elite 15 athlete. Personalised weekly programming that adapts to you, at a fraction of local PT rates.`;
+  const title = `Personal trainer in ${loc.name} · online coaching with a free consultation`;
+  const description = `Looking for a personal trainer in ${loc.name}? Get online personal training from a HYROX Elite 15 athlete, at a fraction of local PT rates. Free consultation, no commitment.`;
   return {
     title,
     description,

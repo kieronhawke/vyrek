@@ -10,7 +10,7 @@ import { siteUrl } from "@/lib/blog/urls";
 export const metadata: Metadata = {
   title: "Online personal training across the UK · Suth Performance",
   description:
-    "Online personal training from a HYROX Elite 15 athlete. Personalised weekly programming that adapts to you, wherever you are in the UK. £8.99/month after a free trial.",
+    "Online personal training from a HYROX Elite 15 athlete. Personalised weekly programming that adapts to you, wherever you are in the UK. Starts with a free consultation.",
   alternates: { canonical: `${siteUrl()}/personal-trainer` },
 };
 
