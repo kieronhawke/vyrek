@@ -62,7 +62,7 @@ export function AdaptAsYouImprove() {
     <RevealOnView
       as="section"
       aria-labelledby="adapt-heading"
-      className="border-t border-vyrek-border-subtle py-24 md:py-32"
+      className="border-t border-suth-border-subtle py-24 md:py-32"
     >
       <Container>
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-20">
@@ -74,39 +74,39 @@ export function AdaptAsYouImprove() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "0px 0px -20% 0px" }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-5 md:p-6"
+              className="rounded-lg border border-suth-border bg-suth-elevated p-5 md:p-6"
             >
               <div className="flex items-baseline justify-between">
                 <Eyebrow>Tue, 28 May, logged</Eyebrow>
-                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-success">
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-success">
                   COMPLETE
                 </span>
               </div>
-              <h3 className="mt-3 text-xl font-bold tracking-[-0.02em] text-vyrek-text">
+              <h3 className="mt-3 text-xl font-bold tracking-[-0.02em] text-suth-text">
                 Hyrox hybrid: run + sled
               </h3>
               <div className="mt-4 grid grid-cols-3 gap-3 text-center">
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                     Duration
                   </p>
-                  <p className="mt-1 text-base font-semibold tabular-nums text-vyrek-text">
+                  <p className="mt-1 text-base font-semibold tabular-nums text-suth-text">
                     58 min
                   </p>
                 </div>
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                     Split vs week 3
                   </p>
-                  <p className="mt-1 text-base font-semibold tabular-nums text-vyrek-accent">
+                  <p className="mt-1 text-base font-semibold tabular-nums text-suth-accent">
                     -12 sec
                   </p>
                 </div>
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                     RPE
                   </p>
-                  <p className="mt-1 text-base font-semibold tabular-nums text-vyrek-text">
+                  <p className="mt-1 text-base font-semibold tabular-nums text-suth-text">
                     7 / 10
                   </p>
                 </div>
@@ -114,10 +114,10 @@ export function AdaptAsYouImprove() {
             </motion.div>
 
             {/* 12-week trajectory chart */}
-            <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5 md:p-6">
+            <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5 md:p-6">
               <div className="flex items-baseline justify-between">
                 <Eyebrow>12-week trajectory</Eyebrow>
-                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                   RACE-READY WEEK 12
                 </span>
               </div>
@@ -134,7 +134,7 @@ export function AdaptAsYouImprove() {
                   x2={W - PADX}
                   y2={H - PADY}
                   stroke="currentColor"
-                  className="text-vyrek-border-subtle"
+                  className="text-suth-border-subtle"
                   strokeWidth="1"
                 />
                 {/* Animated path */}
@@ -142,7 +142,7 @@ export function AdaptAsYouImprove() {
                   d={d}
                   fill="none"
                   stroke="currentColor"
-                  className="text-vyrek-accent"
+                  className="text-suth-accent"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -162,8 +162,8 @@ export function AdaptAsYouImprove() {
                       r={isMilestone ? 4.5 : 2.5}
                       className={
                         isMilestone
-                          ? "fill-vyrek-accent"
-                          : "fill-vyrek-text-tertiary"
+                          ? "fill-suth-accent"
+                          : "fill-suth-text-tertiary"
                       }
                       initial={{ opacity: 0, scale: 0 }}
                       whileInView={{ opacity: 1, scale: 1 }}
@@ -177,7 +177,7 @@ export function AdaptAsYouImprove() {
                   );
                 })}
               </svg>
-              <p className="mt-2 text-xs text-vyrek-text-tertiary">
+              <p className="mt-2 text-xs text-suth-text-tertiary">
                 Every session you log sharpens your plan.
               </p>
             </div>
@@ -187,26 +187,26 @@ export function AdaptAsYouImprove() {
           <div>
             <Eyebrow>Adaptive</Eyebrow>
             <SplitHeading
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
             >
               Adapts as you improve.
             </SplitHeading>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 max-w-md text-base leading-relaxed text-suth-text-secondary md:text-lg">
               Log your splits, your sled times, your wall-ball cycles. Every
               Sunday we recalibrate based on what you actually did. The plan
               is never the same plan twice.
             </p>
-            <ul className="mt-6 space-y-2 text-sm text-vyrek-text-secondary">
+            <ul className="mt-6 space-y-2 text-sm text-suth-text-secondary">
               <li className="flex gap-3">
-                <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-vyrek-accent" />
+                <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-suth-accent" />
                 <span>Strong week. Next week pushes harder.</span>
               </li>
               <li className="flex gap-3">
-                <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-vyrek-accent" />
+                <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-suth-accent" />
                 <span>Missed sessions. Plan rebuilds with more recovery.</span>
               </li>
               <li className="flex gap-3">
-                <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-vyrek-accent" />
+                <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-suth-accent" />
                 <span>Race date moves. The 12 weeks rebuild around it.</span>
               </li>
             </ul>

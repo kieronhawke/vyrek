@@ -72,24 +72,24 @@ export function MarketingNav() {
   return (
     <header
       className={cn(
-        // top:var(--vyrek-consent-h) keeps the nav docked below the
+        // top:var(--suth-consent-h) keeps the nav docked below the
         // cookie strip when it's visible. Falls back to 0 (the CSS
         // variable default) the rest of the time.
         "fixed inset-x-0 z-50 transition-[colors,top] duration-base ease-out",
-        "top-[var(--vyrek-consent-h,0px)] pt-[var(--safe-top)]",
+        "top-[var(--suth-consent-h,0px)] pt-[var(--safe-top)]",
       )}
     >
       <div
         className={cn(
           "h-16 transition-[background,backdrop-filter,border-color] duration-base ease-out",
           scrolled || open
-            ? "border-b border-vyrek-border-subtle bg-vyrek-base/85 backdrop-blur-xl": "border-b border-transparent bg-transparent",
+            ? "border-b border-suth-border-subtle bg-suth-base/85 backdrop-blur-xl": "border-b border-transparent bg-transparent",
         )}
       >
         <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-3 px-5 md:px-8">
           <Link
             href="/"
-            aria-label="Vyrek, home"
+            aria-label="Suth Performance, home"
             className="inline-flex items-center"
           >
             <Wordmark size="md" />
@@ -107,7 +107,7 @@ export function MarketingNav() {
                 className={cn(
                   "inline-flex h-10 items-center px-3 text-sm transition-colors",
                   isActive(link.href)
-                    ? "text-vyrek-text": "text-vyrek-text-secondary hover:text-vyrek-text",
+                    ? "text-suth-text": "text-suth-text-secondary hover:text-suth-text",
                 )}
               >
                 {link.label}
@@ -119,14 +119,14 @@ export function MarketingNav() {
             <Link
               href="/login"
               prefetch={false}
-              className="hidden h-10 items-center px-3 text-sm text-vyrek-text-secondary transition-colors hover:text-vyrek-text md:inline-flex"
+              className="hidden h-10 items-center px-3 text-sm text-suth-text-secondary transition-colors hover:text-suth-text md:inline-flex"
             >
               sign in
             </Link>
             <Link
               ref={ctaRef}
               href={ctaHref}
-              className="hidden h-10 items-center justify-center gap-2 rounded-pill bg-vyrek-accent px-4 text-sm font-semibold uppercase tracking-wide text-[#0A0A0A] transition-[background,opacity] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vyrek-text will-change-transform sm:inline-flex"
+              className="hidden h-10 items-center justify-center gap-2 rounded-pill bg-suth-accent px-4 text-sm font-semibold uppercase tracking-wide text-[#0A0A0A] transition-[background,opacity] duration-fast ease-out hover:bg-suth-accent-hover active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-suth-text will-change-transform sm:inline-flex"
             >
               {ctaLabel}
             </Link>
@@ -137,7 +137,7 @@ export function MarketingNav() {
               aria-expanded={open}
               aria-controls="mobile-nav-drawer"
               aria-label={open ? "Close navigation": "Open navigation"}
-              className="inline-flex size-11 items-center justify-center rounded-pill border border-vyrek-border bg-vyrek-elevated text-vyrek-text transition-colors hover:border-vyrek-border-strong md:hidden"
+              className="inline-flex size-11 items-center justify-center rounded-pill border border-suth-border bg-suth-elevated text-suth-text transition-colors hover:border-suth-border-strong md:hidden"
             >
               <span aria-hidden className="relative block size-4">
                 <span
@@ -165,7 +165,7 @@ export function MarketingNav() {
       </div>
 
       {/* Mobile drawer, slides down beneath the nav bar. Padding-top
-          accounts for: cookie banner height (--vyrek-consent-h, 0 when
+          accounts for: cookie banner height (--suth-consent-h, 0 when
           dismissed) + iOS safe-top inset + 4rem nav bar height. Pre-fix
           the cookie-banner offset was missing, so when the cookie strip
           was visible the drawer card slid up over the nav bar and hid
@@ -182,12 +182,12 @@ export function MarketingNav() {
         inert={!open}
         className={cn(
           "fixed inset-x-0 top-0 z-40 origin-top md:hidden",
-          "pt-[calc(var(--vyrek-consent-h,0px)+var(--safe-top)+4rem)]",
+          "pt-[calc(var(--suth-consent-h,0px)+var(--safe-top)+4rem)]",
           "transition-[transform,opacity] duration-base ease-out",
           open ? "translate-y-0 opacity-100": "pointer-events-none -translate-y-2 opacity-0",
         )}
       >
-        <div className="mx-5 mt-2 overflow-hidden rounded-2xl border border-vyrek-border bg-vyrek-elevated shadow-2xl">
+        <div className="mx-5 mt-2 overflow-hidden rounded-2xl border border-suth-border bg-suth-elevated shadow-2xl">
           <nav aria-label="Mobile primary" className="flex flex-col px-2 py-2">
             {LINKS.map((link) => (
               <Link
@@ -197,13 +197,13 @@ export function MarketingNav() {
                 className={cn(
                   "flex items-center justify-between rounded-md px-4 py-3 text-base transition-colors",
                   isActive(link.href)
-                    ? "bg-vyrek-overlay text-vyrek-text": "text-vyrek-text-secondary hover:bg-vyrek-overlay hover:text-vyrek-text",
+                    ? "bg-suth-overlay text-suth-text": "text-suth-text-secondary hover:bg-suth-overlay hover:text-suth-text",
                 )}
               >
                 <span>{link.label}</span>
                 <span
                   aria-hidden
-                  className="font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+                  className="font-mono text-xs uppercase tracking-[0.18em] text-suth-text-tertiary"
                 >
                   →
                 </span>
@@ -212,26 +212,26 @@ export function MarketingNav() {
             <Link
               href="/login"
               prefetch={false}
-              className="flex items-center justify-between rounded-md px-4 py-3 text-base text-vyrek-text-secondary transition-colors hover:bg-vyrek-overlay hover:text-vyrek-text"
+              className="flex items-center justify-between rounded-md px-4 py-3 text-base text-suth-text-secondary transition-colors hover:bg-suth-overlay hover:text-suth-text"
             >
               <span>sign in</span>
               <span
                 aria-hidden
-                className="font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+                className="font-mono text-xs uppercase tracking-[0.18em] text-suth-text-tertiary"
               >
                 →
               </span>
             </Link>
-            <div className="mx-2 mt-2 border-t border-vyrek-border-subtle" />
+            <div className="mx-2 mt-2 border-t border-suth-border-subtle" />
             <Link
               href={ctaHref}
-              className="m-2 inline-flex h-12 items-center justify-center rounded-pill bg-vyrek-accent px-5 text-base font-medium tracking-tight text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vyrek-text"
+              className="m-2 inline-flex h-12 items-center justify-center rounded-pill bg-suth-accent px-5 text-base font-medium tracking-tight text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-suth-text"
             >
               {ctaLabel} →
             </Link>
           </nav>
-          <div className="border-t border-vyrek-border-subtle bg-vyrek-base/40 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
-            [ VYREK · FITNESS / 2026 ]
+          <div className="border-t border-suth-border-subtle bg-suth-base/40 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+            [ SUTH PERFORMANCE · FITNESS / 2026 ]
           </div>
         </div>
       </div>

@@ -84,7 +84,7 @@ export function PlanValueSection() {
     >
       <h2
         id="plan-value-heading"
-        className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary"
+        className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary"
       >
         [ WHAT YOU UNLOCK ]
       </h2>
@@ -92,8 +92,8 @@ export function PlanValueSection() {
       {/* James Wright coach card. Sits above the 5-item list so the
           PRIVATE COACH CALL item has a real face attached to it — was
           missing per user "James Wright image disappeared" feedback. */}
-      <div className="mt-6 flex items-center gap-4 rounded-2xl border border-vyrek-accent/30 bg-vyrek-elevated p-4">
-        <div className="relative size-16 shrink-0 overflow-hidden rounded-full bg-vyrek-overlay">
+      <div className="mt-6 flex items-center gap-4 rounded-2xl border border-suth-accent/30 bg-suth-elevated p-4">
+        <div className="relative size-16 shrink-0 overflow-hidden rounded-full bg-suth-overlay">
           <Image
             src="/media/images/v2/coach-james-wright-warm.jpg"
             alt="James Wright, founding coach"
@@ -103,13 +103,13 @@ export function PlanValueSection() {
           />
         </div>
         <div className="min-w-0">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
             [ YOUR COACH ]
           </p>
-          <p className="mt-1 text-sm font-bold text-vyrek-text">
+          <p className="mt-1 text-sm font-bold text-suth-text">
             James Wright
           </p>
-          <p className="mt-0.5 text-xs text-vyrek-text-secondary">
+          <p className="mt-0.5 text-xs text-suth-text-secondary">
             Elite 15 athlete · Top 50 World Championships finisher
           </p>
         </div>
@@ -131,15 +131,15 @@ export function PlanValueSection() {
             <div className="flex items-baseline gap-3">
               <span
                 aria-hidden
-                className="font-mono text-sm font-medium text-vyrek-accent"
+                className="font-mono text-sm font-medium text-suth-accent"
               >
                 [ {item.number} ]
               </span>
-              <h3 className="text-base font-bold uppercase tracking-[0.04em] text-vyrek-text md:text-lg">
+              <h3 className="text-base font-bold uppercase tracking-[0.04em] text-suth-text md:text-lg">
                 {item.title}
               </h3>
             </div>
-            <p className="mt-3 max-w-[40ch] text-sm leading-relaxed text-vyrek-text/75 md:text-base">
+            <p className="mt-3 max-w-[40ch] text-sm leading-relaxed text-suth-text/75 md:text-base">
               {item.body}
             </p>
           </li>

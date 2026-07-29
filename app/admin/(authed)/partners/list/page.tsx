@@ -47,12 +47,12 @@ export default async function AdminPartnersListPage() {
             <Link
               key="n"
               href={`/admin/partners/p/${p.id}`}
-              className="text-vyrek-accent hover:underline"
+              className="text-suth-accent hover:underline"
             >
               {p.name}
             </Link>,
-            <span key="c" className="font-mono text-xs text-vyrek-text-secondary">
-              vyrek.com/p/{p.partner_code}
+            <span key="c" className="font-mono text-xs text-suth-text-secondary">
+              suthperformance.com/p/{p.partner_code}
             </span>,
             <Badge key="t" tone={tierTone(p.tier)}>{p.tier}</Badge>,
             <span key="a" className="tabular-nums">

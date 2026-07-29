@@ -8,7 +8,7 @@ import { verifyOnboardingToken } from "@/lib/partners/tokens";
 import { OnboardingForm } from "@/components/partners/onboarding-form";
 
 export const metadata: Metadata = {
-  title: "Welcome to the Vyrek Partner Programme",
+  title: "Welcome to the Suth Performance Partner Programme",
   description: "Set up your partner profile and payout details.",
   robots: { index: false, follow: false },
 };
@@ -72,16 +72,16 @@ export default async function PartnersOnboardPage({
         <Container>
           <div className="mx-auto max-w-2xl">
             <Eyebrow>Partner onboarding</Eyebrow>
-            <h1 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl">
+            <h1 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl">
               Welcome, {firstName(app.name)}.
             </h1>
-            <p className="mt-5 text-base text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 text-base text-suth-text-secondary md:text-lg">
               {alreadyOnboarded ? (
                 <>
                   Your partner profile is already set up. Open the{" "}
                   <a
                     href="/partners/dashboard"
-                    className="text-vyrek-accent underline underline-offset-4"
+                    className="text-suth-accent underline underline-offset-4"
                   >
                     dashboard
                   </a>{" "}
@@ -118,20 +118,20 @@ function Invalid({ reason }: { reason: string }) {
       <main className="pb-24 pt-32 md:pt-40">
         <Container>
           <div className="mx-auto max-w-md text-center">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
               [ ONBOARDING LINK ]
             </p>
-            <h1 className="mt-3 text-3xl font-black tracking-[-0.04em] text-vyrek-text md:text-4xl">
+            <h1 className="mt-3 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
               This link can&apos;t be used.
             </h1>
-            <p className="mt-4 text-base text-vyrek-text-secondary">{reason}</p>
-            <p className="mt-6 text-sm text-vyrek-text-tertiary">
+            <p className="mt-4 text-base text-suth-text-secondary">{reason}</p>
+            <p className="mt-6 text-sm text-suth-text-tertiary">
               If this looks wrong, email{" "}
               <a
-                href="mailto:partners@vyrek.com"
-                className="text-vyrek-accent underline underline-offset-4"
+                href="mailto:partners@suthperformance.com"
+                className="text-suth-accent underline underline-offset-4"
               >
-                partners@vyrek.com
+                partners@suthperformance.com
               </a>{" "}
               and we&apos;ll send a fresh link.
             </p>

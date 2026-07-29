@@ -35,7 +35,7 @@ export function ReadingProgress() {
       style={{ pointerEvents: "none" }}
     >
       <div
-        className="h-full bg-vyrek-accent"
+        className="h-full bg-suth-accent"
         style={{
           width: `${progress * 100}%`,
           transition: "width 80ms linear",

@@ -22,7 +22,7 @@ import {
 } from "@/lib/email/templates/_styles";
 
 export function PaymentFailedEmail({
-  updatePaymentUrl = "https://vyrek.vercel.app/account/billing",
+  updatePaymentUrl = "https://suthperformance.com/account/billing",
 }: {
   updatePaymentUrl?: string;
 } = {}) {

@@ -30,7 +30,7 @@ export function useHaptics() {
   return useCallback((type: HapticType) => {
     if (typeof window === "undefined") return;
     if (!("vibrate" in navigator)) return;
-    if (window.localStorage.getItem("vyrek:haptics") === "off") return;
+    if (window.localStorage.getItem("suth:haptics") === "off") return;
     navigator.vibrate(patterns[type]);
   }, []);
 }

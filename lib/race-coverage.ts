@@ -5,7 +5,7 @@
  * coverage milestone has been hit (T-14, T-7, T-1, T+1, T+7) and renders
  * the matching templated MDX post. The Vercel Cron route invokes this
  * daily; it either writes a draft file (default) or auto-publishes
- * (when VYREK_BOT_AUTOPUBLISH=true).
+ * (when SUTH_BOT_AUTOPUBLISH=true).
  *
  * Templates use only the structured data already in `HYROX_EVENTS` plus
  * a few short hand-written copy fragments per milestone. No LLM call,
@@ -33,7 +33,7 @@ export type CoveragePost = {
     tags: string[];
     publishedAt: string; // ISO date
     updatedAt: string;
-    author: "james-wright" | "vyrek-team";
+    author: "james-wright" | "suth-team";
     heroImage: string;
     heroAlt: string;
     seoTitle: string;
@@ -164,7 +164,7 @@ export function generateCoveragePost(
         ``,
         `---`,
         ``,
-        `**Train this final week with the Vyrek programme calibrated to your race date.** [Find your plan →](/quiz)`,
+        `**Train this final week with the Suth Performance programme calibrated to your race date.** [Find your plan →](/quiz)`,
       ].join("\n"),
     }),
 
@@ -235,7 +235,7 @@ export function generateCoveragePost(
         ``,
         `---`,
         ``,
-        `**One more week.** If you've followed a Vyrek programme to this point, the taper is already built into your plan. If you haven't. [start your next race build now](/quiz). The next race is always closer than you think.`,
+        `**One more week.** If you've followed a Suth Performance programme to this point, the taper is already built into your plan. If you haven't. [start your next race build now](/quiz). The next race is always closer than you think.`,
       ].join("\n"),
     }),
 
@@ -297,7 +297,7 @@ export function generateCoveragePost(
         ``,
         `---`,
         ``,
-        `**Want a plan for your next race?** Vyrek builds the 12 weeks backwards from your race date. [Find yours →](/quiz)`,
+        `**Want a plan for your next race?** Suth Performance builds the 12 weeks backwards from your race date. [Find yours →](/quiz)`,
       ].join("\n"),
     }),
 
@@ -310,7 +310,7 @@ export function generateCoveragePost(
         tags: [event.venue.city, "race recap", "results"],
         publishedAt,
         updatedAt: publishedAt,
-        author: "vyrek-team",
+        author: "suth-team",
         heroImage: "/media/images/v2/bento-progress.jpg",
         heroAlt: `${event.name} recap`,
         seoTitle: `${event.name} recap · winners + conditions`,

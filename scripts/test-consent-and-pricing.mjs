@@ -42,7 +42,7 @@ try {
   console.log("\n[1] Cookie banner appears on /quiz");
   await page.goto(BASE, { waitUntil: "domcontentloaded" });
   await page.evaluate(() => {
-    window.localStorage.removeItem("vyrek:consent:v1");
+    window.localStorage.removeItem("suth:consent:v1");
   });
   await page.goto(`${BASE}/quiz`, { waitUntil: "networkidle2" });
   await settle(2200); // wait past the 1500ms delay + grace

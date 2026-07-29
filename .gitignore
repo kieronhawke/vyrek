@@ -74,7 +74,7 @@ next-env.d.ts
 /screenshots/
 
 # Internal brief documents (keep locally, not in public repo)
-/docs/vyrek-*.md
+/docs/suth-*.md
 /docs/NIGHT-OF-*.md
 
 # Audit artefacts (never commit for repo bloat prevention)

@@ -75,9 +75,9 @@ export function CalibrationScreen({
         </li>
       </ul>
 
-      <hr className="my-8 border-t border-vyrek-border-subtle" />
+      <hr className="my-8 border-t border-suth-border-subtle" />
 
-      <p className="mb-3 text-sm text-vyrek-text-secondary">
+      <p className="mb-3 text-sm text-suth-text-secondary">
         Your body weight (for sled load calculations):
       </p>
 
@@ -93,9 +93,9 @@ export function CalibrationScreen({
           onChange={(e) => onDraftChange(e.target.value)}
           onBlur={onBlur}
           aria-label="Body weight"
-          className="h-14 w-32 rounded-md border border-vyrek-border bg-vyrek-elevated px-4 text-lg font-medium text-vyrek-text outline-none transition-colors focus:border-vyrek-accent"
+          className="h-14 w-32 rounded-md border border-suth-border bg-suth-elevated px-4 text-lg font-medium text-suth-text outline-none transition-colors focus:border-suth-accent"
         />
-        <div className="flex items-stretch gap-1 rounded-md border border-vyrek-border bg-vyrek-elevated p-1">
+        <div className="flex items-stretch gap-1 rounded-md border border-suth-border bg-suth-elevated p-1">
           {(["kg", "lb"] as const).map((u) => (
             <button
               key={u}
@@ -105,7 +105,7 @@ export function CalibrationScreen({
               className={cn(
                 "flex h-full min-h-0 items-center justify-center rounded px-4 text-sm font-medium transition-colors",
                 unit === u
-                  ? "bg-vyrek-accent text-[#0A0A0A]": "text-vyrek-text-secondary hover:text-vyrek-text",
+                  ? "bg-suth-accent text-[#0A0A0A]": "text-suth-text-secondary hover:text-suth-text",
               )}
             >
               {u}
@@ -114,7 +114,7 @@ export function CalibrationScreen({
         </div>
       </div>
 
-      <p className="mt-3 text-xs text-vyrek-text-tertiary">
+      <p className="mt-3 text-xs text-suth-text-tertiary">
         Used for sandbag-lunge load only. Never shared, never displayed.
       </p>
     </div>

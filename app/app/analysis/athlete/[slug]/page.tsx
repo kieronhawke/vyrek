@@ -25,33 +25,33 @@ export default async function AthleteDetailPage({
     <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
       <Link
         href="/app/analysis"
-        className="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary hover:text-vyrek-text"
+        className="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary hover:text-suth-text"
       >
         ← Athletes
       </Link>
 
       <header className="mt-4 flex items-center gap-4">
-        <div className="flex size-16 items-center justify-center rounded-full border border-vyrek-border bg-vyrek-elevated text-lg font-black uppercase text-vyrek-text">
+        <div className="flex size-16 items-center justify-center rounded-full border border-suth-border bg-suth-elevated text-lg font-black uppercase text-suth-text">
           {initials}
         </div>
         <div className="min-w-0">
-          <h1 className="truncate text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl">
+          <h1 className="truncate text-2xl font-black tracking-[-0.02em] text-suth-text md:text-3xl">
             {athlete.name}
           </h1>
-          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             {athlete.category} · {athlete.city}
           </p>
         </div>
       </header>
 
-      <div className="mt-6 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-vyrek-border bg-vyrek-border-subtle">
+      <div className="mt-6 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-suth-border bg-suth-border-subtle">
         <Stat label="Personal best" value={athlete.pb} accent />
         <Stat label="Total races" value={String(athlete.raceCount)} />
         <Stat label="Best finish" value={athlete.recentRaces[0]?.rank ?? "-"} />
       </div>
 
       <section className="mt-8">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           [ Station splits · PB race ]
         </p>
         <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -67,28 +67,28 @@ export default async function AthleteDetailPage({
       </section>
 
       <section className="mt-10">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           [ Race history ]
         </p>
         <ul role="list" className="mt-3 space-y-2">
           {athlete.recentRaces.map((r, i) => (
             <li
               key={i}
-              className="flex items-center justify-between gap-3 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/60 px-4 py-3"
+              className="flex items-center justify-between gap-3 rounded-lg border border-suth-border-subtle bg-suth-elevated/60 px-4 py-3"
             >
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold text-vyrek-text">
+                <p className="truncate text-sm font-semibold text-suth-text">
                   {r.event}
                 </p>
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                   {r.date}
                 </p>
               </div>
               <div className="shrink-0 text-right">
-                <p className="font-mono text-base tabular-nums text-vyrek-text">
+                <p className="font-mono text-base tabular-nums text-suth-text">
                   {r.time}
                 </p>
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-accent">
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-accent">
                   {r.rank}
                 </p>
               </div>
@@ -97,11 +97,11 @@ export default async function AthleteDetailPage({
         </ul>
       </section>
 
-      <section className="mt-10 rounded-2xl border border-vyrek-border-subtle bg-vyrek-elevated/60 p-5">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+      <section className="mt-10 rounded-2xl border border-suth-border-subtle bg-suth-elevated/60 p-5">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           What you can borrow
         </p>
-        <p className="mt-2 text-sm leading-relaxed text-vyrek-text-secondary">
+        <p className="mt-2 text-sm leading-relaxed text-suth-text-secondary">
           Compare your own splits side by side. The biggest gain for most
           athletes at this level is the {weakestStation(athlete)}, that&apos;s
           where {athlete.name.split(" ")[0]} spends the most time relative to
@@ -142,13 +142,13 @@ function Stat({
   accent?: boolean;
 }) {
   return (
-    <div className="bg-vyrek-elevated p-4 text-center">
-      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+    <div className="bg-suth-elevated p-4 text-center">
+      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
         {label}
       </p>
       <p
         className={`mt-1 text-xl font-black tabular-nums md:text-2xl ${
-          accent ? "text-vyrek-accent" : "text-vyrek-text"
+          accent ? "text-suth-accent" : "text-suth-text"
         }`}
       >
         {value}
@@ -169,12 +169,12 @@ function Split({
   return (
     <Link
       href={`/app/plan/stations#${slug}`}
-      className="block rounded-md border border-vyrek-border-subtle bg-vyrek-base/40 p-2 text-center transition-colors hover:border-vyrek-border-strong"
+      className="block rounded-md border border-suth-border-subtle bg-suth-base/40 p-2 text-center transition-colors hover:border-suth-border-strong"
     >
-      <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+      <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-suth-text-tertiary">
         {label}
       </p>
-      <p className="mt-0.5 font-mono text-sm tabular-nums text-vyrek-text">{v}</p>
+      <p className="mt-0.5 font-mono text-sm tabular-nums text-suth-text">{v}</p>
     </Link>
   );
 }

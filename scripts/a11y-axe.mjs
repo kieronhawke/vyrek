@@ -2,7 +2,7 @@
 /**
  * WCAG 2.1 AA accessibility audit using Playwright + @axe-core/playwright.
  *
- * Audits 8 production routes on https://vyrek.vercel.app and prints a compact
+ * Audits 8 production routes on https://suthperformance.com and prints a compact
  * per-route table, then saves full results to scripts/a11y-axe/results.json.
  *
  * Run: node scripts/a11y-axe.mjs
@@ -18,7 +18,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = join(__dirname, 'a11y-axe');
 const OUT_FILE = join(OUT_DIR, 'results.json');
 
-const BASE = 'https://vyrek.vercel.app';
+const BASE = 'https://suthperformance.com';
 const ROUTES = [
   '/',
   '/programmes',
@@ -49,7 +49,7 @@ async function auditRoute(browser, route) {
   const context = await browser.newContext({
     viewport: { width: 1280, height: 900 },
     userAgent:
-      'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 vyrek-a11y-audit',
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 suth-a11y-audit',
   });
   const page = await context.newPage();
   const url = `${BASE}${route}`;
@@ -123,7 +123,7 @@ function printTable(rows) {
     pad('Minor', 6),
   ].join(' ');
   const sep = '-'.repeat(header.length);
-  console.log('\nAccessibility audit — https://vyrek.vercel.app');
+  console.log('\nAccessibility audit — https://suthperformance.com');
   console.log(`Tags: ${TAGS.join(', ')}\n`);
   console.log(header);
   console.log(sep);

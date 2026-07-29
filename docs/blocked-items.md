@@ -9,7 +9,7 @@ Most §3 items already shipped across earlier sessions (Phase B3 Part 1 + Stage 
 - 3.1 Hero image vs video — DONE (uses next/image + `useShouldServeHeavyAssets` for mobile video gating)
 - 3.2 Hero text sizing — DONE (text-3xl mobile, text-7xl desktop)
 - 3.3 Social proof bar cleanup — DONE
-- 3.4 "What you get with Vyrek" 4-card bento — DONE
+- 3.4 "What you get with Suth Performance" 4-card bento — DONE
 - 3.5 Mashed programme text — NOT REPRODUCIBLE at any viewport in Stage 1 audit
 - 3.6 "Find your programme" unchanged — DONE
 - 3.7 James + 2 placeholder coaches — DONE

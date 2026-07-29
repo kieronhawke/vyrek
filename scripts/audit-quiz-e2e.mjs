@@ -4,7 +4,7 @@
 
 import { chromium } from "@playwright/test";
 
-const BASE = process.env.SMOKE_BASE ?? "https://vyrek.vercel.app";
+const BASE = process.env.SMOKE_BASE ?? "https://suthperformance.com";
 
 const browser = await chromium.launch();
 const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });

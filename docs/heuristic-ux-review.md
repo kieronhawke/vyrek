@@ -1,4 +1,4 @@
-# Heuristic UX Review — Vyrek
+# Heuristic UX Review — Suth Performance
 
 **Reviewer:** Claude (Stage 14 deliverable)
 **Date:** 24 May 2026
@@ -6,7 +6,7 @@
 **Scope:** Marketing surface + member app + partner programme + admin
 
 This is a thorough walk-through of the live site under each Nielsen heuristic
-plus a few Vyrek-specific lenses (voice consistency, race-day timing
+plus a few Suth Performance-specific lenses (voice consistency, race-day timing
 sensitivity, mobile-first reality). Each finding is rated **Critical /
 Major / Minor**. Critical issues block launch; major issues hurt
 conversion; minor are polish.
@@ -31,7 +31,7 @@ unambiguously.
   reads as a broken click. Add a 200ms transition state.
 - **Major.** When `/api/account/create` hits the new IP velocity 429
   branch, the message renders inline but doesn't suggest a meaningful
-  next step. We say "contact support@vyrek.com if this looks wrong" —
+  next step. We say "contact support@suthperformance.com if this looks wrong" —
   good — but should also offer a 24-hour countdown so the user knows
   exactly when they can retry. Add a `Retry-After` header and surface it.
 
@@ -192,7 +192,7 @@ guidelines live under /press. Good distribution.
 
 ---
 
-## Vyrek-specific lenses
+## Suth Performance-specific lenses
 
 ### Voice consistency
 
@@ -216,7 +216,7 @@ guidelines live under /press. Good distribution.
 
 ### Image attribution
 
-- **Minor.** The /press/founder-bio.md says "credit Vyrek where space
+- **Minor.** The /press/founder-bio.md says "credit Suth Performance where space
   allows" but the press kit doesn't include a logo or wordmark in the
   bio PDF format directly. Add a one-line "Logo at /logo-primary.svg"
   to the bio so press can grab both in one click.

@@ -44,7 +44,7 @@ export async function generateMetadata({
       title: c.title,
       description: c.hook,
       url,
-      siteName: "Vyrek",
+      siteName: "Suth Performance",
       type: "article",
       locale: "en_GB",
     },
@@ -105,43 +105,43 @@ export default async function ComparePage({
         <Container>
           <nav
             aria-label="Breadcrumb"
-            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary"
           >
-            <Link href="/" className="hover:text-vyrek-text">Home</Link>
+            <Link href="/" className="hover:text-suth-text">Home</Link>
             <span aria-hidden className="mx-2">/</span>
-            <Link href="/compare" className="hover:text-vyrek-text">Compare</Link>
+            <Link href="/compare" className="hover:text-suth-text">Compare</Link>
             <span aria-hidden className="mx-2">/</span>
-            <span className="text-vyrek-text">{c.eyebrow}</span>
+            <span className="text-suth-text">{c.eyebrow}</span>
           </nav>
 
           <div className="mx-auto max-w-3xl">
             <Eyebrow>{c.eyebrow}</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               {c.title}
             </SplitHeading>
             {c.intro.map((p, i) => (
-              <p key={i} className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+              <p key={i} className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                 {p}
               </p>
             ))}
           </div>
 
-          <section className="mx-auto mt-16 max-w-4xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-4xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>Side by side</Eyebrow>
-            <div className="mt-6 overflow-hidden rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated">
+            <div className="mt-6 overflow-hidden rounded-lg border border-suth-border-subtle bg-suth-elevated">
               <table className="w-full text-left text-sm">
-                <thead className="border-b border-vyrek-border-subtle">
+                <thead className="border-b border-suth-border-subtle">
                   <tr>
-                    <th className="px-4 py-4 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                    <th className="px-4 py-4 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                       Axis
                     </th>
-                    <th className="px-4 py-4 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-accent">
+                    <th className="px-4 py-4 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-accent">
                       Hyrox
                     </th>
-                    <th className="px-4 py-4 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                    <th className="px-4 py-4 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                       {c.opposite}
                     </th>
                   </tr>
@@ -152,13 +152,13 @@ export default async function ComparePage({
                       key={r.axis}
                       className={
                         i < c.rows.length - 1
-                          ? "border-b border-vyrek-border-subtle"
+                          ? "border-b border-suth-border-subtle"
                           : ""
                       }
                     >
-                      <td className="px-4 py-3 text-vyrek-text-secondary">{r.axis}</td>
-                      <td className="px-4 py-3 text-vyrek-text">{r.hyrox}</td>
-                      <td className="px-4 py-3 text-vyrek-text-secondary">{r.other}</td>
+                      <td className="px-4 py-3 text-suth-text-secondary">{r.axis}</td>
+                      <td className="px-4 py-3 text-suth-text">{r.hyrox}</td>
+                      <td className="px-4 py-3 text-suth-text-secondary">{r.other}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -166,14 +166,14 @@ export default async function ComparePage({
             </div>
           </section>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>Verdict</Eyebrow>
-            <p className="mt-4 text-base leading-relaxed text-vyrek-text md:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-suth-text md:text-lg">
               {c.verdict}
             </p>
           </section>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>FAQs</Eyebrow>
             <div className="mt-6">
               <Accordion>
@@ -181,12 +181,12 @@ export default async function ComparePage({
                   <AccordionItem
                     key={i}
                     value={`q-${i}`}
-                    className="border-b border-vyrek-border-subtle last:border-b-0"
+                    className="border-b border-suth-border-subtle last:border-b-0"
                   >
-                    <AccordionTrigger className="py-5 text-left text-base font-medium text-vyrek-text hover:no-underline md:text-lg">
+                    <AccordionTrigger className="py-5 text-left text-base font-medium text-suth-text hover:no-underline md:text-lg">
                       {f.q}
                     </AccordionTrigger>
-                    <AccordionContent className="pb-5 text-base leading-relaxed text-vyrek-text-secondary">
+                    <AccordionContent className="pb-5 text-base leading-relaxed text-suth-text-secondary">
                       {f.a}
                     </AccordionContent>
                   </AccordionItem>
@@ -195,12 +195,12 @@ export default async function ComparePage({
             </div>
           </section>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10 text-center">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10 text-center">
             <Eyebrow>Pick Hyrox</Eyebrow>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-vyrek-text md:text-4xl">
+            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
               Ready to race?
             </h2>
-            <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
+            <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
               Three-minute quiz. Dated Week 1 before you pay. £8.99/month.
             </p>
             <div className="mt-8">
@@ -210,16 +210,16 @@ export default async function ComparePage({
             </div>
           </section>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>More comparisons</Eyebrow>
             <ul role="list" className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
               {COMPARISONS.filter((x) => x.slug !== c.slug).map((x) => (
                 <li key={x.slug}>
                   <Link
                     href={`/compare/${x.slug}`}
-                    className="block rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-4 transition-colors hover:border-vyrek-border-strong"
+                    className="block rounded-md border border-suth-border-subtle bg-suth-elevated p-4 transition-colors hover:border-suth-border-strong"
                   >
-                    <p className="text-sm font-medium text-vyrek-text">{x.title}</p>
+                    <p className="text-sm font-medium text-suth-text">{x.title}</p>
                   </Link>
                 </li>
               ))}

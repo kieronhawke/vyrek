@@ -5,7 +5,7 @@ import { execSync } from "node:child_process";
 import { writeFile, mkdir } from "node:fs/promises";
 import { readFileSync } from "node:fs";
 
-const BASE = process.env.SMOKE_BASE ?? "https://vyrek.vercel.app";
+const BASE = process.env.SMOKE_BASE ?? "https://suthperformance.com";
 const OUT = "/Users/kieronhawke/code/vyrek/scripts/stress-test/results/lighthouse";
 await mkdir(OUT, { recursive: true });
 

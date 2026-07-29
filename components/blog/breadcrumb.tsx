@@ -7,24 +7,24 @@ export function Breadcrumb({
 }) {
   return (
     <nav aria-label="Breadcrumb">
-      <ol className="flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+      <ol className="flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
         {trail.map((step, i) => {
           const isLast = i === trail.length - 1;
           return (
             <li key={step.url} className="flex items-center gap-2">
               {isLast ? (
-                <span aria-current="page" className="text-vyrek-text">
+                <span aria-current="page" className="text-suth-text">
                   {step.name}
                 </span>
               ) : (
                 <>
                   <Link
                     href={step.url}
-                    className="transition-colors hover:text-vyrek-text"
+                    className="transition-colors hover:text-suth-text"
                   >
                     {step.name}
                   </Link>
-                  <span aria-hidden className="text-vyrek-text-disabled">
+                  <span aria-hidden className="text-suth-text-disabled">
                     ›
                   </span>
                 </>

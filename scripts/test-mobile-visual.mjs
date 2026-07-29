@@ -62,7 +62,7 @@ try {
   await page.goto(BASE, { waitUntil: "domcontentloaded" });
   await page.evaluate(() => {
     window.localStorage.setItem(
-      "vyrek:consent:v1",
+      "suth:consent:v1",
       JSON.stringify({
         decided: true,
         categories: { necessary: true, analytics: false, marketing: false },

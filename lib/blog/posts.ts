@@ -103,8 +103,8 @@ async function parseFile(filename: string): Promise<Post | null> {
   const slug =
     (fm.slug as string | undefined) ?? filename.replace(/\.mdx$/, "");
 
-  const authorSlug = (fm.author as string | undefined) ?? "vyrek-team";
-  const author = AUTHORS[authorSlug] ?? AUTHORS["vyrek-team"];
+  const authorSlug = (fm.author as string | undefined) ?? "suth-team";
+  const author = AUTHORS[authorSlug] ?? AUTHORS["suth-team"];
 
   const category = (fm.category as Category | undefined) ?? "training";
   if (!CATEGORIES[category]) {

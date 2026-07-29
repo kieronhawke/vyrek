@@ -123,7 +123,7 @@ export async function POST(req: Request) {
         ok: false,
         reason: "rate-limited",
         retryAfterSeconds: retryAfter,
-        message: `Too many signups from this network in the last 24 hours. Try again in about ${hours} hour${hours === 1 ? "" : "s"}, or email support@vyrek.com if this looks wrong.`,
+        message: `Too many signups from this network in the last 24 hours. Try again in about ${hours} hour${hours === 1 ? "" : "s"}, or email support@suthperformance.com if this looks wrong.`,
       },
       {
         status: 429,
@@ -221,17 +221,17 @@ export async function POST(req: Request) {
       scheduled_for: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
     });
 
-    // 4. Partner attribution. Read the signed vyrek_partner cookie set by
+    // 4. Partner attribution. Read the signed suth_partner cookie set by
     //    /p/<slug>, verify the HMAC + expiry, and create a pending referral.
     //    Self-referrals (where the partner's own email matches the referee's)
     //    are dropped silently. Pre-fix, the cookie was unsigned and anyone
-    //    could stamp `vyrek_partner=<any uuid>` to force-attribute referrals.
+    //    could stamp `suth_partner=<any uuid>` to force-attribute referrals.
     try {
       const cookieStore = await cookies();
-      const rawCookie = cookieStore.get("vyrek_partner")?.value;
+      const rawCookie = cookieStore.get("suth_partner")?.value;
       const verified = readPartnerAttributionCookie(rawCookie);
       const partnerId = verified.ok ? verified.partnerId : null;
-      const subId = cookieStore.get("vyrek_partner_sub")?.value ?? null;
+      const subId = cookieStore.get("suth_partner_sub")?.value ?? null;
       if (partnerId) {
         const { data: partner } = await sb
           .from("partners")

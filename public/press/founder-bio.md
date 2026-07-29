@@ -1,8 +1,8 @@
 # James Wright — Founder bio
 
-**Founding coach, Vyrek**
+**Founding coach, Suth Performance**
 
-James Wright is a UK-based Elite 15 Hyrox athlete and founder of Vyrek, the
+James Wright is a UK-based Elite 15 Hyrox athlete and founder of Suth Performance, the
 race-specific training platform for Hyrox.
 
 ## Racing record
@@ -20,9 +20,9 @@ format first arrived in the UK at scale. He spent three seasons writing his
 own training, racing across the UK and Europe, and quietly coaching a small
 group of friends through their first races.
 
-Vyrek started as a spreadsheet he kept refining for those friends. By the
+Suth Performance started as a spreadsheet he kept refining for those friends. By the
 end of 2025 it had become a 12-week structured programme that consistently
-produced PBs and first finishes. He launched Vyrek in early 2026 to give
+produced PBs and first finishes. He launched Suth Performance in early 2026 to give
 that same programme to the rapidly growing UK Hyrox community.
 
 ## What James can speak to
@@ -35,7 +35,7 @@ that same programme to the rapidly growing UK Hyrox community.
 
 ## Contact
 
-press@vyrek.com — replies within 4 hours, Monday to Friday.
+press@suthperformance.com — replies within 4 hours, Monday to Friday.
 
 ## Pronouns and identity
 
@@ -44,4 +44,4 @@ James Wright, he/him. Based in the UK.
 ## Photo
 
 Approved press headshot at `/media/images/v2/coach-james-wright-warm.jpg`
-(usable in print and online; please credit "Vyrek" where space allows).
+(usable in print and online; please credit "Suth Performance" where space allows).

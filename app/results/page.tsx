@@ -14,7 +14,7 @@ import {
 import { EventCard } from "@/components/results/event-card";
 
 export const metadata: Metadata = {
-  title: "Results: HYROX athletes, events, rankings · Vyrek",
+  title: "Results: HYROX athletes, events, rankings · Suth Performance",
   description:
     "Browse HYROX events, athletes, splits, rankings. Live and historic data across every venue. Train, race, analyse, beat.",
   alternates: { canonical: "/results" },
@@ -38,16 +38,16 @@ export default function ResultsHubPage() {
             <Eyebrow>Results</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-4xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-6xl"
+              className="mt-4 text-balance text-4xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-6xl"
             >
               Train. Race. Analyse. Beat.
             </SplitHeading>
-            <p className="mt-5 text-base text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 text-base text-suth-text-secondary md:text-lg">
               Live and historic HYROX results across every venue. Splits,
               ranks, comparisons, and the data that decides your next
               build.
             </p>
-            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
               [ {DATA_STATUS.source === "live" ? "LIVE" : "PREVIEW"} ·{" "}
               {totalAthletes.toLocaleString("en-GB")} athletes indexed ]
             </p>
@@ -68,14 +68,14 @@ export default function ResultsHubPage() {
 
           {/* Past races grid */}
           {buckets.past.length > 0 ? (
-            <section className="mt-20 border-t border-vyrek-border-subtle pt-10">
+            <section className="mt-20 border-t border-suth-border-subtle pt-10">
               <header className="mb-4 flex items-baseline justify-between">
-                <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+                <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
                   [ RECENT RACES ]
                 </h2>
                 <a
                   href="/results/events"
-                  className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-secondary hover:text-vyrek-text"
+                  className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-secondary hover:text-suth-text"
                 >
                   Browse all →
                 </a>

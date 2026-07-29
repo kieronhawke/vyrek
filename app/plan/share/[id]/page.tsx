@@ -13,9 +13,9 @@ const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 export const metadata: Metadata = {
-  title: "Vyrek plan",
+  title: "Suth Performance plan",
   description:
-    "A personalised Hyrox training plan from Vyrek. Want your own? Take the three-minute quiz.",
+    "A personalised Hyrox training plan from Suth Performance. Want your own? Take the three-minute quiz.",
 };
 
 async function fetchSharedPlan(id: string): Promise<{

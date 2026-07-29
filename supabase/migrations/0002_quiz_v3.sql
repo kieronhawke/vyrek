@@ -1,4 +1,4 @@
--- Quiz V3 additions (Phase 1 / docs/vyrek-quiz-v3-brief.md + addendum)
+-- Quiz V3 additions (Phase 1 / docs/suth-quiz-v3-brief.md + addendum)
 --
 -- Adds:
 --   1. Supabase Auth linkage (`auth_user_id`) to customers

@@ -30,7 +30,7 @@ export function ReferralCodeInput() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="text-sm text-vyrek-text-secondary underline-offset-4 hover:underline"
+        className="text-sm text-suth-text-secondary underline-offset-4 hover:underline"
       >
         Have a code from a friend?
       </button>
@@ -41,7 +41,7 @@ export function ReferralCodeInput() {
     <div className="w-full space-y-2">
       <label
         htmlFor="referral-code"
-        className="block font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+        className="block font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary"
       >
         Referral code
       </label>
@@ -59,22 +59,22 @@ export function ReferralCodeInput() {
           maxLength={12}
           placeholder="K7M9X2P4"
           className={cn(
-            "flex-1 rounded-md border bg-vyrek-base px-3 py-2.5 font-mono text-sm uppercase tracking-[0.12em] text-vyrek-text outline-none transition-colors",
+            "flex-1 rounded-md border bg-suth-base px-3 py-2.5 font-mono text-sm uppercase tracking-[0.12em] text-suth-text outline-none transition-colors",
             status === "valid"
-              ? "border-vyrek-success"
+              ? "border-suth-success"
               : status === "invalid"
-                ? "border-vyrek-danger"
-                : "border-vyrek-border",
+                ? "border-suth-danger"
+                : "border-suth-border",
           )}
         />
         {status === "checking" && (
-          <span className="text-xs text-vyrek-text-tertiary">Checking...</span>
+          <span className="text-xs text-suth-text-tertiary">Checking...</span>
         )}
         {status === "valid" && (
-          <span className="text-xs text-vyrek-success">✓ Applied</span>
+          <span className="text-xs text-suth-success">✓ Applied</span>
         )}
         {status === "invalid" && (
-          <span className="text-xs text-vyrek-danger">Not valid</span>
+          <span className="text-xs text-suth-danger">Not valid</span>
         )}
       </div>
     </div>

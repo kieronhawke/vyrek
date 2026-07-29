@@ -44,7 +44,7 @@ export async function generateMetadata({
       title: g.title,
       description: g.hook,
       url,
-      siteName: "Vyrek",
+      siteName: "Suth Performance",
       type: "article",
       locale: "en_GB",
     },
@@ -103,37 +103,37 @@ export default async function GearPage({
         <Container>
           <nav
             aria-label="Breadcrumb"
-            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary"
           >
-            <Link href="/" className="hover:text-vyrek-text">Home</Link>
+            <Link href="/" className="hover:text-suth-text">Home</Link>
             <span aria-hidden className="mx-2">/</span>
-            <Link href="/hyrox/gear" className="hover:text-vyrek-text">Gear</Link>
+            <Link href="/hyrox/gear" className="hover:text-suth-text">Gear</Link>
             <span aria-hidden className="mx-2">/</span>
-            <span className="text-vyrek-text">{g.eyebrow}</span>
+            <span className="text-suth-text">{g.eyebrow}</span>
           </nav>
 
           <div className="mx-auto max-w-3xl">
             <Eyebrow>Gear · {g.eyebrow}</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               {g.title}
             </SplitHeading>
             {g.intro.map((p, i) => (
-              <p key={i} className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+              <p key={i} className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                 {p}
               </p>
             ))}
           </div>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10 md:grid md:grid-cols-2 md:gap-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10 md:grid md:grid-cols-2 md:gap-10">
             <div>
               <Eyebrow>What to look for</Eyebrow>
-              <ul role="list" className="mt-4 space-y-2 text-base leading-relaxed text-vyrek-text-secondary">
+              <ul role="list" className="mt-4 space-y-2 text-base leading-relaxed text-suth-text-secondary">
                 {g.whatToLookFor.map((w) => (
                   <li key={w} className="flex gap-3">
-                    <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-vyrek-accent" />
+                    <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-suth-accent" />
                     <span>{w}</span>
                   </li>
                 ))}
@@ -141,10 +141,10 @@ export default async function GearPage({
             </div>
             <div className="mt-10 md:mt-0">
               <Eyebrow>What to avoid</Eyebrow>
-              <ul role="list" className="mt-4 space-y-2 text-base leading-relaxed text-vyrek-text-secondary">
+              <ul role="list" className="mt-4 space-y-2 text-base leading-relaxed text-suth-text-secondary">
                 {g.whatToAvoid.map((w) => (
                   <li key={w} className="flex gap-3">
-                    <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-vyrek-danger/70" />
+                    <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-suth-danger/70" />
                     <span>{w}</span>
                   </li>
                 ))}
@@ -153,7 +153,7 @@ export default async function GearPage({
           </section>
 
           <section
-            className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10"
+            className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10"
             aria-labelledby="gear-faq-heading"
           >
             <Eyebrow>FAQs</Eyebrow>
@@ -166,12 +166,12 @@ export default async function GearPage({
                   <AccordionItem
                     key={i}
                     value={`q-${i}`}
-                    className="border-b border-vyrek-border-subtle last:border-b-0"
+                    className="border-b border-suth-border-subtle last:border-b-0"
                   >
-                    <AccordionTrigger className="py-5 text-left text-base font-medium text-vyrek-text hover:no-underline md:text-lg">
+                    <AccordionTrigger className="py-5 text-left text-base font-medium text-suth-text hover:no-underline md:text-lg">
                       {f.q}
                     </AccordionTrigger>
-                    <AccordionContent className="pb-5 text-base leading-relaxed text-vyrek-text-secondary">
+                    <AccordionContent className="pb-5 text-base leading-relaxed text-suth-text-secondary">
                       {f.a}
                     </AccordionContent>
                   </AccordionItem>
@@ -180,12 +180,12 @@ export default async function GearPage({
             </div>
           </section>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10 text-center">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10 text-center">
             <Eyebrow>Gear doesn&apos;t train you</Eyebrow>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-vyrek-text md:text-4xl">
+            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
               The plan does.
             </h2>
-            <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
+            <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
               Right kit, wrong plan: still slow. Right plan: any decent kit
               will do. Take the quiz, see your Week 1 free.
             </p>
@@ -196,19 +196,19 @@ export default async function GearPage({
             </div>
           </section>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>More gear guides</Eyebrow>
             <ul role="list" className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
               {GEAR_GUIDES.filter((x) => x.slug !== g.slug).map((x) => (
                 <li key={x.slug}>
                   <Link
                     href={`/hyrox/gear/${x.slug}`}
-                    className="block rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-4 transition-colors hover:border-vyrek-border-strong"
+                    className="block rounded-md border border-suth-border-subtle bg-suth-elevated p-4 transition-colors hover:border-suth-border-strong"
                   >
-                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                       {x.eyebrow}
                     </p>
-                    <p className="mt-1 text-sm font-medium text-vyrek-text">
+                    <p className="mt-1 text-sm font-medium text-suth-text">
                       {x.title}
                     </p>
                   </Link>

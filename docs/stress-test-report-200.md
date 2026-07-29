@@ -1,7 +1,7 @@
 # Stage 14 stress test — 200 sessions
 
 **Run:** 24 May 2026, 13:00 BST
-**Target:** https://vyrek.vercel.app
+**Target:** https://suthperformance.com
 **Sessions:** 200 (8 personas × 25 each)
 **Concurrency:** 8 parallel browsers
 **Wall time:** 228.4 seconds (~3:48)
@@ -68,7 +68,7 @@ hesitations, scrolls, page nav), elapsed, console errors with first
 ## Reproduce
 
 ```bash
-SESSIONS_PER_PERSONA=25 CONCURRENCY=8 SMOKE_BASE=https://vyrek.vercel.app \
+SESSIONS_PER_PERSONA=25 CONCURRENCY=8 SMOKE_BASE=https://suthperformance.com \
   node scripts/stress-test/run-stress.mjs
 ```
 

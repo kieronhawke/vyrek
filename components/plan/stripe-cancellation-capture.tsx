@@ -26,7 +26,7 @@ const REASONS = [
   "Other",
 ] as const;
 
-const STORAGE_KEY = "vyrek:plan:cancel-prompt:dismissed";
+const STORAGE_KEY = "suth:plan:cancel-prompt:dismissed";
 
 export function StripeCancellationCapture() {
   const params = useSearchParams();
@@ -96,14 +96,14 @@ export function StripeCancellationCapture() {
   return (
     <aside
       aria-label="Cancellation feedback"
-      className="fixed inset-x-4 bottom-[max(1rem,var(--safe-bottom))] z-30 mx-auto max-w-md rounded-2xl border border-vyrek-border bg-vyrek-elevated/95 p-5 shadow-2xl backdrop-blur md:left-auto md:right-6 md:mx-0 md:bottom-6"
+      className="fixed inset-x-4 bottom-[max(1rem,var(--safe-bottom))] z-30 mx-auto max-w-md rounded-2xl border border-suth-border bg-suth-elevated/95 p-5 shadow-2xl backdrop-blur md:left-auto md:right-6 md:mx-0 md:bottom-6"
     >
       {step === "thanks" ? (
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
             [ THANKS ]
           </p>
-          <p className="mt-2 text-base font-bold text-vyrek-text">
+          <p className="mt-2 text-base font-bold text-suth-text">
             Got it. We&apos;ll use that to make the offer clearer.
           </p>
         </div>
@@ -111,13 +111,13 @@ export function StripeCancellationCapture() {
         <>
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
                 [ NO PROBLEM ]
               </p>
-              <p className="mt-2 text-base font-bold leading-tight text-vyrek-text">
+              <p className="mt-2 text-base font-bold leading-tight text-suth-text">
                 What changed your mind?
               </p>
-              <p className="mt-1 text-xs leading-relaxed text-vyrek-text-secondary">
+              <p className="mt-1 text-xs leading-relaxed text-suth-text-secondary">
                 Optional. One tap helps us shape what we offer next.
               </p>
             </div>
@@ -125,7 +125,7 @@ export function StripeCancellationCapture() {
               type="button"
               onClick={dismiss}
               aria-label="Dismiss feedback prompt"
-              className="-mr-1 -mt-1 inline-flex size-8 items-center justify-center rounded-full text-vyrek-text-tertiary transition-colors hover:bg-vyrek-overlay hover:text-vyrek-text"
+              className="-mr-1 -mt-1 inline-flex size-8 items-center justify-center rounded-full text-suth-text-tertiary transition-colors hover:bg-suth-overlay hover:text-suth-text"
             >
               <span aria-hidden>×</span>
             </button>
@@ -138,8 +138,8 @@ export function StripeCancellationCapture() {
                 onClick={() => setReason(r)}
                 className={`inline-flex h-9 items-center rounded-pill border px-3 text-xs transition-colors ${
                   reason === r
-                    ? "border-vyrek-accent bg-vyrek-accent/10 text-vyrek-text"
-                    : "border-vyrek-border-subtle bg-vyrek-base/40 text-vyrek-text-secondary hover:border-vyrek-border-strong"
+                    ? "border-suth-accent bg-suth-accent/10 text-suth-text"
+                    : "border-suth-border-subtle bg-suth-base/40 text-suth-text-secondary hover:border-suth-border-strong"
                 }`}
               >
                 {r}
@@ -153,9 +153,9 @@ export function StripeCancellationCapture() {
               onChange={(e) => setNote(e.currentTarget.value.slice(0, 280))}
               placeholder="Anything else? (optional)"
               rows={2}
-              className="block w-full resize-y rounded-md border border-vyrek-border bg-vyrek-base px-3 py-2 text-sm text-vyrek-text outline-none placeholder:text-vyrek-text-tertiary focus:border-vyrek-accent"
+              className="block w-full resize-y rounded-md border border-suth-border bg-suth-base px-3 py-2 text-sm text-suth-text outline-none placeholder:text-suth-text-tertiary focus:border-suth-accent"
             />
-            <span className="mt-1 block text-right font-mono text-[10px] text-vyrek-text-tertiary">
+            <span className="mt-1 block text-right font-mono text-[10px] text-suth-text-tertiary">
               {note.length}/280
             </span>
           </label>
@@ -163,7 +163,7 @@ export function StripeCancellationCapture() {
             <button
               type="button"
               onClick={dismiss}
-              className="inline-flex h-9 items-center px-3 text-xs text-vyrek-text-secondary hover:text-vyrek-text"
+              className="inline-flex h-9 items-center px-3 text-xs text-suth-text-secondary hover:text-suth-text"
             >
               No thanks
             </button>
@@ -171,7 +171,7 @@ export function StripeCancellationCapture() {
               type="button"
               onClick={submit}
               disabled={!reason && note.trim().length === 0}
-              className="inline-flex h-9 items-center rounded-pill bg-vyrek-accent px-4 text-xs font-semibold text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-9 items-center rounded-pill bg-suth-accent px-4 text-xs font-semibold text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
             >
               Send →
             </button>

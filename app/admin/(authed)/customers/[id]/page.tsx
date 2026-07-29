@@ -50,7 +50,7 @@ export default async function AdminCustomerDetailPage({
         actions={
           <Link
             href="/admin/customers"
-            className="inline-flex h-10 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 text-sm text-vyrek-text"
+            className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text"
           >
             ← Back to all
           </Link>
@@ -59,23 +59,23 @@ export default async function AdminCustomerDetailPage({
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <Card>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             Account
           </p>
           <dl className="mt-3 space-y-2 text-sm">
             <div className="flex justify-between gap-3">
-              <dt className="text-vyrek-text-tertiary">Customer ID</dt>
-              <dd className="font-mono text-xs text-vyrek-text">{customer.id}</dd>
+              <dt className="text-suth-text-tertiary">Customer ID</dt>
+              <dd className="font-mono text-xs text-suth-text">{customer.id}</dd>
             </div>
             <div className="flex justify-between gap-3">
-              <dt className="text-vyrek-text-tertiary">Stripe customer</dt>
-              <dd className="font-mono text-xs text-vyrek-text">
+              <dt className="text-suth-text-tertiary">Stripe customer</dt>
+              <dd className="font-mono text-xs text-suth-text">
                 {customer.stripe_customer_id ?? "-"}
               </dd>
             </div>
             <div className="flex justify-between gap-3">
-              <dt className="text-vyrek-text-tertiary">Referral code</dt>
-              <dd className="font-mono text-xs text-vyrek-text">
+              <dt className="text-suth-text-tertiary">Referral code</dt>
+              <dd className="font-mono text-xs text-suth-text">
                 {customer.referral_code ?? "-"}
               </dd>
             </div>
@@ -83,7 +83,7 @@ export default async function AdminCustomerDetailPage({
         </Card>
 
         <Card>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             Latest subscription
           </p>
           {latestSub ? (
@@ -93,31 +93,31 @@ export default async function AdminCustomerDetailPage({
               </p>
               <dl className="mt-3 space-y-2 text-sm">
                 <div className="flex justify-between gap-3">
-                  <dt className="text-vyrek-text-tertiary">Trial ends</dt>
-                  <dd className="text-vyrek-text">
+                  <dt className="text-suth-text-tertiary">Trial ends</dt>
+                  <dd className="text-suth-text">
                     {latestSub.trial_end
                       ? format(new Date(latestSub.trial_end), "dd MMM yyyy")
                       : "-"}
                   </dd>
                 </div>
                 <div className="flex justify-between gap-3">
-                  <dt className="text-vyrek-text-tertiary">Current period end</dt>
-                  <dd className="text-vyrek-text">
+                  <dt className="text-suth-text-tertiary">Current period end</dt>
+                  <dd className="text-suth-text">
                     {latestSub.current_period_end
                       ? format(new Date(latestSub.current_period_end), "dd MMM yyyy")
                       : "-"}
                   </dd>
                 </div>
                 <div className="flex justify-between gap-3">
-                  <dt className="text-vyrek-text-tertiary">Stripe sub</dt>
-                  <dd className="font-mono text-xs text-vyrek-text">
+                  <dt className="text-suth-text-tertiary">Stripe sub</dt>
+                  <dd className="font-mono text-xs text-suth-text">
                     {latestSub.stripe_subscription_id ?? "-"}
                   </dd>
                 </div>
               </dl>
               {latestSub.stripe_subscription_id &&
               latestSub.status !== "canceled" ? (
-                <div className="mt-4 border-t border-vyrek-border-subtle pt-4">
+                <div className="mt-4 border-t border-suth-border-subtle pt-4">
                   <CancelSubscriptionButton
                     stripeSubscriptionId={latestSub.stripe_subscription_id}
                   />
@@ -125,7 +125,7 @@ export default async function AdminCustomerDetailPage({
               ) : null}
             </>
           ) : (
-            <p className="mt-3 text-sm text-vyrek-text-tertiary">
+            <p className="mt-3 text-sm text-suth-text-tertiary">
               No subscription yet.
             </p>
           )}
@@ -134,7 +134,7 @@ export default async function AdminCustomerDetailPage({
 
       {/* Subscription history */}
       <section className="mt-10">
-        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           Subscription history
         </h2>
         <Table
@@ -146,7 +146,7 @@ export default async function AdminCustomerDetailPage({
             s.current_period_end
               ? format(new Date(s.current_period_end), "dd MMM yyyy")
               : "-",
-            <span key="ss" className="font-mono text-xs text-vyrek-text-secondary">
+            <span key="ss" className="font-mono text-xs text-suth-text-secondary">
               {s.stripe_subscription_id ?? "-"}
             </span>,
             s.created_at
@@ -158,7 +158,7 @@ export default async function AdminCustomerDetailPage({
 
       {/* Customer actions */}
       <section className="mt-10">
-        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           Account actions
         </h2>
         <CustomerActions
@@ -169,28 +169,28 @@ export default async function AdminCustomerDetailPage({
 
       {/* Latest quiz response */}
       <section className="mt-10">
-        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           Latest quiz response
         </h2>
         {latestQuiz ? (
           <Card>
             <div className="flex items-center justify-between">
-              <p className="font-semibold text-vyrek-text">
+              <p className="font-semibold text-suth-text">
                 Programme: {latestQuiz.program ?? "-"}
               </p>
-              <span className="font-mono text-xs text-vyrek-text-tertiary">
+              <span className="font-mono text-xs text-suth-text-tertiary">
                 {latestQuiz.created_at
                   ? format(new Date(latestQuiz.created_at), "dd MMM yyyy, HH:mm")
                   : "-"}
               </span>
             </div>
-            <pre className="mt-4 max-h-96 overflow-auto rounded-md border border-vyrek-border-subtle bg-vyrek-base/40 p-4 text-xs leading-relaxed text-vyrek-text-secondary">
+            <pre className="mt-4 max-h-96 overflow-auto rounded-md border border-suth-border-subtle bg-suth-base/40 p-4 text-xs leading-relaxed text-suth-text-secondary">
               {JSON.stringify(latestQuiz.answers, null, 2)}
             </pre>
           </Card>
         ) : (
           <Card>
-            <p className="text-sm text-vyrek-text-tertiary">
+            <p className="text-sm text-suth-text-tertiary">
               No quiz response on file.
             </p>
           </Card>

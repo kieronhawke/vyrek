@@ -28,7 +28,7 @@ export async function GET() {
   }));
   const body = {
     version: "https://jsonfeed.org/version/1.1",
-    title: "Vyrek Journal",
+    title: "Suth Performance Journal",
     description:
       "Practical Hyrox content from an Elite 15 coach. Training, technique, race-day, recovery.",
     home_page_url: `${siteUrl()}/blog`,
@@ -36,7 +36,7 @@ export async function GET() {
     language: "en-GB",
     icon: `${siteUrl()}/icon-512.png`,
     favicon: `${siteUrl()}/icon.svg`,
-    authors: [{ name: "Vyrek", url: siteUrl() }],
+    authors: [{ name: "Suth Performance", url: siteUrl() }],
     items,
   };
   return NextResponse.json(body, {

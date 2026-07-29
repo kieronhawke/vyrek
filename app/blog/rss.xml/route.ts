@@ -2,7 +2,7 @@ import { listPostMeta } from "@/lib/blog/posts";
 import { blogIndexUrl, postUrl, siteUrl } from "@/lib/blog/urls";
 
 /**
- * RSS 2.0 feed for the Vyrek Journal. Discoverable via the
+ * RSS 2.0 feed for the Suth Performance Journal. Discoverable via the
  * `<link rel="alternate" type="application/rss+xml">` in blog metadata,
  * and indexable by Feedly, Substack imports, Semrush content monitoring,
  * Google's content-freshness signals, and any standard feed reader.
@@ -31,7 +31,7 @@ export async function GET() {
       <guid isPermaLink="true">${url}</guid>
       <pubDate>${pub}</pubDate>
       <description>${escape(p.excerpt)}</description>
-      <author>noreply@vyrek.com (${escape(p.author.name)})</author>
+      <author>noreply@suthperformance.com (${escape(p.author.name)})</author>
       <category>${escape(p.category)}</category>
     </item>`;
     })
@@ -40,7 +40,7 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Vyrek Journal</title>
+    <title>Suth Performance Journal</title>
     <link>${blogIndexUrl()}</link>
     <description>Practical Hyrox training, technique and race-day guides from an Elite 15 coach.</description>
     <language>en-GB</language>

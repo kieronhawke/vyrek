@@ -18,7 +18,8 @@ const RESERVED = new Set([
   "p",
   "partners",
   "support",
-  "vyrek",
+  "suth",
+  "suthperformance",
 ]);
 
 // ─── GET ?check=slug → availability ─────────────────────

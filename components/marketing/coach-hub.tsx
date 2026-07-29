@@ -25,19 +25,19 @@ export function CoachHub() {
     <RevealOnView
       as="section"
       aria-labelledby="coaches-heading"
-      className="border-t border-vyrek-border-subtle py-24 md:py-32"
+      className="border-t border-suth-border-subtle py-24 md:py-32"
     >
       <Container>
         <header className="mx-auto max-w-2xl text-center">
           <Eyebrow>Coaching</Eyebrow>
           <SplitHeading
             id="coaches-heading"
-            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
           >
             Programmed by an Elite 15 coach
           </SplitHeading>
-          <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary">
-            James Wright writes the progression Vyrek runs on. Two more
+          <p className="mt-4 text-base leading-relaxed text-suth-text-secondary">
+            James Wright writes the progression Suth Performance runs on. Two more
             coaches join in 2026 to cover Doubles and Pro.
           </p>
         </header>
@@ -81,7 +81,7 @@ function CoachTile({
   if (coach.role === "JOINING 2026") {
     return (
       <div
-        className="relative isolate flex aspect-[5/4] flex-col justify-between overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 sm:aspect-[4/5]"
+        className="relative isolate flex aspect-[5/4] flex-col justify-between overflow-hidden rounded-lg border border-suth-border bg-suth-elevated p-6 sm:aspect-[4/5]"
         aria-label={`Coach placeholder, ${coach.role.toLowerCase()}`}
       >
         <div aria-hidden className="absolute inset-0 -z-10">
@@ -94,19 +94,19 @@ function CoachTile({
               className="object-cover grayscale opacity-30"
             />
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-b from-vyrek-overlay via-vyrek-elevated to-vyrek-base" />
+            <div className="absolute inset-0 bg-gradient-to-b from-suth-overlay via-suth-elevated to-suth-base" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-vyrek-base via-vyrek-base/60 to-vyrek-base/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-suth-base via-suth-base/60 to-suth-base/30" />
         </div>
-        <Eyebrow className="relative z-10 !text-vyrek-accent">
+        <Eyebrow className="relative z-10 !text-suth-accent">
           {coach.role}
         </Eyebrow>
         <div className="relative z-10">
-          <h3 className="text-2xl font-black tracking-[-0.04em] text-vyrek-text-tertiary">
+          <h3 className="text-2xl font-black tracking-[-0.04em] text-suth-text-tertiary">
             {coach.name}
           </h3>
           {coach.bio ? (
-            <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
+            <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
               {coach.bio}
             </p>
           ) : null}
@@ -122,7 +122,7 @@ function CoachTile({
           <button
             type="button"
             className={cn(
-              "group lift-on-hover shimmer relative isolate flex aspect-[5/4] flex-col justify-between overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 text-left active:scale-[0.99] sm:aspect-[4/5]",
+              "group lift-on-hover shimmer relative isolate flex aspect-[5/4] flex-col justify-between overflow-hidden rounded-lg border border-suth-border bg-suth-elevated p-6 text-left active:scale-[0.99] sm:aspect-[4/5]",
             )}
           />
         }
@@ -136,7 +136,7 @@ function CoachTile({
         ) : (
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-0 flex items-center justify-center text-[140px] font-black leading-none tracking-[-0.08em] text-vyrek-text/[0.08] sm:text-[200px]"
+            className="pointer-events-none absolute inset-0 flex items-center justify-center text-[140px] font-black leading-none tracking-[-0.08em] text-suth-text/[0.08] sm:text-[200px]"
           >
             {initials}
           </span>
@@ -144,7 +144,7 @@ function CoachTile({
         {/* Type legibility wash + accent tint */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-vyrek-base/95 via-vyrek-base/45 to-vyrek-base/20"
+          className="absolute inset-0 bg-gradient-to-t from-suth-base/95 via-suth-base/45 to-suth-base/20"
         />
         <div
           aria-hidden
@@ -152,19 +152,19 @@ function CoachTile({
         />
         <Eyebrow className="relative z-10">{coach.role}</Eyebrow>
         <div className="relative z-10">
-          <h3 className="text-3xl font-black tracking-[-0.04em] text-vyrek-text">
+          <h3 className="text-3xl font-black tracking-[-0.04em] text-suth-text">
             {coach.name}
           </h3>
           <div className="mt-4 flex flex-wrap gap-1.5">
             {coach.credentials.slice(0, 2).map((cred) => (
-              <Eyebrow key={cred} className="!text-vyrek-text-secondary">
+              <Eyebrow key={cred} className="!text-suth-text-secondary">
                 {cred}
               </Eyebrow>
             ))}
           </div>
         </div>
       </SheetTrigger>
-      <SheetContent side="bottom" className="bg-vyrek-elevated">
+      <SheetContent side="bottom" className="bg-suth-elevated">
         <SheetHeader>
           <Eyebrow>{coach.role}</Eyebrow>
           <SheetTitle className="text-2xl font-black tracking-[-0.04em] md:text-3xl">
@@ -177,13 +177,13 @@ function CoachTile({
         <div className="space-y-6 px-4 pb-6 md:px-6">
           <div className="flex flex-wrap gap-1.5">
             {coach.credentials.map((cred) => (
-              <Eyebrow key={cred} className="!text-vyrek-text-secondary">
+              <Eyebrow key={cred} className="!text-suth-text-secondary">
                 {cred}
               </Eyebrow>
             ))}
           </div>
           {coach.bio && (
-            <p className="text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="text-base leading-relaxed text-suth-text-secondary md:text-lg">
               {coach.bio}
             </p>
           )}
@@ -194,7 +194,7 @@ function CoachTile({
                   href={coach.socials.instagram}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-vyrek-text underline-offset-4 hover:underline"
+                  className="text-suth-text underline-offset-4 hover:underline"
                 >
                   Instagram ↗
                 </a>
@@ -204,7 +204,7 @@ function CoachTile({
                   href={coach.socials.tiktok}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-vyrek-text underline-offset-4 hover:underline"
+                  className="text-suth-text underline-offset-4 hover:underline"
                 >
                   TikTok ↗
                 </a>

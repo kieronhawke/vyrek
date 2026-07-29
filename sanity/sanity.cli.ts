@@ -3,6 +3,6 @@ import { dataset, projectId } from "./env";
 
 export default defineCliConfig({
   api: { projectId, dataset },
-  studioHost: "vyrek",
+  studioHost: "suthperformance",
   autoUpdates: true,
 });

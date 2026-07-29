@@ -7,8 +7,8 @@ import type { QuizAnswers } from "@/lib/quiz-flow";
  * Per-user quiz state for V3. Lives in localStorage under a versioned key so
  * V1 and V2 carry-over data never collide.
  */
-const STORAGE_KEY = "vyrek:quiz:v3:state";
-const UUID_KEY = "vyrek:customer:uuid";
+const STORAGE_KEY = "suth:quiz:v3:state";
+const UUID_KEY = "suth:customer:uuid";
 
 export type QuizStateV3 = {
   uuid: string;

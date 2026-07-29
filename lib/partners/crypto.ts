@@ -45,7 +45,7 @@ function derivedKey(): Buffer {
   const km = keyMaterial();
   // Salt is intentionally static so the same secret derives the same
   // key, we don't store per-row keys; we store per-row IVs.
-  return scryptSync(km, "vyrek:partners:v1", 32);
+  return scryptSync(km, "suth:partners:v1", 32);
 }
 
 export function encryptPii(plain: string): string {

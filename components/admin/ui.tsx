@@ -14,18 +14,18 @@ export function PageHeader({
   actions?: ReactNode;
 }) {
   return (
-    <header className="mb-8 flex flex-col gap-4 border-b border-vyrek-border-subtle pb-6 md:flex-row md:items-end md:justify-between">
+    <header className="mb-8 flex flex-col gap-4 border-b border-suth-border-subtle pb-6 md:flex-row md:items-end md:justify-between">
       <div>
         {eyebrow ? (
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
             [ {eyebrow} ]
           </p>
         ) : null}
-        <h1 className="mt-2 text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl">
+        <h1 className="mt-2 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-3xl">
           {title}
         </h1>
         {description ? (
-          <p className="mt-2 text-sm text-vyrek-text-secondary md:text-base">
+          <p className="mt-2 text-sm text-suth-text-secondary md:text-base">
             {description}
           </p>
         ) : null}
@@ -50,23 +50,23 @@ export function Stat({
   sparkline?: ReactNode;
 }) {
   return (
-    <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
+    <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
       <div className="flex items-start justify-between gap-3">
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           {label}
         </p>
         {sparkline ? <div className="shrink-0">{sparkline}</div> : null}
       </div>
-      <p className="mt-3 text-3xl font-black tracking-[-0.02em] text-vyrek-text tabular-nums md:text-4xl">
+      <p className="mt-3 text-3xl font-black tracking-[-0.02em] text-suth-text tabular-nums md:text-4xl">
         {value}
       </p>
       {delta ? (
-        <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-accent">
+        <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-accent">
           {delta}
         </p>
       ) : null}
       {hint ? (
-        <p className="mt-2 text-xs text-vyrek-text-tertiary">{hint}</p>
+        <p className="mt-2 text-xs text-suth-text-tertiary">{hint}</p>
       ) : null}
     </div>
   );
@@ -82,12 +82,12 @@ export function Badge({
 }) {
   const tones: Record<string, string> = {
     neutral:
-      "border-vyrek-border-subtle bg-vyrek-elevated text-vyrek-text-secondary",
+      "border-suth-border-subtle bg-suth-elevated text-suth-text-secondary",
     good: "border-emerald-500/30 bg-emerald-500/10 text-emerald-300",
     warn: "border-amber-500/30 bg-amber-500/10 text-amber-300",
     bad: "border-red-500/30 bg-red-500/10 text-red-300",
     accent:
-      "border-vyrek-accent/30 bg-vyrek-accent/10 text-vyrek-accent",
+      "border-suth-accent/30 bg-suth-accent/10 text-suth-accent",
   };
   return (
     <span
@@ -112,7 +112,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5",
+        "rounded-lg border border-suth-border-subtle bg-suth-elevated p-5",
         className,
       )}
     >
@@ -133,20 +133,20 @@ export function Table({
 }) {
   if (rows.length === 0) {
     return (
-      <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/40 p-8 text-center text-sm text-vyrek-text-tertiary">
+      <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated/40 p-8 text-center text-sm text-suth-text-tertiary">
         {empty}
       </div>
     );
   }
   return (
-    <div className="overflow-x-auto rounded-lg border border-vyrek-border-subtle">
+    <div className="overflow-x-auto rounded-lg border border-suth-border-subtle">
       <table className="w-full border-collapse text-sm">
-        <thead className="bg-vyrek-elevated">
+        <thead className="bg-suth-elevated">
           <tr>
             {headers.map((h, i) => (
               <th
                 key={i}
-                className="border-b border-vyrek-border-subtle px-4 py-3 text-left font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+                className="border-b border-suth-border-subtle px-4 py-3 text-left font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary"
               >
                 {h}
               </th>
@@ -157,12 +157,12 @@ export function Table({
           {rows.map((row, i) => (
             <tr
               key={i}
-              className="border-b border-vyrek-border-subtle last:border-b-0 hover:bg-vyrek-elevated/60"
+              className="border-b border-suth-border-subtle last:border-b-0 hover:bg-suth-elevated/60"
             >
               {row.map((cell, j) => (
                 <td
                   key={j}
-                  className="px-4 py-3 align-top text-vyrek-text"
+                  className="px-4 py-3 align-top text-suth-text"
                 >
                   {cell}
                 </td>
@@ -188,7 +188,7 @@ export function NoticeCard({
       <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-amber-300">
         [ {title} ]
       </p>
-      <div className="mt-2 text-sm text-vyrek-text-secondary">{body}</div>
+      <div className="mt-2 text-sm text-suth-text-secondary">{body}</div>
     </div>
   );
 }

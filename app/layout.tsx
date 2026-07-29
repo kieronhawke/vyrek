@@ -43,33 +43,33 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   title: {
-    default: "Vyrek. Train like a Hyrox athlete",
-    template: "%s · Vyrek",
+    default: "Suth Performance. Train like a Hyrox athlete",
+    template: "%s · Suth Performance",
   },
   description:
     "Personalised Hyrox training programmes built by an Elite 15 coach. See your Week 1 before you pay.",
-  applicationName: "Vyrek",
+  applicationName: "Suth Performance",
   appleWebApp: {
     capable: true,
-    title: "Vyrek",
+    title: "Suth Performance",
     statusBarStyle: "black-translucent",
   },
   alternates: {
     canonical: "/",
     types: {
       "application/rss+xml": [
-        { url: "/blog/rss.xml", title: "Vyrek Journal RSS" },
+        { url: "/blog/rss.xml", title: "Suth Performance Journal RSS" },
       ],
     },
   },
   // Default Open Graph + Twitter, every page inherits unless overridden.
   // Per-route metadata (blog, city pages) sets its own when specific.
   openGraph: {
-    title: "Vyrek. Train like a Hyrox athlete",
+    title: "Suth Performance. Train like a Hyrox athlete",
     description:
       "Personalised Hyrox training programmes built by an Elite 15 coach. See your Week 1 before you pay.",
     url: SITE,
-    siteName: "Vyrek",
+    siteName: "Suth Performance",
     type: "website",
     locale: "en_GB",
     images: [
@@ -77,13 +77,13 @@ export const metadata: Metadata = {
         url: "/media/images/v2/programme-first-race.jpg",
         width: 1920,
         height: 1080,
-        alt: "Vyrek, personalised Hyrox training",
+        alt: "Suth Performance, personalised Hyrox training",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vyrek. Train like a Hyrox athlete",
+    title: "Suth Performance. Train like a Hyrox athlete",
     description:
       "Personalised Hyrox training programmes built by an Elite 15 coach.",
     images: ["/media/images/v2/programme-first-race.jpg"],
@@ -125,7 +125,7 @@ export default function RootLayout({
               {
                 "@context": "https://schema.org",
                 "@type": "Organization",
-                name: "Vyrek",
+                name: "Suth Performance",
                 url: SITE,
                 logo: `${SITE}/logo-primary.svg`,
                 description:
@@ -134,13 +134,13 @@ export default function RootLayout({
                   {
                     "@type": "ContactPoint",
                     contactType: "customer support",
-                    email: "support@vyrek.com",
+                    email: "support@suthperformance.com",
                     availableLanguage: ["English"],
                   },
                   {
                     "@type": "ContactPoint",
                     contactType: "press",
-                    email: "press@vyrek.com",
+                    email: "press@suthperformance.com",
                     availableLanguage: ["English"],
                   },
                 ],
@@ -149,7 +149,7 @@ export default function RootLayout({
               {
                 "@context": "https://schema.org",
                 "@type": "WebSite",
-                name: "Vyrek",
+                name: "Suth Performance",
                 url: SITE,
                 potentialAction: {
                   "@type": "SearchAction",
@@ -158,7 +158,7 @@ export default function RootLayout({
                   "query-input": "required name=search_term_string",
                 },
               },
-              // SoftwareApplication: lets Google surface Vyrek as an
+              // SoftwareApplication: lets Google surface Suth Performance as an
               // "app" rich-result for queries like "best Hyrox training
               // app". Also pulls in the rating + price for the SERP
               // card.
@@ -166,7 +166,7 @@ export default function RootLayout({
                 "@context": "https://schema.org",
                 "@type": "SoftwareApplication",
                 "@id": `${SITE}#software`,
-                name: "Vyrek",
+                name: "Suth Performance",
                 description:
                   "Personalised Hyrox training. Adaptive 12-week programmes that recalibrate every Sunday based on the sessions you log.",
                 url: SITE,

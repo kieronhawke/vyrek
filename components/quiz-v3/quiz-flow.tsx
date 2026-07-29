@@ -354,7 +354,7 @@ function QuizV3Inner() {
     try {
       if (typeof window !== "undefined") {
         window.localStorage.setItem(
-          "vyrek:quiz:v3:account-submit-snapshot",
+          "suth:quiz:v3:account-submit-snapshot",
           JSON.stringify({
             email: emailDraft.trim().toLowerCase(),
             marketingOptIn: marketingDraft,
@@ -448,7 +448,7 @@ function QuizV3Inner() {
         try {
           if (typeof window !== "undefined") {
             window.localStorage.removeItem(
-              "vyrek:quiz:v3:account-submit-snapshot",
+              "suth:quiz:v3:account-submit-snapshot",
             );
           }
         } catch {
@@ -497,7 +497,7 @@ function QuizV3Inner() {
     // (image + headline + animated dots) instead of a dead "One moment"
     // string, matters for slow connections, link previews, and crawlers.
     return (
-      <main className="relative isolate flex min-h-svh flex-col overflow-hidden bg-vyrek-base">
+      <main className="relative isolate flex min-h-svh flex-col overflow-hidden bg-suth-base">
         <div aria-hidden className="absolute inset-0 -z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -507,16 +507,16 @@ function QuizV3Inner() {
             loading="eager"
             decoding="async"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-vyrek-base/60 via-vyrek-base/30 to-vyrek-base/95" />
+          <div className="absolute inset-0 bg-gradient-to-b from-suth-base/60 via-suth-base/30 to-suth-base/95" />
         </div>
         <div className="flex flex-1 flex-col justify-end px-6 pb-[max(2rem,calc(var(--safe-bottom)+2rem))] pt-[max(5rem,calc(var(--safe-top)+4rem))]">
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
-            [ THE VYREK QUIZ ]
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
+            [ THE SUTH PERFORMANCE QUIZ ]
           </p>
-          <h1 className="mt-4 max-w-[16ch] text-4xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl">
+          <h1 className="mt-4 max-w-[16ch] text-4xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl">
             Hyrox training, personalised in three minutes.
           </h1>
-          <p className="mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+          <p className="mt-5 max-w-md text-base leading-relaxed text-suth-text-secondary md:text-lg">
             We&apos;ll ask about your race date, experience, equipment, and
             schedule. You&apos;ll see your dated Week 1 before you pay.
           </p>
@@ -524,10 +524,10 @@ function QuizV3Inner() {
             aria-label="Loading quiz"
             className="mt-10 flex items-center gap-2"
           >
-            <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent" />
-            <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent [animation-delay:120ms]" />
-            <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent [animation-delay:240ms]" />
-            <span className="ml-2 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+            <span className="inline-flex size-2 animate-pulse rounded-full bg-suth-accent" />
+            <span className="inline-flex size-2 animate-pulse rounded-full bg-suth-accent [animation-delay:120ms]" />
+            <span className="inline-flex size-2 animate-pulse rounded-full bg-suth-accent [animation-delay:240ms]" />
+            <span className="ml-2 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
               Loading
             </span>
           </div>
@@ -659,7 +659,7 @@ function QuizV3Inner() {
               // Made into a real secondary button (was a tertiary text link).
               // When no date is picked, this is the only enabled action and
               // it needs visual weight that signals "this is a fine choice".
-              className="inline-flex h-14 flex-1 items-center justify-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-5 text-base font-medium text-vyrek-text transition-colors hover:border-vyrek-border-strong active:scale-[0.98]"
+              className="inline-flex h-14 flex-1 items-center justify-center rounded-pill border border-suth-border bg-suth-elevated px-5 text-base font-medium text-suth-text transition-colors hover:border-suth-border-strong active:scale-[0.98]"
             >
               No race yet
             </button>
@@ -982,7 +982,7 @@ function QuizV3Inner() {
 
 function QuizColdLoadFallback() {
   return (
-    <main className="relative isolate flex min-h-svh flex-col overflow-hidden bg-vyrek-base">
+    <main className="relative isolate flex min-h-svh flex-col overflow-hidden bg-suth-base">
       <div aria-hidden className="absolute inset-0 -z-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -992,24 +992,24 @@ function QuizColdLoadFallback() {
           loading="eager"
           decoding="async"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-vyrek-base/60 via-vyrek-base/30 to-vyrek-base/95" />
+        <div className="absolute inset-0 bg-gradient-to-b from-suth-base/60 via-suth-base/30 to-suth-base/95" />
       </div>
       <div className="flex flex-1 flex-col justify-end px-6 pb-[max(2rem,calc(var(--safe-bottom)+2rem))] pt-[max(5rem,calc(var(--safe-top)+4rem))]">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
-          [ THE VYREK QUIZ ]
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
+          [ THE SUTH PERFORMANCE QUIZ ]
         </p>
-        <h1 className="mt-4 max-w-[16ch] text-4xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl">
+        <h1 className="mt-4 max-w-[16ch] text-4xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl">
           Hyrox training, personalised in three minutes.
         </h1>
-        <p className="mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+        <p className="mt-5 max-w-md text-base leading-relaxed text-suth-text-secondary md:text-lg">
           We&apos;ll ask about your race date, experience, equipment, and
           schedule. You&apos;ll see your dated Week 1 before you pay.
         </p>
         <div aria-label="Loading quiz" className="mt-10 flex items-center gap-2">
-          <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent" />
-          <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent [animation-delay:120ms]" />
-          <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent [animation-delay:240ms]" />
-          <span className="ml-2 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+          <span className="inline-flex size-2 animate-pulse rounded-full bg-suth-accent" />
+          <span className="inline-flex size-2 animate-pulse rounded-full bg-suth-accent [animation-delay:120ms]" />
+          <span className="inline-flex size-2 animate-pulse rounded-full bg-suth-accent [animation-delay:240ms]" />
+          <span className="ml-2 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
             Loading
           </span>
         </div>

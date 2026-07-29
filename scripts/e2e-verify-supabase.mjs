@@ -15,9 +15,9 @@ const sb = createClient(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SECRET_KEY, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
 
-const customerId = readFileSync("/tmp/vyrek-test-customer.txt", "utf8").trim();
-const quizResponseId = readFileSync("/tmp/vyrek-test-quiz.txt", "utf8").trim();
-const email = "test+verify@vyrek.com";
+const customerId = readFileSync("/tmp/suth-test-customer.txt", "utf8").trim();
+const quizResponseId = readFileSync("/tmp/suth-test-quiz.txt", "utf8").trim();
+const email = "test+verify@suthperformance.com";
 
 console.log("Query targets:");
 console.log("  customerId      ", customerId);

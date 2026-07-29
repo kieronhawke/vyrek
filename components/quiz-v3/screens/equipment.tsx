@@ -43,8 +43,8 @@ export function EquipmentScreen({
                 className={cn(
                   "inline-flex h-11 items-center justify-center rounded-pill border px-4 text-sm font-medium transition-[border,background,transform] duration-fast ease-out active:scale-[0.97]",
                   on
-                    ? "border-vyrek-accent bg-vyrek-accent text-[#0A0A0A]"
-                    : "border-vyrek-border bg-vyrek-elevated text-vyrek-text hover:border-vyrek-border-strong",
+                    ? "border-suth-accent bg-suth-accent text-[#0A0A0A]"
+                    : "border-suth-border bg-suth-elevated text-suth-text hover:border-suth-border-strong",
                 )}
               >
                 {opt.label}

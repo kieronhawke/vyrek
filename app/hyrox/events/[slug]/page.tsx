@@ -47,7 +47,7 @@ export async function generateMetadata({
       title,
       description,
       url,
-      siteName: "Vyrek",
+      siteName: "Suth Performance",
       type: "website",
       locale: "en_GB",
     },
@@ -141,44 +141,44 @@ export default async function EventPage({
         <Container>
           <nav
             aria-label="Breadcrumb"
-            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary"
           >
-            <Link href="/" className="hover:text-vyrek-text">Home</Link>
+            <Link href="/" className="hover:text-suth-text">Home</Link>
             <span aria-hidden className="mx-2">/</span>
-            <Link href="/hyrox/events" className="hover:text-vyrek-text">Events</Link>
+            <Link href="/hyrox/events" className="hover:text-suth-text">Events</Link>
             <span aria-hidden className="mx-2">/</span>
-            <span className="text-vyrek-text">{e.eyebrow}</span>
+            <span className="text-suth-text">{e.eyebrow}</span>
           </nav>
 
           <div className="mx-auto max-w-3xl">
             <Eyebrow>{e.eyebrow}</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               {e.name}
             </SplitHeading>
-            <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
               {e.about}
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-2">
-              <span className="rounded-pill border border-vyrek-accent/40 bg-vyrek-accent/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-accent">
+              <span className="rounded-pill border border-suth-accent/40 bg-suth-accent/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-accent">
                 {format(new Date(e.startDate), "EEE d MMM yyyy")}
                 {e.endDate !== e.startDate
                   ? `, ${format(new Date(e.endDate), "EEE d MMM yyyy")}`: ""}
               </span>
-              <span className="rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-secondary">
+              <span className="rounded-pill border border-suth-border bg-suth-elevated px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-secondary">
                 {e.venue.name}, {e.venue.city}
               </span>
             </div>
           </div>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>Venue + logistics</Eyebrow>
-            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
+            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               Getting to {e.venue.name}.
             </h2>
-            <address className="mt-4 text-base not-italic leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <address className="mt-4 text-base not-italic leading-relaxed text-suth-text-secondary md:text-lg">
               {e.venue.addressLine}
               <br />
               {e.venue.city} {e.venue.postcode}
@@ -189,30 +189,30 @@ export default async function EventPage({
                     href={e.venue.googleMapsUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-vyrek-text underline decoration-vyrek-accent underline-offset-4 hover:decoration-2"
+                    className="text-suth-text underline decoration-suth-accent underline-offset-4 hover:decoration-2"
                   >
                     Open in Google Maps ↗
                   </a>
                 </>
               ): null}
             </address>
-            <ul role="list" className="mt-6 space-y-2 text-base leading-relaxed text-vyrek-text-secondary">
+            <ul role="list" className="mt-6 space-y-2 text-base leading-relaxed text-suth-text-secondary">
               {e.logistics.map((l) => (
                 <li key={l} className="flex gap-3">
-                  <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-vyrek-accent" />
+                  <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-suth-accent" />
                   <span>{l}</span>
                 </li>
               ))}
             </ul>
           </section>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>Divisions</Eyebrow>
             <ul role="list" className="mt-4 flex flex-wrap gap-2">
               {e.divisions.map((d) => (
                 <li
                   key={d}
-                  className="rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 py-1.5 text-sm text-vyrek-text"
+                  className="rounded-pill border border-suth-border bg-suth-elevated px-3 py-1.5 text-sm text-suth-text"
                 >
                   {d}
                 </li>
@@ -220,12 +220,12 @@ export default async function EventPage({
             </ul>
           </section>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>Train backwards from this date</Eyebrow>
-            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
+            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               When to start training.
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
               {e.prepWindow}
             </p>
             <div className="mt-6">
@@ -235,7 +235,7 @@ export default async function EventPage({
             </div>
           </section>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>FAQs</Eyebrow>
             <div className="mt-6">
               <Accordion>
@@ -243,12 +243,12 @@ export default async function EventPage({
                   <AccordionItem
                     key={i}
                     value={`q-${i}`}
-                    className="border-b border-vyrek-border-subtle last:border-b-0"
+                    className="border-b border-suth-border-subtle last:border-b-0"
                   >
-                    <AccordionTrigger className="py-5 text-left text-base font-medium text-vyrek-text hover:no-underline md:text-lg">
+                    <AccordionTrigger className="py-5 text-left text-base font-medium text-suth-text hover:no-underline md:text-lg">
                       {f.q}
                     </AccordionTrigger>
-                    <AccordionContent className="pb-5 text-base leading-relaxed text-vyrek-text-secondary">
+                    <AccordionContent className="pb-5 text-base leading-relaxed text-suth-text-secondary">
                       {f.a}
                     </AccordionContent>
                   </AccordionItem>
@@ -258,19 +258,19 @@ export default async function EventPage({
           </section>
 
           {/* Related events */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>Other UK Hyrox events</Eyebrow>
             <ul role="list" className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
               {HYROX_EVENTS.filter((x) => x.slug !== e.slug).map((x) => (
                 <li key={x.slug}>
                   <Link
                     href={`/hyrox/events/${x.slug}`}
-                    className="block rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-4 transition-colors hover:border-vyrek-border-strong"
+                    className="block rounded-md border border-suth-border-subtle bg-suth-elevated p-4 transition-colors hover:border-suth-border-strong"
                   >
-                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                       {x.eyebrow}
                     </p>
-                    <p className="mt-1 text-sm font-medium text-vyrek-text">
+                    <p className="mt-1 text-sm font-medium text-suth-text">
                       {x.name}
                     </p>
                   </Link>

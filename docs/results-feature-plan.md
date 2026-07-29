@@ -27,9 +27,9 @@
 | `/simulator` | Per-station time inputs, total time prediction | Top-percentile per station; total auto-calc | No "what-if" slider; no goal-mode (input target → suggested splits); no comparison to athlete |
 | `/locations` | 126 cities indexed | Airport-code badges; city photos; nation/region filters | No map view; no per-city stats |
 | `/locations/[city]` | City detail | Past + upcoming events list | No fastest-time-ever record; no "locals" leaderboard |
-| `/hyrox/[station]` guides | Per-station guide with technique + pacing | Time-distribution chart with division selector | No video; no Vyrek-style coach commentary; no linked drills |
+| `/hyrox/[station]` guides | Per-station guide with technique + pacing | Time-distribution chart with division selector | No video; no Suth Performance-style coach commentary; no linked drills |
 
-### Differentiators identified (where Vyrek should beat them)
+### Differentiators identified (where Suth Performance should beat them)
 
 (per Brief v2 §3.2 — Sprint 2-5 will deliver these)
 
@@ -42,7 +42,7 @@
 7. **Course visualisation** with animated runner avatar through the 8 stations + 8 runs
 8. **Athlete progression chart** across whole career
 9. **Achievement / patch gamification** — "Sub-90 Open Men", "Elite Top 100", "5 nations raced", "10 races in a season"
-10. **Rising stars index (Vyrek Live)** — athletes whose times are improving fastest
+10. **Rising stars index (Suth Performance Live)** — athletes whose times are improving fastest
 11. **Live points projection** during a running race
 12. **World map view** of locations (MapLibre, no token, free tier)
 13. **City fastest-time-ever records** by division
@@ -86,7 +86,7 @@ Path B for v1 (live now), path C in parallel for v2 (long-term), path A only if 
 
 ---
 
-## C. Feature spec for Vyrek Results
+## C. Feature spec for Suth Performance Results
 
 ### Sprint 2 — Event detail + division ranking (4-6 hrs)
 
@@ -112,7 +112,7 @@ Path B for v1 (live now), path C in parallel for v2 (long-term), path A only if 
 - **`/results/rankings/legends`** (most races)
 - **`/results/rankings/elite-points/[category]`** with sparkline history
 - **`/results/simulator`** with "what if" sliders + goal mode + course visualisation
-- **`/results/rankings/vyrek-live`** (Vyrek-only "rising stars index")
+- **`/results/rankings/suth-live`** (Suth Performance-only "rising stars index")
 
 ### Sprint 5 — Locations + guides + recap + polish (5-7 hrs)
 
@@ -141,7 +141,7 @@ Path B for v1 (live now), path C in parallel for v2 (long-term), path A only if 
 | Coach commentary | — | — | ✅ |
 | Simulator goal mode + what-if | — | — | ✅ |
 | OG share card customisation | — | — | ✅ |
-| Rising stars / Vyrek Live insights | — | — | ✅ |
+| Rising stars / Suth Performance Live insights | — | — | ✅ |
 
 ---
 
@@ -173,7 +173,7 @@ Total addressable indexable pages at launch: ~1200. With long tail: 8000+ as ath
 - Month 3-6: organic crawl + indexing, ranking for long-tail queries first ("hyrox london 2026 results" etc.)
 - Month 6-12: ranking pages compete with hyresult on event-specific queries; athlete profiles compete on long-tail name queries
 - Month 12-18: outranking hyresult on the queries we hold differentiators on (improvement levers, athlete progression, locals leaderboard)
-- **Pre-launch backlinks** matter more than schema. Top priorities: Vyrek blog cross-links from race-coverage posts (already exist), partner programme creators sharing their athlete profile, official Hyrox UK / nation pages, fitness publications (Men's Health, Runner's World UK, Hyrox Mag) when we have story-mode recaps to pitch.
+- **Pre-launch backlinks** matter more than schema. Top priorities: Suth Performance blog cross-links from race-coverage posts (already exist), partner programme creators sharing their athlete profile, official Hyrox UK / nation pages, fitness publications (Men's Health, Runner's World UK, Hyrox Mag) when we have story-mode recaps to pitch.
 
 ### Backlink strategy
 
@@ -339,7 +339,7 @@ All GETs cache-control `s-maxage=60, stale-while-revalidate=300` so the ISR laye
 | Risk | Severity | Mitigation |
 |---|---|---|
 | Hyrox terms violation if we deploy a scraper | HIGH | Don't deploy Path A without your OK + legal review. Start with Path B (seed). Pursue Path C (partner feed) in parallel. |
-| Brand dilution: people see Vyrek as "results site" not "training app" | MEDIUM | Results positioned as a top-of-funnel acquisition channel. Every results page CTAs the quiz. Course members get pro analytics. The training app is the destination, not Results. |
+| Brand dilution: people see Suth Performance as "results site" not "training app" | MEDIUM | Results positioned as a top-of-funnel acquisition channel. Every results page CTAs the quiz. Course members get pro analytics. The training app is the destination, not Results. |
 | Resource pull from core training product | MEDIUM | Time-box Sprints. Don't ship Sprint 2 until Sprint 1 is validated with real traffic for 2 weeks. Don't ship Sprint 3 until Sprint 2 is. |
 | 15k-row ranking tables slow to render | MEDIUM | Virtualisation in Sprint 2 (Tanstack Virtual). Test with realistic synthetic data before shipping. |
 | Athlete personal data + UK GDPR | HIGH | Athlete results are public race data, so most of GDPR doesn't bite. But we'll honour any DSAR / right-to-erasure within 30 days, and we'll add a "Remove me" link on every athlete profile. Privacy Policy update needed (covered in Stage 11). |

@@ -21,13 +21,13 @@ export default async function NutritionPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
       <header className="mb-6">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           [ FUEL ]
         </p>
-        <h1 className="mt-1 text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl">
+        <h1 className="mt-1 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-3xl">
           Today&apos;s food
         </h1>
-        <p className="mt-1 text-sm text-vyrek-text-secondary">
+        <p className="mt-1 text-sm text-suth-text-secondary">
           Targets are tuned to your programme + body weight.
         </p>
       </header>
@@ -51,11 +51,11 @@ export default async function NutritionPage() {
       {/* Coach guidance */}
       <section>
         <SectionEyebrow title="Race-week tip" />
-        <div className="rounded-lg border border-vyrek-accent/30 bg-vyrek-accent/5 p-5">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+        <div className="rounded-lg border border-suth-accent/30 bg-suth-accent/5 p-5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
             [ COACH JAMES ]
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-vyrek-text">
+          <p className="mt-2 text-sm leading-relaxed text-suth-text">
             Push carbs to 7-8 g/kg in the 48 hours before your next race. Stick
             to white rice, pasta, ripe fruit. Cut fibre 24 hours out so you&apos;re
             not running with a heavy gut at metre 200.
@@ -82,7 +82,7 @@ function MacroTile({
   const c = 2 * Math.PI * r;
   const dash = (pct / 100) * c;
   return (
-    <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-3 text-center">
+    <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-3 text-center">
       <div className="relative mx-auto size-14">
         <svg viewBox="0 0 56 56" className="size-14 -rotate-90">
           <circle
@@ -92,7 +92,7 @@ function MacroTile({
             stroke="currentColor"
             strokeWidth="4"
             fill="none"
-            className="text-vyrek-border-subtle"
+            className="text-suth-border-subtle"
           />
           <circle
             cx="28"
@@ -103,17 +103,17 @@ function MacroTile({
             fill="none"
             strokeDasharray={`${dash} ${c}`}
             strokeLinecap="round"
-            className="text-vyrek-accent"
+            className="text-suth-accent"
           />
         </svg>
-        <span className="absolute inset-0 flex items-center justify-center text-xs font-bold tabular-nums text-vyrek-text">
+        <span className="absolute inset-0 flex items-center justify-center text-xs font-bold tabular-nums text-suth-text">
           {pct}%
         </span>
       </div>
-      <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+      <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.18em] text-suth-text-tertiary">
         {label}
       </p>
-      <p className="text-xs tabular-nums text-vyrek-text">
+      <p className="text-xs tabular-nums text-suth-text">
         {value}
         {unit} / {target}
         {unit}

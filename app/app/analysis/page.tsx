@@ -16,13 +16,13 @@ export default async function AnalysisPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
       <header className="mb-6">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           [ ANALYSIS ]
         </p>
-        <h1 className="mt-1 text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl">
+        <h1 className="mt-1 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-3xl">
           Races, athletes, pace
         </h1>
-        <p className="mt-1 text-sm text-vyrek-text-secondary">
+        <p className="mt-1 text-sm text-suth-text-secondary">
           Search the Hyrox database. Track an athlete. Project your finish.
         </p>
       </header>

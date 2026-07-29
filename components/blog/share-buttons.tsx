@@ -53,7 +53,7 @@ export function ShareButtons({
       <button
         type="button"
         onClick={onWebShare}
-        className="inline-flex h-10 items-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 text-sm text-vyrek-text transition-colors hover:border-vyrek-border-strong"
+        className="inline-flex h-10 items-center gap-2 rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text transition-colors hover:border-suth-border-strong"
       >
         <span aria-hidden>↗</span>
         <span>{copied ? "Copied" : "Share"}</span>
@@ -62,7 +62,7 @@ export function ShareButtons({
         href={twitter}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex h-10 items-center justify-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 text-sm text-vyrek-text-secondary transition-colors hover:border-vyrek-border-strong hover:text-vyrek-text"
+        className="inline-flex h-10 items-center justify-center rounded-pill border border-suth-border bg-suth-elevated px-3 text-sm text-suth-text-secondary transition-colors hover:border-suth-border-strong hover:text-suth-text"
         aria-label="Share on X (Twitter)"
       >
         X
@@ -71,7 +71,7 @@ export function ShareButtons({
         href={linkedin}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex h-10 items-center justify-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 text-sm text-vyrek-text-secondary transition-colors hover:border-vyrek-border-strong hover:text-vyrek-text"
+        className="inline-flex h-10 items-center justify-center rounded-pill border border-suth-border bg-suth-elevated px-3 text-sm text-suth-text-secondary transition-colors hover:border-suth-border-strong hover:text-suth-text"
         aria-label="Share on LinkedIn"
       >
         LinkedIn
@@ -80,7 +80,7 @@ export function ShareButtons({
         href={facebook}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex h-10 items-center justify-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 text-sm text-vyrek-text-secondary transition-colors hover:border-vyrek-border-strong hover:text-vyrek-text"
+        className="inline-flex h-10 items-center justify-center rounded-pill border border-suth-border bg-suth-elevated px-3 text-sm text-suth-text-secondary transition-colors hover:border-suth-border-strong hover:text-suth-text"
         aria-label="Share on Facebook"
       >
         Facebook

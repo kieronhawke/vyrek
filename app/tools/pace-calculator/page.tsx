@@ -17,11 +17,11 @@ export const metadata: Metadata = {
     "Free Hyrox pace calculator. Enter your 1 km pace and station splits, get your projected finish time, kilometre breakdown, and pacing strategy.",
   alternates: { canonical: `${siteUrl()}/tools/pace-calculator` },
   openGraph: {
-    title: "Hyrox pace calculator. Vyrek",
+    title: "Hyrox pace calculator. Suth Performance",
     description:
       "Free Hyrox pace calculator: project your finish time from your 1 km pace and station splits.",
     url: `${siteUrl()}/tools/pace-calculator`,
-    siteName: "Vyrek",
+    siteName: "Suth Performance",
     type: "website",
     locale: "en_GB",
   },
@@ -32,7 +32,7 @@ export default function PaceCalculatorPage() {
   const softwareLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "Vyrek Hyrox Pace Calculator",
+    name: "Suth Performance Hyrox Pace Calculator",
     applicationCategory: "HealthApplication",
     operatingSystem: "Web",
     offers: { "@type": "Offer", price: "0", priceCurrency: "GBP" },
@@ -81,24 +81,24 @@ export default function PaceCalculatorPage() {
         <Container>
           <nav
             aria-label="Breadcrumb"
-            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary"
           >
-            <Link href="/" className="hover:text-vyrek-text">Home</Link>
+            <Link href="/" className="hover:text-suth-text">Home</Link>
             <span aria-hidden className="mx-2">/</span>
-            <Link href="/tools" className="hover:text-vyrek-text">Tools</Link>
+            <Link href="/tools" className="hover:text-suth-text">Tools</Link>
             <span aria-hidden className="mx-2">/</span>
-            <span className="text-vyrek-text">Pace calculator</span>
+            <span className="text-suth-text">Pace calculator</span>
           </nav>
 
           <div className="mx-auto max-w-3xl">
             <Eyebrow>Tool · Free</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               Hyrox pace calculator.
             </SplitHeading>
-            <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
               Enter your 1 km running pace and your estimated station splits.
               We&apos;ll project your Hyrox finish time and break it down by
               kilometre so you can plan race-day pacing.
@@ -109,9 +109,9 @@ export default function PaceCalculatorPage() {
             <PaceCalculator />
           </section>
 
-          <section className="mx-auto mt-20 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-20 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>How it works</Eyebrow>
-            <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
               A Hyrox race is 8 × 1 km runs alternated with 8 stations. The
               calculator sums your projected run time (8 × your 1 km pace) and
               your station splits to give the total race time. It doesn&apos;t
@@ -120,14 +120,14 @@ export default function PaceCalculatorPage() {
             </p>
           </section>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10 text-center">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10 text-center">
             <Eyebrow>Build your real plan</Eyebrow>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-vyrek-text md:text-4xl">
+            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
               Pace projection ≠ training plan.
             </h2>
-            <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
+            <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
               Predicting your time is useful. Hitting it requires a 12-week
-              build that targets your actual limiter. Vyrek&apos;s quiz takes
+              build that targets your actual limiter. Suth Performance&apos;s quiz takes
               three minutes and produces a dated Week 1 before you pay.
             </p>
             <div className="mt-8">

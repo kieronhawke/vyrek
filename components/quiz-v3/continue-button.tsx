@@ -24,9 +24,9 @@ export function ContinueButton({
       disabled={disabled || loading}
       aria-disabled={disabled || loading}
       className={cn(
-        "inline-flex h-14 w-full items-center justify-center gap-2 rounded-pill bg-vyrek-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,opacity,transform] duration-fast ease-out",
-        "hover:bg-vyrek-accent-hover active:scale-[0.98]",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vyrek-text",
+        "inline-flex h-14 w-full items-center justify-center gap-2 rounded-pill bg-suth-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,opacity,transform] duration-fast ease-out",
+        "hover:bg-suth-accent-hover active:scale-[0.98]",
+        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-suth-text",
         "disabled:cursor-not-allowed disabled:opacity-50",
       )}
     >

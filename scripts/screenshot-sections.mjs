@@ -58,7 +58,7 @@ try {
 
     // Pre-seed consent so the cookie banner doesn't appear in shots.
     await page.goto(BASE, { waitUntil: "domcontentloaded", timeout: 15000 });
-    await page.evaluate((v) => window.localStorage.setItem("vyrek:consent:v1", v), CONSENT_VALUE);
+    await page.evaluate((v) => window.localStorage.setItem("suth:consent:v1", v), CONSENT_VALUE);
 
     for (const route of ROUTES) {
       const url = `${BASE}${route.path}`;

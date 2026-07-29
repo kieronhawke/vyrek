@@ -12,7 +12,7 @@ type Body = {
   platform?: string;
   followerCount?: string;
   contentDescription?: string;
-  whyVyrek?: string;
+  whySuth?: string;
   primaryUrl?: string;
   pastAffiliate?: string;
   promotionMethods?: string[];
@@ -35,8 +35,8 @@ function validate(b: Body): string | null {
   if (!b.followerCount) return "Please choose a follower count range.";
   if (!b.contentDescription || b.contentDescription.trim().length < 12)
     return "Tell us a bit more about your content (12+ characters).";
-  if (!b.whyVyrek || b.whyVyrek.trim().length < 20)
-    return "Tell us why Vyrek fits your audience (20+ characters).";
+  if (!b.whySuth || b.whySuth.trim().length < 20)
+    return "Tell us why Suth Performance fits your audience (20+ characters).";
   if (!b.primaryUrl || !/^https?:\/\//.test(b.primaryUrl))
     return "Please paste a full URL (including https://).";
   if (!Array.isArray(b.promotionMethods) || b.promotionMethods.length === 0)
@@ -81,9 +81,9 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
-  if ((body.whyVyrek ?? "").length > 1000) {
+  if ((body.whySuth ?? "").length > 1000) {
     return NextResponse.json(
-      { ok: false, error: "Why Vyrek is too long." },
+      { ok: false, error: "Why Suth Performance is too long." },
       { status: 400 },
     );
   }
@@ -105,7 +105,7 @@ export async function POST(req: Request) {
         platform: body.platform,
         follower_count: body.followerCount,
         content_description: body.contentDescription,
-        why_vyrek: body.whyVyrek,
+        why_vyrek: body.whySuth,
         primary_url: body.primaryUrl,
         past_affiliate: body.pastAffiliate || null,
         promotion_methods: body.promotionMethods,

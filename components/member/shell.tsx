@@ -11,7 +11,7 @@ export function MemberShell({
   children: ReactNode;
 }) {
   return (
-    <div className="flex min-h-svh flex-col bg-vyrek-base text-vyrek-text">
+    <div className="flex min-h-svh flex-col bg-suth-base text-suth-text">
       <MemberTopBar email={ctx.user.email} />
       <main
         className="flex-1 pb-[calc(5.5rem+var(--safe-bottom))] md:pb-12"

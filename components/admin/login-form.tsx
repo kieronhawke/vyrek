@@ -37,7 +37,7 @@ export function AdminLoginForm() {
   return (
     <form onSubmit={onSubmit} className="mt-8 space-y-4" noValidate>
       <label className="block">
-        <span className="block text-sm font-medium text-vyrek-text">
+        <span className="block text-sm font-medium text-suth-text">
           Email
         </span>
         <input
@@ -46,11 +46,11 @@ export function AdminLoginForm() {
           autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mt-2 block h-12 w-full rounded-md border border-vyrek-border bg-vyrek-elevated px-4 text-base text-vyrek-text outline-none focus:border-vyrek-accent"
+          className="mt-2 block h-12 w-full rounded-md border border-suth-border bg-suth-elevated px-4 text-base text-suth-text outline-none focus:border-suth-accent"
         />
       </label>
       <label className="block">
-        <span className="block text-sm font-medium text-vyrek-text">
+        <span className="block text-sm font-medium text-suth-text">
           Password
         </span>
         <input
@@ -59,7 +59,7 @@ export function AdminLoginForm() {
           autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="mt-2 block h-12 w-full rounded-md border border-vyrek-border bg-vyrek-elevated px-4 text-base text-vyrek-text outline-none focus:border-vyrek-accent"
+          className="mt-2 block h-12 w-full rounded-md border border-suth-border bg-suth-elevated px-4 text-base text-suth-text outline-none focus:border-suth-accent"
         />
       </label>
       {err ? (
@@ -70,11 +70,11 @@ export function AdminLoginForm() {
       <button
         type="submit"
         disabled={busy}
-        className="inline-flex h-12 w-full items-center justify-center rounded-pill bg-vyrek-accent px-5 text-base font-semibold text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover disabled:opacity-60"
+        className="inline-flex h-12 w-full items-center justify-center rounded-pill bg-suth-accent px-5 text-base font-semibold text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover disabled:opacity-60"
       >
         {busy ? "Signing in..." : "Sign in →"}
       </button>
-      <p className="text-center font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+      <p className="text-center font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
         Phase 1 · Email allowlist
       </p>
     </form>

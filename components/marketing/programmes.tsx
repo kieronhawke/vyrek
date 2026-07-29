@@ -40,18 +40,18 @@ export function Programmes() {
       as="section"
       id="programmes"
       aria-labelledby="programmes-heading"
-      className="border-t border-vyrek-border-subtle py-24 md:py-32"
+      className="border-t border-suth-border-subtle py-24 md:py-32"
     >
       <Container>
         <header className="mx-auto max-w-2xl text-center">
           <Eyebrow>Programmes</Eyebrow>
           <SplitHeading
             id="programmes-heading"
-            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
           >
             Find your programme
           </SplitHeading>
-          <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
+          <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
             Hyrox is a one-hour fitness race: 8 stations, 8 one-kilometre
             runs. Pick the path that matches yours. Each is a 12-week build.
           </p>
@@ -79,8 +79,8 @@ export function Programmes() {
                 className={cn(
                   "h-1.5 rounded-pill transition-[width,background] duration-base",
                   i === activeIdx
-                    ? "w-6 bg-vyrek-accent"
-                    : "w-1.5 bg-vyrek-border-strong",
+                    ? "w-6 bg-suth-accent"
+                    : "w-1.5 bg-suth-border-strong",
                 )}
               />
             ))}
@@ -109,7 +109,7 @@ function ProgrammeCard({
       data-programme-card
       href={`/quiz?program=${programme.slug}`}
       className={cn(
-        "group lift-on-hover shimmer relative isolate flex flex-col justify-between overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 active:scale-[0.99]",
+        "group lift-on-hover shimmer relative isolate flex flex-col justify-between overflow-hidden rounded-lg border border-suth-border bg-suth-elevated p-6 active:scale-[0.99]",
         variant === "mobile" && "min-h-[300px] w-[78%] shrink-0 snap-center",
         variant === "desktop" && "aspect-[5/3]",
       )}
@@ -126,7 +126,7 @@ function ProgrammeCard({
       {/* Type legibility wash + accent tint that intensifies on hover */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-vyrek-base/95 via-vyrek-base/55 to-vyrek-base/25"
+        className="absolute inset-0 -z-10 bg-gradient-to-t from-suth-base/95 via-suth-base/55 to-suth-base/25"
       />
       <div
         aria-hidden
@@ -136,16 +136,16 @@ function ProgrammeCard({
         <Eyebrow className="whitespace-nowrap">{programme.tag}</Eyebrow>
         <span
           aria-hidden
-          className="font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary transition-colors group-hover:text-vyrek-accent"
+          className="font-mono text-xs uppercase tracking-[0.18em] text-suth-text-tertiary transition-colors group-hover:text-suth-accent"
         >
           →
         </span>
       </div>
       <div className="relative mt-12 md:mt-0">
-        <h3 className="font-display text-2xl font-bold uppercase leading-[0.95] tracking-[-0.01em] text-vyrek-text md:text-3xl">
+        <h3 className="font-display text-2xl font-bold uppercase leading-[0.95] tracking-[-0.01em] text-suth-text md:text-3xl">
           {programme.name}
         </h3>
-        <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary md:text-base">
+        <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary md:text-base">
           {programme.audience}
         </p>
       </div>

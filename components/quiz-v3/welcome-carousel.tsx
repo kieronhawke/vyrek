@@ -77,7 +77,7 @@ export function WelcomeCarousel({
   return (
     <section
       aria-labelledby="welcome-heading"
-      className="relative isolate min-h-svh overflow-hidden bg-vyrek-base"
+      className="relative isolate min-h-svh overflow-hidden bg-suth-base"
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
@@ -88,11 +88,11 @@ export function WelcomeCarousel({
               <span
                 key={i}
                 aria-hidden
-                className="relative h-0.5 flex-1 overflow-hidden rounded-pill bg-vyrek-text/20"
+                className="relative h-0.5 flex-1 overflow-hidden rounded-pill bg-suth-text/20"
               >
                 <span
                   className={cn(
-                    "absolute inset-y-0 left-0 block bg-vyrek-text",
+                    "absolute inset-y-0 left-0 block bg-suth-text",
                     i < index && "w-full",
                     i === index && "story-bar-active",
                     i > index && "w-0",
@@ -110,7 +110,7 @@ export function WelcomeCarousel({
           <button
             type="button"
             onClick={() => router.push("/")}
-            className="font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text/80 transition-colors hover:text-vyrek-text"
+            className="font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text/80 transition-colors hover:text-suth-text"
           >
             Skip
           </button>
@@ -135,7 +135,7 @@ export function WelcomeCarousel({
         ) : null}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-vyrek-base via-vyrek-base/30 to-transparent"
+          className="absolute inset-0 bg-gradient-to-t from-suth-base via-suth-base/30 to-transparent"
         />
       </button>
 
@@ -145,14 +145,14 @@ export function WelcomeCarousel({
       <div className="pointer-events-none relative z-10 flex min-h-svh flex-col justify-end px-6 pb-[max(2rem,calc(var(--safe-bottom)+2rem))]">
         <h1
           id="welcome-heading"
-          className="pointer-events-auto max-w-[14ch] text-4xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+          className="pointer-events-auto max-w-[14ch] text-4xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
         >
           {slide?.headline}
         </h1>
         <button
           type="button"
           onClick={onAdvance}
-          className="pointer-events-auto mt-8 inline-flex h-14 w-full items-center justify-center rounded-pill bg-vyrek-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,transform] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98]"
+          className="pointer-events-auto mt-8 inline-flex h-14 w-full items-center justify-center rounded-pill bg-suth-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,transform] duration-fast ease-out hover:bg-suth-accent-hover active:scale-[0.98]"
         >
           Find your plan →
         </button>

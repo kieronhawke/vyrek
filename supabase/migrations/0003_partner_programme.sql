@@ -1,4 +1,4 @@
--- Vyrek Partner Programme (Phase B3 Part 11)
+-- Suth Performance Partner Programme (Phase B3 Part 11)
 -- Flat tiered recurring commission only (30/40/50% by active referrals).
 -- No flat sign-up bounty (the legacy `referrals` table in 0001 was for the
 -- old £20 bounty referral model; the new model is partner-based recurring

@@ -1,4 +1,4 @@
-# Vyrek visual + smoke test suite
+# Suth Performance visual + smoke test suite
 
 Built per Phase B3 Part 13.
 

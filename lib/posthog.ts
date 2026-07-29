@@ -37,7 +37,7 @@ function consented(): boolean {
 // Listen for consent changes, flush the queue if the user just opted in,
 // or wipe state if they opted out.
 if (typeof window !== "undefined") {
-  window.addEventListener("vyrek:consent-changed", () => {
+  window.addEventListener("suth:consent-changed", () => {
     if (consented() && !posthog) {
       void loadPostHog();
     } else if (!consented() && posthog) {
@@ -98,7 +98,7 @@ async function loadPostHog(): Promise<PostHog | null> {
           recordCrossOriginIframes: false,
         },
 
-        // Autocapture on. Vyrek's UI is link-and-button heavy and we want
+        // Autocapture on. Suth Performance's UI is link-and-button heavy and we want
         // heatmaps + element-level drop-off without instrumenting every CTA.
         // `data-mask` on a node opts that subtree out.
         autocapture: {

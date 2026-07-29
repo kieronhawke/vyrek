@@ -36,7 +36,7 @@ export function EventCard({
     <Link
       href={`/results/event/${event.slug}`}
       className={[
-        "group relative block overflow-hidden rounded-2xl border border-vyrek-border bg-vyrek-elevated transition-[border,transform] duration-base ease-out hover:-translate-y-0.5 hover:border-vyrek-border-strong",
+        "group relative block overflow-hidden rounded-2xl border border-suth-border bg-suth-elevated transition-[border,transform] duration-base ease-out hover:-translate-y-0.5 hover:border-suth-border-strong",
         featured ? "aspect-[16/9]" : "aspect-[4/5]",
         featured ? "" : "min-w-[280px] snap-center",
       ].join(" ")}
@@ -54,7 +54,7 @@ export function EventCard({
       {/* Glass + gradient legibility wash */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-vyrek-base/95 via-vyrek-base/60 to-vyrek-base/10"
+        className="absolute inset-0 bg-gradient-to-t from-suth-base/95 via-suth-base/60 to-suth-base/10"
       />
 
       {/* LIVE / countdown badge */}
@@ -64,7 +64,7 @@ export function EventCard({
             "inline-flex items-center gap-1.5 rounded-pill border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.22em] backdrop-blur-md",
             event.status === "live"
               ? "border-cyan-400/50 bg-cyan-400/10 text-cyan-300"
-              : "border-vyrek-border bg-vyrek-base/70 text-vyrek-text",
+              : "border-suth-border bg-suth-base/70 text-suth-text",
           ].join(" ")}
         >
           {event.status === "live" ? (
@@ -79,19 +79,19 @@ export function EventCard({
 
       {/* Content stacks bottom-left */}
       <div className="absolute inset-x-0 bottom-0 z-10 p-5">
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           {event.venue.city} · {event.venue.country}
         </p>
         <h3
           className={[
-            "mt-2 font-black leading-tight tracking-[-0.025em] text-vyrek-text",
+            "mt-2 font-black leading-tight tracking-[-0.025em] text-suth-text",
             featured ? "text-2xl md:text-3xl" : "text-lg md:text-xl",
           ].join(" ")}
         >
           {event.name}
         </h3>
         {event.totalAthletes > 0 ? (
-          <p className="mt-2 font-mono text-[10px] tabular-nums text-vyrek-text-secondary">
+          <p className="mt-2 font-mono text-[10px] tabular-nums text-suth-text-secondary">
             <span title="Total racers signed up across all divisions">
               {event.totalAthletes.toLocaleString("en-GB")} athletes
             </span>

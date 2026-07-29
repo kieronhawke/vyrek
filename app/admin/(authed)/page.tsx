@@ -64,7 +64,7 @@ export default async function AdminOverviewPage() {
               <>
                 One or more queries failed. Most common cause: migrations
                 0002 / 0003 / 0004 haven&apos;t been run yet (see{" "}
-                <code className="text-vyrek-text">
+                <code className="text-suth-text">
                   supabase/migrations/
                 </code>
                 ). Apply via the Supabase Dashboard SQL Editor.
@@ -125,7 +125,7 @@ export default async function AdminOverviewPage() {
       <section className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <header className="mb-3 flex items-center justify-between">
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
               Activity feed
             </h2>
             <Badge tone="accent">LIVE</Badge>
@@ -133,7 +133,7 @@ export default async function AdminOverviewPage() {
           {events.ok ? (
             events.data.length === 0 ? (
               <Card>
-                <p className="text-sm text-vyrek-text-tertiary">
+                <p className="text-sm text-suth-text-tertiary">
                   Nothing yet. Submit an application, sign up a customer, or
                   trigger a Stripe webhook to populate the feed.
                 </p>
@@ -143,25 +143,25 @@ export default async function AdminOverviewPage() {
                 {events.data.map((e) => (
                   <li
                     key={e.id}
-                    className="rounded-md border border-vyrek-border-subtle bg-vyrek-elevated/60 p-4"
+                    className="rounded-md border border-suth-border-subtle bg-suth-elevated/60 p-4"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
-                        <p className="text-sm text-vyrek-text">
+                        <p className="text-sm text-suth-text">
                           {eventLabel(e.action)}
                         </p>
-                        <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                        <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                           {e.actor === "system" ? "[ SYSTEM ]" : `[ ${e.actor} ]`}
                           {e.target_kind ? ` · ${e.target_kind}` : ""}
                           {e.target_id ? ` · ${e.target_id.slice(0, 8)}` : ""}
                         </p>
                         {e.metadata ? (
-                          <p className="mt-2 font-mono text-[11px] text-vyrek-text-secondary">
+                          <p className="mt-2 font-mono text-[11px] text-suth-text-secondary">
                             {summariseMetadata(e.metadata)}
                           </p>
                         ) : null}
                       </div>
-                      <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                      <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                         {formatDistanceToNow(new Date(e.created_at), {
                           addSuffix: true,
                         })}
@@ -173,7 +173,7 @@ export default async function AdminOverviewPage() {
             )
           ) : (
             <Card>
-              <p className="text-sm text-vyrek-text-tertiary">
+              <p className="text-sm text-suth-text-tertiary">
                 Activity feed unavailable: {events.reason}
               </p>
             </Card>
@@ -182,12 +182,12 @@ export default async function AdminOverviewPage() {
 
         <div>
           <header className="mb-3 flex items-center justify-between">
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
               Recent signups
             </h2>
             <Link
               href="/admin/customers"
-              className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent hover:underline"
+              className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent hover:underline"
             >
               See all →
             </Link>
@@ -195,7 +195,7 @@ export default async function AdminOverviewPage() {
           {recent.ok ? (
             recent.data.length === 0 ? (
               <Card>
-                <p className="text-sm text-vyrek-text-tertiary">
+                <p className="text-sm text-suth-text-tertiary">
                   No signups yet. Share the quiz to start filling this list.
                 </p>
               </Card>
@@ -205,12 +205,12 @@ export default async function AdminOverviewPage() {
                   <li key={c.id}>
                     <Link
                       href={`/admin/customers/${c.id}`}
-                      className="flex items-center justify-between rounded-md border border-vyrek-border-subtle bg-vyrek-elevated/60 px-4 py-3 transition-colors hover:border-vyrek-border-strong"
+                      className="flex items-center justify-between rounded-md border border-suth-border-subtle bg-suth-elevated/60 px-4 py-3 transition-colors hover:border-suth-border-strong"
                     >
-                      <span className="truncate text-sm text-vyrek-text">
+                      <span className="truncate text-sm text-suth-text">
                         {c.email}
                       </span>
-                      <span className="ml-3 shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                      <span className="ml-3 shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                         {c.created_at
                           ? formatDistanceToNow(new Date(c.created_at), {
                               addSuffix: true,
@@ -224,7 +224,7 @@ export default async function AdminOverviewPage() {
             )
           ) : (
             <Card>
-              <p className="text-sm text-vyrek-text-tertiary">
+              <p className="text-sm text-suth-text-tertiary">
                 Could not load recent signups: {recent.reason}
               </p>
             </Card>
@@ -236,15 +236,15 @@ export default async function AdminOverviewPage() {
       <section className="mt-10 grid grid-cols-1 gap-3 md:grid-cols-3">
         <Link
           href="/admin/partners"
-          className="block rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5 transition-colors hover:border-vyrek-border-strong"
+          className="block rounded-lg border border-suth-border-subtle bg-suth-elevated p-5 transition-colors hover:border-suth-border-strong"
         >
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
             [ PARTNERS ]
           </p>
-          <p className="mt-3 text-base font-bold text-vyrek-text">
+          <p className="mt-3 text-base font-bold text-suth-text">
             Review applications
           </p>
-          <p className="mt-2 text-sm text-vyrek-text-secondary">
+          <p className="mt-2 text-sm text-suth-text-secondary">
             {s.partnerPending.ok
               ? `${s.partnerPending.data} pending`
               : "Pending applications"}
@@ -252,35 +252,35 @@ export default async function AdminOverviewPage() {
         </Link>
         <Link
           href="/admin/payouts"
-          className="block rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5 transition-colors hover:border-vyrek-border-strong"
+          className="block rounded-lg border border-suth-border-subtle bg-suth-elevated p-5 transition-colors hover:border-suth-border-strong"
         >
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
             [ PAYOUTS ]
           </p>
-          <p className="mt-3 text-base font-bold text-vyrek-text">
+          <p className="mt-3 text-base font-bold text-suth-text">
             Process BACS payouts
           </p>
-          <p className="mt-2 text-sm text-vyrek-text-secondary">
+          <p className="mt-2 text-sm text-suth-text-secondary">
             Mark pending payouts as paid once BACS clears.
           </p>
         </Link>
         <Link
           href="/admin/subscriptions?status=past_due"
-          className="block rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5 transition-colors hover:border-vyrek-border-strong"
+          className="block rounded-lg border border-suth-border-subtle bg-suth-elevated p-5 transition-colors hover:border-suth-border-strong"
         >
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
             [ DUNNING ]
           </p>
-          <p className="mt-3 text-base font-bold text-vyrek-text">
+          <p className="mt-3 text-base font-bold text-suth-text">
             Failed-payment queue
           </p>
-          <p className="mt-2 text-sm text-vyrek-text-secondary">
+          <p className="mt-2 text-sm text-suth-text-secondary">
             Subscriptions where the last invoice failed.
           </p>
         </Link>
       </section>
 
-      <p className="mt-10 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+      <p className="mt-10 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
         <Badge tone="accent">LIVE</Badge>
         Refreshes on every page load
       </p>

@@ -50,14 +50,14 @@ export function WeekInLife() {
     <RevealOnView
       as="section"
       aria-labelledby="week-heading"
-      className="border-t border-vyrek-border-subtle py-24 md:py-32"
+      className="border-t border-suth-border-subtle py-24 md:py-32"
     >
       <Container>
         <header className="mx-auto max-w-2xl text-center">
-          <Eyebrow>A week with Vyrek</Eyebrow>
+          <Eyebrow>A week with Suth Performance</Eyebrow>
           <SplitHeading
             id="week-heading"
-            className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+            className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
           >
             A week in your life.
           </SplitHeading>
@@ -75,7 +75,7 @@ export function WeekInLife() {
             return (
               <li
                 key={v.stamp}
-                className="md:flex md:flex-col md:gap-4 md:rounded-lg md:border md:border-vyrek-border-subtle md:bg-vyrek-elevated md:p-6"
+                className="md:flex md:flex-col md:gap-4 md:rounded-lg md:border md:border-suth-border-subtle md:bg-suth-elevated md:p-6"
               >
                 <div
                   className={`grid grid-cols-1 gap-4 md:contents ${
@@ -84,7 +84,7 @@ export function WeekInLife() {
                       : ""
                   }`}
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-vyrek-overlay">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-suth-overlay">
                     <Image
                       src={v.image}
                       alt={v.alt}
@@ -94,18 +94,18 @@ export function WeekInLife() {
                     />
                     <div
                       aria-hidden
-                      className="absolute inset-0 bg-gradient-to-t from-vyrek-elevated/80 via-transparent to-transparent"
+                      className="absolute inset-0 bg-gradient-to-t from-suth-elevated/80 via-transparent to-transparent"
                     />
-                    <span className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-base/80 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text">
-                      <span aria-hidden className="size-1.5 rounded-full bg-vyrek-accent" />
+                    <span className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-pill border border-suth-border bg-suth-base/80 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text">
+                      <span aria-hidden className="size-1.5 rounded-full bg-suth-accent" />
                       {v.stamp}
                     </span>
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold leading-tight tracking-[-0.02em] text-vyrek-text md:text-xl">
+                    <h3 className="text-lg font-bold leading-tight tracking-[-0.02em] text-suth-text md:text-xl">
                       {v.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-vyrek-text-secondary md:text-base">
+                    <p className="mt-2 text-sm leading-relaxed text-suth-text-secondary md:text-base">
                       {v.body}
                     </p>
                   </div>

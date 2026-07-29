@@ -9,7 +9,7 @@
 import { chromium, webkit, devices } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 
-const BASE = process.env.SMOKE_BASE ?? "https://vyrek.vercel.app";
+const BASE = process.env.SMOKE_BASE ?? "https://suthperformance.com";
 const OUT = "/Users/kieronhawke/code/vyrek/docs/live-assess";
 await mkdir(OUT, { recursive: true });
 
@@ -115,7 +115,7 @@ console.log("\n=== mobile 390 ===");
   await page.screenshot({ path: `${OUT}/08-app-today--m390.png`, fullPage: true });
 
   // Seed quiz state + navigate to /plan
-  await page.evaluate(() => localStorage.setItem("vyrek:quiz:v3:state", JSON.stringify({
+  await page.evaluate(() => localStorage.setItem("suth:quiz:v3:state", JSON.stringify({
     uuid: "550e8400-e29b-41d4-a716-446655440099",
     startedAt: new Date().toISOString(),
     screenIndex: 14,
@@ -168,7 +168,7 @@ console.log("\n=== desktop 1440 ===");
   await page.fill('input[type="password"]', PASSWORD);
   await page.click('button[type="submit"]');
   await page.waitForURL((u) => u.pathname.startsWith("/app"), { timeout: 15000 });
-  await page.evaluate(() => localStorage.setItem("vyrek:quiz:v3:state", JSON.stringify({
+  await page.evaluate(() => localStorage.setItem("suth:quiz:v3:state", JSON.stringify({
     uuid: "550e8400-e29b-41d4-a716-446655440099",
     startedAt: new Date().toISOString(),
     screenIndex: 14,
@@ -194,7 +194,7 @@ console.log("\n=== calculating cinematic frames ===");
   await page.fill('input[type="password"]', PASSWORD);
   await page.click('button[type="submit"]');
   await page.waitForURL((u) => u.pathname.startsWith("/app"), { timeout: 15000 });
-  await page.evaluate(() => localStorage.setItem("vyrek:quiz:v3:state", JSON.stringify({
+  await page.evaluate(() => localStorage.setItem("suth:quiz:v3:state", JSON.stringify({
     uuid: "550e8400-e29b-41d4-a716-446655440099",
     startedAt: new Date().toISOString(),
     screenIndex: 15,

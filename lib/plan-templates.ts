@@ -162,7 +162,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     programmeSlug: "sub-90",
     intro: [
       "A sub-90 Hyrox is the benchmark age-group finish, strong, consistent, race-tested. Most athletes who break 90 do so on their second or third race after a structured build.",
-      "Vyrek's Sub-90 programme starts with a diagnostic block: three race-simulation sessions across weeks 1-3 that identify whether your limiter is aerobic capacity, station strength, or pacing discipline. The next 9 weeks target whichever one's holding you back.",
+      "Suth Performance's Sub-90 programme starts with a diagnostic block: three race-simulation sessions across weeks 1-3 that identify whether your limiter is aerobic capacity, station strength, or pacing discipline. The next 9 weeks target whichever one's holding you back.",
     ],
     whoFor: [
       "Athletes who've finished one Hyrox between 95-110 minutes.",
@@ -258,7 +258,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     eyebrow: "First Race",
     programmeSlug: "first-race",
     intro: [
-      "Vyrek's First Race programme is built for total Hyrox beginners, athletes who've never raced and may not have done a CrossFit-style workout before. The 12 weeks build aerobic capacity, station competence, and race-pattern familiarity, in that order.",
+      "Suth Performance's First Race programme is built for total Hyrox beginners, athletes who've never raced and may not have done a CrossFit-style workout before. The 12 weeks build aerobic capacity, station competence, and race-pattern familiarity, in that order.",
       "You don't need to be a sub-25 runner. You don't need a CrossFit gym. You need 4 hours a week and a willingness to follow a plan written by Elite 15 coaches.",
     ],
     whoFor: [
@@ -313,7 +313,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     eyebrow: "Women",
     programmeSlug: "first-race",
     intro: [
-      "Vyrek programmes auto-calibrate to women's open standards: 102 kg sled push, 78 kg sled pull, 16 kg farmers carry, 6 kg wall ball to a 9 ft target. Sandbag lunge weight scales as a percentage of your body weight.",
+      "Suth Performance programmes auto-calibrate to women's open standards: 102 kg sled push, 78 kg sled pull, 16 kg farmers carry, 6 kg wall ball to a 9 ft target. Sandbag lunge weight scales as a percentage of your body weight.",
       "The training plan is the same structure, aerobic base, race-specific intensity, peak and taper, with loads dialled to your category and bodyweight.",
     ],
     whoFor: [
@@ -356,7 +356,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
       },
       {
         q: "Should I train differently from male athletes?",
-        a: "Structurally no, the periodisation is the same. The differences are calibrated loads and a slightly different ratio of strength-to-running emphasis depending on your baseline. Vyrek auto-applies this from the quiz.",
+        a: "Structurally no, the periodisation is the same. The differences are calibrated loads and a slightly different ratio of strength-to-running emphasis depending on your baseline. Suth Performance auto-applies this from the quiz.",
       },
     ],
   },
@@ -368,7 +368,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     eyebrow: "Masters",
     programmeSlug: "first-race",
     intro: [
-      "Hyrox over 40 isn't a different sport, it's the same race with more attention paid to recovery. The Vyrek masters programming uses the same structure as our standard plans, with three differences: more deload weeks, more Zone 2 volume, and tighter rules around joint-loaded movements.",
+      "Hyrox over 40 isn't a different sport, it's the same race with more attention paid to recovery. The Suth Performance masters programming uses the same structure as our standard plans, with three differences: more deload weeks, more Zone 2 volume, and tighter rules around joint-loaded movements.",
       "You can finish a Hyrox over 40, over 50, over 60. The athletes who do it consistently are the ones who treat recovery as part of the training, not a luxury.",
     ],
     whoFor: [
@@ -380,7 +380,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     prerequisites: [
       "Cleared by a GP for high-intensity exercise.",
       "Able to run 5 km continuously.",
-      "Honest about recent injury history (Vyrek's quiz asks).",
+      "Honest about recent injury history (Suth Performance's quiz asks).",
     ],
     sampleWeek: [
       {
@@ -407,7 +407,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     faqs: [
       {
         q: "Is Hyrox safe over 40?",
-        a: "Yes, with the right preparation. Vyrek's masters programming uses lighter compound loads, more deload weeks, and substitutes joint-loaded movements (box jumps) for safer alternatives when your quiz flags injury history.",
+        a: "Yes, with the right preparation. Suth Performance's masters programming uses lighter compound loads, more deload weeks, and substitutes joint-loaded movements (box jumps) for safer alternatives when your quiz flags injury history.",
       },
       {
         q: "How long should an over-40 Hyrox build be?",
@@ -424,7 +424,7 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     programmeSlug: "doubles",
     intro: [
       "Hyrox doubles is the fastest-growing division. It's also a different race from solo, paired running, split station work, fast handoffs, partner-conversation strategy.",
-      "Vyrek's Doubles programme assumes you train as a pair most of the time. Sessions are designed for two athletes, one runs while the other does a station, then swap. Calibration handles each athlete's individual loads plus the team's combined targets.",
+      "Suth Performance's Doubles programme assumes you train as a pair most of the time. Sessions are designed for two athletes, one runs while the other does a station, then swap. Calibration handles each athlete's individual loads plus the team's combined targets.",
     ],
     whoFor: [
       "Doubles teams preparing for their first paired race.",
@@ -457,11 +457,11 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     faqs: [
       {
         q: "How do you split stations in Hyrox doubles?",
-        a: "Each station has its own rule. Sled push and pull alternate sets within the lane; burpee broad jumps alternate every rep; wall balls split 50-50 with one transition. Vyrek's Doubles programme rehearses each split pattern in training.",
+        a: "Each station has its own rule. Sled push and pull alternate sets within the lane; burpee broad jumps alternate every rep; wall balls split 50-50 with one transition. Suth Performance's Doubles programme rehearses each split pattern in training.",
       },
       {
         q: "Should doubles partners train together every session?",
-        a: "Ideally yes, but realistically no. Vyrek's Doubles programme includes solo-mode sessions twice a week that simulate doubles patterns. Pair up for the long weekend sessions.",
+        a: "Ideally yes, but realistically no. Suth Performance's Doubles programme includes solo-mode sessions twice a week that simulate doubles patterns. Pair up for the long weekend sessions.",
       },
     ],
   },

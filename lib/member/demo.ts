@@ -1159,5 +1159,5 @@ export function programmeLabel(p: string | null): string {
 export function programmeAccent(p: string | null): string {
   // All four programmes use the same accent colour for now. Reserved
   // for future per-programme theming if we want it.
-  return "vyrek-accent";
+  return "suth-accent";
 }

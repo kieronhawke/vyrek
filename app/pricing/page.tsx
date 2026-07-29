@@ -16,7 +16,7 @@ import { PRICING } from "@/lib/pricing";
 import { FAQS } from "@/lib/faqs";
 
 export const metadata: Metadata = {
-  title: "Pricing. £8.99/mo Hyrox training, first week free · Vyrek",
+  title: "Pricing. £8.99/mo Hyrox training, first week free · Suth Performance",
   description: `${PRICING.monthlyDisplay}/month, 7-day free trial. All four programmes included. First Race, Sub-90, Doubles, Pro. Cancel in two taps, no minimum term.`,
   alternates: { canonical: "/pricing" },
   openGraph: {
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
         url: "/media/images/v2/bento-plan.jpg",
         width: 1200,
         height: 630,
-        alt: "Open Vyrek dated weekly plan",
+        alt: "Open Suth Performance dated weekly plan",
       },
     ],
   },
@@ -63,35 +63,35 @@ export default function PricingPage() {
             <Eyebrow>Pricing</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.05em] text-vyrek-text md:text-4xl lg:text-5xl"
+              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.05em] text-suth-text md:text-4xl lg:text-5xl"
             >
               One plan. All programmes.
             </SplitHeading>
           </header>
 
           <section className="mx-auto mt-16 max-w-xl">
-            <div className="pricing-card shimmer relative overflow-hidden rounded-lg border border-vyrek-border-strong bg-vyrek-elevated p-8 md:p-10">
+            <div className="pricing-card shimmer relative overflow-hidden rounded-lg border border-suth-border-strong bg-suth-elevated p-8 md:p-10">
               {/* Soft accent gradient on the top edge. Apple's pricing-card flourish */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-vyrek-accent/60 to-transparent"
+                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-suth-accent/60 to-transparent"
               />
               <div className="text-center">
-                <div className="font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary">
-                  Vyrek membership
+                <div className="font-mono text-xs uppercase tracking-[0.18em] text-suth-text-tertiary">
+                  Suth Performance membership
                 </div>
                 <div className="pricing-card-price mt-4 flex items-baseline justify-center gap-2">
-                  <span className="text-4xl font-black tracking-[-0.06em] text-vyrek-text md:text-5xl">
+                  <span className="text-4xl font-black tracking-[-0.06em] text-suth-text md:text-5xl">
                     {PRICING.monthlyDisplay}
                   </span>
-                  <span className="text-base text-vyrek-text-secondary">
+                  <span className="text-base text-suth-text-secondary">
                     /month
                   </span>
                 </div>
-                <p className="mt-3 text-base text-vyrek-text">
+                <p className="mt-3 text-base text-suth-text">
                   First week free, then {PRICING.monthlyDisplay}/month
                 </p>
-                <p className="mt-1 text-sm text-vyrek-text-tertiary">
+                <p className="mt-1 text-sm text-suth-text-tertiary">
                   {PRICING.anchorCopy}
                 </p>
               </div>
@@ -101,9 +101,9 @@ export default function PricingPage() {
                   <li key={item} className="flex items-start gap-3 text-base">
                     <span
                       aria-hidden
-                      className="mt-2 size-1.5 shrink-0 rounded-full bg-vyrek-accent"
+                      className="mt-2 size-1.5 shrink-0 rounded-full bg-suth-accent"
                     />
-                    <span className="text-vyrek-text">{item}</span>
+                    <span className="text-suth-text">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -114,11 +114,11 @@ export default function PricingPage() {
                 </CtaButton>
               </div>
 
-              <p className="mt-4 text-center text-xs text-vyrek-text-tertiary">
+              <p className="mt-4 text-center text-xs text-suth-text-tertiary">
                 Cancel anytime in two taps. No charge during trial.
               </p>
 
-              <div className="mt-8 border-t border-vyrek-border-subtle pt-6">
+              <div className="mt-8 border-t border-suth-border-subtle pt-6">
                 <ReferralCodeInput />
               </div>
             </div>
@@ -128,19 +128,19 @@ export default function PricingPage() {
               that experienced racers have when they compare to HAC (£45)
               or Marchon (£30). Honesty pre-empts skepticism. */}
           <section className="mx-auto mt-16 max-w-2xl">
-            <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/60 p-6 md:p-8">
+            <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated/60 p-6 md:p-8">
               <Eyebrow>Why £8.99?</Eyebrow>
-              <h2 className="mt-3 text-balance text-xl font-black leading-tight tracking-[-0.04em] text-vyrek-text sm:text-2xl md:text-3xl">
+              <h2 className="mt-3 text-balance text-xl font-black leading-tight tracking-[-0.04em] text-suth-text sm:text-2xl md:text-3xl">
                 Software-first, not 1:1 coaching.
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
-                Vyrek is a personalised programme delivered by software.
+              <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
+                Suth Performance is a personalised programme delivered by software.
                 Programming is written by our Elite 15 coach and reviewed
                 each week, then the algorithm calibrates it to your race
                 date, equipment, body weight, injuries, and the sessions
                 you&apos;ve actually logged.
               </p>
-              <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+              <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                 What you get for £8.99/mo: the same programming logic an Elite
                 15 coach would write, applied to your inputs, updated every
                 Sunday. What you don&apos;t get: a human messaging you weekly,
@@ -148,7 +148,7 @@ export default function PricingPage() {
                 name. If you want that, you want 1:1 coaching, typically
                 £150, £400/mo elsewhere.
               </p>
-              <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+              <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                 We&apos;re open about the trade. Most members never need 1:1.
                 Some do, and we&apos;ll signpost when.
               </p>
@@ -156,37 +156,37 @@ export default function PricingPage() {
           </section>
 
           <section className="mx-auto mt-20 max-w-3xl">
-            <p className="text-center font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+            <p className="text-center font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
               [ WHAT YOU GET ]
             </p>
-            <h2 className="mt-3 text-center text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
+            <h2 className="mt-3 text-center text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               Inside the £8.99
             </h2>
             <ul role="list" className="mt-8 grid gap-4 md:grid-cols-3">
-              <li className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+              <li className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
                   Programming
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-vyrek-text">
+                <p className="mt-2 text-sm leading-relaxed text-suth-text">
                   A 12-week plan dated to your race. Eight stations, eight
                   runs, calibrated to your weight and kit. Updated every
                   Sunday.
                 </p>
               </li>
-              <li className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+              <li className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
                   Coaching logic
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-vyrek-text">
+                <p className="mt-2 text-sm leading-relaxed text-suth-text">
                   The same progression an Elite 15 coach would write, applied
                   to your inputs. No copy-paste templates. No PDFs.
                 </p>
               </li>
-              <li className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+              <li className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
                   Cancel in two taps
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-vyrek-text">
+                <p className="mt-2 text-sm leading-relaxed text-suth-text">
                   7-day free trial, no card needed to start. In the app
                   forever, no email-the-team friction.
                 </p>
@@ -195,7 +195,7 @@ export default function PricingPage() {
           </section>
 
           <section className="mx-auto mt-24 max-w-2xl">
-            <h2 className="text-center text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
+            <h2 className="text-center text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               Common questions
             </h2>
             <div className="mt-8">
@@ -204,12 +204,12 @@ export default function PricingPage() {
                   <AccordionItem
                     key={f.question}
                     value={`mini-${i}`}
-                    className="border-b border-vyrek-border-subtle last:border-b-0"
+                    className="border-b border-suth-border-subtle last:border-b-0"
                   >
-                    <AccordionTrigger className="py-5 text-left text-base font-medium text-vyrek-text hover:no-underline md:text-lg">
+                    <AccordionTrigger className="py-5 text-left text-base font-medium text-suth-text hover:no-underline md:text-lg">
                       {f.question}
                     </AccordionTrigger>
-                    <AccordionContent className="pb-5 text-base leading-relaxed text-vyrek-text-secondary">
+                    <AccordionContent className="pb-5 text-base leading-relaxed text-suth-text-secondary">
                       {f.answer}
                     </AccordionContent>
                   </AccordionItem>

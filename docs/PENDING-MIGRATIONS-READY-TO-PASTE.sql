@@ -1,5 +1,5 @@
 -- =====================================================================
--- VYREK PENDING MIGRATIONS — ready to paste into Supabase SQL Editor
+-- SUTH PERFORMANCE PENDING MIGRATIONS — ready to paste into Supabase SQL Editor
 -- =====================================================================
 --
 -- Project: iiezxhzbissemvsfytwl.supabase.co
@@ -27,7 +27,7 @@
 --
 -- =====================================================================
 
--- Quiz V3 additions (Phase 1 / docs/vyrek-quiz-v3-brief.md + addendum)
+-- Quiz V3 additions (Phase 1 / docs/suth-quiz-v3-brief.md + addendum)
 --
 -- Adds:
 --   1. Supabase Auth linkage (`auth_user_id`) to customers
@@ -67,7 +67,7 @@ create index if not exists abandoned_plans_customer_id_idx
 create index if not exists abandoned_plans_scheduled_for_idx
   on abandoned_plans(scheduled_for)
   where recovered_at is null;
--- Vyrek Partner Programme (Phase B3 Part 11)
+-- Suth Performance Partner Programme (Phase B3 Part 11)
 -- Flat tiered recurring commission only (30/40/50% by active referrals).
 -- No flat sign-up bounty (the legacy `referrals` table in 0001 was for the
 -- old £20 bounty referral model; the new model is partner-based recurring
@@ -162,7 +162,7 @@ alter table partner_applications enable row level security;
 alter table partners             enable row level security;
 alter table partner_referrals    enable row level security;
 alter table partner_payouts      enable row level security;
--- Vyrek admin observability + partner attribution depth (Phase B3+).
+-- Suth Performance admin observability + partner attribution depth (Phase B3+).
 -- Idempotent.
 
 -- ─── partner_clicks ─────────────────────────────────────
@@ -215,7 +215,7 @@ alter table admin_events  enable row level security;
 
 -- ─── Schema cache reload ────────────────────────────────
 notify pgrst, 'reload schema';
--- Vyrek live-presence tracking (Phase B3 polish).
+-- Suth Performance live-presence tracking (Phase B3 polish).
 -- Records every active session with a sliding last_seen timestamp.
 -- Anything older than 60 seconds is "stale" (user closed tab / lost
 -- connection); the admin /live page filters on last_seen > now()-60s.

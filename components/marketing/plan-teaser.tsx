@@ -38,14 +38,14 @@ export function PlanTeaser() {
       as="section"
       id="plan-teaser"
       aria-labelledby="plan-teaser-heading"
-      className="border-t border-vyrek-border-subtle py-24 md:py-32"
+      className="border-t border-suth-border-subtle py-24 md:py-32"
     >
       <Container>
         <div className="mx-auto max-w-2xl text-center">
           <Eyebrow>Plan reveal</Eyebrow>
           <SplitHeading
             id="plan-teaser-heading"
-            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
           >
             See your plan in three minutes
           </SplitHeading>
@@ -72,7 +72,7 @@ export function PlanTeaser() {
                   className="flex gap-5"
                 >
                   <Eyebrow className="shrink-0 pt-1">{step.label}</Eyebrow>
-                  <p className="text-base leading-relaxed text-vyrek-text md:text-lg">
+                  <p className="text-base leading-relaxed text-suth-text md:text-lg">
                     {step.text}
                   </p>
                 </motion.li>
@@ -96,7 +96,7 @@ function PhoneMockup({ days }: { days: PreviewDay[] }) {
       className="relative w-full max-w-[300px] shrink-0"
       aria-hidden /* decorative, content is summarised in step list */
     >
-      <div className="relative aspect-[9/19] overflow-hidden rounded-[44px] border border-vyrek-border-strong bg-vyrek-elevated shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
+      <div className="relative aspect-[9/19] overflow-hidden rounded-[44px] border border-suth-border-strong bg-suth-elevated shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
         {/* Notch */}
         <div className="absolute left-1/2 top-2.5 z-10 h-6 w-24 -translate-x-1/2 rounded-full bg-black" />
 
@@ -105,7 +105,7 @@ function PhoneMockup({ days }: { days: PreviewDay[] }) {
             <Eyebrow bare>FIRST RACE · WEEK 1</Eyebrow>
             <Eyebrow bare>4/7</Eyebrow>
           </div>
-          <h3 className="mt-3 text-xl font-black tracking-[-0.04em] text-vyrek-text">
+          <h3 className="mt-3 text-xl font-black tracking-[-0.04em] text-suth-text">
             Your week
           </h3>
 
@@ -121,9 +121,9 @@ function PhoneMockup({ days }: { days: PreviewDay[] }) {
                   duration: 0.45,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="rounded-md border border-vyrek-border-subtle bg-vyrek-overlay px-3 py-2"
+                className="rounded-md border border-suth-border-subtle bg-suth-overlay px-3 py-2"
               >
-                <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                   <span>
                     {d.day} · {d.date}
                   </span>
@@ -131,8 +131,8 @@ function PhoneMockup({ days }: { days: PreviewDay[] }) {
                 </div>
                 <div className="mt-1.5 flex items-center justify-between gap-2">
                   {/* Blurred workout name placeholder */}
-                  <div className="h-2 flex-1 rounded-pill bg-vyrek-border-strong/70" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-vyrek-text-secondary">
+                  <div className="h-2 flex-1 rounded-pill bg-suth-border-strong/70" />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-suth-text-secondary">
                     {d.intensity}
                   </span>
                 </div>

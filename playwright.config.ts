@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 /**
- * Playwright config for Vyrek's visual + smoke test suite (Phase B3 Part 13).
+ * Playwright config for Suth Performance's visual + smoke test suite (Phase B3 Part 13).
  *
  * Run locally:
  *   pnpm test:visual              # all tests

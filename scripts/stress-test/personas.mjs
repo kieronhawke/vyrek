@@ -148,7 +148,7 @@ export const PERSONAS = [
       await page.goto(`${ctx.base}/`, { waitUntil: "domcontentloaded" });
       await page.evaluate(() => {
         try {
-          localStorage.setItem("vyrek:quiz:v2:state", JSON.stringify({ answers: { intent: "first-race" }, screenIndex: 5 }));
+          localStorage.setItem("suth:quiz:v2:state", JSON.stringify({ answers: { intent: "first-race" }, screenIndex: 5 }));
         } catch {}
       });
       await hesitate(ctx, 600, "recognise site");

@@ -24,7 +24,7 @@ export function AdminSignOut() {
       type="button"
       onClick={onClick}
       disabled={busy}
-      className="inline-flex h-8 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 text-xs font-medium text-vyrek-text transition-colors hover:border-vyrek-border-strong disabled:opacity-50"
+      className="inline-flex h-8 items-center rounded-pill border border-suth-border bg-suth-elevated px-3 text-xs font-medium text-suth-text transition-colors hover:border-suth-border-strong disabled:opacity-50"
     >
       {busy ? "Signing out..." : "Sign out"}
     </button>

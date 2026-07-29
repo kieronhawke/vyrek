@@ -9,7 +9,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { execSync } from "node:child_process";
 import { existsSync } from "node:fs";
 
-const TMP = "/tmp/vyrek-stock";
+const TMP = "/tmp/suth-stock";
 const OUT = "/Users/kieronhawke/code/vyrek/public/media/images/v2";
 
 await mkdir(TMP, { recursive: true });

@@ -1,11 +1,11 @@
-# Vyrek
+# Suth Performance
 
-Personalised Hyrox training programmes built by Elite 15 athletes. Marketing site, onboarding funnel, plan reveal, Stripe-backed trial, and the journal. Live at **https://vyrek.vercel.app**.
+Personalised Hyrox training programmes built by Elite 15 athletes. Marketing site, onboarding funnel, plan reveal, Stripe-backed trial, and the journal. Live at **https://suthperformance.com**.
 
 ## Stack
 
 - **Next.js 16** App Router, React 19, TypeScript strict
-- **Tailwind v4** with bespoke Vyrek design tokens (no `@tailwindcss/typography`)
+- **Tailwind v4** with bespoke Suth Performance design tokens (no `@tailwindcss/typography`)
 - **Supabase** Auth + Postgres + RLS via `@supabase/ssr`
 - **Stripe** subscriptions, £4.99/mo with 7-day trial
 - **Resend + React Email** for transactional + drip
@@ -122,7 +122,7 @@ excerpt: "One-sentence summary."
 category: "training"             # first-race | training | technique | nutrition | race-day | recovery
 tags: ["tag1", "tag2"]
 publishedAt: "2026-05-22"
-author: "james-wright"           # or vyrek-team (lib/blog/authors.ts)
+author: "james-wright"           # or suth-team (lib/blog/authors.ts)
 heroImage: "/media/images/programme-first-race.jpg"
 heroAlt: "Alt text for the hero image"
 seoTitle: "Optional, overrides <title> tag"
@@ -164,4 +164,4 @@ Preview deploys are automatic on PRs once the Vercel GitHub App is connected.
 
 ## Voice
 
-Trainer's Notebook. Direct, technical, no hype. Lowercase nav copy. No exclamation marks. Specific over generic ("12 weeks" not "a few months"). See `docs/vyrek-build-brief-v3.md` §4 for the full guide.
+Trainer's Notebook. Direct, technical, no hype. Lowercase nav copy. No exclamation marks. Specific over generic ("12 weeks" not "a few months"). See `docs/suth-build-brief-v3.md` §4 for the full guide.

@@ -6,7 +6,7 @@ import lighthouse from "lighthouse";
 import * as ChromeLauncher from "chrome-launcher";
 import { mkdir, writeFile } from "node:fs/promises";
 
-const BASE = process.argv[2] || "https://vyrek.vercel.app";
+const BASE = process.argv[2] || "https://suthperformance.com";
 const OUT = "/Users/kieronhawke/code/vyrek/scripts/lighthouse-top8";
 await mkdir(OUT, { recursive: true });
 
@@ -25,7 +25,7 @@ const chrome = await ChromeLauncher.launch({
   chromeFlags: ["--headless=new", "--no-sandbox", "--disable-gpu"],
 });
 
-console.log("\nLighthouse · mobile · vyrek.vercel.app");
+console.log("\nLighthouse · mobile · suthperformance.com");
 console.log("────────────────────────────────────────────────────────────────────────────────────");
 console.log("ROUTE                                Perf A11y  BP  SEO    LCP    CLS   TBT");
 console.log("────────────────────────────────────────────────────────────────────────────────────");

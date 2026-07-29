@@ -17,11 +17,11 @@ export const metadata: Metadata = {
     "All eight Hyrox race stations explained. Coaching cues, common faults, goal splits, and training drills for SkiErg, sled push, sled pull, burpee broad jumps, rowing, farmers carry, sandbag lunges, and wall balls.",
   alternates: { canonical: `${siteUrl()}/hyrox/stations` },
   openGraph: {
-    title: "The 8 Hyrox stations. Vyrek technique guides",
+    title: "The 8 Hyrox stations. Suth Performance technique guides",
     description:
       "Station-by-station coaching for every Hyrox race element. Built by an Elite 15 coach.",
     url: `${siteUrl()}/hyrox/stations`,
-    siteName: "Vyrek",
+    siteName: "Suth Performance",
     type: "website",
     locale: "en_GB",
   },
@@ -75,11 +75,11 @@ export default function StationsIndex() {
             <Eyebrow>Stations</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               The 8 Hyrox stations, decoded.
             </SplitHeading>
-            <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
               Every Hyrox race is the same eight stations in the same order,
               separated by eight 1 km runs. Get each one right and the race
               gets honest. Get them wrong and the back half collapses.
@@ -97,23 +97,23 @@ export default function StationsIndex() {
                 <li key={s.slug}>
                   <Link
                     href={`/hyrox/stations/${s.slug}`}
-                    className="lift-on-hover shimmer block h-full rounded-lg border border-vyrek-border bg-vyrek-elevated p-6"
+                    className="lift-on-hover shimmer block h-full rounded-lg border border-suth-border bg-suth-elevated p-6"
                   >
                     <div className="flex items-baseline justify-between gap-3">
                       <Eyebrow>
                         Station {String(s.order).padStart(2, "0")}
                       </Eyebrow>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                         {s.spec.distance ?? s.spec.reps}
                       </span>
                     </div>
-                    <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-vyrek-text">
+                    <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text">
                       {s.name}
                     </h2>
-                    <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
+                    <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
                       {s.summary}
                     </p>
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-vyrek-accent">
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-suth-accent">
                       Read the guide →
                     </span>
                   </Link>

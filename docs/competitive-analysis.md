@@ -1,4 +1,4 @@
-# Vyrek. Competitive Analysis
+# Suth Performance. Competitive Analysis
 
 **Date:** 2026-05-22
 **Scope:** Three direct competitors for a UK Hyrox training app. Runna, Marchon, Hybrid Athlete Club.
@@ -49,8 +49,8 @@ Founded in London, UK-headquartered. Race goals heavily skew to UK majors (Londo
 - High personalisation, adaptive plans
 - Strong UK brand awareness, big paid acquisition spend
 
-### Weaknesses / gaps Vyrek can exploit
-- **No Hyrox programme at all**. Vyrek owns this lane
+### Weaknesses / gaps Suth Performance can exploit
+- **No Hyrox programme at all**. Suth Performance owns this lane
 - Onboarding is long (25 screens) and ends in a hard paywall
 - Plan is invisible until payment, opposite of plan-before-pay
 - Single discipline (running), ignores strength and station work
@@ -100,7 +100,7 @@ UK-headquartered, GBP billing, UK Hyrox race calendar awareness. Strong UK brand
 - Polished native app, strong retention loop
 - Founder credibility in functional fitness space
 
-### Weaknesses / gaps Vyrek can exploit
+### Weaknesses / gaps Suth Performance can exploit
 - **Hyrox is 2 of 9 programmes**, they're not Hyrox-first
 - **Pricing complexity:** Core vs Pro vs annual vs one-off plans + 3-month Core lock-in
 - No plan-before-pay; quiz funnels to paywall
@@ -156,7 +156,7 @@ UK-native, GBP, race-specific programmes for UK Hyrox events (London, Manchester
 - Has a doubles programme (rare)
 - Race-specific programming for UK events
 
-### Weaknesses / gaps Vyrek can exploit
+### Weaknesses / gaps Suth Performance can exploit
 - **No own app**, delivered through generic Fitr.training, breaks brand and limits UX control
 - **£44.99/month is the highest of the three** with no annual option to soften it
 - WordPress marketing site, no plan-before-pay, no editorial polish
@@ -165,23 +165,23 @@ UK-native, GBP, race-specific programmes for UK Hyrox events (London, Manchester
 
 ---
 
-## 4. Vyrek's wedge
+## 4. Suth Performance's wedge
 
-Where Vyrek wins versus all three:
+Where Suth Performance wins versus all three:
 
-- **Plan-before-pay.** Runna, Marchon, and Hybrid Athlete Club all gate the dated plan behind payment or trial start. Vyrek shows a real dated Week 1 free; only Weeks 2-12 require trial. This inverts the funnel, the user sees value before card capture.
+- **Plan-before-pay.** Runna, Marchon, and Hybrid Athlete Club all gate the dated plan behind payment or trial start. Suth Performance shows a real dated Week 1 free; only Weeks 2-12 require trial. This inverts the funnel, the user sees value before card capture.
 
-- **Hyrox-first, UK-native.** Runna has zero Hyrox. Marchon treats Hyrox as 2 of 9 tracks. Hybrid Athlete Club is Hyrox-only but lacks a native app and beginner ladder. Vyrek is purpose-built for UK Hyrox with four programmes covering the full athlete ladder: First Race (beginner 12-week), Sub-90 (intermediate), Doubles (partner), Pro (sub-75).
+- **Hyrox-first, UK-native.** Runna has zero Hyrox. Marchon treats Hyrox as 2 of 9 tracks. Hybrid Athlete Club is Hyrox-only but lacks a native app and beginner ladder. Suth Performance is purpose-built for UK Hyrox with four programmes covering the full athlete ladder: First Race (beginner 12-week), Sub-90 (intermediate), Doubles (partner), Pro (sub-75).
 
-- **Trainer's Notebook voice.** Marchon ("become your fittest, fastest, strongest") and Runna lean on generic fitness-marketing hype. Vyrek's editorial, direct, no-hype voice reads as premium and signals coach-grade content rather than ad copy.
+- **Trainer's Notebook voice.** Marchon ("become your fittest, fastest, strongest") and Runna lean on generic fitness-marketing hype. Suth Performance's editorial, direct, no-hype voice reads as premium and signals coach-grade content rather than ad copy.
 
-- **Single price, no decision tax.** £14.99/month flat. Marchon forces a Core vs Pro vs annual decision plus a 3-month Core lock-in. Hybrid Athlete Club is £44.99/mo. Runna is £15.99/mo for a non-Hyrox product. Vyrek is the cheapest Hyrox option and the simplest pricing on the board.
+- **Single price, no decision tax.** £14.99/month flat. Marchon forces a Core vs Pro vs annual decision plus a 3-month Core lock-in. Hybrid Athlete Club is £44.99/mo. Runna is £15.99/mo for a non-Hyrox product. Suth Performance is the cheapest Hyrox option and the simplest pricing on the board.
 
-- **Named Elite-15 founding coach + brand-led architecture.** Like Hybrid Athlete Club, Vyrek leads with an Elite-15 athlete (credibility parity). Unlike Hybrid Athlete Club, the brand outlives any single coach, so the moat compounds.
+- **Named Elite-15 founding coach + brand-led architecture.** Like Hybrid Athlete Club, Suth Performance leads with an Elite-15 athlete (credibility parity). Unlike Hybrid Athlete Club, the brand outlives any single coach, so the moat compounds.
 
 - **Real £20 BACS referral bounty.** None of the three competitors offer cash referral. Runna uses extended-trial codes; Marchon and Hybrid Athlete Club have no public referral mechanic. A real £20 bounty is a sharper acquisition lever in the UK Hyrox community than a discount code.
 
-- **Mobile-first web with native feel.** Marchon requires App Store download. Hybrid Athlete Club routes to third-party Fitr. Vyrek's PWA-grade web flow removes install friction for the 90% of traffic that's mobile, while keeping the Phase 2 native app option open.
+- **Mobile-first web with native feel.** Marchon requires App Store download. Hybrid Athlete Club routes to third-party Fitr. Suth Performance's PWA-grade web flow removes install friction for the 90% of traffic that's mobile, while keeping the Phase 2 native app option open.
 
 ---
 

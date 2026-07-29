@@ -19,8 +19,8 @@ const CREDS = [
 export function SocialProofBar() {
   return (
     <section
-      aria-label="What Vyrek is"
-      className="border-y border-vyrek-border-subtle bg-vyrek-base"
+      aria-label="What Suth Performance is"
+      className="border-y border-suth-border-subtle bg-suth-base"
     >
       <Container>
         <div className="flex flex-col items-center justify-center gap-6 py-8 text-center md:py-10">
@@ -30,10 +30,10 @@ export function SocialProofBar() {
           >
             {CREDS.map((c) => (
               <li key={c.label} className="flex flex-col items-center gap-1">
-                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
                   {c.label}
                 </span>
-                <span className="text-sm text-vyrek-text md:text-base">
+                <span className="text-sm text-suth-text md:text-base">
                   {c.value}
                 </span>
               </li>

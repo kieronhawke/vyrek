@@ -70,7 +70,7 @@ export function Day3Email() {
           </Text>
 
           <Button
-            href="https://vyrek.vercel.app/plan"
+            href="https://suthperformance.com/plan"
             style={{ ...ctaPrimary, marginTop: 24 }}
           >
             See tomorrow&apos;s session →

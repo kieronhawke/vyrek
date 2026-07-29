@@ -123,7 +123,7 @@ test("about: Find your plan CTA reaches quiz", async ({ page }) => {
 
 test("contact: each mailto link is well-formed", async ({ page }) => {
   await page.goto("/contact");
-  const emails = ["hello@vyrek.com", "support@vyrek.com", "press@vyrek.com"];
+  const emails = ["hello@suthperformance.com", "support@suthperformance.com", "press@suthperformance.com"];
   for (const email of emails) {
     const link = page.locator(`a[href="mailto:${email}"]`);
     await expect(link).toBeVisible();

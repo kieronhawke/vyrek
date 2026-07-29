@@ -18,23 +18,23 @@ export function BlurWall() {
       aria-hidden
       className="pointer-events-none fixed inset-x-0 bottom-0 z-30 h-1/2"
     >
-      <div className="absolute inset-0 bg-gradient-to-t from-vyrek-base via-vyrek-base/90 to-transparent backdrop-blur-md" />
+      <div className="absolute inset-0 bg-gradient-to-t from-suth-base via-suth-base/90 to-transparent backdrop-blur-md" />
       <div className="pointer-events-auto absolute inset-x-0 bottom-1/3 px-5">
-        <div className="mx-auto max-w-md rounded-2xl border border-vyrek-accent/40 bg-vyrek-elevated/90 p-6 text-center backdrop-blur-xl">
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+        <div className="mx-auto max-w-md rounded-2xl border border-suth-accent/40 bg-suth-elevated/90 p-6 text-center backdrop-blur-xl">
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
             [ KEEP ANALYSING ]
           </p>
-          <h2 className="mt-3 text-xl font-black tracking-[-0.02em] text-vyrek-text md:text-2xl">
+          <h2 className="mt-3 text-xl font-black tracking-[-0.02em] text-suth-text md:text-2xl">
             Sign up free to see the rest
           </h2>
-          <p className="mt-2 text-sm text-vyrek-text-secondary">
+          <p className="mt-2 text-sm text-suth-text-secondary">
             Free account unlocks everything on the Results hub. Pro
             analytics arrive with the course.
           </p>
           <div className="mt-4">
             <Link
               href="/quiz"
-              className="inline-flex h-12 w-full items-center justify-center rounded-pill bg-vyrek-accent px-5 text-base font-semibold text-[#0A0A0A] hover:bg-vyrek-accent-hover"
+              className="inline-flex h-12 w-full items-center justify-center rounded-pill bg-suth-accent px-5 text-base font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover"
             >
               Create free account
             </Link>

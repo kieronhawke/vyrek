@@ -184,7 +184,7 @@ try {
   const itemCount = (rss.match(/<item>/g) || []).length;
   if (itemCount < 3) fail(`RSS has only ${itemCount} items`);
   else ok(`RSS has ${itemCount} items`);
-  if (!rss.includes("<title>Vyrek Journal</title>"))
+  if (!rss.includes("<title>Suth Performance Journal</title>"))
     fail("RSS channel title missing");
   else ok("RSS channel title present");
 
@@ -192,7 +192,7 @@ try {
   console.log("\n[4] /llms.txt");
   await page.goto(`${BASE}/llms.txt`, { waitUntil: "networkidle2" });
   const llms = await page.evaluate(() => document.body.textContent || "");
-  if (!llms.includes("# Vyrek")) fail("llms.txt missing main header");
+  if (!llms.includes("# Suth Performance")) fail("llms.txt missing main header");
   else ok("llms.txt header present");
   if (!llms.includes("/blog/")) fail("llms.txt missing blog links");
   else ok("llms.txt lists blog posts");

@@ -9,7 +9,7 @@ import { chromium } from "@playwright/test";
 import { writeFile, mkdir } from "node:fs/promises";
 import { PERSONAS } from "./personas.mjs";
 
-const BASE = process.env.SMOKE_BASE ?? "https://vyrek.vercel.app";
+const BASE = process.env.SMOKE_BASE ?? "https://suthperformance.com";
 const SESSIONS_PER_PERSONA = Number(process.env.SESSIONS_PER_PERSONA ?? 5);
 const CONCURRENCY = Number(process.env.CONCURRENCY ?? 8);
 const OUT = "/Users/kieronhawke/code/vyrek/scripts/stress-test/results";

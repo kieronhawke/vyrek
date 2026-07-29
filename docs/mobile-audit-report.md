@@ -42,7 +42,7 @@
 - [x] Tap targets ≥ 48 px on primary CTAs (h-12 = 48px standard for chartreuse pill buttons)
 - [x] 16 px input font (verified login + quiz inputs)
 - [x] Safe-area-inset-bottom on sticky CTAs and member-app bottom nav
-- [x] Cookie banner doesn't permanently cover content (pushes layout via `--vyrek-consent-h`)
+- [x] Cookie banner doesn't permanently cover content (pushes layout via `--suth-consent-h`)
 
 ### Acceptance per Stage 1.5
 

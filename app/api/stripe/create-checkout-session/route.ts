@@ -67,7 +67,7 @@ export async function POST() {
     if (!stripeCustomerId) {
       const stripeCustomer = await s.customers.create({
         email: customer.email,
-        metadata: { vyrek_customer_id: customer.id },
+        metadata: { suth_customer_id: customer.id },
       });
       stripeCustomerId = stripeCustomer.id;
       await admin
@@ -84,7 +84,7 @@ export async function POST() {
       subscription_data: {
         trial_period_days: 7,
         metadata: {
-          vyrek_customer_id: customer.id,
+          suth_customer_id: customer.id,
           programme: quizResponse?.program ?? "unknown",
           referred_by_code: customer.referred_by_code ?? "",
         },
@@ -95,7 +95,7 @@ export async function POST() {
       allow_promotion_codes: true,
       payment_method_types: ["card"],
       metadata: {
-        vyrek_customer_id: customer.id,
+        suth_customer_id: customer.id,
         programme: quizResponse?.program ?? "unknown",
       },
     });

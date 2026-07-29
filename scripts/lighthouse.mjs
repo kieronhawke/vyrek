@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, "..", ".lighthouse");
-const BASE = process.argv[2] || "https://vyrek.vercel.app";
+const BASE = process.argv[2] || "https://suthperformance.com";
 
 const ROUTES = [
   { path: "/", name: "landing" },

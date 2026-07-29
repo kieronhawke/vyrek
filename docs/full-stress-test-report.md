@@ -1,7 +1,7 @@
-# Vyrek full stress-test report
+# Suth Performance full stress-test report
 
 **Generated:** 2026-05-23
-**Target:** https://vyrek.vercel.app (deploy `vyrek-egfps9qon`)
+**Target:** https://suthperformance.com (deploy `suth-egfps9qon`)
 **Wall time:** 200 sessions in 193.7 seconds (≈0.97s per session amortised at concurrency=10)
 
 ---
@@ -189,7 +189,7 @@ Notable: Slow-3G sessions completed in roughly the same time as unthrottled mobi
 | 5 | Compress home page from 12 → 8 sections (M-1). Reduces mobile scroll fatigue. | **MAJOR** | 2-3 hr |
 | 6 | Quiz V3 single-select confirmation pulse (M-3). 200ms feedback before advance. | **MAJOR** | 1 hr |
 | 7 | Silence client-side 429 logging on `/api/presence/ping` so noise doesn't reach Sentry. | MINOR | 10 min |
-| 8 | Custom domain pointing. `vyrek.com` still serves a parked Apache page; live site is only at `vyrek.vercel.app`. | **MAJOR infra** | 1 hr (DNS) |
+| 8 | Custom domain pointing. `suthperformance.com` still serves a parked Apache page; live site is only at `suthperformance.com`. | **MAJOR infra** | 1 hr (DNS) |
 | 9 | Blog inline imagery (Stage 2 Part A.2). 30 posts × 2 inline = 60 unique images needed. | MAJOR content | 6-8 hr |
 | 10 | Real Adobe Stock / Mixkit assets from Drive (replaces placeholder hero video). | MINOR brand | 1 hr once Drive is reachable |
 

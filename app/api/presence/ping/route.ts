@@ -15,7 +15,7 @@ import { limiters, requestIp } from "@/lib/rate-limit";
  */
 function derivePresenceKey(sid: string, ip: string): string {
   const h = createHash("sha256");
-  h.update("vyrek:presence:");
+  h.update("suth:presence:");
   h.update(sid);
   h.update(":");
   h.update(ip);

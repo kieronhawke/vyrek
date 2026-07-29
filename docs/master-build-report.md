@@ -1,9 +1,9 @@
-# Master Build Report — Vyrek autonomous run (Stages 1-15)
+# Master Build Report — Suth Performance autonomous run (Stages 1-15)
 
 **Generated:** 24 May 2026
 **Branch:** main
 **Final commit:** see `git log -1`
-**Live:** https://vyrek.vercel.app
+**Live:** https://suthperformance.com
 **Reporting standard:** honest. Where something is incomplete or
 deferred, it is named as such with the exact thing that's missing.
 
@@ -181,7 +181,7 @@ Word count targets in parentheses.
 | Playwright suite at 4 viewports | spec asked 4: 375, 390, 768, 1440. We have 375/390/414 + 1280/1440/1920 from prior sweeps. **Tablet 768 viewport not yet captured** | PARTIAL |
 | 200 sessions (8 personas × 25) | **Executed today**: 200 sessions, 228s wall, 0 console errors, 0 failed requests. Per-persona report at `docs/stress-test-report-200.md` | DONE |
 | Interactive flow tests | Quiz happy path + partner application paths covered by stress test runner | DONE |
-| Heuristic UX review | `docs/heuristic-ux-review.md` — 10 Nielsen heuristics + Vyrek-specific lenses, 0 critical / 5 major / 12 minor | DONE |
+| Heuristic UX review | `docs/heuristic-ux-review.md` — 10 Nielsen heuristics + Suth Performance-specific lenses, 0 critical / 5 major / 12 minor | DONE |
 | Definition of Done checklist | Covered in this report | DONE |
 
 ### Stage 15 — Master report

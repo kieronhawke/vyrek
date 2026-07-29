@@ -1,4 +1,4 @@
--- Vyrek admin observability + partner attribution depth (Phase B3+).
+-- Suth Performance admin observability + partner attribution depth (Phase B3+).
 -- Idempotent.
 
 -- ─── partner_clicks ─────────────────────────────────────

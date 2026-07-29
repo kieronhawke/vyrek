@@ -50,7 +50,7 @@ export function DatedWeeklyPlan() {
     <RevealOnView
       as="section"
       aria-labelledby="dated-week-heading"
-      className="border-t border-vyrek-border-subtle py-24 md:py-32"
+      className="border-t border-suth-border-subtle py-24 md:py-32"
     >
       <Container>
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
@@ -59,11 +59,11 @@ export function DatedWeeklyPlan() {
             <Eyebrow>Your week</Eyebrow>
             <SplitHeading
               id="dated-week-heading"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
             >
               A dated weekly plan, built around your life.
             </SplitHeading>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 max-w-md text-base leading-relaxed text-suth-text-secondary md:text-lg">
               Every Sunday your next seven days appear. Hyrox-specific
               sessions, your equipment, your time. Open the app, see today,
               hit it, log it.
@@ -72,7 +72,7 @@ export function DatedWeeklyPlan() {
 
           {/* Phone mockup */}
           <div className="mx-auto w-full max-w-[320px]">
-            <div className="relative aspect-[9/19] overflow-hidden rounded-[44px] border border-vyrek-border-strong bg-vyrek-elevated shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
+            <div className="relative aspect-[9/19] overflow-hidden rounded-[44px] border border-suth-border-strong bg-suth-elevated shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
               {/* Notch */}
               <div className="absolute left-1/2 top-2.5 z-10 h-6 w-24 -translate-x-1/2 rounded-full bg-black" />
 
@@ -81,7 +81,7 @@ export function DatedWeeklyPlan() {
                   <Eyebrow bare>WEEK 4</Eyebrow>
                   <Eyebrow bare>27 MAY, 02 JUN</Eyebrow>
                 </div>
-                <h3 className="text-2xl font-black tracking-[-0.04em] text-vyrek-text">
+                <h3 className="text-2xl font-black tracking-[-0.04em] text-suth-text">
                   Your week
                 </h3>
 
@@ -97,13 +97,13 @@ export function DatedWeeklyPlan() {
                         duration: 0.5,
                         ease: [0.16, 1, 0.3, 1],
                       }}
-                      className={`relative rounded-md border bg-vyrek-overlay px-3 py-2.5 ${
+                      className={`relative rounded-md border bg-suth-overlay px-3 py-2.5 ${
                         w.isToday
-                          ? "border-vyrek-accent/60 bg-vyrek-accent/[0.06]"
-                          : "border-vyrek-border-subtle"
+                          ? "border-suth-accent/60 bg-suth-accent/[0.06]"
+                          : "border-suth-border-subtle"
                       }`}
                     >
-                      <div className="flex items-baseline justify-between text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                      <div className="flex items-baseline justify-between text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                         <span className="tabular-nums">
                           {w.day}, {w.date}
                         </span>
@@ -112,8 +112,8 @@ export function DatedWeeklyPlan() {
                       <p
                         className={`mt-1.5 text-sm font-medium ${
                           w.isRest
-                            ? "text-vyrek-text-tertiary"
-                            : "text-vyrek-text"
+                            ? "text-suth-text-tertiary"
+                            : "text-suth-text"
                         }`}
                       >
                         {w.title}
@@ -127,7 +127,7 @@ export function DatedWeeklyPlan() {
                             repeat: Infinity,
                             ease: "easeInOut",
                           }}
-                          className="absolute right-2.5 top-2.5 size-1.5 rounded-full bg-vyrek-accent"
+                          className="absolute right-2.5 top-2.5 size-1.5 rounded-full bg-suth-accent"
                         />
                       ) : null}
                     </motion.li>

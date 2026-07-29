@@ -15,7 +15,7 @@ const EXCLUDE = [
   "pnpm-lock",
   "package-lock",
   // Brief docs and historical reports preserve their own dashes.
-  "docs/vyrek-",
+  "docs/suth-",
   "docs/landing-audit",
   "docs/NIGHT-OF",
   "scripts/audit-shots",

@@ -7,9 +7,9 @@ type Size = "sm" | "md" | "lg";
 
 const toneClasses: Record<Tone, string> = {
   accent:
-    "bg-vyrek-accent text-[#0A0A0A] hover:bg-vyrek-accent-hover active:scale-[0.98]",
+    "bg-suth-accent text-[#0A0A0A] hover:bg-suth-accent-hover active:scale-[0.98]",
   ghost:
-    "border border-vyrek-border bg-transparent text-vyrek-text hover:bg-vyrek-elevated active:scale-[0.98]",
+    "border border-suth-border bg-transparent text-suth-text hover:bg-suth-elevated active:scale-[0.98]",
 };
 
 const sizeClasses: Record<Size, string> = {
@@ -19,7 +19,7 @@ const sizeClasses: Record<Size, string> = {
 };
 
 const baseClasses =
-  "inline-flex items-center justify-center gap-2 rounded-pill font-medium tracking-tight transition-[background,transform,opacity] duration-fast ease-out outline-none focus-visible:ring-2 focus-visible:ring-vyrek-accent focus-visible:ring-offset-2 focus-visible:ring-offset-vyrek-base disabled:pointer-events-none disabled:opacity-50";
+  "inline-flex items-center justify-center gap-2 rounded-pill font-medium tracking-tight transition-[background,transform,opacity] duration-fast ease-out outline-none focus-visible:ring-2 focus-visible:ring-suth-accent focus-visible:ring-offset-2 focus-visible:ring-offset-suth-base disabled:pointer-events-none disabled:opacity-50";
 
 type CtaButtonAsLink = {
   href: string;

@@ -23,7 +23,7 @@ import {
  *   2. **GitHub commit**, if `GITHUB_TOKEN` + `GITHUB_REPO` env vars are
  *      set, the route uses the GitHub Contents API to commit the new MDX
  *      file directly to the main branch (or a draft branch if
- *      `VYREK_BOT_BRANCH` is set). This triggers a Vercel deploy.
+ *      `SUTH_BOT_BRANCH` is set). This triggers a Vercel deploy.
  *
  *   3. **Slack notification**, if `SLACK_WEBHOOK_URL` is set, posts a
  *      summary to Slack so editors see what was generated.
@@ -54,7 +54,7 @@ async function commitToGitHub(
 ): Promise<{ ok: boolean; sha?: string; error?: string }> {
   const token = process.env.GITHUB_TOKEN;
   const repo = process.env.GITHUB_REPO; // e.g. "kieronhawke/vyrek"
-  const branch = process.env.VYREK_BOT_BRANCH ?? "main";
+  const branch = process.env.SUTH_BOT_BRANCH ?? "main";
   if (!token || !repo) {
     return { ok: false, error: "GITHUB_TOKEN or GITHUB_REPO not set" };
   }
@@ -93,7 +93,7 @@ async function notifySlack(generated: Generated[], todayLabel: string) {
       `• *${g.milestone}* · ${g.event} → \`content/blog/${g.slug}.mdx\`` +
       (g.github ? ` (GitHub: ${g.github.ok ? "✅": "❌ " + g.github.error})`: ""),
   );
-  const text = `*Vyrek race-coverage bot* (${todayLabel})\n${lines.join("\n")}`;
+  const text = `*Suth Performance race-coverage bot* (${todayLabel})\n${lines.join("\n")}`;
   try {
     await fetch(url, {
       method: "POST",
@@ -129,7 +129,7 @@ export async function GET(req: Request) {
   const dateParam = url.searchParams.get("date");
   const today = dateParam ? new Date(dateParam): new Date();
   const todayLabel = today.toISOString().slice(0, 10);
-  const autoCommit = process.env.VYREK_BOT_AUTOPUBLISH === "true";
+  const autoCommit = process.env.SUTH_BOT_AUTOPUBLISH === "true";
 
   const generated: Generated[] = [];
 

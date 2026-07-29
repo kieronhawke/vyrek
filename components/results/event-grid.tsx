@@ -10,8 +10,8 @@ export function EventGrid({
 }) {
   if (events.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-vyrek-border bg-vyrek-elevated/30 p-10 text-center">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+      <div className="rounded-2xl border border-dashed border-suth-border bg-suth-elevated/30 p-10 text-center">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           {emptyLabel}
         </p>
       </div>
@@ -37,10 +37,10 @@ export function EventCarousel({
   return (
     <section className="mt-12">
       <header className="mb-4 flex items-baseline justify-between">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+        <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           [ {label} ]
         </h2>
-        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           {events.length} {events.length === 1 ? "event" : "events"}
         </span>
       </header>

@@ -59,7 +59,7 @@ try {
     // Skip cookie banner by pre-seeding consent in localStorage on the origin.
     await page.goto(BASE, { waitUntil: "domcontentloaded", timeout: 15000 });
     await page.evaluate((value) => {
-      window.localStorage.setItem("vyrek:consent:v1", value);
+      window.localStorage.setItem("suth:consent:v1", value);
     }, CONSENT_VALUE);
 
     for (const route of ROUTES) {

@@ -10,7 +10,7 @@ import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, "audit-shots");
-const BASE = process.env.PLAYWRIGHT_BASE_URL ?? "https://vyrek.vercel.app";
+const BASE = process.env.PLAYWRIGHT_BASE_URL ?? "https://suthperformance.com";
 
 const PAGES = [
   { name: "landing", path: "/" },

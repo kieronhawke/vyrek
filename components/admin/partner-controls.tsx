@@ -80,12 +80,12 @@ export function PartnerControls({
 
   return (
     <Card>
-      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
         Admin controls
       </p>
 
       <div className="mt-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
           Tier
         </p>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -99,8 +99,8 @@ export function PartnerControls({
                 disabled={pending}
                 className={
                   active
-                    ? "inline-flex h-9 items-center rounded-pill border border-vyrek-accent bg-vyrek-accent/10 px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-accent"
-                    : "inline-flex h-9 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-secondary hover:text-vyrek-text disabled:opacity-50"
+                    ? "inline-flex h-9 items-center rounded-pill border border-suth-accent bg-suth-accent/10 px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-accent"
+                    : "inline-flex h-9 items-center rounded-pill border border-suth-border bg-suth-elevated px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-secondary hover:text-suth-text disabled:opacity-50"
                 }
               >
                 {t}
@@ -110,18 +110,18 @@ export function PartnerControls({
         </div>
       </div>
 
-      <div className="mt-6 border-t border-vyrek-border-subtle pt-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+      <div className="mt-6 border-t border-suth-border-subtle pt-4">
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
           Payouts
         </p>
-        <p className="mt-2 text-sm text-vyrek-text-secondary">
-          Pending balance: <span className="text-vyrek-text tabular-nums">{gbp(pendingPayoutPence)}</span>
+        <p className="mt-2 text-sm text-suth-text-secondary">
+          Pending balance: <span className="text-suth-text tabular-nums">{gbp(pendingPayoutPence)}</span>
         </p>
         <button
           type="button"
           onClick={onQueuePayout}
           disabled={pending || pendingPayoutPence < 5000}
-          className="mt-3 inline-flex h-10 items-center rounded-pill bg-vyrek-accent px-4 text-sm font-semibold text-[#0A0A0A] hover:bg-vyrek-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
+          className="mt-3 inline-flex h-10 items-center rounded-pill bg-suth-accent px-4 text-sm font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
         >
           {pendingPayoutPence < 5000
             ? "Below £50 minimum"
@@ -129,8 +129,8 @@ export function PartnerControls({
         </button>
       </div>
 
-      <div className="mt-6 border-t border-vyrek-border-subtle pt-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+      <div className="mt-6 border-t border-suth-border-subtle pt-4">
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
           Account
         </p>
         {suspended ? (

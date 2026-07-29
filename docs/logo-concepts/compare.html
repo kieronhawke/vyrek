@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suth Performance — Logo Concepts</title>
+<style>
+  :root { --chartreuse: #A3E635; --dark: #0A0A0A; --ink: #FAFAFA; }
+  * { margin: 0; box-sizing: border-box; }
+  body { background: #141414; color: #FAFAFA; font-family: ui-monospace, "Geist Mono", SFMono-Regular, Menlo, monospace; padding: 48px; }
+  h1 { font-family: ui-sans-serif, system-ui; font-weight: 800; font-size: 28px; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .sub { color: #888; font-size: 13px; margin-bottom: 40px; }
+  h2 { font-size: 13px; letter-spacing: 0.2em; color: var(--chartreuse); margin: 56px 0 16px; text-transform: uppercase; }
+  .concept { border: 1px solid #2a2a2a; border-radius: 8px; overflow: hidden; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; }
+  .panel { padding: 56px 40px; display: flex; align-items: center; justify-content: center; min-height: 220px; }
+  .panel.dark { background: var(--dark); }
+  .panel.light { background: #fff; }
+  .strip { display: flex; align-items: center; gap: 40px; padding: 16px 24px; border-top: 1px solid #2a2a2a; font-size: 11px; color: #777; }
+  .navdemo { display: flex; align-items: center; height: 56px; padding: 0 24px; border-top: 1px solid #2a2a2a; }
+  .navdemo.dark { background: var(--dark); }
+  .navdemo.light { background: #fff; }
+  .fav { display: flex; align-items: center; gap: 18px; padding: 18px 24px; border-top: 1px solid #2a2a2a; }
+  .fav.dark { background: var(--dark); } .fav.light { background: #fff; }
+  .fav span { font-size: 10px; color: #777; }
+  img { display: block; }
+  .label { font-size: 11px; color: #999; padding: 10px 24px; background: #1a1a1a; border-top: 1px solid #2a2a2a; letter-spacing: 0.12em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<h1>Suth Performance — logo concepts</h1>
+<p class="sub">Oswald 700 wordmark (existing brand display face) with Geist Mono spaced caps. Chartreuse #A3E635, editorial dark #0A0A0A.</p>
+
+<h2>Concept A — stacked lockup</h2>
+<div class="concept">
+  <div class="row">
+    <div class="panel dark"><img src="concept-a-dark.svg" width="360" alt="Concept A on dark"></div>
+    <div class="panel light"><img src="concept-a-light.svg" width="360" alt="Concept A on light"></div>
+  </div>
+  <div class="label">Nav size (24px logo height)</div>
+  <div class="navdemo dark"><img src="concept-a-dark.svg" height="46" alt=""></div>
+  <div class="navdemo light"><img src="concept-a-light.svg" height="46" alt=""></div>
+  <div class="label">Favicon sizes (16 / 32 / 48) — wordmark shown for honesty; monogram recommended at these sizes</div>
+  <div class="fav dark"><img src="concept-a-dark.svg" width="16"><img src="concept-a-dark.svg" width="32"><img src="concept-a-dark.svg" width="48"><span>SUTH stack at 16/32/48px</span></div>
+</div>
+
+<h2>Concept B — chartreuse terminal</h2>
+<div class="concept">
+  <div class="row">
+    <div class="panel dark"><img src="concept-b-dark.svg" width="380" alt="Concept B on dark"></div>
+    <div class="panel light"><img src="concept-b-light.svg" width="380" alt="Concept B on light"></div>
+  </div>
+  <div class="label">Nav size</div>
+  <div class="navdemo dark"><img src="concept-b-dark.svg" height="46" alt=""></div>
+  <div class="navdemo light"><img src="concept-b-light.svg" height="46" alt=""></div>
+  <div class="label">Favicon sizes (16 / 32 / 48)</div>
+  <div class="fav dark"><img src="concept-b-dark.svg" width="16"><img src="concept-b-dark.svg" width="32"><img src="concept-b-dark.svg" width="48"><span>stack at 16/32/48px</span></div>
+</div>
+
+<h2>Concept C — S monogram + lockup</h2>
+<div class="concept">
+  <div class="row">
+    <div class="panel dark"><img src="concept-c-dark.svg" width="440" alt="Concept C on dark"></div>
+    <div class="panel light"><img src="concept-c-light.svg" width="440" alt="Concept C on light"></div>
+  </div>
+  <div class="label">Nav size</div>
+  <div class="navdemo dark"><img src="concept-c-dark.svg" height="42" alt=""></div>
+  <div class="navdemo light"><img src="concept-c-light.svg" height="42" alt=""></div>
+  <div class="label">Monogram at favicon sizes (16 / 32 / 48 / 96)</div>
+  <div class="fav dark"><img src="concept-c-mark-dark.svg" width="16"><img src="concept-c-mark-dark.svg" width="32"><img src="concept-c-mark-dark.svg" width="48"><img src="concept-c-mark-dark.svg" width="96"><span>S mark, direct successor to the current V mark</span></div>
+  <div class="fav light"><img src="concept-c-mark-light.svg" width="16"><img src="concept-c-mark-light.svg" width="32"><img src="concept-c-mark-light.svg" width="48"><img src="concept-c-mark-light.svg" width="96"><span>light background</span></div>
+</div>
+
+</body>
+</html>

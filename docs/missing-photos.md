@@ -91,7 +91,7 @@ These are the LCP elements. Every visitor sees one within 1.5 s.
 
 - Current: `v2/testimonial-sarah.jpg` (Pexels — female runner in her thirties on a UK street)
 - §1.2 verdict: **replace** when a real consented member quote + photo lands
-- Required subject: real consented Vyrek graduate, ideally a real Hyrox finish photo of a real woman in her 30s, Bristol if possible
+- Required subject: real consented Suth Performance graduate, ideally a real Hyrox finish photo of a real woman in her 30s, Bristol if possible
 - Required composition: tight 5:4 portrait or landscape with face dominant
 - Required mood: post-finish satisfaction, not stocky-smile
 - Sourcing: contact existing first-race members for consented quote + finish-line photo; ASA/CAP code 3.7 requires consent docs on file before going off the "Pre-launch · illustrative" badge
@@ -115,7 +115,7 @@ Used across `/programmes`, `/quiz?program=X`, `/plans/[slug]`, blog post hero cl
 ### Programme — First Race
 
 - Current: `v2/programme-first-race.jpg` (Pexels female runner outdoor track golden hour) — used **20×** across the site
-- §1.2 verdict: **keep** (highest use, currently the most-recognisable Vyrek photo) — **replace** in a future pass for a real first-time-finisher hero shot
+- §1.2 verdict: **keep** (highest use, currently the most-recognisable Suth Performance photo) — **replace** in a future pass for a real first-time-finisher hero shot
 - Required subject: real first-time Hyrox finisher crossing the line, OR a beginner doing a sled push for the first time
 - Required composition: landscape, room for the programme name across the top
 - Required mood: aspirational, surprised-by-own-effort — the "I did it" beat
@@ -233,7 +233,7 @@ Interstitials are short-exposure (~2s) screens that pace the quiz. Three slots e
 ### Reassurance 1, "We'll keep this short."
 
 - Current: `v2/quiz-interstitial-1.jpg` (Pexels — calm pre-run, shoes)
-- §1.2 verdict: **keep**, **replace** with a Vyrek-branded warm-up scene
+- §1.2 verdict: **keep**, **replace** with a Suth Performance-branded warm-up scene
 - Required mood: low-stakes, "you're not committed to anything yet"
 
 ### Reassurance 2, "What's coming next" (3 tiles)
@@ -304,7 +304,7 @@ Brief §3.6 says: "Empty states have a custom empty state with illustrative phot
 
 ### Station guides (9 stations + Roxzone)
 
-- Required: per-station hero video OR still — Vyrek already has some coach video assets
+- Required: per-station hero video OR still — Suth Performance already has some coach video assets
 - Cross-reference with `lib/video-assets.ts` for what's already available
 
 ---

@@ -10,7 +10,7 @@ import { RevealOnView } from "@/components/shared/reveal-on-view";
 import { siteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
-  title: "Hyrox programmes. 12-week plans by an Elite 15 coach · Vyrek",
+  title: "Hyrox programmes. 12-week plans by an Elite 15 coach · Suth Performance",
   description:
     "Four 12-week Hyrox programmes: First Race, Sub-90, Doubles, Pro. Pick where you are, we'll meet you there. Built by an Elite 15 coach.",
   alternates: { canonical: "/programmes" },
@@ -191,11 +191,11 @@ const courseListLd = {
     position: i + 1,
     item: {
       "@type": "Course",
-      name: `Vyrek ${p.name} Hyrox programme`,
+      name: `Suth Performance ${p.name} Hyrox programme`,
       description: p.audience,
       provider: {
         "@type": "Organization",
-        name: "Vyrek",
+        name: "Suth Performance",
         url: siteUrl(),
       },
       hasCourseInstance: {
@@ -230,11 +230,11 @@ export default function ProgrammesPage() {
               <Eyebrow>Programmes</Eyebrow>
               <SplitHeading
                 as="h1"
-                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
               >
                 Four programmes. One pathway.
               </SplitHeading>
-              <p className="mt-5 text-base text-vyrek-text-secondary md:text-lg">
+              <p className="mt-5 text-base text-suth-text-secondary md:text-lg">
                 Pick where you are. We&apos;ll meet you there.
               </p>
             </div>
@@ -246,7 +246,7 @@ export default function ProgrammesPage() {
             key={p.slug}
             id={p.slug}
             aria-labelledby={`${p.slug}-heading`}
-            className="border-t border-vyrek-border-subtle py-20 md:py-28"
+            className="border-t border-suth-border-subtle py-20 md:py-28"
           >
             <Container>
               {/* Above-the-fold: hero image full-bleed on mobile, side-by-side on desktop */}
@@ -259,11 +259,11 @@ export default function ProgrammesPage() {
                   <Eyebrow>{p.tag}</Eyebrow>
                   <h2
                     id={`${p.slug}-heading`}
-                    className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+                    className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
                   >
                     {p.name}
                   </h2>
-                  <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+                  <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                     {p.audience}
                   </p>
 
@@ -275,7 +275,7 @@ export default function ProgrammesPage() {
                 </RevealOnView>
 
                 <RevealOnView delay={0.08}>
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated md:sticky md:top-32">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-suth-border bg-suth-elevated md:sticky md:top-32">
                     <Image
                       src={p.image}
                       alt={`${p.name} programme imagery, ${p.audience}`}
@@ -286,9 +286,9 @@ export default function ProgrammesPage() {
                     />
                     <div
                       aria-hidden
-                      className="absolute inset-0 bg-gradient-to-t from-vyrek-base/80 via-vyrek-base/20 to-transparent"
+                      className="absolute inset-0 bg-gradient-to-t from-suth-base/80 via-suth-base/20 to-transparent"
                     />
-                    <p className="absolute bottom-6 left-6 font-mono text-xs font-medium uppercase tracking-[0.18em] text-vyrek-text">
+                    <p className="absolute bottom-6 left-6 font-mono text-xs font-medium uppercase tracking-[0.18em] text-suth-text">
                       [ {p.tag} ]
                     </p>
                   </div>
@@ -300,12 +300,12 @@ export default function ProgrammesPage() {
                 <div className="grid gap-10 md:grid-cols-2 md:gap-16">
                   <RevealOnView delay={0.16}>
                     <Eyebrow>Who this is for</Eyebrow>
-                    <ul className="mt-4 space-y-2 text-base text-vyrek-text-secondary md:text-lg">
+                    <ul className="mt-4 space-y-2 text-base text-suth-text-secondary md:text-lg">
                       {p.who.map((line) => (
                         <li key={line} className="flex items-start gap-3">
                           <span
                             aria-hidden
-                            className="mt-2.5 size-1 shrink-0 rounded-full bg-vyrek-accent"
+                            className="mt-2.5 size-1 shrink-0 rounded-full bg-suth-accent"
                           />
                           <span>{line}</span>
                         </li>
@@ -315,12 +315,12 @@ export default function ProgrammesPage() {
 
                   <RevealOnView delay={0.24}>
                     <Eyebrow>What you&apos;ll do</Eyebrow>
-                    <ul className="mt-4 space-y-2 text-base text-vyrek-text-secondary md:text-lg">
+                    <ul className="mt-4 space-y-2 text-base text-suth-text-secondary md:text-lg">
                       {p.doing.map((line) => (
                         <li key={line} className="flex items-start gap-3">
                           <span
                             aria-hidden
-                            className="mt-2.5 size-1 shrink-0 rounded-full bg-vyrek-accent"
+                            className="mt-2.5 size-1 shrink-0 rounded-full bg-suth-accent"
                           />
                           <span>{line}</span>
                         </li>
@@ -340,16 +340,16 @@ export default function ProgrammesPage() {
                       {p.sampleWeek.map((d) => (
                         <li
                           key={d.day}
-                          className="flex flex-col gap-1 rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-3"
+                          className="flex flex-col gap-1 rounded-md border border-suth-border-subtle bg-suth-elevated p-3"
                         >
-                          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+                          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
                             {d.day}
                           </span>
-                          <span className="text-sm font-medium leading-tight text-vyrek-text">
+                          <span className="text-sm font-medium leading-tight text-suth-text">
                             {d.type}
                           </span>
                           {d.duration ? (
-                            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-vyrek-text-tertiary tabular-nums">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-suth-text-tertiary tabular-nums">
                               {d.duration}
                             </span>
                           ) : null}
@@ -363,7 +363,7 @@ export default function ProgrammesPage() {
                 <RevealOnView delay={0.4}>
                   <div className="mt-12 max-w-2xl">
                     <Eyebrow>Outcome</Eyebrow>
-                    <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+                    <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                       {p.outcome}
                     </p>
                   </div>
@@ -375,7 +375,7 @@ export default function ProgrammesPage() {
                     <CtaButton href={`/quiz?program=${p.slug}`} size="md">
                       Start this programme →
                     </CtaButton>
-                    <p className="font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                    <p className="font-mono text-xs uppercase tracking-[0.18em] text-suth-text-tertiary">
                       12 weeks · Recalibrates every Sunday
                     </p>
                   </div>

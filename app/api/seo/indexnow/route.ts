@@ -12,16 +12,16 @@ export const runtime = "nodejs";
  *  2. Set INDEXNOW_KEY env var on Vercel
  *
  * Call as part of a post-deploy hook or whenever a new blog post lands:
- *   curl -X POST https://vyrek.com/api/seo/indexnow \
+ *   curl -X POST https://suthperformance.com/api/seo/indexnow \
  *     -H 'Content-Type: application/json' \
- *     -d '{"urls":["https://vyrek.com/blog/your-new-post"]}'
+ *     -d '{"urls":["https://suthperformance.com/blog/your-new-post"]}'
  *
  * The endpoint also accepts a GET with no body and submits every blog
  * post + every static route, useful as a one-shot "refresh
  * everything" after a sitemap rebuild.
  */
 
-const HOST = "vyrek.com";
+const HOST = "suthperformance.com";
 
 function indexNowKey(): string | null {
   return process.env.INDEXNOW_KEY?.trim() || null;

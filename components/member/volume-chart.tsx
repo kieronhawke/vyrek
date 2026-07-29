@@ -19,12 +19,12 @@ export function VolumeChart({ data }: { data: WeekVolume[] }) {
   const barW = Math.max(6, colW * 0.6);
 
   return (
-    <figure className="rounded-2xl border border-vyrek-border-subtle bg-vyrek-elevated/60 p-4">
+    <figure className="rounded-2xl border border-suth-border-subtle bg-suth-elevated/60 p-4">
       <figcaption className="flex items-baseline justify-between">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           Weekly load · last {data.length} weeks
         </p>
-        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
           Run · Strength · Stations
         </p>
       </figcaption>

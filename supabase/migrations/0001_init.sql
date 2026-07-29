@@ -1,4 +1,4 @@
--- Vyrek Phase 1 schema (see build-brief v3 §18)
+-- Suth Performance Phase 1 schema (see build-brief v3 §18)
 -- Single migration: creates all tables, indexes, and locks RLS down to
 -- service-role only (Phase 1 writes everything via API routes using the
 -- secret key — no anonymous client-side reads/writes).

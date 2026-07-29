@@ -46,7 +46,7 @@ export async function generateMetadata({
       title,
       description,
       url,
-      siteName: "Vyrek",
+      siteName: "Suth Performance",
       type: "article",
       locale: "en_GB",
     },
@@ -137,45 +137,45 @@ export default async function StationPage({
         <Container>
           <nav
             aria-label="Breadcrumb"
-            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary"
           >
-            <Link href="/" className="hover:text-vyrek-text">
+            <Link href="/" className="hover:text-suth-text">
               Home
             </Link>
             <span aria-hidden className="mx-2">/</span>
-            <Link href="/hyrox/stations" className="hover:text-vyrek-text">
+            <Link href="/hyrox/stations" className="hover:text-suth-text">
               Stations
             </Link>
             <span aria-hidden className="mx-2">/</span>
-            <span className="text-vyrek-text">{s.name}</span>
+            <span className="text-suth-text">{s.name}</span>
           </nav>
 
           <div className="mx-auto max-w-3xl">
             <Eyebrow>Station {String(s.order).padStart(2, "0")} · {s.spec.distance ?? s.spec.reps}</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               Hyrox {s.name}
             </SplitHeading>
-            <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
               {s.oneLiner}
             </p>
 
             <div className="mt-6 inline-flex flex-wrap items-center gap-2">
-              <span className="rounded-pill border border-vyrek-accent/40 bg-vyrek-accent/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-accent">
+              <span className="rounded-pill border border-suth-accent/40 bg-suth-accent/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-accent">
                 Men&apos;s open: {s.spec.mensOpen}
               </span>
-              <span className="rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-secondary">
+              <span className="rounded-pill border border-suth-border bg-suth-elevated px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-secondary">
                 Women&apos;s open: {s.spec.womensOpen}
               </span>
             </div>
           </div>
 
           {/* Goal splits */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>Goal splits</Eyebrow>
-            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
+            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               What good looks like.
             </h2>
             <dl className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -187,15 +187,15 @@ export default async function StationPage({
               ].map(([label, split, sub]) => (
                 <div
                   key={label}
-                  className="rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-4"
+                  className="rounded-md border border-suth-border-subtle bg-suth-elevated p-4"
                 >
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                     {label}
                   </dt>
-                  <dd className="mt-2 text-2xl font-black tracking-[-0.04em] text-vyrek-text">
+                  <dd className="mt-2 text-2xl font-black tracking-[-0.04em] text-suth-text">
                     {split}
                   </dd>
-                  <dd className="mt-1 text-xs text-vyrek-text-secondary">
+                  <dd className="mt-1 text-xs text-suth-text-secondary">
                     {sub}
                   </dd>
                 </div>
@@ -204,21 +204,21 @@ export default async function StationPage({
           </section>
 
           {/* Cues */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>Coaching cues</Eyebrow>
-            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
+            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               What to think about during the {s.name.toLowerCase()}.
             </h2>
             <ol role="list" className="mt-6 space-y-3">
               {s.cues.map((cue, i) => (
                 <li
                   key={i}
-                  className="flex gap-4 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5"
+                  className="flex gap-4 rounded-lg border border-suth-border-subtle bg-suth-elevated p-5"
                 >
-                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
                     0{i + 1}
                   </span>
-                  <p className="flex-1 text-base leading-relaxed text-vyrek-text">
+                  <p className="flex-1 text-base leading-relaxed text-suth-text">
                     {cue}
                   </p>
                 </li>
@@ -227,15 +227,15 @@ export default async function StationPage({
           </section>
 
           {/* Faults */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>Common faults</Eyebrow>
-            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
+            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               What costs time.
             </h2>
-            <ul role="list" className="mt-6 space-y-2 text-base leading-relaxed text-vyrek-text-secondary">
+            <ul role="list" className="mt-6 space-y-2 text-base leading-relaxed text-suth-text-secondary">
               {s.faults.map((f) => (
                 <li key={f} className="flex gap-3">
-                  <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-vyrek-danger" />
+                  <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-suth-danger" />
                   <span>{f}</span>
                 </li>
               ))}
@@ -243,21 +243,21 @@ export default async function StationPage({
           </section>
 
           {/* Drills */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>Training drills</Eyebrow>
-            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
+            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               What to train this week.
             </h2>
             <ul role="list" className="mt-6 space-y-4">
               {s.drills.map((d) => (
                 <li
                   key={d.name}
-                  className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5"
+                  className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5"
                 >
-                  <p className="text-base font-bold text-vyrek-text">
+                  <p className="text-base font-bold text-suth-text">
                     {d.name}
                   </p>
-                  <p className="mt-1 text-sm leading-relaxed text-vyrek-text-secondary">
+                  <p className="mt-1 text-sm leading-relaxed text-suth-text-secondary">
                     {d.detail}
                   </p>
                 </li>
@@ -266,9 +266,9 @@ export default async function StationPage({
           </section>
 
           {/* FAQ */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>FAQ</Eyebrow>
-            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
+            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               {s.name} questions.
             </h2>
             <div className="mt-6">
@@ -277,12 +277,12 @@ export default async function StationPage({
                   <AccordionItem
                     key={i}
                     value={`q-${i}`}
-                    className="border-b border-vyrek-border-subtle last:border-b-0"
+                    className="border-b border-suth-border-subtle last:border-b-0"
                   >
-                    <AccordionTrigger className="py-5 text-left text-base font-medium text-vyrek-text hover:no-underline md:text-lg">
+                    <AccordionTrigger className="py-5 text-left text-base font-medium text-suth-text hover:no-underline md:text-lg">
                       {f.q}
                     </AccordionTrigger>
-                    <AccordionContent className="pb-5 text-base leading-relaxed text-vyrek-text-secondary">
+                    <AccordionContent className="pb-5 text-base leading-relaxed text-suth-text-secondary">
                       {f.a}
                     </AccordionContent>
                   </AccordionItem>
@@ -292,7 +292,7 @@ export default async function StationPage({
           </section>
 
           {/* Next station */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
             <Eyebrow>Up next</Eyebrow>
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {(() => {
@@ -304,12 +304,12 @@ export default async function StationPage({
                     {prev ? (
                       <Link
                         href={`/hyrox/stations/${prev.slug}`}
-                        className="lift-on-hover rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5"
+                        className="lift-on-hover rounded-lg border border-suth-border-subtle bg-suth-elevated p-5"
                       >
-                        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                           ← Previous station
                         </p>
-                        <p className="mt-2 text-base font-bold text-vyrek-text">
+                        <p className="mt-2 text-base font-bold text-suth-text">
                           {prev.name}
                         </p>
                       </Link>
@@ -319,12 +319,12 @@ export default async function StationPage({
                     {next ? (
                       <Link
                         href={`/hyrox/stations/${next.slug}`}
-                        className="lift-on-hover rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5 text-right"
+                        className="lift-on-hover rounded-lg border border-suth-border-subtle bg-suth-elevated p-5 text-right"
                       >
-                        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                           Next station →
                         </p>
-                        <p className="mt-2 text-base font-bold text-vyrek-text">
+                        <p className="mt-2 text-base font-bold text-suth-text">
                           {next.name}
                         </p>
                       </Link>
@@ -336,13 +336,13 @@ export default async function StationPage({
           </section>
 
           {/* CTA */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10 text-center">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10 text-center">
             <Eyebrow>Train it properly</Eyebrow>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-vyrek-text md:text-4xl">
+            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
               Build the {s.name.toLowerCase()} into your plan.
             </h2>
-            <p className="mt-4 text-base text-vyrek-text-secondary">
-              Vyrek programmes include station-specific drills in every week.
+            <p className="mt-4 text-base text-suth-text-secondary">
+              Suth Performance programmes include station-specific drills in every week.
               Three-minute quiz, dated Week 1 before you pay.
             </p>
             <div className="mt-6">

@@ -65,7 +65,7 @@ export async function generateMetadata({
 
   const url = postUrl(post.slug);
   const og = ogImageUrl(post.slug);
-  const title = post.seoTitle ?? `${post.title} | Vyrek Journal`;
+  const title = post.seoTitle ?? `${post.title} | Suth Performance Journal`;
   const description = post.seoDescription ?? post.excerpt;
 
   return {
@@ -74,7 +74,7 @@ export async function generateMetadata({
     alternates: {
       canonical: url,
       types: {
-        "application/rss+xml": [{ url: rssUrl(), title: "Vyrek Journal RSS" }],
+        "application/rss+xml": [{ url: rssUrl(), title: "Suth Performance Journal RSS" }],
       },
     },
     keywords: post.tags,
@@ -83,7 +83,7 @@ export async function generateMetadata({
       title: post.title,
       description,
       url,
-      siteName: "Vyrek",
+      siteName: "Suth Performance",
       type: "article",
       locale: "en_GB",
       publishedTime: new Date(post.publishedAt).toISOString(),
@@ -180,19 +180,19 @@ export default async function BlogPostPage({
             <header className="mx-auto max-w-3xl">
               <Link
                 href={`/blog/category/${post.category}`}
-                className="inline-block font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent transition-colors hover:text-vyrek-accent-hover"
+                className="inline-block font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent transition-colors hover:text-suth-accent-hover"
               >
                 [ {categoryLabel} ]
               </Link>
-              <h1 className="mt-4 text-balance text-3xl font-black leading-[1.1] tracking-[-0.035em] text-vyrek-text md:text-5xl lg:text-6xl">
+              <h1 className="mt-4 text-balance text-3xl font-black leading-[1.1] tracking-[-0.035em] text-suth-text md:text-5xl lg:text-6xl">
                 {post.title}
               </h1>
-              <p className="mt-5 text-balance text-base leading-relaxed text-vyrek-text-secondary md:text-xl">
+              <p className="mt-5 text-balance text-base leading-relaxed text-suth-text-secondary md:text-xl">
                 {post.excerpt}
               </p>
-              <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-vyrek-text-tertiary">
+              <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-suth-text-tertiary">
                 <div className="flex items-center gap-2">
-                  <div className="relative size-7 overflow-hidden rounded-full bg-vyrek-overlay">
+                  <div className="relative size-7 overflow-hidden rounded-full bg-suth-overlay">
                     <Image
                       src={post.author.photo}
                       alt={`Portrait of ${post.author.name}`}
@@ -215,7 +215,7 @@ export default async function BlogPostPage({
             {/* Hero capped at max-h-[60vh] per Stage 1.3 spec so it
                 doesn't dominate the fold on tall desktop viewports.
                 aspect-[16/9] still governs short viewports. */}
-            <div className="relative mx-auto mt-10 aspect-[16/9] max-h-[60vh] w-full max-w-5xl overflow-hidden rounded-lg bg-vyrek-overlay md:mt-14">
+            <div className="relative mx-auto mt-10 aspect-[16/9] max-h-[60vh] w-full max-w-5xl overflow-hidden rounded-lg bg-suth-overlay md:mt-14">
               <Image
                 src={post.heroImage}
                 alt={post.heroAlt}
@@ -260,14 +260,14 @@ export default async function BlogPostPage({
                   <FaqSection faqs={post.faqs} />
                 ): null}
 
-                <div className="mt-12 border-t border-vyrek-border-subtle pt-8">
+                <div className="mt-12 border-t border-suth-border-subtle pt-8">
                   <div className="flex flex-wrap items-center justify-between gap-4">
                     <ShareButtons url={url} title={post.title} />
                     {post.tags.length ? (
                       <ul className="flex flex-wrap items-center gap-2">
                         {post.tags.map((t) => (
                           <li key={t}>
-                            <span className="inline-flex h-8 items-center rounded-pill border border-vyrek-border-subtle px-3 font-mono text-[10px] uppercase tracking-[0.16em] text-vyrek-text-tertiary">
+                            <span className="inline-flex h-8 items-center rounded-pill border border-suth-border-subtle px-3 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
                               #{t}
                             </span>
                           </li>

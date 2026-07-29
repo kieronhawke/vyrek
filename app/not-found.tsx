@@ -46,13 +46,13 @@ export default function NotFound() {
       <main className="pb-24 pt-28 md:pt-36">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
               [ 404 · LOST LAP ]
             </p>
-            <h1 className="mt-4 text-balance text-4xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl lg:text-6xl">
+            <h1 className="mt-4 text-balance text-4xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl lg:text-6xl">
               You took a wrong turn at the wall ball lane.
             </h1>
-            <p className="mt-6 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-6 text-base leading-relaxed text-suth-text-secondary md:text-lg">
               The page you were after isn&apos;t here. Either we moved it, or
               the URL got mangled somewhere. Pick a fresh start below.
             </p>
@@ -66,13 +66,13 @@ export default function NotFound() {
               <li key={trail.href}>
                 <Link
                   href={trail.href}
-                  className="group flex h-full flex-col gap-3 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5 transition-[border,transform] duration-fast ease-out hover:-translate-y-0.5 hover:border-vyrek-border-strong active:scale-[0.995]"
+                  className="group flex h-full flex-col gap-3 rounded-lg border border-suth-border-subtle bg-suth-elevated p-5 transition-[border,transform] duration-fast ease-out hover:-translate-y-0.5 hover:border-suth-border-strong active:scale-[0.995]"
                 >
                   <Eyebrow>{trail.eyebrow}</Eyebrow>
-                  <p className="text-lg font-bold leading-tight tracking-[-0.015em] text-vyrek-text md:text-xl">
+                  <p className="text-lg font-bold leading-tight tracking-[-0.015em] text-suth-text md:text-xl">
                     {trail.label}
                   </p>
-                  <p className="text-sm leading-relaxed text-vyrek-text-secondary">
+                  <p className="text-sm leading-relaxed text-suth-text-secondary">
                     {trail.note}
                   </p>
                 </Link>
@@ -83,7 +83,7 @@ export default function NotFound() {
           <div className="mt-12 text-center">
             <Link
               href="/"
-              className="inline-flex h-12 items-center justify-center rounded-pill bg-vyrek-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,transform] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98]"
+              className="inline-flex h-12 items-center justify-center rounded-pill bg-suth-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,transform] duration-fast ease-out hover:bg-suth-accent-hover active:scale-[0.98]"
             >
               Back to home →
             </Link>

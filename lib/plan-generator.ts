@@ -1,5 +1,5 @@
 /**
- * Vyrek plan generator. Phase 2 / docs/vyrek-phase-d-e-brief.md.
+ * Suth Performance plan generator. Phase 2 / docs/suth-phase-d-e-brief.md.
  *
  * Pure, deterministic functions that build a 7-day Week-1 schedule given
  * the user's quiz answers. Week 1 is what /plan reveals before paywall;
@@ -536,7 +536,7 @@ const BENEFITS: Record<Programme, Benefit[]> = {
     {
       number: "05",
       title: "Community of racers",
-      body: "Train alongside other Vyrek members. Share splits, swap tips, find race partners.",
+      body: "Train alongside other Suth Performance members. Share splits, swap tips, find race partners.",
     },
   ],
   "sub-90": [
@@ -590,7 +590,7 @@ const BENEFITS: Record<Programme, Benefit[]> = {
     {
       number: "05",
       title: "Doubles community",
-      body: "Find new partners or race teams in the Vyrek community.",
+      body: "Find new partners or race teams in the Suth Performance community.",
     },
   ],
   pro: [

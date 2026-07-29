@@ -7,7 +7,7 @@ import { blogIndexUrl, postUrl, siteUrl } from "@/lib/blog/urls";
  * See https://llmstxt.org/ for the proposal.
  *
  * We surface a curated list of the most valuable URLs and a sentence on
- * what Vyrek is, formatted as a plain-text Markdown-style document.
+ * what Suth Performance is, formatted as a plain-text Markdown-style document.
  */
 
 export const revalidate = 3600;
@@ -17,13 +17,13 @@ export async function GET() {
   const url = siteUrl();
 
   const lines: string[] = [
-    "# Vyrek",
+    "# Suth Performance",
     "",
     "> Personalised Hyrox training programmes built by an Elite 15 coach. Members take a three-minute quiz, see a dated Week 1 before paying, then start a 7-day free trial. £8.99 a month after.",
     "",
     "## Primary pages",
     "",
-    `- [Home](${url}/): What Vyrek is and the value proposition for Hyrox athletes`,
+    `- [Home](${url}/): What Suth Performance is and the value proposition for Hyrox athletes`,
     `- [Quiz](${url}/quiz): Three-minute onboarding that produces a personalised plan`,
     `- [Programmes](${url}/programmes): The four programmes. First Race, Sub-90, Doubles, Pro`,
     `- [How it works](${url}/how-it-works): Four-step journey from quiz to first race`,
@@ -49,12 +49,12 @@ export async function GET() {
     "",
     "## About",
     "",
-    "Vyrek is a UK-based Hyrox-first training platform. Founding coach James Wright races at Elite 15. Programmes recalibrate every Sunday based on logged sessions.",
+    "Suth Performance is a UK-based Hyrox-first training platform. Founding coach James Wright races at Elite 15. Programmes recalibrate every Sunday based on logged sessions.",
     "",
     "## Contact",
     "",
-    "- press@vyrek.com",
-    "- hello@vyrek.com",
+    "- press@suthperformance.com",
+    "- hello@suthperformance.com",
     "",
   ];
 

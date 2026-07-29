@@ -86,13 +86,13 @@ export function StickyMobileCta({
     >
       <div className="px-4">
         <div
-          className={`pointer-events-auto rounded-pill border border-vyrek-border bg-vyrek-base/95 px-1 py-1 backdrop-blur-md shadow-[0_-8px_30px_-8px_rgba(0,0,0,0.6)] transition-transform duration-300 ease-out ${
+          className={`pointer-events-auto rounded-pill border border-suth-border bg-suth-base/95 px-1 py-1 backdrop-blur-md shadow-[0_-8px_30px_-8px_rgba(0,0,0,0.6)] transition-transform duration-300 ease-out ${
             visible ? "translate-y-0" : "translate-y-4"
           }`}
         >
           <Link
             href={href}
-            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-pill bg-vyrek-accent px-6 text-base font-semibold uppercase tracking-wide text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vyrek-text"
+            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-pill bg-suth-accent px-6 text-base font-semibold uppercase tracking-wide text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-suth-text"
           >
             {label} →
           </Link>

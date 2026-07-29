@@ -15,15 +15,15 @@ import {
 } from "@/components/ui/accordion";
 
 export const metadata: Metadata = {
-  title: "Partner Programme. Recurring revenue with Vyrek",
+  title: "Partner Programme. Recurring revenue with Suth Performance",
   description:
-    "Earn 30% to 50% lifetime recurring commission referring athletes to Vyrek. Flat tiered rates, monthly BACS payouts, no spammy gimmicks.",
+    "Earn 30% to 50% lifetime recurring commission referring athletes to Suth Performance. Flat tiered rates, monthly BACS payouts, no spammy gimmicks.",
   robots: { index: true, follow: true },
   alternates: { canonical: "/partners" },
   openGraph: {
-    title: "Vyrek Partner Programme. Recurring revenue with Vyrek",
+    title: "Suth Performance Partner Programme. Recurring revenue with Suth Performance",
     description:
-      "30 to 50 percent lifetime recurring commission referring athletes to Vyrek. Monthly BACS payouts. Apply in three minutes.",
+      "30 to 50 percent lifetime recurring commission referring athletes to Suth Performance. Monthly BACS payouts. Apply in three minutes.",
     url: "/partners",
     type: "website",
     images: [
@@ -31,13 +31,13 @@ export const metadata: Metadata = {
         url: "/media/images/v2/partners-coach-warm.jpg",
         width: 1200,
         height: 630,
-        alt: "Vyrek coach in a gym session",
+        alt: "Suth Performance coach in a gym session",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vyrek Partner Programme",
+    title: "Suth Performance Partner Programme",
     description:
       "Earn 30 to 50 percent lifetime commission. Monthly BACS payouts.",
     images: ["/media/images/v2/partners-coach-warm.jpg"],
@@ -119,7 +119,7 @@ const FAQS = [
   },
   {
     q: "Can I run paid ads?",
-    a: "Yes, with two rules. No bidding on Vyrek brand terms (Google, Meta). No misleading creative claiming results we have not made. Send us your creative if you are unsure.",
+    a: "Yes, with two rules. No bidding on Suth Performance brand terms (Google, Meta). No misleading creative claiming results we have not made. Send us your creative if you are unsure.",
   },
   {
     q: "Can I share my link in private communities?",
@@ -131,7 +131,7 @@ const FAQS = [
   },
   {
     q: "Why no flat bounty?",
-    a: "Because flat bounties incentivise volume over fit. Recurring rewards aligning your audience to Vyrek long-term. The partners who do best on Vyrek build steady, trustworthy referrals over months, not one-off campaigns.",
+    a: "Because flat bounties incentivise volume over fit. Recurring rewards aligning your audience to Suth Performance long-term. The partners who do best on Suth Performance build steady, trustworthy referrals over months, not one-off campaigns.",
   },
 ];
 
@@ -143,7 +143,7 @@ export default function PartnersPage() {
         {/* Hero band */}
         <section
           aria-labelledby="partners-heading"
-          className="relative isolate flex min-h-[68svh] flex-col justify-end overflow-hidden bg-vyrek-base pb-16 pt-[max(7rem,calc(var(--safe-top)+6rem))]"
+          className="relative isolate flex min-h-[68svh] flex-col justify-end overflow-hidden bg-suth-base pb-16 pt-[max(7rem,calc(var(--safe-top)+6rem))]"
         >
           <div aria-hidden className="absolute inset-0 -z-10">
             <Image
@@ -154,7 +154,7 @@ export default function PartnersPage() {
               sizes="100vw"
               className="object-cover grayscale"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-vyrek-base/70 via-vyrek-base/55 to-vyrek-base" />
+            <div className="absolute inset-0 bg-gradient-to-b from-suth-base/70 via-suth-base/55 to-suth-base" />
           </div>
           <Container>
             <Eyebrow>Partner Programme</Eyebrow>
@@ -164,11 +164,11 @@ export default function PartnersPage() {
             <SplitHeading
               id="partners-heading"
               as="h1"
-              className="mt-4 max-w-3xl text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 max-w-3xl text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
-              Start making recurring revenue with Vyrek.
+              Start making recurring revenue with Suth Performance.
             </SplitHeading>
-            <p className="mt-5 max-w-2xl text-base text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 max-w-2xl text-base text-suth-text-secondary md:text-lg">
               Real partners earn a real percentage of every subscription.
               For as long as the athlete stays.
             </p>
@@ -179,7 +179,7 @@ export default function PartnersPage() {
               <Link
                 href="/partners/dashboard"
                 prefetch={false}
-                className="inline-flex h-12 items-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-elevated px-5 text-sm font-medium text-vyrek-text transition-colors hover:border-vyrek-border-strong"
+                className="inline-flex h-12 items-center gap-2 rounded-pill border border-suth-border bg-suth-elevated px-5 text-sm font-medium text-suth-text transition-colors hover:border-suth-border-strong"
               >
                 Partner login
               </Link>
@@ -191,7 +191,7 @@ export default function PartnersPage() {
             concrete claims in plain boxes, each load-bearing. */}
         <section
           aria-labelledby="earnings-heading"
-          className="border-t border-vyrek-border-subtle py-20 md:py-24"
+          className="border-t border-suth-border-subtle py-20 md:py-24"
         >
           <Container>
             <h2 id="earnings-heading" className="sr-only">
@@ -201,38 +201,38 @@ export default function PartnersPage() {
               role="list"
               className="mx-auto grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-3 md:gap-5"
             >
-              <li className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 md:p-7">
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+              <li className="rounded-lg border border-suth-border bg-suth-elevated p-6 md:p-7">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
                   [ Worked example ]
                 </p>
-                <p className="mt-4 text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl lg:text-4xl">
-                  £249<span className="text-vyrek-text-tertiary">/mo</span>
+                <p className="mt-4 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-3xl lg:text-4xl">
+                  £249<span className="text-suth-text-tertiary">/mo</span>
                 </p>
-                <p className="mt-3 text-sm text-vyrek-text-secondary">
+                <p className="mt-3 text-sm text-suth-text-secondary">
                   100 active referrals on the base 30% tier. Recurring as
                   long as they stay. See the full breakdown below.
                 </p>
               </li>
-              <li className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 md:p-7">
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+              <li className="rounded-lg border border-suth-border bg-suth-elevated p-6 md:p-7">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
                   [ Commission ]
                 </p>
-                <p className="mt-4 text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl lg:text-4xl">
-                  30-50%<span className="text-vyrek-text-tertiary"> lifetime</span>
+                <p className="mt-4 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-3xl lg:text-4xl">
+                  30-50%<span className="text-suth-text-tertiary"> lifetime</span>
                 </p>
-                <p className="mt-3 text-sm text-vyrek-text-secondary">
+                <p className="mt-3 text-sm text-suth-text-secondary">
                   Of every subscription month your referral pays. For as
                   long as they stay. No flat sign-up bounty.
                 </p>
               </li>
-              <li className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 md:p-7">
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+              <li className="rounded-lg border border-suth-border bg-suth-elevated p-6 md:p-7">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
                   [ Payouts ]
                 </p>
-                <p className="mt-4 text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl lg:text-4xl">
+                <p className="mt-4 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-3xl lg:text-4xl">
                   Monthly BACS
                 </p>
-                <p className="mt-3 text-sm text-vyrek-text-secondary">
+                <p className="mt-3 text-sm text-suth-text-secondary">
                   Paid the first week of every month, once you cross £50.
                   Below that the balance rolls.
                 </p>
@@ -247,14 +247,14 @@ export default function PartnersPage() {
             the photo carries narrative, not just decoration. */}
         <section
           aria-labelledby="who-heading"
-          className="border-t border-vyrek-border-subtle py-20 md:py-24"
+          className="border-t border-suth-border-subtle py-20 md:py-24"
         >
           <Container>
             <div className="mx-auto max-w-3xl text-center">
               <Eyebrow>Who&apos;s earning</Eyebrow>
               <h2
                 id="who-heading"
-                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
               >
                 Coaches, creators, and community leads.
               </h2>
@@ -275,9 +275,9 @@ export default function PartnersPage() {
                 return (
                   <li
                     key={f.tag}
-                    className="overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated"
+                    className="overflow-hidden rounded-lg border border-suth-border bg-suth-elevated"
                   >
-                    <div className="relative aspect-[5/4] overflow-hidden bg-vyrek-overlay">
+                    <div className="relative aspect-[5/4] overflow-hidden bg-suth-overlay">
                       <Image
                         src={portrait}
                         alt=""
@@ -287,13 +287,13 @@ export default function PartnersPage() {
                       />
                       <div
                         aria-hidden
-                        className="absolute inset-0 bg-gradient-to-t from-vyrek-elevated/80 via-transparent to-transparent"
+                        className="absolute inset-0 bg-gradient-to-t from-suth-elevated/80 via-transparent to-transparent"
                       />
-                      <span className="absolute bottom-3 left-4 inline-flex items-center rounded-pill border border-vyrek-border bg-vyrek-base/85 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text">
+                      <span className="absolute bottom-3 left-4 inline-flex items-center rounded-pill border border-suth-border bg-suth-base/85 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text">
                         {f.tag}
                       </span>
                     </div>
-                    <p className="p-5 text-sm leading-relaxed text-vyrek-text-secondary md:text-base">
+                    <p className="p-5 text-sm leading-relaxed text-suth-text-secondary md:text-base">
                       {f.body}
                     </p>
                   </li>
@@ -306,14 +306,14 @@ export default function PartnersPage() {
         {/* How it works */}
         <section
           aria-labelledby="how-heading"
-          className="border-t border-vyrek-border-subtle py-24 md:py-32"
+          className="border-t border-suth-border-subtle py-24 md:py-32"
         >
           <Container>
             <div className="mx-auto max-w-3xl">
               <Eyebrow>How it works</Eyebrow>
               <h2
                 id="how-heading"
-                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
               >
                 Three steps. No spreadsheets.
               </h2>
@@ -325,12 +325,12 @@ export default function PartnersPage() {
               {STEPS.map((s) => (
                 <li
                   key={s.n}
-                  className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-6"
+                  className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-6"
                 >
-                  <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
                     [ {s.n} ] {s.label}
                   </p>
-                  <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+                  <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                     {s.body}
                   </p>
                 </li>
@@ -342,18 +342,18 @@ export default function PartnersPage() {
         {/* Commission tiers */}
         <section
           aria-labelledby="tiers-heading"
-          className="border-t border-vyrek-border-subtle py-24 md:py-32"
+          className="border-t border-suth-border-subtle py-24 md:py-32"
         >
           <Container>
             <div className="mx-auto max-w-3xl">
               <Eyebrow>Commission tiers</Eyebrow>
               <h2
                 id="tiers-heading"
-                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
               >
                 The more you refer, the higher your rate.
               </h2>
-              <p className="mt-5 text-base text-vyrek-text-secondary md:text-lg">
+              <p className="mt-5 text-base text-suth-text-secondary md:text-lg">
                 Flat tiered recurring commission. No sign-up bounty. Lifetime
                 rate locks the moment you cross each threshold.
               </p>
@@ -365,21 +365,21 @@ export default function PartnersPage() {
               {TIERS.map((t) => (
                 <li
                   key={t.name}
-                  className="flex flex-col rounded-lg border border-vyrek-border bg-vyrek-elevated p-6"
+                  className="flex flex-col rounded-lg border border-suth-border bg-suth-elevated p-6"
                 >
-                  <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
                     {t.name}
                   </p>
-                  <p className="mt-3 text-sm text-vyrek-text-secondary">
+                  <p className="mt-3 text-sm text-suth-text-secondary">
                     {t.range}
                   </p>
-                  <p className="mt-6 text-5xl font-black tracking-[-0.04em] text-vyrek-text tabular-nums">
+                  <p className="mt-6 text-5xl font-black tracking-[-0.04em] text-suth-text tabular-nums">
                     {t.rate}
                   </p>
-                  <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+                  <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
                     lifetime recurring
                   </p>
-                  <p className="mt-6 text-sm leading-relaxed text-vyrek-text-secondary">
+                  <p className="mt-6 text-sm leading-relaxed text-suth-text-secondary">
                     {t.note}
                   </p>
                 </li>
@@ -387,12 +387,12 @@ export default function PartnersPage() {
             </ul>
 
             {/* Worked example callout */}
-            <div className="mx-auto mt-10 max-w-3xl rounded-lg border border-vyrek-accent/40 bg-vyrek-elevated p-6 md:p-8">
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+            <div className="mx-auto mt-10 max-w-3xl rounded-lg border border-suth-accent/40 bg-suth-elevated p-6 md:p-8">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
                 [ WORKED EXAMPLE · ELITE TIER ]
               </p>
-              <p className="mt-4 text-base leading-relaxed text-vyrek-text md:text-lg">
-                If 100 of your audience start training with Vyrek, you earn{" "}
+              <p className="mt-4 text-base leading-relaxed text-suth-text md:text-lg">
+                If 100 of your audience start training with Suth Performance, you earn{" "}
                 <span className="font-bold tabular-nums">£249.50</span> every
                 month for as long as they are subscribed. That is{" "}
                 <span className="font-bold tabular-nums">£2,994</span> a year,
@@ -405,14 +405,14 @@ export default function PartnersPage() {
         {/* Who this is for */}
         <section
           aria-labelledby="who-this-is-for-heading"
-          className="border-t border-vyrek-border-subtle py-24 md:py-32"
+          className="border-t border-suth-border-subtle py-24 md:py-32"
         >
           <Container>
             <div className="mx-auto max-w-3xl">
               <Eyebrow>Who this is for</Eyebrow>
               <h2
                 id="who-this-is-for-heading"
-                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
               >
                 Built for people whose audience already trains.
               </h2>
@@ -424,10 +424,10 @@ export default function PartnersPage() {
               {FOR.map((f) => (
                 <li
                   key={f.tag}
-                  className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-6"
+                  className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-6"
                 >
                   <Eyebrow>{f.tag}</Eyebrow>
-                  <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+                  <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                     {f.body}
                   </p>
                 </li>
@@ -439,14 +439,14 @@ export default function PartnersPage() {
         {/* FAQ */}
         <section
           aria-labelledby="faq-heading"
-          className="border-t border-vyrek-border-subtle py-24 md:py-32"
+          className="border-t border-suth-border-subtle py-24 md:py-32"
         >
           <Container>
             <div className="mx-auto max-w-3xl">
               <Eyebrow>Frequently asked</Eyebrow>
               <h2
                 id="faq-heading"
-                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
               >
                 Common questions.
               </h2>
@@ -456,12 +456,12 @@ export default function PartnersPage() {
                     <AccordionItem
                       key={i}
                       value={`q-${i}`}
-                      className="border-b border-vyrek-border-subtle last:border-b-0"
+                      className="border-b border-suth-border-subtle last:border-b-0"
                     >
-                      <AccordionTrigger className="py-5 text-left text-base font-medium text-vyrek-text hover:no-underline md:text-lg">
+                      <AccordionTrigger className="py-5 text-left text-base font-medium text-suth-text hover:no-underline md:text-lg">
                         {f.q}
                       </AccordionTrigger>
-                      <AccordionContent className="pb-5 text-base leading-relaxed text-vyrek-text-secondary">
+                      <AccordionContent className="pb-5 text-base leading-relaxed text-suth-text-secondary">
                         {f.a}
                       </AccordionContent>
                     </AccordionItem>
@@ -473,14 +473,14 @@ export default function PartnersPage() {
         </section>
 
         {/* Final CTA */}
-        <section className="border-t border-vyrek-border-subtle py-24 md:py-32">
+        <section className="border-t border-suth-border-subtle py-24 md:py-32">
           <Container>
             <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
               <Eyebrow>Apply</Eyebrow>
-              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl">
+              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl">
                 Three minutes to apply.
               </h2>
-              <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
+              <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
                 We reply within 48 hours.
               </p>
               <div className="mt-8">

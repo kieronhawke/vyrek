@@ -6,7 +6,7 @@
  * key so we can invalidate consent when the categories change.
  */
 
-export const CONSENT_STORAGE_KEY = "vyrek:consent:v1";
+export const CONSENT_STORAGE_KEY = "suth:consent:v1";
 
 export type ConsentCategories = {
   necessary: true; // always true, cookies required for the site to function
@@ -44,5 +44,5 @@ export function readConsent(): ConsentState {
 export function writeConsent(state: ConsentState) {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(state));
-  window.dispatchEvent(new CustomEvent("vyrek:consent-changed"));
+  window.dispatchEvent(new CustomEvent("suth:consent-changed"));
 }

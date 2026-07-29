@@ -124,14 +124,14 @@ export function Day6Email({
           </Section>
 
           <Section style={{ marginTop: 24 }}>
-            <Button href="https://vyrek.vercel.app/plan" style={ctaPrimary}>
-              Stay with Vyrek →
+            <Button href="https://suthperformance.com/plan" style={ctaPrimary}>
+              Stay with Suth Performance →
             </Button>
           </Section>
 
           <Section style={{ marginTop: 12 }}>
             <Link
-              href="https://vyrek.vercel.app/account/cancel"
+              href="https://suthperformance.com/account/cancel"
               style={ctaSecondary}
             >
               Cancel my trial

@@ -28,11 +28,11 @@ export default function GearIndex() {
             <Eyebrow>Gear</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               Hyrox gear, honestly.
             </SplitHeading>
-            <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
               No affiliate-stuffed listicles. What helps, what doesn&apos;t, and
               what experienced racers actually wear.
             </p>
@@ -42,16 +42,16 @@ export default function GearIndex() {
               <li key={g.slug}>
                 <Link
                   href={`/hyrox/gear/${g.slug}`}
-                  className="lift-on-hover shimmer block rounded-lg border border-vyrek-border bg-vyrek-elevated p-6"
+                  className="lift-on-hover shimmer block rounded-lg border border-suth-border bg-suth-elevated p-6"
                 >
                   <Eyebrow>{g.eyebrow}</Eyebrow>
-                  <h2 className="mt-3 text-xl font-black tracking-[-0.04em] text-vyrek-text">
+                  <h2 className="mt-3 text-xl font-black tracking-[-0.04em] text-suth-text">
                     {g.title}
                   </h2>
-                  <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
+                  <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
                     {g.summary}
                   </p>
-                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-vyrek-accent">
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-suth-accent">
                     Read the guide →
                   </span>
                 </Link>

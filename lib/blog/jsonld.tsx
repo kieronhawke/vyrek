@@ -22,7 +22,7 @@ export function authorPersonJsonLd(author: Author) {
     sameAs: author.sameAs,
     affiliation: {
       "@type": "Organization",
-      name: "Vyrek",
+      name: "Suth Performance",
       url: siteUrl(),
     },
   };
@@ -33,7 +33,7 @@ export function organizationJsonLd() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${siteUrl()}#organization`,
-    name: "Vyrek",
+    name: "Suth Performance",
     url: siteUrl(),
     logo: `${siteUrl()}/logo-primary.svg`,
     description:
@@ -85,7 +85,7 @@ export function blogPostingJsonLd(post: PostMeta) {
     publisher: {
       "@type": "Organization",
       "@id": `${siteUrl()}#organization`,
-      name: "Vyrek",
+      name: "Suth Performance",
       logo: {
         "@type": "ImageObject",
         url: `${siteUrl()}/logo-primary.svg`,
@@ -165,7 +165,7 @@ export function howToStepsFromMdx(
 
 /**
  * SoftwareApplication schema for the platform itself. Lets Google
- * surface Vyrek as an "app" result for queries like "best hyrox
+ * surface Suth Performance as an "app" result for queries like "best hyrox
  * training app".
  */
 export function softwareApplicationJsonLd() {
@@ -173,7 +173,7 @@ export function softwareApplicationJsonLd() {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "@id": `${siteUrl()}#software`,
-    name: "Vyrek",
+    name: "Suth Performance",
     description:
       "Personalised Hyrox training on the web. Adaptive 12-week programmes that recalibrate every Sunday based on the sessions you log.",
     url: siteUrl(),
@@ -220,7 +220,7 @@ export function collectionPageJsonLd(posts: PostMeta[]) {
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Vyrek Journal",
+    name: "Suth Performance Journal",
     description:
       "Hyrox training, technique, and race-day guides written by Elite 15 coaches.",
     url: blogIndexUrl(),
@@ -229,7 +229,7 @@ export function collectionPageJsonLd(posts: PostMeta[]) {
       "@type": "WebSite",
       "@id": `${siteUrl()}#website`,
       url: siteUrl(),
-      name: "Vyrek",
+      name: "Suth Performance",
     },
     hasPart: posts.slice(0, 20).map((p) => ({
       "@type": "BlogPosting",

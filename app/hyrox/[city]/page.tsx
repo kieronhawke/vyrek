@@ -48,7 +48,7 @@ export async function generateMetadata({
       title,
       description,
       url,
-      siteName: "Vyrek",
+      siteName: "Suth Performance",
       type: "website",
       locale: "en_GB",
     },
@@ -62,24 +62,24 @@ function buildFaqs(loc: UkLocation) {
   return [
     {
       q: `Is there a Hyrox gym in ${loc.name}?`,
-      a: `Yes, ${loc.name} has a growing network of affiliate gyms running Hyrox-pattern classes. Vyrek isn't a gym; we're a personalised training platform you can use alongside any gym. Members in ${loc.name} train at their usual gym (or at home) and follow a programme built around the exact equipment they have available.`,
+      a: `Yes, ${loc.name} has a growing network of affiliate gyms running Hyrox-pattern classes. Suth Performance isn't a gym; we're a personalised training platform you can use alongside any gym. Members in ${loc.name} train at their usual gym (or at home) and follow a programme built around the exact equipment they have available.`,
     },
     {
       q: `What's the nearest Hyrox race to ${loc.name}?`,
       a: venue
-        ? `${venue.name} in ${venue.city} hosts annual Hyrox race weekends and is the closest major venue to ${loc.name}. Vyrek programmes auto-calibrate to your chosen race date, you tell us when you're racing, we build the 12 weeks backwards from it.`: `${loc.name} athletes typically race at ExCeL London, Birmingham NEC, or Manchester Central. All three host Hyrox weekends annually. Vyrek programmes auto-calibrate to your chosen race date.`,
+        ? `${venue.name} in ${venue.city} hosts annual Hyrox race weekends and is the closest major venue to ${loc.name}. Suth Performance programmes auto-calibrate to your chosen race date, you tell us when you're racing, we build the 12 weeks backwards from it.`: `${loc.name} athletes typically race at ExCeL London, Birmingham NEC, or Manchester Central. All three host Hyrox weekends annually. Suth Performance programmes auto-calibrate to your chosen race date.`,
     },
     {
       q: `How much does Hyrox coaching cost in ${loc.name}?`,
-      a: `Local 1:1 Hyrox coaching in ${loc.name} typically ranges from £60, £150 per hour. Vyrek's online programme is £8.99 per month with a 7-day free trial, the same level of programming as you'd get from an Elite 15 coach, dated and personalised, at a fraction of the cost.`,
+      a: `Local 1:1 Hyrox coaching in ${loc.name} typically ranges from £60, £150 per hour. Suth Performance's online programme is £8.99 per month with a 7-day free trial, the same level of programming as you'd get from an Elite 15 coach, dated and personalised, at a fraction of the cost.`,
     },
     {
       q: `Can I train for Hyrox in ${loc.name} as a beginner?`,
-      a: `Yes. Vyrek's First Race programme is built for total Hyrox beginners, three minutes of quiz, you see your Week 1 immediately. We calibrate to your current fitness, equipment, and the race date you're working towards. No CrossFit background needed.`,
+      a: `Yes. Suth Performance's First Race programme is built for total Hyrox beginners, three minutes of quiz, you see your Week 1 immediately. We calibrate to your current fitness, equipment, and the race date you're working towards. No CrossFit background needed.`,
     },
     {
       q: `Do I need a special gym to train for Hyrox in ${loc.name}?`,
-      a: `No. Vyrek programmes adapt to your equipment, full commercial gym, standard PureGym/Nuffield-style facility, or home setup. The quiz asks what you have access to, and your plan only includes exercises you can actually do. You can train for a Hyrox finish from any ${loc.name} gym.`,
+      a: `No. Suth Performance programmes adapt to your equipment, full commercial gym, standard PureGym/Nuffield-style facility, or home setup. The quiz asks what you have access to, and your plan only includes exercises you can actually do. You can train for a Hyrox finish from any ${loc.name} gym.`,
     },
   ];
 }
@@ -123,7 +123,7 @@ export default async function CityPage({
   const localBusinessLd = {
     "@context": "https://schema.org",
     "@type": "SportsActivityLocation",
-    name: `Vyrek Hyrox Training, ${loc.name}`,
+    name: `Suth Performance Hyrox Training, ${loc.name}`,
     description: `Personalised Hyrox training programmes for ${loc.name} athletes. Online platform delivered by an Elite 15 coach.`,
     url,
     areaServed: {
@@ -133,7 +133,7 @@ export default async function CityPage({
     },
     provider: {
       "@type": "Organization",
-      name: "Vyrek",
+      name: "Suth Performance",
       url: siteUrl(),
     },
     offers: {
@@ -168,32 +168,32 @@ export default async function CityPage({
           {/* Breadcrumb */}
           <nav
             aria-label="Breadcrumb"
-            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary"
           >
-            <Link href="/" className="hover:text-vyrek-text">
+            <Link href="/" className="hover:text-suth-text">
               Home
             </Link>
             <span aria-hidden className="mx-2">
               /
             </span>
-            <Link href="/hyrox" className="hover:text-vyrek-text">
+            <Link href="/hyrox" className="hover:text-suth-text">
               Hyrox locations
             </Link>
             <span aria-hidden className="mx-2">
               /
             </span>
-            <span className="text-vyrek-text">{loc.name}</span>
+            <span className="text-suth-text">{loc.name}</span>
           </nav>
 
           <div className="mx-auto max-w-3xl">
             <Eyebrow>Hyrox · {loc.region}</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl lg:text-6xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl lg:text-6xl"
             >
               Hyrox training in {loc.name}
             </SplitHeading>
-            <p className="mt-6 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-6 text-base leading-relaxed text-suth-text-secondary md:text-lg">
               Personalised 12-week Hyrox programmes for athletes in {loc.name}.
               See your Week 1 dated and ready in three minutes, before you
               pay a penny.
@@ -205,7 +205,7 @@ export default async function CityPage({
               </CtaButton>
               <Link
                 href="/pricing"
-                className="inline-flex h-12 items-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-elevated px-5 text-sm font-medium text-vyrek-text transition-colors hover:border-vyrek-border-strong"
+                className="inline-flex h-12 items-center gap-2 rounded-pill border border-suth-border bg-suth-elevated px-5 text-sm font-medium text-suth-text transition-colors hover:border-suth-border-strong"
               >
                 See pricing
               </Link>
@@ -213,19 +213,19 @@ export default async function CityPage({
           </div>
 
           {/* Local context */}
-          <section className="mx-auto mt-20 max-w-3xl border-t border-vyrek-border-subtle pt-12">
+          <section className="mx-auto mt-20 max-w-3xl border-t border-suth-border-subtle pt-12">
             <Eyebrow>The {loc.name} Hyrox scene</Eyebrow>
-            <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
               {loc.context ??
-                `${loc.name} has a growing community of Hyrox athletes training across its local gyms. Vyrek programmes adapt to whatever equipment your gym has, full commercial setup, standard chain gym, or home weights, and recalibrate every Sunday based on the sessions you've logged.`}
+                `${loc.name} has a growing community of Hyrox athletes training across its local gyms. Suth Performance programmes adapt to whatever equipment your gym has, full commercial setup, standard chain gym, or home weights, and recalibrate every Sunday based on the sessions you've logged.`}
             </p>
             {loc.nearestVenue ? (
-              <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+              <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                 The closest major race venue to {loc.name} is{" "}
-                <span className="text-vyrek-text">
+                <span className="text-suth-text">
                   {loc.nearestVenue.name}
                 </span>{" "}
-                in {loc.nearestVenue.city}. Your Vyrek programme builds backwards
+                in {loc.nearestVenue.city}. Your Suth Performance programme builds backwards
                 from your chosen race date, pick the day, we&apos;ll dial in the 12
                 weeks before it.
               </p>
@@ -233,13 +233,13 @@ export default async function CityPage({
           </section>
 
           {/* Programmes for this city */}
-          <section className="mx-auto mt-20 max-w-5xl border-t border-vyrek-border-subtle pt-12">
+          <section className="mx-auto mt-20 max-w-5xl border-t border-suth-border-subtle pt-12">
             <header className="mx-auto max-w-2xl text-center">
               <Eyebrow>Programmes for {loc.name} athletes</Eyebrow>
-              <h2 className="mt-3 text-2xl font-black leading-tight tracking-[-0.04em] text-vyrek-text md:text-3xl">
+              <h2 className="mt-3 text-2xl font-black leading-tight tracking-[-0.04em] text-suth-text md:text-3xl">
                 Pick the path that fits.
               </h2>
-              <p className="mt-3 text-base leading-relaxed text-vyrek-text-secondary">
+              <p className="mt-3 text-base leading-relaxed text-suth-text-secondary">
                 One subscription, all four programmes. Switch between them as
                 your race calendar changes.
               </p>
@@ -273,13 +273,13 @@ export default async function CityPage({
                 <li key={p.slug}>
                   <Link
                     href={`/quiz?program=${p.slug}`}
-                    className="lift-on-hover shimmer block rounded-lg border border-vyrek-border bg-vyrek-elevated p-6"
+                    className="lift-on-hover shimmer block rounded-lg border border-suth-border bg-suth-elevated p-6"
                   >
                     <Eyebrow>{p.tag}</Eyebrow>
-                    <p className="mt-3 text-base leading-relaxed text-vyrek-text-secondary">
+                    <p className="mt-3 text-base leading-relaxed text-suth-text-secondary">
                       {p.body}
                     </p>
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-vyrek-accent">
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-suth-accent">
                       Start the quiz →
                     </span>
                   </Link>
@@ -289,9 +289,9 @@ export default async function CityPage({
           </section>
 
           {/* FAQ */}
-          <section className="mx-auto mt-20 max-w-3xl border-t border-vyrek-border-subtle pt-12">
+          <section className="mx-auto mt-20 max-w-3xl border-t border-suth-border-subtle pt-12">
             <Eyebrow>FAQs · {loc.name}</Eyebrow>
-            <h2 className="mt-3 text-2xl font-black leading-tight tracking-[-0.04em] text-vyrek-text md:text-3xl">
+            <h2 className="mt-3 text-2xl font-black leading-tight tracking-[-0.04em] text-suth-text md:text-3xl">
               Common {loc.name} Hyrox questions.
             </h2>
             <div className="mt-6">
@@ -300,12 +300,12 @@ export default async function CityPage({
                   <AccordionItem
                     key={i}
                     value={`q-${i}`}
-                    className="border-b border-vyrek-border-subtle last:border-b-0"
+                    className="border-b border-suth-border-subtle last:border-b-0"
                   >
-                    <AccordionTrigger className="py-5 text-left text-base font-medium text-vyrek-text hover:no-underline md:text-lg">
+                    <AccordionTrigger className="py-5 text-left text-base font-medium text-suth-text hover:no-underline md:text-lg">
                       {f.q}
                     </AccordionTrigger>
-                    <AccordionContent className="pb-5 text-base leading-relaxed text-vyrek-text-secondary">
+                    <AccordionContent className="pb-5 text-base leading-relaxed text-suth-text-secondary">
                       {f.a}
                     </AccordionContent>
                   </AccordionItem>
@@ -315,12 +315,12 @@ export default async function CityPage({
           </section>
 
           {/* Final CTA */}
-          <section className="mx-auto mt-20 max-w-3xl border-t border-vyrek-border-subtle pt-12 text-center">
+          <section className="mx-auto mt-20 max-w-3xl border-t border-suth-border-subtle pt-12 text-center">
             <Eyebrow>Start</Eyebrow>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-vyrek-text md:text-4xl">
+            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
               Find your {loc.name} plan.
             </h2>
-            <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
+            <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
               Three-minute quiz. Dated Week 1 before you pay. £8.99/month.
             </p>
             <div className="mt-8">
@@ -328,7 +328,7 @@ export default async function CityPage({
                 Find your plan →
               </CtaButton>
             </div>
-            <p className="mt-4 font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+            <p className="mt-4 font-mono text-xs uppercase tracking-[0.18em] text-suth-text-tertiary">
               First week free. Cancel anytime.
             </p>
           </section>
@@ -377,16 +377,16 @@ export default async function CityPage({
           />
 
           {/* Related: other cities */}
-          <section className="mx-auto mt-20 max-w-3xl border-t border-vyrek-border-subtle pt-12">
+          <section className="mx-auto mt-20 max-w-3xl border-t border-suth-border-subtle pt-12">
             <Eyebrow>More UK locations</Eyebrow>
-            <p className="mt-3 text-sm text-vyrek-text-secondary">
-              Vyrek serves athletes across the UK, see the full list of
+            <p className="mt-3 text-sm text-suth-text-secondary">
+              Suth Performance serves athletes across the UK, see the full list of
               cities and boroughs.
             </p>
             <div className="mt-5">
               <Link
                 href="/hyrox"
-                className="inline-flex h-11 items-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-elevated px-5 text-sm font-medium text-vyrek-text transition-colors hover:border-vyrek-border-strong"
+                className="inline-flex h-11 items-center gap-2 rounded-pill border border-suth-border bg-suth-elevated px-5 text-sm font-medium text-suth-text transition-colors hover:border-suth-border-strong"
               >
                 All Hyrox locations →
               </Link>

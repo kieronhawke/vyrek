@@ -11,7 +11,7 @@ import { cookies } from "next/headers";
  * 30-day TTL. Rotation handled by re-signing on each magic-link visit.
  */
 
-const COOKIE = "vyrek_partner_session";
+const COOKIE = "suth_partner_session";
 const TTL_SECONDS = 60 * 60 * 24 * 30;
 
 function secret(): string {

@@ -6,8 +6,8 @@ import { SectionEyebrow } from "@/components/member/section-eyebrow";
 export const dynamic = "force-dynamic";
 
 const PHASE_TONE: Record<string, string> = {
-  base: "border-vyrek-border-subtle bg-vyrek-elevated text-vyrek-text-secondary",
-  build: "border-vyrek-accent/30 bg-vyrek-accent/10 text-vyrek-accent",
+  base: "border-suth-border-subtle bg-suth-elevated text-suth-text-secondary",
+  build: "border-suth-accent/30 bg-suth-accent/10 text-suth-accent",
   peak: "border-red-500/30 bg-red-500/10 text-red-300",
   taper: "border-emerald-500/30 bg-emerald-500/10 text-emerald-300",
 };
@@ -30,13 +30,13 @@ export default async function PlanPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
       <header className="mb-6">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           [ {programme.toUpperCase()} · 12 WEEKS ]
         </p>
-        <h1 className="mt-1 text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl">
+        <h1 className="mt-1 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-3xl">
           Your programme
         </h1>
-        <p className="mt-1 text-sm text-vyrek-text-secondary">
+        <p className="mt-1 text-sm text-suth-text-secondary">
           Week {currentWeek} of 12 · recalibrates every Sunday based on what you log.
         </p>
       </header>
@@ -50,13 +50,13 @@ export default async function PlanPage() {
               <div
                 className={`flex flex-col items-center gap-1 rounded-md border p-2 text-center ${
                   d.done
-                    ? "border-vyrek-accent/40 bg-vyrek-accent/10"
+                    ? "border-suth-accent/40 bg-suth-accent/10"
                     : d.type === "rest"
-                      ? "border-vyrek-border-subtle bg-vyrek-elevated/40"
-                      : "border-vyrek-border-subtle bg-vyrek-elevated"
+                      ? "border-suth-border-subtle bg-suth-elevated/40"
+                      : "border-suth-border-subtle bg-suth-elevated"
                 }`}
               >
-                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                   {d.day}
                 </p>
                 <p
@@ -67,7 +67,7 @@ export default async function PlanPage() {
                   {TYPE_ICON[d.type] ?? "·"}
                 </p>
                 {d.durationMin ? (
-                  <p className="font-mono text-[9px] tabular-nums text-vyrek-text-tertiary">
+                  <p className="font-mono text-[9px] tabular-nums text-suth-text-tertiary">
                     {d.durationMin}
                   </p>
                 ) : null}
@@ -79,15 +79,15 @@ export default async function PlanPage() {
           {DEMO_WEEK.filter((d) => d.type !== "rest").map((d) => (
             <li
               key={d.day}
-              className="flex items-center justify-between gap-3 rounded-md border border-vyrek-border-subtle bg-vyrek-elevated/60 px-3 py-2.5"
+              className="flex items-center justify-between gap-3 rounded-md border border-suth-border-subtle bg-suth-elevated/60 px-3 py-2.5"
             >
               <div className="flex items-center gap-3 min-w-0">
-                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent shrink-0 w-12">
+                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent shrink-0 w-12">
                   {d.day}
                 </span>
-                <p className="truncate text-sm text-vyrek-text">{d.title}</p>
+                <p className="truncate text-sm text-suth-text">{d.title}</p>
               </div>
-              <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+              <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                 {d.durationMin}m
               </span>
             </li>
@@ -105,22 +105,22 @@ export default async function PlanPage() {
             return (
               <li key={w.number}>
                 <div
-                  className={`flex items-center gap-3 rounded-lg border bg-vyrek-elevated px-4 py-3 ${
+                  className={`flex items-center gap-3 rounded-lg border bg-suth-elevated px-4 py-3 ${
                     isCurrent
-                      ? "border-vyrek-accent"
+                      ? "border-suth-accent"
                       : isPast
-                        ? "border-vyrek-border-subtle opacity-70"
-                        : "border-vyrek-border-subtle"
+                        ? "border-suth-border-subtle opacity-70"
+                        : "border-suth-border-subtle"
                   }`}
                 >
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-vyrek-border-subtle bg-vyrek-base font-mono text-xs tabular-nums text-vyrek-text">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-suth-border-subtle bg-suth-base font-mono text-xs tabular-nums text-suth-text">
                     {w.number}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-semibold text-vyrek-text">
+                    <p className="truncate text-sm font-semibold text-suth-text">
                       {w.focus}
                     </p>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                       {w.sessionCount} sessions
                     </p>
                   </div>
@@ -143,24 +143,24 @@ export default async function PlanPage() {
         <SectionEyebrow title="Hyrox stations" right={`${DEMO_STATIONS.length} stations`} />
         <Link
           href="/app/plan/stations"
-          className="group block rounded-2xl border border-vyrek-border bg-vyrek-elevated/60 p-5 transition-colors hover:border-vyrek-border-strong"
+          className="group block rounded-2xl border border-suth-border bg-suth-elevated/60 p-5 transition-colors hover:border-suth-border-strong"
         >
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
-              <p className="text-base font-semibold text-vyrek-text">
+              <p className="text-base font-semibold text-suth-text">
                 Stations playbook
               </p>
-              <p className="mt-1 text-sm text-vyrek-text-secondary">
+              <p className="mt-1 text-sm text-suth-text-secondary">
                 Spec, technique, failure pattern for every station. Tap to drill in.
               </p>
             </div>
-            <span className="shrink-0 text-vyrek-accent">→</span>
+            <span className="shrink-0 text-suth-accent">→</span>
           </div>
           <div className="mt-4 grid grid-cols-4 gap-1.5 sm:grid-cols-8">
             {DEMO_STATIONS.map((s) => (
               <span
                 key={s.slug}
-                className="rounded-md border border-vyrek-border-subtle bg-vyrek-base/60 px-1.5 py-1 text-center font-mono text-[9px] uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+                className="rounded-md border border-suth-border-subtle bg-suth-base/60 px-1.5 py-1 text-center font-mono text-[9px] uppercase tracking-[0.18em] text-suth-text-tertiary"
               >
                 {String(s.number).padStart(2, "0")}
               </span>
@@ -177,9 +177,9 @@ export default async function PlanPage() {
             <li key={v.id}>
               <Link
                 href="#"
-                className="group block overflow-hidden rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated transition-colors hover:border-vyrek-border-strong"
+                className="group block overflow-hidden rounded-lg border border-suth-border-subtle bg-suth-elevated transition-colors hover:border-suth-border-strong"
               >
-                <div className="relative aspect-[4/3] bg-vyrek-overlay">
+                <div className="relative aspect-[4/3] bg-suth-overlay">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={v.thumbnail}
@@ -188,28 +188,28 @@ export default async function PlanPage() {
                   />
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-vyrek-base/80 via-transparent to-transparent"
+                    className="absolute inset-0 bg-gradient-to-t from-suth-base/80 via-transparent to-transparent"
                   />
-                  <div className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-pill bg-vyrek-base/80 px-2 py-0.5 font-mono text-[10px] text-vyrek-text">
+                  <div className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-pill bg-suth-base/80 px-2 py-0.5 font-mono text-[10px] text-suth-text">
                     {formatDuration(v.durationSec)}
                   </div>
                   <div
                     aria-hidden
                     className="absolute inset-0 flex items-center justify-center"
                   >
-                    <span className="flex size-12 items-center justify-center rounded-full bg-vyrek-accent text-[#0A0A0A]">
+                    <span className="flex size-12 items-center justify-center rounded-full bg-suth-accent text-[#0A0A0A]">
                       ▶
                     </span>
                   </div>
                 </div>
                 <div className="p-3">
-                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-vyrek-accent">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-suth-accent">
                     {v.category}
                   </p>
-                  <p className="mt-1 text-sm font-medium leading-snug text-vyrek-text">
+                  <p className="mt-1 text-sm font-medium leading-snug text-suth-text">
                     {v.title}
                   </p>
-                  <p className="mt-1 text-xs text-vyrek-text-tertiary">
+                  <p className="mt-1 text-xs text-suth-text-tertiary">
                     {v.coach}
                   </p>
                 </div>

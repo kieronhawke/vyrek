@@ -1,7 +1,7 @@
 # Funnel walkthrough — Fix 6 verification
 
 **Generated:** 2026-05-24
-**Live deploy:** `vyrek-5v8xe6o9u` (latest Ready)
+**Live deploy:** `suth-5v8xe6o9u` (latest Ready)
 **Demo creds:** `demo@vyrek.test` / `VyrekDemo2026!`
 **Script:** `scripts/funnel-walkthrough.mjs` (re-runnable)
 **Screenshots:** `docs/funnel-walkthrough-screenshots/`

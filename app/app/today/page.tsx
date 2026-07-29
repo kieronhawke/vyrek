@@ -27,13 +27,13 @@ export default async function TodayPage() {
     <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
       {/* Greeting */}
       <header className="mb-6">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           {todayLabel()}
         </p>
-        <h1 className="mt-1 text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl">
+        <h1 className="mt-1 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-3xl">
           Morning, {firstName ?? "athlete"}.
         </h1>
-        <p className="mt-1 text-sm text-vyrek-text-secondary">
+        <p className="mt-1 text-sm text-suth-text-secondary">
           Week {DEMO_TODAY.weekNumber} of 12 · {programme} programme
         </p>
       </header>

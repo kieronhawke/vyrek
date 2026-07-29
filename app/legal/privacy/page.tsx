@@ -12,48 +12,48 @@ import {
 export const metadata: Metadata = {
   title: "Privacy policy",
   description:
-    "How Vyrek collects, uses, and protects your data. UK GDPR-compliant. Plain English.",
+    "How Suth Performance collects, uses, and protects your data. UK GDPR-compliant. Plain English.",
 };
 
 export default function PrivacyPage() {
   return (
     <LegalLayout eyebrow="Privacy" title="Privacy policy">
       <ProseP>
-        Vyrek is a Hyrox training platform operated from the United Kingdom.
+        Suth Performance is a Hyrox training platform operated from the United Kingdom.
         This policy explains what data we collect, why we collect it, where it
         lives, how long we keep it, and the rights you have over it under the
         UK GDPR and the Data Protection Act 2018.
       </ProseP>
       <ProseP>
         We are the data controller. Our contact for data matters is{" "}
-        <ProseEmailLink email="privacy@vyrek.com" />.
+        <ProseEmailLink email="privacy@suthperformance.com" />.
       </ProseP>
 
       <ProseH2>What we collect</ProseH2>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Account data.</strong> Your email
+          <strong className="text-suth-text">Account data.</strong> Your email
           address, given at the email gate of the quiz so we can save your plan
           and send it back to you.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Quiz answers.</strong> Your
+          <strong className="text-suth-text">Quiz answers.</strong> Your
           responses to the onboarding quiz: experience level, race date,
           training days, equipment, injuries. Used to generate your plan.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Training data.</strong> The
+          <strong className="text-suth-text">Training data.</strong> The
           sessions you mark complete, the splits, weights, and RPE values you
           log, and any notes you attach. Used to recalibrate your plan each
           Sunday.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Payment data.</strong> Processed
+          <strong className="text-suth-text">Payment data.</strong> Processed
           by Stripe. We never see or store your card number; Stripe gives us a
           token plus the last 4 digits of the card for receipts and disputes.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Usage analytics + session
+          <strong className="text-suth-text">Usage analytics + session
           replay.</strong>{" "}
           Page views, quiz progress, click heatmaps, and session replay
           captured by PostHog after you give cookie consent. Input fields
@@ -64,13 +64,13 @@ export default function PrivacyPage() {
           setting Do Not Track in your browser.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Error reports.</strong> Captured
+          <strong className="text-suth-text">Error reports.</strong> Captured
           by Sentry when something breaks. Includes the page you were on and a
           minimal stack trace. No payment data is ever sent to Sentry.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Content drafts.</strong> If you
-          are a Vyrek editor with access to /studio, your drafts and revisions
+          <strong className="text-suth-text">Content drafts.</strong> If you
+          are a Suth Performance editor with access to /studio, your drafts and revisions
           are stored in Sanity (our headless CMS).
         </ProseLi>
       </ProseUl>
@@ -95,21 +95,21 @@ export default function PrivacyPage() {
       <ProseH2>Legal basis</ProseH2>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Contract performance.</strong>{" "}
+          <strong className="text-suth-text">Contract performance.</strong>{" "}
           We cannot deliver your plan without your quiz answers and email.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Consent.</strong> Analytics
+          <strong className="text-suth-text">Consent.</strong> Analytics
           cookies, session replay, marketing emails. You opt in; you can opt
           out anytime.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Legitimate interest.</strong>{" "}
+          <strong className="text-suth-text">Legitimate interest.</strong>{" "}
           Security, fraud prevention, error monitoring, product analytics in
           aggregate.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Legal obligation.</strong> Payment
+          <strong className="text-suth-text">Legal obligation.</strong> Payment
           records, retained 7 years for HMRC.
         </ProseLi>
       </ProseUl>
@@ -117,29 +117,29 @@ export default function PrivacyPage() {
       <ProseH2>How long we keep it</ProseH2>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Account and training data.</strong>{" "}
+          <strong className="text-suth-text">Account and training data.</strong>{" "}
           Kept while your subscription is active, plus 90 days after
           cancellation in case you come back. Then deleted.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Quiz answers without an
+          <strong className="text-suth-text">Quiz answers without an
           account.</strong> 30 days, then deleted.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Session replay.</strong> 30 days
+          <strong className="text-suth-text">Session replay.</strong> 30 days
           rolling window. Then deleted.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Analytics events.</strong> 12
+          <strong className="text-suth-text">Analytics events.</strong> 12
           months at row level. After 12 months we aggregate and the
           individual events are deleted.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Payment records.</strong> 7 years
+          <strong className="text-suth-text">Payment records.</strong> 7 years
           per HMRC requirements.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Support emails.</strong> 2 years,
+          <strong className="text-suth-text">Support emails.</strong> 2 years,
           then deleted.
         </ProseLi>
       </ProseUl>
@@ -153,11 +153,11 @@ export default function PrivacyPage() {
       </ProseP>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Stripe (payments).</strong>{" "}
+          <strong className="text-suth-text">Stripe (payments).</strong>{" "}
           Card processing, billing, customer portal, fraud screening. Data
           stays inside the EEA and UK regions. Privacy:{" "}
           <a
-            className="text-vyrek-text underline underline-offset-4 hover:text-vyrek-accent"
+            className="text-suth-text underline underline-offset-4 hover:text-suth-accent"
             href="https://stripe.com/privacy"
             target="_blank"
             rel="noreferrer"
@@ -167,11 +167,11 @@ export default function PrivacyPage() {
           .
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Supabase (database + auth).</strong>{" "}
+          <strong className="text-suth-text">Supabase (database + auth).</strong>{" "}
           Your account, quiz answers, and training data. EU regions
           (Frankfurt). Privacy:{" "}
           <a
-            className="text-vyrek-text underline underline-offset-4 hover:text-vyrek-accent"
+            className="text-suth-text underline underline-offset-4 hover:text-suth-accent"
             href="https://supabase.com/privacy"
             target="_blank"
             rel="noreferrer"
@@ -181,36 +181,36 @@ export default function PrivacyPage() {
           .
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Resend (email).</strong>{" "}
+          <strong className="text-suth-text">Resend (email).</strong>{" "}
           Transactional emails only (welcome, trial reminders, payment
           notices). EU sub-processors.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">PostHog (analytics + session
+          <strong className="text-suth-text">PostHog (analytics + session
           replay).</strong> EU-hosted, only loaded after consent. Inputs and
           marked fields are masked at recording layer.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Sentry (error monitoring).</strong>{" "}
+          <strong className="text-suth-text">Sentry (error monitoring).</strong>{" "}
           EU-hosted. Scrubs PII before storing. Used to find crashes.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Sanity (CMS).</strong> Only
-          touched by Vyrek editors at /studio. Public visitors never interact
+          <strong className="text-suth-text">Sanity (CMS).</strong> Only
+          touched by Suth Performance editors at /studio. Public visitors never interact
           with Sanity.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Vercel (hosting + CDN).</strong>{" "}
+          <strong className="text-suth-text">Vercel (hosting + CDN).</strong>{" "}
           Serves the web app. Logs HTTP-level metadata (IP, user agent,
           referrer) for 30 days for security and abuse prevention.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Upstash (rate limiting).</strong>{" "}
+          <strong className="text-suth-text">Upstash (rate limiting).</strong>{" "}
           Tracks request counts by IP to block abusive traffic. Keys expire
           within 24 hours.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Crisp (live chat, when
+          <strong className="text-suth-text">Crisp (live chat, when
           enabled).</strong> If you message us through the chat widget on
           /contact, your message and email are processed by Crisp. EU-hosted.
         </ProseLi>
@@ -234,7 +234,7 @@ export default function PrivacyPage() {
         cookie banner. For the full list, including names, providers, and
         durations, see our{" "}
         <a
-          className="text-vyrek-text underline underline-offset-4 hover:text-vyrek-accent"
+          className="text-suth-text underline underline-offset-4 hover:text-suth-accent"
           href="/legal/cookies"
         >
           Cookie policy
@@ -244,9 +244,9 @@ export default function PrivacyPage() {
 
       <ProseH2>Children</ProseH2>
       <ProseP>
-        Vyrek is intended for people aged 16 and over. We do not knowingly
+        Suth Performance is intended for people aged 16 and over. We do not knowingly
         collect data from anyone under 16. If you believe a child has signed
-        up, email <ProseEmailLink email="privacy@vyrek.com" /> and we will
+        up, email <ProseEmailLink email="privacy@suthperformance.com" /> and we will
         delete the account.
       </ProseP>
 
@@ -274,7 +274,7 @@ export default function PrivacyPage() {
       </ProseUl>
       <ProseP>
         To exercise any of these rights, email{" "}
-        <ProseEmailLink email="privacy@vyrek.com" /> from the address on your
+        <ProseEmailLink email="privacy@suthperformance.com" /> from the address on your
         account. We reply within 24 hours and complete most requests within a
         calendar month, as the UK GDPR requires. There is no fee unless the
         request is manifestly unfounded or excessive.
@@ -283,7 +283,7 @@ export default function PrivacyPage() {
         If you are not happy with how we handled your request, you can
         complain to the Information Commissioner&apos;s Office at{" "}
         <a
-          className="text-vyrek-text underline underline-offset-4 hover:text-vyrek-accent"
+          className="text-suth-text underline underline-offset-4 hover:text-suth-accent"
           href="https://ico.org.uk/make-a-complaint/"
           target="_blank"
           rel="noreferrer"
@@ -319,7 +319,7 @@ export default function PrivacyPage() {
 
       <ProseH2>Automated decision-making</ProseH2>
       <ProseP>
-        Vyrek personalises your training plan automatically using the answers
+        Suth Performance personalises your training plan automatically using the answers
         you give in the onboarding quiz and the sessions you log through the
         app. This is profiling for the purpose of delivering the service, not
         for any marketing, pricing, or credit decision.
@@ -329,7 +329,7 @@ export default function PrivacyPage() {
         effects on you, and the output is always a training schedule that you
         can adjust, ignore, or override. If you would prefer a coach to set
         your week manually instead of the adaptive engine, email{" "}
-        <ProseEmailLink email="support@vyrek.com" /> and we will switch your
+        <ProseEmailLink email="support@suthperformance.com" /> and we will switch your
         account to manual planning at no extra cost.
       </ProseP>
 
@@ -338,41 +338,41 @@ export default function PrivacyPage() {
         We use a small number of named processors to deliver the service. Each
         one is contracted under a Data Processing Agreement that mirrors the
         GDPR Article 28 obligations and forbids them from using your data for
-        any purpose other than delivering Vyrek to you.
+        any purpose other than delivering Suth Performance to you.
       </ProseP>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Supabase (UK + EU regions).</strong>{" "}
+          <strong className="text-suth-text">Supabase (UK + EU regions).</strong>{" "}
           Hosts authentication, application database, and file uploads.
           Receives: account email, hashed password, training logs, quiz
           answers, partner application records.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Vercel (global edge, primary region UK).</strong>{" "}
+          <strong className="text-suth-text">Vercel (global edge, primary region UK).</strong>{" "}
           Serves the marketing site and member app. Receives: HTTP request
           metadata (IP, user agent, referer) needed to route requests and
           mitigate abuse.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Stripe (UK).</strong> Processes
+          <strong className="text-suth-text">Stripe (UK).</strong> Processes
           payments and stores card data on its own PCI-compliant systems.
           Receives: name, email, billing address, card details. Card details
-          never touch Vyrek servers.
+          never touch Suth Performance servers.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Resend (EU).</strong> Sends
+          <strong className="text-suth-text">Resend (EU).</strong> Sends
           transactional and lifecycle emails. Receives: name, email, message
           content (welcome, payment receipts, password resets, partner
           status).
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Upstash (EU).</strong>{" "}
+          <strong className="text-suth-text">Upstash (EU).</strong>{" "}
           Rate-limit counters and short-lived session tokens. Receives:
           hashed IP and request fingerprints; no personal data is stored
           long-term.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Sentry (EU, optional).</strong>{" "}
+          <strong className="text-suth-text">Sentry (EU, optional).</strong>{" "}
           Error tracking. Receives: stack traces, browser metadata, the
           pseudonymous user ID associated with the session that errored. We
           do not send body content of requests.
@@ -392,21 +392,21 @@ export default function PrivacyPage() {
       </ProseP>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Access.</strong> Email{" "}
-          <ProseEmailLink email="privacy@vyrek.com" /> from your registered
+          <strong className="text-suth-text">Access.</strong> Email{" "}
+          <ProseEmailLink email="privacy@suthperformance.com" /> from your registered
           address. We acknowledge within 72 hours and reply in full within
           30 days (UK GDPR Article 12(3)) with an export of all personal
           data we hold about you, formatted as JSON or CSV at your choice.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Correction.</strong> Most
+          <strong className="text-suth-text">Correction.</strong> Most
           fields are editable in-app under Account → Profile. For fields
           you cannot edit (legal name on receipts, historical training
           logs), email the same address with the correction and any
           supporting evidence; we update within 7 days.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Deletion.</strong> In-app:
+          <strong className="text-suth-text">Deletion.</strong> In-app:
           Account → Close account. Within 30 days we delete personal data
           from production systems. Backup copies cycle out within a further
           30 days, after which the record is unrecoverable. Some categories
@@ -414,12 +414,12 @@ export default function PrivacyPage() {
           period under tax law and explain in the next section.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Restriction or objection.</strong>{" "}
-          Email <ProseEmailLink email="privacy@vyrek.com" />. We will pause
+          <strong className="text-suth-text">Restriction or objection.</strong>{" "}
+          Email <ProseEmailLink email="privacy@suthperformance.com" />. We will pause
           the relevant processing within 7 days and confirm when done.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Portability.</strong> The
+          <strong className="text-suth-text">Portability.</strong> The
           access export is machine-readable JSON suitable for porting to
           another service. Specify your preferred format in the request if
           CSV is more useful.
@@ -454,7 +454,7 @@ export default function PrivacyPage() {
       <ProseH3>Contact</ProseH3>
       <ProseP>
         Data Protection contact:{" "}
-        <ProseEmailLink email="privacy@vyrek.com" />.
+        <ProseEmailLink email="privacy@suthperformance.com" />.
       </ProseP>
     </LegalLayout>
   );

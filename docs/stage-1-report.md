@@ -1,7 +1,7 @@
 # Master Brief — Stage 1 report
 
 **Commit:** `09fd2fc`
-**Live:** verified at `https://vyrek.vercel.app` post-deploy
+**Live:** verified at `https://suthperformance.com` post-deploy
 
 ## What shipped
 
@@ -41,14 +41,14 @@ Same 39 captures at 375 / 390 / 414. Report at `docs/mobile-audit-report.md`. **
 Confirmed live in HTML:
 
 ```
-$ curl -s https://vyrek.vercel.app/ | grep -oE 'WEEK 04|★★★★★|workout-dated|programme-sub-90-v2|coach-james-wright-warm'
+$ curl -s https://suthperformance.com/ | grep -oE 'WEEK 04|★★★★★|workout-dated|programme-sub-90-v2|coach-james-wright-warm'
 WEEK 04
 ★★★★★
 workout-dated
 programme-sub-90-v2
 coach-james-wright-warm
 
-$ curl -s https://vyrek.vercel.app/how-it-works | grep -oE 'adapt-coaching'
+$ curl -s https://suthperformance.com/how-it-works | grep -oE 'adapt-coaching'
 adapt-coaching
 ```
 

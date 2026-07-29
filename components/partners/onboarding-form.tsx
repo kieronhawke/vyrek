@@ -84,15 +84,15 @@ export function OnboardingForm({
     return (
       <div
         role="status"
-        className="mt-12 rounded-lg border border-vyrek-accent/40 bg-vyrek-elevated p-8 text-center"
+        className="mt-12 rounded-lg border border-suth-accent/40 bg-suth-elevated p-8 text-center"
       >
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           [ YOU&apos;RE IN ]
         </p>
-        <h2 className="mt-3 text-2xl font-black text-vyrek-text">
+        <h2 className="mt-3 text-2xl font-black text-suth-text">
           Partner profile saved.
         </h2>
-        <p className="mt-3 text-sm text-vyrek-text-secondary">
+        <p className="mt-3 text-sm text-suth-text-secondary">
           Opening your dashboard...
         </p>
       </div>
@@ -101,25 +101,25 @@ export function OnboardingForm({
 
   return (
     <form onSubmit={onSubmit} className="mt-12 space-y-6" noValidate>
-      <section className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/50 p-6 md:p-8">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+      <section className="rounded-lg border border-suth-border-subtle bg-suth-elevated/50 p-6 md:p-8">
+        <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           Confirm your details
         </h2>
         <dl className="mt-4 space-y-2 text-sm">
           <Row k="Name" v={name} />
           <Row k="Email" v={email} mono />
         </dl>
-        <p className="mt-3 text-xs text-vyrek-text-tertiary">
-          Email <a href="mailto:partners@vyrek.com" className="text-vyrek-accent underline underline-offset-4">partners@vyrek.com</a> to change either.
+        <p className="mt-3 text-xs text-suth-text-tertiary">
+          Email <a href="mailto:partners@suthperformance.com" className="text-suth-accent underline underline-offset-4">partners@suthperformance.com</a> to change either.
         </p>
       </section>
 
-      <section className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/50 p-6 md:p-8">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+      <section className="rounded-lg border border-suth-border-subtle bg-suth-elevated/50 p-6 md:p-8">
+        <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           Choose your partner code
         </h2>
-        <p className="mt-3 text-sm text-vyrek-text-secondary">
-          Your link will be <code className="font-mono text-vyrek-text">vyrek.com/p/{code || "your-slug"}</code>
+        <p className="mt-3 text-sm text-suth-text-secondary">
+          Your link will be <code className="font-mono text-suth-text">suthperformance.com/p/{code || "your-slug"}</code>
         </p>
         <div className="mt-4 flex flex-col gap-2 sm:flex-row">
           <div className="flex-1">
@@ -134,7 +134,7 @@ export function OnboardingForm({
               onBlur={() => code && checkCodeAvailability(code)}
               minLength={3}
               maxLength={32}
-              className="block h-12 w-full rounded-md border border-vyrek-border bg-vyrek-base px-4 text-base text-vyrek-text outline-none focus:border-vyrek-accent"
+              className="block h-12 w-full rounded-md border border-suth-border bg-suth-base px-4 text-base text-suth-text outline-none focus:border-suth-accent"
               placeholder="your-slug"
             />
           </div>
@@ -142,14 +142,14 @@ export function OnboardingForm({
             type="button"
             onClick={() => checkCodeAvailability(code)}
             disabled={!code || codeStatus === "checking"}
-            className="inline-flex h-12 items-center justify-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-5 text-sm font-medium text-vyrek-text disabled:opacity-50"
+            className="inline-flex h-12 items-center justify-center rounded-pill border border-suth-border bg-suth-elevated px-5 text-sm font-medium text-suth-text disabled:opacity-50"
           >
             Check
           </button>
         </div>
         <p className="mt-2 text-xs">
           {codeStatus === "checking" ? (
-            <span className="text-vyrek-text-tertiary">Checking...</span>
+            <span className="text-suth-text-tertiary">Checking...</span>
           ) : codeStatus === "ok" ? (
             <span className="text-emerald-300">Available.</span>
           ) : codeStatus === "taken" ? (
@@ -159,18 +159,18 @@ export function OnboardingForm({
               Use 3 to 32 lowercase letters, numbers, or dashes.
             </span>
           ) : (
-            <span className="text-vyrek-text-tertiary">
+            <span className="text-suth-text-tertiary">
               Lowercase letters, numbers, dashes. Min 3.
             </span>
           )}
         </p>
       </section>
 
-      <section className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/50 p-6 md:p-8">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+      <section className="rounded-lg border border-suth-border-subtle bg-suth-elevated/50 p-6 md:p-8">
+        <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           Bank details for BACS payouts
         </h2>
-        <p className="mt-2 text-xs text-vyrek-text-tertiary">
+        <p className="mt-2 text-xs text-suth-text-tertiary">
           Stored encrypted. Only the last four digits of your account number
           are visible to admins or to you in the dashboard.
         </p>
@@ -196,8 +196,8 @@ export function OnboardingForm({
         </div>
       </section>
 
-      <section className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/50 p-6 md:p-8">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+      <section className="rounded-lg border border-suth-border-subtle bg-suth-elevated/50 p-6 md:p-8">
+        <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           Address for tax records
         </h2>
         <Field
@@ -213,24 +213,24 @@ export function OnboardingForm({
         />
       </section>
 
-      <section className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/50 p-6 md:p-8">
-        <label className="flex cursor-pointer items-start gap-3 text-base text-vyrek-text">
+      <section className="rounded-lg border border-suth-border-subtle bg-suth-elevated/50 p-6 md:p-8">
+        <label className="flex cursor-pointer items-start gap-3 text-base text-suth-text">
           <input
             type="checkbox"
             name="termsAccepted"
             required
-            className="mt-1 size-4 accent-vyrek-accent"
+            className="mt-1 size-4 accent-suth-accent"
           />
           <span>
             I accept the{" "}
             <a
               href="/legal/terms"
-              className="text-vyrek-accent underline underline-offset-4"
+              className="text-suth-accent underline underline-offset-4"
             >
-              Vyrek Terms
+              Suth Performance Terms
             </a>{" "}
             and the Partner Programme T&amp;Cs, including the no-bidding rule
-            on Vyrek brand terms and the 30-day commission clawback window.
+            on Suth Performance brand terms and the 30-day commission clawback window.
           </span>
         </label>
       </section>
@@ -244,7 +244,7 @@ export function OnboardingForm({
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="inline-flex h-14 w-full items-center justify-center rounded-pill bg-vyrek-accent px-6 text-base font-semibold tracking-tight text-[#0A0A0A] hover:bg-vyrek-accent-hover disabled:opacity-60"
+        className="inline-flex h-14 w-full items-center justify-center rounded-pill bg-suth-accent px-6 text-base font-semibold tracking-tight text-[#0A0A0A] hover:bg-suth-accent-hover disabled:opacity-60"
       >
         {status === "submitting" ? "Saving..." : "Finish onboarding →"}
       </button>
@@ -265,7 +265,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="block text-sm font-medium text-vyrek-text">
+      <span className="block text-sm font-medium text-suth-text">
         {label}
       </span>
       <input
@@ -273,7 +273,7 @@ function Field({
         name={name}
         required={required}
         placeholder={placeholder}
-        className="mt-2 block h-12 w-full rounded-md border border-vyrek-border bg-vyrek-base px-4 text-base text-vyrek-text outline-none focus:border-vyrek-accent"
+        className="mt-2 block h-12 w-full rounded-md border border-suth-border bg-suth-base px-4 text-base text-suth-text outline-none focus:border-suth-accent"
       />
     </label>
   );
@@ -290,12 +290,12 @@ function Row({
 }) {
   return (
     <div className="flex justify-between gap-3">
-      <dt className="text-vyrek-text-tertiary">{k}</dt>
+      <dt className="text-suth-text-tertiary">{k}</dt>
       <dd
         className={
           mono
-            ? "font-mono text-xs text-vyrek-text"
-            : "text-right text-vyrek-text"
+            ? "font-mono text-xs text-suth-text"
+            : "text-right text-suth-text"
         }
       >
         {v}

@@ -5,7 +5,7 @@ import { RevealOnView } from "@/components/shared/reveal-on-view";
 import { SplitHeading } from "@/components/shared/split-heading";
 
 /**
- * Brief 2.4: "What you get with Vyrek".
+ * Brief 2.4: "What you get with Suth Performance".
  *
  * Four cards, feature-led. No pricing. No "cancel anytime". Mobile stacks
  * one column, desktop is a 2x2 bento. Each card has a real image and
@@ -23,7 +23,7 @@ const CARDS = [
     // doesn't repeat the same person twice and the "coach you'd
     // actually DM" register lands.
     image: "/media/images/v2/coach-james-wright-warm.jpg",
-    alt: "Vyrek coach in his gym",
+    alt: "Suth Performance coach in his gym",
   },
   {
     tag: "Dated weekly programme",
@@ -64,14 +64,14 @@ export function WhatYouGet() {
     <RevealOnView
       as="section"
       aria-labelledby="what-you-get-heading"
-      className="border-t border-vyrek-border-subtle py-24 md:py-32"
+      className="border-t border-suth-border-subtle py-24 md:py-32"
     >
       <Container>
         <header className="mx-auto max-w-2xl text-center">
-          <Eyebrow>What you get with Vyrek</Eyebrow>
+          <Eyebrow>What you get with Suth Performance</Eyebrow>
           <SplitHeading
             id="what-you-get-heading"
-            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
           >
             Four parts of one membership.
           </SplitHeading>
@@ -84,9 +84,9 @@ export function WhatYouGet() {
           {CARDS.map((c) => (
             <li
               key={c.tag}
-              className="group relative flex flex-col overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated transition-[border,transform] duration-base ease-out hover:-translate-y-0.5 hover:border-vyrek-border-strong"
+              className="group relative flex flex-col overflow-hidden rounded-lg border border-suth-border bg-suth-elevated transition-[border,transform] duration-base ease-out hover:-translate-y-0.5 hover:border-suth-border-strong"
             >
-              <div className="relative aspect-[16/9] overflow-hidden bg-vyrek-overlay">
+              <div className="relative aspect-[16/9] overflow-hidden bg-suth-overlay">
                 <Image
                   src={c.image}
                   alt={c.alt}
@@ -96,12 +96,12 @@ export function WhatYouGet() {
                 />
                 <div
                   aria-hidden
-                  className="absolute inset-0 bg-gradient-to-t from-vyrek-elevated/95 via-vyrek-elevated/30 to-transparent"
+                  className="absolute inset-0 bg-gradient-to-t from-suth-elevated/95 via-suth-elevated/30 to-transparent"
                 />
                 {c.badge ? (
                   <span
                     aria-hidden
-                    className="absolute right-4 top-4 inline-flex items-center rounded-pill border border-vyrek-accent/40 bg-vyrek-base/70 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-vyrek-accent backdrop-blur-md"
+                    className="absolute right-4 top-4 inline-flex items-center rounded-pill border border-suth-accent/40 bg-suth-base/70 px-2.5 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-suth-accent backdrop-blur-md"
                   >
                     [ {c.badge} ]
                   </span>
@@ -109,10 +109,10 @@ export function WhatYouGet() {
               </div>
               <div className="flex flex-1 flex-col gap-3 p-6 md:p-8">
                 <Eyebrow>{c.tag}</Eyebrow>
-                <h3 className="text-balance text-xl font-bold leading-tight tracking-[-0.02em] text-vyrek-text md:text-2xl">
+                <h3 className="text-balance text-xl font-bold leading-tight tracking-[-0.02em] text-suth-text md:text-2xl">
                   {c.title}
                 </h3>
-                <p className="text-base leading-relaxed text-vyrek-text-secondary">
+                <p className="text-base leading-relaxed text-suth-text-secondary">
                   {c.body}
                 </p>
               </div>

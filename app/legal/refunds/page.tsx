@@ -12,19 +12,19 @@ import {
 export const metadata: Metadata = {
   title: "Refund policy",
   description:
-    "Vyrek refunds, in plain English. Friendly first, then the legal detail.",
+    "Suth Performance refunds, in plain English. Friendly first, then the legal detail.",
 };
 
 export default function RefundsPage() {
   return (
     <LegalLayout eyebrow="Refunds" title="Refund policy">
       <ProseP>
-        We want every Vyrek member to feel good about their subscription.
+        We want every Suth Performance member to feel good about their subscription.
       </ProseP>
       <ProseP>
         If you signed up by accident, or you are not happy within the first
         48 hours of being charged, email us at{" "}
-        <ProseEmailLink email="support@vyrek.com" /> and we will refund you.
+        <ProseEmailLink email="support@suthperformance.com" /> and we will refund you.
         No questions.
       </ProseP>
       <ProseP>
@@ -35,8 +35,8 @@ export default function RefundsPage() {
       <ProseH2>How to request a refund</ProseH2>
       <ProseUl>
         <ProseLi>
-          Email <ProseEmailLink email="support@vyrek.com" /> from the email
-          address on your Vyrek account.
+          Email <ProseEmailLink email="support@suthperformance.com" /> from the email
+          address on your Suth Performance account.
         </ProseLi>
         <ProseLi>
           Include the last 4 digits of the card we charged (Stripe shows
@@ -71,18 +71,18 @@ export default function RefundsPage() {
       <ProseH2>When we always refund</ProseH2>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Accidental charges.</strong> You
+          <strong className="text-suth-text">Accidental charges.</strong> You
           meant to cancel during the trial but the charge went through and
           you have not opened a plan since. Refunded in full.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Service not as described.</strong>{" "}
+          <strong className="text-suth-text">Service not as described.</strong>{" "}
           The platform failed to deliver what we describe (Week 1, dated plan,
           weekly recalibration). We fix it; if we cannot, you get a pro-rata
           refund for the unused portion of the month.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Payment errors.</strong> Double
+          <strong className="text-suth-text">Payment errors.</strong> Double
           charges, currency conversion errors, or anything attributable to us
           or to Stripe. Refunded in full.
         </ProseLi>
@@ -111,7 +111,7 @@ export default function RefundsPage() {
 
       <ProseH3>Contact</ProseH3>
       <ProseP>
-        Refund queries: <ProseEmailLink email="support@vyrek.com" />.
+        Refund queries: <ProseEmailLink email="support@suthperformance.com" />.
       </ProseP>
     </LegalLayout>
   );

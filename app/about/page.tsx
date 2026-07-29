@@ -11,9 +11,9 @@ import { SplitHeading } from "@/components/shared/split-heading";
 import { CtaButton } from "@/components/shared/cta-button";
 
 export const metadata: Metadata = {
-  title: "About Vyrek. UK Hyrox training built by an Elite 15 coach",
+  title: "About Suth Performance. UK Hyrox training built by an Elite 15 coach",
   description:
-    "Vyrek is a UK Hyrox-first training platform. 12-week personalised programmes built by an Elite 15 coach for first-timers, sub-90 chasers, doubles teams, and pros. Direct from the coaches who race it.",
+    "Suth Performance is a UK Hyrox-first training platform. 12-week personalised programmes built by an Elite 15 coach for first-timers, sub-90 chasers, doubles teams, and pros. Direct from the coaches who race it.",
   alternates: { canonical: "/about" },
 };
 
@@ -47,7 +47,7 @@ export default function AboutPage() {
         {/* Hero band with overlay image */}
         <section
           aria-labelledby="about-heading"
-          className="relative isolate flex min-h-[68svh] flex-col justify-end overflow-hidden bg-vyrek-base pb-16 pt-[max(7rem,calc(var(--safe-top)+6rem))]"
+          className="relative isolate flex min-h-[68svh] flex-col justify-end overflow-hidden bg-suth-base pb-16 pt-[max(7rem,calc(var(--safe-top)+6rem))]"
         >
           <ParallaxBackdrop
             intensity={70}
@@ -61,19 +61,19 @@ export default function AboutPage() {
               sizes="100vw"
               className="object-cover grayscale"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-vyrek-base/70 via-vyrek-base/55 to-vyrek-base" />
+            <div className="absolute inset-0 bg-gradient-to-b from-suth-base/70 via-suth-base/55 to-suth-base" />
           </ParallaxBackdrop>
           <Container>
             <Eyebrow>About</Eyebrow>
             <SplitHeading
               id="about-heading"
               as="h1"
-              className="mt-4 max-w-3xl text-4xl font-black leading-[1.02] tracking-[-0.04em] text-vyrek-text md:text-6xl"
+              className="mt-4 max-w-3xl text-4xl font-black leading-[1.02] tracking-[-0.04em] text-suth-text md:text-6xl"
             >
               Built for the world&apos;s fastest growing sport.
             </SplitHeading>
-            <p className="mt-5 max-w-2xl text-base text-vyrek-text-secondary md:text-lg">
-              Vyrek is a Hyrox-first training platform. Our mission: get you to
+            <p className="mt-5 max-w-2xl text-base text-suth-text-secondary md:text-lg">
+              Suth Performance is a Hyrox-first training platform. Our mission: get you to
               your start line stronger than you expected.
             </p>
           </Container>
@@ -82,21 +82,21 @@ export default function AboutPage() {
         {/* Our story (breathing room: pt-24 = 96px, more than brief's 64px minimum) */}
         <section
           aria-labelledby="story-heading"
-          className="border-t border-vyrek-border-subtle py-24 md:py-32"
+          className="border-t border-suth-border-subtle py-24 md:py-32"
         >
           <Container>
             <div className="mx-auto max-w-3xl">
               <Eyebrow>Our story</Eyebrow>
               <h2
                 id="story-heading"
-                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
               >
                 A training plan written by the coach who races it.
               </h2>
 
-              <div className="mt-10 space-y-6 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+              <div className="mt-10 space-y-6 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                 <p>
-                  James Wright started Vyrek after coaching dozens of athletes
+                  James Wright started Suth Performance after coaching dozens of athletes
                   through their first Hyrox using nothing more than a shared
                   spreadsheet. The spreadsheet worked. Every athlete finished.
                   Most surprised themselves with their time. The bottleneck was
@@ -114,7 +114,7 @@ export default function AboutPage() {
                   />
                 </figure>
                 <p>
-                  Vyrek is the version of that spreadsheet that scales: dated
+                  Suth Performance is the version of that spreadsheet that scales: dated
                   workouts, adaptive Sunday rebuilds, weekly coach review, all
                   inside an app you open like any other. The coaching does not
                   get diluted. It gets handed back the time it used to lose to
@@ -128,19 +128,19 @@ export default function AboutPage() {
         {/* Why Hyrox */}
         <section
           aria-labelledby="why-heading"
-          className="border-t border-vyrek-border-subtle py-24 md:py-32"
+          className="border-t border-suth-border-subtle py-24 md:py-32"
         >
           <Container>
             <div className="mx-auto max-w-3xl">
               <Eyebrow>Why Hyrox</Eyebrow>
               <h2
                 id="why-heading"
-                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
               >
                 Programming that works backwards from the race.
               </h2>
 
-              <div className="mt-10 space-y-6 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+              <div className="mt-10 space-y-6 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                 <p>
                   The sport: 600 athletes in 2018. Around 650,000 in 2024.
                   Hyrox is the fastest growing endurance event in Europe and
@@ -186,11 +186,11 @@ export default function AboutPage() {
               >
                 {GROWTH.map((g, i) => (
                   <RevealOnView key={g.year} as="li" delay={i * 0.08}>
-                    <div className="rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-4">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+                    <div className="rounded-md border border-suth-border-subtle bg-suth-elevated p-4">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
                         {g.year}
                       </p>
-                      <p className="mt-2 text-lg font-bold tracking-[-0.02em] text-vyrek-text md:text-xl">
+                      <p className="mt-2 text-lg font-bold tracking-[-0.02em] text-suth-text md:text-xl">
                         <CountUp
                           value={g.value}
                           suffix={g.suffix}
@@ -208,7 +208,7 @@ export default function AboutPage() {
         {/* What we believe (3 principle cards) */}
         <section
           aria-labelledby="believe-heading"
-          className="border-t border-vyrek-border-subtle py-24 md:py-32"
+          className="border-t border-suth-border-subtle py-24 md:py-32"
         >
           <Container>
             <div className="mx-auto max-w-5xl">
@@ -216,7 +216,7 @@ export default function AboutPage() {
                 <Eyebrow>What we believe</Eyebrow>
                 <h2
                   id="believe-heading"
-                  className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+                  className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
                 >
                   Three principles that decide every workout.
                 </h2>
@@ -228,11 +228,11 @@ export default function AboutPage() {
               >
                 {PRINCIPLES.map((p, i) => (
                   <RevealOnView key={p.tag} as="li" delay={i * 0.12}>
-                    <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-6">
-                      <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+                    <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-6">
+                      <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
                         [ {p.tag} ]
                       </p>
-                      <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+                      <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                         {p.body}
                       </p>
                     </div>
@@ -244,21 +244,21 @@ export default function AboutPage() {
         </section>
 
         {/* Built in the UK */}
-        <section className="border-t border-vyrek-border-subtle py-24 md:py-32">
+        <section className="border-t border-suth-border-subtle py-24 md:py-32">
           <Container>
             <div className="mx-auto max-w-3xl">
               <Eyebrow>Made in UK</Eyebrow>
-              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl">
+              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl">
                 Built in the UK.
               </h2>
-              <p className="mt-6 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
-                Vyrek is a small team based in the United Kingdom. Our founding
+              <p className="mt-6 text-base leading-relaxed text-suth-text-secondary md:text-lg">
+                Suth Performance is a small team based in the United Kingdom. Our founding
                 coach, James Wright, races at the Elite 15 level and finished
                 top 50 at the 2025 World Championships. The programming is
                 designed for UK athletes training in UK gyms with UK race
                 schedules.
               </p>
-              <p className="mt-6 font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+              <p className="mt-6 font-mono text-xs uppercase tracking-[0.18em] text-suth-text-tertiary">
                 [ MADE IN UK ]
               </p>
             </div>
@@ -266,14 +266,14 @@ export default function AboutPage() {
         </section>
 
         {/* Final CTA */}
-        <section className="border-t border-vyrek-border-subtle py-24 md:py-32">
+        <section className="border-t border-suth-border-subtle py-24 md:py-32">
           <Container>
             <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
               <Eyebrow>Start</Eyebrow>
-              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl">
+              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl">
                 Ready to find your plan?
               </h2>
-              <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
+              <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
                 Three-minute quiz. Real Week 1 before you pay.
               </p>
               <div className="mt-8">
@@ -281,7 +281,7 @@ export default function AboutPage() {
                   Find your plan →
                 </CtaButton>
               </div>
-              <p className="mt-4 text-sm text-vyrek-text-tertiary">
+              <p className="mt-4 text-sm text-suth-text-tertiary">
                 First week free. Cancel anytime.
               </p>
             </div>

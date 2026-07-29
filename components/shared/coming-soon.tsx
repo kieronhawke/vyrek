@@ -19,16 +19,16 @@ export function ComingSoon({
           <Eyebrow>{eyebrow}</Eyebrow>
           <SplitHeading
             as="h1"
-            className="mt-4 text-3xl font-black leading-tight tracking-[-0.05em] text-vyrek-text md:text-4xl"
+            className="mt-4 text-3xl font-black leading-tight tracking-[-0.05em] text-suth-text md:text-4xl"
           >
             {title}
           </SplitHeading>
-          <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+          <p className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
             {description}
           </p>
           <Link
             href="/"
-            className="mt-8 inline-flex h-11 items-center text-sm text-vyrek-text-secondary underline-offset-4 hover:underline"
+            className="mt-8 inline-flex h-11 items-center text-sm text-suth-text-secondary underline-offset-4 hover:underline"
           >
             ← Back to home
           </Link>

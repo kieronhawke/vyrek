@@ -12,30 +12,30 @@ import {
 export const metadata: Metadata = {
   title: "Terms of service",
   description:
-    "The agreement between you and Vyrek when you take a trial or subscribe. Plain English.",
+    "The agreement between you and Suth Performance when you take a trial or subscribe. Plain English.",
 };
 
 export default function TermsPage() {
   return (
     <LegalLayout eyebrow="Terms" title="Terms of service">
       <ProseP>
-        These terms govern your use of Vyrek. By taking the trial or
+        These terms govern your use of Suth Performance. By taking the trial or
         subscribing, you accept them. They are written in plain English on
         purpose. If something is unclear, write to{" "}
-        <ProseEmailLink email="support@vyrek.com" /> and we will clarify.
+        <ProseEmailLink email="support@suthperformance.com" /> and we will clarify.
       </ProseP>
 
       <ProseH2>Who we are</ProseH2>
       <ProseP>
-        Vyrek is a Hyrox training platform operated from the United Kingdom.
+        Suth Performance is a Hyrox training platform operated from the United Kingdom.
         Where these terms refer to &ldquo;we&rdquo; or &ldquo;us&rdquo;, that
-        means the Vyrek team. Where they refer to &ldquo;you&rdquo;, that
+        means the Suth Performance team. Where they refer to &ldquo;you&rdquo;, that
         means the person taking the trial or holding the subscription.
       </ProseP>
 
       <ProseH2>The service</ProseH2>
       <ProseP>
-        Vyrek provides personalised Hyrox training programmes through a web
+        Suth Performance provides personalised Hyrox training programmes through a web
         platform. Programmes are 12 weeks. Plans recalibrate every Sunday
         based on the sessions you log. The service is currently web-based;
         native apps may follow. We may add, change, or remove features as the
@@ -56,11 +56,11 @@ export default function TermsPage() {
           credentials secure.
         </ProseLi>
         <ProseLi>
-          You must be at least 16 years old to use Vyrek. We do not knowingly
+          You must be at least 16 years old to use Suth Performance. We do not knowingly
           accept accounts for anyone younger.
         </ProseLi>
         <ProseLi>
-          Tell us at <ProseEmailLink email="support@vyrek.com" /> as soon as
+          Tell us at <ProseEmailLink email="support@suthperformance.com" /> as soon as
           you suspect unauthorised access. We will help secure the account.
         </ProseLi>
       </ProseUl>
@@ -95,7 +95,7 @@ export default function TermsPage() {
       <ProseUl>
         <ProseLi>
           You can cancel at any time, in two taps, via the Stripe customer
-          portal or by emailing <ProseEmailLink email="support@vyrek.com" />.
+          portal or by emailing <ProseEmailLink email="support@suthperformance.com" />.
         </ProseLi>
         <ProseLi>
           Cancellation takes effect at the end of your current billing period.
@@ -106,7 +106,7 @@ export default function TermsPage() {
           After cancellation we keep your training data for 90 days in case
           you return, then delete it (see the{" "}
           <a
-            className="text-vyrek-text underline underline-offset-4 hover:text-vyrek-accent"
+            className="text-suth-text underline underline-offset-4 hover:text-suth-accent"
             href="/legal/privacy"
           >
             Privacy policy
@@ -129,7 +129,7 @@ export default function TermsPage() {
         unaffected. If the service is not as described or not delivered with
         reasonable skill, contact us; we will put it right or refund. See the{" "}
         <a
-          className="text-vyrek-text underline underline-offset-4 hover:text-vyrek-accent"
+          className="text-suth-text underline underline-offset-4 hover:text-suth-accent"
           href="/legal/refunds"
         >
           Refund policy
@@ -169,7 +169,7 @@ export default function TermsPage() {
 
       <ProseH2>Intellectual property</ProseH2>
       <ProseP>
-        Vyrek owns the platform, the programme structure, the workouts, the
+        Suth Performance owns the platform, the programme structure, the workouts, the
         editorial content (the Journal), and the brand. You own your personal
         data and the workout logs you create. Using the service does not
         transfer any rights in the programmes to you. You grant us a
@@ -179,7 +179,7 @@ export default function TermsPage() {
 
       <ProseH2>Health and safety</ProseH2>
       <ProseP>
-        Vyrek delivers training programmes online, not medical advice. The
+        Suth Performance delivers training programmes online, not medical advice. The
         sessions are designed for adults in reasonable health. If you have a
         medical condition, an injury, or any reason to consult a clinician
         before starting a new training programme, you should do so before
@@ -221,7 +221,7 @@ export default function TermsPage() {
 
       <ProseH2>Recurring billing and payment authorisation</ProseH2>
       <ProseP>
-        By starting a paid subscription you authorise Vyrek (via Stripe) to
+        By starting a paid subscription you authorise Suth Performance (via Stripe) to
         charge your saved payment method the monthly subscription fee
         (currently £8.99 in GBP) on a recurring monthly cycle. The first
         charge happens at the end of the 7-day free trial; subsequent
@@ -251,14 +251,14 @@ export default function TermsPage() {
       </ProseP>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Account sharing at scale.</strong>{" "}
+          <strong className="text-suth-text">Account sharing at scale.</strong>{" "}
           One account per person. Sharing a login with a partner or training
           buddy is fine occasionally; we treat persistent multi-device usage
           from materially different geographies on the same account as a
           shared account and may suspend.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Bulk export or scraping.</strong>{" "}
+          <strong className="text-suth-text">Bulk export or scraping.</strong>{" "}
           Automated scripts that pull workout content, blog posts, or
           partner-facing materials in bulk are not permitted. The marketing
           site, blog, and partner-public surfaces are open to good-faith
@@ -266,20 +266,20 @@ export default function TermsPage() {
           that needs prior written permission.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Reverse engineering or
+          <strong className="text-suth-text">Reverse engineering or
           redistribution.</strong> You may not lift programmes, workouts,
           or coaching content out of the service and republish them under
           your own brand. Sharing a single session with a friend in
           conversation is fine; redistribution is not.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Multi-account schemes for
+          <strong className="text-suth-text">Multi-account schemes for
           referrals.</strong> Creating multiple accounts to refer yourself or
           to game partner commissions voids any earned referral payout and
           is a permanent suspension trigger.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Threats or abuse to staff or
+          <strong className="text-suth-text">Threats or abuse to staff or
           coaches.</strong> We are happy to disagree about training,
           billing, or any other aspect of the service; abuse aimed at
           named individuals results in immediate suspension.
@@ -299,7 +299,7 @@ export default function TermsPage() {
 
       <ProseH2>Member referrals</ProseH2>
       <ProseP>
-        Any Vyrek member can refer a friend from their account. When the
+        Any Suth Performance member can refer a friend from their account. When the
         friend you refer converts from trial to a paid subscription, you earn
         £20.
       </ProseP>
@@ -324,7 +324,7 @@ export default function TermsPage() {
       <ProseH2>Partner Programme (creators, coaches, communities)</ProseH2>
       <ProseP>
         Separate from the member referral above. If you are accepted onto the
-        Vyrek Partner Programme, separate Partner T&amp;Cs apply alongside
+        Suth Performance Partner Programme, separate Partner T&amp;Cs apply alongside
         these terms. Headline points:
       </ProseP>
       <ProseUl>
@@ -350,7 +350,7 @@ export default function TermsPage() {
 
       <ProseH2>Coaching, training advice, and what we are not</ProseH2>
       <ProseP>
-        Vyrek delivers structured Hyrox training programmes and gives you
+        Suth Performance delivers structured Hyrox training programmes and gives you
         access to a coach for week-by-week guidance through the in-app
         messaging surface and (for paid members) a 30-minute onboarding
         call in your first week. Our coaches are experienced athletes and
@@ -386,7 +386,7 @@ export default function TermsPage() {
 
       <ProseH2>Member-generated content and ownership</ProseH2>
       <ProseP>
-        You retain ownership of the content you create on Vyrek: workout
+        You retain ownership of the content you create on Suth Performance: workout
         logs, race notes, profile photo, custom calendar entries. We hold
         a non-exclusive licence to store, process, and display that content
         within the service so it can render in your app and feed into your
@@ -422,7 +422,7 @@ export default function TermsPage() {
       <ProseP>
         Where we cite a creator or organisation we attribute clearly; if
         you are a creator and want a citation amended or removed, email{" "}
-        <ProseEmailLink email="press@vyrek.com" /> and we will action within
+        <ProseEmailLink email="press@suthperformance.com" /> and we will action within
         7 days.
       </ProseP>
 
@@ -462,7 +462,7 @@ export default function TermsPage() {
       <ProseH2>Account data export and portability</ProseH2>
       <ProseP>
         You can request a full export of your account data at any time by
-        emailing <ProseEmailLink email="support@vyrek.com" />. The export
+        emailing <ProseEmailLink email="support@suthperformance.com" />. The export
         is delivered as a single ZIP file containing your training logs,
         quiz answers, plan history, account profile, and invoices, in
         machine-readable JSON. Typical turnaround is 7 days.
@@ -481,7 +481,7 @@ export default function TermsPage() {
         live if that right is given to you by law.
       </ProseP>
       <ProseP>
-        Please contact <ProseEmailLink email="support@vyrek.com" /> before
+        Please contact <ProseEmailLink email="support@suthperformance.com" /> before
         starting any formal dispute. We resolve nearly every concern faster
         directly than through any formal channel. For consumers in the EU/UK,
         you can also use the Online Dispute Resolution platform:{" "}
@@ -491,7 +491,7 @@ export default function TermsPage() {
       <ProseH3>Contact</ProseH3>
       <ProseP>
         Questions about these terms:{" "}
-        <ProseEmailLink email="support@vyrek.com" />.
+        <ProseEmailLink email="support@suthperformance.com" />.
       </ProseP>
     </LegalLayout>
   );

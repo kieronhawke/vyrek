@@ -1,4 +1,4 @@
--- Vyrek live-presence tracking (Phase B3 polish).
+-- Suth Performance live-presence tracking (Phase B3 polish).
 -- Records every active session with a sliding last_seen timestamp.
 -- Anything older than 60 seconds is "stale" (user closed tab / lost
 -- connection); the admin /live page filters on last_seen > now()-60s.

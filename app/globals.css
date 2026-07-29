@@ -3,44 +3,44 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ─── Vyrek design tokens (per build brief §6) ──────────────────────── */
+/* ─── Suth Performance design tokens (per build brief §6) ──────────────────────── */
 /* The site is dark by default. :root and .dark share the same palette. */
 
 :root,
 .dark {
   /* Surfaces */
-  --vyrek-bg-base:        #0A0A0A;
-  --vyrek-bg-elevated:    #141414;
-  --vyrek-bg-overlay:     #1C1C1C;
+  --suth-bg-base:        #0A0A0A;
+  --suth-bg-elevated:    #141414;
+  --suth-bg-overlay:     #1C1C1C;
 
   /* Borders */
-  --vyrek-border-subtle:  #1F1F1F;
-  --vyrek-border-default: #2A2A2A;
-  --vyrek-border-strong:  #3D3D3D;
+  --suth-border-subtle:  #1F1F1F;
+  --suth-border-default: #2A2A2A;
+  --suth-border-strong:  #3D3D3D;
 
   /* Text — tertiary lifted from the brief's #5C5C5A (2.95:1) to #8A8A88
      (~5.7:1) so eyebrow/mono labels pass WCAG AA on the dark surface. */
-  --vyrek-text-primary:   #F5F5F3;
-  --vyrek-text-secondary: #A8A8A6;
-  --vyrek-text-tertiary:  #8A8A88;
-  --vyrek-text-disabled:  #555553;
+  --suth-text-primary:   #F5F5F3;
+  --suth-text-secondary: #A8A8A6;
+  --suth-text-tertiary:  #8A8A88;
+  --suth-text-disabled:  #555553;
 
   /* Accent (chartreuse, used sparingly).
      accent       : primary action fill / mono brackets / active states
      accent-hover : darker variant for hover, pressed
      accent-glow  : lighter highlight for focus rings on subtle surfaces
      accent-muted : low-saturation backdrop for callout pills + bg tints */
-  --vyrek-accent:         #A3E635;
-  --vyrek-accent-hover:   #84CC16;
-  --vyrek-accent-glow:    #BEF264;
-  --vyrek-accent-muted:   #1A3D08;
+  --suth-accent:         #A3E635;
+  --suth-accent-hover:   #84CC16;
+  --suth-accent-glow:    #BEF264;
+  --suth-accent-muted:   #1A3D08;
 
   /* Semantic.
      Success uses white plus a checkmark icon, not green: chartreuse owns
      green in this palette and a second green would confuse the brand. */
-  --vyrek-success:        #FFFFFF;
-  --vyrek-warning:        #F59E0B;
-  --vyrek-danger:         #EF4444;
+  --suth-success:        #FFFFFF;
+  --suth-warning:        #F59E0B;
+  --suth-danger:         #EF4444;
 
   /* Motion */
   --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
@@ -58,38 +58,38 @@
   /* Cookie consent strip pushes everything down by this much while
      visible. Set by components/legal/cookie-banner.tsx on mount; 0
      when not visible so layouts collapse cleanly. */
-  --vyrek-consent-h: 0px;
+  --suth-consent-h: 0px;
 
-  /* shadcn semantic tokens, mapped onto Vyrek palette */
-  --background:             var(--vyrek-bg-base);
-  --foreground:             var(--vyrek-text-primary);
-  --card:                   var(--vyrek-bg-elevated);
-  --card-foreground:        var(--vyrek-text-primary);
-  --popover:                var(--vyrek-bg-elevated);
-  --popover-foreground:     var(--vyrek-text-primary);
-  --primary:                var(--vyrek-accent);
+  /* shadcn semantic tokens, mapped onto Suth Performance palette */
+  --background:             var(--suth-bg-base);
+  --foreground:             var(--suth-text-primary);
+  --card:                   var(--suth-bg-elevated);
+  --card-foreground:        var(--suth-text-primary);
+  --popover:                var(--suth-bg-elevated);
+  --popover-foreground:     var(--suth-text-primary);
+  --primary:                var(--suth-accent);
   --primary-foreground:     #0A0A0A;
-  --secondary:              var(--vyrek-bg-overlay);
-  --secondary-foreground:   var(--vyrek-text-primary);
-  --muted:                  var(--vyrek-bg-overlay);
-  --muted-foreground:       var(--vyrek-text-secondary);
-  --accent:                 var(--vyrek-bg-overlay);
-  --accent-foreground:      var(--vyrek-text-primary);
-  --destructive:            var(--vyrek-danger);
+  --secondary:              var(--suth-bg-overlay);
+  --secondary-foreground:   var(--suth-text-primary);
+  --muted:                  var(--suth-bg-overlay);
+  --muted-foreground:       var(--suth-text-secondary);
+  --accent:                 var(--suth-bg-overlay);
+  --accent-foreground:      var(--suth-text-primary);
+  --destructive:            var(--suth-danger);
   --destructive-foreground: #FFFFFF;
-  --border:                 var(--vyrek-border-default);
-  --input:                  var(--vyrek-border-default);
-  --ring:                   var(--vyrek-accent);
+  --border:                 var(--suth-border-default);
+  --input:                  var(--suth-border-default);
+  --ring:                   var(--suth-accent);
   --radius:                 12px;
 
-  --sidebar:                       var(--vyrek-bg-base);
-  --sidebar-foreground:            var(--vyrek-text-primary);
-  --sidebar-primary:               var(--vyrek-accent);
+  --sidebar:                       var(--suth-bg-base);
+  --sidebar-foreground:            var(--suth-text-primary);
+  --sidebar-primary:               var(--suth-accent);
   --sidebar-primary-foreground:    #0A0A0A;
-  --sidebar-accent:                var(--vyrek-bg-overlay);
-  --sidebar-accent-foreground:     var(--vyrek-text-primary);
-  --sidebar-border:                var(--vyrek-border-default);
-  --sidebar-ring:                  var(--vyrek-accent);
+  --sidebar-accent:                var(--suth-bg-overlay);
+  --sidebar-accent-foreground:     var(--suth-text-primary);
+  --sidebar-border:                var(--suth-border-default);
+  --sidebar-ring:                  var(--suth-accent);
 }
 
 /* ─── Tailwind v4 theme exposure ────────────────────────────────────── */
@@ -115,24 +115,24 @@
   --color-input:                  var(--input);
   --color-ring:                   var(--ring);
 
-  /* Vyrek-named colours (bg-vyrek-elevated, text-vyrek-secondary, etc) */
-  --color-vyrek-base:           var(--vyrek-bg-base);
-  --color-vyrek-elevated:       var(--vyrek-bg-elevated);
-  --color-vyrek-overlay:        var(--vyrek-bg-overlay);
-  --color-vyrek-border-subtle:  var(--vyrek-border-subtle);
-  --color-vyrek-border:         var(--vyrek-border-default);
-  --color-vyrek-border-strong:  var(--vyrek-border-strong);
-  --color-vyrek-text:           var(--vyrek-text-primary);
-  --color-vyrek-text-secondary: var(--vyrek-text-secondary);
-  --color-vyrek-text-tertiary:  var(--vyrek-text-tertiary);
-  --color-vyrek-text-disabled:  var(--vyrek-text-disabled);
-  --color-vyrek-accent:         var(--vyrek-accent);
-  --color-vyrek-accent-hover:   var(--vyrek-accent-hover);
-  --color-vyrek-accent-glow:    var(--vyrek-accent-glow);
-  --color-vyrek-accent-muted:   var(--vyrek-accent-muted);
-  --color-vyrek-success:        var(--vyrek-success);
-  --color-vyrek-warning:        var(--vyrek-warning);
-  --color-vyrek-danger:         var(--vyrek-danger);
+  /* Suth Performance-named colours (bg-suth-elevated, text-suth-secondary, etc) */
+  --color-suth-base:           var(--suth-bg-base);
+  --color-suth-elevated:       var(--suth-bg-elevated);
+  --color-suth-overlay:        var(--suth-bg-overlay);
+  --color-suth-border-subtle:  var(--suth-border-subtle);
+  --color-suth-border:         var(--suth-border-default);
+  --color-suth-border-strong:  var(--suth-border-strong);
+  --color-suth-text:           var(--suth-text-primary);
+  --color-suth-text-secondary: var(--suth-text-secondary);
+  --color-suth-text-tertiary:  var(--suth-text-tertiary);
+  --color-suth-text-disabled:  var(--suth-text-disabled);
+  --color-suth-accent:         var(--suth-accent);
+  --color-suth-accent-hover:   var(--suth-accent-hover);
+  --color-suth-accent-glow:    var(--suth-accent-glow);
+  --color-suth-accent-muted:   var(--suth-accent-muted);
+  --color-suth-success:        var(--suth-success);
+  --color-suth-warning:        var(--suth-warning);
+  --color-suth-danger:         var(--suth-danger);
 
   /* Radii per brief */
   --radius-sm:   6px;
@@ -210,7 +210,7 @@
    Falls back to instant for users who prefer reduced motion. */
 html {
   height: 100svh;
-  background: var(--vyrek-bg-base);
+  background: var(--suth-bg-base);
   color-scheme: dark;
   scroll-behavior: smooth;
 }
@@ -225,7 +225,7 @@ html {
    shadcn / Radix components opt out with focus-visible:outline-none and
    their own ring; this rule covers everything else. */
 :focus-visible {
-  outline: 2px solid var(--vyrek-accent);
+  outline: 2px solid var(--suth-accent);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -240,17 +240,17 @@ a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  box-shadow: 0 0 0 2px var(--vyrek-accent), 0 0 0 4px rgba(163, 230, 53, 0.20);
-  border-color: var(--vyrek-accent);
+  box-shadow: 0 0 0 2px var(--suth-accent), 0 0 0 4px rgba(163, 230, 53, 0.20);
+  border-color: var(--suth-accent);
 }
 
 body {
-  background: var(--vyrek-bg-base);
-  color: var(--vyrek-text-primary);
+  background: var(--suth-bg-base);
+  color: var(--suth-text-primary);
   font-family: var(--font-sans);
   /* Push everything down by the cookie strip height while visible.
      Transitions for a clean slide. */
-  padding-top: var(--vyrek-consent-h, 0px);
+  padding-top: var(--suth-consent-h, 0px);
   transition: padding-top var(--duration-base, 320ms) var(--ease-out);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -320,7 +320,7 @@ a.inline, [data-inline-tap], .prose a, nav[aria-label="Breadcrumb"] a {
 .lift-on-hover:hover,
 .lift-on-hover:focus-visible {
   transform: translateY(-3px);
-  border-color: var(--vyrek-border-strong);
+  border-color: var(--suth-border-strong);
   box-shadow:
     0 18px 38px -22px rgba(0, 0, 0, 0.55),
     0 1px 0 0 rgba(163, 230, 53, 0.20) inset;

@@ -306,7 +306,7 @@ test.describe("Form edge cases", () => {
     await page.fill('input[name="name"]', "Ñoël “The Coach” Müller-O'Brien");
     await page.fill(
       'input[name="email"]',
-      "ñoël+vyrek-test_2026@example-domain.co.uk",
+      "ñoël+suth-test_2026@example-domain.co.uk",
     );
     await page.fill('input[name="country"]', "United Kingdom");
     await page.selectOption('select[name="platform"]', { label: "Instagram" });
@@ -315,7 +315,7 @@ test.describe("Form edge cases", () => {
       'textarea[name="contentDescription"]',
       "x".repeat(200),
     );
-    await page.fill('textarea[name="whyVyrek"]', "y".repeat(300));
+    await page.fill('textarea[name="whySuth"]', "y".repeat(300));
     await page.fill(
       'input[name="primaryUrl"]',
       "https://example.com/path?query=1&more=2#frag",

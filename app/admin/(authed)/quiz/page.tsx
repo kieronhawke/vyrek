@@ -44,12 +44,12 @@ export default async function AdminQuizPage() {
       </section>
 
       <section className="mb-10">
-        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           By programme
         </h2>
         {sortedProgrammes.length === 0 ? (
           <Card>
-            <p className="text-sm text-vyrek-text-tertiary">No data yet.</p>
+            <p className="text-sm text-suth-text-tertiary">No data yet.</p>
           </Card>
         ) : (
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
@@ -57,13 +57,13 @@ export default async function AdminQuizPage() {
               const pct = total ? Math.round((n / total) * 100) : 0;
               return (
                 <Card key={p}>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
                     {PROGRAMME_LABELS[p] ?? p}
                   </p>
-                  <p className="mt-2 text-3xl font-black tracking-[-0.02em] text-vyrek-text tabular-nums">
+                  <p className="mt-2 text-3xl font-black tracking-[-0.02em] text-suth-text tabular-nums">
                     {n}
                   </p>
-                  <p className="mt-1 text-xs text-vyrek-text-tertiary">{pct}% of total</p>
+                  <p className="mt-1 text-xs text-suth-text-tertiary">{pct}% of total</p>
                 </Card>
               );
             })}
@@ -72,7 +72,7 @@ export default async function AdminQuizPage() {
       </section>
 
       <section>
-        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           Recent responses
         </h2>
         <Table

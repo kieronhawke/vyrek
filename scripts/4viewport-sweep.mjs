@@ -14,7 +14,7 @@
 import { chromium } from "@playwright/test";
 import { writeFile, mkdir } from "node:fs/promises";
 
-const BASE = process.env.SMOKE_BASE ?? "https://vyrek.vercel.app";
+const BASE = process.env.SMOKE_BASE ?? "https://suthperformance.com";
 const OUT = "/Users/kieronhawke/code/vyrek/scripts/4viewport-sweep";
 
 const VIEWPORTS = [

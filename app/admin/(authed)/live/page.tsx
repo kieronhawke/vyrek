@@ -41,7 +41,7 @@ export default async function AdminLivePage() {
     <>
       <PageHeader
         eyebrow="Right now"
-        title="Live on Vyrek"
+        title="Live on Suth Performance"
         description="Visitors active in the last 60 seconds. Polls every 5s."
       />
       {!initial.ok ? (
@@ -52,7 +52,7 @@ export default async function AdminLivePage() {
       ) : (
         <LiveSessions initial={initial.sessions} />
       )}
-      <p className="mt-8 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+      <p className="mt-8 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
         <Badge tone="accent">LIVE</Badge>
         Sessions older than 60s drop off automatically
       </p>

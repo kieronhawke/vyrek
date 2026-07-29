@@ -1,6 +1,6 @@
-# Vyrek photo sourcing brief
+# Suth Performance photo sourcing brief
 
-**Purpose:** a commission-ready spec you (or a photographer / stock-image agency / casting director) can act on to lift Vyrek's imagery from "decent Pexels stock" to "owned, race-authentic visual identity".
+**Purpose:** a commission-ready spec you (or a photographer / stock-image agency / casting director) can act on to lift Suth Performance's imagery from "decent Pexels stock" to "owned, race-authentic visual identity".
 
 **Reading order:**
 
@@ -20,7 +20,7 @@ Each priority block lists: slot it solves, current §1.2 verdict, required subje
 
 ### Cast (must-have)
 
-1. **James Wright** — founding coach. The Vyrek face.
+1. **James Wright** — founding coach. The Suth Performance face.
 2. **One female athlete, 35-45, white or Black** — represents the Masters demo currently absent from imagery.
 3. **One non-lean first-time athlete, any gender** — represents the First Race programme honestly (current imagery sets a fitness prerequisite that the programme itself doesn't).
 4. **One Black or South Asian athlete, 25-35** — closes the ethnicity gap; 4/25 identifiable subjects are non-white today.
@@ -50,7 +50,7 @@ Each priority block lists: slot it solves, current §1.2 verdict, required subje
 - ASA/CAP code 3.7 compliance: get signed consent forms before any portrait shoot if the image will be used with a quote
 
 **A4. Bento + lifestyle (~25 frames)**
-- Phone-in-hand with the Vyrek app open (mock-up) — replaces `bento-plan`
+- Phone-in-hand with the Suth Performance app open (mock-up) — replaces `bento-plan`
 - Watch metrics check post-session — replaces `bento-progress`
 - Wide gym-floor scene — replaces `bento-coaches` and the various reused gym backdrops
 
@@ -63,7 +63,7 @@ Each priority block lists: slot it solves, current §1.2 verdict, required subje
 - All RAW + edited JPEG + WebP exports
 - Per-image alt text drafted at delivery
 - Signed model releases for every visible subject
-- Filename convention: `vyrek-{role}-{subject-initials}-{shot-number}.jpg`
+- Filename convention: `suth-{role}-{subject-initials}-{shot-number}.jpg`
 
 ### Budget tier
 £1,500-3,000 half-day shoot (London / Manchester / Bristol rates). Half goes to photographer, half to cast + venue hire if not free.
@@ -142,12 +142,12 @@ Solves: Cluster 6.
 
 ## §D — Member testimonial gather (free, ~30 days)
 
-**Goal:** replace the 3 "Pre-launch · illustrative" testimonials with real consented Vyrek graduates + their photo.
+**Goal:** replace the 3 "Pre-launch · illustrative" testimonials with real consented Suth Performance graduates + their photo.
 
 ### Process
 
 1. Email existing First Race / Sub-90 / Doubles graduates (Supabase `customers` table, filter by programme + completed-quiz timestamp older than 12 weeks)
-2. Offer: a free month of Vyrek + a t-shirt + (if they want) feature on the testimonials carousel
+2. Offer: a free month of Suth Performance + a t-shirt + (if they want) feature on the testimonials carousel
 3. Required from them: a 30-50 word quote about the programme, a finish-line photo OR a gym-session photo, signed photo + quote release
 4. Filter for quality: 3 quotes with concrete numbers ("finished 92 minutes when I'd planned for 105") + 3 photos that fit the testimonial card (5:4 portrait or landscape with face dominant)
 
@@ -193,7 +193,7 @@ Solves: Cluster 6.
 
 **£1,500:** §A only. Solves coach + portrait + bento + all the warm-register slots site-wide. Strongest brand lift per £.
 
-**£3,000:** §A + §B. Replaces every "wrong kit / generic" slot AND every coach/portrait slot. Sets the visual baseline for Vyrek through 2027.
+**£3,000:** §A + §B. Replaces every "wrong kit / generic" slot AND every coach/portrait slot. Sets the visual baseline for Suth Performance through 2027.
 
 ---
 

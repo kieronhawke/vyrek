@@ -16,7 +16,7 @@ import { capture } from "@/lib/posthog";
 
 const SAMPLE_CODE = "DEMO-W2X4-RX9P";
 const SHARE_TEXT =
-  "I'm using Vyrek for Hyrox training. £8.99/mo, first week free, use my link and I'll get £20 if you stay past your trial.";
+  "I'm using Suth Performance for Hyrox training. £8.99/mo, first week free, use my link and I'll get £20 if you stay past your trial.";
 
 type ReferralState = {
   code: string;
@@ -66,7 +66,7 @@ export function ReferPanel() {
   const code = state?.code ?? SAMPLE_CODE;
   const origin =
     typeof window === "undefined"
-      ? "https://vyrek.com": window.location.origin;
+      ? "https://suthperformance.com": window.location.origin;
   const referralUrl = `${origin}/?ref=${code}`;
 
   const onCopy = useCallback(
@@ -88,7 +88,7 @@ export function ReferPanel() {
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
-          title: "Vyrek. Hyrox training",
+          title: "Suth Performance. Hyrox training",
           text: SHARE_TEXT,
           url: referralUrl,
         });
@@ -107,19 +107,19 @@ export function ReferPanel() {
           <Eyebrow>Refer &amp; earn</Eyebrow>
           <SplitHeading
             as="h1"
-            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
           >
             Refer a friend. Earn £20.
           </SplitHeading>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-suth-text-secondary md:text-lg">
             Send a friend your link. When their trial converts to paid, we BACS
             £20 to your account within 5 business days. No cap. No expiry.
           </p>
 
           {/* Code card */}
-          <section className="mt-12 rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 md:p-8">
+          <section className="mt-12 rounded-lg border border-suth-border bg-suth-elevated p-6 md:p-8">
             {isPreview ? (
-              <div className="mb-5 inline-flex items-center gap-2 rounded-pill border border-vyrek-accent/40 bg-vyrek-accent/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-pill border border-suth-accent/40 bg-suth-accent/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
                 <span aria-hidden>●</span>
                 Preview · sign in to see your real code
               </div>
@@ -131,11 +131,11 @@ export function ReferPanel() {
               <div className="min-w-0">
                 <p
                   aria-label="Referral code"
-                  className="select-all break-all font-mono text-3xl font-bold uppercase tracking-[0.05em] text-vyrek-text md:text-4xl"
+                  className="select-all break-all font-mono text-3xl font-bold uppercase tracking-[0.05em] text-suth-text md:text-4xl"
                 >
                   {code}
                 </p>
-                <p className="mt-2 text-sm text-vyrek-text-secondary">
+                <p className="mt-2 text-sm text-suth-text-secondary">
                   Friends who use this code get the same 7-day free trial. You
                   earn £20 if they stay past day 7.
                 </p>
@@ -144,13 +144,13 @@ export function ReferPanel() {
                 type="button"
                 onClick={() => onCopy(code, "code")}
                 disabled={loading}
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-overlay px-5 text-sm font-medium text-vyrek-text transition-[border,background] duration-fast hover:border-vyrek-border-strong disabled:opacity-50"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-pill border border-suth-border bg-suth-overlay px-5 text-sm font-medium text-suth-text transition-[border,background] duration-fast hover:border-suth-border-strong disabled:opacity-50"
               >
                 {copied === "code" ? "Copied ✓": "Copy code"}
               </button>
             </div>
 
-            <hr className="my-6 border-t border-vyrek-border-subtle" />
+            <hr className="my-6 border-t border-suth-border-subtle" />
 
             <Eyebrow>Share link</Eyebrow>
             <div className="mt-3 flex flex-col gap-3 sm:flex-row">
@@ -158,13 +158,13 @@ export function ReferPanel() {
                 readOnly
                 value={referralUrl}
                 aria-label="Referral URL"
-                className="h-12 w-full rounded-md border border-vyrek-border bg-vyrek-base px-4 font-mono text-sm text-vyrek-text outline-none focus:border-vyrek-accent"
+                className="h-12 w-full rounded-md border border-suth-border bg-suth-base px-4 font-mono text-sm text-suth-text outline-none focus:border-suth-accent"
               />
               <button
                 type="button"
                 onClick={() => onCopy(referralUrl, "url")}
                 disabled={loading}
-                className="inline-flex h-12 shrink-0 items-center justify-center rounded-pill border border-vyrek-border bg-vyrek-overlay px-5 text-sm font-medium text-vyrek-text transition-[border,background] duration-fast hover:border-vyrek-border-strong disabled:opacity-50"
+                className="inline-flex h-12 shrink-0 items-center justify-center rounded-pill border border-suth-border bg-suth-overlay px-5 text-sm font-medium text-suth-text transition-[border,background] duration-fast hover:border-suth-border-strong disabled:opacity-50"
               >
                 {copied === "url" ? "Copied ✓": "Copy link"}
               </button>
@@ -172,7 +172,7 @@ export function ReferPanel() {
                 type="button"
                 onClick={onShare}
                 disabled={loading}
-                className="inline-flex h-12 items-center justify-center rounded-pill bg-vyrek-accent px-5 text-sm font-medium text-[#0A0A0A] transition-[background,transform] duration-fast hover:bg-vyrek-accent-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex h-12 items-center justify-center rounded-pill bg-suth-accent px-5 text-sm font-medium text-[#0A0A0A] transition-[background,transform] duration-fast hover:bg-suth-accent-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Share ↗
               </button>
@@ -180,7 +180,7 @@ export function ReferPanel() {
           </section>
 
           {/* Stats card */}
-          <section className="mt-6 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-6 md:p-8">
+          <section className="mt-6 rounded-lg border border-suth-border-subtle bg-suth-elevated p-6 md:p-8">
             <Eyebrow>Your numbers</Eyebrow>
             <dl className="mt-4 grid grid-cols-3 gap-4">
               <Stat label="Referred" value={state?.totalReferred ?? 0} />
@@ -191,11 +191,11 @@ export function ReferPanel() {
               />
             </dl>
             {isPreview ? (
-              <p className="mt-5 text-sm text-vyrek-text-secondary">
+              <p className="mt-5 text-sm text-suth-text-secondary">
                 Numbers will update automatically as friends sign up.{" "}
                 <Link
                   href="/quiz"
-                  className="text-vyrek-text underline underline-offset-4 decoration-vyrek-accent hover:decoration-2"
+                  className="text-suth-text underline underline-offset-4 decoration-suth-accent hover:decoration-2"
                 >
                   Start your own trial
                 </Link>{" "}
@@ -230,15 +230,15 @@ export function ReferPanel() {
               ].map((s) => (
                 <li
                   key={s.step}
-                  className="flex flex-col gap-3 rounded-lg border border-vyrek-border bg-vyrek-elevated p-5"
+                  className="flex flex-col gap-3 rounded-lg border border-suth-border bg-suth-elevated p-5"
                 >
-                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
                     {s.step}
                   </span>
-                  <h3 className="text-base font-bold text-vyrek-text">
+                  <h3 className="text-base font-bold text-suth-text">
                     {s.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-vyrek-text-secondary">
+                  <p className="text-sm leading-relaxed text-suth-text-secondary">
                     {s.body.replace(/&apos;/g, "’")}
                   </p>
                 </li>
@@ -247,41 +247,41 @@ export function ReferPanel() {
           </section>
 
           {/* Terms */}
-          <section className="mt-16 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/60 p-6 md:p-8">
+          <section className="mt-16 rounded-lg border border-suth-border-subtle bg-suth-elevated/60 p-6 md:p-8">
             <Eyebrow>Programme terms</Eyebrow>
-            <ul role="list" className="mt-4 space-y-2 text-sm text-vyrek-text-secondary">
+            <ul role="list" className="mt-4 space-y-2 text-sm text-suth-text-secondary">
               <li>
-                <strong className="text-vyrek-text">Eligibility.</strong> You
-                must be a Vyrek member with at least one paid month on file
+                <strong className="text-suth-text">Eligibility.</strong> You
+                must be a Suth Performance member with at least one paid month on file
                 before payouts release. (Active trials still earn referrals,
                 they just don&apos;t pay out until you&apos;ve converted yourself.)
               </li>
               <li>
-                <strong className="text-vyrek-text">Payout.</strong> £20 per
+                <strong className="text-suth-text">Payout.</strong> £20 per
                 converted referral, paid by BACS within 5 working days of the
                 friend&apos;s first paid invoice settling. UK bank accounts
                 only at launch.
               </li>
               <li>
-                <strong className="text-vyrek-text">Cooling-off.</strong> If
+                <strong className="text-suth-text">Cooling-off.</strong> If
                 the referred friend cancels and refunds within the
                 Consumer Contracts Regulations 14-day window, the bounty is
                 reversed. This applies once per referral.
               </li>
               <li>
-                <strong className="text-vyrek-text">No self-referrals.</strong>{" "}
+                <strong className="text-suth-text">No self-referrals.</strong>{" "}
                 Codes are tied to the account that issued them. We auto-detect
                 same-card, same-device, or shared-IP signups and decline those
                 payouts.
               </li>
               <li>
-                <strong className="text-vyrek-text">No cap.</strong> Refer as
+                <strong className="text-suth-text">No cap.</strong> Refer as
                 many as you like. We&apos;ll happily fund your gym membership
                 in £20 chunks.
               </li>
             </ul>
-            <p className="mt-5 text-xs text-vyrek-text-tertiary">
-              Vyrek may pause the programme or adjust the bounty with 30 days&apos;
+            <p className="mt-5 text-xs text-suth-text-tertiary">
+              Suth Performance may pause the programme or adjust the bounty with 30 days&apos;
               notice. Existing earned payouts are never affected.
             </p>
           </section>
@@ -294,10 +294,10 @@ export function ReferPanel() {
 function Stat({ label, value }: { label: string; value: number | string }) {
   return (
     <div>
-      <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+      <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
         {label}
       </dt>
-      <dd className="mt-1 text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
+      <dd className="mt-1 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
         {value}
       </dd>
     </div>

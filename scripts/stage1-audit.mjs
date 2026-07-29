@@ -5,7 +5,7 @@
 import { chromium, webkit, devices } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 
-const BASE = process.env.SHOT_BASE ?? "https://vyrek.vercel.app";
+const BASE = process.env.SHOT_BASE ?? "https://suthperformance.com";
 const ROOT = "/Users/kieronhawke/code/vyrek/docs";
 await mkdir(`${ROOT}/desktop-audit-screenshots`, { recursive: true });
 await mkdir(`${ROOT}/mobile-audit-screenshots`, { recursive: true });

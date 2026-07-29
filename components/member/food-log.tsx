@@ -46,26 +46,26 @@ export function FoodLog({ initial }: { initial: FoodEntry[] }) {
         {entries.map((f) => (
           <li
             key={f.id}
-            className="flex items-center gap-3 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/60 px-3 py-2.5"
+            className="flex items-center gap-3 rounded-lg border border-suth-border-subtle bg-suth-elevated/60 px-3 py-2.5"
           >
-            <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary w-12">
+            <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary w-12">
               {f.time}
             </span>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-vyrek-text">
+              <p className="truncate text-sm font-semibold text-suth-text">
                 {f.name}
               </p>
               {f.amount ? (
-                <p className="truncate text-xs text-vyrek-text-secondary">
+                <p className="truncate text-xs text-suth-text-secondary">
                   {f.amount}
                 </p>
               ) : null}
             </div>
             <div className="shrink-0 text-right">
-              <p className="font-mono text-xs tabular-nums text-vyrek-text">
+              <p className="font-mono text-xs tabular-nums text-suth-text">
                 {f.kcal}
               </p>
-              <p className="font-mono text-[10px] tabular-nums text-vyrek-text-tertiary">
+              <p className="font-mono text-[10px] tabular-nums text-suth-text-tertiary">
                 P{f.protein} C{f.carbs} F{f.fat}
               </p>
             </div>
@@ -73,7 +73,7 @@ export function FoodLog({ initial }: { initial: FoodEntry[] }) {
               type="button"
               onClick={() => remove(f.id)}
               aria-label={`Remove ${f.name}`}
-              className="ml-1 inline-flex size-7 shrink-0 items-center justify-center rounded-full text-vyrek-text-tertiary hover:bg-vyrek-base hover:text-vyrek-text"
+              className="ml-1 inline-flex size-7 shrink-0 items-center justify-center rounded-full text-suth-text-tertiary hover:bg-suth-base hover:text-suth-text"
             >
               ×
             </button>
@@ -84,13 +84,13 @@ export function FoodLog({ initial }: { initial: FoodEntry[] }) {
       {open ? (
         <form
           onSubmit={add}
-          className="rounded-lg border border-vyrek-accent/40 bg-vyrek-elevated p-4"
+          className="rounded-lg border border-suth-accent/40 bg-suth-elevated p-4"
         >
-          <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+          <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
             [ ADD FOOD ]
           </p>
           <label className="block">
-            <span className="block text-xs font-medium text-vyrek-text-tertiary">
+            <span className="block text-xs font-medium text-suth-text-tertiary">
               Name
             </span>
             <input
@@ -99,7 +99,7 @@ export function FoodLog({ initial }: { initial: FoodEntry[] }) {
               onChange={(e) => setName(e.target.value)}
               placeholder="Chicken rice bowl"
               required
-              className="mt-1 block h-10 w-full rounded-md border border-vyrek-border bg-vyrek-base px-3 text-sm text-vyrek-text"
+              className="mt-1 block h-10 w-full rounded-md border border-suth-border bg-suth-base px-3 text-sm text-suth-text"
             />
           </label>
           <div className="mt-3 grid grid-cols-4 gap-2">
@@ -111,14 +111,14 @@ export function FoodLog({ initial }: { initial: FoodEntry[] }) {
           <div className="mt-4 flex gap-2">
             <button
               type="submit"
-              className="inline-flex h-10 flex-1 items-center justify-center rounded-pill bg-vyrek-accent px-4 text-sm font-semibold text-[#0A0A0A]"
+              className="inline-flex h-10 flex-1 items-center justify-center rounded-pill bg-suth-accent px-4 text-sm font-semibold text-[#0A0A0A]"
             >
               Add
             </button>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="inline-flex h-10 items-center justify-center rounded-pill border border-vyrek-border bg-vyrek-base px-4 text-sm text-vyrek-text"
+              className="inline-flex h-10 items-center justify-center rounded-pill border border-suth-border bg-suth-base px-4 text-sm text-suth-text"
             >
               Cancel
             </button>
@@ -128,7 +128,7 @@ export function FoodLog({ initial }: { initial: FoodEntry[] }) {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-dashed border-vyrek-border bg-transparent px-4 text-sm font-medium text-vyrek-text-secondary hover:border-vyrek-accent hover:text-vyrek-accent"
+          className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-dashed border-suth-border bg-transparent px-4 text-sm font-medium text-suth-text-secondary hover:border-suth-accent hover:text-suth-accent"
         >
           + Add food
         </button>
@@ -150,7 +150,7 @@ function NumField({
 }) {
   return (
     <label className="block">
-      <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+      <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-suth-text-tertiary">
         {label}
       </span>
       <input
@@ -160,7 +160,7 @@ function NumField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         required={required}
-        className="mt-1 block h-10 w-full rounded-md border border-vyrek-border bg-vyrek-base px-2 text-sm tabular-nums text-vyrek-text"
+        className="mt-1 block h-10 w-full rounded-md border border-suth-border bg-suth-base px-2 text-sm tabular-nums text-suth-text"
       />
     </label>
   );

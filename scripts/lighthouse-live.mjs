@@ -3,7 +3,7 @@
  * full JSON to .lighthouse-live/ and prints a compact summary, then a
  * "top opportunities" rollup for any route with a sub-95 score.
  *
- * Usage: BASE=https://vyrek-...vercel.app node scripts/lighthouse-live.mjs
+ * Usage: BASE=https://suth-...vercel.app node scripts/lighthouse-live.mjs
  */
 import lighthouse from "lighthouse";
 import * as ChromeLauncher from "chrome-launcher";

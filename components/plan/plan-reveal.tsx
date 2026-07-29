@@ -73,7 +73,7 @@ export function PlanReveal({
   useEffect(() => {
     if (answers) return;
     try {
-      const raw = window.localStorage.getItem("vyrek:quiz:v3:state");
+      const raw = window.localStorage.getItem("suth:quiz:v3:state");
       if (!raw) {
         if (variant === "owner") router.replace("/quiz");
         return;
@@ -133,13 +133,13 @@ export function PlanReveal({
 
   const onShare = useCallback(
     async (workout: Workout) => {
-      const text = `${workout.day}'s training: ${workout.title}. ${workout.durationMin} min. From my Vyrek plan.`;
+      const text = `${workout.day}'s training: ${workout.title}. ${workout.durationMin} min. From my Suth Performance plan.`;
       const url = shareId
         ? `${window.location.origin}/plan/share/${shareId}`: window.location.href;
       try {
         if ((navigator as Navigator).share) {
           await (navigator as Navigator).share({
-            title: "Vyrek workout",
+            title: "Suth Performance workout",
             text,
             url,
           });
@@ -247,20 +247,20 @@ export function PlanReveal({
 
   if (!planContext) {
     return (
-      <main className="flex min-h-svh flex-col items-center justify-center bg-vyrek-base px-6 text-center">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+      <main className="flex min-h-svh flex-col items-center justify-center bg-suth-base px-6 text-center">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           [ YOUR PLAN ]
         </p>
-        <h1 className="mt-4 max-w-md text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl">
+        <h1 className="mt-4 max-w-md text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl">
           Loading your personalised Hyrox plan
         </h1>
-        <p className="mt-4 max-w-sm text-sm text-vyrek-text-secondary">
+        <p className="mt-4 max-w-sm text-sm text-suth-text-secondary">
           Reading your quiz answers, generating Week 1.
         </p>
         <div className="mt-8 flex items-center gap-2">
-          <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent" />
-          <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent [animation-delay:120ms]" />
-          <span className="inline-flex size-2 animate-pulse rounded-full bg-vyrek-accent [animation-delay:240ms]" />
+          <span className="inline-flex size-2 animate-pulse rounded-full bg-suth-accent" />
+          <span className="inline-flex size-2 animate-pulse rounded-full bg-suth-accent [animation-delay:120ms]" />
+          <span className="inline-flex size-2 animate-pulse rounded-full bg-suth-accent [animation-delay:240ms]" />
         </div>
       </main>
     );
@@ -271,7 +271,7 @@ export function PlanReveal({
   const weeksUntilRace = calculateWeeksUntilRace(raceDate);
 
   return (
-    <main className="flex min-h-svh flex-col bg-vyrek-base pt-[var(--safe-top)]">
+    <main className="flex min-h-svh flex-col bg-suth-base pt-[var(--safe-top)]">
       {/* Checkout transition overlay — appears as soon as the user clicks
           the Start trial CTA so the 1-2s round-trip + 302 to Stripe
           doesn't read as a broken click on slow networks. */}
@@ -279,17 +279,17 @@ export function PlanReveal({
         <div
           role="status"
           aria-live="polite"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-vyrek-base/90 backdrop-blur-md"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-suth-base/90 backdrop-blur-md"
         >
           <div className="flex flex-col items-center gap-4 px-6 text-center">
             <span
               aria-hidden
-              className="inline-block size-10 animate-spin rounded-full border-2 border-vyrek-border border-t-vyrek-accent"
+              className="inline-block size-10 animate-spin rounded-full border-2 border-suth-border border-t-suth-accent"
             />
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
               [ TAKING YOU TO STRIPE ]
             </p>
-            <p className="max-w-xs text-sm leading-relaxed text-vyrek-text-secondary">
+            <p className="max-w-xs text-sm leading-relaxed text-suth-text-secondary">
               Your card is processed securely by Stripe. First week is free —
               you won&apos;t be charged today.
             </p>
@@ -301,14 +301,14 @@ export function PlanReveal({
         <Link
           href="/"
           aria-label="Home"
-          className="-ml-3 inline-flex h-10 items-center px-3 text-vyrek-text-secondary transition-colors hover:text-vyrek-text"
+          className="-ml-3 inline-flex h-10 items-center px-3 text-suth-text-secondary transition-colors hover:text-suth-text"
         >
           ←
         </Link>
         <span aria-hidden />
         <span
           aria-hidden
-          className="inline-flex size-9 items-center justify-center rounded-full border border-vyrek-border bg-vyrek-elevated font-mono text-xs uppercase tracking-[0.12em] text-vyrek-text"
+          className="inline-flex size-9 items-center justify-center rounded-full border border-suth-border bg-suth-elevated font-mono text-xs uppercase tracking-[0.12em] text-suth-text"
         >
           {variant === "share" ? "★": "JW"}
         </span>
@@ -317,48 +317,48 @@ export function PlanReveal({
       <div className="flex-1 px-5 pb-32">
         <div className="mx-auto max-w-md">
           <Eyebrow>Your plan</Eyebrow>
-          <h1 className="mt-3 text-3xl font-black leading-tight tracking-[-0.04em] text-vyrek-text md:text-4xl">
+          <h1 className="mt-3 text-3xl font-black leading-tight tracking-[-0.04em] text-suth-text md:text-4xl">
             {PROGRAMME_DISPLAY[programme]}
           </h1>
-          <p className="mt-3 max-w-md text-base leading-relaxed text-vyrek-text-secondary">
+          <p className="mt-3 max-w-md text-base leading-relaxed text-suth-text-secondary">
             12 weeks. Built around your race on{" "}
-            <span className="text-vyrek-text">
+            <span className="text-suth-text">
               {format(raceDate, "EEEE, d MMMM yyyy")}
             </span>.
           </p>
 
-          <dl className="mt-6 grid grid-cols-3 gap-3 rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-3 text-center">
+          <dl className="mt-6 grid grid-cols-3 gap-3 rounded-md border border-suth-border-subtle bg-suth-elevated p-3 text-center">
             <div>
-              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                 Days
               </dt>
-              <dd className="mt-1 text-xl font-bold text-vyrek-text">
+              <dd className="mt-1 text-xl font-bold text-suth-text">
                 {answers?.days ?? 4}
               </dd>
             </div>
             <div>
-              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                 Time
               </dt>
-              <dd className="mt-1 text-xl font-bold text-vyrek-text">
+              <dd className="mt-1 text-xl font-bold text-suth-text">
                 {answers?.sessionLength ?? "60"}m
               </dd>
             </div>
             <div>
-              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                 Start
               </dt>
-              <dd className="mt-1 text-xl font-bold text-vyrek-text">
+              <dd className="mt-1 text-xl font-bold text-suth-text">
                 {format(startDate, "EEE")}
               </dd>
             </div>
           </dl>
 
-          <p className="mt-4 inline-block rounded-pill border border-vyrek-accent/30 bg-vyrek-accent/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-accent">
+          <p className="mt-4 inline-block rounded-pill border border-suth-accent/30 bg-suth-accent/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-accent">
             {weeksUntilRace} weeks to your race
           </p>
 
-          <hr className="my-8 border-t border-vyrek-border-subtle" />
+          <hr className="my-8 border-t border-suth-border-subtle" />
 
           <WeekTabs
             active={activeWeek}
@@ -371,7 +371,7 @@ export function PlanReveal({
             }}
           />
 
-          <h2 className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          <h2 className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             [ WEEK 1 · {format(startDate, "d MMM")} ]
           </h2>
 
@@ -389,7 +389,7 @@ export function PlanReveal({
                   before the unlock prompt. Stagger fades in on scroll. */}
               <PlanValueSection />
 
-              <hr className="my-10 border-t border-vyrek-border-subtle" />
+              <hr className="my-10 border-t border-suth-border-subtle" />
 
               <div
                 id="paywall-card"
@@ -403,20 +403,20 @@ export function PlanReveal({
             </>
           ): (
             <>
-              <hr className="my-8 border-t border-vyrek-border-subtle" />
-              <div className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-6 text-center">
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
-                  [ VYREK · PERSONALISED HYROX TRAINING ]
+              <hr className="my-8 border-t border-suth-border-subtle" />
+              <div className="rounded-lg border border-suth-border bg-suth-elevated p-6 text-center">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
+                  [ SUTH PERFORMANCE · PERSONALISED HYROX TRAINING ]
                 </p>
-                <h3 className="mt-3 text-2xl font-black leading-tight tracking-[-0.02em] text-vyrek-text">
+                <h3 className="mt-3 text-2xl font-black leading-tight tracking-[-0.02em] text-suth-text">
                   Want your own plan?
                 </h3>
-                <p className="mt-3 text-sm text-vyrek-text-secondary">
+                <p className="mt-3 text-sm text-suth-text-secondary">
                   Three-minute quiz. Week 1 dated and ready before you pay.
                 </p>
                 <Link
                   href="/quiz"
-                  className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-pill bg-vyrek-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,transform] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98]"
+                  className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-pill bg-suth-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,transform] duration-fast ease-out hover:bg-suth-accent-hover active:scale-[0.98]"
                 >
                   Take the quiz →
                 </Link>
@@ -440,7 +440,7 @@ export function PlanReveal({
           aria-live="polite"
           className="pointer-events-none fixed inset-x-0 bottom-24 z-50 flex justify-center px-5"
         >
-          <div className="rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text shadow-lg">
+          <div className="rounded-pill border border-suth-border bg-suth-elevated px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text shadow-lg">
             {toast}
           </div>
         </div>

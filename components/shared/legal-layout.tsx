@@ -27,17 +27,17 @@ export function LegalLayout({
             <Eyebrow>{eyebrow}</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               {title}
             </SplitHeading>
-            <p className="mt-4 font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+            <p className="mt-4 font-mono text-xs uppercase tracking-[0.18em] text-suth-text-tertiary">
               Last updated: {lastUpdated}
             </p>
           </header>
 
           <article
-            className="legal-body mx-auto mt-12 max-w-3xl text-base leading-relaxed text-vyrek-text-secondary md:text-lg"
+            className="legal-body mx-auto mt-12 max-w-3xl text-base leading-relaxed text-suth-text-secondary md:text-lg"
           >
             {children}
           </article>

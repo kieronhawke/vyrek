@@ -48,7 +48,7 @@ export async function generateMetadata({
       title: t.title,
       description: t.hook,
       url,
-      siteName: "Vyrek",
+      siteName: "Suth Performance",
       type: "website",
       locale: "en_GB",
     },
@@ -112,27 +112,27 @@ export default async function TopicHubPage({
         <Container>
           <nav
             aria-label="Breadcrumb"
-            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary"
+            className="mb-8 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary"
           >
-            <Link href="/" className="hover:text-vyrek-text">Home</Link>
+            <Link href="/" className="hover:text-suth-text">Home</Link>
             <span aria-hidden className="mx-2">/</span>
-            <Link href="/topics" className="hover:text-vyrek-text">Topics</Link>
+            <Link href="/topics" className="hover:text-suth-text">Topics</Link>
             <span aria-hidden className="mx-2">/</span>
-            <span className="text-vyrek-text">{t.eyebrow}</span>
+            <span className="text-suth-text">{t.eyebrow}</span>
           </nav>
 
           <div className="mx-auto max-w-3xl">
             <Eyebrow>{t.eyebrow}</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               {t.title}
             </SplitHeading>
             {t.intro.map((p, i) => (
               <p
                 key={i}
-                className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg"
+                className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg"
               >
                 {p}
               </p>
@@ -146,20 +146,20 @@ export default async function TopicHubPage({
 
           {/* Plans */}
           {plans.length > 0 ? (
-            <section className="mx-auto mt-16 max-w-5xl border-t border-vyrek-border-subtle pt-10">
+            <section className="mx-auto mt-16 max-w-5xl border-t border-suth-border-subtle pt-10">
               <Eyebrow>Plans for this audience</Eyebrow>
               <ul role="list" className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
                 {plans.map((p) => (
                   <li key={p.slug}>
                     <Link
                       href={`/plans/${p.slug}`}
-                      className="lift-on-hover block h-full rounded-lg border border-vyrek-border bg-vyrek-elevated p-6"
+                      className="lift-on-hover block h-full rounded-lg border border-suth-border bg-suth-elevated p-6"
                     >
                       <Eyebrow>{p.eyebrow}</Eyebrow>
-                      <h3 className="mt-3 text-lg font-black tracking-[-0.04em] text-vyrek-text">
+                      <h3 className="mt-3 text-lg font-black tracking-[-0.04em] text-suth-text">
                         {p.title}
                       </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
+                      <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
                         {p.hook}
                       </p>
                     </Link>
@@ -171,22 +171,22 @@ export default async function TopicHubPage({
 
           {/* Blog posts */}
           {posts.length > 0 ? (
-            <section className="mx-auto mt-16 max-w-5xl border-t border-vyrek-border-subtle pt-10">
+            <section className="mx-auto mt-16 max-w-5xl border-t border-suth-border-subtle pt-10">
               <Eyebrow>Read next</Eyebrow>
               <ul role="list" className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
                 {posts.map((p) => (
                   <li key={p.slug}>
                     <Link
                       href={`/blog/${p.slug}`}
-                      className="lift-on-hover block h-full rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5"
+                      className="lift-on-hover block h-full rounded-lg border border-suth-border-subtle bg-suth-elevated p-5"
                     >
-                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-accent">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-accent">
                         {p.category}
                       </p>
-                      <p className="mt-2 text-sm font-bold leading-snug text-vyrek-text">
+                      <p className="mt-2 text-sm font-bold leading-snug text-suth-text">
                         {p.title}
                       </p>
-                      <p className="mt-2 text-xs leading-relaxed text-vyrek-text-secondary">
+                      <p className="mt-2 text-xs leading-relaxed text-suth-text-secondary">
                         {p.excerpt}
                       </p>
                     </Link>
@@ -198,19 +198,19 @@ export default async function TopicHubPage({
 
           {/* Stations */}
           {stations.length > 0 ? (
-            <section className="mx-auto mt-16 max-w-5xl border-t border-vyrek-border-subtle pt-10">
+            <section className="mx-auto mt-16 max-w-5xl border-t border-suth-border-subtle pt-10">
               <Eyebrow>Key stations for this audience</Eyebrow>
               <ul role="list" className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4">
                 {stations.map((s) => (
                   <li key={s.slug}>
                     <Link
                       href={`/hyrox/stations/${s.slug}`}
-                      className="lift-on-hover block h-full rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-4"
+                      className="lift-on-hover block h-full rounded-md border border-suth-border-subtle bg-suth-elevated p-4"
                     >
-                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                         Station {String(s.order).padStart(2, "0")}
                       </p>
-                      <p className="mt-2 text-sm font-bold text-vyrek-text">
+                      <p className="mt-2 text-sm font-bold text-suth-text">
                         {s.name}
                       </p>
                     </Link>
@@ -221,7 +221,7 @@ export default async function TopicHubPage({
           ): null}
 
           {/* FAQs */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10" aria-labelledby="topic-faq-heading">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10" aria-labelledby="topic-faq-heading">
             <Eyebrow>FAQs</Eyebrow>
             <h2 id="topic-faq-heading" className="sr-only">
               {t.eyebrow}, frequently asked questions
@@ -232,12 +232,12 @@ export default async function TopicHubPage({
                   <AccordionItem
                     key={i}
                     value={`q-${i}`}
-                    className="border-b border-vyrek-border-subtle last:border-b-0"
+                    className="border-b border-suth-border-subtle last:border-b-0"
                   >
-                    <AccordionTrigger className="py-5 text-left text-base font-medium text-vyrek-text hover:no-underline md:text-lg">
+                    <AccordionTrigger className="py-5 text-left text-base font-medium text-suth-text hover:no-underline md:text-lg">
                       {f.q}
                     </AccordionTrigger>
-                    <AccordionContent className="pb-5 text-base leading-relaxed text-vyrek-text-secondary">
+                    <AccordionContent className="pb-5 text-base leading-relaxed text-suth-text-secondary">
                       {f.a}
                     </AccordionContent>
                   </AccordionItem>
@@ -258,12 +258,12 @@ export default async function TopicHubPage({
           />
 
           {/* Final CTA */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-vyrek-border-subtle pt-10 text-center">
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10 text-center">
             <Eyebrow>Start</Eyebrow>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-vyrek-text md:text-4xl">
+            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
               Build your plan.
             </h2>
-            <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
+            <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
               Three-minute quiz. Dated Week 1 before you pay. £8.99/month.
             </p>
             <div className="mt-8">

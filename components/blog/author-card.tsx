@@ -10,8 +10,8 @@ export function AuthorCard({
   showLink?: boolean;
 }) {
   return (
-    <div className="flex items-start gap-4 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
-      <div className="size-16 shrink-0 overflow-hidden rounded-full bg-vyrek-overlay">
+    <div className="flex items-start gap-4 rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
+      <div className="size-16 shrink-0 overflow-hidden rounded-full bg-suth-overlay">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={author.photo}
@@ -22,25 +22,25 @@ export function AuthorCard({
         />
       </div>
       <div className="flex-1">
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           Written by
         </p>
         {showLink ? (
           <Link
             href={authorUrl(author.slug).replace(/^https?:\/\/[^/]+/, "")}
-            className="mt-1 inline-block text-lg font-bold leading-tight tracking-[-0.01em] text-vyrek-text underline-offset-4 hover:underline"
+            className="mt-1 inline-block text-lg font-bold leading-tight tracking-[-0.01em] text-suth-text underline-offset-4 hover:underline"
           >
             {author.name}
           </Link>
         ) : (
-          <p className="mt-1 text-lg font-bold leading-tight tracking-[-0.01em] text-vyrek-text">
+          <p className="mt-1 text-lg font-bold leading-tight tracking-[-0.01em] text-suth-text">
             {author.name}
           </p>
         )}
-        <p className="mt-0.5 text-xs uppercase tracking-[0.16em] text-vyrek-accent">
+        <p className="mt-0.5 text-xs uppercase tracking-[0.16em] text-suth-accent">
           {author.role}
         </p>
-        <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
+        <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
           {author.bio}
         </p>
       </div>

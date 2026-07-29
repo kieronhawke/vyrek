@@ -1,8 +1,8 @@
-# Vyrek improvements pass — 25 May 2026
+# Suth Performance improvements pass — 25 May 2026
 
 **Branch:** main
 **Final commit:** `bd5c556`
-**Tests run against:** https://vyrek.vercel.app
+**Tests run against:** https://suthperformance.com
 
 ## Summary
 
@@ -46,7 +46,7 @@
 | Severity | Surface | Finding |
 |---|---|---|
 | Perf | `/quiz` welcome carousel | Used a bare `<img>` for the 573 KB JPEG hero — bypassed next/image entirely. |
-| SEO | 5 non-blog pages | All declared `<link rel="canonical" href="https://vyrek.vercel.app"/>` (root) instead of their page-specific URL — root layout's `alternates.canonical: "/"` was inherited everywhere. Lighthouse penalty: SEO 92. |
+| SEO | 5 non-blog pages | All declared `<link rel="canonical" href="https://suthperformance.com"/>` (root) instead of their page-specific URL — root layout's `alternates.canonical: "/"` was inherited everywhere. Lighthouse penalty: SEO 92. |
 | A11y | Home (3 nodes) | `<p aria-label="5 out of 5 stars">` flagged by axe — ARIA 1.2 disallows aria-label on bare `<p>` without an explicit role. |
 | A11y/UX | Whole app | motion/react components with `initial={{opacity:0}}` + `whileInView={{opacity:1}}` stayed invisible for users with `prefers-reduced-motion: reduce` (the whileInView animation gets skipped, leaving the initial state). |
 | Console noise | Every page | RSC prefetches of `/login` (and `/partners/dashboard` on /partners) returned `net::ERR_ABORTED` because the prefetched pages depend on a session that the unauthenticated marketing visitor doesn't have. |
@@ -77,7 +77,7 @@
 7. **`/api/account/create` 429** now includes `Retry-After` header + a "try again in N hours" line in the JSON body. Client can surface a countdown.
 8. **`<PlanReveal>` checkout overlay** — full-screen spinner + "Taking you to Stripe" appears the moment the user clicks Start trial. Masks the 1-2s round-trip + redirect.
 9. **Race-date picker** renders an inline warning when the picked date is < 7 days ("short taper plan") or < 12 weeks ("we'll compress the plan to fit"). Doesn't block submission.
-10. **Quiz account-creation** writes a `vyrek:quiz:v3:account-submit-snapshot` to localStorage before calling the API, clears it on success. If auth-create succeeds but persist fails, the snapshot survives for next-session reconciliation.
+10. **Quiz account-creation** writes a `suth:quiz:v3:account-submit-snapshot` to localStorage before calling the API, clears it on success. If auth-create succeeds but persist fails, the snapshot survives for next-session reconciliation.
 11. **`StripeCancellationCapture`** — inline card on `/plan?cancelled=true`: 6 reason chips + optional 280-char note. Submits to new `/api/feedback/cancellation` endpoint that logs to admin events anonymously.
 
 ### Build-blocker fix

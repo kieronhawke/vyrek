@@ -63,7 +63,7 @@ export function QuizShell({
 
   return (
     <div
-      className="flex min-h-svh flex-col bg-vyrek-base pt-[var(--safe-top)]"
+      className="flex min-h-svh flex-col bg-suth-base pt-[var(--safe-top)]"
       style={{ viewTransitionName: "quiz-shell" }}
     >
       <header className="grid h-14 shrink-0 grid-cols-[auto_1fr_auto] items-center gap-3 px-5">
@@ -74,7 +74,7 @@ export function QuizShell({
             type="button"
             onClick={onBack}
             aria-label="Back"
-            className="-ml-3 inline-flex h-10 items-center px-3 text-vyrek-text-secondary transition-colors hover:text-vyrek-text"
+            className="-ml-3 inline-flex h-10 items-center px-3 text-suth-text-secondary transition-colors hover:text-suth-text"
           >
             ←
           </button>
@@ -82,17 +82,17 @@ export function QuizShell({
         <div className="flex items-center gap-3">
           <div
             aria-hidden
-            className="relative h-0.5 flex-1 overflow-hidden rounded-pill bg-vyrek-border-subtle"
+            className="relative h-0.5 flex-1 overflow-hidden rounded-pill bg-suth-border-subtle"
           >
             <span
-              className="absolute left-0 top-0 block h-full rounded-pill bg-vyrek-accent will-change-transform"
+              className="absolute left-0 top-0 block h-full rounded-pill bg-suth-accent will-change-transform"
               style={{
                 width: `${pct * 100}%`,
                 transition: "width 320ms var(--ease-out)",
               }}
             />
           </div>
-          <span className="font-mono text-[11px] font-medium uppercase tabular-nums tracking-[0.18em] text-vyrek-text-tertiary">
+          <span className="font-mono text-[11px] font-medium uppercase tabular-nums tracking-[0.18em] text-suth-text-tertiary">
             {currentScreen} / {totalScreens}
           </span>
         </div>
@@ -100,7 +100,7 @@ export function QuizShell({
           type="button"
           onClick={onClose}
           aria-label="Close quiz, back to home"
-          className="-mr-3 inline-flex h-10 items-center px-3 text-vyrek-text-secondary transition-colors hover:text-vyrek-text"
+          className="-mr-3 inline-flex h-10 items-center px-3 text-suth-text-secondary transition-colors hover:text-suth-text"
         >
           ✕
         </button>
@@ -111,7 +111,7 @@ export function QuizShell({
       </div>
 
       {footer && (
-        <footer className="sticky bottom-0 border-t border-vyrek-border-subtle bg-vyrek-base/90 pb-[max(1rem,var(--safe-bottom))] pt-4 backdrop-blur-md">
+        <footer className="sticky bottom-0 border-t border-suth-border-subtle bg-suth-base/90 pb-[max(1rem,var(--safe-bottom))] pt-4 backdrop-blur-md">
           <div className="mx-auto flex max-w-md items-center justify-stretch gap-3 px-5">
             {footer}
           </div>
@@ -131,17 +131,17 @@ export function QuizShell({
             if (e.target === e.currentTarget) setConfirmOpen(false);
           }}
         >
-          <div className="w-full max-w-sm rounded-2xl border border-vyrek-border bg-vyrek-elevated p-6 shadow-2xl">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+          <div className="w-full max-w-sm rounded-2xl border border-suth-border bg-suth-elevated p-6 shadow-2xl">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
               [ Leave quiz? ]
             </p>
             <h2
               id="quiz-leave-title"
-              className="mt-3 text-xl font-black tracking-[-0.02em] text-vyrek-text md:text-2xl"
+              className="mt-3 text-xl font-black tracking-[-0.02em] text-suth-text md:text-2xl"
             >
               Your answers are saved.
             </h2>
-            <p className="mt-2 text-sm leading-relaxed text-vyrek-text-secondary">
+            <p className="mt-2 text-sm leading-relaxed text-suth-text-secondary">
               You can pick this up right where you left off when you come
               back.
             </p>
@@ -149,7 +149,7 @@ export function QuizShell({
               <button
                 type="button"
                 onClick={() => setConfirmOpen(false)}
-                className="inline-flex h-11 flex-1 items-center justify-center rounded-pill bg-vyrek-accent px-4 text-sm font-semibold text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.98]"
+                className="inline-flex h-11 flex-1 items-center justify-center rounded-pill bg-suth-accent px-4 text-sm font-semibold text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover active:scale-[0.98]"
               >
                 Stay
               </button>
@@ -159,7 +159,7 @@ export function QuizShell({
                   setConfirmOpen(false);
                   router.push("/");
                 }}
-                className="inline-flex h-11 flex-1 items-center justify-center rounded-pill border border-vyrek-border bg-vyrek-base px-4 text-sm font-medium text-vyrek-text transition-colors hover:border-vyrek-border-strong active:scale-[0.98]"
+                className="inline-flex h-11 flex-1 items-center justify-center rounded-pill border border-suth-border bg-suth-base px-4 text-sm font-medium text-suth-text transition-colors hover:border-suth-border-strong active:scale-[0.98]"
               >
                 Leave
               </button>

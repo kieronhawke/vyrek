@@ -4,7 +4,7 @@
 
 import { chromium } from "@playwright/test";
 
-const BASE = process.env.SMOKE_BASE ?? "https://vyrek.vercel.app";
+const BASE = process.env.SMOKE_BASE ?? "https://suthperformance.com";
 const browser = await chromium.launch();
 const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
 const page = await ctx.newPage();
@@ -32,7 +32,7 @@ note("/partners/apply", "info", `${inputs} input fields, ${submit} submit button
 if (submit > 0) {
   await page.locator('button[type="submit"]').first().click();
   await page.waitForTimeout(800);
-  const errors = await page.locator('[role="alert"], .text-vyrek-danger, .text-red-300').count();
+  const errors = await page.locator('[role="alert"], .text-suth-danger, .text-red-300').count();
   note("/partners/apply", errors > 0 ? "ok" : "WARN", `empty submit → ${errors} error indicator(s)`);
 }
 
@@ -43,7 +43,7 @@ await page.fill('input[type="email"]', "not-a-real-email@example-fake.invalid");
 await page.fill('input[type="password"]', "wrongpassword123");
 await page.click('button[type="submit"]');
 await page.waitForTimeout(2000);
-const loginErr = await page.locator('[role="alert"], .text-vyrek-danger, .text-red-300').count();
+const loginErr = await page.locator('[role="alert"], .text-suth-danger, .text-red-300').count();
 note("/login", loginErr > 0 ? "ok" : "WARN", `bad creds → ${loginErr} error indicator(s); url=${page.url()}`);
 
 // Email format validation (HTML5)
@@ -63,7 +63,7 @@ await page.fill('input[type="email"]', "bad@example.com");
 await page.fill('input[type="password"]', "wrongpassword");
 await page.click('button[type="submit"]');
 await page.waitForTimeout(2000);
-const adminErr = await page.locator('[role="alert"], .text-vyrek-danger, .text-red-300, .text-red-500').count();
+const adminErr = await page.locator('[role="alert"], .text-suth-danger, .text-red-300, .text-red-500').count();
 note("/admin/login", adminErr > 0 ? "ok" : "WARN", `bad creds → ${adminErr} error indicator(s); url=${page.url()}`);
 
 // ── 5. /pricing CTA destination ─────────────

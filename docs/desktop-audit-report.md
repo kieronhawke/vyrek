@@ -1,7 +1,7 @@
 # Desktop alignment audit — Stage 1.4
 
 **Generated:** 2026-05-24
-**Live deploy:** `vyrek-...` (post-Stage-1 commit `09fd2fc`)
+**Live deploy:** `suth-...` (post-Stage-1 commit `09fd2fc`)
 **Viewports captured:** 1280px, 1440px, 1920px
 **Pages walked:** /, /programmes, /how-it-works, /about, /partners, /contact, /pricing, /blog, /blog/12-week-hyrox-training-plan, /results, /results/events, /quiz, /login
 **Screenshots:** `docs/desktop-audit-screenshots/<page>-<width>.png` (39 files)

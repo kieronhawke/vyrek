@@ -88,11 +88,11 @@ export function PaceCalculator() {
   return (
     <div className="space-y-8">
       {/* Inputs */}
-      <div className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-6">
+      <div className="rounded-lg border border-suth-border bg-suth-elevated p-6">
         <Eyebrow>Inputs</Eyebrow>
         <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
           <label className="block">
-            <span className="mb-2 block text-xs uppercase tracking-[0.15em] text-vyrek-text-tertiary">
+            <span className="mb-2 block text-xs uppercase tracking-[0.15em] text-suth-text-tertiary">
               1 km running pace
             </span>
             <input
@@ -101,15 +101,15 @@ export function PaceCalculator() {
               value={paceInput}
               onChange={(e) => setPaceInput(e.target.value)}
               placeholder="4:30"
-              className="h-14 w-full rounded-md border border-vyrek-border bg-vyrek-base px-4 text-lg font-medium text-vyrek-text outline-none transition-colors focus:border-vyrek-accent"
+              className="h-14 w-full rounded-md border border-suth-border bg-suth-base px-4 text-lg font-medium text-suth-text outline-none transition-colors focus:border-suth-accent"
             />
-            <span className="mt-1 block text-xs text-vyrek-text-tertiary">
+            <span className="mt-1 block text-xs text-suth-text-tertiary">
               MM:SS format (e.g. 4:30) or decimal (4.5)
             </span>
           </label>
 
           <label className="block">
-            <span className="mb-2 block text-xs uppercase tracking-[0.15em] text-vyrek-text-tertiary">
+            <span className="mb-2 block text-xs uppercase tracking-[0.15em] text-suth-text-tertiary">
               Second-half fade
             </span>
             <div className="flex items-center gap-3">
@@ -120,14 +120,14 @@ export function PaceCalculator() {
                 step={1}
                 value={fadePct}
                 onChange={(e) => setFadePct(parseInt(e.target.value))}
-                className="flex-1 accent-vyrek-accent"
+                className="flex-1 accent-suth-accent"
                 aria-label="Second-half fade percentage"
               />
-              <span className="w-16 text-right font-mono text-sm font-medium text-vyrek-text">
+              <span className="w-16 text-right font-mono text-sm font-medium text-suth-text">
                 +{fadePct}%
               </span>
             </div>
-            <span className="mt-1 block text-xs text-vyrek-text-tertiary">
+            <span className="mt-1 block text-xs text-suth-text-tertiary">
               How much your km pace slows by km 8. Most age-group athletes fade
               5-10%.
             </span>
@@ -136,13 +136,13 @@ export function PaceCalculator() {
       </div>
 
       {/* Stations */}
-      <div className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-6">
+      <div className="rounded-lg border border-suth-border bg-suth-elevated p-6">
         <Eyebrow>Station splits (seconds)</Eyebrow>
         <ul role="list" className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
           {stations.map((s, i) => (
             <li key={s.name}>
               <label className="flex items-center justify-between gap-3">
-                <span className="text-sm text-vyrek-text-secondary">
+                <span className="text-sm text-suth-text-secondary">
                   {s.name}
                 </span>
                 <input
@@ -151,25 +151,25 @@ export function PaceCalculator() {
                   value={s.seconds}
                   onChange={(e) => updateStation(i, parseInt(e.target.value, 10))}
                   aria-label={`${s.name} split in seconds`}
-                  className="h-10 w-24 rounded-md border border-vyrek-border bg-vyrek-base px-3 text-right font-mono text-sm text-vyrek-text outline-none focus:border-vyrek-accent"
+                  className="h-10 w-24 rounded-md border border-suth-border bg-suth-base px-3 text-right font-mono text-sm text-suth-text outline-none focus:border-suth-accent"
                 />
               </label>
             </li>
           ))}
         </ul>
-        <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+        <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
           Defaults reflect a first-time finisher pace.
         </p>
       </div>
 
       {/* Output */}
       {projection ? (
-        <div className="rounded-lg border border-vyrek-accent/40 bg-vyrek-accent/[0.04] p-6">
+        <div className="rounded-lg border border-suth-accent/40 bg-suth-accent/[0.04] p-6">
           <Eyebrow>Projected finish</Eyebrow>
-          <p className="mt-3 font-mono text-5xl font-black tracking-[-0.04em] text-vyrek-text md:text-6xl">
+          <p className="mt-3 font-mono text-5xl font-black tracking-[-0.04em] text-suth-text md:text-6xl">
             {formatHMMSS(projection.total)}
           </p>
-          <p className="mt-2 text-sm text-vyrek-text-secondary">
+          <p className="mt-2 text-sm text-suth-text-secondary">
             Running time: {formatHMMSS(projection.adjustedRunTotal)} ·
             Stations: {formatHMMSS(projection.stationTotal)}
           </p>
@@ -180,12 +180,12 @@ export function PaceCalculator() {
               {projection.perKm.map((sec, i) => (
                 <li
                   key={i}
-                  className="rounded-md border border-vyrek-border bg-vyrek-base p-3 text-center"
+                  className="rounded-md border border-suth-border bg-suth-base p-3 text-center"
                 >
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                     km {i + 1}
                   </span>
-                  <span className="mt-1 block font-mono text-sm text-vyrek-text">
+                  <span className="mt-1 block font-mono text-sm text-suth-text">
                     {formatMMSS(sec)}
                   </span>
                 </li>
@@ -194,8 +194,8 @@ export function PaceCalculator() {
           </div>
         </div>
       ) : (
-        <div className="rounded-lg border border-vyrek-border bg-vyrek-elevated p-6">
-          <p className="text-sm text-vyrek-text-secondary">
+        <div className="rounded-lg border border-suth-border bg-suth-elevated p-6">
+          <p className="text-sm text-suth-text-secondary">
             Enter a valid 1 km pace to see your projection.
           </p>
         </div>

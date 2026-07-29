@@ -9,9 +9,9 @@ import { Eyebrow } from "@/components/shared/eyebrow";
 import { CustomerLoginForm } from "@/components/account/login-form";
 
 export const metadata: Metadata = {
-  title: "Sign in. Vyrek",
+  title: "Sign in. Suth Performance",
   description:
-    "Sign in to your Vyrek account to see your week, log sessions, and manage your subscription.",
+    "Sign in to your Suth Performance account to see your week, log sessions, and manage your subscription.",
   robots: { index: false, follow: false },
 };
 
@@ -46,18 +46,18 @@ export default async function LoginPage({
         <Container>
           <div className="mx-auto max-w-md">
             <Eyebrow>Sign in</Eyebrow>
-            <h1 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl">
+            <h1 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl">
               Welcome back.
             </h1>
-            <p className="mt-4 text-base text-vyrek-text-secondary">
+            <p className="mt-4 text-base text-suth-text-secondary">
               Sign in with the email and password you used to save your plan.
             </p>
             <CustomerLoginForm />
-            <p className="mt-12 text-center text-sm text-vyrek-text-tertiary">
+            <p className="mt-12 text-center text-sm text-suth-text-tertiary">
               First time here?{" "}
               <Link
                 href="/quiz"
-                className="text-vyrek-accent underline underline-offset-4"
+                className="text-suth-accent underline underline-offset-4"
               >
                 Find your plan in 3 minutes
               </Link>

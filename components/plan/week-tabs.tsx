@@ -55,12 +55,12 @@ export function WeekTabs({
               className={cn(
                 "snap-start group relative flex size-14 shrink-0 items-center justify-center rounded-full border-2 font-mono text-base font-bold tabular-nums transition-[border,background,color,transform] duration-fast active:scale-[0.95]",
                 isActive &&
-                  "border-vyrek-accent bg-vyrek-accent text-[#0A0A0A] shadow-[0_0_0_4px_rgba(163,230,53,0.12)]",
+                  "border-suth-accent bg-suth-accent text-[#0A0A0A] shadow-[0_0_0_4px_rgba(163,230,53,0.12)]",
                 !isActive &&
                   !locked &&
-                  "border-vyrek-accent/60 bg-transparent text-vyrek-accent hover:border-vyrek-accent",
+                  "border-suth-accent/60 bg-transparent text-suth-accent hover:border-suth-accent",
                 locked &&
-                  "border-vyrek-border-subtle bg-vyrek-elevated/50 text-vyrek-text-tertiary hover:border-vyrek-border hover:text-vyrek-text-secondary",
+                  "border-suth-border-subtle bg-suth-elevated/50 text-suth-text-tertiary hover:border-suth-border hover:text-suth-text-secondary",
               )}
             >
               <span aria-hidden>{w}</span>
@@ -73,7 +73,7 @@ export function WeekTabs({
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="absolute -top-1.5 -right-1.5 size-4 rounded-full bg-vyrek-base p-0.5 text-vyrek-text-tertiary"
+                  className="absolute -top-1.5 -right-1.5 size-4 rounded-full bg-suth-base p-0.5 text-suth-text-tertiary"
                 >
                   <rect x="5" y="11" width="14" height="9" rx="1.5" />
                   <path d="M8 11V8a4 4 0 0 1 8 0v3" />
@@ -83,7 +83,7 @@ export function WeekTabs({
           );
         })}
       </div>
-      <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+      <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
         Week {active}
         {active > unlockedWeeks ? " · locked" : null}
       </p>

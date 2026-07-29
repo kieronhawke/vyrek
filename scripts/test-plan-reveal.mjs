@@ -70,7 +70,7 @@ try {
       startedAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    window.localStorage.setItem("vyrek:quiz:v3:state", JSON.stringify(state));
+    window.localStorage.setItem("suth:quiz:v3:state", JSON.stringify(state));
   });
 
   await page.goto(`${BASE}/plan`, { waitUntil: "networkidle2" });

@@ -51,13 +51,13 @@ export function CancellationEmail() {
               margin: 0,
             }}
           >
-            Your Vyrek membership is cancelled. Nothing more will be charged.
+            Your Suth Performance membership is cancelled. Nothing more will be charged.
             If you change your mind, the door is open, your answers stay
             saved.
           </Text>
 
           <Button
-            href="https://vyrek.vercel.app/quiz"
+            href="https://suthperformance.com/quiz"
             style={{ ...ctaPrimary, marginTop: 24 }}
           >
             Restart your plan →

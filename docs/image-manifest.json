@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema",
-  "title": "Vyrek image manifest (post Part 1.4 swap)",
+  "title": "Suth Performance image manifest (post Part 1.4 swap)",
   "generatedAt": "2026-05-24",
   "description": "Every image currently in use on the site. usedOn lists the pages or component surfaces that pull the file. Files in /public/media/images/v2/ with 0 call sites are listed at the bottom (inventory but not deployed).",
   "totals": {
@@ -132,8 +132,8 @@
       "usedOn": [
         "/about hero backdrop",
         "/partners hero backdrop",
-        "/api/og/blog/[slug] for vyrek-team-authored posts",
-        "lib/blog/authors.ts vyrek-team photo"
+        "/api/og/blog/[slug] for suth-team-authored posts",
+        "lib/blog/authors.ts suth-team photo"
       ],
       "subjectTags": ["mixed-gender", "coach-and-athlete", "instructive"],
       "altSummary": "Coach demonstrating a movement to an athlete"

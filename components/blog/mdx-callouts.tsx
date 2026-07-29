@@ -4,33 +4,33 @@ import { cn } from "@/lib/utils";
 /**
  * Visual-rhythm components for MDX. Authors drop these inline in posts to
  * break up long stretches of body copy with callouts, pull quotes, and key
- * stats. Each component is intentionally minimal, they reuse the Vyrek
+ * stats. Each component is intentionally minimal, they reuse the Suth Performance
  * design tokens and don't override the prose font sizing.
  */
 
 const TONE_STYLES = {
   info: {
-    border: "border-vyrek-accent/40",
-    bg: "bg-vyrek-accent/5",
-    eyebrow: "text-vyrek-accent",
+    border: "border-suth-accent/40",
+    bg: "bg-suth-accent/5",
+    eyebrow: "text-suth-accent",
     label: "NOTE",
   },
   tip: {
-    border: "border-vyrek-success/40",
-    bg: "bg-vyrek-success/5",
-    eyebrow: "text-vyrek-success",
+    border: "border-suth-success/40",
+    bg: "bg-suth-success/5",
+    eyebrow: "text-suth-success",
     label: "TIP",
   },
   warn: {
-    border: "border-vyrek-warning/40",
-    bg: "bg-vyrek-warning/5",
-    eyebrow: "text-vyrek-warning",
+    border: "border-suth-warning/40",
+    bg: "bg-suth-warning/5",
+    eyebrow: "text-suth-warning",
     label: "HEADS UP",
   },
   insight: {
-    border: "border-vyrek-text/15",
-    bg: "bg-vyrek-elevated",
-    eyebrow: "text-vyrek-text-tertiary",
+    border: "border-suth-text/15",
+    bg: "bg-suth-elevated",
+    eyebrow: "text-suth-text-tertiary",
     label: "INSIGHT",
   },
 } as const;
@@ -49,7 +49,7 @@ export function Callout({
     <aside
       role="note"
       className={cn(
-        "mt-8 rounded-lg border-l-4 border-y border-r border-vyrek-border-subtle p-5 md:p-6",
+        "mt-8 rounded-lg border-l-4 border-y border-r border-suth-border-subtle p-5 md:p-6",
         s.border,
         s.bg,
       )}
@@ -62,7 +62,7 @@ export function Callout({
       >
         [ {s.label}{title ? ` · ${title}`: ""} ]
       </p>
-      <div className="mt-3 text-base leading-relaxed text-vyrek-text md:text-lg [&>p:first-child]:mt-0 [&>p]:mt-3">
+      <div className="mt-3 text-base leading-relaxed text-suth-text md:text-lg [&>p:first-child]:mt-0 [&>p]:mt-3">
         {children}
       </div>
     </aside>
@@ -78,17 +78,17 @@ export function PullQuote({
 }) {
   return (
     <figure className="mt-10 md:mt-12">
-      <blockquote className="border-l-2 border-vyrek-accent pl-6 text-balance text-2xl font-medium leading-tight tracking-[-0.02em] text-vyrek-text md:text-3xl">
-        <span aria-hidden className="text-vyrek-accent">
+      <blockquote className="border-l-2 border-suth-accent pl-6 text-balance text-2xl font-medium leading-tight tracking-[-0.02em] text-suth-text md:text-3xl">
+        <span aria-hidden className="text-suth-accent">
           “
         </span>
         {children}
-        <span aria-hidden className="text-vyrek-accent">
+        <span aria-hidden className="text-suth-accent">
           ”
         </span>
       </blockquote>
       {attribution ? (
-        <figcaption className="mt-3 pl-6 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">, {attribution}
+        <figcaption className="mt-3 pl-6 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">, {attribution}
         </figcaption>
       ): null}
     </figure>
@@ -105,15 +105,15 @@ export function Stat({
   caption?: string;
 }) {
   return (
-    <div className="mt-8 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5 md:p-6">
-      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+    <div className="mt-8 rounded-lg border border-suth-border-subtle bg-suth-elevated p-5 md:p-6">
+      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
         {label}
       </p>
-      <p className="mt-2 text-5xl font-black leading-none tracking-[-0.04em] text-vyrek-text md:text-6xl">
+      <p className="mt-2 text-5xl font-black leading-none tracking-[-0.04em] text-suth-text md:text-6xl">
         {value}
       </p>
       {caption ? (
-        <p className="mt-3 max-w-md text-sm leading-relaxed text-vyrek-text-secondary md:text-base">
+        <p className="mt-3 max-w-md text-sm leading-relaxed text-suth-text-secondary md:text-base">
           {caption}
         </p>
       ): null}
@@ -138,9 +138,9 @@ export function KeyTakeaways({
   return (
     <aside
       aria-label="Key takeaways"
-      className="mt-8 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5 md:p-6"
+      className="mt-8 rounded-lg border border-suth-border-subtle bg-suth-elevated p-5 md:p-6"
     >
-      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
         [ KEY TAKEAWAYS ]
       </p>
       {list ? (
@@ -148,18 +148,18 @@ export function KeyTakeaways({
           {list.map((it, i) => (
             <li
               key={i}
-              className="flex items-start gap-3 text-base leading-relaxed text-vyrek-text md:text-lg"
+              className="flex items-start gap-3 text-base leading-relaxed text-suth-text md:text-lg"
             >
               <span
                 aria-hidden
-                className="mt-1.5 size-1.5 shrink-0 rounded-full bg-vyrek-accent"
+                className="mt-1.5 size-1.5 shrink-0 rounded-full bg-suth-accent"
               />
               <span>{it}</span>
             </li>
           ))}
         </ul>
       ): (
-        <div className="mt-4 text-base leading-relaxed text-vyrek-text md:text-lg [&_ul]:mt-0 [&_ul]:list-none [&_ul]:space-y-3 [&_ul]:pl-0 [&_li]:flex [&_li]:items-start [&_li]:gap-3 [&_li]:pl-0 [&_li]:before:mt-2.5 [&_li]:before:size-1.5 [&_li]:before:shrink-0 [&_li]:before:rounded-full [&_li]:before:bg-vyrek-accent">
+        <div className="mt-4 text-base leading-relaxed text-suth-text md:text-lg [&_ul]:mt-0 [&_ul]:list-none [&_ul]:space-y-3 [&_ul]:pl-0 [&_li]:flex [&_li]:items-start [&_li]:gap-3 [&_li]:pl-0 [&_li]:before:mt-2.5 [&_li]:before:size-1.5 [&_li]:before:shrink-0 [&_li]:before:rounded-full [&_li]:before:bg-suth-accent">
           {children}
         </div>
       )}

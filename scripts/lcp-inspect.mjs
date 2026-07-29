@@ -5,7 +5,7 @@ const chrome = await ChromeLauncher.launch({
   chromeFlags: ["--headless=new", "--no-sandbox", "--disable-gpu"],
 });
 
-for (const url of ["https://vyrek.vercel.app/", "https://vyrek.vercel.app/quiz"]) {
+for (const url of ["https://suthperformance.com/", "https://suthperformance.com/quiz"]) {
   const result = await lighthouse(url, {
     port: chrome.port,
     output: "json",

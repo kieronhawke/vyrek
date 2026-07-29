@@ -22,23 +22,23 @@ export function RelatedGrid({
 }) {
   if (items.length === 0) return null;
   return (
-    <section className="mx-auto mt-16 max-w-5xl border-t border-vyrek-border-subtle pt-10">
+    <section className="mx-auto mt-16 max-w-5xl border-t border-suth-border-subtle pt-10">
       <Eyebrow>{heading}</Eyebrow>
       <ul role="list" className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
         {items.map((it) => (
           <li key={it.href}>
             <Link
               href={it.href}
-              className="lift-on-hover block h-full rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-4 transition-colors"
+              className="lift-on-hover block h-full rounded-md border border-suth-border-subtle bg-suth-elevated p-4 transition-colors"
             >
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                 {it.eyebrow}
               </p>
-              <p className="mt-2 text-sm font-medium leading-snug text-vyrek-text">
+              <p className="mt-2 text-sm font-medium leading-snug text-suth-text">
                 {it.title}
               </p>
               {it.body ? (
-                <p className="mt-1 text-xs leading-relaxed text-vyrek-text-secondary">
+                <p className="mt-1 text-xs leading-relaxed text-suth-text-secondary">
                   {it.body}
                 </p>
               ) : null}

@@ -109,12 +109,12 @@ export function LiveSessions({ initial }: { initial: Session[] }) {
 
       <section className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <Card>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             Top pages right now
           </p>
           {topPaths.length === 0 ? (
-            <p className="mt-3 text-sm text-vyrek-text-tertiary">
-              Nobody on the site in the last 60 seconds. Open vyrek.com in a
+            <p className="mt-3 text-sm text-suth-text-tertiary">
+              Nobody on the site in the last 60 seconds. Open suthperformance.com in a
               second tab to populate this list.
             </p>
           ) : (
@@ -122,12 +122,12 @@ export function LiveSessions({ initial }: { initial: Session[] }) {
               {topPaths.map(([path, count]) => (
                 <li
                   key={path}
-                  className="flex items-center justify-between gap-3 rounded-md border border-vyrek-border-subtle bg-vyrek-elevated/60 px-3 py-2"
+                  className="flex items-center justify-between gap-3 rounded-md border border-suth-border-subtle bg-suth-elevated/60 px-3 py-2"
                 >
-                  <span className="truncate font-mono text-xs text-vyrek-text">
+                  <span className="truncate font-mono text-xs text-suth-text">
                     {path}
                   </span>
-                  <span className="shrink-0 font-mono text-xs tabular-nums text-vyrek-accent">
+                  <span className="shrink-0 font-mono text-xs tabular-nums text-suth-accent">
                     {count}
                   </span>
                 </li>
@@ -137,11 +137,11 @@ export function LiveSessions({ initial }: { initial: Session[] }) {
         </Card>
 
         <Card>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             Top countries
           </p>
           {topCountries.length === 0 ? (
-            <p className="mt-3 text-sm text-vyrek-text-tertiary">
+            <p className="mt-3 text-sm text-suth-text-tertiary">
               No country data yet.
             </p>
           ) : (
@@ -149,12 +149,12 @@ export function LiveSessions({ initial }: { initial: Session[] }) {
               {topCountries.map(([country, count]) => (
                 <li
                   key={country}
-                  className="flex items-center justify-between gap-3 rounded-md border border-vyrek-border-subtle bg-vyrek-elevated/60 px-3 py-2"
+                  className="flex items-center justify-between gap-3 rounded-md border border-suth-border-subtle bg-suth-elevated/60 px-3 py-2"
                 >
-                  <span className="font-mono text-xs uppercase text-vyrek-text">
+                  <span className="font-mono text-xs uppercase text-suth-text">
                     {country}
                   </span>
-                  <span className="font-mono text-xs tabular-nums text-vyrek-accent">
+                  <span className="font-mono text-xs tabular-nums text-suth-accent">
                     {count}
                   </span>
                 </li>
@@ -166,7 +166,7 @@ export function LiveSessions({ initial }: { initial: Session[] }) {
 
       <section>
         <header className="mb-3 flex items-center justify-between">
-          <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             Active sessions ({total})
           </h2>
           <div className="flex items-center gap-2">
@@ -178,22 +178,22 @@ export function LiveSessions({ initial }: { initial: Session[] }) {
               }}
               aria-hidden
             />
-            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
               {stale ? "stale" : "live · poll 5s"}
             </span>
           </div>
         </header>
         {sessions.length === 0 ? (
           <Card>
-            <p className="text-sm text-vyrek-text-tertiary">
-              No live sessions right now. Open vyrek.com in another tab and
+            <p className="text-sm text-suth-text-tertiary">
+              No live sessions right now. Open suthperformance.com in another tab and
               this list will populate within 5 seconds.
             </p>
           </Card>
         ) : (
-          <div className="overflow-x-auto rounded-lg border border-vyrek-border-subtle">
+          <div className="overflow-x-auto rounded-lg border border-suth-border-subtle">
             <table className="w-full border-collapse text-sm">
-              <thead className="bg-vyrek-elevated">
+              <thead className="bg-suth-elevated">
                 <tr>
                   <Th>Path</Th>
                   <Th>Who</Th>
@@ -213,36 +213,36 @@ export function LiveSessions({ initial }: { initial: Session[] }) {
                   return (
                     <tr
                       key={s.id}
-                      className="border-b border-vyrek-border-subtle last:border-b-0 hover:bg-vyrek-elevated/60"
+                      className="border-b border-suth-border-subtle last:border-b-0 hover:bg-suth-elevated/60"
                     >
                       <Td>
-                        <span className="font-mono text-xs text-vyrek-text">
+                        <span className="font-mono text-xs text-suth-text">
                           {s.path}
                         </span>
                       </Td>
                       <Td>
                         {s.customer_email ? (
-                          <span className="text-vyrek-text">
+                          <span className="text-suth-text">
                             {s.customer_email}
                           </span>
                         ) : (
-                          <span className="font-mono text-xs text-vyrek-text-tertiary">
+                          <span className="font-mono text-xs text-suth-text-tertiary">
                             anon · {s.id.slice(0, 8)}
                           </span>
                         )}
                       </Td>
                       <Td>
-                        <span className="font-mono text-xs uppercase text-vyrek-text-secondary">
+                        <span className="font-mono text-xs uppercase text-suth-text-secondary">
                           {s.country ?? "-"}
                         </span>
                       </Td>
                       <Td>
-                        <span className="font-mono text-xs text-vyrek-text-secondary">
+                        <span className="font-mono text-xs text-suth-text-secondary">
                           {fmtAge(sessAgeS)}
                         </span>
                       </Td>
                       <Td>
-                        <span className="font-mono text-xs text-vyrek-text-secondary">
+                        <span className="font-mono text-xs text-suth-text-secondary">
                           {fmtAge(ageS)} ago
                         </span>
                       </Td>
@@ -268,7 +268,7 @@ function fmtAge(secs: number): string {
 
 function Th({ children }: { children: React.ReactNode }) {
   return (
-    <th className="border-b border-vyrek-border-subtle px-4 py-3 text-left font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+    <th className="border-b border-suth-border-subtle px-4 py-3 text-left font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
       {children}
     </th>
   );

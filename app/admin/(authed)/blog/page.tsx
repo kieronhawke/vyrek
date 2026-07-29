@@ -32,7 +32,7 @@ export default async function AdminBlogPage() {
             href={`${GITHUB_BASE}`}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-10 items-center rounded-pill bg-vyrek-accent px-4 text-sm font-semibold text-[#0A0A0A]"
+            className="inline-flex h-10 items-center rounded-pill bg-suth-accent px-4 text-sm font-semibold text-[#0A0A0A]"
           >
             Open content/blog ↗
           </a>
@@ -63,10 +63,10 @@ export default async function AdminBlogPage() {
       </section>
 
       <Card className="mb-8">
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           How publishing works
         </p>
-        <ol className="mt-3 list-decimal space-y-1 pl-5 text-sm text-vyrek-text-secondary">
+        <ol className="mt-3 list-decimal space-y-1 pl-5 text-sm text-suth-text-secondary">
           <li>
             Open the file on GitHub, edit, commit (or open a PR).
           </li>
@@ -74,7 +74,7 @@ export default async function AdminBlogPage() {
             Every push to <code>main</code> triggers a Vercel deploy.
           </li>
           <li>
-            New routes appear at <code>vyrek.com/blog/[slug]</code> within
+            New routes appear at <code>suthperformance.com/blog/[slug]</code> within
             ~60 seconds of deploy success.
           </li>
           <li>
@@ -99,7 +99,7 @@ export default async function AdminBlogPage() {
           <Link
             key="t"
             href={`/blog/${p.slug}`}
-            className="text-vyrek-accent hover:underline"
+            className="text-suth-accent hover:underline"
             target="_blank"
             rel="noreferrer"
           >
@@ -107,15 +107,15 @@ export default async function AdminBlogPage() {
           </Link>,
           <span
             key="c"
-            className="font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-secondary"
+            className="font-mono text-xs uppercase tracking-[0.18em] text-suth-text-secondary"
           >
             {p.category}
           </span>,
-          <span key="a" className="text-vyrek-text-secondary">
+          <span key="a" className="text-suth-text-secondary">
             {p.author.name}
           </span>,
           format(new Date(p.publishedAt), "dd MMM yyyy"),
-          <span key="w" className="tabular-nums text-vyrek-text-secondary">
+          <span key="w" className="tabular-nums text-suth-text-secondary">
             {p.words.toLocaleString("en-GB")}
           </span>,
           <a
@@ -123,7 +123,7 @@ export default async function AdminBlogPage() {
             href={`${GITHUB_BASE}/${p.slug}.mdx`}
             target="_blank"
             rel="noreferrer"
-            className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent hover:underline"
+            className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent hover:underline"
           >
             Edit ↗
           </a>,

@@ -3,8 +3,8 @@ import lighthouse from "lighthouse";
 import * as ChromeLauncher from "chrome-launcher";
 
 const URLS = [
-  "https://vyrek.vercel.app/blog/hyrox-sled-push-technique",
-  "https://vyrek.vercel.app/blog/hyrox-station-weights-explained",
+  "https://suthperformance.com/blog/hyrox-sled-push-technique",
+  "https://suthperformance.com/blog/hyrox-station-weights-explained",
 ];
 const chrome = await ChromeLauncher.launch({
   chromeFlags: ["--headless=new", "--no-sandbox"],
@@ -24,7 +24,7 @@ try {
     const a = result.lhr.audits;
     const fmt = (s) => Math.round((s ?? 0) * 100).toString().padStart(3);
     console.log(
-      url.replace("https://vyrek.vercel.app", "").padEnd(50),
+      url.replace("https://suthperformance.com", "").padEnd(50),
       "perf=" + fmt(c.performance.score),
       "lcp=" + Math.round(a["largest-contentful-paint"].numericValue) + "ms",
       "tbt=" + Math.round(a["total-blocking-time"].numericValue) + "ms",

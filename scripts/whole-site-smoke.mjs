@@ -2,7 +2,7 @@
 // Whole-site smoke test. Hits every route, records status + size,
 // flags anything that isn't an expected success/redirect.
 
-const BASE = process.env.SMOKE_BASE ?? "https://vyrek.vercel.app";
+const BASE = process.env.SMOKE_BASE ?? "https://suthperformance.com";
 
 // expected -> set of (status code) considered "OK" for that route
 const ROUTES = [
@@ -137,7 +137,7 @@ async function worker() {
     try {
       const res = await fetch(url, {
         redirect: "manual",
-        headers: { "User-Agent": "vyrek-smoke/1.0" },
+        headers: { "User-Agent": "suth-smoke/1.0" },
       });
       const ok = expected.includes(res.status);
       const len = res.headers.get("content-length") ?? "";

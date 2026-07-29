@@ -1,4 +1,4 @@
-# Vyrek release notes — Brief v2 execution log
+# Suth Performance release notes — Brief v2 execution log
 
 **Started:** 2026-05-24
 **Brief:** `docs/CLAUDE_CODE_BRIEF_v2.md` — three-part execution (Image overhaul → Quiz redesign → Results hub).
@@ -83,7 +83,7 @@ Decisions confirmed:
 - Data sourcing: seed JSON now, scraper local-only (Part 3 §3.3 Option B)
 - Map: MapLibre + MapTiler free tier (§3.0.14)
 - Storage: Upstash Redis + Drizzle (§3.3 schema + §3.4 gate counter)
-- Branding: Vyrek primary (chartreuse) + Results accents cyan/magenta/amber, scoped to `/results/*`
+- Branding: Suth Performance primary (chartreuse) + Results accents cyan/magenta/amber, scoped to `/results/*`
 
 ---
 

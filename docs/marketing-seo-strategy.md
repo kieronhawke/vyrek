@@ -1,4 +1,4 @@
-# Vyrek. Marketing + SEO Strategy
+# Suth Performance. Marketing + SEO Strategy
 
 **Last updated:** 2026-05-22
 **Owner:** Founder + content team
@@ -27,9 +27,9 @@ These are aggressive but achievable given the **125+ programmatic pages already 
 
 ### Pillar 1. Be first to publish
 
-Every Hyrox race weekend has a 7-day pre-race attention spike (search volume on "hyrox [city]" peaks in the run-up). If Vyrek owns the first-page result for that query at T-7, we capture organic + ad-adjacent traffic for the cohort already converting.
+Every Hyrox race weekend has a 7-day pre-race attention spike (search volume on "hyrox [city]" peaks in the run-up). If Suth Performance owns the first-page result for that query at T-7, we capture organic + ad-adjacent traffic for the cohort already converting.
 
-**Tactical rule:** for every UK Hyrox race weekend, Vyrek publishes:
+**Tactical rule:** for every UK Hyrox race weekend, Suth Performance publishes:
 - **T-14 days:** Race preview ("Hyrox London March 2026: what to expect")
 - **T-7 days:** Final-week prep guide ("7 days out from Hyrox Manchester: taper, fuelling, kit check")
 - **T-1 day:** Race-day briefing ("Race-day kit checklist for Hyrox Birmingham")
@@ -40,7 +40,7 @@ Every Hyrox race weekend has a 7-day pre-race attention spike (search volume on 
 
 ### Pillar 2. Topical depth (own the question, not just the keyword)
 
-For every Hyrox-adjacent question, Vyrek should be one of three things on Google's results page:
+For every Hyrox-adjacent question, Suth Performance should be one of three things on Google's results page:
 1. The clearest answer (featured snippet)
 2. The deepest guide (clicked first from results)
 3. The trustworthy source (cited by gear roundups, Reddit, race-prep threads)
@@ -68,7 +68,7 @@ The blog ≠ the moat. The moat is **knowing where Hyrox racers spend their atte
 **Channels (in priority order):**
 1. **Reddit**, r/Hyrox (4k+ subs), r/crossfit, r/running. Useful answers + tool links (pace calculator gets shared most).
 2. **Hyrox UK Facebook group** (large active community). Race-week briefings + the cohort-banner urgency.
-3. **Strava clubs**, set up "Vyrek Athletes" club, post weekly training summaries.
+3. **Strava clubs**, set up "Suth Performance Athletes" club, post weekly training summaries.
 4. **TikTok**, short race-tip videos (60 sec each), evergreen, station-by-station.
 5. **YouTube Shorts**, same content as TikTok, second distribution.
 6. **Hyrox-adjacent newsletters**, pitch RoxLyfe, HyroxInsider, Hybrid Athlete Club for guest content swaps.
@@ -93,7 +93,7 @@ The blog ≠ the moat. The moat is **knowing where Hyrox racers spend their atte
 
 ### Race-coverage bot (deployed this round)
 
-The bot is implemented as a Vercel Cron that runs daily at 06:00 UTC. It scans `lib/hyrox-events.ts` and decides whether any event has hit a coverage milestone (T-14/T-7/T-1/T+1/T+7). If yes, it triggers content generation from a template + the event's structured data. The output is a stub MDX file in `content/blog/_pending/` for human review, OR auto-publishes if `VYREK_BOT_AUTOPUBLISH=true`.
+The bot is implemented as a Vercel Cron that runs daily at 06:00 UTC. It scans `lib/hyrox-events.ts` and decides whether any event has hit a coverage milestone (T-14/T-7/T-1/T+1/T+7). If yes, it triggers content generation from a template + the event's structured data. The output is a stub MDX file in `content/blog/_pending/` for human review, OR auto-publishes if `SUTH_BOT_AUTOPUBLISH=true`.
 
 **Why human-review by default:** even templated content needs a final eye for tone + facts. The bot generates the structure (headers, sections, schema), not the spirit. A reviewer's job is reduced from "write a 1,500-word post" to "approve 60 seconds of edits."
 
@@ -116,7 +116,7 @@ Each hub pulls related blog posts + plan templates + station guides + relevant c
 
 | Priority | Action | Why |
 |---|---|---|
-| **P0** | Custom domain (vyrek.com) + Google Search Console verification | Indexing crawl rate is throttled on `.vercel.app` |
+| **P0** | Custom domain (suthperformance.com) + Google Search Console verification | Indexing crawl rate is throttled on `.vercel.app` |
 | **P0** | Submit sitemap.xml (178 URLs) to GSC + Bing Webmaster | Triggers initial crawl |
 | **P1** | Set up automated race-coverage cron (live) | Captures T-14/T-1 search peaks |
 | **P1** | Build /topics hubs | Internal-link density compounds rankings |

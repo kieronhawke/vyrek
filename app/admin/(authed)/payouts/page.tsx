@@ -55,8 +55,8 @@ export default async function AdminPayoutsPage({
               }
               className={
                 active
-                  ? "inline-flex h-9 items-center rounded-pill border border-vyrek-accent bg-vyrek-accent/10 px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-accent"
-                  : "inline-flex h-9 items-center rounded-pill border border-vyrek-border-subtle bg-vyrek-elevated px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-secondary"
+                  ? "inline-flex h-9 items-center rounded-pill border border-suth-accent bg-suth-accent/10 px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-accent"
+                  : "inline-flex h-9 items-center rounded-pill border border-suth-border-subtle bg-suth-elevated px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-secondary"
               }
             >
               {f.label}
@@ -83,10 +83,10 @@ export default async function AdminPayoutsPage({
           empty="No payouts in this state."
           rows={res.data.map((p) => [
             <div key="p">
-              <p className="text-sm font-medium text-vyrek-text">
+              <p className="text-sm font-medium text-suth-text">
                 {p.partner_name ?? "(unknown)"}
               </p>
-              <p className="font-mono text-xs text-vyrek-text-secondary">
+              <p className="font-mono text-xs text-suth-text-secondary">
                 {p.partner_email ?? p.partner_id}
               </p>
             </div>,
@@ -97,17 +97,17 @@ export default async function AdminPayoutsPage({
               {p.period_start} → {p.period_end}
             </span>,
             <Badge key="s" tone={statusTone(p.status)}>{p.status}</Badge>,
-            <span key="b" className="font-mono text-xs text-vyrek-text-secondary">
+            <span key="b" className="font-mono text-xs text-suth-text-secondary">
               {p.bacs_reference ?? "-"}
             </span>,
             p.status === "pending" ? (
               <MarkPayoutPaidButton key="m" payoutId={p.id} />
             ) : p.paid_at ? (
-              <span key="d" className="font-mono text-xs text-vyrek-text-tertiary">
+              <span key="d" className="font-mono text-xs text-suth-text-tertiary">
                 {format(new Date(p.paid_at), "dd MMM")}
               </span>
             ) : (
-              <span key="d" className="text-vyrek-text-tertiary">
+              <span key="d" className="text-suth-text-tertiary">
                 , 
               </span>
             ),

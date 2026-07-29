@@ -30,18 +30,18 @@ export function PartnerLinkBox({ link }: { link: string }) {
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_240px]">
-      <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+      <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           Share this link
         </p>
-        <p className="mt-3 break-all font-mono text-base text-vyrek-text">
+        <p className="mt-3 break-all font-mono text-base text-suth-text">
           {link}
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
           <button
             type="button"
             onClick={copy}
-            className="inline-flex h-10 items-center rounded-pill bg-vyrek-accent px-4 text-sm font-semibold text-[#0A0A0A] hover:bg-vyrek-accent-hover"
+            className="inline-flex h-10 items-center rounded-pill bg-suth-accent px-4 text-sm font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover"
           >
             {copied ? "Copied" : "Copy link"}
           </button>
@@ -49,19 +49,19 @@ export function PartnerLinkBox({ link }: { link: string }) {
             href={link}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex h-10 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 text-sm text-vyrek-text-secondary hover:text-vyrek-text"
+            className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text-secondary hover:text-suth-text"
           >
             Open in new tab ↗
           </a>
         </div>
-        <p className="mt-4 text-xs text-vyrek-text-tertiary">
+        <p className="mt-4 text-xs text-suth-text-tertiary">
           When someone signs up after clicking your link, they&rsquo;re
           attributed to you for life. Commission accrues from their first
           paid invoice.
         </p>
       </div>
 
-      <div className="flex items-center justify-center rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
+      <div className="flex items-center justify-center rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={qrSrc}

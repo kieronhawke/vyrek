@@ -1,12 +1,12 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 /**
- * Signs and verifies the `vyrek_partner` attribution cookie.
+ * Signs and verifies the `suth_partner` attribution cookie.
  *
  * Format: `${partnerId}.${expiresAt}.${hmac(secret, "partner-attr:" + partnerId + ":" + expiresAt)}`
  *
  * Pre-fix, this cookie was the raw partner UUID with no signature,
- * which let any visitor stamp `vyrek_partner=<any-uuid>` and have any
+ * which let any visitor stamp `suth_partner=<any-uuid>` and have any
  * partner attributed for their own signup. The 90-day TTL also lived
  * only in the Set-Cookie maxAge — an exfiltrated cookie could be
  * replayed indefinitely. Both fixed here.

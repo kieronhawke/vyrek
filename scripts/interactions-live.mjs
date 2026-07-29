@@ -240,7 +240,7 @@ function add(category, detail) {
     await page.waitForTimeout(500);
     // Any visible error
     const err = await page
-      .locator('[role="alert"], .text-vyrek-danger, [aria-invalid="true"]')
+      .locator('[role="alert"], .text-suth-danger, [aria-invalid="true"]')
       .first()
       .innerText({ timeout: 1500 })
       .catch(() => null);

@@ -3,7 +3,7 @@ import { assertMember } from "@/lib/member/auth";
 import { MemberShell } from "@/components/member/shell";
 
 export const metadata: Metadata = {
-  title: "Today. Vyrek",
+  title: "Today. Suth Performance",
   description:
     "Your Hyrox training plan, today's session, food log, and race tracker.",
   robots: { index: false, follow: false },

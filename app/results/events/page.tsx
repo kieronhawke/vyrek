@@ -9,7 +9,7 @@ import { GateModal } from "@/components/results/gate-modal";
 import { listAllEvents, bucketEvents } from "@/lib/results/client";
 
 export const metadata: Metadata = {
-  title: "All HYROX events: browse by date · Vyrek",
+  title: "All HYROX events: browse by date · Suth Performance",
   description:
     "Every HYROX event we track. Live, upcoming, finished. Sortable by region, status, division.",
   alternates: { canonical: "/results/events" },
@@ -33,11 +33,11 @@ export default function EventsIndexPage() {
             <Eyebrow>Events</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               Browse HYROX events
             </SplitHeading>
-            <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
               [ {live} LIVE · {thisWeekend} THIS WEEKEND ·{" "}
               {upcoming30} UPCOMING ]
             </p>

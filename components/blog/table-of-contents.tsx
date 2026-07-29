@@ -48,8 +48,8 @@ export function TableOfContents() {
   if (!headings.length) return null;
 
   return (
-    <details className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated px-4 py-3 lg:open:py-3 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:border-0 lg:bg-transparent lg:p-0 [&[open]>summary>span:last-child]:rotate-180">
-      <summary className="flex cursor-pointer items-center justify-between font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary lg:cursor-default lg:pointer-events-none lg:mb-3 [&::-webkit-details-marker]:hidden">
+    <details className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3 lg:open:py-3 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:border-0 lg:bg-transparent lg:p-0 [&[open]>summary>span:last-child]:rotate-180">
+      <summary className="flex cursor-pointer items-center justify-between font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary lg:cursor-default lg:pointer-events-none lg:mb-3 [&::-webkit-details-marker]:hidden">
         <span>[ ON THIS PAGE ]</span>
         <span aria-hidden className="transition-transform lg:hidden">
           ▾
@@ -66,8 +66,8 @@ export function TableOfContents() {
               className={cn(
                 "block py-1.5 leading-snug transition-colors",
                 activeId === h.id
-                  ? "text-vyrek-accent"
-                  : "text-vyrek-text-secondary hover:text-vyrek-text",
+                  ? "text-suth-accent"
+                  : "text-suth-text-secondary hover:text-suth-text",
               )}
             >
               {h.text}

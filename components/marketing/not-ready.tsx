@@ -26,14 +26,14 @@ export function NotReady() {
     <RevealOnView
       as="section"
       aria-labelledby="objections-heading"
-      className="border-t border-vyrek-border-subtle py-24 md:py-32"
+      className="border-t border-suth-border-subtle py-24 md:py-32"
     >
       <Container>
         <header className="mx-auto max-w-2xl text-center">
           <Eyebrow>Common questions</Eyebrow>
           <SplitHeading
             id="objections-heading"
-            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
           >
             What if I&apos;m not ready?
           </SplitHeading>
@@ -43,12 +43,12 @@ export function NotReady() {
           {OBJECTIONS.map((o) => (
             <article
               key={o.fear}
-              className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-6 md:p-8"
+              className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-6 md:p-8"
             >
-              <h3 className="text-lg font-black leading-snug tracking-[-0.02em] text-vyrek-text md:text-xl">
+              <h3 className="text-lg font-black leading-snug tracking-[-0.02em] text-suth-text md:text-xl">
                 &ldquo;{o.fear}&rdquo;
               </h3>
-              <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+              <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                 {o.response}
               </p>
             </article>

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema",
-  "title": "Vyrek photo inventory",
+  "title": "Suth Performance photo inventory",
   "description": "Per Brief v2 §1.1. Two photo sources are catalogued here. Source A is the new /photos folder you added (2 usable files; 53 ChatGPT-generated files excluded per your Q1 answer). Source B is the existing /public/media/images/v2/ Pexels stock library shipped in Stage 2 Part A.",
   "generatedAt": "2026-05-24",
   "policy": {

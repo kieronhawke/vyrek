@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
-const SESSION_KEY = "vyrek:presence:sid";
+const SESSION_KEY = "suth:presence:sid";
 const HEARTBEAT_MS = 30_000;
 
 function sid(): string {

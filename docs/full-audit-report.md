@@ -1,6 +1,6 @@
 # Full audit — 2026-05-23
 
-**Target:** https://vyrek.vercel.app (deploy `vyrek-egfps9qon`)
+**Target:** https://suthperformance.com (deploy `suth-egfps9qon`)
 **Scope:** every route, every form, every interactive flow, build pipeline, lint, image spider, auth gates, stress test, Lighthouse, accessibility, error pages, edge cases.
 **Outcome:** report only — no fixes shipped in this audit.
 
@@ -48,7 +48,7 @@ What's surfaced below is divided into **real issues to fix** (12 ESLint errors, 
 | # | Item | Status | Action |
 |---|---|---|---|
 | INFRA-1 | Supabase migrations `0001`–`0005` | Unapplied as of 2026-05-22 (per memory) | Run them in Supabase Studio. Unblocks every backend path (quiz save, email gate, partners, member app). 30 min. |
-| INFRA-2 | `vyrek.com` DNS | Points at parked Apache page, not Vercel | Move DNS, set `NEXT_PUBLIC_SITE_URL=https://vyrek.com`. 1 hr. |
+| INFRA-2 | `suthperformance.com` DNS | Points at parked Apache page, not Vercel | Move DNS, set `NEXT_PUBLIC_SITE_URL=https://suthperformance.com`. 1 hr. |
 | INFRA-3 | `/api/presence/ping` 429 logging | Client logs console.error when rate-limited (cosmetic; ping is fire-and-forget) | Wrap the fetch in a silent catch so 429s don't reach Sentry. 10 min. |
 
 ### 1.4 Untested at runtime (deliberate, flagged)
@@ -168,4 +168,4 @@ Subtotal critical + major: ~5 hours (excluding Stripe / Resend / DNS which are e
 | `scripts/audit-forms.mjs` | Exercise every form with realistic input |
 | `scripts/audit-quiz-e2e.mjs` | Walk quiz V3 with heuristic clicker |
 
-All accept `SMOKE_BASE` env var; default `https://vyrek.vercel.app`.
+All accept `SMOKE_BASE` env var; default `https://suthperformance.com`.

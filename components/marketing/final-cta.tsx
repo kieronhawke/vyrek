@@ -14,7 +14,7 @@ export function FinalCta() {
     <RevealOnView
       as="section"
       aria-labelledby="final-cta-heading"
-      className="border-t border-vyrek-border-subtle py-24 md:py-40"
+      className="border-t border-suth-border-subtle py-24 md:py-40"
     >
       <Container>
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
@@ -25,7 +25,7 @@ export function FinalCta() {
               non-pushy (no second person), and on-brand specific. */}
           <SplitHeading
             id="final-cta-heading"
-            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.05em] text-vyrek-text md:text-4xl lg:text-5xl"
+            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.05em] text-suth-text md:text-4xl lg:text-5xl"
           >
             12 weeks to race-ready.
           </SplitHeading>
@@ -34,7 +34,7 @@ export function FinalCta() {
               Find your plan
             </CtaButton>
           </div>
-          <p className="mt-5 font-mono text-xs uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+          <p className="mt-5 font-mono text-xs uppercase tracking-[0.18em] text-suth-text-tertiary">
             7-day free trial. No card needed to start.
           </p>
         </div>

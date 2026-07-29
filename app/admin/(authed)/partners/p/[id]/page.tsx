@@ -57,8 +57,8 @@ export default async function AdminPartnerDetailPage({
         title={partner.name}
         description={
           <>
-            <span className="font-mono text-xs text-vyrek-text">
-              vyrek.com/p/{partner.partner_code}
+            <span className="font-mono text-xs text-suth-text">
+              suthperformance.com/p/{partner.partner_code}
             </span>
             {" · "}
             <Badge tone={tierTone(partner.tier)}>{partner.tier}</Badge>
@@ -73,7 +73,7 @@ export default async function AdminPartnerDetailPage({
         actions={
           <Link
             href="/admin/partners/list"
-            className="inline-flex h-10 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 text-sm text-vyrek-text"
+            className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text"
           >
             ← All partners
           </Link>
@@ -128,7 +128,7 @@ export default async function AdminPartnerDetailPage({
       {/* Profile + admin controls side-by-side */}
       <section className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2">
         <Card>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             Profile
           </p>
           <dl className="mt-3 space-y-2 text-sm">
@@ -153,11 +153,11 @@ export default async function AdminPartnerDetailPage({
             />
             {partner.application_id ? (
               <div className="flex justify-between gap-3">
-                <dt className="text-vyrek-text-tertiary">From application</dt>
+                <dt className="text-suth-text-tertiary">From application</dt>
                 <dd>
                   <Link
                     href={`/admin/partners/${partner.application_id}`}
-                    className="text-vyrek-accent underline underline-offset-4"
+                    className="text-suth-accent underline underline-offset-4"
                   >
                     Open ↗
                   </Link>
@@ -177,7 +177,7 @@ export default async function AdminPartnerDetailPage({
 
       {/* Recent referrals */}
       <section className="mt-10">
-        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           Referrals ({referrals.length})
         </h2>
         <Table
@@ -191,7 +191,7 @@ export default async function AdminPartnerDetailPage({
           empty="No referrals yet. Their /p/ link has been live since onboarding."
           rows={referrals.map((r) => [
             <Badge key="s" tone={refStatusTone(r.status)}>{r.status}</Badge>,
-            <span key="sub" className="font-mono text-xs text-vyrek-text-secondary">
+            <span key="sub" className="font-mono text-xs text-suth-text-secondary">
               {r.sub_id ?? "-"}
             </span>,
             r.signed_up_at
@@ -209,7 +209,7 @@ export default async function AdminPartnerDetailPage({
 
       {/* Payouts */}
       <section className="mt-10">
-        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           Payouts ({payouts.length})
         </h2>
         <Table
@@ -223,7 +223,7 @@ export default async function AdminPartnerDetailPage({
               {gbp(p.amount_pence)}
             </span>,
             <Badge key="s" tone={payoutStatusTone(p.status)}>{p.status}</Badge>,
-            <span key="ref" className="font-mono text-xs text-vyrek-text-secondary">
+            <span key="ref" className="font-mono text-xs text-suth-text-secondary">
               {p.bacs_reference ?? "-"}
             </span>,
           ])}
@@ -232,7 +232,7 @@ export default async function AdminPartnerDetailPage({
 
       {/* Audit log */}
       <section className="mt-10">
-        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           Audit log
         </h2>
         {events.ok && events.data.length > 0 ? (
@@ -240,18 +240,18 @@ export default async function AdminPartnerDetailPage({
             {events.data.map((e) => (
               <li
                 key={e.id}
-                className="rounded-md border border-vyrek-border-subtle bg-vyrek-elevated/60 p-4"
+                className="rounded-md border border-suth-border-subtle bg-suth-elevated/60 p-4"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-sm text-vyrek-text">
+                    <p className="text-sm text-suth-text">
                       {eventLabel(e.action)}
                     </p>
-                    <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                    <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                       {e.actor === "system" ? "[ SYSTEM ]" : `[ ${e.actor} ]`}
                     </p>
                   </div>
-                  <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                     {format(new Date(e.created_at), "dd MMM HH:mm")}
                   </span>
                 </div>
@@ -260,7 +260,7 @@ export default async function AdminPartnerDetailPage({
           </ol>
         ) : (
           <Card>
-            <p className="text-sm text-vyrek-text-tertiary">
+            <p className="text-sm text-suth-text-tertiary">
               No events yet for this partner.
             </p>
           </Card>
@@ -281,12 +281,12 @@ function Row({
 }) {
   return (
     <div className="flex justify-between gap-3">
-      <dt className="text-vyrek-text-tertiary">{k}</dt>
+      <dt className="text-suth-text-tertiary">{k}</dt>
       <dd
         className={
           mono
-            ? "font-mono text-xs text-vyrek-text"
-            : "text-right text-vyrek-text"
+            ? "font-mono text-xs text-suth-text"
+            : "text-right text-suth-text"
         }
       >
         {v}

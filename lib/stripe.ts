@@ -19,7 +19,7 @@ export function stripe(): Stripe {
   cached = new Stripe(key, {
     // Pin to the SDK's bundled API version. Stripe rolls these forward
     // safely; we can move to a newer version explicitly when we're ready.
-    appInfo: { name: "Vyrek", url: siteUrl() },
+    appInfo: { name: "Suth Performance", url: siteUrl() },
   });
   return cached;
 }
@@ -50,5 +50,5 @@ export function getSiteUrl(): string {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
   }
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return "https://vyrek.vercel.app";
+  return "https://suthperformance.com";
 }

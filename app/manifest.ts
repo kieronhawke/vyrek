@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Vyrek",
-    short_name: "Vyrek",
+    name: "Suth Performance",
+    short_name: "Suth Performance",
     description: "Personalised Hyrox training programmes",
     start_url: "/",
     display: "standalone",

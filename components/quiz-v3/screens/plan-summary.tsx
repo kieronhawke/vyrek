@@ -89,7 +89,7 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
     <div ref={containerRef}>
       <div
         data-summary-line
-        className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent"
+        className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent"
       >
         [ YOUR PLAN ]
       </div>
@@ -101,17 +101,17 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
           well as an h1 with a single trailing " Programme". */}
       <h1
         data-summary-line
-        className="mt-3 text-balance text-3xl font-black leading-tight tracking-[-0.04em] text-vyrek-text md:text-4xl"
+        className="mt-3 text-balance text-3xl font-black leading-tight tracking-[-0.04em] text-suth-text md:text-4xl"
       >
         {PROGRAMME_DISPLAY[programme]} Programme
       </h1>
 
       <p
         data-summary-line
-        className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg"
+        className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg"
       >
         Built around your race on{" "}
-        <span className="text-vyrek-text">
+        <span className="text-suth-text">
           {format(raceDate, "EEEE, d MMMM yyyy")}
         </span>
         .
@@ -119,12 +119,12 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
 
       <div
         data-summary-line
-        className="my-8 h-px w-full bg-vyrek-border-subtle"
+        className="my-8 h-px w-full bg-suth-border-subtle"
       />
 
       <p
         data-summary-line
-        className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary"
+        className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary"
       >
         Built around your answers
       </p>
@@ -137,12 +137,12 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
         {summariseAnswers(answers).map((row) => (
           <li
             key={row.label}
-            className="rounded-md border border-vyrek-border-subtle bg-vyrek-elevated/60 p-3"
+            className="rounded-md border border-suth-border-subtle bg-suth-elevated/60 p-3"
           >
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
               {row.label}
             </p>
-            <p className="mt-1 font-medium leading-snug text-vyrek-text">
+            <p className="mt-1 font-medium leading-snug text-suth-text">
               {row.value}
             </p>
           </li>
@@ -151,12 +151,12 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
 
       <div
         data-summary-line
-        className="my-8 h-px w-full bg-vyrek-border-subtle"
+        className="my-8 h-px w-full bg-suth-border-subtle"
       />
 
       <p
         data-summary-line
-        className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary"
+        className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary"
       >
         What&apos;s included
       </p>
@@ -166,14 +166,14 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
           <li
             key={b.number}
             data-summary-line
-            className="flex gap-4 rounded-md border border-vyrek-border-subtle bg-vyrek-elevated p-5"
+            className="flex gap-4 rounded-md border border-suth-border-subtle bg-suth-elevated p-5"
           >
-            <span className="shrink-0 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-vyrek-accent">
+            <span className="shrink-0 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-suth-accent">
               [ {b.number} ]
             </span>
             <div>
-              <p className="text-base font-bold text-vyrek-text">{b.title}</p>
-              <p className="mt-1 text-sm leading-relaxed text-vyrek-text-secondary">
+              <p className="text-base font-bold text-suth-text">{b.title}</p>
+              <p className="mt-1 text-sm leading-relaxed text-suth-text-secondary">
                 {b.body}
               </p>
             </div>
@@ -183,38 +183,38 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
 
       <div
         data-summary-line
-        className="my-8 h-px w-full bg-vyrek-border-subtle"
+        className="my-8 h-px w-full bg-suth-border-subtle"
       />
 
       <div
         data-summary-line
-        className="space-y-1 text-base text-vyrek-text-secondary"
+        className="space-y-1 text-base text-suth-text-secondary"
       >
         <p>
           Starting{" "}
-          <span className="text-vyrek-text">
+          <span className="text-suth-text">
             {format(startDate, "EEEE d MMMM yyyy")}
           </span>
         </p>
         <p>
           Race-ready:{" "}
-          <span className="text-vyrek-text">
+          <span className="text-suth-text">
             {format(raceDate, "EEEE d MMMM yyyy")}
           </span>
         </p>
-        <p className="text-sm text-vyrek-text-tertiary">
+        <p className="text-sm text-suth-text-tertiary">
           {weeksUntil} weeks to your race
         </p>
       </div>
 
       <div
         data-summary-line
-        className="mt-8 rounded-lg border border-vyrek-accent/40 bg-vyrek-accent/[0.06] p-5"
+        className="mt-8 rounded-lg border border-suth-accent/40 bg-suth-accent/[0.06] p-5"
       >
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
           What you pay
         </p>
-        <p className="mt-2 text-base font-medium leading-snug text-vyrek-text">
+        <p className="mt-2 text-base font-medium leading-snug text-suth-text">
           Free for 7 days. Then £8.99 a month, cancel in two taps from the
           app. No card needed to start your trial.
         </p>

@@ -14,7 +14,7 @@ export function ProseH2({
   return (
     <h2
       className={cn(
-        "mt-12 text-xl font-black tracking-[-0.02em] text-vyrek-text md:text-2xl",
+        "mt-12 text-xl font-black tracking-[-0.02em] text-suth-text md:text-2xl",
         className,
       )}
       {...rest}
@@ -32,7 +32,7 @@ export function ProseH3({
   return (
     <h3
       className={cn(
-        "mt-8 text-base font-bold uppercase tracking-[0.05em] text-vyrek-text md:text-lg",
+        "mt-8 text-base font-bold uppercase tracking-[0.05em] text-suth-text md:text-lg",
         className,
       )}
       {...rest}
@@ -50,7 +50,7 @@ export function ProseP({
   return (
     <p
       className={cn(
-        "mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg",
+        "mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg",
         className,
       )}
       {...rest}
@@ -68,7 +68,7 @@ export function ProseUl({
   return (
     <ul
       className={cn(
-        "mt-4 space-y-2 text-base text-vyrek-text-secondary md:text-lg",
+        "mt-4 space-y-2 text-base text-suth-text-secondary md:text-lg",
         className,
       )}
       {...rest}
@@ -90,7 +90,7 @@ export function ProseLi({
     >
       <span
         aria-hidden
-        className="mt-2.5 size-1 shrink-0 rounded-full bg-vyrek-accent"
+        className="mt-2.5 size-1 shrink-0 rounded-full bg-suth-accent"
       />
       <span>{children}</span>
     </li>
@@ -105,7 +105,7 @@ export function ProseAside({
   return (
     <aside
       className={cn(
-        "mt-8 rounded-md border border-vyrek-border-subtle bg-vyrek-elevated/60 p-5 text-sm leading-relaxed text-vyrek-text-secondary md:text-base",
+        "mt-8 rounded-md border border-suth-border-subtle bg-suth-elevated/60 p-5 text-sm leading-relaxed text-suth-text-secondary md:text-base",
         className,
       )}
       {...rest}
@@ -126,7 +126,7 @@ export function ProseEmailLink({
     <a
       href={`mailto:${email}`}
       className={cn(
-        "text-vyrek-text underline underline-offset-4 transition-colors hover:text-vyrek-accent",
+        "text-suth-text underline underline-offset-4 transition-colors hover:text-suth-accent",
         className,
       )}
     >

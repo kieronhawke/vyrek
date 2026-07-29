@@ -74,7 +74,7 @@ export const HYROX_EVENTS: HyroxEvent[] = [
       "Masters (40-44, 45-49, 50-54, 55-59, 60+)",
     ],
     prepWindow:
-      "12-week race build starts the week of 28 December 2025. Vyrek programmes auto-calibrate to this date.",
+      "12-week race build starts the week of 28 December 2025. Suth Performance programmes auto-calibrate to this date.",
     faqs: [
       {
         q: "How do I get to ExCeL for Hyrox London?",
@@ -86,7 +86,7 @@ export const HYROX_EVENTS: HyroxEvent[] = [
       },
       {
         q: "When should I start training for Hyrox London March 2026?",
-        a: "A 12-week build means starting the week of 28 December 2025. A 16-week build for total beginners means starting late November. Vyrek programmes auto-calibrate to your chosen race date.",
+        a: "A 12-week build means starting the week of 28 December 2025. A 16-week build for total beginners means starting late November. Suth Performance programmes auto-calibrate to your chosen race date.",
       },
     ],
   },

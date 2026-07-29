@@ -3,8 +3,8 @@
  *
  * Order of precedence:
  *   1. NEXT_PUBLIC_SITE_URL , set this in Vercel to the production
- *      canonical (currently https://vyrek.vercel.app; flip to
- *      https://vyrek.com once that domain is wired up).
+ *      canonical (currently https://suthperformance.com; flip to
+ *      https://suthperformance.com once that domain is wired up).
  *   2. VERCEL_PROJECT_PRODUCTION_URL, automatically set on production
  *      Vercel deploys.
  *   3. VERCEL_URL, preview deploy URL.

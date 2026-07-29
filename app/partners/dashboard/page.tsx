@@ -14,7 +14,7 @@ import { PartnerLinkBox } from "@/components/partners/link-box";
 export const metadata: Metadata = {
   title: "Partner dashboard",
   description:
-    "Track referrals, earnings, and payouts for your Vyrek Partner Programme.",
+    "Track referrals, earnings, and payouts for your Suth Performance Partner Programme.",
   robots: { index: false, follow: false },
 };
 
@@ -40,7 +40,7 @@ function siteUrl(): string {
   return (
     process.env.NEXT_PUBLIC_SITE_URL ??
     process.env.VERCEL_URL?.replace(/^/, "https://") ??
-    "https://vyrek.vercel.app"
+    "https://suthperformance.com"
   );
 }
 
@@ -60,10 +60,10 @@ export default async function PartnerDashboardPage({
           <Container>
             <div className="mx-auto max-w-md">
               <Eyebrow>Partner sign-in</Eyebrow>
-              <h1 className="mt-4 text-3xl font-black tracking-[-0.04em] text-vyrek-text md:text-4xl">
+              <h1 className="mt-4 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
                 Open your dashboard.
               </h1>
-              <p className="mt-4 text-base text-vyrek-text-secondary">
+              <p className="mt-4 text-base text-suth-text-secondary">
                 Sign-in link sent by email. Use the address on your partner
                 profile.
               </p>
@@ -76,13 +76,13 @@ export default async function PartnerDashboardPage({
                 </p>
               ) : null}
               <PartnerLoginForm />
-              <p className="mt-12 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+              <p className="mt-12 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
                 [ NOT A PARTNER YET? ]
               </p>
               <div className="mt-3 text-center">
                 <Link
                   href="/partners"
-                  className="text-vyrek-accent underline underline-offset-4"
+                  className="text-suth-accent underline underline-offset-4"
                 >
                   See the programme overview →
                 </Link>
@@ -141,7 +141,7 @@ export default async function PartnerDashboardPage({
     if (!p) {
       suspendedMessage = "We couldn't find your partner profile. Sign in again.";
     } else if (p.suspended_at) {
-      suspendedMessage = "Your account has been suspended. Email partners@vyrek.com.";
+      suspendedMessage = "Your account has been suspended. Email partners@suthperformance.com.";
     } else {
       partner = p as Partner;
 
@@ -197,19 +197,19 @@ export default async function PartnerDashboardPage({
           <header className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <Eyebrow>Partner dashboard</Eyebrow>
-              <h1 className="mt-3 text-3xl font-black tracking-[-0.04em] text-vyrek-text md:text-4xl">
+              <h1 className="mt-3 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
                 {partner.name}
               </h1>
-              <p className="mt-2 text-sm text-vyrek-text-secondary">
+              <p className="mt-2 text-sm text-suth-text-secondary">
                 Signed in as{" "}
-                <span className="text-vyrek-text">{partner.email}</span>
+                <span className="text-suth-text">{partner.email}</span>
               </p>
             </div>
             <div className="flex gap-2">
               <form action="/api/partners/dashboard/logout" method="POST">
                 <button
                   type="submit"
-                  className="inline-flex h-10 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 text-sm text-vyrek-text-secondary hover:text-vyrek-text"
+                  className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text-secondary hover:text-suth-text"
                 >
                   Sign out
                 </button>
@@ -239,40 +239,40 @@ export default async function PartnerDashboardPage({
           </section>
 
           {/* Tier */}
-          <section className="mt-8 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-6">
+          <section className="mt-8 rounded-lg border border-suth-border-subtle bg-suth-elevated p-6">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
                   [ {tierLabel(partner.tier).toUpperCase()} TIER · {tierRate(partner.tier)} ]
                 </p>
-                <p className="mt-2 text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl">
+                <p className="mt-2 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-3xl">
                   {tierRate(partner.tier)} lifetime recurring
                 </p>
               </div>
               {tierNext ? (
-                <p className="text-right text-sm text-vyrek-text-secondary">
+                <p className="text-right text-sm text-suth-text-secondary">
                   Next tier:
                   <br />
-                  <span className="font-mono uppercase tracking-[0.18em] text-vyrek-accent">
+                  <span className="font-mono uppercase tracking-[0.18em] text-suth-accent">
                     {tierNext.tier} ({tierNext.at}+)
                   </span>
                 </p>
               ) : (
-                <p className="text-right font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-accent">
+                <p className="text-right font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
                   Top tier reached
                 </p>
               )}
             </div>
             {tierNext ? (
               <>
-                <div className="mt-5 h-2 overflow-hidden rounded-pill bg-vyrek-base">
+                <div className="mt-5 h-2 overflow-hidden rounded-pill bg-suth-base">
                   <div
-                    className="h-full bg-vyrek-accent transition-all"
+                    className="h-full bg-suth-accent transition-all"
                     style={{ width: `${tierProgress}%` }}
                     aria-hidden
                   />
                 </div>
-                <p className="mt-2 text-xs text-vyrek-text-tertiary">
+                <p className="mt-2 text-xs text-suth-text-tertiary">
                   {partner.active_subscribers} of {tierNext.at} active
                   subscribers needed for {tierNext.tier} tier.
                 </p>
@@ -282,7 +282,7 @@ export default async function PartnerDashboardPage({
 
           {/* Your link */}
           <section className="mt-10">
-            <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
               Your link
             </h2>
             <PartnerLinkBox link={link} />
@@ -290,19 +290,19 @@ export default async function PartnerDashboardPage({
 
           {/* Recent referrals */}
           <section className="mt-10">
-            <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
               Recent referrals
             </h2>
             {referrals.length === 0 ? (
-              <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/40 p-8 text-center">
-                <p className="text-sm text-vyrek-text-tertiary">
+              <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated/40 p-8 text-center">
+                <p className="text-sm text-suth-text-tertiary">
                   No referrals yet. Share your link to get started.
                 </p>
               </div>
             ) : (
-              <div className="overflow-x-auto rounded-lg border border-vyrek-border-subtle">
+              <div className="overflow-x-auto rounded-lg border border-suth-border-subtle">
                 <table className="w-full border-collapse text-sm">
-                  <thead className="bg-vyrek-elevated">
+                  <thead className="bg-suth-elevated">
                     <tr>
                       <Th>Status</Th>
                       <Th>Signed up</Th>
@@ -314,7 +314,7 @@ export default async function PartnerDashboardPage({
                     {referrals.map((r) => (
                       <tr
                         key={r.id}
-                        className="border-b border-vyrek-border-subtle last:border-b-0"
+                        className="border-b border-suth-border-subtle last:border-b-0"
                       >
                         <Td>
                           <ReferralBadge status={r.status} />
@@ -347,18 +347,18 @@ export default async function PartnerDashboardPage({
 
           {/* Payouts */}
           <section className="mt-10">
-            <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
               Payout history
             </h2>
             {payouts.length === 0 ? (
-              <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/40 p-6 text-sm text-vyrek-text-tertiary">
+              <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated/40 p-6 text-sm text-suth-text-tertiary">
                 No payouts yet. Payouts queue automatically once your pending
                 balance reaches £50.
               </div>
             ) : (
-              <div className="overflow-x-auto rounded-lg border border-vyrek-border-subtle">
+              <div className="overflow-x-auto rounded-lg border border-suth-border-subtle">
                 <table className="w-full border-collapse text-sm">
-                  <thead className="bg-vyrek-elevated">
+                  <thead className="bg-suth-elevated">
                     <tr>
                       <Th>Period</Th>
                       <Th align="right">Amount</Th>
@@ -370,7 +370,7 @@ export default async function PartnerDashboardPage({
                     {payouts.map((p) => (
                       <tr
                         key={p.id}
-                        className="border-b border-vyrek-border-subtle last:border-b-0"
+                        className="border-b border-suth-border-subtle last:border-b-0"
                       >
                         <Td>
                           <span className="font-mono text-xs">
@@ -384,7 +384,7 @@ export default async function PartnerDashboardPage({
                           <PayoutBadge status={p.status} />
                         </Td>
                         <Td>
-                          <span className="font-mono text-xs text-vyrek-text-secondary">
+                          <span className="font-mono text-xs text-suth-text-secondary">
                             {p.bacs_reference ?? "-"}
                           </span>
                         </Td>
@@ -398,7 +398,7 @@ export default async function PartnerDashboardPage({
 
           {/* Marketing assets */}
           <section className="mt-10">
-            <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
               Marketing assets
             </h2>
             <ul role="list" className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -423,15 +423,15 @@ export default async function PartnerDashboardPage({
                 note="Press kit collection."
               />
             </ul>
-            <div className="mt-6 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <div className="mt-6 rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
                 Suggested copy
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
-                &ldquo;The Vyrek Hyrox training plan adapts every Sunday based
+              <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
+                &ldquo;The Suth Performance Hyrox training plan adapts every Sunday based
                 on what you logged. I&rsquo;ve been using it for [X] weeks
                 and broke my [Y] PB. Get a personalised week 1 before you
-                pay: <span className="text-vyrek-text">{link}</span>&rdquo;
+                pay: <span className="text-suth-text">{link}</span>&rdquo;
               </p>
             </div>
           </section>
@@ -458,15 +458,15 @@ function StatTile({
   note?: string;
 }) {
   return (
-    <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
-      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+    <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
+      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
         {label}
       </p>
-      <p className="mt-3 text-3xl font-black tracking-[-0.02em] text-vyrek-text tabular-nums md:text-4xl">
+      <p className="mt-3 text-3xl font-black tracking-[-0.02em] text-suth-text tabular-nums md:text-4xl">
         {value}
       </p>
       {note ? (
-        <p className="mt-2 text-xs text-vyrek-text-tertiary">{note}</p>
+        <p className="mt-2 text-xs text-suth-text-tertiary">{note}</p>
       ) : null}
     </div>
   );
@@ -475,13 +475,13 @@ function StatTile({
 function ReferralBadge({ status }: { status: string }) {
   const tones: Record<string, string> = {
     paid: "border-emerald-500/30 bg-emerald-500/10 text-emerald-300",
-    trial: "border-vyrek-accent/30 bg-vyrek-accent/10 text-vyrek-accent",
+    trial: "border-suth-accent/30 bg-suth-accent/10 text-suth-accent",
     cancelled: "border-red-500/30 bg-red-500/10 text-red-300",
     clawed_back: "border-amber-500/30 bg-amber-500/10 text-amber-300",
   };
   const tone =
     tones[status] ??
-    "border-vyrek-border-subtle bg-vyrek-elevated text-vyrek-text-secondary";
+    "border-suth-border-subtle bg-suth-elevated text-suth-text-secondary";
   return (
     <span
       className={`inline-flex items-center rounded-pill border px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] ${tone}`}
@@ -499,7 +499,7 @@ function PayoutBadge({ status }: { status: string }) {
   };
   const tone =
     tones[status] ??
-    "border-vyrek-border-subtle bg-vyrek-elevated text-vyrek-text-secondary";
+    "border-suth-border-subtle bg-suth-elevated text-suth-text-secondary";
   return (
     <span
       className={`inline-flex items-center rounded-pill border px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] ${tone}`}
@@ -522,10 +522,10 @@ function AssetCard({
     <li>
       <a
         href={href}
-        className="flex flex-col gap-2 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5 transition-colors hover:border-vyrek-border-strong"
+        className="flex flex-col gap-2 rounded-lg border border-suth-border-subtle bg-suth-elevated p-5 transition-colors hover:border-suth-border-strong"
       >
-        <span className="text-sm font-semibold text-vyrek-text">{title}</span>
-        <span className="text-xs text-vyrek-text-secondary">{note}</span>
+        <span className="text-sm font-semibold text-suth-text">{title}</span>
+        <span className="text-xs text-suth-text-secondary">{note}</span>
       </a>
     </li>
   );
@@ -540,9 +540,9 @@ function Th({
 }) {
   return (
     <th
-      className={`border-b border-vyrek-border-subtle px-4 py-3 ${
+      className={`border-b border-suth-border-subtle px-4 py-3 ${
         align === "right" ? "text-right" : "text-left"
-      } font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary`}
+      } font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary`}
     >
       {children}
     </th>
@@ -576,13 +576,13 @@ function Suspended({ message }: { message: string }) {
       <main className="pb-24 pt-32 md:pt-40">
         <Container>
           <div className="mx-auto max-w-md text-center">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
               [ PARTNER DASHBOARD ]
             </p>
-            <h1 className="mt-3 text-3xl font-black tracking-[-0.04em] text-vyrek-text md:text-4xl">
+            <h1 className="mt-3 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
               Account paused.
             </h1>
-            <p className="mt-4 text-base text-vyrek-text-secondary">
+            <p className="mt-4 text-base text-suth-text-secondary">
               {message}
             </p>
             <form
@@ -592,7 +592,7 @@ function Suspended({ message }: { message: string }) {
             >
               <button
                 type="submit"
-                className="inline-flex h-10 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 text-sm text-vyrek-text"
+                className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text"
               >
                 Sign out
               </button>

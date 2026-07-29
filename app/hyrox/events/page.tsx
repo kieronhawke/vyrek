@@ -47,11 +47,11 @@ export default function EventsIndex() {
             <Eyebrow>Events</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               Hyrox UK race calendar.
             </SplitHeading>
-            <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
               Every UK Hyrox race weekend with venue logistics, divisions, and
               the date your 12-week build should start.
             </p>
@@ -67,21 +67,21 @@ export default function EventsIndex() {
               <li key={e.slug}>
                 <Link
                   href={`/hyrox/events/${e.slug}`}
-                  className="lift-on-hover shimmer block h-full rounded-lg border border-vyrek-border bg-vyrek-elevated p-6"
+                  className="lift-on-hover shimmer block h-full rounded-lg border border-suth-border bg-suth-elevated p-6"
                 >
                   <div className="flex items-baseline justify-between gap-3">
                     <Eyebrow>{e.eyebrow}</Eyebrow>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                       {format(new Date(e.startDate), "MMM yyyy")}
                     </span>
                   </div>
-                  <h2 className="mt-3 text-xl font-black tracking-[-0.04em] text-vyrek-text">
+                  <h2 className="mt-3 text-xl font-black tracking-[-0.04em] text-suth-text">
                     {e.name}
                   </h2>
-                  <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
+                  <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
                     {e.about}
                   </p>
-                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-vyrek-accent">
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-suth-accent">
                     Venue + logistics →
                   </span>
                 </Link>

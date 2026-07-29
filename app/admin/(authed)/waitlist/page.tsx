@@ -30,8 +30,8 @@ export default async function AdminWaitlistPage() {
           res.ok && res.data.length > 0 ? (
             <a
               href={csvHref}
-              download="vyrek-waitlist.csv"
-              className="inline-flex h-10 items-center rounded-pill bg-vyrek-accent px-4 text-sm font-semibold text-[#0A0A0A] hover:bg-vyrek-accent-hover"
+              download="suth-waitlist.csv"
+              className="inline-flex h-10 items-center rounded-pill bg-suth-accent px-4 text-sm font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover"
             >
               Export CSV ({res.data.length})
             </a>
@@ -49,10 +49,10 @@ export default async function AdminWaitlistPage() {
           headers={["Email", "Source", "Joined"]}
           empty="Waitlist is empty."
           rows={res.data.map((r) => [
-            <span key="e" className="text-vyrek-text">
+            <span key="e" className="text-suth-text">
               {r.email}
             </span>,
-            <span key="s" className="font-mono text-xs text-vyrek-text-secondary">
+            <span key="s" className="font-mono text-xs text-suth-text-secondary">
               {r.source ?? "-"}
             </span>,
             format(new Date(r.created_at), "dd MMM yyyy, HH:mm"),

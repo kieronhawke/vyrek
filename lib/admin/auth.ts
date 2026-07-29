@@ -7,7 +7,7 @@ import { supabaseServer } from "@/lib/supabase/server";
  * an admin. Phase 1; replace with a roles table when a second admin
  * joins.
  *
- *   ADMIN_EMAILS=kieron.hawke@googlemail.com,another@vyrek.com
+ *   ADMIN_EMAILS=kieron.hawke@googlemail.com,another@suthperformance.com
  *
  * Use from admin layouts/pages/route handlers:
  *

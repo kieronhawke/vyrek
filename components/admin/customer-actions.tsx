@@ -66,7 +66,7 @@ export function CustomerActions({
 
   return (
     <Card>
-      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
         Customer actions
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
@@ -74,7 +74,7 @@ export function CustomerActions({
           type="button"
           onClick={passwordReset}
           disabled={pending}
-          className="inline-flex h-10 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 text-sm text-vyrek-text hover:border-vyrek-border-strong disabled:opacity-50"
+          className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text hover:border-suth-border-strong disabled:opacity-50"
         >
           Send password reset
         </button>

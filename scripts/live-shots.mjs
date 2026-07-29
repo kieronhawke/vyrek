@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Capture the LIVE site at vyrek.vercel.app so we can sanity-check the
+// Capture the LIVE site at suthperformance.com so we can sanity-check the
 // just-deployed build. Includes a signed-in admin pass to prove the
 // production deploy can read Supabase + render the dashboard.
 
@@ -10,7 +10,7 @@ import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, "audit-shots");
-const BASE = "https://vyrek.vercel.app";
+const BASE = "https://suthperformance.com";
 const ADMIN_EMAIL = "kieron.hawke@googlemail.com";
 const ADMIN_PASSWORD = "VyrekAdminTemp!2026";
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const DRAFT_KEY = "vyrek:partners:apply:draft:v1";
+const DRAFT_KEY = "suth:partners:apply:draft:v1";
 
 /**
  * Stage 12 (PART 11.4) — Partner application wizard.
@@ -21,7 +21,7 @@ const DRAFT_KEY = "vyrek:partners:apply:draft:v1";
  *   5.  Primary platform
  *   6.  Follower count
  *   7.  Content description
- *   8.  Why Vyrek
+ *   8.  Why Suth Performance
  *   9.  Primary URL
  *  10.  Past affiliate experience (optional)
  *  11.  Promotion methods + terms + submit
@@ -36,7 +36,7 @@ type Answers = {
   platform: string;
   followerCount: string;
   contentDescription: string;
-  whyVyrek: string;
+  whySuth: string;
   primaryUrl: string;
   pastAffiliate: string;
   promotionMethods: string[];
@@ -50,7 +50,7 @@ const INITIAL: Answers = {
   platform: "",
   followerCount: "",
   contentDescription: "",
-  whyVyrek: "",
+  whySuth: "",
   primaryUrl: "",
   pastAffiliate: "",
   promotionMethods: [],
@@ -172,7 +172,7 @@ export function PartnerApplicationForm() {
       case 7:
         return answers.contentDescription.trim().length >= 12;
       case 8:
-        return answers.whyVyrek.trim().length >= 20;
+        return answers.whySuth.trim().length >= 20;
       case 9:
         return /^https?:\/\/.+\..+/.test(answers.primaryUrl.trim());
       case 10:
@@ -200,7 +200,7 @@ export function PartnerApplicationForm() {
           platform: answers.platform,
           followerCount: answers.followerCount,
           contentDescription: answers.contentDescription.trim(),
-          whyVyrek: answers.whyVyrek.trim(),
+          whySuth: answers.whySuth.trim(),
           primaryUrl: answers.primaryUrl.trim(),
           pastAffiliate: answers.pastAffiliate.trim(),
           promotionMethods: answers.promotionMethods,
@@ -234,15 +234,15 @@ export function PartnerApplicationForm() {
     return (
       <div
         role="status"
-        className="mt-12 rounded-lg border border-vyrek-accent/40 bg-vyrek-elevated p-8 text-center"
+        className="mt-12 rounded-lg border border-suth-accent/40 bg-suth-elevated p-8 text-center"
       >
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           [ APPLICATION RECEIVED ]
         </p>
-        <h2 className="mt-4 text-3xl font-black tracking-[-0.04em] text-vyrek-text md:text-4xl">
+        <h2 className="mt-4 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
           Thanks. We will review within 48 hours.
         </h2>
-        <p className="mt-5 text-base text-vyrek-text-secondary md:text-lg">
+        <p className="mt-5 text-base text-suth-text-secondary md:text-lg">
           You will hear back at the email you provided. If approved, the
           email contains an onboarding link to set your partner code and
           payout details.
@@ -256,7 +256,7 @@ export function PartnerApplicationForm() {
       <ProgressBar screen={screen} total={TOTAL_SCREENS} />
 
       <form
-        className="mt-8 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/50 p-6 md:p-10"
+        className="mt-8 rounded-lg border border-suth-border-subtle bg-suth-elevated/50 p-6 md:p-10"
         onSubmit={(e) => {
           e.preventDefault();
           if (screen < TOTAL_SCREENS) {
@@ -270,10 +270,10 @@ export function PartnerApplicationForm() {
         {screen === 1 && (
           <Screen
             eyebrow="Welcome"
-            title="Apply to the Vyrek Partner Programme"
+            title="Apply to the Suth Performance Partner Programme"
             help="About three minutes. Eleven short questions about you and your audience."
           >
-            <p className="mt-6 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-6 text-base leading-relaxed text-suth-text-secondary md:text-lg">
               We&apos;re looking for creators, coaches, and community organisers
               with a Hyrox-aligned audience. Submit this application and
               we&apos;ll respond within 48 hours.
@@ -381,14 +381,14 @@ export function PartnerApplicationForm() {
         {screen === 8 && (
           <Screen
             eyebrow={`Step 8 of ${TOTAL_SCREENS}`}
-            title="Why is Vyrek a fit?"
+            title="Why is Suth Performance a fit?"
             help="What does your audience get out of it specifically?"
           >
             <Textarea
-              label="Why Vyrek"
-              name="whyVyrek"
-              value={answers.whyVyrek}
-              onChange={(v) => update("whyVyrek", v)}
+              label="Why Suth Performance"
+              name="whySuth"
+              value={answers.whySuth}
+              onChange={(v) => update("whySuth", v)}
               maxLength={300}
               autoFocus
             />
@@ -432,7 +432,7 @@ export function PartnerApplicationForm() {
         {screen === 11 && (
           <Screen
             eyebrow={`Step 11 of ${TOTAL_SCREENS}`}
-            title="How will you promote Vyrek?"
+            title="How will you promote Suth Performance?"
             help="Pick at least one. We use this to send relevant assets after approval."
           >
             <CheckGrid
@@ -441,25 +441,25 @@ export function PartnerApplicationForm() {
               values={answers.promotionMethods}
               onToggle={togglePromotion}
             />
-            <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-md border border-vyrek-border-subtle bg-vyrek-base/40 p-4 text-base text-vyrek-text">
+            <label className="mt-6 flex cursor-pointer items-start gap-3 rounded-md border border-suth-border-subtle bg-suth-base/40 p-4 text-base text-suth-text">
               <input
                 type="checkbox"
                 checked={answers.termsAccepted}
                 onChange={(e) =>
                   update("termsAccepted", e.currentTarget.checked)
                 }
-                className="mt-1 size-4 accent-vyrek-accent"
+                className="mt-1 size-4 accent-suth-accent"
               />
               <span>
                 I accept the{" "}
                 <a
                   href="/legal/terms"
-                  className="text-vyrek-accent underline underline-offset-4"
+                  className="text-suth-accent underline underline-offset-4"
                 >
-                  Vyrek Terms
+                  Suth Performance Terms
                 </a>{" "}
                 and the Partner Programme T&amp;Cs, including the no-bidding
-                rule on Vyrek brand terms and the 30-day commission clawback
+                rule on Suth Performance brand terms and the 30-day commission clawback
                 window.
               </span>
             </label>
@@ -477,7 +477,7 @@ export function PartnerApplicationForm() {
             <button
               type="button"
               onClick={() => setScreen(screen - 1)}
-              className="inline-flex h-12 items-center rounded-pill border border-vyrek-border bg-vyrek-base px-5 text-sm font-medium text-vyrek-text hover:border-vyrek-border-strong"
+              className="inline-flex h-12 items-center rounded-pill border border-suth-border bg-suth-base px-5 text-sm font-medium text-suth-text hover:border-suth-border-strong"
             >
               ← Back
             </button>
@@ -485,7 +485,7 @@ export function PartnerApplicationForm() {
           <button
             type="submit"
             disabled={!canAdvance() || status === "submitting"}
-            className="ml-auto inline-flex h-12 items-center justify-center rounded-pill bg-vyrek-accent px-6 text-base font-semibold tracking-tight text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
+            className="ml-auto inline-flex h-12 items-center justify-center rounded-pill bg-suth-accent px-6 text-base font-semibold tracking-tight text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
           >
             {screen === TOTAL_SCREENS
               ? status === "submitting"
@@ -504,16 +504,16 @@ function ProgressBar({ screen, total }: { screen: number; total: number }) {
   return (
     <div>
       <div className="flex items-baseline justify-between">
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           Step {screen} of {total}
         </p>
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           {pct}%
         </p>
       </div>
-      <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-vyrek-elevated">
+      <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-suth-elevated">
         <div
-          className="h-full bg-vyrek-accent transition-[width] duration-base ease-out"
+          className="h-full bg-suth-accent transition-[width] duration-base ease-out"
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -534,16 +534,16 @@ function Screen({
 }) {
   return (
     <div>
-      <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+      <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
         [ {eyebrow} ]
       </p>
       <h2
-        className="mt-3 text-balance text-2xl font-black leading-tight tracking-[-0.04em] text-vyrek-text md:text-3xl"
+        className="mt-3 text-balance text-2xl font-black leading-tight tracking-[-0.04em] text-suth-text md:text-3xl"
         dangerouslySetInnerHTML={{ __html: title }}
       />
       {help ? (
         <p
-          className="mt-3 text-base text-vyrek-text-secondary md:text-lg"
+          className="mt-3 text-base text-suth-text-secondary md:text-lg"
           dangerouslySetInnerHTML={{ __html: help }}
         />
       ) : null}
@@ -571,7 +571,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="block text-sm font-medium text-vyrek-text">{label}</span>
+      <span className="block text-sm font-medium text-suth-text">{label}</span>
       <input
         type={type}
         name={name}
@@ -580,7 +580,7 @@ function Field({
         placeholder={placeholder}
         autoFocus={autoFocus}
         autoComplete={type === "email" ? "email" : "off"}
-        className="mt-2 block h-12 w-full rounded-md border border-vyrek-border bg-vyrek-base px-4 text-base text-vyrek-text outline-none transition-colors placeholder:text-vyrek-text-tertiary focus:border-vyrek-accent"
+        className="mt-2 block h-12 w-full rounded-md border border-suth-border bg-suth-base px-4 text-base text-suth-text outline-none transition-colors placeholder:text-suth-text-tertiary focus:border-suth-accent"
       />
     </label>
   );
@@ -605,10 +605,10 @@ function Textarea({
 }) {
   return (
     <label className="block">
-      <span className="block text-sm font-medium text-vyrek-text">
+      <span className="block text-sm font-medium text-suth-text">
         {label}
         {maxLength ? (
-          <span className="ml-2 font-mono text-xs text-vyrek-text-tertiary">
+          <span className="ml-2 font-mono text-xs text-suth-text-tertiary">
             up to {maxLength} chars
           </span>
         ) : null}
@@ -621,7 +621,7 @@ function Textarea({
         rows={4}
         placeholder={placeholder}
         autoFocus={autoFocus}
-        className="mt-2 block w-full resize-y rounded-md border border-vyrek-border bg-vyrek-base px-4 py-3 text-base text-vyrek-text outline-none transition-colors placeholder:text-vyrek-text-tertiary focus:border-vyrek-accent"
+        className="mt-2 block w-full resize-y rounded-md border border-suth-border bg-suth-base px-4 py-3 text-base text-suth-text outline-none transition-colors placeholder:text-suth-text-tertiary focus:border-suth-accent"
       />
     </label>
   );
@@ -651,8 +651,8 @@ function RadioGrid<T extends string>({
             key={opt}
             className={`flex cursor-pointer items-center gap-3 rounded-md border px-4 py-3 text-base transition-colors ${
               checked
-                ? "border-vyrek-accent bg-vyrek-accent/10 text-vyrek-text"
-                : "border-vyrek-border-subtle bg-vyrek-base/40 text-vyrek-text hover:border-vyrek-border-strong"
+                ? "border-suth-accent bg-suth-accent/10 text-suth-text"
+                : "border-suth-border-subtle bg-suth-base/40 text-suth-text hover:border-suth-border-strong"
             }`}
           >
             <input
@@ -661,7 +661,7 @@ function RadioGrid<T extends string>({
               value={opt}
               checked={checked}
               onChange={() => onChange(opt)}
-              className="size-4 accent-vyrek-accent"
+              className="size-4 accent-suth-accent"
             />
             <span>{opt}</span>
           </label>
@@ -685,7 +685,7 @@ function CheckGrid<T extends string>({
   const set = new Set(values);
   return (
     <fieldset>
-      <legend className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+      <legend className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
         Pick all that apply
       </legend>
       <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -694,10 +694,10 @@ function CheckGrid<T extends string>({
           return (
             <label
               key={opt}
-              className={`flex cursor-pointer items-center gap-3 rounded-md border px-4 py-3 text-base text-vyrek-text transition-colors ${
+              className={`flex cursor-pointer items-center gap-3 rounded-md border px-4 py-3 text-base text-suth-text transition-colors ${
                 checked
-                  ? "border-vyrek-accent bg-vyrek-accent/10"
-                  : "border-vyrek-border-subtle bg-vyrek-base/40 hover:border-vyrek-border-strong"
+                  ? "border-suth-accent bg-suth-accent/10"
+                  : "border-suth-border-subtle bg-suth-base/40 hover:border-suth-border-strong"
               }`}
             >
               <input
@@ -706,7 +706,7 @@ function CheckGrid<T extends string>({
                 value={opt}
                 checked={checked}
                 onChange={() => onToggle(opt)}
-                className="size-4 accent-vyrek-accent"
+                className="size-4 accent-suth-accent"
               />
               <span>{opt}</span>
             </label>

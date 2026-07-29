@@ -27,11 +27,11 @@ export default async function AdminCustomersPage({
               name="q"
               defaultValue={search}
               placeholder="Search email..."
-              className="h-10 w-64 rounded-md border border-vyrek-border bg-vyrek-elevated px-3 text-sm text-vyrek-text outline-none focus:border-vyrek-accent"
+              className="h-10 w-64 rounded-md border border-suth-border bg-suth-elevated px-3 text-sm text-suth-text outline-none focus:border-suth-accent"
             />
             <button
               type="submit"
-              className="h-10 rounded-pill bg-vyrek-accent px-4 text-sm font-semibold text-[#0A0A0A]"
+              className="h-10 rounded-pill bg-suth-accent px-4 text-sm font-semibold text-[#0A0A0A]"
             >
               Search
             </button>
@@ -52,11 +52,11 @@ export default async function AdminCustomersPage({
             <Link
               key="email"
               href={`/admin/customers/${c.id}`}
-              className="text-vyrek-accent hover:underline"
+              className="text-suth-accent hover:underline"
             >
               {c.email}
             </Link>,
-            <span key="stripe" className="font-mono text-xs text-vyrek-text-secondary">
+            <span key="stripe" className="font-mono text-xs text-suth-text-secondary">
               {c.stripe_customer_id ?? "-"}
             </span>,
             <span key="ref" className="font-mono text-xs">

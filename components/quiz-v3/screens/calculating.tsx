@@ -91,7 +91,7 @@ export function CalculatingScreen({ answers }: { answers: QuizAnswers }) {
 
   return (
     <section
-      className="relative isolate flex min-h-svh flex-col items-center justify-center overflow-hidden bg-vyrek-base px-6 py-16"
+      className="relative isolate flex min-h-svh flex-col items-center justify-center overflow-hidden bg-suth-base px-6 py-16"
       aria-busy="true"
       aria-live="polite"
     >
@@ -130,14 +130,14 @@ export function CalculatingScreen({ answers }: { answers: QuizAnswers }) {
       {/* Phase 3 centre pulse */}
       {phase === 3 ? (
         <div aria-hidden className="relative mb-6 size-3">
-          <span className="absolute inset-0 animate-ping rounded-full bg-vyrek-accent/40" />
-          <span className="absolute inset-0 rounded-full bg-vyrek-accent" />
+          <span className="absolute inset-0 animate-ping rounded-full bg-suth-accent/40" />
+          <span className="absolute inset-0 rounded-full bg-suth-accent" />
         </div>
       ) : null}
 
       {/* The line */}
       <p
-        className="min-h-[1.5em] text-center font-mono text-[14px] uppercase tracking-[0.12em] text-vyrek-accent transition-[opacity,transform] duration-300"
+        className="min-h-[1.5em] text-center font-mono text-[14px] uppercase tracking-[0.12em] text-suth-accent transition-[opacity,transform] duration-300"
         style={{
           opacity: phase >= 1 ? 1 : 0,
           transform: phase >= 1 ? "translateY(0)" : "translateY(12px)",
@@ -149,10 +149,10 @@ export function CalculatingScreen({ answers }: { answers: QuizAnswers }) {
       {/* Progress line */}
       <div
         aria-hidden
-        className="mt-6 h-px w-[200px] overflow-hidden bg-vyrek-border-subtle"
+        className="mt-6 h-px w-[200px] overflow-hidden bg-suth-border-subtle"
       >
         <div
-          className="h-full bg-vyrek-accent"
+          className="h-full bg-suth-accent"
           style={{
             width: `${Math.round(progress * 100)}%`,
             transition: "width 80ms linear",

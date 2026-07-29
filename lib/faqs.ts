@@ -7,7 +7,7 @@ export type Faq = { question: string; answer: string };
 
 export const FAQS: Faq[] = [
   {
-    question: "What is Vyrek?",
+    question: "What is Suth Performance?",
     answer:
       "Personalised Hyrox training programmes built by Elite 15 athletes. Take the three-minute quiz. See your first week. Start a 7-day free trial.",
   },

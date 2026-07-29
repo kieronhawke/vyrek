@@ -29,7 +29,7 @@ export function PrimaryIntentScreen({
   return (
     <div>
       <QuestionHeader
-        question="What brings you to Vyrek?"
+        question="What brings you to Suth Performance?"
         helper="Pick the closest. Tap a second if it also applies."
       />
       <ul role="list" className="space-y-3">

@@ -6,8 +6,8 @@ import { determineStartDate } from "@/lib/quiz-flow";
 import { WelcomeContent } from "@/components/welcome/welcome-content";
 
 export const metadata: Metadata = {
-  title: "Welcome. Vyrek",
-  description: "Your Vyrek trial is live. Day 1 starts tomorrow.",
+  title: "Welcome. Suth Performance",
+  description: "Your Suth Performance trial is live. Day 1 starts tomorrow.",
   robots: { index: false, follow: false },
 };
 

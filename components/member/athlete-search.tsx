@@ -26,11 +26,11 @@ export function AthleteSearch({ athletes }: { athletes: Athlete[] }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by name, city, or category"
-          className="block h-11 w-full rounded-pill border border-vyrek-border bg-vyrek-elevated pl-10 pr-4 text-sm text-vyrek-text outline-none focus:border-vyrek-accent"
+          className="block h-11 w-full rounded-pill border border-suth-border bg-suth-elevated pl-10 pr-4 text-sm text-suth-text outline-none focus:border-suth-accent"
         />
         <span
           aria-hidden
-          className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-vyrek-text-tertiary"
+          className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-suth-text-tertiary"
         >
           🔍
         </span>
@@ -38,7 +38,7 @@ export function AthleteSearch({ athletes }: { athletes: Athlete[] }) {
 
       <ul role="list" className="mt-3 space-y-2">
         {results.length === 0 ? (
-          <li className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/40 p-5 text-center text-sm text-vyrek-text-tertiary">
+          <li className="rounded-lg border border-suth-border-subtle bg-suth-elevated/40 p-5 text-center text-sm text-suth-text-tertiary">
             No athletes match &ldquo;{query}&rdquo;. Try a city or category.
           </li>
         ) : (
@@ -46,9 +46,9 @@ export function AthleteSearch({ athletes }: { athletes: Athlete[] }) {
             <li key={a.slug}>
               <Link
                 href={`/app/analysis/athlete/${a.slug}`}
-                className="flex w-full items-center gap-3 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/60 px-3 py-3 text-left transition-colors hover:border-vyrek-border-strong active:scale-[0.99]"
+                className="flex w-full items-center gap-3 rounded-lg border border-suth-border-subtle bg-suth-elevated/60 px-3 py-3 text-left transition-colors hover:border-suth-border-strong active:scale-[0.99]"
               >
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-vyrek-border bg-vyrek-base text-sm font-semibold uppercase text-vyrek-text">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-suth-border bg-suth-base text-sm font-semibold uppercase text-suth-text">
                   {a.name
                     .split(/\s+/)
                     .slice(0, 2)
@@ -56,18 +56,18 @@ export function AthleteSearch({ athletes }: { athletes: Athlete[] }) {
                     .join("")}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-semibold text-vyrek-text">
+                  <p className="truncate text-sm font-semibold text-suth-text">
                     {a.name}
                   </p>
-                  <p className="truncate font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  <p className="truncate font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                     {a.category} · {a.city}
                   </p>
                 </div>
                 <div className="shrink-0 text-right">
-                  <p className="font-mono text-sm tabular-nums text-vyrek-accent">
+                  <p className="font-mono text-sm tabular-nums text-suth-accent">
                     {a.pb}
                   </p>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                     PB · {a.raceCount} races
                   </p>
                 </div>

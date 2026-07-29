@@ -90,8 +90,8 @@ try {
   await page.goto(`${BASE}/quiz`, { waitUntil: "networkidle2" });
   // Clear localStorage so the test always starts fresh
   await page.evaluate(() => {
-    window.localStorage.removeItem("vyrek:quiz:v3:state");
-    window.localStorage.removeItem("vyrek:customer:uuid");
+    window.localStorage.removeItem("suth:quiz:v3:state");
+    window.localStorage.removeItem("suth:customer:uuid");
   });
   await page.reload({ waitUntil: "networkidle2" });
   await settle(600);
@@ -255,7 +255,7 @@ try {
 
   // Verify localStorage state has expected fields
   const finalState = await page.evaluate(() => {
-    const raw = window.localStorage.getItem("vyrek:quiz:v3:state");
+    const raw = window.localStorage.getItem("suth:quiz:v3:state");
     return raw ? JSON.parse(raw) : null;
   });
 

@@ -32,12 +32,12 @@ export default function PlansIndex() {
             <Eyebrow>Training plans</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               Hyrox plans by goal and athlete.
             </SplitHeading>
-            <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
-              Every Vyrek subscription includes all programmes. The plans below
+            <p className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
+              Every Suth Performance subscription includes all programmes. The plans below
               are example shapes, start the quiz and we&apos;ll build the
               version that fits your race date, equipment, and current fitness.
             </p>
@@ -50,7 +50,7 @@ export default function PlansIndex() {
 
           <section className="mx-auto mt-20 max-w-5xl">
             <Eyebrow>By goal time</Eyebrow>
-            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
+            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               Pick your target.
             </h2>
             <ul role="list" className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -58,16 +58,16 @@ export default function PlansIndex() {
                 <li key={p.slug}>
                   <Link
                     href={`/plans/${p.slug}`}
-                    className="lift-on-hover shimmer block rounded-lg border border-vyrek-border bg-vyrek-elevated p-6"
+                    className="lift-on-hover shimmer block rounded-lg border border-suth-border bg-suth-elevated p-6"
                   >
                     <Eyebrow>{p.eyebrow}</Eyebrow>
-                    <h3 className="mt-3 text-xl font-black tracking-[-0.04em] text-vyrek-text">
+                    <h3 className="mt-3 text-xl font-black tracking-[-0.04em] text-suth-text">
                       {p.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
+                    <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
                       {p.hook}
                     </p>
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-vyrek-accent">
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-suth-accent">
                       Read the plan →
                     </span>
                   </Link>
@@ -76,9 +76,9 @@ export default function PlansIndex() {
             </ul>
           </section>
 
-          <section className="mx-auto mt-20 max-w-5xl border-t border-vyrek-border-subtle pt-12">
+          <section className="mx-auto mt-20 max-w-5xl border-t border-suth-border-subtle pt-12">
             <Eyebrow>By athlete</Eyebrow>
-            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-vyrek-text md:text-3xl">
+            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               Pick your starting point.
             </h2>
             <ul role="list" className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -86,16 +86,16 @@ export default function PlansIndex() {
                 <li key={p.slug}>
                   <Link
                     href={`/plans/${p.slug}`}
-                    className="lift-on-hover shimmer block rounded-lg border border-vyrek-border bg-vyrek-elevated p-6"
+                    className="lift-on-hover shimmer block rounded-lg border border-suth-border bg-suth-elevated p-6"
                   >
                     <Eyebrow>{p.eyebrow}</Eyebrow>
-                    <h3 className="mt-3 text-xl font-black tracking-[-0.04em] text-vyrek-text">
+                    <h3 className="mt-3 text-xl font-black tracking-[-0.04em] text-suth-text">
                       {p.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
+                    <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
                       {p.hook}
                     </p>
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-vyrek-accent">
+                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-suth-accent">
                       Read the plan →
                     </span>
                   </Link>

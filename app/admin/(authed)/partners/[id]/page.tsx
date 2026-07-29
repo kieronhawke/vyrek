@@ -41,7 +41,7 @@ export default async function AdminApplicationDetailPage({
         actions={
           <Link
             href="/admin/partners"
-            className="inline-flex h-10 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 text-sm text-vyrek-text"
+            className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text"
           >
             ← Back to applications
           </Link>
@@ -50,7 +50,7 @@ export default async function AdminApplicationDetailPage({
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <Card>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             Contact
           </p>
           <dl className="mt-3 space-y-2 text-sm">
@@ -61,7 +61,7 @@ export default async function AdminApplicationDetailPage({
         </Card>
 
         <Card>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             Audience
           </p>
           <dl className="mt-3 space-y-2 text-sm">
@@ -75,38 +75,38 @@ export default async function AdminApplicationDetailPage({
         </Card>
 
         <Card className="md:col-span-2">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             Their content
           </p>
-          <p className="mt-3 text-sm text-vyrek-text">
+          <p className="mt-3 text-sm text-suth-text">
             {a.content_description}
           </p>
         </Card>
 
         <Card className="md:col-span-2">
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
-            Why Vyrek fits their audience
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+            Why Suth Performance fits their audience
           </p>
-          <p className="mt-3 text-sm text-vyrek-text">{a.why_vyrek}</p>
+          <p className="mt-3 text-sm text-suth-text">{a.why_vyrek}</p>
         </Card>
 
         {a.past_affiliate ? (
           <Card className="md:col-span-2">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
               Past affiliate experience
             </p>
-            <p className="mt-3 text-sm text-vyrek-text">{a.past_affiliate}</p>
+            <p className="mt-3 text-sm text-suth-text">{a.past_affiliate}</p>
           </Card>
         ) : null}
 
         {a.rejection_reason ? (
           <Card className="md:col-span-2">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
               Admin note
             </p>
-            <p className="mt-3 text-sm text-vyrek-text">{a.rejection_reason}</p>
+            <p className="mt-3 text-sm text-suth-text">{a.rejection_reason}</p>
             {a.reviewed_at ? (
-              <p className="mt-2 font-mono text-xs text-vyrek-text-tertiary">
+              <p className="mt-2 font-mono text-xs text-suth-text-tertiary">
                 Reviewed {format(new Date(a.reviewed_at), "dd MMM yyyy, HH:mm")}
               </p>
             ) : null}
@@ -116,13 +116,13 @@ export default async function AdminApplicationDetailPage({
 
       {a.status === "pending" ? (
         <section className="mt-10">
-          <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             Actions
           </h2>
           <ApplicationActions applicationId={a.id} />
         </section>
       ) : (
-        <p className="mt-10 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <p className="mt-10 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           [ NO ACTIONS · APPLICATION ALREADY {a.status.toUpperCase()} ]
         </p>
       )}
@@ -141,12 +141,12 @@ function Row({
 }) {
   return (
     <div className="flex justify-between gap-3">
-      <dt className="text-vyrek-text-tertiary">{k}</dt>
+      <dt className="text-suth-text-tertiary">{k}</dt>
       <dd
         className={
           mono
-            ? "font-mono text-xs text-vyrek-text"
-            : "text-right text-vyrek-text"
+            ? "font-mono text-xs text-suth-text"
+            : "text-right text-suth-text"
         }
       >
         {v}

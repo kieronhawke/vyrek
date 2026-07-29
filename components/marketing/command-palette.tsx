@@ -179,7 +179,7 @@ export function CommandPalette() {
             onClick={() => setOpen(false)}
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
           />
-          <div className="relative z-10 w-full max-w-xl overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated shadow-2xl">
+          <div className="relative z-10 w-full max-w-xl overflow-hidden rounded-lg border border-suth-border bg-suth-elevated shadow-2xl">
             <input
               ref={inputRef}
               type="text"
@@ -187,18 +187,18 @@ export function CommandPalette() {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={onKeyDownInput}
               placeholder="Search routes, programmes, cities, stations..."
-              className="h-14 w-full border-b border-vyrek-border-subtle bg-transparent px-5 text-base text-vyrek-text placeholder:text-vyrek-text-tertiary focus:outline-none"
+              className="h-14 w-full border-b border-suth-border-subtle bg-transparent px-5 text-base text-suth-text placeholder:text-suth-text-tertiary focus:outline-none"
               aria-label="Search"
             />
             <ul role="listbox" className="max-h-[60vh] overflow-y-auto p-2">
               {Object.keys(grouped).length === 0 ? (
-                <li className="px-3 py-6 text-center text-sm text-vyrek-text-tertiary">
+                <li className="px-3 py-6 text-center text-sm text-suth-text-tertiary">
                   No matches. Try &ldquo;sub 90&rdquo;, &ldquo;london&rdquo;, &ldquo;wall ball&rdquo;.
                 </li>
               ): (
                 Object.entries(grouped).map(([group, items]) => (
                   <li key={group}>
-                    <p className="px-3 pb-1 pt-3 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+                    <p className="px-3 pb-1 pt-3 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
                       {group}
                     </p>
                     <ul role="group">
@@ -211,10 +211,10 @@ export function CommandPalette() {
                               type="button"
                               onClick={() => onSelect(flatIdx)}
                               onMouseEnter={() => setActive(flatIdx)}
-                              className={`flex w-full items-center justify-between gap-3 rounded-md px-3 py-2.5 text-left text-sm transition-colors ${isActive ? "bg-vyrek-overlay text-vyrek-text": "text-vyrek-text-secondary hover:text-vyrek-text"}`}
+                              className={`flex w-full items-center justify-between gap-3 rounded-md px-3 py-2.5 text-left text-sm transition-colors ${isActive ? "bg-suth-overlay text-suth-text": "text-suth-text-secondary hover:text-suth-text"}`}
                             >
                               <span>{it.label}</span>
-                              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                                 {isActive ? "↵": it.hint ?? ""}
                               </span>
                             </button>
@@ -226,7 +226,7 @@ export function CommandPalette() {
                 ))
               )}
             </ul>
-            <div className="flex items-center justify-between gap-3 border-t border-vyrek-border-subtle px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+            <div className="flex items-center justify-between gap-3 border-t border-suth-border-subtle px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
               <span>↑↓ navigate · ↵ go</span>
               <span>Esc to close</span>
             </div>

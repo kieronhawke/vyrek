@@ -20,7 +20,7 @@ export function Faq() {
     <RevealOnView
       as="section"
       aria-labelledby="faq-heading"
-      className="border-t border-vyrek-border-subtle py-24 md:py-32"
+      className="border-t border-suth-border-subtle py-24 md:py-32"
     >
       <Container>
         {/* FAQPage JSON-LD, search engines render these as rich results. */}
@@ -45,7 +45,7 @@ export function Faq() {
           <Eyebrow>Questions</Eyebrow>
           <SplitHeading
             id="faq-heading"
-            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
           >
             Common questions
           </SplitHeading>
@@ -58,12 +58,12 @@ export function Faq() {
               <AccordionItem
                 key={f.question}
                 value={`item-${i}`}
-                className="border-b border-vyrek-border-subtle last:border-b-0"
+                className="border-b border-suth-border-subtle last:border-b-0"
               >
-                <AccordionTrigger className="py-5 text-left text-base font-medium text-vyrek-text hover:no-underline">
+                <AccordionTrigger className="py-5 text-left text-base font-medium text-suth-text hover:no-underline">
                   {f.question}
                 </AccordionTrigger>
-                <AccordionContent className="pb-5 text-base leading-relaxed text-vyrek-text-secondary">
+                <AccordionContent className="pb-5 text-base leading-relaxed text-suth-text-secondary">
                   {f.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -78,12 +78,12 @@ export function Faq() {
                   <AccordionItem
                     key={f.question}
                     value={`col-${ci}-item-${i}`}
-                    className="border-b border-vyrek-border-subtle last:border-b-0"
+                    className="border-b border-suth-border-subtle last:border-b-0"
                   >
-                    <AccordionTrigger className="py-5 text-left text-lg font-medium text-vyrek-text hover:no-underline">
+                    <AccordionTrigger className="py-5 text-left text-lg font-medium text-suth-text hover:no-underline">
                       {f.question}
                     </AccordionTrigger>
-                    <AccordionContent className="pb-5 text-base leading-relaxed text-vyrek-text-secondary">
+                    <AccordionContent className="pb-5 text-base leading-relaxed text-suth-text-secondary">
                       {f.answer}
                     </AccordionContent>
                   </AccordionItem>

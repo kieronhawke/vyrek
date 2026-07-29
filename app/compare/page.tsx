@@ -28,11 +28,11 @@ export default function CompareIndex() {
             <Eyebrow>Compare</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               Hyrox vs everything else.
             </SplitHeading>
-            <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
               Honest comparisons of Hyrox against the other major endurance and
               hybrid disciplines. Use them to pick the right race, or to make
               the case to your gym buddy.
@@ -43,16 +43,16 @@ export default function CompareIndex() {
               <li key={c.slug}>
                 <Link
                   href={`/compare/${c.slug}`}
-                  className="lift-on-hover shimmer block rounded-lg border border-vyrek-border bg-vyrek-elevated p-6"
+                  className="lift-on-hover shimmer block rounded-lg border border-suth-border bg-suth-elevated p-6"
                 >
                   <Eyebrow>{c.eyebrow}</Eyebrow>
-                  <h2 className="mt-3 text-xl font-black tracking-[-0.04em] text-vyrek-text">
+                  <h2 className="mt-3 text-xl font-black tracking-[-0.04em] text-suth-text">
                     {c.title}
                   </h2>
-                  <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary">
+                  <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
                     {c.hook}
                   </p>
-                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-vyrek-accent">
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-suth-accent">
                     Read the comparison →
                   </span>
                 </Link>

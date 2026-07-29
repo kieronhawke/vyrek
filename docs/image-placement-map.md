@@ -35,7 +35,7 @@ All currently-rendered images sit at the right size + aspect after the Stage 2 P
 
 ## Slots that explicitly DON'T get a /photos image (and why)
 
-The /photos folder gave us 2 usable files. Vyrek surfaces with hundreds of image slots cannot all be re-shot. The following slots stay on Pexels v2/ because:
+The /photos folder gave us 2 usable files. Suth Performance surfaces with hundreds of image slots cannot all be re-shot. The following slots stay on Pexels v2/ because:
 
 - **Programme images, race-station imagery, station-specific bento tiles** — h1/h2 are *gym smiling-portrait* shots, not sled/wall ball/burpee station shots. Wrong semantic.
 - **Hero backdrops (Home, About)** — Hero uses moodier/intense direction. h1/h2's bright daylight + warm smile would shift the brand register lighter than intended.

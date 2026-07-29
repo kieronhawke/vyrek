@@ -1,4 +1,4 @@
-# Vyrek — Claude Code Execution Brief (v2)
+# Suth Performance — Claude Code Execution Brief (v2)
 
 **Scope:** Site-wide image overhaul + Quiz redesign + Results Hub (the big one) that matches hyresult.com feature-for-feature and beats it on UX, polish, data, and insight.
 
@@ -16,7 +16,7 @@
 - **Diversity audit** at the end of Part 1.
 - **Every commit** references the Part/section it advances.
 - **Never invent or AI-generate imagery.** Use only the photos in the project's `photos` folder. Where no match exists, leave the existing image or use a neutral logomark placeholder.
-- **Never copy text, code, or assets from hyresult.com.** Their feature set is the reference; copy and visual design are entirely Vyrek's.
+- **Never copy text, code, or assets from hyresult.com.** Their feature set is the reference; copy and visual design are entirely Suth Performance's.
 
 ---
 
@@ -40,7 +40,7 @@ Walk every page and component. For each `<Image>`, `<img>`, or `background-image
 
 ## 1.3 Match photos to slots
 
-For each "replace" slot, pick the best photo by **semantic fit** (coach portrait → portrait photo, sled-station card → sled photo, doubles programme → two athletes), **composition fit** (hero needs landscape with text headroom, bento needs balanced focal points, testimonial needs tight crop), and **mood fit** (Vyrek is gritty, serious, aspirational — not stocky or smiley unless slot calls for warmth). Document matches in `docs/image-placement-map.md`: slot → photo ID → one-sentence rationale.
+For each "replace" slot, pick the best photo by **semantic fit** (coach portrait → portrait photo, sled-station card → sled photo, doubles programme → two athletes), **composition fit** (hero needs landscape with text headroom, bento needs balanced focal points, testimonial needs tight crop), and **mood fit** (Suth Performance is gritty, serious, aspirational — not stocky or smiley unless slot calls for warmth). Document matches in `docs/image-placement-map.md`: slot → photo ID → one-sentence rationale.
 
 ## 1.4 Replace, crop, optimise
 
@@ -52,7 +52,7 @@ Produce `docs/image-manifest.json`: every in-use image with path, used-on pages,
 
 ## 1.6 No-match handling
 
-If no folder image matches a slot, leave the current image if acceptable or replace with a neutral dark-gradient + Vyrek logomark placeholder. Log every gap in `docs/missing-photos.md`.
+If no folder image matches a slot, leave the current image if acceptable or replace with a neutral dark-gradient + Suth Performance logomark placeholder. Log every gap in `docs/missing-photos.md`.
 
 ## 1.7 Acceptance criteria
 
@@ -88,13 +88,13 @@ Personalised headline, recommended programme, secondary recommendations, clear p
 
 # PART 3 — Results Hub
 
-This is the headline build. Match hyresult.com **feature-for-feature** and beat it on UX, polish, data, and insight. The hub becomes Vyrek's main acquisition channel: athletes come for the data, get gated, convert to the course.
+This is the headline build. Match hyresult.com **feature-for-feature** and beat it on UX, polish, data, and insight. The hub becomes Suth Performance's main acquisition channel: athletes come for the data, get gated, convert to the course.
 
 ## 3.0 hyresult.com — page-by-page UI reference
 
-This section is the spec. Every page here is **based on direct inspection** of the live hyresult.com pages. Build the Vyrek equivalent of each. Vyrek's version should be visually obviously better (see 3.6 Design system) but **functionally must include everything described here**, plus the differentiators in 3.2.
+This section is the spec. Every page here is **based on direct inspection** of the live hyresult.com pages. Build the Suth Performance equivalent of each. Suth Performance's version should be visually obviously better (see 3.6 Design system) but **functionally must include everything described here**, plus the differentiators in 3.2.
 
-> Naming convention reference: hyresult uses `s{season}-{year}-{city-slug}` for event slugs (e.g. `s8-2026-hong-kong`), country flags from `/flags/{iso-cc}.svg` with regional variants `gb-eng.svg`, `gb-sct.svg`, `gb-wls.svg`, and city images from `/loc/{IATA-CODE}.jpg`. Vyrek can adopt similar slug conventions or use its own — but keep slugs stable, SEO-friendly, and shareable.
+> Naming convention reference: hyresult uses `s{season}-{year}-{city-slug}` for event slugs (e.g. `s8-2026-hong-kong`), country flags from `/flags/{iso-cc}.svg` with regional variants `gb-eng.svg`, `gb-sct.svg`, `gb-wls.svg`, and city images from `/loc/{IATA-CODE}.jpg`. Suth Performance can adopt similar slug conventions or use its own — but keep slugs stable, SEO-friendly, and shareable.
 
 ### 3.0.1 Home `/results`
 
@@ -105,8 +105,8 @@ This section is the spec. Every page here is **based on direct inspection** of t
 - Horizontally scrollable strip of upcoming + recent event cards
 - Each event card: city name, LIVE badge if running, race title, date range or "in N hours/days" or "N days ago", country and continent, location background photo
 
-**Vyrek's version:**
-- Same nav structure plus "Results" tab in main Vyrek header
+**Suth Performance's version:**
+- Same nav structure plus "Results" tab in main Suth Performance header
 - Hero with rotating animated tagline (sample: "Train. Race. Analyse. Beat." — confirm copy with me)
 - Live race ticker bar at top when any event running, with pulse animation
 - Skeleton placeholders not "Loading data..." text
@@ -123,7 +123,7 @@ This section is the spec. Every page here is **based on direct inspection** of t
 - Count statement: "16 events and 58 event days in May 2026"
 - Grid of event cards (same shape as on Home)
 
-**Vyrek's version:**
+**Suth Performance's version:**
 - Same month-prev/next; mini-calendar view also available for the year (toggle: Month | Year)
 - Filters: Region · Country · Status (Live / Upcoming / Finished) · Division has-results filter
 - World map view toggle showing pins for all events in the month
@@ -138,7 +138,7 @@ This section is the spec. Every page here is **based on direct inspection** of t
 - Per-division block: division name + athlete count + multiplier (e.g. "HYROX MEN 2× 1439") + Ranking link
 - Loading data placeholder
 
-**Vyrek's version:**
+**Suth Performance's version:**
 - Hero header with venue photo, dates, distance from user (geolocation prompt)
 - Tabs: **Overview · Start Lists · Live Results · Final Results · Recap · Course Map**
 - Overview: venue info, schedule, divisions table (division name, athlete count, leader so far with link to their result, fastest split per station so far)
@@ -158,7 +158,7 @@ This section is the spec. Every page here is **based on direct inspection** of t
 - Pagination dropdown: "Page: 1 ▼"
 - Table columns: #, Athlete (country flag SVG + name), Time, [Analyze] link
 
-**Vyrek's version:**
+**Suth Performance's version:**
 - Same filters + Search by name, fuzzy
 - Compare flow: click row checkbox; "Compare (2)" floating button bottom-right; opens compare modal/page
 - Table: sticky header, sortable, virtualised (Tanstack Virtual) — handle 15k+ rows
@@ -181,14 +181,14 @@ This section is the spec. Every page here is **based on direct inspection** of t
 - Performance Radar chart (multi-axis)
 - "Percentiles are based on all races of this division."
 
-**Vyrek's version:**
+**Suth Performance's version:**
 - Hero header: athlete photo if available, name, country flag, age group, race name, date, division, **share button** (generates an OG image card)
 - Headline stat cards (Total, Runs, Workouts, Roxzone) with animated number reveals (600ms ease-out), rank chip, top-% chip in cyan
 - Distribution row: each station shows a histogram with the athlete's position marked, a vertical line for division average, and another for top-1%
 - **Radar chart:** stations vs field — overlay another athlete or "Elite average" or "Your goal time"
 - **Splits table:** every station + run with time, station-rank, AG-rank, pace, deviation from athlete's PB
 - **Pacing chart:** line graph of cumulative time deviation from a target finish (e.g. their target sub-90) — shows where they gained/lost time
-- **Coach commentary:** if a Vyrek coach has tagged the race, show their note ("Sled push lost him 12s vs the next finisher — see the sled push drill")
+- **Coach commentary:** if a Suth Performance coach has tagged the race, show their note ("Sled push lost him 12s vs the next finisher — see the sled push drill")
 - **Improvement levers:** "If you'd matched the field-average wall balls, your finish would be 1:28:47 (–22s, +14 positions)"
 - **Shareable card:** big "Share my race" button → generates a vertical IG-story image and a horizontal X/LinkedIn card
 
@@ -203,7 +203,7 @@ This section is the spec. Every page here is **based on direct inspection** of t
 - "Loading data ..." placeholder
 - Race list: each race card shows time, rank, event name, division, partners (for doubles), [link to race analysis]
 
-**Vyrek's version:**
+**Suth Performance's version:**
 - Hero: avatar (athlete photo if available, else initials in coloured circle), country flag, name, primary division, key stats row (races, seasons, PRs by division, partner count)
 - Tabs:
   - **Races** — filterable, sortable, virtualised list; each card same as hyresult plus mini sparkline of station performance
@@ -224,7 +224,7 @@ This section is the spec. Every page here is **based on direct inspection** of t
 - Two empty slots labelled "Select athlete 1" and "Select athlete 2"
 - Search input per slot
 
-**Vyrek's version:**
+**Suth Performance's version:**
 - Multi-target compare: up to 4 athletes side-by-side
 - Compare mode options (tabs at top of result view): **All-time PBs · Specific race · Season average · Division average benchmark**
 - Visual diff: tables with deltas highlighted (green = better, red = worse)
@@ -240,8 +240,8 @@ This section is the spec. Every page here is **based on direct inspection** of t
 - Three feature cards: **All Time Ranking / WR**, **Legends Ranking** (most races), **Elite Points Ranking** (Elite series leaderboard)
 - "Recent Event Rankings" — list of recent events with link to event ranking
 
-**Vyrek's version:**
-- Same three feature cards as hero blocks, plus a fourth: **Vyrek Live** — Vyrek-only feature showing athletes whose times are improving fastest (rising stars index)
+**Suth Performance's version:**
+- Same three feature cards as hero blocks, plus a fourth: **Suth Performance Live** — Suth Performance-only feature showing athletes whose times are improving fastest (rising stars index)
 - Recent event rankings as carousel
 - Quick-filter chips: "My country", "My division", "This season", "All time"
 
@@ -260,7 +260,7 @@ This section is the spec. Every page here is **based on direct inspection** of t
   - HYROX ADAPTIVE: Men / Women
 - Each picker links to a division-specific page
 
-**Vyrek's version:**
+**Suth Performance's version:**
 - Same 17 combos plus filters at top of list view: Season, Year, Country, Age Group
 - "Compare divisions" toggle showing how WR times differ across divisions
 - Visual hierarchy: each group as a card with the current WR + holder shown
@@ -274,7 +274,7 @@ This section is the spec. Every page here is **based on direct inspection** of t
 - Division dropdown to switch
 - Table columns: indicator (trend arrow), #, Athlete (flag + name), Event (linked), Time, Diff (gap from #1, e.g. "+0:07"), [Analyze]
 
-**Vyrek's version:**
+**Suth Performance's version:**
 - Same columns plus: AG (age group), date, season
 - Trend indicator: ↑↓ with 100-day delta, hover shows sparkline
 - Filter bar: Season, Year, Country, Age Group, Event
@@ -290,7 +290,7 @@ This section is the spec. Every page here is **based on direct inspection** of t
 - Table: #, Athlete (flag + name), Races, [Athlete profile] link
 - Tied ranks share a number (e.g. two athletes tied at rank 6)
 
-**Vyrek's version:**
+**Suth Performance's version:**
 - Same table plus: country, seasons active, divisions raced, average finish position
 - Filter: country, season range
 - Visual: top-10 as oversized cards with their photo and race count
@@ -303,7 +303,7 @@ This section is the spec. Every page here is **based on direct inspection** of t
 - Gender dropdown filter
 - Table: #, Athlete (flag + name), Pts (float to 2dp), [Athlete link]
 
-**Vyrek's version:**
+**Suth Performance's version:**
 - Same sub-pages + Mixed Doubles where applicable
 - Points history sparkline per row showing how their points changed across the season
 - "Live points scenario" — if an athlete is racing right now, project their projected new total if they finish at their current pace
@@ -320,7 +320,7 @@ This section is the spec. Every page here is **based on direct inspection** of t
   - "top X%" indicator
 - Roxzone has its own row (transition + rest)
 
-**Vyrek's version (significantly enhanced):**
+**Suth Performance's version (significantly enhanced):**
 - Division: Men / Women / Doubles Men / Doubles Women / Doubles Mixed / Pro Men / Pro Women / Pro Doubles
 - Each station row:
   - Station name + sled/sandbag/wall-ball weight badge for the selected division
@@ -348,7 +348,7 @@ This section is the spec. Every page here is **based on direct inspection** of t
 - Filters: All nations ▼, All regions ▼
 - Grid of city cards: airport code badge (e.g. "LHR", "BCN"), city name, country + region, event count, city background photo
 
-**Vyrek's version:**
+**Suth Performance's version:**
 - Same index plus a toggle: Grid view | World Map view
 - Map view: dark Mapbox/MapLibre style, pins clustered by region, click cluster to zoom, click pin to peek city card
 - Filters: nation, region, "Has upcoming event", "Has live event"
@@ -375,23 +375,23 @@ This section is the spec. Every page here is **based on direct inspection** of t
   - Race Day Tips
 - Time distribution chart at bottom with division selector
 
-**Vyrek's version:**
+**Suth Performance's version:**
 - Same nine station guides: Run · Ski Erg · Sled Push · Sled Pull · Burpee Broad Jumps · Row · Farmers Carry · Sandbag Lunges · Wall Balls — plus a tenth covering Roxzone strategy
 - Each guide:
-  - Hero video (use existing relevant Vyrek video where applicable)
+  - Hero video (use existing relevant Suth Performance video where applicable)
   - Specs table (per division)
   - Technique with annotated stills / diagrams
   - "Common mistakes" cards
-  - Vyrek coach video commentary (when coach video exists)
+  - Suth Performance coach video commentary (when coach video exists)
   - **Live distribution chart** with division selector — show user's PB on this station vs full field
-  - Linked drills (deep link to Vyrek programme content for that station)
+  - Linked drills (deep link to Suth Performance programme content for that station)
   - "Athletes who improved this station fastest" — leaderboard of biggest deltas this season
 
 ### 3.0.16 Search
 
 **hyresult:** global athlete name search in top nav.
 
-**Vyrek's version:** universal search modal (`Cmd+K` / `Ctrl+K` / mobile search button):
+**Suth Performance's version:** universal search modal (`Cmd+K` / `Ctrl+K` / mobile search button):
 - Searches athletes, events, locations, guides, divisions
 - Recent searches shown by default
 - Each result type has its own icon and detail snippet
@@ -418,7 +418,7 @@ Tick each of these off:
 - [ ] Station guides for all 9 stations
 - [ ] Global search
 
-## 3.2 Vyrek differentiators (where we beat them)
+## 3.2 Suth Performance differentiators (where we beat them)
 
 - [ ] Story-mode race recaps with scroll-driven storytelling
 - [ ] Coach commentary system tagged onto results
@@ -429,7 +429,7 @@ Tick each of these off:
 - [ ] Course visualisation animating a runner avatar through stations
 - [ ] Athlete progression chart across whole career
 - [ ] Achievement / patch gamification
-- [ ] Rising stars index (Vyrek Live)
+- [ ] Rising stars index (Suth Performance Live)
 - [ ] Live points projection during a running race
 - [ ] World map view of locations
 - [ ] City fastest-time-ever records by division
@@ -533,14 +533,14 @@ API:
 
 - **Theme:** dark by default, background `#0A0A0B`, subtle radial gradients in hero zones. Light mode optional, ship dark-only.
 - **Accent palette:**
-  - Primary (Vyrek brand) — for active states, primary actions
+  - Primary (Suth Performance brand) — for active states, primary actions
   - Electric cyan `#22D3EE` — LIVE indicators, real-time pulses
   - Magenta `#E879F9` — compare/versus elements
   - Amber `#FBBF24` — podium/leader highlights
   - Soft white `#F8FAFC` — primary text
   - Slate-400 `#94A3B8` — secondary text
 - **Typography:**
-  - Display headings — existing Vyrek font
+  - Display headings — existing Suth Performance font
   - Body — existing
   - **Tabular numerals everywhere** for tables and time displays: `font-feature-settings: 'tnum'`
   - Fixed-width style for live timer/clock displays to prevent digit jitter

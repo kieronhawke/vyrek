@@ -30,21 +30,21 @@ import {
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Vyrek Journal. Hyrox training, technique, race-day guides",
+  title: "Suth Performance Journal. Hyrox training, technique, race-day guides",
   description:
     "Practical Hyrox content from an Elite 15 coach. Training plans, station-by-station technique, nutrition, and race-day pacing. Plain English, no fluff.",
   alternates: {
     canonical: blogIndexUrl(),
     types: {
-      "application/rss+xml": [{ url: rssUrl(), title: "Vyrek Journal RSS" }],
+      "application/rss+xml": [{ url: rssUrl(), title: "Suth Performance Journal RSS" }],
     },
   },
   openGraph: {
-    title: "Vyrek Journal",
+    title: "Suth Performance Journal",
     description:
       "Practical Hyrox content from an Elite 15 coach. Training, technique, race-day, recovery.",
     url: blogIndexUrl(),
-    siteName: "Vyrek",
+    siteName: "Suth Performance",
     type: "website",
     locale: "en_GB",
     images: [
@@ -52,13 +52,13 @@ export const metadata: Metadata = {
         url: `${siteUrl()}/media/images/v2/bento-plan.jpg`,
         width: 1200,
         height: 630,
-        alt: "Vyrek Journal. Hyrox training insights",
+        alt: "Suth Performance Journal. Hyrox training insights",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vyrek Journal",
+    title: "Suth Performance Journal",
     description:
       "Practical Hyrox training, technique and race-day guides from an Elite 15 coach.",
   },
@@ -121,7 +121,7 @@ export default async function BlogIndexPage() {
                     <Link
                       key={slug}
                       href={`/blog/category/${slug}`}
-                      className="inline-flex h-9 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-secondary transition-colors hover:border-vyrek-border-strong hover:text-vyrek-text"
+                      className="inline-flex h-9 items-center rounded-pill border border-suth-border bg-suth-elevated px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-secondary transition-colors hover:border-suth-border-strong hover:text-suth-text"
                     >
                       {c.label} · {counts[slug]}
                     </Link>

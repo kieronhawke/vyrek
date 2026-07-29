@@ -15,11 +15,11 @@ export function QuestionHeader({
 }) {
   return (
     <header className="mb-6">
-      <h1 className="text-balance text-2xl font-bold leading-tight tracking-[-0.02em] text-vyrek-text md:text-3xl">
+      <h1 className="text-balance text-2xl font-bold leading-tight tracking-[-0.02em] text-suth-text md:text-3xl">
         {question}
       </h1>
       {helper ? (
-        <p className="mt-2 text-sm leading-relaxed text-vyrek-text-secondary md:text-base">
+        <p className="mt-2 text-sm leading-relaxed text-suth-text-secondary md:text-base">
           {helper}
         </p>
       ): null}

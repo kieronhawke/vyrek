@@ -14,7 +14,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, "..", ".screenshots", "sweep");
-const BASE = process.argv[2] || "https://vyrek.vercel.app";
+const BASE = process.argv[2] || "https://suthperformance.com";
 const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
 const ROUTES = [

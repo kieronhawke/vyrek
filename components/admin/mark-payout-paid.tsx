@@ -45,7 +45,7 @@ export function MarkPayoutPaidButton({ payoutId }: { payoutId: string }) {
           type="button"
           onClick={() => setOpen(true)}
           disabled={pending}
-          className="inline-flex h-9 items-center rounded-pill bg-vyrek-accent px-3 text-xs font-semibold text-[#0A0A0A] hover:bg-vyrek-accent-hover disabled:opacity-50"
+          className="inline-flex h-9 items-center rounded-pill bg-suth-accent px-3 text-xs font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover disabled:opacity-50"
         >
           Mark paid
         </button>
@@ -69,20 +69,20 @@ export function MarkPayoutPaidButton({ payoutId }: { payoutId: string }) {
           value={ref}
           onChange={(e) => setRef(e.target.value)}
           placeholder="BACS reference"
-          className="h-9 w-40 rounded-md border border-vyrek-border bg-vyrek-base px-2 text-xs text-vyrek-text outline-none focus:border-vyrek-accent"
+          className="h-9 w-40 rounded-md border border-suth-border bg-suth-base px-2 text-xs text-suth-text outline-none focus:border-suth-accent"
         />
         <button
           type="button"
           onClick={submit}
           disabled={pending}
-          className="inline-flex h-9 items-center rounded-pill bg-vyrek-accent px-3 text-xs font-semibold text-[#0A0A0A] hover:bg-vyrek-accent-hover disabled:opacity-50"
+          className="inline-flex h-9 items-center rounded-pill bg-suth-accent px-3 text-xs font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover disabled:opacity-50"
         >
           {pending ? "..." : "Save"}
         </button>
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="inline-flex h-9 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-3 text-xs text-vyrek-text-secondary"
+          className="inline-flex h-9 items-center rounded-pill border border-suth-border bg-suth-elevated px-3 text-xs text-suth-text-secondary"
         >
           Cancel
         </button>

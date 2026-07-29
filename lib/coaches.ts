@@ -32,7 +32,7 @@ export const COACHES: CoachTile[] = [
       "HYROX UK 2024/25",
       "TOP 50 WORLDS QUALIFIER",
     ],
-    bio: "James Wright is a UK Hyrox athlete competing at the Elite 15 level. Top 50 finish at the 2025 World Championships in Chicago. Eight seasons of competitive functional fitness before transitioning to Hyrox in 2023. Coaches the programming for Vyrek's First Race, Sub-90, and Pro programmes.",
+    bio: "James Wright is a UK Hyrox athlete competing at the Elite 15 level. Top 50 finish at the 2025 World Championships in Chicago. Eight seasons of competitive functional fitness before transitioning to Hyrox in 2023. Coaches the programming for Suth Performance's First Race, Sub-90, and Pro programmes.",
     // Image is the real Adobe Stock photoshoot (h1). Video field dropped
     // per user feedback — coach hub tile renders a static portrait now,
     // no looping background video.

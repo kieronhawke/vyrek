@@ -59,8 +59,8 @@ const visibleQuestion = (page) =>
 async function freshQuiz(page) {
   await page.goto(`${BASE}/quiz`, { waitUntil: "domcontentloaded" });
   await page.evaluate(() => {
-    window.localStorage.removeItem("vyrek:quiz:v3:state");
-    window.localStorage.removeItem("vyrek:customer:uuid");
+    window.localStorage.removeItem("suth:quiz:v3:state");
+    window.localStorage.removeItem("suth:customer:uuid");
   });
   await page.reload({ waitUntil: "networkidle2" });
   await settle(700);
@@ -109,7 +109,7 @@ async function pathDoubles(page) {
   await clickByText(page, "No injuries");
   await clickContinue(page); await settle(700);
   return await page.evaluate(() => {
-    const raw = window.localStorage.getItem("vyrek:quiz:v3:state");
+    const raw = window.localStorage.getItem("suth:quiz:v3:state");
     const parsed = raw ? JSON.parse(raw) : null;
     const summary = document.body.innerText;
     return {
@@ -150,7 +150,7 @@ async function pathRacedMany(page) {
   await clickByText(page, "No injuries");
   await clickContinue(page); await settle(700);
   return await page.evaluate(() => {
-    const raw = window.localStorage.getItem("vyrek:quiz:v3:state");
+    const raw = window.localStorage.getItem("suth:quiz:v3:state");
     const parsed = raw ? JSON.parse(raw) : null;
     const summary = document.body.innerText;
     return {
@@ -199,7 +199,7 @@ async function pathHomeKnee(page) {
   await clickByText(page, "Knee");
   await clickContinue(page); await settle(700);
   return await page.evaluate(() => {
-    const raw = window.localStorage.getItem("vyrek:quiz:v3:state");
+    const raw = window.localStorage.getItem("suth:quiz:v3:state");
     const parsed = raw ? JSON.parse(raw) : null;
     return {
       equipmentQuestionAppeared: true,

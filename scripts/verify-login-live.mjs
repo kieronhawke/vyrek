@@ -5,7 +5,7 @@
 
 import { chromium } from "@playwright/test";
 
-const BASE = process.env.SMOKE_BASE ?? "https://vyrek.vercel.app";
+const BASE = process.env.SMOKE_BASE ?? "https://suthperformance.com";
 const EMAIL = "demo@vyrek.test";
 const PASSWORD = "VyrekDemo2026!";
 

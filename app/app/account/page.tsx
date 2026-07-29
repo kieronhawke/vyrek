@@ -15,29 +15,29 @@ export default async function AccountPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
       <header className="mb-6">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           [ ACCOUNT ]
         </p>
-        <h1 className="mt-1 text-2xl font-black tracking-[-0.02em] text-vyrek-text md:text-3xl">
+        <h1 className="mt-1 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-3xl">
           Profile
         </h1>
-        <p className="mt-1 text-sm text-vyrek-text-secondary">
+        <p className="mt-1 text-sm text-suth-text-secondary">
           Manage your subscription, settings, and referral link.
         </p>
       </header>
 
       {/* Profile card */}
       <section className="mb-8">
-        <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
+        <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
           <div className="flex items-center gap-3">
-            <div className="flex size-12 items-center justify-center rounded-full border border-vyrek-border bg-vyrek-base text-base font-semibold uppercase text-vyrek-text">
+            <div className="flex size-12 items-center justify-center rounded-full border border-suth-border bg-suth-base text-base font-semibold uppercase text-suth-text">
               {ctx.user.email[0]?.toUpperCase()}
             </div>
             <div className="min-w-0">
-              <p className="truncate text-base font-bold text-vyrek-text">
+              <p className="truncate text-base font-bold text-suth-text">
                 {ctx.user.email}
               </p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                 Member since{" "}
                 {ctx.customer?.created_at
                   ? format(new Date(ctx.customer.created_at), "MMM yyyy")
@@ -46,17 +46,17 @@ export default async function AccountPage() {
             </div>
           </div>
           <dl className="mt-5 grid grid-cols-2 gap-3 text-sm">
-            <div className="rounded-md border border-vyrek-border-subtle bg-vyrek-base/40 p-3">
-              <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <div className="rounded-md border border-suth-border-subtle bg-suth-base/40 p-3">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
                 Programme
               </dt>
-              <dd className="mt-1 text-vyrek-text">{programme}</dd>
+              <dd className="mt-1 text-suth-text">{programme}</dd>
             </div>
-            <div className="rounded-md border border-vyrek-border-subtle bg-vyrek-base/40 p-3">
-              <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <div className="rounded-md border border-suth-border-subtle bg-suth-base/40 p-3">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
                 Referral code
               </dt>
-              <dd className="mt-1 font-mono text-xs text-vyrek-text">
+              <dd className="mt-1 font-mono text-xs text-suth-text">
                 {ctx.customer?.referral_code ?? "-"}
               </dd>
             </div>
@@ -75,17 +75,17 @@ export default async function AccountPage() {
         <SectionEyebrow title="Performance" />
         <Link
           href="/app/account/pr"
-          className="flex items-center justify-between gap-3 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-4 transition-colors hover:border-vyrek-border-strong"
+          className="flex items-center justify-between gap-3 rounded-lg border border-suth-border-subtle bg-suth-elevated p-4 transition-colors hover:border-suth-border-strong"
         >
           <div>
-            <p className="text-sm font-semibold text-vyrek-text">
+            <p className="text-sm font-semibold text-suth-text">
               Personal records
             </p>
-            <p className="mt-1 text-xs text-vyrek-text-tertiary">
+            <p className="mt-1 text-xs text-suth-text-tertiary">
               Strength, cardio, and station bests. Updated when you log a session.
             </p>
           </div>
-          <span className="font-mono text-xs text-vyrek-accent">→</span>
+          <span className="font-mono text-xs text-suth-accent">→</span>
         </Link>
       </section>
 
@@ -95,17 +95,17 @@ export default async function AccountPage() {
         <SectionEyebrow title="Earn" />
         <Link
           href="/partners"
-          className="flex items-center justify-between gap-3 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-4 transition-colors hover:border-vyrek-border-strong"
+          className="flex items-center justify-between gap-3 rounded-lg border border-suth-border-subtle bg-suth-elevated p-4 transition-colors hover:border-suth-border-strong"
         >
           <div>
-            <p className="text-sm font-semibold text-vyrek-text">
+            <p className="text-sm font-semibold text-suth-text">
               Partner programme
             </p>
-            <p className="mt-1 text-xs text-vyrek-text-tertiary">
+            <p className="mt-1 text-xs text-suth-text-tertiary">
               For coaches and creators. 30-50% lifetime recurring.
             </p>
           </div>
-          <span className="font-mono text-xs text-vyrek-accent">→</span>
+          <span className="font-mono text-xs text-suth-accent">→</span>
         </Link>
       </section>
 
@@ -126,10 +126,10 @@ export default async function AccountPage() {
         <MemberSignOut />
       </section>
 
-      <p className="text-center font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+      <p className="text-center font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
         Need help? Email{" "}
-        <a href="mailto:support@vyrek.com" className="text-vyrek-accent">
-          support@vyrek.com
+        <a href="mailto:support@suthperformance.com" className="text-suth-accent">
+          support@suthperformance.com
         </a>
       </p>
     </div>
@@ -151,10 +151,10 @@ function SettingRow({
         href={href}
         target={external ? "_blank" : undefined}
         rel={external ? "noreferrer" : undefined}
-        className="flex items-center justify-between gap-3 rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated/60 px-4 py-3 transition-colors hover:border-vyrek-border-strong"
+        className="flex items-center justify-between gap-3 rounded-lg border border-suth-border-subtle bg-suth-elevated/60 px-4 py-3 transition-colors hover:border-suth-border-strong"
       >
-        <span className="text-sm text-vyrek-text">{label}</span>
-        <span className="font-mono text-xs text-vyrek-text-tertiary">
+        <span className="text-sm text-suth-text">{label}</span>
+        <span className="font-mono text-xs text-suth-text-tertiary">
           {external ? "↗" : "→"}
         </span>
       </a>

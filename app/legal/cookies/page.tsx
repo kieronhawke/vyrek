@@ -12,7 +12,7 @@ import {
 export const metadata: Metadata = {
   title: "Cookie policy",
   description:
-    "Every cookie Vyrek uses, what it does, and how to opt out. No tricks.",
+    "Every cookie Suth Performance uses, what it does, and how to opt out. No tricks.",
 };
 
 type CookieRow = {
@@ -24,26 +24,26 @@ type CookieRow = {
 
 const NECESSARY: CookieRow[] = [
   {
-    name: "vyrek:consent:v1",
-    provider: "Vyrek (localStorage)",
+    name: "suth:consent:v1",
+    provider: "Suth Performance (localStorage)",
     purpose: "Remembers your cookie banner choices so we do not ask again every visit.",
     duration: "12 months",
   },
   {
-    name: "vyrek:quiz:state",
-    provider: "Vyrek (localStorage)",
+    name: "suth:quiz:state",
+    provider: "Suth Performance (localStorage)",
     purpose: "Remembers your quiz progress so you can refresh or come back later.",
     duration: "30 days",
   },
   {
-    name: "vyrek:customer:uuid",
-    provider: "Vyrek (localStorage)",
+    name: "suth:customer:uuid",
+    provider: "Suth Performance (localStorage)",
     purpose: "Anonymous identifier for your quiz session. Linked to your account when you complete the email gate.",
     duration: "12 months",
   },
   {
     name: "__Host-next-auth.csrf-token",
-    provider: "Vyrek (session cookie)",
+    provider: "Suth Performance (session cookie)",
     purpose: "CSRF protection on form submissions.",
     duration: "Session (cleared when you close the browser)",
   },
@@ -90,34 +90,34 @@ function CookieTable({ rows }: { rows: CookieRow[] }) {
     <div className="mt-5 overflow-x-auto">
       <table className="w-full border-collapse text-sm">
         <thead>
-          <tr className="border-b border-vyrek-border">
-            <th className="bg-vyrek-elevated px-3 py-2 text-left font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+          <tr className="border-b border-suth-border">
+            <th className="bg-suth-elevated px-3 py-2 text-left font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
               Name
             </th>
-            <th className="bg-vyrek-elevated px-3 py-2 text-left font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+            <th className="bg-suth-elevated px-3 py-2 text-left font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
               Provider
             </th>
-            <th className="bg-vyrek-elevated px-3 py-2 text-left font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+            <th className="bg-suth-elevated px-3 py-2 text-left font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
               Purpose
             </th>
-            <th className="bg-vyrek-elevated px-3 py-2 text-left font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+            <th className="bg-suth-elevated px-3 py-2 text-left font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
               Duration
             </th>
           </tr>
         </thead>
         <tbody>
           {rows.map((r) => (
-            <tr key={r.name} className="border-b border-vyrek-border-subtle">
-              <td className="px-3 py-3 align-top font-mono text-xs text-vyrek-text">
+            <tr key={r.name} className="border-b border-suth-border-subtle">
+              <td className="px-3 py-3 align-top font-mono text-xs text-suth-text">
                 {r.name}
               </td>
-              <td className="px-3 py-3 align-top text-vyrek-text-secondary">
+              <td className="px-3 py-3 align-top text-suth-text-secondary">
                 {r.provider}
               </td>
-              <td className="px-3 py-3 align-top text-vyrek-text-secondary">
+              <td className="px-3 py-3 align-top text-suth-text-secondary">
                 {r.purpose}
               </td>
-              <td className="px-3 py-3 align-top text-vyrek-text-secondary">
+              <td className="px-3 py-3 align-top text-suth-text-secondary">
                 {r.duration}
               </td>
             </tr>
@@ -133,7 +133,7 @@ export default function CookiesPage() {
     <LegalLayout eyebrow="Cookies" title="Cookie policy">
       <ProseP>
         This policy explains what cookies and similar storage technologies
-        Vyrek uses, why we use them, and how to opt out. We list every cookie
+        Suth Performance uses, why we use them, and how to opt out. We list every cookie
         we set, by category, in the tables below.
       </ProseP>
 
@@ -155,21 +155,21 @@ export default function CookiesPage() {
       <ProseH2>Categories</ProseH2>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Strictly necessary.</strong>{" "}
+          <strong className="text-suth-text">Strictly necessary.</strong>{" "}
           Always on. The site does not work without them.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Analytics.</strong> Off by
+          <strong className="text-suth-text">Analytics.</strong> Off by
           default. Loaded only after you accept Analytics in the cookie
           banner. Used to understand product usage in aggregate.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Functionality (third party).</strong>{" "}
+          <strong className="text-suth-text">Functionality (third party).</strong>{" "}
           Set by services we embed, like Stripe checkout or the optional live
           chat. Each only loads in context, not on every page.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Marketing.</strong> None at the
+          <strong className="text-suth-text">Marketing.</strong> None at the
           moment. If we add ad pixels in future, they will be opt-in via the
           banner and listed here before being switched on.
         </ProseLi>
@@ -214,7 +214,7 @@ export default function CookiesPage() {
       <ProseP>
         Stripe&apos;s cookie policy:{" "}
         <a
-          className="text-vyrek-text underline underline-offset-4 hover:text-vyrek-accent"
+          className="text-suth-text underline underline-offset-4 hover:text-suth-accent"
           href="https://stripe.com/cookies-policy/legal"
           target="_blank"
           rel="noreferrer"
@@ -226,7 +226,7 @@ export default function CookiesPage() {
 
       <ProseH2>First-party vs third-party cookies</ProseH2>
       <ProseP>
-        A first-party cookie is set by the domain you are visiting (vyrek.com
+        A first-party cookie is set by the domain you are visiting (suthperformance.com
         or its subdomains). A third-party cookie is set by a different domain
         embedded into the page (for example, an analytics script loaded from
         a vendor domain). First-party cookies are restricted to the original
@@ -239,7 +239,7 @@ export default function CookiesPage() {
         service to work without them: every analytics signal we use is
         either first-party or pseudonymous, and the checkout flow does not
         rely on third-party tracking. Blocking third-party cookies in your
-        browser settings has no effect on your Vyrek experience.
+        browser settings has no effect on your Suth Performance experience.
       </ProseP>
 
       <ProseH2>Consent management</ProseH2>
@@ -281,35 +281,35 @@ export default function CookiesPage() {
       <ProseH2>How to opt out</ProseH2>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">In the Vyrek banner.</strong>{" "}
+          <strong className="text-suth-text">In the Suth Performance banner.</strong>{" "}
           Reject all non-necessary on first visit, or re-open the banner from
           the footer at any time to change your mind.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">In your browser.</strong> Each
+          <strong className="text-suth-text">In your browser.</strong> Each
           major browser lets you clear, block, or restrict cookies:
         </ProseLi>
       </ProseUl>
       <ProseUl>
         <ProseLi>
-          <strong className="text-vyrek-text">Safari (macOS / iOS):</strong>{" "}
+          <strong className="text-suth-text">Safari (macOS / iOS):</strong>{" "}
           Settings → Safari → Privacy &amp; Security → Block All Cookies.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Chrome:</strong> Settings →
+          <strong className="text-suth-text">Chrome:</strong> Settings →
           Privacy and security → Cookies and other site data.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Firefox:</strong> Settings →
+          <strong className="text-suth-text">Firefox:</strong> Settings →
           Privacy &amp; Security → Cookies and Site Data.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Edge:</strong> Settings →
+          <strong className="text-suth-text">Edge:</strong> Settings →
           Cookies and site permissions → Manage and delete cookies and site
           data.
         </ProseLi>
         <ProseLi>
-          <strong className="text-vyrek-text">Private / incognito mode.</strong>{" "}
+          <strong className="text-suth-text">Private / incognito mode.</strong>{" "}
           Most cookies do not persist past the session.
         </ProseLi>
       </ProseUl>
@@ -329,7 +329,7 @@ export default function CookiesPage() {
       <ProseH3>Contact</ProseH3>
       <ProseP>
         Questions about cookies:{" "}
-        <ProseEmailLink email="privacy@vyrek.com" />.
+        <ProseEmailLink email="privacy@suthperformance.com" />.
       </ProseP>
     </LegalLayout>
   );

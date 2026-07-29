@@ -13,19 +13,19 @@ export function Testimonials() {
     <RevealOnView
       as="section"
       aria-labelledby="testimonials-heading"
-      className="border-t border-vyrek-border-subtle py-24 md:py-32"
+      className="border-t border-suth-border-subtle py-24 md:py-32"
     >
       <Container>
         <header className="mx-auto max-w-2xl text-center">
           <Eyebrow>Athletes</Eyebrow>
           <SplitHeading
             id="testimonials-heading"
-            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
           >
             What members say
           </SplitHeading>
           {anyIllustrative ? (
-            <p className="mt-4 inline-block rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+            <p className="mt-4 inline-block rounded-pill border border-suth-border bg-suth-elevated px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
               Pre-launch · illustrative until real consented quotes land
             </p>
           ) : null}
@@ -37,10 +37,10 @@ export function Testimonials() {
           {TESTIMONIALS.map((t) => (
             <li
               key={t.id}
-              className="flex min-w-[88%] snap-center flex-col gap-6 overflow-hidden rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated md:min-w-0"
+              className="flex min-w-[88%] snap-center flex-col gap-6 overflow-hidden rounded-lg border border-suth-border-subtle bg-suth-elevated md:min-w-0"
             >
               {t.image && (
-                <div className="relative aspect-[5/4] w-full overflow-hidden bg-vyrek-base">
+                <div className="relative aspect-[5/4] w-full overflow-hidden bg-suth-base">
                   <Image
                     src={t.image}
                     alt=""
@@ -51,7 +51,7 @@ export function Testimonials() {
                   />
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-vyrek-elevated/95 via-vyrek-elevated/30 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-t from-suth-elevated/95 via-suth-elevated/30 to-transparent"
                   />
                 </div>
               )}
@@ -65,19 +65,19 @@ export function Testimonials() {
                   <div
                     role="img"
                     aria-label="5 out of 5 stars"
-                    className="mb-4 font-mono text-base tracking-[0.18em] text-vyrek-accent"
+                    className="mb-4 font-mono text-base tracking-[0.18em] text-suth-accent"
                   >
                     <span aria-hidden>★★★★★</span>
                   </div>
-                  <blockquote className="text-lg font-medium leading-relaxed text-vyrek-text md:text-xl">
+                  <blockquote className="text-lg font-medium leading-relaxed text-suth-text md:text-xl">
                     &ldquo;{t.quote}&rdquo;
                   </blockquote>
                 </div>
                 <div className="flex flex-col gap-2 text-sm">
-                  <span className="font-medium text-vyrek-text">
+                  <span className="font-medium text-suth-text">
                     {t.name}
                     {t.raceTime ? (
-                      <span className="ml-2 font-mono text-xs text-vyrek-accent">
+                      <span className="ml-2 font-mono text-xs text-suth-accent">
                         {t.raceTime}
                       </span>
                     ) : null}
@@ -88,7 +88,7 @@ export function Testimonials() {
                       .join(" · ")}
                   </Eyebrow>
                   {t.illustrative ? (
-                    <span className="mt-1 inline-block w-fit rounded-pill border border-vyrek-border bg-vyrek-base/40 px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+                    <span className="mt-1 inline-block w-fit rounded-pill border border-suth-border bg-suth-base/40 px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.22em] text-suth-text-tertiary">
                       Pre-launch · illustrative
                     </span>
                   ) : null}

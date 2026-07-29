@@ -7,7 +7,7 @@
 import { chromium } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 
-const BASE = process.env.SMOKE_BASE ?? "https://vyrek.vercel.app";
+const BASE = process.env.SMOKE_BASE ?? "https://suthperformance.com";
 const SHOTS = "/tmp/quiz-walk";
 await mkdir(SHOTS, { recursive: true });
 

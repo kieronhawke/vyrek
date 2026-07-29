@@ -5,11 +5,11 @@ import { cn } from "@/lib/utils";
 import type { Workout } from "@/lib/plan-generator";
 
 const TYPE_TAG: Record<Workout["type"], { label: string; tone: string }> = {
-  hyrox: { label: "Race-specific", tone: "text-vyrek-accent" },
-  run: { label: "Z2 endurance", tone: "text-vyrek-text-secondary" },
-  strength: { label: "Strength", tone: "text-vyrek-text-secondary" },
-  recovery: { label: "Recovery", tone: "text-vyrek-success" },
-  rest: { label: "Rest", tone: "text-vyrek-text-tertiary" },
+  hyrox: { label: "Race-specific", tone: "text-suth-accent" },
+  run: { label: "Z2 endurance", tone: "text-suth-text-secondary" },
+  strength: { label: "Strength", tone: "text-suth-text-secondary" },
+  recovery: { label: "Recovery", tone: "text-suth-success" },
+  rest: { label: "Rest", tone: "text-suth-text-tertiary" },
 };
 
 export function DayCard({
@@ -32,25 +32,25 @@ export function DayCard({
       disabled={isRest || locked}
       aria-disabled={isRest || locked}
       className={cn(
-        "group relative flex w-full flex-col gap-2 rounded-lg border bg-vyrek-elevated p-4 text-left transition-[border,background,transform] duration-fast ease-out",
-        "border-vyrek-border",
-        !isRest && !locked && "hover:border-vyrek-border-strong active:scale-[0.99] cursor-pointer",
+        "group relative flex w-full flex-col gap-2 rounded-lg border bg-suth-elevated p-4 text-left transition-[border,background,transform] duration-fast ease-out",
+        "border-suth-border",
+        !isRest && !locked && "hover:border-suth-border-strong active:scale-[0.99] cursor-pointer",
         isRest && "opacity-60 cursor-default",
         locked && "cursor-not-allowed opacity-50",
       )}
     >
       <div className="flex items-baseline justify-between gap-2">
-        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
           {workout.day} · {format(date, "d MMM")}
         </span>
         <span className={cn("font-mono text-[10px] uppercase tracking-[0.18em]", tag.tone)}>
           {tag.label}
         </span>
       </div>
-      <p className="text-base font-semibold leading-snug text-vyrek-text">
+      <p className="text-base font-semibold leading-snug text-suth-text">
         {workout.title}
       </p>
-      <p className="text-sm text-vyrek-text-secondary">
+      <p className="text-sm text-suth-text-secondary">
         {isRest
           ? "Optional walk. No structured training."
           : (
@@ -64,7 +64,7 @@ export function DayCard({
           )}
       </p>
       {!isRest && !locked ? (
-        <span className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary opacity-0 transition-opacity group-hover:opacity-100">
+        <span className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary opacity-0 transition-opacity group-hover:opacity-100">
           Tap for full session →
         </span>
       ) : null}

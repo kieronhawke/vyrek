@@ -56,9 +56,9 @@ export function CookieBanner() {
     if (typeof document === "undefined") return;
     const root = document.documentElement;
     if (mounted && visible) {
-      root.style.setProperty("--vyrek-consent-h", "48px");
+      root.style.setProperty("--suth-consent-h", "48px");
     } else {
-      root.style.setProperty("--vyrek-consent-h", "0px");
+      root.style.setProperty("--suth-consent-h", "0px");
     }
   }, [mounted, visible]);
 
@@ -92,9 +92,9 @@ export function CookieBanner() {
           // 48px on mobile, 52px on desktop after padding.
         }}
       >
-        <div className="border-b border-vyrek-border-subtle bg-vyrek-base/95 backdrop-blur-md">
+        <div className="border-b border-suth-border-subtle bg-suth-base/95 backdrop-blur-md">
           <div className="mx-auto flex max-w-7xl items-center gap-2 px-4 py-2.5 md:gap-4 md:px-6 md:py-3">
-            <p className="flex-1 min-w-0 truncate text-[13px] leading-snug text-vyrek-text-secondary md:text-sm">
+            <p className="flex-1 min-w-0 truncate text-[13px] leading-snug text-suth-text-secondary md:text-sm">
               <span className="hidden md:inline">
                 We use cookies for analytics + session replay. Off until
                 you accept.
@@ -105,7 +105,7 @@ export function CookieBanner() {
               <button
                 type="button"
                 onClick={() => setPrefsOpen(true)}
-                className="!min-h-0 text-vyrek-text-tertiary underline-offset-2 hover:text-vyrek-text hover:underline"
+                className="!min-h-0 text-suth-text-tertiary underline-offset-2 hover:text-suth-text hover:underline"
               >
                 Manage
               </button>
@@ -113,14 +113,14 @@ export function CookieBanner() {
             <button
               type="button"
               onClick={rejectAll}
-              className="!min-h-0 inline-flex h-8 shrink-0 items-center rounded-pill border border-vyrek-border bg-transparent px-3 text-xs font-medium text-vyrek-text-secondary transition-colors hover:text-vyrek-text active:scale-[0.97]"
+              className="!min-h-0 inline-flex h-8 shrink-0 items-center rounded-pill border border-suth-border bg-transparent px-3 text-xs font-medium text-suth-text-secondary transition-colors hover:text-suth-text active:scale-[0.97]"
             >
               Reject
             </button>
             <button
               type="button"
               onClick={acceptAll}
-              className="!min-h-0 inline-flex h-8 shrink-0 items-center rounded-pill bg-vyrek-accent px-3.5 text-xs font-semibold text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover active:scale-[0.97]"
+              className="!min-h-0 inline-flex h-8 shrink-0 items-center rounded-pill bg-suth-accent px-3.5 text-xs font-semibold text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover active:scale-[0.97]"
             >
               Accept
             </button>
@@ -129,12 +129,12 @@ export function CookieBanner() {
       </div>
 
       <Dialog open={prefsOpen} onOpenChange={setPrefsOpen}>
-        <DialogContent className="bg-vyrek-elevated">
+        <DialogContent className="bg-suth-elevated">
           <DialogHeader>
             <DialogTitle className="text-xl font-black tracking-[-0.02em]">
               Cookie preferences
             </DialogTitle>
-            <DialogDescription className="text-vyrek-text-secondary">
+            <DialogDescription className="text-suth-text-secondary">
               Necessary cookies are always on. The rest is up to you.
             </DialogDescription>
           </DialogHeader>
@@ -167,14 +167,14 @@ export function CookieBanner() {
             <button
               type="button"
               onClick={rejectAll}
-              className="h-11 rounded-pill border border-vyrek-border px-5 text-sm font-medium text-vyrek-text transition-colors hover:bg-vyrek-overlay"
+              className="h-11 rounded-pill border border-suth-border px-5 text-sm font-medium text-suth-text transition-colors hover:bg-suth-overlay"
             >
               Reject all
             </button>
             <button
               type="button"
               onClick={saveCustom}
-              className="h-11 rounded-pill bg-vyrek-accent px-5 text-sm font-medium text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover"
+              className="h-11 rounded-pill bg-suth-accent px-5 text-sm font-medium text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover"
             >
               Save preferences
             </button>
@@ -200,21 +200,21 @@ function PrefRow({
 }) {
   return (
     <label
-      className={`flex cursor-pointer items-start justify-between gap-4 rounded-md border border-vyrek-border-subtle px-4 py-3 ${
-        disabled ? "opacity-60" : "hover:border-vyrek-border-default"
+      className={`flex cursor-pointer items-start justify-between gap-4 rounded-md border border-suth-border-subtle px-4 py-3 ${
+        disabled ? "opacity-60" : "hover:border-suth-border-default"
       }`}
     >
       <span className="flex-1">
-        <span className="block text-sm font-medium text-vyrek-text">
+        <span className="block text-sm font-medium text-suth-text">
           {title}
         </span>
-        <span className="mt-1 block text-xs leading-relaxed text-vyrek-text-secondary">
+        <span className="mt-1 block text-xs leading-relaxed text-suth-text-secondary">
           {description}
         </span>
       </span>
       <input
         type="checkbox"
-        className="mt-1 size-4 accent-vyrek-accent"
+        className="mt-1 size-4 accent-suth-accent"
         checked={checked}
         disabled={disabled}
         onChange={(e) => onToggle(e.target.checked)}

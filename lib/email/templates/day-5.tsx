@@ -76,7 +76,7 @@ export function Day5Email({
           </Text>
 
           <Button
-            href="https://vyrek.vercel.app/plan"
+            href="https://suthperformance.com/plan"
             style={{ ...ctaPrimary, marginTop: 24 }}
           >
             Open the app →

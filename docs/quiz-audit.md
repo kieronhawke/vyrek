@@ -38,7 +38,7 @@ Progress bar header (`question-shell.tsx`) shows `current / total` from `questio
 
 | # | Question | Helper | Options (label → value) |
 |---|---|---|---|
-| 1 | What brings you to Vyrek? | Select 1 to 2 answers | Training for my first Hyrox → `first-hyrox` · Done a Hyrox, want to go faster → `go-faster` · Training with a partner (Doubles) → `doubles` · Getting into Hyrox-style training → `getting-into` · Building general Hyrox fitness → `building` |
+| 1 | What brings you to Suth Performance? | Select 1 to 2 answers | Training for my first Hyrox → `first-hyrox` · Done a Hyrox, want to go faster → `go-faster` · Training with a partner (Doubles) → `doubles` · Getting into Hyrox-style training → `getting-into` · Building general Hyrox fitness → `building` |
 | 2 | Have you raced a Hyrox before? | Pick one | Never raced → `never` · Signed up, not raced yet → `signed-up` · Raced once or twice → `raced-few` · Raced multiple times → `raced-many` |
 | 3 | What's your best Hyrox time? | Roughly is fine | Under 75 min → `under-75` · 75-90 min → `75-90` · 90-105 min → `90-105` · 105-120 min → `105-120` · Over 120 min → `over-120` |
 | 4 | Got a race booked? | We'll build your plan around the date. Or skip and we'll suggest one. | (calendar) OR "No race yet" |
@@ -78,7 +78,7 @@ if (intent.includes("building")) return "first-race";
 return "first-race"; // fallback
 ```
 
-Four terminal programmes: `first-race` · `sub-90` · `doubles` · `pro`. Mapped 1:1 to the Vyrek programme catalogue.
+Four terminal programmes: `first-race` · `sub-90` · `doubles` · `pro`. Mapped 1:1 to the Suth Performance programme catalogue.
 
 ### Date logic
 
@@ -137,7 +137,7 @@ Four terminal programmes: `first-race` · `sub-90` · `doubles` · `pro`. Mapped
 
 Comparing V3 to Strava's signup flow (the user's stated reference):
 
-| Strava trait | Vyrek V3 status |
+| Strava trait | Suth Performance V3 status |
 |---|---|
 | Big imagery on intro screens | ✅ welcome carousel + reassurance interstitials |
 | One question per screen | ✅ |
@@ -162,7 +162,7 @@ Ordered by impact / effort:
 4. **Add a third mid-flow interstitial** to meet §2.5 acceptance (currently 2 interstitials + welcome carousel). Place after `session-length`, copy: "Almost there. Two more questions, then your plan." 30 min.
 5. **Hide Back button below welcome+interstitials** unless user scrolls up — Strava pattern. Forward-only register. 30 min.
 6. **Keyboard arrow nav between options** (V-4) — single-select cards become keyboard-navigable with ↑/↓ + Enter. Already get focus-visible; just need event handler. 1 hr.
-7. **Disabled-Continue contrast** (V-3) — bump from `bg-vyrek-accent/30` to `bg-vyrek-accent/50` + border, so it reads as "make a choice first" not "page glitched". 15 min.
+7. **Disabled-Continue contrast** (V-3) — bump from `bg-suth-accent/30` to `bg-suth-accent/50` + border, so it reads as "make a choice first" not "page glitched". 15 min.
 8. **Equipment screen** review — currently shows for `gym-standard` and `home` but the option list is identical. Could split: home gets a "what kit do you own?" subset, gym-standard gets "what does your gym actually have?". 1 hr.
 9. **Result screen → bigger funnel hero treatment** (brief 2.4) — currently plan-summary screen is in-quiz styling. Brief wants it "treated as funnel hero". On `/plan` (the post-calculating destination) the reveal page is already chartreuse + dated + locked-weeks gate — that already reads as funnel hero. Cross-reference whether the brief wants plan-summary-inside-quiz to be more dramatic. Decision: leave as is, /plan is already the funnel hero.
 

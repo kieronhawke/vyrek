@@ -10,7 +10,7 @@
 import { chromium } from "@playwright/test";
 import { writeFile, mkdir } from "node:fs/promises";
 
-const BASE = process.env.SMOKE_BASE ?? "https://vyrek.vercel.app";
+const BASE = process.env.SMOKE_BASE ?? "https://suthperformance.com";
 const OUT = "/Users/kieronhawke/code/vyrek/scripts/flow-walker";
 await mkdir(OUT, { recursive: true });
 
@@ -153,9 +153,9 @@ async function track(page, label) {
   await page.locator('button:has-text("Continue")').click();
   await page.waitForTimeout(200);
 
-  // Why Vyrek (textarea)
-  await page.locator('textarea[name="whyVyrek"]').fill(
-    "My audience asks me which programme to follow constantly. Vyrek is the cleanest answer.",
+  // Why Suth Performance (textarea)
+  await page.locator('textarea[name="whySuth"]').fill(
+    "My audience asks me which programme to follow constantly. Suth Performance is the cleanest answer.",
   );
   await page.locator('button:has-text("Continue")').click();
   await page.waitForTimeout(200);

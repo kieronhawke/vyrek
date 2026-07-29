@@ -20,7 +20,7 @@ import Link from "next/link";
  *   - Crawlers (googlebot etc) skip the gate for SEO
  */
 
-const GATE_KEY = "vyrek:results:gate:v1";
+const GATE_KEY = "suth:results:gate:v1";
 const GATE_MS = 5 * 60 * 1000;
 const SNOOZE_MS = 60 * 1000;
 
@@ -112,24 +112,24 @@ export function GateModal({
       aria-labelledby="gate-modal-title"
       className="fixed inset-x-0 bottom-0 z-50 px-4 pb-[max(1.5rem,calc(var(--safe-bottom)+1rem))]"
     >
-      <div className="mx-auto max-w-md rounded-2xl border border-vyrek-border bg-vyrek-elevated p-6 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+      <div className="mx-auto max-w-md rounded-2xl border border-suth-border bg-suth-elevated p-6 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] backdrop-blur-xl">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           [ FREE TIER ]
         </p>
         <h2
           id="gate-modal-title"
-          className="mt-3 text-2xl font-black leading-tight tracking-[-0.02em] text-vyrek-text"
+          className="mt-3 text-2xl font-black leading-tight tracking-[-0.02em] text-suth-text"
         >
           Keep analysing.
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-vyrek-text-secondary">
+        <p className="mt-2 text-sm leading-relaxed text-suth-text-secondary">
           Sign up free to keep using the Results hub. No card. No email
           spam.
         </p>
         <div className="mt-5 flex flex-col gap-2">
           <Link
             href="/quiz"
-            className="inline-flex h-12 w-full items-center justify-center rounded-pill bg-vyrek-accent px-5 text-base font-semibold text-[#0A0A0A] hover:bg-vyrek-accent-hover"
+            className="inline-flex h-12 w-full items-center justify-center rounded-pill bg-suth-accent px-5 text-base font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover"
           >
             Create free account
           </Link>
@@ -145,12 +145,12 @@ export function GateModal({
               } catch {}
               setOpen(false);
             }}
-            className="inline-flex h-11 w-full items-center justify-center rounded-pill border border-vyrek-border bg-transparent px-5 text-sm text-vyrek-text-secondary hover:border-vyrek-border-strong hover:text-vyrek-text"
+            className="inline-flex h-11 w-full items-center justify-center rounded-pill border border-suth-border bg-transparent px-5 text-sm text-suth-text-secondary hover:border-suth-border-strong hover:text-suth-text"
           >
             Maybe later
           </button>
         </div>
-        <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           Paid course members unlock pro analytics
         </p>
       </div>

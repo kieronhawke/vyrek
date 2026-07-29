@@ -19,7 +19,7 @@ const files = [
   "supabase/migrations/0005_live_presence.sql",
 ];
 
-console.log(`-- Vyrek consolidated pending migrations`);
+console.log(`-- Suth Performance consolidated pending migrations`);
 console.log(`-- Generated: ${new Date().toISOString()}`);
 console.log("");
 

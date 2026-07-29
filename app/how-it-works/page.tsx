@@ -9,7 +9,7 @@ import { CtaButton } from "@/components/shared/cta-button";
 export const metadata: Metadata = {
   title: "How it works",
   description:
-    "Vyrek in four steps: quiz, Week 1 reveal, free trial, then train and adapt. See exactly what you get.",
+    "Suth Performance in four steps: quiz, Week 1 reveal, free trial, then train and adapt. See exactly what you get.",
   alternates: { canonical: "/how-it-works" },
 };
 
@@ -81,11 +81,11 @@ export default function HowItWorksPage() {
               <SplitHeading
                 id="how-heading"
                 as="h1"
-                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
               >
                 From quiz to start line, in four steps.
               </SplitHeading>
-              <p className="mt-5 text-base text-vyrek-text-secondary md:text-lg">
+              <p className="mt-5 text-base text-suth-text-secondary md:text-lg">
                 No mystery. No drip-feed. Here is the whole arc.
               </p>
             </div>
@@ -96,7 +96,7 @@ export default function HowItWorksPage() {
           <section
             key={step.number}
             aria-labelledby={`step-${step.number}`}
-            className="border-t border-vyrek-border-subtle py-20 md:py-28"
+            className="border-t border-suth-border-subtle py-20 md:py-28"
           >
             <Container>
               <div
@@ -105,16 +105,16 @@ export default function HowItWorksPage() {
                 }`}
               >
                 <div>
-                  <p className="font-mono text-sm font-medium uppercase tracking-[0.18em] text-vyrek-accent">
+                  <p className="font-mono text-sm font-medium uppercase tracking-[0.18em] text-suth-accent">
                     [ {step.number} ]
                   </p>
                   <h2
                     id={`step-${step.number}`}
-                    className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+                    className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
                   >
                     {step.label}
                   </h2>
-                  <div className="mt-6 space-y-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+                  <div className="mt-6 space-y-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                     {step.body.map((p) => (
                       <p key={p.slice(0, 40)}>{p}</p>
                     ))}
@@ -127,7 +127,7 @@ export default function HowItWorksPage() {
                     </div>
                   ) : null}
                 </div>
-                <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-vyrek-border bg-vyrek-elevated">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-suth-border bg-suth-elevated">
                   <img
                     src={step.image}
                     alt=""
@@ -137,9 +137,9 @@ export default function HowItWorksPage() {
                   />
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-vyrek-base/80 via-vyrek-base/20 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-t from-suth-base/80 via-suth-base/20 to-transparent"
                   />
-                  <p className="absolute bottom-6 left-6 font-mono text-xs font-medium uppercase tracking-[0.18em] text-vyrek-text">
+                  <p className="absolute bottom-6 left-6 font-mono text-xs font-medium uppercase tracking-[0.18em] text-suth-text">
                     [ STEP {step.number} ]
                   </p>
                 </div>
@@ -148,14 +148,14 @@ export default function HowItWorksPage() {
           </section>
         ))}
 
-        <section className="border-t border-vyrek-border-subtle py-24 md:py-32">
+        <section className="border-t border-suth-border-subtle py-24 md:py-32">
           <Container>
             <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
               <Eyebrow>Start</Eyebrow>
-              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl">
+              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl">
                 Ready to find your plan?
               </h2>
-              <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
+              <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
                 Three-minute quiz. Real Week 1 before you pay.
               </p>
               <div className="mt-8">
@@ -163,7 +163,7 @@ export default function HowItWorksPage() {
                   Find your plan →
                 </CtaButton>
               </div>
-              <p className="mt-4 text-sm text-vyrek-text-tertiary">
+              <p className="mt-4 text-sm text-suth-text-tertiary">
                 First week free. Cancel anytime.
               </p>
             </div>

@@ -14,14 +14,14 @@ export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "Hyrox training. UK cities and boroughs",
   description:
-    "Vyrek Hyrox programmes for every UK city and London borough. Personalised 12-week plans built by an Elite 15 coach. Find your local Hyrox training in three minutes.",
+    "Suth Performance Hyrox programmes for every UK city and London borough. Personalised 12-week plans built by an Elite 15 coach. Find your local Hyrox training in three minutes.",
   alternates: { canonical: `${siteUrl()}/hyrox` },
   openGraph: {
-    title: "Hyrox training across the UK. Vyrek",
+    title: "Hyrox training across the UK. Suth Performance",
     description:
       "Find personalised Hyrox training programmes for every UK city. Built by an Elite 15 coach. Free trial.",
     url: `${siteUrl()}/hyrox`,
-    siteName: "Vyrek",
+    siteName: "Suth Performance",
     type: "website",
     locale: "en_GB",
     images: [
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hyrox training across the UK. Vyrek",
+    title: "Hyrox training across the UK. Suth Performance",
     description:
       "Personalised 12-week Hyrox plans for every UK city.",
     images: ["/media/images/v2/programme-first-race.jpg"],
@@ -94,12 +94,12 @@ export default function HyroxLocationsPage() {
             <Eyebrow>Locations</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               Hyrox training, anywhere in the UK.
             </SplitHeading>
-            <p className="mt-5 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
-              Vyrek programmes are designed for your city, your equipment, and
+            <p className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
+              Suth Performance programmes are designed for your city, your equipment, and
               your race date. Find your local landing page below, or skip
               straight to the quiz and we&apos;ll build your Week 1 in three
               minutes.
@@ -110,22 +110,22 @@ export default function HyroxLocationsPage() {
               </CtaButton>
               <Link
                 href="/programmes"
-                className="inline-flex h-12 items-center gap-2 rounded-pill border border-vyrek-border bg-vyrek-elevated px-5 text-sm font-medium text-vyrek-text transition-colors hover:border-vyrek-border-strong"
+                className="inline-flex h-12 items-center gap-2 rounded-pill border border-suth-border bg-suth-elevated px-5 text-sm font-medium text-suth-text transition-colors hover:border-suth-border-strong"
               >
                 Browse programmes
               </Link>
             </div>
           </div>
 
-          <section className="mx-auto mt-20 max-w-5xl border-t border-vyrek-border-subtle pt-12">
+          <section className="mx-auto mt-20 max-w-5xl border-t border-suth-border-subtle pt-12">
             <Eyebrow>{total} UK locations</Eyebrow>
-            <h2 className="mt-3 text-2xl font-black leading-tight tracking-[-0.04em] text-vyrek-text md:text-3xl">
+            <h2 className="mt-3 text-2xl font-black leading-tight tracking-[-0.04em] text-suth-text md:text-3xl">
               Pick your city or borough.
             </h2>
             <div className="mt-10 space-y-12">
               {regions.map((region) => (
                 <div key={region}>
-                  <h3 className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+                  <h3 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
                     {region}
                   </h3>
                   <ul
@@ -136,7 +136,7 @@ export default function HyroxLocationsPage() {
                       <li key={loc.slug}>
                         <Link
                           href={`/hyrox/${loc.slug}`}
-                          className="block py-1.5 text-sm text-vyrek-text-secondary transition-colors hover:text-vyrek-text"
+                          className="block py-1.5 text-sm text-suth-text-secondary transition-colors hover:text-suth-text"
                         >
                           {loc.name}
                         </Link>

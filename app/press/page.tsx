@@ -8,7 +8,7 @@ import { SplitHeading } from "@/components/shared/split-heading";
 export const metadata: Metadata = {
   title: "Press & media",
   description:
-    "Vyrek press and media kit, logos, brand assets, media contact.",
+    "Suth Performance press and media kit, logos, brand assets, media contact.",
   alternates: { canonical: "/press" },
 };
 
@@ -61,30 +61,30 @@ export default function PressPage() {
             <Eyebrow>Press</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl"
+              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
             >
               Press &amp; media.
             </SplitHeading>
-            <p className="mt-5 text-base text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 text-base text-suth-text-secondary md:text-lg">
               For media enquiries, partnerships, or athlete features.
             </p>
 
             <section className="mt-12">
               <Eyebrow>Contact</Eyebrow>
-              <p className="mt-3 text-base text-vyrek-text md:text-lg">
+              <p className="mt-3 text-base text-suth-text md:text-lg">
                 <a
-                  href="mailto:press@vyrek.com"
-                  className="underline underline-offset-4 hover:text-vyrek-accent"
+                  href="mailto:press@suthperformance.com"
+                  className="underline underline-offset-4 hover:text-suth-accent"
                 >
-                  press@vyrek.com
+                  press@suthperformance.com
                 </a>
               </p>
-              <p className="mt-2 text-sm text-vyrek-text-secondary md:text-base">
+              <p className="mt-2 text-sm text-suth-text-secondary md:text-base">
                 We reply within 4 hours, Monday to Friday.
               </p>
             </section>
 
-            <section className="mt-16 border-t border-vyrek-border-subtle pt-10">
+            <section className="mt-16 border-t border-suth-border-subtle pt-10">
               <Eyebrow>Brand assets</Eyebrow>
               <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {ASSETS.map((asset) => {
@@ -95,15 +95,15 @@ export default function PressPage() {
                         href={asset.href}
                         {...(isPage
                           ? {}: { target: "_blank", rel: "noreferrer", download: true })}
-                        className="group flex h-full flex-col gap-2 rounded-lg border border-vyrek-border bg-vyrek-elevated p-5 transition-[border,transform] duration-fast ease-out hover:-translate-y-0.5 hover:border-vyrek-border-strong active:scale-[0.99]"
+                        className="group flex h-full flex-col gap-2 rounded-lg border border-suth-border bg-suth-elevated p-5 transition-[border,transform] duration-fast ease-out hover:-translate-y-0.5 hover:border-suth-border-strong active:scale-[0.99]"
                       >
-                        <span className="text-base font-bold text-vyrek-text">
+                        <span className="text-base font-bold text-suth-text">
                           {asset.label}
                         </span>
-                        <span className="text-sm text-vyrek-text-secondary">
+                        <span className="text-sm text-suth-text-secondary">
                           {asset.note}
                         </span>
-                        <span className="mt-2 inline-flex items-center gap-1 text-sm text-vyrek-accent">
+                        <span className="mt-2 inline-flex items-center gap-1 text-sm text-suth-accent">
                           {isPage ? "Open →": "Download ↗"}
                         </span>
                       </a>
@@ -113,9 +113,9 @@ export default function PressPage() {
               </ul>
             </section>
 
-            <section className="mt-16 border-t border-vyrek-border-subtle pt-10">
+            <section className="mt-16 border-t border-suth-border-subtle pt-10">
               <Eyebrow>What we&apos;ll talk about</Eyebrow>
-              <p className="mt-3 max-w-2xl text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-suth-text-secondary md:text-lg">
                 Topics our coaches can speak to, with notice. We&apos;re happy
                 to fact-check Hyrox claims for editors and provide quotes for
                 fitness or endurance features.
@@ -148,14 +148,14 @@ export default function PressPage() {
                 ].map((item) => (
                   <li
                     key={item.title}
-                    className="flex flex-col gap-2 rounded-lg border border-vyrek-border bg-vyrek-elevated p-5"
+                    className="flex flex-col gap-2 rounded-lg border border-suth-border bg-suth-elevated p-5"
                   >
                     <Eyebrow>{item.tag}</Eyebrow>
-                    <h3 className="text-base font-bold leading-tight text-vyrek-text">
+                    <h3 className="text-base font-bold leading-tight text-suth-text">
                       {item.title}
                     </h3>
                     <p
-                      className="text-sm leading-relaxed text-vyrek-text-secondary"
+                      className="text-sm leading-relaxed text-suth-text-secondary"
                       // The strings above include `&apos;` for JSX safety;
                       // dangerouslySetInnerHTML would be overkill, the entity
                       // resolves at render. Plain text is fine.
@@ -167,26 +167,26 @@ export default function PressPage() {
               </ul>
             </section>
 
-            <section className="mt-16 border-t border-vyrek-border-subtle pt-10">
+            <section className="mt-16 border-t border-suth-border-subtle pt-10">
               <Eyebrow>Recent coverage</Eyebrow>
-              <p className="mt-4 text-base text-vyrek-text-secondary md:text-lg">
-                Coverage coming soon. Vyrek launched in early 2026 and we are
+              <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
+                Coverage coming soon. Suth Performance launched in early 2026 and we are
                 actively talking to UK fitness media. If you publish a piece
                 that mentions us, email{" "}
                 <a
-                  href="mailto:press@vyrek.com"
-                  className="underline underline-offset-4 hover:text-vyrek-accent"
+                  href="mailto:press@suthperformance.com"
+                  className="underline underline-offset-4 hover:text-suth-accent"
                 >
-                  press@vyrek.com
+                  press@suthperformance.com
                 </a>{" "}
                 and we will add it here.
               </p>
             </section>
 
-            <section className="mt-16 border-t border-vyrek-border-subtle pt-10">
-              <Eyebrow>About Vyrek</Eyebrow>
-              <p className="mt-4 text-base leading-relaxed text-vyrek-text-secondary md:text-lg">
-                Vyrek is a UK-based Hyrox-first training platform. Members
+            <section className="mt-16 border-t border-suth-border-subtle pt-10">
+              <Eyebrow>About Suth Performance</Eyebrow>
+              <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
+                Suth Performance is a UK-based Hyrox-first training platform. Members
                 take a three-minute quiz and see a dated Week 1 before paying.
                 Programmes are 12 weeks, designed by an Elite 15 coach,
                 recalibrate every Sunday based on logged sessions. Founding

@@ -71,13 +71,13 @@ export function ApplicationActions({ applicationId }: { applicationId: string })
   }
 
   return (
-    <div className="rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-5">
+    <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
       <div className="flex flex-wrap gap-3">
         <button
           type="button"
           onClick={approve}
           disabled={pending}
-          className="inline-flex h-11 items-center rounded-pill bg-vyrek-accent px-5 text-sm font-semibold text-[#0A0A0A] transition-colors hover:bg-vyrek-accent-hover disabled:opacity-50"
+          className="inline-flex h-11 items-center rounded-pill bg-suth-accent px-5 text-sm font-semibold text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover disabled:opacity-50"
         >
           {pending ? "Working..." : "Approve"}
         </button>
@@ -100,14 +100,14 @@ export function ApplicationActions({ applicationId }: { applicationId: string })
       </div>
 
       <label className="mt-5 block">
-        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
           Reason (required for reject / needs info)
         </span>
         <textarea
           value={reason}
           onChange={(e) => setReason(e.target.value)}
           rows={3}
-          className="mt-2 block w-full rounded-md border border-vyrek-border bg-vyrek-base px-3 py-2 text-sm text-vyrek-text outline-none focus:border-vyrek-accent"
+          className="mt-2 block w-full rounded-md border border-suth-border bg-suth-base px-3 py-2 text-sm text-suth-text outline-none focus:border-suth-accent"
           placeholder="One or two sentences. Stays internal unless you copy it into the reply email."
         />
       </label>

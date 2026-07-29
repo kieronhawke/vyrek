@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Forensic UX/visual/animation audit of vyrek.vercel.app.
+// Forensic UX/visual/animation audit of suthperformance.com.
 // Captures every page across 4 viewports + interaction states.
 
 import { chromium, devices } from "@playwright/test";
@@ -9,7 +9,7 @@ import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, "audit-shots");
-const BASE = "https://vyrek.vercel.app";
+const BASE = "https://suthperformance.com";
 
 await mkdir(OUT, { recursive: true });
 

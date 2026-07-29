@@ -144,7 +144,7 @@ export const COMPARISONS: ComparisonDef[] = [
       { axis: "Format", hyrox: "Periodised 12-week race build", other: "45-min group class, varied daily" },
       { axis: "Outcome measured by", hyrox: "Finish time on race day", other: "Class attendance, perceived effort" },
       { axis: "Training environment", hyrox: "Gym, programmed sessions", other: "F45 studio" },
-      { axis: "Cost", hyrox: "£8.99/mo (Vyrek) + gym", other: "£100-180/mo F45 membership" },
+      { axis: "Cost", hyrox: "£8.99/mo (Suth Performance) + gym", other: "£100-180/mo F45 membership" },
       { axis: "Race option", hyrox: "Yes, global calendar", other: "F45 Playoffs (limited)" },
     ],
     verdict:

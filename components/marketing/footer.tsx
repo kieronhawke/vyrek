@@ -43,7 +43,7 @@ const COLUMNS = [
 
 export function MarketingFooter() {
   return (
-    <footer className="border-t border-vyrek-border-subtle bg-vyrek-base pb-[max(2rem,calc(var(--safe-bottom)+2rem))] pt-16 md:pt-24">
+    <footer className="border-t border-suth-border-subtle bg-suth-base pb-[max(2rem,calc(var(--safe-bottom)+2rem))] pt-16 md:pt-24">
       <Container>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
           {COLUMNS.map((col) => (
@@ -54,7 +54,7 @@ export function MarketingFooter() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-base text-vyrek-text-secondary transition-colors hover:text-vyrek-text"
+                      className="text-base text-suth-text-secondary transition-colors hover:text-suth-text"
                     >
                       {link.label}
                     </Link>
@@ -65,21 +65,21 @@ export function MarketingFooter() {
           ))}
         </div>
 
-        <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-vyrek-border-subtle pt-8 md:flex-row md:items-center">
-          <div className="flex items-center gap-3 text-vyrek-text">
+        <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-suth-border-subtle pt-8 md:flex-row md:items-center">
+          <div className="flex items-center gap-3 text-suth-text">
             <Monogram size={32} />
-            <Eyebrow bare>VYREK</Eyebrow>
-            <Eyebrow bare className="text-vyrek-text-tertiary">
+            <Eyebrow bare>SUTH PERFORMANCE</Eyebrow>
+            <Eyebrow bare className="text-suth-text-tertiary">
               FITNESS / 2026
             </Eyebrow>
-            <Eyebrow bare className="text-vyrek-text-tertiary">
+            <Eyebrow bare className="text-suth-text-tertiary">
               MADE IN UK
             </Eyebrow>
           </div>
           <div className="flex items-center gap-3">
             <Link
               href="/login"
-              className="inline-flex h-10 items-center rounded-pill border border-vyrek-border bg-vyrek-elevated px-4 text-sm text-vyrek-text-secondary transition-colors hover:border-vyrek-border-strong hover:text-vyrek-text"
+              className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text-secondary transition-colors hover:border-suth-border-strong hover:text-suth-text"
             >
               Member sign in →
             </Link>

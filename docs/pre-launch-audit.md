@@ -1,8 +1,8 @@
-# Pre-launch audit — Vyrek
+# Pre-launch audit — Suth Performance
 
 **Date:** 2026-05-25
 **Auditor:** Claude (fresh-eyes customer pass)
-**Method:** Walked every key page as a 32-year-old who saw a Vyrek ad on Instagram, never used Vyrek before, deciding in 60 seconds whether to give an email. Used Playwright to capture mobile (390x844) and desktop (1440x900) screenshots before and after fixes, plus an end-to-end quiz walk. Ran three parallel deep-audit research agents (quiz, landing, everything else) to ensure no page got skipped.
+**Method:** Walked every key page as a 32-year-old who saw a Suth Performance ad on Instagram, never used Suth Performance before, deciding in 60 seconds whether to give an email. Used Playwright to capture mobile (390x844) and desktop (1440x900) screenshots before and after fixes, plus an end-to-end quiz walk. Ran three parallel deep-audit research agents (quiz, landing, everything else) to ensure no page got skipped.
 
 ---
 
@@ -48,7 +48,7 @@ A separate quiz audit lives in §3. Headlines:
 
 | Severity | Finding | Fix applied |
 |---|---|---|
-| CRITICAL | `components/quiz-v3/screens/reassurance-1.tsx` carried a fabricated stat "92% of first-time Vyrek members finish their Hyrox stronger than they expected" attributed to "VYREK MEMBER DATA · 2026", plus a "Sarah · Bristol" testimonial. The product launches in 2026 with no completed members. | Replaced with a coaching truth ("Half the work is honest answers"). No stat. No name. |
+| CRITICAL | `components/quiz-v3/screens/reassurance-1.tsx` carried a fabricated stat "92% of first-time Suth Performance members finish their Hyrox stronger than they expected" attributed to "SUTH PERFORMANCE MEMBER DATA · 2026", plus a "Sarah · Bristol" testimonial. The product launches in 2026 with no completed members. | Replaced with a coaching truth ("Half the work is honest answers"). No stat. No name. |
 | CRITICAL | `components/quiz-v3/screens/calculating.tsx` cinematic showed "Cross-referencing 12,000 athlete data points" with a 8000→12000 counter ticker. Same fabrication risk as the 92% claim. | Replaced with "Calibrating loads to your weight". Counter removed. |
 | CRITICAL | Plan-summary screen showed no price, no trial terms, no reference to user answers. After 12 questions the customer got a generic features list. | Added "Built around your answers" recap block (sessions, length, location, weight, injury, doubles). Added price commitment box: "Free for 7 days. Then £8.99 a month, cancel in two taps from the app. No card needed to start your trial." |
 | CRITICAL | Account-creation screen called itself "Save your plan" with CTA "See my plan →". The plan was already on the previous screen, so this read as bait. No price disclosed. | Header rewritten to "Save your plan and start Week 1". Helper now states "Free for 7 days. Then £8.99 a month. No card to start. Cancel in two taps from the app." CTA changed to "Start free trial →". |
@@ -106,7 +106,7 @@ A separate quiz audit lives in §3. Headlines:
 | Page | Severity | Finding | Fix applied |
 |---|---|---|---|
 | `/pricing` | CRITICAL | Same fabricated "Sarah/Marcus/Alex" testimonials as the home page. | Replaced the three cards with a "What you get for £8.99" block (programming / coaching logic / cancel in two taps). |
-| `/about` | OK | 2018→2024 Hyrox-participation stats labelled correctly as Hyrox-global data, not Vyrek-internal. | None needed. |
+| `/about` | OK | 2018→2024 Hyrox-participation stats labelled correctly as Hyrox-global data, not Suth Performance-internal. | None needed. |
 | `/contact`, `/legal/*` | MINOR | No Companies House number, registered address or VAT number anywhere. T&Cs say "VAT where applicable" but no entity ID. | Logged for follow-up — needs the company entity to be live. |
 | `/how-it-works`, `/plans`, `/plan`, `/hyrox`, `/tools`, `/compare`, `/press` | OK | Structurally complete. `/tools` ships one tool with the label "Tools" (plural) — minor oversell. | None this pass. |
 

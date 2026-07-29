@@ -77,7 +77,7 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative isolate flex min-h-svh flex-col justify-end overflow-hidden bg-vyrek-base pb-[max(4rem,calc(var(--safe-bottom)+3rem))] pt-[max(6rem,calc(var(--safe-top)+5rem))]"
+      className="relative isolate flex min-h-svh flex-col justify-end overflow-hidden bg-suth-base pb-[max(4rem,calc(var(--safe-bottom)+3rem))] pt-[max(6rem,calc(var(--safe-top)+5rem))]"
     >
       {/* Backdrop: poster as the fallback frame, looping Pexels footage on
           top when the connection isn't metered. Grayscale + scroll-driven
@@ -115,7 +115,7 @@ export function Hero() {
           />
         )}
         {/* Dim overlay to keep type legible regardless of clip */}
-        <div className="absolute inset-0 bg-gradient-to-b from-vyrek-base/55 via-vyrek-base/30 to-vyrek-base/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-suth-base/55 via-suth-base/30 to-suth-base/90" />
       </div>
 
       <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
@@ -129,11 +129,11 @@ export function Hero() {
             matter-of-fact (verb "built", no superlatives). */}
         <h1
           id="hero-heading"
-          className="font-display max-w-[16ch] text-3xl font-black uppercase leading-[0.92] tracking-[-0.02em] text-vyrek-text sm:text-5xl md:text-6xl lg:text-7xl"
+          className="font-display max-w-[16ch] text-3xl font-black uppercase leading-[0.92] tracking-[-0.02em] text-suth-text sm:text-5xl md:text-6xl lg:text-7xl"
         >
           Hyrox training,<br />built for your race.
         </h1>
-        <p className="hero-intro mt-5 max-w-md text-base leading-relaxed text-vyrek-text-secondary md:max-w-xl md:text-lg">
+        <p className="hero-intro mt-5 max-w-md text-base leading-relaxed text-suth-text-secondary md:max-w-xl md:text-lg">
           From your first race to chasing podiums. One personalised
           12-week plan, dated to your race date. See your Week 1 before
           you pay.
@@ -142,11 +142,11 @@ export function Hero() {
           <Link
             ref={ctaRef}
             href="/quiz"
-            className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-pill bg-vyrek-accent px-6 text-base font-semibold uppercase tracking-wide text-[#0A0A0A] transition-[background,opacity] duration-fast ease-out hover:bg-vyrek-accent-hover active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vyrek-text will-change-transform sm:w-auto sm:min-w-[14rem]"
+            className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-pill bg-suth-accent px-6 text-base font-semibold uppercase tracking-wide text-[#0A0A0A] transition-[background,opacity] duration-fast ease-out hover:bg-suth-accent-hover active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-suth-text will-change-transform sm:w-auto sm:min-w-[14rem]"
           >
             See your Week 1 free
           </Link>
-          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-text-tertiary">
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             £8.99/mo · 7-day free trial · no card to start
           </span>
         </div>

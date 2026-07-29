@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { getPost, CATEGORIES } from "@/lib/blog/posts";
 
 /**
- * Dynamic OG image generator for blog posts. 1200×630, dark Vyrek palette,
+ * Dynamic OG image generator for blog posts. 1200×630, dark Suth Performance palette,
  * accent eyebrow + bold headline + author/date footer. Used by every blog
  * page's `<meta property="og:image">` so X / LinkedIn / Slack / etc. show
  * a custom preview card for each post.
@@ -17,11 +17,11 @@ export async function GET(
   const { slug } = await context.params;
   const post = await getPost(slug);
 
-  const title = post?.title ?? "Vyrek Journal";
+  const title = post?.title ?? "Suth Performance Journal";
   const category = post
     ? (CATEGORIES[post.category]?.label ?? post.category)
     : "Hyrox training";
-  const author = post?.author.name ?? "Vyrek Team";
+  const author = post?.author.name ?? "Suth Performance Team";
   const dateLabel = post
     ? new Date(post.publishedAt).toLocaleDateString("en-GB", {
         day: "numeric",
@@ -53,7 +53,7 @@ export async function GET(
             display: "flex",
           }}
         >
-          [ {category} · Vyrek Journal ]
+          [ {category} · Suth Performance Journal ]
         </div>
 
         <div
@@ -107,7 +107,7 @@ export async function GET(
               letterSpacing: "0.04em",
             }}
           >
-            VYREK
+            SUTH PERFORMANCE
           </div>
         </div>
       </div>

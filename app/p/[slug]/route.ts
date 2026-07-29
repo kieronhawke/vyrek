@@ -7,10 +7,10 @@ export const runtime = "nodejs";
 const SUB_RE = /^[a-z0-9][a-z0-9._-]{0,63}$/i;
 
 /**
- * Partner attribution endpoint. Visiting vyrek.com/p/<slug>(?sub=campaign):
+ * Partner attribution endpoint. Visiting suthperformance.com/p/<slug>(?sub=campaign):
  *  - looks up the partner
  *  - logs a partner_clicks row (used for CTR + conversion funnel)
- *  - sets a 90-day vyrek_partner first-party cookie (httpOnly)
+ *  - sets a 90-day suth_partner first-party cookie (httpOnly)
  *  - 302s to `to` (default /). Onsite-only.
  */
 export async function GET(
@@ -60,7 +60,7 @@ export async function GET(
   const res = NextResponse.redirect(new URL(dest, url.origin), 302);
   if (partnerId) {
     const signed = mintPartnerAttributionCookie(partnerId);
-    res.cookies.set("vyrek_partner", signed.value, {
+    res.cookies.set("suth_partner", signed.value, {
       httpOnly: true,
       secure: true,
       sameSite: "lax",
@@ -68,7 +68,7 @@ export async function GET(
       maxAge: signed.maxAgeSeconds,
     });
     if (subId) {
-      res.cookies.set("vyrek_partner_sub", subId, {
+      res.cookies.set("suth_partner_sub", subId, {
         httpOnly: true,
         secure: true,
         sameSite: "lax",

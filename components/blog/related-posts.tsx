@@ -6,14 +6,14 @@ export function RelatedPosts({ posts }: { posts: PostMeta[] }) {
   return (
     <section
       aria-labelledby="related-heading"
-      className="mt-16 border-t border-vyrek-border-subtle pt-12"
+      className="mt-16 border-t border-suth-border-subtle pt-12"
     >
-      <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-vyrek-accent">
+      <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
         [ KEEP READING ]
       </p>
       <h2
         id="related-heading"
-        className="mt-3 text-2xl font-black leading-tight tracking-[-0.02em] text-vyrek-text md:text-3xl"
+        className="mt-3 text-2xl font-black leading-tight tracking-[-0.02em] text-suth-text md:text-3xl"
       >
         Related guides
       </h2>

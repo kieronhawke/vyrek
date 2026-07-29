@@ -55,8 +55,8 @@ export default async function AdminSubscriptionsPage({
               }
               className={
                 active
-                  ? "inline-flex h-9 items-center rounded-pill border border-vyrek-accent bg-vyrek-accent/10 px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-accent"
-                  : "inline-flex h-9 items-center rounded-pill border border-vyrek-border-subtle bg-vyrek-elevated px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-secondary"
+                  ? "inline-flex h-9 items-center rounded-pill border border-suth-accent bg-suth-accent/10 px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-accent"
+                  : "inline-flex h-9 items-center rounded-pill border border-suth-border-subtle bg-suth-elevated px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-secondary"
               }
             >
               {f.label}
@@ -85,12 +85,12 @@ export default async function AdminSubscriptionsPage({
               <Link
                 key="c"
                 href={`/admin/customers/${s.customer_id}`}
-                className="text-vyrek-accent hover:underline"
+                className="text-suth-accent hover:underline"
               >
                 {s.customer_email ?? s.customer_id.slice(0, 8)}
               </Link>
             ) : (
-              <span key="c" className="text-vyrek-text-tertiary">
+              <span key="c" className="text-suth-text-tertiary">
                 , 
               </span>
             ),

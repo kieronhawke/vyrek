@@ -37,7 +37,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const cat = CATEGORIES[slug as Category];
   if (!cat) return { title: "Not found" };
-  const title = `${cat.label}. Vyrek Journal`;
+  const title = `${cat.label}. Suth Performance Journal`;
   return {
     title,
     description: cat.description,
@@ -46,7 +46,7 @@ export async function generateMetadata({
       title,
       description: cat.description,
       url: categoryUrl(slug),
-      siteName: "Vyrek",
+      siteName: "Suth Performance",
       type: "website",
       locale: "en_GB",
     },
@@ -87,10 +87,10 @@ export default async function CategoryPage({
           />
           <div className="mt-6 max-w-3xl">
             <Eyebrow>{cat.label}</Eyebrow>
-            <h1 className="mt-3 text-balance text-4xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-5xl">
+            <h1 className="mt-3 text-balance text-4xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl">
               {cat.label} guides
             </h1>
-            <p className="mt-5 text-base text-vyrek-text-secondary md:text-lg">
+            <p className="mt-5 text-base text-suth-text-secondary md:text-lg">
               {cat.description}
             </p>
           </div>
@@ -107,7 +107,7 @@ export default async function CategoryPage({
               ))}
             </ul>
           ): (
-            <p className="mt-10 text-base text-vyrek-text-secondary">
+            <p className="mt-10 text-base text-suth-text-secondary">
               No posts in this category yet, check back soon.
             </p>
           )}

@@ -6,8 +6,8 @@ import { apiVersion, dataset, projectId } from "./env";
 import { schemaTypes } from "./schemas";
 
 export default defineConfig({
-  name: "vyrek",
-  title: "Vyrek",
+  name: "suthperformance",
+  title: "Suth Performance",
   basePath: "/studio",
   projectId,
   dataset,

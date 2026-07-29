@@ -14,11 +14,11 @@ import { CancellationEmail } from "@/lib/email/templates/cancellation";
  * don't have to special-case the unconfigured-Resend case.
  *
  * `from` address uses Resend's default verified sender (onboarding@resend.dev)
- * until we verify our own domain. Switch to hello@vyrek.com once vyrek.com
+ * until we verify our own domain. Switch to hello@suthperformance.com once suthperformance.com
  * is verified in the Resend dashboard.
  */
 
-const DEFAULT_FROM = "Vyrek <onboarding@resend.dev>";
+const DEFAULT_FROM = "Suth Performance <onboarding@resend.dev>";
 
 let cachedClient: Resend | null = null;
 
@@ -149,7 +149,7 @@ export async function sendCancellationEmail(args: {
 }): Promise<Result> {
   return send({
     to: args.to,
-    subject: "Your Vyrek membership is cancelled",
+    subject: "Your Suth Performance membership is cancelled",
     react: CancellationEmail(),
   });
 }

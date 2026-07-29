@@ -1,5 +1,5 @@
 /**
- * Shared style tokens for Vyrek transactional emails. Inline styles only,
+ * Shared style tokens for Suth Performance transactional emails. Inline styles only,
  * email clients (especially Outlook) ignore <style> sheets and CSS classes.
  */
 
@@ -11,7 +11,7 @@ export const TEXT_DIM = "#A8A8A6";
 export const TEXT_FAINT = "#8A8A88";
 export const ACCENT = "#A3E635";
 
-export const TECH_MARK = "[ VYREK · FITNESS / 2026 · MADE IN UK ]";
+export const TECH_MARK = "[ SUTH PERFORMANCE · FITNESS / 2026 · MADE IN UK ]";
 
 export const fontStack =
   "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif";

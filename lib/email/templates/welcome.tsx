@@ -41,7 +41,7 @@ export function WelcomeEmail({
       <Preview>You&apos;re in. Day 1 starts {tFirst}.</Preview>
       <Body style={bodyStyle}>
         <Container style={containerStyle}>
-          <Text style={monoEyebrow}>[ VYREK ]</Text>
+          <Text style={monoEyebrow}>[ SUTH PERFORMANCE ]</Text>
           <Heading
             style={{
               color: TEXT,
@@ -77,7 +77,7 @@ export function WelcomeEmail({
           </Section>
 
           <Section style={{ marginTop: 32 }}>
-            <Button href="https://vyrek.vercel.app/plan" style={ctaPrimary}>
+            <Button href="https://suthperformance.com/plan" style={ctaPrimary}>
               View your plan →
             </Button>
           </Section>
@@ -103,7 +103,7 @@ export function WelcomeEmail({
               margin: "8px 0",
             }}
           >
-            01 · Add Vyrek to your home screen
+            01 · Add Suth Performance to your home screen
             <br />
             02 · Open Tuesday morning
             <br />

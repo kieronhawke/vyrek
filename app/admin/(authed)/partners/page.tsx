@@ -58,8 +58,8 @@ export default async function AdminPartnerApplicationsPage({
               }
               className={
                 active
-                  ? "inline-flex h-9 items-center rounded-pill border border-vyrek-accent bg-vyrek-accent/10 px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-accent"
-                  : "inline-flex h-9 items-center rounded-pill border border-vyrek-border-subtle bg-vyrek-elevated px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-vyrek-text-secondary"
+                  ? "inline-flex h-9 items-center rounded-pill border border-suth-accent bg-suth-accent/10 px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-accent"
+                  : "inline-flex h-9 items-center rounded-pill border border-suth-border-subtle bg-suth-elevated px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-secondary"
               }
             >
               {f.label}
@@ -91,11 +91,11 @@ export default async function AdminPartnerApplicationsPage({
             <Link
               key="n"
               href={`/admin/partners/${a.id}`}
-              className="text-vyrek-accent hover:underline"
+              className="text-suth-accent hover:underline"
             >
               {a.name}
             </Link>,
-            <span key="e" className="text-vyrek-text-secondary">
+            <span key="e" className="text-suth-text-secondary">
               {a.email}
             </span>,
             a.platform,

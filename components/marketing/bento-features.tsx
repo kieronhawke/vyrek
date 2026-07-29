@@ -14,14 +14,14 @@ export function BentoFeatures() {
     <RevealOnView
       as="section"
       aria-labelledby="features-heading"
-      className="border-t border-vyrek-border-subtle py-24 md:py-32"
+      className="border-t border-suth-border-subtle py-24 md:py-32"
     >
       <Container>
         <header className="mx-auto max-w-2xl text-center">
           <Eyebrow>What you get</Eyebrow>
           <SplitHeading
             id="features-heading"
-            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-vyrek-text md:text-4xl"
+            className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
           >
             Built to fit, built to adapt
           </SplitHeading>
@@ -42,15 +42,15 @@ export function BentoFeatures() {
                 >
                   <div className="flex h-32 w-full items-end justify-center md:h-40">
                     {DAY_LOAD[i] === 0 ? (
-                      <div className="h-1 w-full rounded-pill bg-vyrek-border-strong" />
+                      <div className="h-1 w-full rounded-pill bg-suth-border-strong" />
                     ): (
                       <div
-                        className="w-full rounded-md bg-gradient-to-t from-vyrek-accent/40 to-vyrek-accent"
+                        className="w-full rounded-md bg-gradient-to-t from-suth-accent/40 to-suth-accent"
                         style={{ height: `${DAY_LOAD[i] * 100}%` }}
                       />
                     )}
                   </div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-vyrek-text-tertiary">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                     {day}
                   </span>
                 </div>
@@ -67,7 +67,7 @@ export function BentoFeatures() {
             />
             <div
               aria-hidden
-              className="absolute inset-0 bg-gradient-to-b from-vyrek-elevated/60 via-vyrek-elevated/35 to-vyrek-elevated/85"
+              className="absolute inset-0 bg-gradient-to-b from-suth-elevated/60 via-suth-elevated/35 to-suth-elevated/85"
             />
             <div className="relative z-10">
               <CardCopy
@@ -83,11 +83,11 @@ export function BentoFeatures() {
                 ].map((tile, i) => (
                   <div
                     key={tile.name}
-                    className="relative aspect-square overflow-hidden rounded-md border border-vyrek-border-subtle bg-vyrek-overlay/80 backdrop-blur-sm"
+                    className="relative aspect-square overflow-hidden rounded-md border border-suth-border-subtle bg-suth-overlay/80 backdrop-blur-sm"
                   >
                     <div className="absolute inset-0 bg-[radial-gradient(80%_80%_at_50%_30%,rgba(163,230,53,0.18)_0%,rgba(20,20,20,0)_55%)]" />
                     <span
-                      className={`absolute bottom-2 left-2 font-mono text-[9px] uppercase tracking-[0.18em] ${i === 0 ? "text-vyrek-text-secondary": "text-vyrek-text-tertiary"}`}
+                      className={`absolute bottom-2 left-2 font-mono text-[9px] uppercase tracking-[0.18em] ${i === 0 ? "text-suth-text-secondary": "text-suth-text-tertiary"}`}
                     >
                       {tile.name}
                     </span>
@@ -122,7 +122,7 @@ function Card({
 }) {
   return (
     <div
-      className={`rounded-lg border border-vyrek-border-subtle bg-vyrek-elevated p-6 md:p-8 ${className ?? ""}`}
+      className={`rounded-lg border border-suth-border-subtle bg-suth-elevated p-6 md:p-8 ${className ?? ""}`}
     >
       {children}
     </div>
@@ -138,10 +138,10 @@ function CardCopy({
 }) {
   return (
     <>
-      <h3 className="text-xl font-black leading-tight tracking-[-0.04em] text-vyrek-text md:text-2xl">
+      <h3 className="text-xl font-black leading-tight tracking-[-0.04em] text-suth-text md:text-2xl">
         {headline}
       </h3>
-      <p className="mt-3 text-sm leading-relaxed text-vyrek-text-secondary md:text-base">
+      <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary md:text-base">
         {sub}
       </p>
     </>

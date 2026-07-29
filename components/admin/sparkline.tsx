@@ -58,7 +58,7 @@ export function Sparkline({
     <svg
       width={width}
       height={height}
-      className={cn("text-vyrek-accent", className)}
+      className={cn("text-suth-accent", className)}
       viewBox={`0 0 ${width} ${height}`}
       preserveAspectRatio="none"
       aria-hidden

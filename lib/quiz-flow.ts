@@ -1,8 +1,8 @@
 /**
- * Vyrek Quiz V3, types, programme matching, and date helpers.
+ * Suth Performance Quiz V3, types, programme matching, and date helpers.
  *
- * The 15-screen Marchon-Runna hybrid. See /docs/vyrek-quiz-v3-brief.md and
- * /docs/vyrek-quiz-v3-addendum.md for the spec.
+ * The 15-screen Marchon-Runna hybrid. See /docs/suth-quiz-v3-brief.md and
+ * /docs/suth-quiz-v3-addendum.md for the spec.
  *
  * V2 lives at lib/quiz-flow-v2.ts (kept as a /quiz/v2 fallback). Once V3 is
  * verified live and converting, V2 can be deleted in a cleanup pass.

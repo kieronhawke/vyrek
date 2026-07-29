@@ -74,12 +74,12 @@ Walked every entry in `docs/image-manifest.json` and tagged the visible primary 
 ### What's strong
 
 - **Gender mix close to 50/50** when accounting for mixed-subject images.
-- **Age bracket 30-39 dominates** (matches the Vyrek brand demo).
+- **Age bracket 30-39 dominates** (matches the Suth Performance brand demo).
 - **Body types are mostly lean-athletic** which fits the Hyrox audience.
 
 ### What's under-represented (real gaps)
 
-1. **40+ athletes (Masters category)** — only 1 image features a visibly 40+ subject, and it's a multi-subject background frame. Vyrek programmes explicitly target Masters; the imagery doesn't reflect that.
+1. **40+ athletes (Masters category)** — only 1 image features a visibly 40+ subject, and it's a multi-subject background frame. Suth Performance programmes explicitly target Masters; the imagery doesn't reflect that.
 2. **Athletes outside white/European ethnicity** — 4 of 25 identifiable single-subject images. Hyrox demographics in the UK are more diverse than this set suggests.
 3. **Non-lean body types** — almost zero images of athletes who don't already look athletic. First Race programme is explicitly for first-timers; the imagery sets a fitness-prerequisite that the programme itself doesn't.
 4. **Real members in real Hyrox events** — every "race" or "competition" image is stock; none captures the actual UK Hyrox race-day environment, branding, venue signage.
