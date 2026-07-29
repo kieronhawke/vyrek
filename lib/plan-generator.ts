@@ -516,7 +516,7 @@ const BENEFITS: Record<Programme, Benefit[]> = {
     {
       number: "01",
       title: "Your personal Elite 15 coach",
-      body: "James Wright, Top 50 World Championships finisher. Reviews your weekly progress. Answers your questions in the app.",
+      body: "Ben Sutherland, HYROX Elite 15 athlete. Reviews your weekly progress. Answers your questions in the app.",
     },
     {
       number: "02",

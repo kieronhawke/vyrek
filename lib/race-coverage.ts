@@ -33,7 +33,7 @@ export type CoveragePost = {
     tags: string[];
     publishedAt: string; // ISO date
     updatedAt: string;
-    author: "james-wright" | "suth-team";
+    author: "ben-sutherland" | "suth-team";
     heroImage: string;
     heroAlt: string;
     seoTitle: string;
@@ -110,7 +110,7 @@ export function generateCoveragePost(
         tags: [event.venue.city, "race week", "taper", "preparation"],
         publishedAt,
         updatedAt: publishedAt,
-        author: "james-wright",
+        author: "suth-team",
         heroImage: "/media/images/v2/programme-pro.jpg",
         heroAlt: `${event.name} preview`,
         seoTitle: `${event.name}, two weeks out · prep checklist`,
@@ -177,7 +177,7 @@ export function generateCoveragePost(
         tags: [event.venue.city, "race week", "taper"],
         publishedAt,
         updatedAt: publishedAt,
-        author: "james-wright",
+        author: "suth-team",
         heroImage: "/media/images/v2/programme-sub-90-v2.jpg",
         heroAlt: `Final week prep for ${event.name}`,
         seoTitle: `${event.name}, final week prep`,
@@ -248,7 +248,7 @@ export function generateCoveragePost(
         tags: [event.venue.city, "race day", "checklist"],
         publishedAt,
         updatedAt: publishedAt,
-        author: "james-wright",
+        author: "suth-team",
         heroImage: "/media/images/v2/programme-first-race.jpg",
         heroAlt: `${event.name} race day checklist`,
         seoTitle: `${event.name} race-day checklist`,
@@ -365,8 +365,8 @@ export function generateCoveragePost(
         tags: [event.venue.city, "race lessons", "training"],
         publishedAt,
         updatedAt: publishedAt,
-        author: "james-wright",
-        heroImage: "/media/images/v2/coach-james-wright.jpg",
+        author: "suth-team",
+        heroImage: "/media/images/v2/bento-coaches.jpg",
         heroAlt: `${event.name} lessons`,
         seoTitle: `${event.name}. 4 patterns we noticed`,
         seoDescription: `One week on from ${event.name}. Four patterns from the results: pacing, station drop-off, transitions, race-day kit.`,

@@ -1,47 +1,53 @@
-# James Wright — Founder bio
+# Ben Sutherland — Founder bio
 
-**Founding coach, Suth Performance**
+**Founder and head coach, Suth Performance**
 
-James Wright is a UK-based Elite 15 Hyrox athlete and founder of Suth Performance, the
-race-specific training platform for Hyrox.
+Ben Sutherland is a HYROX Elite 15 athlete and the founder of Suth
+Performance, the race-specific training platform for HYROX.
 
 ## Racing record
 
-- Top 50 finisher, 2025 Hyrox World Championships
-- Elite 15 ranked athlete, 2024-2026 seasons
-- Multiple sub-65 race finishes
-- Coach and consultant to UK hybrid athletes
+- HYROX Elite 15 athlete, Doubles division, racing with his brother Harry
+  Sutherland
+- Qualified for the Elite 15 at Miami
+- Multiple Pro Doubles race wins, including Rotterdam and Glasgow
+- Best Doubles times around 49 to 51 minutes
+- First HYROX event: Berlin 2024
 
 ## Background
 
-James grew up running track in the south of England, switched to functional
-fitness in his twenties, and started racing Hyrox in 2021 — the year the
-format first arrived in the UK at scale. He spent three seasons writing his
-own training, racing across the UK and Europe, and quietly coaching a small
-group of friends through their first races.
+Ben raced his first HYROX in Berlin in 2024 and has since risen to the
+Elite 15, the division reserved for the fastest athletes in the sport. He
+competes in Doubles with his brother Harry, with Pro Doubles wins including
+Rotterdam and Glasgow.
 
-Suth Performance started as a spreadsheet he kept refining for those friends. By the
-end of 2025 it had become a 12-week structured programme that consistently
-produced PBs and first finishes. He launched Suth Performance in early 2026 to give
-that same programme to the rapidly growing UK Hyrox community.
+Alongside racing, Ben coaches athletes across the full range of the sport,
+from complete beginners preparing for a first race through to professional
+level. Suth Performance is that coaching, built into a platform: structured,
+progressive, personalised 12-week programmes dated to each athlete's race.
 
-## What James can speak to
+## What Ben can speak to
 
-- Hyrox-specific programming: how it differs from CrossFit, what the
-  evidence supports, why station-based training matters.
-- The UK Hyrox scene: who races, where the events are, what's coming.
-- Coaching the everyday hybrid athlete: balancing work, family, training.
-- Returning from injury, plateau-breaking, first-race nerves.
+- Rising from a first race to the Elite 15: what actually moves the needle.
+- Doubles racing and pacing: strategy, handoffs, racing with a partner.
+- HYROX-specific programming: how it differs from generic functional
+  fitness, why station-based training matters.
+- Coaching the full range: first-timers, sub-90 chasers, doubles pairs,
+  professionals.
 
 ## Contact
 
-press@suthperformance.com — replies within 4 hours, Monday to Friday.
+press@suthperformance.com
 
-## Pronouns and identity
+## Social
 
-James Wright, he/him. Based in the UK.
+Instagram: [@bennysuth95](https://instagram.com/bennysuth95)
+
+## Pronouns
+
+Ben Sutherland, he/him. Based in the UK.
 
 ## Photo
 
-Approved press headshot at `/media/images/v2/coach-james-wright-warm.jpg`
-(usable in print and online; please credit "Suth Performance" where space allows).
+Press photography to follow. Contact press@suthperformance.com for
+approved images of Ben racing and coaching.

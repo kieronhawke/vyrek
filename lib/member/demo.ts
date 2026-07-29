@@ -292,7 +292,7 @@ export const DEMO_COMMUNITY_EXTRA: CommunityPost[] = [
   },
   {
     id: "c12",
-    author: "Coach Hannah",
+    author: "Coach Ben",
     badge: "Elite 15",
     city: "Birmingham",
     programme: "Pro",
@@ -334,7 +334,7 @@ export const DEMO_COMMUNITY_EXTRA: CommunityPost[] = [
   },
   {
     id: "c16",
-    author: "Coach James",
+    author: "Coach Ben",
     badge: "Elite 15",
     city: "London",
     programme: "Pro",
@@ -402,7 +402,7 @@ export const DEMO_COMMUNITY: CommunityPost[] = [
   },
   {
     id: "c6",
-    author: "Coach James",
+    author: "Coach Ben",
     badge: "Elite 15",
     city: "London",
     programme: "Pro",
@@ -463,8 +463,8 @@ export type Athlete = {
 
 export const DEMO_ATHLETES: Athlete[] = [
   {
-    slug: "james-wright",
-    name: "James Wright",
+    slug: "callum-reid",
+    name: "Callum Reid",
     city: "London, GB",
     category: "Pro Men",
     pb: "01:01:22",
@@ -853,7 +853,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     title: "Sled push: body position fix in 90 seconds",
     durationSec: 90,
     category: "Technique",
-    coach: "James Wright",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/programme-pro.jpg",
   },
   {
@@ -861,7 +861,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     title: "Wall ball cadence: breath-out-throw rhythm",
     durationSec: 120,
     category: "Technique",
-    coach: "James Wright",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/quiz-interstitial-2.jpg",
   },
   {
@@ -869,7 +869,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     title: "Pre-race 30-minute warm-up",
     durationSec: 1800,
     category: "Warm-up",
-    coach: "Hannah Ward",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/quiz-interstitial-1.jpg",
   },
   {
@@ -877,7 +877,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     title: "Post-session 10-minute mobility",
     durationSec: 600,
     category: "Cool-down",
-    coach: "James Wright",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/video-recovery.jpg",
   },
   {
@@ -885,7 +885,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     title: "Sandbag lunge: 4-step recovery if you stop",
     durationSec: 95,
     category: "Technique",
-    coach: "James Wright",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/how-step-3.jpg",
   },
   {
@@ -893,7 +893,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     title: "Race day timeline: -3 hours to start gun",
     durationSec: 480,
     category: "Race day",
-    coach: "Hannah Ward",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/testimonial-marcus.jpg",
   },
 ];
@@ -904,7 +904,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     title: "SkiErg: hip drive vs arm pull, the 60/40 rule",
     durationSec: 145,
     category: "Technique",
-    coach: "James Wright",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/video-ski-erg.jpg",
   },
   {
@@ -912,7 +912,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     title: "Sled pull: 3 grip options for when your forearms blow",
     durationSec: 165,
     category: "Technique",
-    coach: "Hannah Ward",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/video-sled-pull.jpg",
   },
   {
@@ -920,7 +920,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     title: "Burpee broad jump: chest-to-floor without losing height",
     durationSec: 110,
     category: "Technique",
-    coach: "James Wright",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/video-burpee.jpg",
   },
   {
@@ -928,7 +928,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     title: "Rowing 1000m: the 2-3-2 split strategy",
     durationSec: 135,
     category: "Technique",
-    coach: "Hannah Ward",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/quiz-interstitial-3.jpg",
   },
   {
@@ -936,7 +936,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     title: "Farmer's carry: handle position for grip endurance",
     durationSec: 85,
     category: "Technique",
-    coach: "James Wright",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/video-farmers.jpg",
   },
   {
@@ -944,7 +944,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     title: "Race-day fuelling: the 90 minutes before the gun",
     durationSec: 420,
     category: "Race day",
-    coach: "Hannah Ward",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/bento-plan.jpg",
   },
   {
@@ -952,7 +952,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     title: "Recovery: 10-minute breathing reset post-race",
     durationSec: 600,
     category: "Recovery",
-    coach: "James Wright",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/about-outdoor.jpg",
   },
   {
@@ -960,7 +960,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     title: "Wall ball: when to switch from rebound to catch-throw",
     durationSec: 125,
     category: "Technique",
-    coach: "James Wright",
+    coach: "Ben Sutherland",
     thumbnail: "/media/images/v2/how-step-2.jpg",
   },
 ];

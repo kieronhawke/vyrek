@@ -39,9 +39,9 @@ const SHOTS = [
     credit: "Suth Performance",
   },
   {
-    src: "/media/images/v2/coach-james-wright-warm.jpg",
-    title: "Founder portrait: James Wright",
-    note: "Approved press headshot. Print and online use, credit Suth Performance.",
+    src: "/media/images/ben/ben-portrait-placeholder.jpg",
+    title: "Founder portrait: Ben Sutherland",
+    note: "Placeholder. Approved press photography of Ben to follow.",
     credit: "Suth Performance",
   },
 ];

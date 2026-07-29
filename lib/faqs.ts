@@ -19,7 +19,7 @@ export const FAQS: Faq[] = [
   {
     question: "Who designs the programming?",
     answer:
-      "Programmes are designed by Elite 15 Hyrox athletes. Founding coach: James Wright. More coaches joining.",
+      "Programmes are designed by Ben Sutherland, a HYROX Elite 15 athlete who coaches from first race to professional level.",
   },
   {
     question: "What if I've never done a Hyrox?",

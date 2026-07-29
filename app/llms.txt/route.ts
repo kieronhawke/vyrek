@@ -49,7 +49,7 @@ export async function GET() {
     "",
     "## About",
     "",
-    "Suth Performance is a UK-based Hyrox-first training platform. Founding coach James Wright races at Elite 15. Programmes recalibrate every Sunday based on logged sessions.",
+    "Suth Performance is a UK-based Hyrox-first training platform. Founder Ben Sutherland races in the HYROX Elite 15, competing in Doubles with his brother Harry. Programmes recalibrate every Sunday based on logged sessions.",
     "",
     "## Contact",
     "",

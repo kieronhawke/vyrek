@@ -76,7 +76,7 @@ export function BentoFeatures() {
               />
               <div className="mt-8 grid grid-cols-4 gap-2">
                 {[
-                  { name: "James", role: "Coach" },
+                  { name: "Ben", role: "Coach" },
                   { name: "First", role: "Race" },
                   { name: "Sub-90", role: "Plan" },
                   { name: "Doubles", role: "Plan" },

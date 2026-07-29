@@ -13,22 +13,20 @@ export type Author = {
 };
 
 export const AUTHORS: Record<string, Author> = {
-  "james-wright": {
-    slug: "james-wright",
-    name: "James Wright",
-    role: "Founding coach · Elite 15 athlete",
-    bio: "James races at Elite 15. Top 50 at the 2025 Hyrox World Championships. Programmed for over 200 first-time finishers before Suth Performance launched.",
-    photo: "/media/images/v2/coach-james-wright.jpg",
-    sameAs: [
-      "https://instagram.com/jameswright.hyrox",
-      "https://www.linkedin.com/in/jameswright-hyrox",
-    ],
+  "ben-sutherland": {
+    slug: "ben-sutherland",
+    name: "Ben Sutherland",
+    role: "Founder · HYROX Elite 15 athlete",
+    bio: "Ben races in the HYROX Elite 15, competing in Doubles with his brother Harry. Pro Doubles wins include Rotterdam and Glasgow. He coaches athletes from their first race to professional level.",
+    // PLACEHOLDER: replace with Ben's real headshot when supplied.
+    photo: "/media/images/ben/ben-portrait-placeholder.jpg",
+    sameAs: ["https://instagram.com/bennysuth95"],
   },
   "suth-team": {
     slug: "suth-team",
     name: "The Suth Performance team",
     role: "Coaches and editors",
-    bio: "The Suth Performance programming team. Elite 15 athletes and S&C coaches who've raced Hyrox at every level.",
+    bio: "The Suth Performance programming team, led by HYROX Elite 15 athlete Ben Sutherland.",
     photo: "/media/images/v2/bento-coaches.jpg",
     sameAs: [],
   },

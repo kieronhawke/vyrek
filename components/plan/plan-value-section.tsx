@@ -89,14 +89,14 @@ export function PlanValueSection() {
         [ WHAT YOU UNLOCK ]
       </h2>
 
-      {/* James Wright coach card. Sits above the 5-item list so the
-          PRIVATE COACH CALL item has a real face attached to it — was
-          missing per user "James Wright image disappeared" feedback. */}
+      {/* Ben Sutherland coach card. Sits above the 5-item list so the
+          PRIVATE COACH CALL item has a real coach attached to it.
+          PLACEHOLDER IMAGE: swap for Ben's real headshot when supplied. */}
       <div className="mt-6 flex items-center gap-4 rounded-2xl border border-suth-accent/30 bg-suth-elevated p-4">
         <div className="relative size-16 shrink-0 overflow-hidden rounded-full bg-suth-overlay">
           <Image
-            src="/media/images/v2/coach-james-wright-warm.jpg"
-            alt="James Wright, founding coach"
+            src="/media/images/ben/ben-portrait-placeholder.jpg"
+            alt="Ben Sutherland, founder and head coach"
             fill
             sizes="64px"
             className="object-cover"
@@ -107,10 +107,10 @@ export function PlanValueSection() {
             [ YOUR COACH ]
           </p>
           <p className="mt-1 text-sm font-bold text-suth-text">
-            James Wright
+            Ben Sutherland
           </p>
           <p className="mt-0.5 text-xs text-suth-text-secondary">
-            Elite 15 athlete · Top 50 World Championships finisher
+            HYROX Elite 15 athlete · Pro Doubles race winner
           </p>
         </div>
       </div>

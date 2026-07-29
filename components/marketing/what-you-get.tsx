@@ -18,12 +18,9 @@ const CARDS = [
     title: "An Elite 15 athlete on your programme.",
     body:
       "Reviews your weekly progress, answers questions, and adjusts your training as you improve.",
-    // Was the cold-stare Pexels coach also used as the home hero
-    // backdrop. Moved to the warm portrait (h1) so the home page
-    // doesn't repeat the same person twice and the "coach you'd
-    // actually DM" register lands.
-    image: "/media/images/v2/coach-james-wright-warm.jpg",
-    alt: "Suth Performance coach in his gym",
+    // PLACEHOLDER: replace with a real photo of Ben when supplied.
+    image: "/media/images/ben/ben-portrait-placeholder.jpg",
+    alt: "Placeholder for a photo of Ben Sutherland, founder and head coach",
   },
   {
     tag: "Dated weekly programme",

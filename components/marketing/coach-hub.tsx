@@ -37,8 +37,9 @@ export function CoachHub() {
             Programmed by an Elite 15 coach
           </SplitHeading>
           <p className="mt-4 text-base leading-relaxed text-suth-text-secondary">
-            James Wright writes the progression Suth Performance runs on. Two more
-            coaches join in 2026 to cover Doubles and Pro.
+            Ben Sutherland writes every programme Suth Performance runs on. He
+            races in the HYROX Elite 15 and coaches athletes from their first
+            race to professional level.
           </p>
         </header>
 

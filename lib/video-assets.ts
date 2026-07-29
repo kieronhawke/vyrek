@@ -31,7 +31,7 @@ export const VIDEOS = {
   manWorkingOut: {
     id: "6296583",
     src: "https://videos.pexels.com/video-files/6296583/6296583-uhd_2560_1080_25fps.mp4",
-    poster: "/media/images/v2/coach-james-wright.jpg",
+    poster: "/media/images/v2/about-coaching.jpg",
     description: "Man training, coach tile",
   },
   womanBoxJumps: {

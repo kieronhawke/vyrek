@@ -1,7 +1,7 @@
 /**
- * Coach hub data (brief §8.9). James is the founding coach. The other two
- * tiles describe the *methodology* behind the programming rather than faking
- * additional coaches. ASA-safe and on-brand.
+ * Coach hub data. Ben Sutherland is the founder and head coach. The other
+ * two tiles describe the *method* behind the programming rather than faking
+ * additional coaches. All athlete claims are verified.
  */
 
 export type CoachTile = {
@@ -24,38 +24,31 @@ export type Coach = CoachTile;
 
 export const COACHES: CoachTile[] = [
   {
-    slug: "james-wright",
-    name: "James Wright",
-    role: "FOUNDING COACH",
-    credentials: [
-      "ELITE 15",
-      "HYROX UK 2024/25",
-      "TOP 50 WORLDS QUALIFIER",
-    ],
-    bio: "James Wright is a UK Hyrox athlete competing at the Elite 15 level. Top 50 finish at the 2025 World Championships in Chicago. Eight seasons of competitive functional fitness before transitioning to Hyrox in 2023. Coaches the programming for Suth Performance's First Race, Sub-90, and Pro programmes.",
-    // Image is the real Adobe Stock photoshoot (h1). Video field dropped
-    // per user feedback — coach hub tile renders a static portrait now,
-    // no looping background video.
-    image: "/media/images/v2/coach-james-wright-warm.jpg",
+    slug: "ben-sutherland",
+    name: "Ben Sutherland",
+    role: "FOUNDER · HEAD COACH",
+    credentials: ["HYROX ELITE 15", "PRO DOUBLES RACE WINNER", "BEGINNER TO PRO COACHING"],
+    bio: "Ben Sutherland races in the HYROX Elite 15, competing in Doubles with his brother Harry. He qualified for the Elite 15 at Miami, has multiple Pro Doubles wins including Rotterdam and Glasgow, and his best Doubles times sit around the 49 to 51 minute mark. He coaches athletes from their first race to professional level.",
+    socials: { instagram: "https://instagram.com/bennysuth95" },
+    // PLACEHOLDER: replace with Ben's real portrait when supplied.
+    image: "/media/images/ben/ben-portrait-placeholder.jpg",
     kind: "coach",
   },
   {
-    slug: "coach-2",
-    name: "Coach two",
-    role: "JOINING 2026",
+    slug: "the-method",
+    name: "The method",
+    role: "HOW THE PROGRAMMING WORKS",
     credentials: [],
-    bio: "We are recruiting our second Elite 15 coach now. Profile announced when contracts are signed.",
-    // Real smiling-coach portrait. Heavily desaturated + dimmed in the
-    // tile via coach-hub.tsx so it reads "person, not yet introduced".
+    bio: "Structured, progressive blocks that work backwards from the eight stations and eight runs. Every week is dated to your race, rebuilt each Sunday from what you logged.",
     image: "/media/images/v2/coach-2.jpg",
     kind: "principle",
   },
   {
-    slug: "coach-3",
-    name: "Coach three",
-    role: "JOINING 2026",
+    slug: "the-standard",
+    name: "The standard",
+    role: "WHAT EVERY ATHLETE GETS",
     credentials: [],
-    bio: "Third coach onboarding in parallel. Programme split across First Race, Sub-90, Doubles, and Pro as the team grows.",
+    bio: "The same structure Ben uses to prepare for Elite 15 racing, scaled to your level. First-timer or pro, the programming principles do not change. The loading does.",
     image: "/media/images/v2/coach-3.jpg",
     kind: "principle",
   },

@@ -100,7 +100,7 @@ export function CalculatingScreen({ answers }: { answers: QuizAnswers }) {
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/media/images/v2/coach-james-wright.jpg"
+            src="/media/images/v2/about-coaching.jpg"
             alt=""
             className="h-full w-full object-cover opacity-[0.08] blur-2xl grayscale"
           />

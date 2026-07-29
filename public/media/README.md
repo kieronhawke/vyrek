@@ -17,7 +17,7 @@ https://drive.google.com/drive/folders/1N_JH9V4gv1ptOq5siP3FTTLPj7ZKqpQM
 
 `/public/media/images/`
 - `hero-poster.jpg`, frame from `hero.mp4` for slow connections / fallback
-- `coach-james-wright.jpg`, `AdobeStock_1887096738.jpeg` (breath-in-cold-air)
+- `coach-james-wright.jpg` (REMOVED in rebrand: depicted a fictional founder; replaced by /media/images/ben/ placeholders awaiting Ben's real photos)
 - `programme-first-race.jpg`, `AdobeStock_2007854881.jpeg` (runner on track)
 - `programme-sub-90.jpg`, `AdobeStock_1887097071.jpeg` (athlete vs wind)
 - `programme-doubles.jpg`, `AdobeStock_192502307.jpeg` (weightlifter prep)

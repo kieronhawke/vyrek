@@ -40,7 +40,7 @@ const ASSETS = [
   {
     label: "Founder bio (Markdown)",
     href: "/press/founder-bio.md",
-    note: "James Wright biography. Racing record, background, contact.",
+    note: "Ben Sutherland biography. Racing record, background, contact.",
     available: true,
   },
   {
@@ -188,9 +188,10 @@ export default function PressPage() {
               <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
                 Suth Performance is a UK-based Hyrox-first training platform. Members
                 take a three-minute quiz and see a dated Week 1 before paying.
-                Programmes are 12 weeks, designed by an Elite 15 coach,
-                recalibrate every Sunday based on logged sessions. Founding
-                coach: James Wright, top 50 at the 2025 World Championships.
+                Programmes are 12 weeks, designed by founder Ben Sutherland,
+                a HYROX Elite 15 athlete with Pro Doubles wins including
+                Rotterdam and Glasgow, and recalibrate every Sunday based on
+                logged sessions.
               </p>
             </section>
           </div>
