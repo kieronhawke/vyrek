@@ -12,6 +12,13 @@ type Heading = { id: string; text: string; level: number };
 export function TableOfContents() {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
+  // Desktop hides the toggle affordance (summary is pointer-events-none),
+  // so the list must start open there; mobile keeps the closed disclosure.
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(min-width: 1024px)").matches) setOpen(true);
+  }, []);
 
   useEffect(() => {
     const article = document.getElementById("article-body");
@@ -48,7 +55,11 @@ export function TableOfContents() {
   if (!headings.length) return null;
 
   return (
-    <details className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3 lg:open:py-3 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:border-0 lg:bg-transparent lg:p-0 [&[open]>summary>span:last-child]:rotate-180">
+    <details
+      open={open}
+      onToggle={(e) => setOpen(e.currentTarget.open)}
+      className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3 lg:open:py-3 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:border-0 lg:bg-transparent lg:p-0 [&[open]>summary>span:last-child]:rotate-180"
+    >
       <summary className="flex cursor-pointer items-center justify-between font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary lg:cursor-default lg:pointer-events-none lg:mb-3 [&::-webkit-details-marker]:hidden">
         <span>[ ON THIS PAGE ]</span>
         <span aria-hidden className="transition-transform lg:hidden">

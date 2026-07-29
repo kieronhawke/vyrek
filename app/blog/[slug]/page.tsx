@@ -177,54 +177,55 @@ export default async function BlogPostPage({
           />
 
           <article className="mt-8">
-            <header className="mx-auto max-w-3xl">
-              <Link
-                href={`/blog/category/${post.category}`}
-                className="inline-block font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent transition-colors hover:text-suth-accent-hover"
-              >
-                [ {categoryLabel} ]
-              </Link>
-              <h1 className="mt-4 text-balance text-3xl font-black leading-[1.1] tracking-[-0.035em] text-suth-text md:text-5xl lg:text-6xl">
-                {post.title}
-              </h1>
-              <p className="mt-5 text-balance text-base leading-relaxed text-suth-text-secondary md:text-xl">
-                {post.excerpt}
-              </p>
-              <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-suth-text-tertiary">
-                <div className="flex items-center gap-2">
-                  <div className="relative size-7 overflow-hidden rounded-full bg-suth-overlay">
-                    <Image
-                      src={post.author.photo}
-                      alt={`Portrait of ${post.author.name}`}
-                      fill
-                      sizes="28px"
-                      className="object-cover"
-                    />
+            {/* Split header on desktop: title block left, hero image right,
+                both inside the first fold. NOTE the design-system type scale
+                is remapped for marketing heroes (text-6xl = 128px), so the
+                article H1 uses explicit editorial sizes instead. Mobile keeps
+                the stacked order that already works. */}
+            <header className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-12 lg:gap-12">
+              <div className="lg:col-span-7">
+                <Link
+                  href={`/blog/category/${post.category}`}
+                  className="inline-block font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent transition-colors hover:text-suth-accent-hover"
+                >
+                  [ {categoryLabel} ]
+                </Link>
+                <h1 className="mt-4 text-balance text-[34px] font-black leading-[1.06] tracking-[-0.03em] text-suth-text md:text-[40px] lg:text-[44px]">
+                  {post.title}
+                </h1>
+                <p className="mt-5 text-balance text-base leading-relaxed text-suth-text-secondary md:text-lg">
+                  {post.excerpt}
+                </p>
+                <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-suth-text-tertiary">
+                  <div className="flex items-center gap-2">
+                    <div className="relative size-7 overflow-hidden rounded-full bg-suth-overlay">
+                      <Image
+                        src={post.author.photo}
+                        alt={`Portrait of ${post.author.name}`}
+                        fill
+                        sizes="28px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <span>{post.author.name}</span>
                   </div>
-                  <span>{post.author.name}</span>
+                  <span aria-hidden>·</span>
+                  <time dateTime={post.publishedAt}>{dateLabel}</time>
+                  <span aria-hidden>·</span>
+                  <span>{post.readingMinutes} min read</span>
                 </div>
-                <span aria-hidden>·</span>
-                <time dateTime={post.publishedAt}>{dateLabel}</time>
-                <span aria-hidden>·</span>
-                <span>{post.readingMinutes} min read</span>
-                <span aria-hidden>·</span>
-                <span>{post.words.toLocaleString()} words</span>
+              </div>
+              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg bg-suth-overlay lg:col-span-5 lg:aspect-[4/3]">
+                <Image
+                  src={post.heroImage}
+                  alt={post.heroAlt}
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 480px, 100vw"
+                  className="object-cover"
+                />
               </div>
             </header>
-
-            {/* Hero capped at max-h-[60vh] per Stage 1.3 spec so it
-                doesn't dominate the fold on tall desktop viewports.
-                aspect-[16/9] still governs short viewports. */}
-            <div className="relative mx-auto mt-10 aspect-[16/9] max-h-[60vh] w-full max-w-5xl overflow-hidden rounded-lg bg-suth-overlay md:mt-14">
-              <Image
-                src={post.heroImage}
-                alt={post.heroAlt}
-                fill
-                priority
-                sizes="(min-width: 1024px) 1024px, 100vw"
-                className="object-cover"
-              />
-            </div>
 
             <div className="mt-12 grid gap-12 lg:grid-cols-[1fr_minmax(0,720px)_1fr]">
               <div
@@ -285,6 +286,27 @@ export default async function BlogPostPage({
 
                 <RelatedPosts posts={related} />
               </div>
+              {/* Right rail: quiet sticky CTA, wide screens only. The third
+                  grid column is otherwise dead space at 1280px+. */}
+              <aside className="hidden xl:block lg:col-start-3 lg:row-start-1">
+                <div className="sticky top-28 ml-auto max-w-[240px] rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-suth-accent">
+                    [ Your plan ]
+                  </p>
+                  <p className="mt-3 text-sm font-semibold leading-snug text-suth-text">
+                    Want this written into a 12-week plan for your race?
+                  </p>
+                  <p className="mt-2 text-xs leading-relaxed text-suth-text-tertiary">
+                    Three-minute quiz. See Week 1 before you pay.
+                  </p>
+                  <Link
+                    href="/quiz"
+                    className="mt-4 inline-flex h-10 w-full items-center justify-center rounded-pill bg-suth-accent px-4 text-xs font-semibold uppercase tracking-wide text-[#0A0A0A] transition-[background] duration-fast hover:bg-suth-accent-hover"
+                  >
+                    Find your plan
+                  </Link>
+                </div>
+              </aside>
             </div>
           </article>
         </Container>

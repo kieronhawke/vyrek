@@ -46,7 +46,7 @@ export function PostCard({
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
                 [ FEATURED · {categoryLabel} ]
               </p>
-              <h2 className="mt-3 text-balance text-2xl font-black leading-tight tracking-[-0.025em] text-suth-text md:text-3xl">
+              <h2 className="mt-3 text-balance text-2xl font-black leading-tight tracking-[-0.025em] text-suth-text md:text-[32px]">
                 {post.title}
               </h2>
               <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">

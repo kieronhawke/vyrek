@@ -40,7 +40,7 @@ function H2({ children, id, ...rest }: React.HTMLAttributes<HTMLHeadingElement>)
   return (
     <h2
       id={id}
-      className="group mt-12 scroll-mt-24 text-balance text-2xl font-black leading-tight tracking-[-0.02em] text-suth-text first:mt-0 md:text-3xl"
+      className="group mt-12 scroll-mt-24 text-balance text-[26px] font-black leading-[1.15] tracking-[-0.02em] text-suth-text first:mt-0 md:text-[28px]"
       {...rest}
     >
       {children}
@@ -52,7 +52,7 @@ function H3({ children, id, ...rest }: React.HTMLAttributes<HTMLHeadingElement>)
   return (
     <h3
       id={id}
-      className="mt-8 scroll-mt-24 text-xl font-bold leading-tight tracking-[-0.015em] text-suth-text md:text-2xl"
+      className="mt-8 scroll-mt-24 text-[20px] font-bold leading-[1.25] tracking-[-0.015em] text-suth-text md:text-[22px]"
       {...rest}
     >
       {children}
@@ -63,7 +63,7 @@ function H3({ children, id, ...rest }: React.HTMLAttributes<HTMLHeadingElement>)
 function P({ children }: { children?: ReactNode }) {
   // Brief 8.3: shrink desktop body to text-base with leading-relaxed; mobile keeps text-base but tighter line height.
   return (
-    <p className="mt-5 text-base leading-[1.65] text-suth-text md:leading-relaxed">
+    <p className="mt-5 text-base leading-[1.65] text-suth-text md:text-[17px] md:leading-[1.7]">
       {children}
     </p>
   );
@@ -71,7 +71,7 @@ function P({ children }: { children?: ReactNode }) {
 
 function UL({ children }: { children?: ReactNode }) {
   return (
-    <ul className="mt-5 list-disc space-y-2 pl-6 text-base leading-[1.65] text-suth-text marker:text-suth-accent md:leading-relaxed">
+    <ul className="mt-5 list-disc space-y-2 pl-6 text-base leading-[1.65] text-suth-text marker:text-suth-accent md:text-[17px] md:leading-[1.7]">
       {children}
     </ul>
   );
@@ -79,7 +79,7 @@ function UL({ children }: { children?: ReactNode }) {
 
 function OL({ children }: { children?: ReactNode }) {
   return (
-    <ol className="mt-5 list-decimal space-y-2 pl-6 text-base leading-[1.65] text-suth-text marker:text-suth-accent marker:font-mono md:leading-relaxed">
+    <ol className="mt-5 list-decimal space-y-2 pl-6 text-base leading-[1.65] text-suth-text marker:text-suth-accent marker:font-mono md:text-[17px] md:leading-[1.7]">
       {children}
     </ol>
   );

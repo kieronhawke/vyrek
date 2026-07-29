@@ -12,7 +12,7 @@ export function JournalHero({ postCount }: { postCount: number }) {
       </p>
       <h1
         id="journal-hero-heading"
-        className="mt-4 text-balance text-4xl font-black leading-[1.02] tracking-[-0.045em] text-suth-text md:text-6xl lg:text-7xl"
+        className="mt-4 text-balance text-[40px] font-black leading-[1.02] tracking-[-0.045em] text-suth-text md:text-[52px] lg:text-[60px]"
       >
         Hyrox, written by{" "}
         <span className="relative whitespace-nowrap">
