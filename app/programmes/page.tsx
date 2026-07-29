@@ -155,7 +155,7 @@ const PROGRAMMES: ProgrammeDetail[] = [
     name: "Pro",
     tag: "ADVANCED / 12 WEEKS",
     audience:
-      "For sub-75 athletes chasing podiums. Designed alongside the programming our founding coach uses for his own Elite 15 race blocks.",
+      "For sub-75 athletes chasing podiums. Designed alongside the programming Ben Sutherland uses for his own Elite 15 race blocks.",
     image: "/media/images/v2/programme-pro.jpg",
     who: [
       "Your current Hyrox PB is under 75 minutes.",

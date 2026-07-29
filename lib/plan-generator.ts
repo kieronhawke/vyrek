@@ -596,7 +596,7 @@ const BENEFITS: Record<Programme, Benefit[]> = {
   pro: [
     {
       number: "01",
-      title: "Coached by an Elite 15 podium contender",
+      title: "Coached by an Elite 15 athlete",
       body: "Specific to Pro-division standards. Programming written for sub-75 / Pro-qualifying targets.",
     },
     {

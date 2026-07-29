@@ -46,7 +46,7 @@ const STEPS: Step[] = [
     image: "/media/images/v2/programme-first-race.jpg",
     body: [
       "7 days free. No commitment.",
-      "From day 1, your assigned Elite 15 coach is monitoring your progress, ready to answer questions about your training, your form, your race strategy.",
+      "From day 1, Ben Sutherland, your Elite 15 coach, is monitoring your progress, ready to answer questions about your training, your form, your race strategy.",
       "You can cancel anytime in the app. Two taps.",
     ],
     cta: { label: "Find your plan →", href: "/quiz" },

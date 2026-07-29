@@ -11,7 +11,7 @@ import { Container } from "@/components/shared/container";
  * coach against the standards Hyrox publishes.
  */
 const CREDS = [
-  { label: "Programming", value: "By an Elite 15 coach" },
+  { label: "Programming", value: "By Elite 15 athlete Ben Sutherland" },
   { label: "Standards", value: "Calibrated to Hyrox" },
   { label: "Plan", value: "12 weeks, dated to your race" },
 ];
