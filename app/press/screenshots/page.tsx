@@ -56,7 +56,7 @@ export default function PressScreenshotsPage() {
             <Eyebrow>Press · Product screenshots</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
+              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]"
             >
               Product screenshots.
             </SplitHeading>

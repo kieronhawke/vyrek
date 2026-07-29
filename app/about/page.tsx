@@ -76,7 +76,7 @@ export default function AboutPage() {
             <SplitHeading
               id="about-heading"
               as="h1"
-              className="mt-4 max-w-3xl text-4xl font-black leading-[1.02] tracking-[-0.04em] text-suth-text md:text-6xl"
+              className="mt-4 max-w-3xl text-4xl font-black leading-[1.02] tracking-[-0.04em] text-suth-text md:text-[52px]"
             >
               Coached by an athlete who races at the sharp end.
             </SplitHeading>
@@ -375,7 +375,7 @@ export default function AboutPage() {
           <Container>
             <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
               <Eyebrow>Start</Eyebrow>
-              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl">
+              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]">
                 Ready to find your plan?
               </h2>
               <p className="mt-4 text-base text-suth-text-secondary md:text-lg">

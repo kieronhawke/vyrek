@@ -106,7 +106,7 @@ export default async function EventDetailPage({
               </p>
               <h1
                 id="event-heading"
-                className="mt-3 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl lg:text-6xl"
+                className="mt-3 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[44px] lg:text-[52px]"
               >
                 {e.name}
               </h1>

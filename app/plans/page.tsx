@@ -32,7 +32,7 @@ export default function PlansIndex() {
             <Eyebrow>Training plans</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]"
             >
               Hyrox plans by goal and athlete.
             </SplitHeading>

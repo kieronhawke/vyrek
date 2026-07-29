@@ -75,7 +75,7 @@ export default function StationsIndex() {
             <Eyebrow>Stations</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]"
             >
               The 8 Hyrox stations, decoded.
             </SplitHeading>
@@ -100,10 +100,12 @@ export default function StationsIndex() {
                     className="lift-on-hover shimmer block h-full rounded-lg border border-suth-border bg-suth-elevated p-6"
                   >
                     <div className="flex items-baseline justify-between gap-3">
-                      <Eyebrow>
-                        Station {String(s.order).padStart(2, "0")}
-                      </Eyebrow>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                      <span className="shrink-0 whitespace-nowrap">
+                        <Eyebrow>
+                          Station {String(s.order).padStart(2, "0")}
+                        </Eyebrow>
+                      </span>
+                      <span className="text-right font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                         {s.spec.distance ?? s.spec.reps}
                       </span>
                     </div>

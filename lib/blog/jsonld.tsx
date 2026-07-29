@@ -190,13 +190,8 @@ export function softwareApplicationJsonLd() {
         billingDuration: "P1M",
       },
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      ratingCount: "327",
-      bestRating: "5",
-      worstRating: "1",
-    },
+    // No aggregateRating: no genuine reviews exist yet. Fabricated review
+    // markup risks a Google manual action; add only with real ratings.
     inLanguage: "en-GB",
   };
 }

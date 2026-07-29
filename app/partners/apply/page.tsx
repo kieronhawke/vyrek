@@ -20,7 +20,7 @@ export default function PartnersApplyPage() {
         <Container>
           <div className="mx-auto max-w-2xl">
             <Eyebrow>Application</Eyebrow>
-            <h1 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl">
+            <h1 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]">
               Apply to join.
             </h1>
             <p className="mt-5 text-base text-suth-text-secondary md:text-lg">

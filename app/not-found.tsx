@@ -49,7 +49,7 @@ export default function NotFound() {
             <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
               [ 404 · LOST LAP ]
             </p>
-            <h1 className="mt-4 text-balance text-4xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl lg:text-6xl">
+            <h1 className="mt-4 text-balance text-4xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[44px] lg:text-[52px]">
               You took a wrong turn at the wall ball lane.
             </h1>
             <p className="mt-6 text-base leading-relaxed text-suth-text-secondary md:text-lg">

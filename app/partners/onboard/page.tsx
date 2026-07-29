@@ -72,7 +72,7 @@ export default async function PartnersOnboardPage({
         <Container>
           <div className="mx-auto max-w-2xl">
             <Eyebrow>Partner onboarding</Eyebrow>
-            <h1 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl">
+            <h1 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]">
               Welcome, {firstName(app.name)}.
             </h1>
             <p className="mt-5 text-base text-suth-text-secondary md:text-lg">

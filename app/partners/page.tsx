@@ -158,13 +158,13 @@ export default function PartnersPage() {
           </div>
           <Container>
             <Eyebrow>Partner Programme</Eyebrow>
-            {/* Hero h1 reduced one step (was text-4xl md:text-6xl). The
+            {/* Hero h1 reduced one step (was text-4xl md:text-[52px]). The
                 earnings boxes immediately below carry the heavyweight
                 visual hit; the h1 doesn't need to compete. */}
             <SplitHeading
               id="partners-heading"
               as="h1"
-              className="mt-4 max-w-3xl text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
+              className="mt-4 max-w-3xl text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]"
             >
               Start making recurring revenue with Suth Performance.
             </SplitHeading>
@@ -477,7 +477,7 @@ export default function PartnersPage() {
           <Container>
             <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
               <Eyebrow>Apply</Eyebrow>
-              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl">
+              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]">
                 Three minutes to apply.
               </h2>
               <p className="mt-4 text-base text-suth-text-secondary md:text-lg">

@@ -230,7 +230,7 @@ export default function ProgrammesPage() {
               <Eyebrow>Programmes</Eyebrow>
               <SplitHeading
                 as="h1"
-                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
+                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]"
               >
                 Four programmes. One pathway.
               </SplitHeading>
@@ -259,7 +259,7 @@ export default function ProgrammesPage() {
                   <Eyebrow>{p.tag}</Eyebrow>
                   <h2
                     id={`${p.slug}-heading`}
-                    className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
+                    className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]"
                   >
                     {p.name}
                   </h2>

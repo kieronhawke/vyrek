@@ -20,6 +20,20 @@ import {
 } from "@/lib/hyrox-stations";
 import { siteUrl } from "@/lib/blog/urls";
 
+// AI-generated station illustrations (see docs/assets/asset-database.md).
+// Captioned as illustrations on-page; swap for real race photography when
+// it exists.
+const STATION_IMAGES: Record<string, string> = {
+  "ski-erg": "/media/images/guides/station-ski-erg.jpg",
+  "sled-push": "/media/images/guides/station-sled-push.jpg",
+  "sled-pull": "/media/images/guides/station-sled-pull.jpg",
+  "burpee-broad-jumps": "/media/images/guides/station-burpees.jpg",
+  rowing: "/media/images/guides/station-row.jpg",
+  "farmers-carry": "/media/images/guides/station-farmers.jpg",
+  "sandbag-lunges": "/media/images/guides/station-sandbag.jpg",
+  "wall-balls": "/media/images/guides/station-wall-balls.jpg",
+};
+
 export const revalidate = 86400;
 export const dynamicParams = false;
 
@@ -154,7 +168,7 @@ export default async function StationPage({
             <Eyebrow>Station {String(s.order).padStart(2, "0")} · {s.spec.distance ?? s.spec.reps}</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]"
             >
               Hyrox {s.name}
             </SplitHeading>
@@ -170,6 +184,22 @@ export default async function StationPage({
                 Women&apos;s open: {s.spec.womensOpen}
               </span>
             </div>
+
+            {STATION_IMAGES[s.slug] ? (
+              <figure className="-mx-4 mt-8 overflow-hidden rounded-2xl md:mx-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={STATION_IMAGES[s.slug]}
+                  alt={`Illustration of the ${s.name} station`}
+                  className="aspect-[16/9] w-full object-cover"
+                  loading="eager"
+                  decoding="async"
+                />
+                <figcaption className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                  Illustration, not race footage
+                </figcaption>
+              </figure>
+            ) : null}
           </div>
 
           {/* Goal splits */}

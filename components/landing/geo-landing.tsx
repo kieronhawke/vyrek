@@ -359,7 +359,7 @@ export function GeoLanding({
                   </Link>
                 ) : null}
               </div>
-              <dl className="grid shrink-0 grid-cols-2 gap-3 md:grid-cols-1">
+              <dl className="grid shrink-0 grid-cols-2 gap-3 md:w-[340px]">
                 {loc.nearestVenue ? (
                   <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3">
                     <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
@@ -378,13 +378,32 @@ export function GeoLanding({
                     {loc.region}
                   </dd>
                 </div>
+                <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                    Programmes
+                  </dt>
+                  <dd className="mt-1 text-sm font-semibold text-suth-text">
+                    First Race to Pro
+                  </dd>
+                </div>
+                <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                    Membership
+                  </dt>
+                  <dd className="mt-1 text-sm font-semibold text-suth-text">
+                    £8.99 a month
+                  </dd>
+                </div>
               </dl>
             </div>
           </Container>
         </section>
 
         {/* ── 3 steps ── */}
-        <section aria-labelledby="geo-steps-heading" className="py-16 md:py-24">
+        <section
+          aria-labelledby="geo-steps-heading"
+          className="border-t border-suth-border-subtle py-16 md:py-24"
+        >
           <Container>
             <h2
               id="geo-steps-heading"
@@ -487,7 +506,7 @@ export function GeoLanding({
         {/* ── FAQ ── */}
         <section
           aria-labelledby="geo-faq-heading"
-          className="border-t border-suth-border-subtle py-16 md:py-24"
+          className="border-t border-suth-border-subtle bg-suth-elevated/30 py-16 md:py-24"
         >
           <Container>
             <div className="mx-auto max-w-2xl">

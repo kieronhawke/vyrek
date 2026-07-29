@@ -43,7 +43,7 @@ export default function ContactPage() {
             <Eyebrow>Contact</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
+              className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]"
             >
               Get in touch.
             </SplitHeading>
@@ -68,9 +68,10 @@ export default function ContactPage() {
                       {c.note}
                     </p>
                   </div>
-                  <span className="mt-auto inline-flex items-center gap-1 text-base text-suth-accent transition-colors group-hover:text-suth-accent-hover">
+                  {/* break-all: the longest address overflows the card at
+                      three-across on desktop otherwise. */}
+                  <span className="mt-auto break-all text-sm text-suth-accent transition-colors group-hover:text-suth-accent-hover md:text-[15px]">
                     {c.email}
-                    <span aria-hidden>→</span>
                   </span>
                 </a>
               ))}

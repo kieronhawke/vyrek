@@ -120,9 +120,9 @@ export default async function PlanTemplatePage({
       acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
   };
-  // Product schema: makes Google render the £8.99 price + 4.9 star
-  // rating in the SERP card for queries like "sub-90 hyrox training
-  // plan price". Pairs with Course; both can co-exist.
+  // Product schema: surfaces the £8.99 price in SERP cards. No
+  // aggregateRating: we have no real reviews yet, and fabricated review
+  // markup risks a manual action. Add it only when genuine ratings exist.
   const productLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -136,13 +136,6 @@ export default async function PlanTemplatePage({
       url,
       availability: "https://schema.org/InStock",
       priceValidUntil: priceValidUntil(),
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      ratingCount: "327",
-      bestRating: "5",
-      worstRating: "1",
     },
   };
 
@@ -187,7 +180,7 @@ export default async function PlanTemplatePage({
             <Eyebrow>{p.eyebrow}</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
+              className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]"
             >
               {p.title}
             </SplitHeading>
