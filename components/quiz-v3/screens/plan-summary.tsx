@@ -263,11 +263,18 @@ function summariseAnswers(a: QuizAnswers): { label: string; value: string }[] {
       label: "Calibrated to",
       value: `${a.weight} kg`,
     });
-  if (a.injuries)
+  if (a.injuries) {
+    const detail =
+      a.injuryRecency === "current"
+        ? ", protected this block"
+        : a.injuryRecency === "recent"
+          ? ", progressed carefully"
+          : "";
     rows.push({
       label: "Adjusted for",
-      value: INJURY_LABEL[a.injuries] ?? a.injuries,
+      value: `${INJURY_LABEL[a.injuries] ?? a.injuries}${detail}`,
     });
+  }
   if (a.partner && a.partner !== "solo")
     rows.push({
       label: "Style",

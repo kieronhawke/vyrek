@@ -75,6 +75,9 @@ function normaliseAnswers(
     equipment: Array.isArray(a.equipment) ? a.equipment: undefined,
     partner: a.partner,
     injuries: a.injuries,
+    injuryRecency: a.injuryRecency,
+    injuryTriggers: Array.isArray(a.injuryTriggers) ? a.injuryTriggers : undefined,
+    injuryCare: a.injuryCare,
   };
 }
 

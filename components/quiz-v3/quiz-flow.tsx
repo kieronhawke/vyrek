@@ -30,6 +30,7 @@ import { LocationScreen } from "@/components/quiz-v3/screens/location";
 import { EquipmentScreen } from "@/components/quiz-v3/screens/equipment";
 import { PartnerScreen } from "@/components/quiz-v3/screens/partner";
 import { InjuriesScreen } from "@/components/quiz-v3/screens/injuries";
+import { InjuryDetailScreen } from "@/components/quiz-v3/screens/injury-detail";
 import { validateAccountForm } from "@/components/quiz-v3/screens/account-creation";
 
 // Heavy screens that pull in third-party JS (react-day-picker, gsap), defer
@@ -91,6 +92,7 @@ import {
   applyIntentPreSelect,
   applyProgrammeShortcutV3,
   determineProgramme,
+  injuryNeedsDetail,
   type IntentValue,
   type ProgrammeFromUrl,
   type QuizAnswers,
@@ -112,6 +114,7 @@ type ScreenKind =
   | "equipment"
   | "partner"
   | "injuries"
+  | "injury-detail"
   | "plan-summary"
   | "account-creation"
   | "calculating";
@@ -148,6 +151,11 @@ const SCREENS: ScreenDef[] = [
     showIf: () => false,
   },
   { kind: "injuries" },
+  {
+    kind: "injury-detail",
+    // Only for specific injuries; "none" and "other" skip straight on.
+    showIf: (a) => injuryNeedsDetail(a.injuries),
+  },
   { kind: "plan-summary" },
   { kind: "account-creation" },
   { kind: "calculating" },
@@ -180,6 +188,7 @@ function questionScreenIndex(
     "equipment",
     "partner",
     "injuries",
+    "injury-detail",
     "plan-summary",
     "account-creation",
   ];
@@ -902,7 +911,57 @@ function QuizV3Inner() {
           value={value}
           onChange={(v) => {
             haptic("light");
-            setAnswer("injuries", v);
+            if (v !== value) {
+              // Changing the injury invalidates any follow-up detail
+              // already captured for a different one.
+              mergeAnswers({
+                injuries: v,
+                injuryRecency: undefined,
+                injuryTriggers: undefined,
+                injuryCare: undefined,
+              });
+            }
+          }}
+        />
+      </QuizShell>
+    );
+  }
+
+  if (current.kind === "injury-detail" && state.answers.injuries) {
+    const { injuryRecency, injuryTriggers, injuryCare } = state.answers;
+    return (
+      <QuizShell
+        currentScreen={pos}
+        totalScreens={total}
+        onBack={backHandler}
+        hasAnswers={hasAnswers}
+        footer={
+          <ContinueButton
+            disabled={!injuryRecency || !injuryCare}
+            onClick={() => continueWithHaptic(injuryRecency)}
+          />
+        }
+      >
+        <InjuryDetailScreen
+          injury={state.answers.injuries}
+          recency={injuryRecency}
+          triggers={injuryTriggers ?? []}
+          care={injuryCare}
+          onRecency={(v) => {
+            haptic("light");
+            setAnswer("injuryRecency", v);
+          }}
+          onToggleTrigger={(v) => {
+            haptic("light");
+            setAnswer("injuryTriggers", (curr) =>
+              (curr ?? []).includes(v)
+                ? (curr ?? []).filter((t) => t !== v)
+                : [...(curr ?? []), v],
+            );
+          }}
+          onCare={(v) => {
+            haptic("light");
+            setAnswer("injuryCare", v);
           }}
         />
       </QuizShell>

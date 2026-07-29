@@ -51,6 +51,10 @@ export type InjuryValue =
   | "achilles-calf"
   | "other";
 
+/** Follow-up detail for a specific injury (lower back, knee, shoulder, achilles/calf) */
+export type InjuryRecencyValue = "current" | "recent" | "past";
+export type InjuryCareValue = "physio" | "self-managed" | "not-assessed";
+
 export type Programme = "first-race" | "sub-90" | "doubles" | "pro";
 
 export type QuizAnswers = {
@@ -71,6 +75,10 @@ export type QuizAnswers = {
   equipment?: string[];
   partner?: PartnerValue;
   injuries?: InjuryValue;
+  /** Follow-ups asked only when a specific injury is selected */
+  injuryRecency?: InjuryRecencyValue;
+  injuryTriggers?: string[];
+  injuryCare?: InjuryCareValue;
 };
 
 /**
@@ -253,10 +261,63 @@ export const INJURY_LABEL: Record<InjuryValue, string> = {
   other: "Other, noted in app",
 };
 
+export const INJURY_RECENCY_LABEL: Record<InjuryRecencyValue, string> = {
+  current: "Bothering me now",
+  recent: "Recent, still cautious",
+  past: "In the past, mostly fine now",
+};
+
+export const INJURY_CARE_LABEL: Record<InjuryCareValue, string> = {
+  physio: "Working with a physio or professional",
+  "self-managed": "Managing it myself",
+  "not-assessed": "Not had it looked at yet",
+};
+
+/**
+ * Aggravator options per specific injury. Shown as a multi-select on the
+ * injury-detail screen; values are stored verbatim in answers.injuryTriggers.
+ */
+export const INJURY_TRIGGER_OPTIONS: Partial<
+  Record<InjuryValue, Array<{ value: string; label: string }>>
+> = {
+  "lower-back": [
+    { value: "hinging", label: "Deadlifts or hinging" },
+    { value: "running-impact", label: "Running" },
+    { value: "twisting", label: "Twisting movements" },
+    { value: "loaded-carries", label: "Heavy carries" },
+    { value: "sitting", label: "Long periods sitting" },
+  ],
+  knee: [
+    { value: "running-impact", label: "Running" },
+    { value: "lunges", label: "Lunges or deep bends" },
+    { value: "jumping", label: "Jumping and landing" },
+    { value: "stairs-hills", label: "Stairs or hills" },
+  ],
+  shoulder: [
+    { value: "overhead", label: "Overhead pressing" },
+    { value: "throwing", label: "Wall balls or throwing" },
+    { value: "pulling", label: "Pulling or rowing" },
+    { value: "carries", label: "Carrying" },
+  ],
+  "achilles-calf": [
+    { value: "running-impact", label: "Running" },
+    { value: "jumping", label: "Jumping or bounding" },
+    { value: "hills", label: "Hill running" },
+    { value: "long-runs", label: "Longer runs" },
+  ],
+};
+
+/** Injuries that get the follow-up detail screen. */
+export function injuryNeedsDetail(v: InjuryValue | undefined): boolean {
+  return (
+    v === "lower-back" || v === "knee" || v === "shoulder" || v === "achilles-calf"
+  );
+}
+
 /**
  * Number of question screens (excluding the cinematic). Conditional screens
  * are accounted for at runtime via the visibleScreens() helper in
  * components/quiz-v3/quiz-flow.tsx. The total is variable: 13 in the shortest
- * common path, 15 in the longest.
+ * common path, 16 in the longest (injury follow-up adds one).
  */
-export const QUIZ_V3_TOTAL_SCREENS_MAX = 15;
+export const QUIZ_V3_TOTAL_SCREENS_MAX = 16;
