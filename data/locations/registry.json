@@ -1,0 +1,1423 @@
+{
+  "version": 1,
+  "generatedFrom": [
+    "lib/uk-locations.ts",
+    "docs/strategy/data/location-targets.csv"
+  ],
+  "note": "Identity layer only. populationK is approximate (ONS-derived); never quote as precise on a page. Enrichment layers live in data/locations/enrichment/<slug>.json.",
+  "locations": [
+    {
+      "slug": "london",
+      "name": "London",
+      "kind": "city",
+      "country": "England",
+      "region": "Greater London",
+      "populationK": 8900,
+      "lat": 51.51,
+      "lng": -0.13,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "female personal trainer london",
+          "volume": 210,
+          "kdPercent": 15,
+          "cpcUsd": 2.58,
+          "modifier": "female"
+        },
+        {
+          "keyword": "personal trainer prices london",
+          "volume": 90,
+          "kdPercent": 13,
+          "cpcUsd": 1.23,
+          "modifier": "pricing"
+        }
+      ]
+    },
+    {
+      "slug": "manchester",
+      "name": "Manchester",
+      "kind": "city",
+      "country": "England",
+      "region": "North West",
+      "populationK": 553,
+      "lat": 53.48,
+      "lng": -2.24,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer manchester uk",
+          "volume": 1000,
+          "kdPercent": 15,
+          "cpcUsd": 3.46
+        },
+        {
+          "keyword": "personal trainers in manchester",
+          "volume": 210,
+          "kdPercent": 15,
+          "cpcUsd": 3.46
+        },
+        {
+          "keyword": "manchester trainer",
+          "volume": 110,
+          "kdPercent": 12,
+          "cpcUsd": 0.5
+        }
+      ]
+    },
+    {
+      "slug": "birmingham",
+      "name": "Birmingham",
+      "kind": "city",
+      "country": "England",
+      "region": "West Midlands",
+      "populationK": 1145,
+      "lat": 52.48,
+      "lng": -1.9,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainers birmingham uk",
+          "volume": 210,
+          "kdPercent": 9,
+          "cpcUsd": 0.87
+        },
+        {
+          "keyword": "personal trainer birmingham uk",
+          "volume": 170,
+          "kdPercent": 12,
+          "cpcUsd": 0.87
+        },
+        {
+          "keyword": "personal trainers birmingham",
+          "volume": 140,
+          "kdPercent": 15,
+          "cpcUsd": 0.8
+        },
+        {
+          "keyword": "birmingham personal trainer",
+          "volume": 140,
+          "kdPercent": 15,
+          "cpcUsd": 0.8
+        },
+        {
+          "keyword": "personal trainers in birmingham",
+          "volume": 110,
+          "kdPercent": 14,
+          "cpcUsd": 0.8
+        }
+      ]
+    },
+    {
+      "slug": "glasgow",
+      "name": "Glasgow",
+      "kind": "city",
+      "country": "Scotland",
+      "region": "Scotland",
+      "populationK": 633,
+      "lat": 55.86,
+      "lng": -4.25,
+      "legacy": true
+    },
+    {
+      "slug": "edinburgh",
+      "name": "Edinburgh",
+      "kind": "city",
+      "country": "Scotland",
+      "region": "Scotland",
+      "populationK": 488,
+      "legacy": true
+    },
+    {
+      "slug": "liverpool",
+      "name": "Liverpool",
+      "kind": "city",
+      "country": "England",
+      "region": "North West",
+      "populationK": 486,
+      "legacy": true
+    },
+    {
+      "slug": "leeds",
+      "name": "Leeds",
+      "kind": "city",
+      "country": "England",
+      "region": "Yorkshire",
+      "populationK": 488,
+      "legacy": true
+    },
+    {
+      "slug": "sheffield",
+      "name": "Sheffield",
+      "kind": "city",
+      "country": "England",
+      "region": "Yorkshire",
+      "populationK": 556,
+      "legacy": true
+    },
+    {
+      "slug": "bristol",
+      "name": "Bristol",
+      "kind": "city",
+      "country": "England",
+      "region": "South West",
+      "populationK": 471,
+      "lat": 51.45,
+      "lng": -2.59,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer bristol",
+          "volume": 590,
+          "kdPercent": 10,
+          "cpcUsd": 1.03
+        },
+        {
+          "keyword": "personal training bristol",
+          "volume": 140,
+          "kdPercent": 12,
+          "cpcUsd": 1.03
+        }
+      ]
+    },
+    {
+      "slug": "newcastle",
+      "name": "Newcastle",
+      "kind": "city",
+      "country": "England",
+      "region": "North East",
+      "populationK": 300,
+      "legacy": true
+    },
+    {
+      "slug": "nottingham",
+      "name": "Nottingham",
+      "kind": "city",
+      "country": "England",
+      "region": "East Midlands",
+      "populationK": 337,
+      "lat": 52.95,
+      "lng": -1.15,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal fitness trainer nottingham",
+          "volume": 320,
+          "kdPercent": 13,
+          "cpcUsd": 0.99
+        },
+        {
+          "keyword": "personal trainers nottingham",
+          "volume": 110,
+          "kdPercent": 12,
+          "cpcUsd": 0.86
+        }
+      ]
+    },
+    {
+      "slug": "cardiff",
+      "name": "Cardiff",
+      "kind": "city",
+      "country": "Wales",
+      "region": "Wales",
+      "populationK": 372,
+      "lat": 51.48,
+      "lng": -3.18,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "fitness trainer cardiff",
+          "volume": 320,
+          "kdPercent": 15,
+          "cpcUsd": 1.02
+        },
+        {
+          "keyword": "personal training cardiff",
+          "volume": 170,
+          "kdPercent": 9,
+          "cpcUsd": 1.02
+        },
+        {
+          "keyword": "personal trainers in cardiff",
+          "volume": 90,
+          "kdPercent": 10,
+          "cpcUsd": 0.74
+        },
+        {
+          "keyword": "cardiff personal trainer",
+          "volume": 90,
+          "kdPercent": 13,
+          "cpcUsd": 0.74
+        }
+      ]
+    },
+    {
+      "slug": "leicester",
+      "name": "Leicester",
+      "kind": "city",
+      "country": "England",
+      "region": "East Midlands",
+      "populationK": 369,
+      "legacy": true
+    },
+    {
+      "slug": "coventry",
+      "name": "Coventry",
+      "kind": "city",
+      "country": "England",
+      "region": "West Midlands",
+      "populationK": 345,
+      "lat": 52.41,
+      "lng": -1.51,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer coventry uk",
+          "volume": 260,
+          "kdPercent": 13,
+          "cpcUsd": 1.06
+        }
+      ]
+    },
+    {
+      "slug": "bradford",
+      "name": "Bradford",
+      "kind": "city",
+      "country": "England",
+      "region": "Yorkshire",
+      "populationK": 546,
+      "lat": 53.79,
+      "lng": -1.75,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer bradford west yorkshire",
+          "volume": 110,
+          "kdPercent": 12,
+          "cpcUsd": 0.78
+        }
+      ]
+    },
+    {
+      "slug": "belfast",
+      "name": "Belfast",
+      "kind": "city",
+      "country": "Northern Ireland",
+      "region": "Northern Ireland",
+      "populationK": 345,
+      "legacy": true
+    },
+    {
+      "slug": "stoke-on-trent",
+      "name": "Stoke-on-Trent",
+      "kind": "city",
+      "country": "England",
+      "region": "West Midlands",
+      "populationK": 256,
+      "legacy": true
+    },
+    {
+      "slug": "wolverhampton",
+      "name": "Wolverhampton",
+      "kind": "city",
+      "country": "England",
+      "region": "West Midlands",
+      "populationK": 263,
+      "legacy": true
+    },
+    {
+      "slug": "plymouth",
+      "name": "Plymouth",
+      "kind": "city",
+      "country": "England",
+      "region": "South West",
+      "populationK": 264,
+      "legacy": true
+    },
+    {
+      "slug": "southampton",
+      "name": "Southampton",
+      "kind": "city",
+      "country": "England",
+      "region": "South",
+      "populationK": 269,
+      "lat": 50.9,
+      "lng": -1.4,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer southampton",
+          "volume": 260,
+          "kdPercent": 12,
+          "cpcUsd": 1.05
+        },
+        {
+          "keyword": "personal trainer southampton uk",
+          "volume": 170,
+          "kdPercent": 9,
+          "cpcUsd": 1.05
+        }
+      ]
+    },
+    {
+      "slug": "reading",
+      "name": "Reading",
+      "kind": "city",
+      "country": "England",
+      "region": "South East",
+      "populationK": 234,
+      "lat": 51.45,
+      "lng": -0.97,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer reading uk",
+          "volume": 210,
+          "kdPercent": 12,
+          "cpcUsd": 1
+        }
+      ]
+    },
+    {
+      "slug": "derby",
+      "name": "Derby",
+      "kind": "city",
+      "country": "England",
+      "region": "East Midlands",
+      "populationK": 261,
+      "legacy": true
+    },
+    {
+      "slug": "dudley",
+      "name": "Dudley",
+      "kind": "city",
+      "country": "England",
+      "region": "West Midlands",
+      "populationK": 320,
+      "legacy": true
+    },
+    {
+      "slug": "northampton",
+      "name": "Northampton",
+      "kind": "city",
+      "country": "England",
+      "region": "East Midlands",
+      "populationK": 224,
+      "lat": 52.24,
+      "lng": -0.9,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer northampton",
+          "volume": 320,
+          "kdPercent": 11,
+          "cpcUsd": 1.14
+        },
+        {
+          "keyword": "fitness trainer northampton",
+          "volume": 210,
+          "kdPercent": 14,
+          "cpcUsd": 1.14
+        }
+      ]
+    },
+    {
+      "slug": "portsmouth",
+      "name": "Portsmouth",
+      "kind": "city",
+      "country": "England",
+      "region": "South",
+      "populationK": 208,
+      "lat": 50.8,
+      "lng": -1.09,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer portsmouth uk",
+          "volume": 110,
+          "kdPercent": 11,
+          "cpcUsd": 0.95
+        }
+      ]
+    },
+    {
+      "slug": "luton",
+      "name": "Luton",
+      "kind": "city",
+      "country": "England",
+      "region": "East",
+      "populationK": 218,
+      "legacy": true
+    },
+    {
+      "slug": "preston",
+      "name": "Preston",
+      "kind": "city",
+      "country": "England",
+      "region": "North West",
+      "populationK": 148,
+      "legacy": true
+    },
+    {
+      "slug": "aberdeen",
+      "name": "Aberdeen",
+      "kind": "city",
+      "country": "Scotland",
+      "region": "Scotland",
+      "populationK": 200,
+      "lat": 57.15,
+      "lng": -2.09,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer aberdeen",
+          "volume": 210,
+          "kdPercent": 12,
+          "cpcUsd": 0.75
+        },
+        {
+          "keyword": "fitness trainer aberdeen",
+          "volume": 170,
+          "kdPercent": 12,
+          "cpcUsd": 0.91
+        },
+        {
+          "keyword": "aberdeen personal trainer",
+          "volume": 140,
+          "kdPercent": 11,
+          "cpcUsd": 0.84
+        }
+      ]
+    },
+    {
+      "slug": "dundee",
+      "name": "Dundee",
+      "kind": "city",
+      "country": "Scotland",
+      "region": "Scotland",
+      "populationK": 148,
+      "legacy": true
+    },
+    {
+      "slug": "swansea",
+      "name": "Swansea",
+      "kind": "city",
+      "country": "Wales",
+      "region": "Wales",
+      "populationK": 247,
+      "legacy": true
+    },
+    {
+      "slug": "york",
+      "name": "York",
+      "kind": "city",
+      "country": "England",
+      "region": "Yorkshire",
+      "populationK": 153,
+      "lat": 53.96,
+      "lng": -1.08,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer york",
+          "volume": 260,
+          "kdPercent": 14,
+          "cpcUsd": 0.92
+        },
+        {
+          "keyword": "personal trainer york uk",
+          "volume": 140,
+          "kdPercent": 13,
+          "cpcUsd": 0.92
+        }
+      ]
+    },
+    {
+      "slug": "milton-keynes",
+      "name": "Milton Keynes",
+      "kind": "city",
+      "country": "England",
+      "region": "East",
+      "populationK": 230,
+      "legacy": true
+    },
+    {
+      "slug": "norwich",
+      "name": "Norwich",
+      "kind": "city",
+      "country": "England",
+      "region": "East",
+      "populationK": 144,
+      "lat": 52.63,
+      "lng": 1.3,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "norwich personal trainer",
+          "volume": 210,
+          "kdPercent": 11,
+          "cpcUsd": 0.93
+        },
+        {
+          "keyword": "personal trainer norwich uk",
+          "volume": 110,
+          "kdPercent": 10,
+          "cpcUsd": 0.93
+        }
+      ]
+    },
+    {
+      "slug": "swindon",
+      "name": "Swindon",
+      "kind": "city",
+      "country": "England",
+      "region": "South West",
+      "populationK": 184,
+      "legacy": true
+    },
+    {
+      "slug": "exeter",
+      "name": "Exeter",
+      "kind": "city",
+      "country": "England",
+      "region": "South West",
+      "populationK": 130,
+      "lat": 50.72,
+      "lng": -3.53,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainers exeter",
+          "volume": 110,
+          "kdPercent": 10,
+          "cpcUsd": 1.13
+        }
+      ]
+    },
+    {
+      "slug": "warrington",
+      "name": "Warrington",
+      "kind": "city",
+      "country": "England",
+      "region": "North West",
+      "populationK": 211,
+      "legacy": true
+    },
+    {
+      "slug": "oxford",
+      "name": "Oxford",
+      "kind": "city",
+      "country": "England",
+      "region": "South East",
+      "populationK": 152,
+      "lat": 51.75,
+      "lng": -1.26,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer oxford uk",
+          "volume": 140,
+          "kdPercent": 15,
+          "cpcUsd": 1.57
+        }
+      ]
+    },
+    {
+      "slug": "cambridge",
+      "name": "Cambridge",
+      "kind": "city",
+      "country": "England",
+      "region": "East",
+      "populationK": 145,
+      "lat": 52.21,
+      "lng": 0.12,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer cambridge",
+          "volume": 320,
+          "kdPercent": 15,
+          "cpcUsd": 0.99
+        },
+        {
+          "keyword": "personal trainer cambridge uk",
+          "volume": 140,
+          "kdPercent": 13,
+          "cpcUsd": 0.99
+        }
+      ]
+    },
+    {
+      "slug": "brighton",
+      "name": "Brighton",
+      "kind": "city",
+      "country": "England",
+      "region": "South East",
+      "populationK": 277,
+      "lat": 50.82,
+      "lng": -0.14,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer brighton",
+          "volume": 320,
+          "kdPercent": 15,
+          "cpcUsd": 1.29
+        }
+      ]
+    },
+    {
+      "slug": "hove",
+      "name": "Hove",
+      "kind": "city",
+      "country": "England",
+      "region": "South East",
+      "populationK": 92,
+      "legacy": true
+    },
+    {
+      "slug": "ipswich",
+      "name": "Ipswich",
+      "kind": "city",
+      "country": "England",
+      "region": "East",
+      "populationK": 145,
+      "legacy": true
+    },
+    {
+      "slug": "huddersfield",
+      "name": "Huddersfield",
+      "kind": "city",
+      "country": "England",
+      "region": "Yorkshire",
+      "populationK": 162,
+      "legacy": true
+    },
+    {
+      "slug": "wakefield",
+      "name": "Wakefield",
+      "kind": "city",
+      "country": "England",
+      "region": "Yorkshire",
+      "populationK": 109,
+      "legacy": true
+    },
+    {
+      "slug": "blackpool",
+      "name": "Blackpool",
+      "kind": "city",
+      "country": "England",
+      "region": "North West",
+      "populationK": 139,
+      "legacy": true
+    },
+    {
+      "slug": "middlesbrough",
+      "name": "Middlesbrough",
+      "kind": "city",
+      "country": "England",
+      "region": "North East",
+      "populationK": 174,
+      "legacy": true
+    },
+    {
+      "slug": "bournemouth",
+      "name": "Bournemouth",
+      "kind": "city",
+      "country": "England",
+      "region": "South",
+      "populationK": 198,
+      "lat": 50.72,
+      "lng": -1.88,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer bournemouth",
+          "volume": 390,
+          "kdPercent": 11,
+          "cpcUsd": 0.93
+        },
+        {
+          "keyword": "personal training bournemouth",
+          "volume": 170,
+          "kdPercent": 10,
+          "cpcUsd": 1.14
+        }
+      ]
+    },
+    {
+      "slug": "poole",
+      "name": "Poole",
+      "kind": "city",
+      "country": "England",
+      "region": "South",
+      "populationK": 152,
+      "lat": 50.72,
+      "lng": -1.98,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer poole",
+          "volume": 170,
+          "kdPercent": 13,
+          "cpcUsd": 0.79
+        },
+        {
+          "keyword": "personal trainer poole dorset",
+          "volume": 110,
+          "kdPercent": 9,
+          "cpcUsd": 0.79
+        }
+      ]
+    },
+    {
+      "slug": "rotherham",
+      "name": "Rotherham",
+      "kind": "city",
+      "country": "England",
+      "region": "Yorkshire",
+      "populationK": 109,
+      "legacy": true
+    },
+    {
+      "slug": "telford",
+      "name": "Telford",
+      "kind": "city",
+      "country": "England",
+      "region": "West Midlands",
+      "populationK": 142,
+      "legacy": true
+    },
+    {
+      "slug": "watford",
+      "name": "Watford",
+      "kind": "city",
+      "country": "England",
+      "region": "East",
+      "populationK": 132,
+      "lat": 51.66,
+      "lng": -0.4,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer watford",
+          "volume": 210,
+          "kdPercent": 12,
+          "cpcUsd": 1.1
+        }
+      ]
+    },
+    {
+      "slug": "slough",
+      "name": "Slough",
+      "kind": "city",
+      "country": "England",
+      "region": "South East",
+      "populationK": 164,
+      "lat": 51.51,
+      "lng": -0.59,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer slough",
+          "volume": 140,
+          "kdPercent": 9,
+          "cpcUsd": 0.96
+        },
+        {
+          "keyword": "fitness trainer slough",
+          "volume": 110,
+          "kdPercent": 13,
+          "cpcUsd": 0.96
+        }
+      ]
+    },
+    {
+      "slug": "basingstoke",
+      "name": "Basingstoke",
+      "kind": "city",
+      "country": "England",
+      "region": "South",
+      "populationK": 113,
+      "legacy": true
+    },
+    {
+      "slug": "guildford",
+      "name": "Guildford",
+      "kind": "city",
+      "country": "England",
+      "region": "South East",
+      "populationK": 78,
+      "legacy": true
+    },
+    {
+      "slug": "chester",
+      "name": "Chester",
+      "kind": "city",
+      "country": "England",
+      "region": "North West",
+      "populationK": 90,
+      "legacy": true
+    },
+    {
+      "slug": "stirling",
+      "name": "Stirling",
+      "kind": "city",
+      "country": "Scotland",
+      "region": "Scotland",
+      "populationK": 37,
+      "legacy": true
+    },
+    {
+      "slug": "inverness",
+      "name": "Inverness",
+      "kind": "city",
+      "country": "Scotland",
+      "region": "Scotland",
+      "populationK": 47,
+      "legacy": true
+    },
+    {
+      "slug": "lincoln",
+      "name": "Lincoln",
+      "kind": "city",
+      "country": "England",
+      "region": "East Midlands",
+      "populationK": 104,
+      "legacy": true
+    },
+    {
+      "slug": "bath",
+      "name": "Bath",
+      "kind": "city",
+      "country": "England",
+      "region": "South West",
+      "populationK": 95,
+      "lat": 51.38,
+      "lng": -2.36,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer bath uk",
+          "volume": 110,
+          "kdPercent": 15,
+          "cpcUsd": 0.98
+        }
+      ]
+    },
+    {
+      "slug": "canterbury",
+      "name": "Canterbury",
+      "kind": "city",
+      "country": "England",
+      "region": "South East",
+      "populationK": 57,
+      "lat": 51.28,
+      "lng": 1.08,
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer canterbury",
+          "volume": 170,
+          "kdPercent": 9,
+          "cpcUsd": 0.74
+        },
+        {
+          "keyword": "personal trainer canterbury uk",
+          "volume": 90,
+          "kdPercent": 10,
+          "cpcUsd": 0.88
+        }
+      ]
+    },
+    {
+      "slug": "st-albans",
+      "name": "St Albans",
+      "kind": "city",
+      "country": "England",
+      "region": "East",
+      "populationK": 87,
+      "legacy": true
+    },
+    {
+      "slug": "winchester",
+      "name": "Winchester",
+      "kind": "city",
+      "country": "England",
+      "region": "South",
+      "populationK": 45,
+      "legacy": true
+    },
+    {
+      "slug": "salisbury",
+      "name": "Salisbury",
+      "kind": "city",
+      "country": "England",
+      "region": "South",
+      "populationK": 45,
+      "legacy": true
+    },
+    {
+      "slug": "camden",
+      "name": "Camden",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "hackney",
+      "name": "Hackney",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "islington",
+      "name": "Islington",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "shoreditch",
+      "name": "Shoreditch",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "westminster",
+      "name": "Westminster",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "kensington",
+      "name": "Kensington",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer kensington",
+          "volume": 170,
+          "kdPercent": 11,
+          "cpcUsd": 4.14
+        }
+      ]
+    },
+    {
+      "slug": "chelsea",
+      "name": "Chelsea",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "fulham",
+      "name": "Fulham",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "hammersmith",
+      "name": "Hammersmith",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "wandsworth",
+      "name": "Wandsworth",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "clapham",
+      "name": "Clapham",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "brixton",
+      "name": "Brixton",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "battersea",
+      "name": "Battersea",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "wimbledon",
+      "name": "Wimbledon",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "putney",
+      "name": "Putney",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "greenwich",
+      "name": "Greenwich",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "lewisham",
+      "name": "Lewisham",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "bermondsey",
+      "name": "Bermondsey",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "southwark",
+      "name": "Southwark",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "tower-hamlets",
+      "name": "Tower Hamlets",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "canary-wharf",
+      "name": "Canary Wharf",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "stratford",
+      "name": "Stratford",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer stratford london",
+          "volume": 90,
+          "kdPercent": 12,
+          "cpcUsd": 1.78
+        }
+      ]
+    },
+    {
+      "slug": "walthamstow",
+      "name": "Walthamstow",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "highbury",
+      "name": "Highbury",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "holloway",
+      "name": "Holloway",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "notting-hill",
+      "name": "Notting Hill",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "paddington",
+      "name": "Paddington",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "mayfair",
+      "name": "Mayfair",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "soho",
+      "name": "Soho",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "pimlico",
+      "name": "Pimlico",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "vauxhall",
+      "name": "Vauxhall",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "marylebone",
+      "name": "Marylebone",
+      "kind": "london-area",
+      "country": "England",
+      "region": "London",
+      "legacy": true
+    },
+    {
+      "slug": "worcester",
+      "name": "Worcester",
+      "kind": "town",
+      "region": "West Midlands",
+      "county": "Worcestershire",
+      "populationK": 103,
+      "country": "England",
+      "lat": 52.19,
+      "lng": -2.22,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer worcester",
+          "volume": 140,
+          "kdPercent": 13,
+          "cpcUsd": 0.68
+        },
+        {
+          "keyword": "personal fitness trainer worcester",
+          "volume": 140,
+          "kdPercent": 13,
+          "cpcUsd": 0.68
+        }
+      ]
+    },
+    {
+      "slug": "bedford",
+      "name": "Bedford",
+      "kind": "town",
+      "region": "East",
+      "county": "Bedfordshire",
+      "populationK": 107,
+      "country": "England",
+      "lat": 52.14,
+      "lng": -0.47,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer bedford",
+          "volume": 170,
+          "kdPercent": 11,
+          "cpcUsd": 0.88
+        }
+      ]
+    },
+    {
+      "slug": "chelmsford",
+      "name": "Chelmsford",
+      "kind": "town",
+      "region": "East",
+      "county": "Essex",
+      "populationK": 112,
+      "country": "England",
+      "lat": 51.74,
+      "lng": 0.47,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer chelmsford uk",
+          "volume": 110,
+          "kdPercent": 11,
+          "cpcUsd": 0.99
+        },
+        {
+          "keyword": "personal trainer chelmsford",
+          "volume": 110,
+          "kdPercent": 12,
+          "cpcUsd": 1.69
+        }
+      ]
+    },
+    {
+      "slug": "redhill",
+      "name": "Redhill",
+      "kind": "town",
+      "region": "South East",
+      "county": "Surrey",
+      "populationK": 40,
+      "country": "England",
+      "lat": 51.24,
+      "lng": -0.17,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer redhill",
+          "volume": 90,
+          "kdPercent": 9,
+          "cpcUsd": 1.22
+        }
+      ]
+    },
+    {
+      "slug": "southend-on-sea",
+      "name": "Southend-on-Sea",
+      "kind": "town",
+      "region": "East",
+      "county": "Essex",
+      "populationK": 183,
+      "country": "England",
+      "lat": 51.54,
+      "lng": 0.71,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer southend",
+          "volume": 90,
+          "kdPercent": 12,
+          "cpcUsd": 0.79
+        }
+      ]
+    },
+    {
+      "slug": "croydon",
+      "name": "Croydon",
+      "kind": "london-area",
+      "region": "London",
+      "populationK": 390,
+      "country": "England",
+      "lat": 51.37,
+      "lng": -0.1,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer croydon",
+          "volume": 170,
+          "kdPercent": 13,
+          "cpcUsd": 1.04
+        }
+      ]
+    },
+    {
+      "slug": "ilford",
+      "name": "Ilford",
+      "kind": "london-area",
+      "region": "London",
+      "populationK": 168,
+      "country": "England",
+      "lat": 51.56,
+      "lng": 0.07,
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer ilford",
+          "volume": 90,
+          "kdPercent": 9,
+          "cpcUsd": 1.78
+        }
+      ]
+    },
+    {
+      "slug": "kent",
+      "name": "Kent",
+      "kind": "county",
+      "region": "South East",
+      "populationK": 1580,
+      "country": "England",
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer kent",
+          "volume": 140,
+          "kdPercent": 9,
+          "cpcUsd": 0.96
+        }
+      ]
+    },
+    {
+      "slug": "essex",
+      "name": "Essex",
+      "kind": "county",
+      "region": "East",
+      "populationK": 1500,
+      "country": "England",
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer essex",
+          "volume": 90,
+          "kdPercent": 12,
+          "cpcUsd": 1.17
+        }
+      ]
+    },
+    {
+      "slug": "leicestershire",
+      "name": "Leicestershire",
+      "kind": "county",
+      "region": "East Midlands",
+      "populationK": 720,
+      "country": "England",
+      "keywordEvidence": [
+        {
+          "keyword": "personal trainer leicestershire",
+          "volume": 170,
+          "kdPercent": 9,
+          "cpcUsd": 0.92
+        }
+      ]
+    }
+  ]
+}

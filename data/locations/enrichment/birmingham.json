@@ -1,0 +1,13 @@
+{
+  "slug": "birmingham",
+  "races": {
+    "hostsRace": true,
+    "nearestRace": {
+      "eventSlug": "birmingham-nec-october-2026",
+      "venue": "NEC Birmingham",
+      "city": "Birmingham",
+      "source": "internal:lib/hyrox-events.ts",
+      "verifiedOn": "2026-07-29"
+    }
+  }
+}

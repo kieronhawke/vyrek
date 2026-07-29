@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/validate-locations.mjs && next build",
+    "validate:locations": "node scripts/validate-locations.mjs",
     "start": "next start",
     "lint": "eslint",
     "test:visual": "playwright test",

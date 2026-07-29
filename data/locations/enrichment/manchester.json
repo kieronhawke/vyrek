@@ -1,0 +1,13 @@
+{
+  "slug": "manchester",
+  "races": {
+    "hostsRace": true,
+    "nearestRace": {
+      "eventSlug": "manchester-central-april-2026",
+      "venue": "Manchester Central",
+      "city": "Manchester",
+      "source": "internal:lib/hyrox-events.ts",
+      "verifiedOn": "2026-07-29"
+    }
+  }
+}

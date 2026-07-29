@@ -1,0 +1,119 @@
+keyword,segment,buyer_type,intent,volume,kd_percent,cpc_usd,opportunity_score,priority,cluster,status
+trainer qualifications uk,Personal Training,Course Buyer,Informational,480,12,0.92,422,Not a buyer,PT Courses,not_started
+level 3 personal trainer course online,Personal Training,Course Buyer,Commercial,480,12,8.7,422,Not a buyer,PT Courses,not_started
+online personal training course,Personal Training,Course Buyer,Informational,320,14,9.14,275,Not a buyer,PT Courses,not_started
+certificate in personal training,Personal Training,Course Buyer,Informational,210,11,7.17,187,Not a buyer,PT Courses,not_started
+government funded personal training courses,Personal Training,Course Buyer,Informational,210,11,5.66,187,Not a buyer,PT Courses,not_started
+government funded pt courses,Personal Training,Course Buyer,Informational,210,11,5.66,187,Not a buyer,PT Courses,not_started
+personal training courses glasgow,Personal Training,Course Buyer,Commercial,210,11,9.26,187,Not a buyer,PT Courses,not_started
+personal training and nutrition courses,Personal Training,Course Buyer,Informational,170,14,4.2,146,Not a buyer,PT Courses,not_started
+how much do personal trainers earn uk,Personal Training,Course Buyer,Informational,170,14,2.63,146,Not a buyer,PT Courses,not_started
+how much does a fitness trainer earn,Personal Training,Course Buyer,Informational,170,14,2.14,146,Not a buyer,PT Courses,not_started
+how much do professional trainers make,Personal Training,Course Buyer,Informational,170,12,2.14,150,Not a buyer,PT Courses,not_started
+pt courses glasgow,Personal Training,Course Buyer,Commercial,170,11,9.97,151,Not a buyer,PT Courses,not_started
+personal training courses belfast,Personal Training,Course Buyer,Commercial,170,9,4.33,155,Not a buyer,PT Courses,not_started
+nutrition courses for personal trainers,Personal Training,Course Buyer,Informational,140,12,4.2,123,Not a buyer,PT Courses,not_started
+personal training course leeds,Personal Training,Course Buyer,Commercial,140,11,7.22,125,Not a buyer,PT Courses,not_started
+personal training courses cardiff,Personal Training,Course Buyer,Commercial,140,11,4.84,125,Not a buyer,PT Courses,not_started
+personal trainer course glasgow,Personal Training,Course Buyer,Commercial,140,11,6.38,125,Not a buyer,PT Courses,not_started
+personal trainer course leeds,Personal Training,Course Buyer,Informational,140,11,7.32,125,Not a buyer,PT Courses,not_started
+personal trainer courses manchester,Personal Training,Course Buyer,Informational,140,11,8.34,125,Not a buyer,PT Courses,not_started
+fitness instructor course glasgow,Personal Training,Course Buyer,Informational,140,11,6.38,125,Not a buyer,PT Courses,not_started
+personal training courses liverpool,Personal Training,Course Buyer,Commercial,140,10,10.04,126,Not a buyer,PT Courses,not_started
+personal training courses newcastle upon tyne,Personal Training,Course Buyer,Commercial,140,10,8.55,126,Not a buyer,PT Courses,not_started
+personal trainer course cardiff,Personal Training,Course Buyer,Informational,140,10,8.15,126,Not a buyer,PT Courses,not_started
+fitness instructor course liverpool,Personal Training,Course Buyer,Informational,140,10,7.89,126,Not a buyer,PT Courses,not_started
+personal trainer courses norwich,Personal Training,Course Buyer,Commercial,140,9,3.03,127,Not a buyer,PT Courses,not_started
+fitness training scotland,Personal Training,Course Buyer,Navigational,140,13,2.5,122,Not a buyer,PT Courses,not_started
+level 3 personal trainer course prices,Personal Training,Course Buyer,Informational,110,13,3.97,96,Not a buyer,PT Courses,not_started
+personal trainer course price,Personal Training,Course Buyer,Informational,110,13,4.04,96,Not a buyer,PT Courses,not_started
+how long does it take to become a personal trainer,Personal Training,Course Buyer,Informational,110,13,2.34,96,Not a buyer,PT Courses,not_started
+how much does a personal trainer earn in the uk,Personal Training,Course Buyer,Informational,110,13,2.63,96,Not a buyer,PT Courses,not_started
+pt courses liverpool,Personal Training,Course Buyer,Commercial,110,11,10.04,98,Not a buyer,PT Courses,not_started
+pt courses manchester,Personal Training,Course Buyer,Informational,110,11,8.34,98,Not a buyer,PT Courses,not_started
+how much is a pt course,Personal Training,Course Buyer,Informational,110,10,4.99,99,Not a buyer,PT Courses,not_started
+fitness instructor course belfast,Personal Training,Course Buyer,Informational,110,10,4.33,99,Not a buyer,PT Courses,not_started
+personal trainer skills,Personal Training,Course Buyer,Informational,110,12,2.61,97,Not a buyer,PT Courses,not_started
+personal trainer cardiff course,Personal Training,Course Buyer,Commercial,90,9,8.15,82,Not a buyer,PT Courses,not_started
+level 1 personal trainer course,Personal Training,Course Buyer,Informational,90,14,4.46,77,Not a buyer,PT Courses,not_started
+become a personal trainer manchester,Personal Training,Course Buyer,Informational,90,14,0,77,Not a buyer,PT Courses,not_started
+average income for personal trainer,Personal Training,Course Buyer,Informational,90,15,1.46,77,Not a buyer,PT Courses,not_started
+fitness instructor course leeds,Personal Training,Course Buyer,Commercial,90,11,7.22,80,Not a buyer,PT Courses,not_started
+fitness instructor course manchester,Personal Training,Course Buyer,Informational,90,10,9.23,81,Not a buyer,PT Courses,not_started
+fitness consultant,Personal Training,Course Buyer,Informational,90,12,4.22,79,Not a buyer,PT Courses,not_started
+hyrox gym,Hyrox,Facility,Commercial,1300,27,1.08,949,Not a buyer,Coaching & Gyms,not_started
+body conditioning class,Personal Training,Facility,Informational,1000,14,1.03,860,Not a buyer,Classes,not_started
+hyrox gyms,Hyrox,Facility,Commercial,880,35,1.08,572,Not a buyer,Coaching & Gyms,not_started
+hyrox classes,Hyrox,Facility,Informational,720,24,0.85,547,Not a buyer,Coaching & Gyms,not_started
+hyrox class,Hyrox,Facility,Informational,590,21,1,466,Not a buyer,Coaching & Gyms,not_started
+womens only gym near me,Personal Training,Facility,Transactional,590,14,0.84,507,Not a buyer,PT Niche,not_started
+pilates studios near me,Personal Training,Facility,Transactional,590,11,1.17,525,Not a buyer,Classes,not_started
+coach gym,Personal Training,Facility,Commercial,590,12,2.07,519,Not a buyer,Classes,not_started
+first class fitness,Personal Training,Facility,Commercial,260,10,0,234,Not a buyer,Classes,not_started
+u gym,Personal Training,Facility,Commercial,260,9,1.61,237,Not a buyer,Classes,not_started
+hydrox gym,Hyrox,Facility,Navigational,210,65,0.79,74,Not a buyer,Misspellings,not_started
+exercise classes for women,Personal Training,Facility,Transactional,210,11,1.05,187,Not a buyer,PT Niche,not_started
+anytime fitness welwyn garden city,Personal Training,Facility,Info/Transactional,210,15,0.07,179,Not a buyer,Classes,not_started
+body conditioning classes,Personal Training,Facility,Informational,170,12,1.03,150,Not a buyer,Classes,not_started
+fitness classes milton keynes,Personal Training,Facility,Commercial,170,15,0.88,145,Not a buyer,Classes,not_started
+fitness first brighton,Personal Training,Facility,Informational,170,15,0.41,145,Not a buyer,Classes,not_started
+fitness at the street,Personal Training,Facility,Info/Transactional,170,14,0,146,Not a buyer,Classes,not_started
+fitness classes near me for ladies,Personal Training,Facility,Transactional,140,14,0.94,120,Not a buyer,PT Niche,not_started
+only women gym near me,Personal Training,Facility,Transactional,140,14,0.69,120,Not a buyer,PT Niche,not_started
+fitness classes bedford,Personal Training,Facility,Commercial,140,14,0.55,120,Not a buyer,Classes,not_started
+fitness classes croydon,Personal Training,Facility,Commercial,140,13,0.61,122,Not a buyer,Classes,not_started
+hyrox training clubs,Hyrox,Facility,Informational,110,22,0.91,86,Not a buyer,Coaching & Gyms,not_started
+what are body conditioning classes,Personal Training,Facility,Informational,110,10,0,99,Not a buyer,Classes,not_started
+aerobics trainer,Personal Training,Facility,Commercial,110,14,0.52,95,Not a buyer,Classes,not_started
+hyrox gym manchester,Hyrox,Facility,Informational,90,15,0.9,77,Not a buyer,Coaching & Gyms,not_started
+fitness first angel,Personal Training,Facility,Info/Commercial,90,15,0.73,77,Not a buyer,Classes,not_started
+personal trainer jobs,Personal Training,Job Seeker,Commercial,1900,15,1.63,1615,Not a buyer,PT Jobs,not_started
+personal fitness instructor jobs,Personal Training,Job Seeker,Commercial,1600,13,1.32,1392,Not a buyer,PT Jobs,not_started
+personal trainer jobs near me,Personal Training,Job Seeker,Commercial,1000,15,1.17,850,Not a buyer,PT Jobs,not_started
+personal fitness trainer jobs,Personal Training,Job Seeker,Commercial,880,15,1.32,748,Not a buyer,PT Jobs,not_started
+personal fitness trainer jobs near me,Personal Training,Job Seeker,Commercial,880,12,1.17,774,Not a buyer,PT Jobs,not_started
+personal trainer vacancies london,Personal Training,Job Seeker,Commercial,590,14,0.76,507,Not a buyer,PT Jobs,not_started
+personal trainer wanted london,Personal Training,Job Seeker,Commercial,590,14,0.76,507,Not a buyer,PT Jobs,not_started
+personal trainer vacancies,Personal Training,Job Seeker,Commercial,480,15,1.63,408,Not a buyer,PT Jobs,not_started
+fitness careers london,Personal Training,Job Seeker,Commercial,390,14,0.48,335,Not a buyer,PT Jobs,not_started
+fitness first careers,Personal Training,Job Seeker,Commercial,320,15,1.84,272,Not a buyer,PT Jobs,not_started
+job instructor fitness,Personal Training,Job Seeker,Commercial,320,15,0.76,272,Not a buyer,PT Jobs,not_started
+fitness work london,Personal Training,Job Seeker,Commercial,320,15,0.73,272,Not a buyer,PT Jobs,not_started
+fitness personal training jobs,Personal Training,Job Seeker,Commercial,320,13,1.57,278,Not a buyer,PT Jobs,not_started
+pt jobs,Personal Training,Job Seeker,Commercial,260,10,1.57,234,Not a buyer,PT Jobs,not_started
+gym apprenticeships,Personal Training,Job Seeker,Commercial,260,10,1.87,234,Not a buyer,PT Jobs,not_started
+fitness instructor jobs london,Personal Training,Job Seeker,Commercial,260,13,0.8,226,Not a buyer,PT Jobs,not_started
+fitness instructor apprenticeship,Personal Training,Job Seeker,Commercial,260,12,3.26,229,Not a buyer,PT Jobs,not_started
+personal training jobs london,Personal Training,Job Seeker,Commercial,210,10,0.65,189,Not a buyer,PT Jobs,not_started
+gym instructor jobs near me,Personal Training,Job Seeker,Commercial,210,15,0.77,179,Not a buyer,PT Jobs,not_started
+gym instructor jobs london,Personal Training,Job Seeker,Commercial,210,14,0.94,181,Not a buyer,PT Jobs,not_started
+jobs trainer,Personal Training,Job Seeker,Commercial,210,15,0.16,179,Not a buyer,PT Jobs,not_started
+personal training apprenticeship,Personal Training,Job Seeker,Commercial,210,12,2.98,185,Not a buyer,PT Jobs,not_started
+fitness apprenticeship,Personal Training,Job Seeker,Commercial,170,10,2.13,153,Not a buyer,PT Jobs,not_started
+fitness trainer jobs,Personal Training,Job Seeker,Commercial,170,14,1.32,146,Not a buyer,PT Jobs,not_started
+gym coach jobs,Personal Training,Job Seeker,Commercial,170,14,0.98,146,Not a buyer,PT Jobs,not_started
+fitness instructor job,Personal Training,Job Seeker,Commercial,170,15,0.76,145,Not a buyer,PT Jobs,not_started
+trainer jobs near me,Personal Training,Job Seeker,Commercial,170,13,0.21,148,Not a buyer,PT Jobs,not_started
+personal training jobs london uk,Personal Training,Job Seeker,Commercial,170,13,0.65,148,Not a buyer,PT Jobs,not_started
+job gym part time,Personal Training,Job Seeker,Commercial,170,14,0.93,146,Not a buyer,PT Jobs,not_started
+jobs in gyms,Personal Training,Job Seeker,Commercial,170,14,1.54,146,Not a buyer,PT Jobs,not_started
+online fitness jobs,Personal Training,Job Seeker,Commercial,140,15,1.46,119,Not a buyer,PT Jobs,not_started
+fitness jobs manchester,Personal Training,Job Seeker,Commercial,140,12,0.53,123,Not a buyer,PT Jobs,not_started
+personal trainer job london,Personal Training,Job Seeker,Commercial,140,14,0.94,120,Not a buyer,PT Jobs,not_started
+fitness class instructor,Personal Training,Job Seeker,Informational,110,12,2.75,97,Not a buyer,Classes,not_started
+remote fitness jobs,Personal Training,Job Seeker,Commercial,110,14,0.28,95,Not a buyer,PT Jobs,not_started
+trainer employment opportunities,Personal Training,Job Seeker,Commercial,110,14,0.14,95,Not a buyer,PT Jobs,not_started
+jobs in health & fitness,Personal Training,Job Seeker,Commercial,110,13,1.05,96,Not a buyer,PT Jobs,not_started
+fitness manager jobs near me,Personal Training,Job Seeker,Commercial,110,11,0.15,98,Not a buyer,PT Jobs,not_started
+gym instructor vacancies,Personal Training,Job Seeker,Commercial,90,14,1.06,77,Not a buyer,PT Jobs,not_started
+online personal training jobs,Personal Training,Job Seeker,Commercial,90,13,1.64,78,Not a buyer,PT Jobs,not_started
+fitness tutor jobs,Personal Training,Job Seeker,Commercial,90,11,1.09,80,Not a buyer,PT Jobs,not_started
+part time fitness jobs,Personal Training,Job Seeker,Commercial,90,11,0.5,80,Not a buyer,PT Jobs,not_started
+fitness marketing careers,Personal Training,Job Seeker,Commercial,90,12,0.31,79,Not a buyer,PT Jobs,not_started
+pt job,Personal Training,Job Seeker,Info/Commercial,90,11,1.57,80,Not a buyer,PT Jobs,not_started
+hyrox logo,Hyrox,Other,Navigational,880,22,0,686,Not a buyer,Brand/Nav,not_started
+hyrox volunteer,Hyrox,Other,Informational,480,14,0,413,Not a buyer,Community,not_started
+hyrox volunteer uk,Hyrox,Other,Informational,170,9,0,155,Not a buyer,Community,not_started
+hyrox volunteers,Hyrox,Other,Informational,110,12,0,97,Not a buyer,Community,not_started
+hyrox partner,Hyrox,Partner,Informational,140,28,0,101,Not a buyer,Coaching & Gyms,not_started
+hyrox affiliate,Hyrox,Partner,Informational,110,16,0,92,Not a buyer,Coaching & Gyms,not_started

@@ -1,0 +1,21 @@
+SUV ATHLETIC — HANDOVER PACK MANIFEST
+Generated 29 July 2026
+
+00-BUILD-ORDER.md                                   4,003 bytes
+01-brand-and-identity.md                            2,914 bytes
+02-audience-and-onboarding.md                       6,155 bytes
+03-seo-architecture.md                              4,921 bytes
+04-location-page-system.md                          6,045 bytes
+05-content-clusters.md                              6,285 bytes
+06-traffic-playbook.md                              5,657 bytes
+07-product-spec.md                                  1,890 bytes
+08-open-questions.md                                2,940 bytes
+README.md                                           2,970 bytes
+data/README.md                                      1,546 bytes
+data/keyword-database.xlsx                         68,321 bytes
+data/keywords-client-only.csv                      31,443 bytes
+data/keywords-excluded.csv                         13,888 bytes
+data/keywords.csv                                  45,228 bytes
+data/location-targets.csv                           5,732 bytes
+rules/HARD-RULES.md                                 3,699 bytes
+rules/uniqueness-validator.md                       2,090 bytes

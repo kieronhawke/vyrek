@@ -1,0 +1,13 @@
+{
+  "slug": "glasgow",
+  "races": {
+    "hostsRace": true,
+    "nearestRace": {
+      "eventSlug": "glasgow-ovo-november-2026",
+      "venue": "OVO Hydro",
+      "city": "Glasgow",
+      "source": "internal:lib/hyrox-events.ts",
+      "verifiedOn": "2026-07-29"
+    }
+  }
+}
