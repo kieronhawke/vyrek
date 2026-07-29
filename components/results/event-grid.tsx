@@ -44,12 +44,17 @@ export function EventCarousel({
           {events.length} {events.length === 1 ? "event" : "events"}
         </span>
       </header>
+      {/* Mobile: swipeable row of fixed-width cards. Desktop (lg+): a
+          plain grid — the swipe pattern collapsed into unusable squares
+          on wide screens. */}
       <div
-        className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3"
+        className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 lg:mx-0 lg:grid lg:grid-cols-3 lg:overflow-visible lg:px-0 lg:pb-0 xl:grid-cols-4"
         style={{ scrollbarWidth: "none" }}
       >
         {events.map((e) => (
-          <EventCard key={e.slug} event={e} />
+          <div key={e.slug} className="w-[280px] shrink-0 snap-center lg:w-auto">
+            <EventCard event={e} />
+          </div>
         ))}
       </div>
     </section>

@@ -38,7 +38,6 @@ export function EventCard({
       className={[
         "group relative block overflow-hidden rounded-2xl border border-suth-border bg-suth-elevated transition-[border,transform] duration-base ease-out hover:-translate-y-0.5 hover:border-suth-border-strong",
         featured ? "aspect-[16/9]" : "aspect-[4/5]",
-        featured ? "" : "min-w-[280px] snap-center",
       ].join(" ")}
     >
       {event.heroImage ? (

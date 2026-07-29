@@ -85,6 +85,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "weekly",
   }));
 
+  // Conversion landing pages: two variants per location plus their hubs.
+  const geoLandingRoutes: MetadataRoute.Sitemap = [
+    { url: `${SITE_URL}/hyrox-training`, lastModified: now, priority: 0.8, changeFrequency: "weekly" as const },
+    { url: `${SITE_URL}/personal-trainer`, lastModified: now, priority: 0.8, changeFrequency: "weekly" as const },
+    ...UK_LOCATIONS.flatMap((loc) => [
+      {
+        url: `${SITE_URL}/hyrox-training/${loc.slug}`,
+        lastModified: now,
+        priority: 0.75,
+        changeFrequency: "weekly" as const,
+      },
+      {
+        url: `${SITE_URL}/personal-trainer/${loc.slug}`,
+        lastModified: now,
+        priority: 0.75,
+        changeFrequency: "weekly" as const,
+      },
+    ]),
+  ];
+
   const stationRoutes: MetadataRoute.Sitemap = STATIONS.map((s) => ({
     url: `${SITE_URL}/hyrox/stations/${s.slug}`,
     lastModified: now,
@@ -142,6 +162,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...categoryRoutes,
     ...authorRoutes,
     ...cityRoutes,
+    ...geoLandingRoutes,
     ...stationRoutes,
     ...planTemplateRoutes,
     ...comparisonRoutes,

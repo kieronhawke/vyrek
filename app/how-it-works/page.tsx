@@ -78,7 +78,7 @@ export default function HowItWorksPage() {
               <SplitHeading
                 id="how-heading"
                 as="h1"
-                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
+                className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[48px]"
               >
                 From quiz to start line, in four steps.
               </SplitHeading>
@@ -93,11 +93,11 @@ export default function HowItWorksPage() {
           <section
             key={step.number}
             aria-labelledby={`step-${step.number}`}
-            className="border-t border-suth-border-subtle py-20 md:py-28"
+            className="border-t border-suth-border-subtle py-14 md:py-20"
           >
             <Container>
               <div
-                className={`mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2 md:gap-16 ${
+                className={`mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2 md:gap-12 ${
                   i % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""
                 }`}
               >
@@ -107,7 +107,7 @@ export default function HowItWorksPage() {
                   </p>
                   <h2
                     id={`step-${step.number}`}
-                    className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
+                    className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[34px]"
                   >
                     {step.label}
                   </h2>
@@ -124,7 +124,7 @@ export default function HowItWorksPage() {
                     </div>
                   ) : null}
                 </div>
-                <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-suth-border bg-suth-elevated">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-suth-border bg-suth-elevated md:aspect-[4/3]">
                   <img
                     src={step.image}
                     alt=""
@@ -149,7 +149,7 @@ export default function HowItWorksPage() {
           <Container>
             <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
               <Eyebrow>Start</Eyebrow>
-              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl">
+              <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[44px]">
                 Ready to find your plan?
               </h2>
               <p className="mt-4 text-base text-suth-text-secondary md:text-lg">

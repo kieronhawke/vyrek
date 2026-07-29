@@ -38,7 +38,7 @@ export default function ResultsHubPage() {
             <Eyebrow>Results</Eyebrow>
             <SplitHeading
               as="h1"
-              className="mt-4 text-balance text-4xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-6xl"
+              className="mt-4 text-balance text-[36px] font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[52px]"
             >
               Train. Race. Analyse. Beat.
             </SplitHeading>
