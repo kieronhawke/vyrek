@@ -70,13 +70,24 @@ export function MarketingFooter() {
             <Monogram size={32} />
             <Eyebrow bare>SUTH PERFORMANCE</Eyebrow>
             <Eyebrow bare className="text-suth-text-tertiary">
-              FITNESS / 2026
-            </Eyebrow>
-            <Eyebrow bare className="text-suth-text-tertiary">
               MADE IN UK
             </Eyebrow>
           </div>
           <div className="flex items-center gap-3">
+            <a
+              href="https://instagram.com/bennysuth95"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text-secondary transition-colors hover:border-suth-border-strong hover:text-suth-text"
+            >
+              @bennysuth95
+            </a>
+            <a
+              href="mailto:hello@suthperformance.com"
+              className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text-secondary transition-colors hover:border-suth-border-strong hover:text-suth-text"
+            >
+              hello@suthperformance.com
+            </a>
             <Link
               href="/login"
               className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text-secondary transition-colors hover:border-suth-border-strong hover:text-suth-text"
@@ -84,6 +95,19 @@ export function MarketingFooter() {
               Member sign in →
             </Link>
           </div>
+        </div>
+
+        {/* PLACEHOLDER — COMPANY DETAILS: replace bracketed values with the
+            real registered company name, number, and office address. */}
+        <div className="mt-8 space-y-2">
+          <p className="text-xs text-suth-text-tertiary">
+            © 2026 Suth Performance. All rights reserved.
+          </p>
+          <p className="text-xs text-suth-text-tertiary">
+            [REGISTERED COMPANY NAME TO BE CONFIRMED], registered in England
+            and Wales, company number [TO BE CONFIRMED], registered office
+            [TO BE CONFIRMED].
+          </p>
         </div>
       </Container>
     </footer>
