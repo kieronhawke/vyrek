@@ -83,10 +83,12 @@ export default function BrandGuidelinesPage() {
                 Wordmark and monogram.
               </h2>
               <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
-                The wordmark spells SUTH PERFORMANCE in Oswald 700 with a , 2% letter-spacing
-                adjustment. Use it on press articles, partner pages, and at
-                widths above 96px. The monogram is the &ldquo;V&rdquo; mark on its own,
-                use it for app icons, social avatars, favicons, and watermarks.
+                The wordmark is a stacked lockup: SUTH in Oswald 700 with a
+                chartreuse square full stop, PERFORMANCE in Geist Mono spaced
+                caps beneath. Use it on press articles, partner pages, and at
+                widths above 96px. The monogram is the &ldquo;S&rdquo; in a
+                rounded square on its own, use it for app icons, social
+                avatars, favicons, and watermarks.
               </p>
               <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <a

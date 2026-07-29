@@ -80,7 +80,36 @@ export default function PressPage() {
                 </a>
               </p>
               <p className="mt-2 text-sm text-suth-text-secondary md:text-base">
-                We reply within 4 hours, Monday to Friday.
+                We reply within 24 hours, Monday to Friday.
+              </p>
+            </section>
+
+            <section className="mt-16 border-t border-suth-border-subtle pt-10">
+              <Eyebrow>Founder</Eyebrow>
+              <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
+                Ben Sutherland.
+              </h2>
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-suth-text-secondary md:text-lg">
+                Ben Sutherland is a HYROX Elite 15 athlete and the founder of
+                Suth Performance. He raced his first HYROX in Berlin in 2024
+                and has since risen to the Elite 15, competing in Doubles with
+                his brother Harry. He has multiple Pro Doubles wins including
+                Rotterdam and Glasgow, qualified for the Elite 15 at Miami,
+                and his best Doubles times sit around 49 to 51 minutes. He
+                coaches athletes from complete beginner to professional level.
+              </p>
+              <p className="mt-3 text-sm text-suth-text-secondary">
+                Instagram:{" "}
+                <a
+                  href="https://instagram.com/bennysuth95"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-suth-accent underline-offset-4 hover:underline"
+                >
+                  @bennysuth95
+                </a>
+                . Press photography of Ben to follow; contact us for interim
+                images.
               </p>
             </section>
 
@@ -114,10 +143,10 @@ export default function PressPage() {
             </section>
 
             <section className="mt-16 border-t border-suth-border-subtle pt-10">
-              <Eyebrow>What we&apos;ll talk about</Eyebrow>
+              <Eyebrow>What Ben will talk about</Eyebrow>
               <p className="mt-3 max-w-2xl text-base leading-relaxed text-suth-text-secondary md:text-lg">
-                Topics our coaches can speak to, with notice. We&apos;re happy
-                to fact-check Hyrox claims for editors and provide quotes for
+                Topics Ben can speak to, with notice. We are happy to
+                fact-check Hyrox claims for editors and provide quotes for
                 fitness or endurance features.
               </p>
               <ul
@@ -134,6 +163,11 @@ export default function PressPage() {
                     tag: "Method",
                     title: "Race-specific programming vs. generic functional fitness",
                     body: "Why station-based training beats CrossFit templates for Hyrox.",
+                  },
+                  {
+                    tag: "Racing",
+                    title: "Elite 15 Doubles: racing with a partner",
+                    body: "Strategy, handoffs, and pacing from inside the sport&apos;s fastest division.",
                   },
                   {
                     tag: "Athletes",
