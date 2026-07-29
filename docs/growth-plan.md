@@ -109,6 +109,10 @@ Two distinct paths through the assessment funnel:
 Both end at the same place: the free call with Ben. This is quiz v4
 (pack's 28-screen dual-branch spec) — next build phase.
 
+**Full offer detail: docs/offer-plan.md** — per-tier spec sheets,
+delivery-time maths for Ben, consultation script, retention engine,
+proof strategy, and the decision list.
+
 ## 4. The funnel (consultative core)
 
 The user-facing shape, per Kieron's brief: a free, valuable front-end

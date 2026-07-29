@@ -242,6 +242,20 @@ export default async function BlogPostPage({
                   source={post.content}
                   components={proseComponents}
                   options={{
+                    // next-mdx-remote v6 strips ALL JavaScript expressions by
+                    // default, including JSX attribute expressions — so any
+                    // `prop={[...]}` is silently dropped and the component
+                    // renders with the prop missing. That broke every data
+                    // component we pass arrays to (charts, checklists,
+                    // comparison tables, race splits).
+                    //
+                    // Safe to disable here: blog MDX is first-party content
+                    // committed to this repo and reviewed like any other
+                    // source file. It is never user-submitted. If that ever
+                    // changes — accepting MDX from outside the team — this
+                    // MUST go back to true. `blockDangerousJS` stays on as a
+                    // second layer regardless.
+                    blockJS: false,
                     mdxOptions: {
                       rehypePlugins: [
                         rehypeSlug,

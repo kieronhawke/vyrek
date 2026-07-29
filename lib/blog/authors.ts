@@ -15,7 +15,9 @@ export type Author = {
 export const AUTHORS: Record<string, Author> = {
   "ben-sutherland": {
     slug: "ben-sutherland",
-    name: "Ben Sutherland",
+    // Formal byline name. Kieron's instruction 2026-07-29: posts are authored
+    // as Benjamin Sutherland, published under Ben, who reviews each one.
+    name: "Benjamin Sutherland",
     role: "Founder · HYROX Elite 15 athlete",
     bio: "Ben races in the HYROX Elite 15, competing in Doubles with his brother Harry. Pro Doubles wins include Rotterdam and Glasgow. He coaches athletes from their first race to professional level.",
     // Crop from the team shoot; swap for a dedicated headshot if preferred.

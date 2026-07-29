@@ -15,6 +15,18 @@ import {
   StatGrid,
   KeyTakeaways,
 } from "@/components/blog/mdx-callouts";
+import {
+  BarChart,
+  StatTile,
+  Meter,
+  Breakdown,
+  Checklist,
+} from "@/components/blog/mdx-charts";
+import {
+  RaceCostCalculator,
+  PaceCalculator,
+  PtCostCalculator,
+} from "@/components/blog/mdx-calculators";
 
 /**
  * Tailwind-prose-flavoured styles for MDX content. We don't use the
@@ -215,4 +227,14 @@ export const proseComponents: MDXRemoteProps["components"] = {
   ComparisonTable,
   WorkoutDemoVideo,
   SledCalculator,
+  // Data-visualisation blocks (palette validated against the dark surface)
+  BarChart,
+  StatTile,
+  Meter,
+  Breakdown,
+  Checklist,
+  // Interactive calculators
+  RaceCostCalculator,
+  PaceCalculator,
+  PtCostCalculator,
 };
