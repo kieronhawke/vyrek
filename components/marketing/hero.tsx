@@ -7,7 +7,7 @@ import { useMagnetic } from "@/hooks/use-magnetic";
 import { useShouldServeHeavyAssets } from "@/hooks/use-network-information";
 import { VIDEOS } from "@/lib/video-assets";
 
-const HERO_VIDEO = VIDEOS.manBattleRopes;
+const HERO_VIDEO = VIDEOS.trackPairApproach;
 
 export function Hero() {
   const ctaRef = useRef<HTMLAnchorElement>(null);
@@ -79,9 +79,9 @@ export function Hero() {
       aria-labelledby="hero-heading"
       className="relative isolate flex min-h-svh flex-col justify-end overflow-hidden bg-suth-base pb-[max(4rem,calc(var(--safe-bottom)+3rem))] pt-[max(6rem,calc(var(--safe-top)+5rem))]"
     >
-      {/* Backdrop: poster as the fallback frame, looping Pexels footage on
-          top when the connection isn't metered. Grayscale + scroll-driven
-          dim is applied to this wrapper via inline style. */}
+      {/* Backdrop: poster as the fallback frame, our own looping track
+          footage on top when the connection isn't metered. Grayscale +
+          scroll-driven dim is applied to this wrapper via inline style. */}
       <div
         ref={backdropRef}
         aria-hidden
@@ -94,8 +94,8 @@ export function Hero() {
             cratering LCP. priority=true keeps it preloaded as the LCP
             candidate. */}
         <Image
-          src="/media/images/v2/hero-cinematic.jpg"
-          alt="Hyrox athlete mid-session in a training gym"
+          src="/media/images/track/pair-frontal-bw.jpg"
+          alt="Two athletes running side by side down a sunlit track straight"
           fill
           priority
           fetchPriority="high"

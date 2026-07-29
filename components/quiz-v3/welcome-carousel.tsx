@@ -14,11 +14,11 @@ const SLIDE_DURATION_MS = 3200;
 
 export const WELCOME_SLIDES: WelcomeSlide[] = [
   {
-    image: "/media/images/v2/programme-first-race.jpg",
+    image: "/media/images/track/programme-first-race.jpg",
     headline: "Hyrox training, personalised in three minutes.",
   },
   {
-    image: "/media/images/v2/bento-plan.jpg",
+    image: "/media/images/track/straight-elevated-bw.jpg",
     headline: "Dated weekly plan, calibrated to your kit and race date.",
   },
 ];

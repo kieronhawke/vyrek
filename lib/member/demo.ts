@@ -854,7 +854,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     durationSec: 90,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/programme-pro.jpg",
+    thumbnail: "/media/images/track/programme-pro.jpg",
   },
   {
     id: "v2",
@@ -862,7 +862,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     durationSec: 120,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/quiz-interstitial-2.jpg",
+    thumbnail: "/media/images/track/gym-ergs-dark-colour.jpg",
   },
   {
     id: "v3",
@@ -870,7 +870,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     durationSec: 1800,
     category: "Warm-up",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/quiz-interstitial-1.jpg",
+    thumbnail: "/media/images/track/palms-sunflare-pair-bw.jpg",
   },
   {
     id: "v4",
@@ -878,7 +878,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     durationSec: 600,
     category: "Cool-down",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/video-recovery.jpg",
+    thumbnail: "/media/images/track/walk-stairs-bw.jpg",
   },
   {
     id: "v5",
@@ -886,7 +886,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     durationSec: 95,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/how-step-3.jpg",
+    thumbnail: "/media/images/track/gym-row-close-colour.jpg",
   },
   {
     id: "v6",
@@ -894,7 +894,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     durationSec: 480,
     category: "Race day",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/testimonial-marcus.jpg",
+    thumbnail: "/media/images/track/pair-elevated-colour.jpg",
   },
 ];
 
@@ -905,7 +905,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 145,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/video-ski-erg.jpg",
+    thumbnail: "/media/images/track/gym-skierg-colour.jpg",
   },
   {
     id: "v8",
@@ -913,7 +913,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 165,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/video-sled-pull.jpg",
+    thumbnail: "/media/images/track/gym-row-close-colour.jpg",
   },
   {
     id: "v9",
@@ -921,7 +921,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 110,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/video-burpee.jpg",
+    thumbnail: "/media/images/track/gym-ergs-dark-colour.jpg",
   },
   {
     id: "v10",
@@ -929,7 +929,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 135,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/quiz-interstitial-3.jpg",
+    thumbnail: "/media/images/track/gym-row-close-colour.jpg",
   },
   {
     id: "v11",
@@ -937,7 +937,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 85,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/video-farmers.jpg",
+    thumbnail: "/media/images/track/under-stands-kit-bw.jpg",
   },
   {
     id: "v12",
@@ -945,7 +945,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 420,
     category: "Race day",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/bento-plan.jpg",
+    thumbnail: "/media/images/track/straight-elevated-bw.jpg",
   },
   {
     id: "v13",
@@ -953,7 +953,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 600,
     category: "Recovery",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/about-outdoor.jpg",
+    thumbnail: "/media/images/track/wide-track-palms-colour.jpg",
   },
   {
     id: "v14",
@@ -961,7 +961,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 125,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/v2/how-step-2.jpg",
+    thumbnail: "/media/images/track/straight-elevated-colour.jpg",
   },
 ];
 

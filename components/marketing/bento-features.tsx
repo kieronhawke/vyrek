@@ -61,8 +61,8 @@ export function BentoFeatures() {
           {/* Medium. Elite 15 */}
           <Card className="relative isolate overflow-hidden">
             <LoopingVideo
-              src={VIDEOS.womanBoxJumps.src}
-              poster={VIDEOS.womanBoxJumps.poster}
+              src={VIDEOS.trackSidePan.src}
+              poster={VIDEOS.trackSidePan.poster}
               className="absolute inset-0 opacity-55"
             />
             <div

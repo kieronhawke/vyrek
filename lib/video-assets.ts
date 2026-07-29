@@ -1,48 +1,47 @@
 /**
- * Stock training footage from Pexels, used as looping background video
- * across the marketing site.
- *
- * All clips are CC0 / Pexels license, free for commercial use, attribution
- * not required but appreciated (we link Pexels in the footer when shipping).
- * Originals at https://www.pexels.com/video/{id}/.
+ * Suth Performance training footage, shot with Ben and Harry on track and
+ * in the gym. Owner-supplied, free for our commercial use. Originals live
+ * outside the repo (photos/suth-track/, gitignored); these are web encodes
+ * (1280x720, H.264, muted, faststart). See docs/assets/asset-database.md.
  */
 
-export type StockVideo = {
-  /** Pexels video id (also the URL slug suffix on the page) */
+export type BrandVideo = {
+  /** Source clip id in the asset database (e.g. C0094) */
   id: string;
-  /** Direct CDN MP4, fine to hot-link, Pexels permits this */
+  /** Self-hosted MP4 under public/ */
   src: string;
-  /** Optional poster image. Pexels CDN, used as fallback + initial frame */
+  /** Optional poster image, used as fallback + initial frame */
   poster?: string;
   /** A short editorial description so we can tell them apart later */
   description: string;
 };
 
 export const VIDEOS = {
-  manBattleRopes: {
-    id: "18573489",
-    // Self-hosted at SD 960x540 (3.3MB), eliminates third-party-cookie BP
-    // hit on the LCP-critical hero. Original at Pexels:
-    // https://www.pexels.com/video/{id}/
+  trackPairApproach: {
+    id: "C0094",
+    // 8s loop, pair running front-on down the straight in golden light,
+    // ends on an upper-body close-up. Hero backdrop; the hero wrapper
+    // applies grayscale so it renders black and white on site.
     src: "/hero.mp4",
-    poster: "/media/images/v2/programme-pro.jpg",
-    description: "Man performing battle ropes in a dark gym, hero backdrop",
+    poster: "/media/images/track/pair-frontal-bw.jpg",
+    description: "Ben and Harry running front-on down the track straight, hero backdrop",
   },
-  manWorkingOut: {
-    id: "6296583",
-    src: "https://videos.pexels.com/video-files/6296583/6296583-uhd_2560_1080_25fps.mp4",
-    poster: "/media/images/v2/about-coaching.jpg",
-    description: "Man training, coach tile",
+  trackSidePan: {
+    id: "C0096",
+    src: "/media/videos/track-sidepan-loop.mp4",
+    poster: "/media/images/track/straight-elevated-bw.jpg",
+    description: "Side pan of the pair striding down the straight, long shadows",
   },
-  womanBoxJumps: {
-    id: "7674511",
-    src: "https://videos.pexels.com/video-files/7674511/7674511-uhd_2732_1440_25fps.mp4",
-    poster: "/media/images/v2/programme-first-race.jpg",
-    description: "Woman box jumps. Elite 15 bento card atmosphere",
+  trackSunflare: {
+    id: "C0102",
+    src: "/media/videos/track-sunflare-loop.mp4",
+    poster: "/media/images/track/sunflare-stride-bw.jpg",
+    description: "Low track-level sun flare, runners pass in the distance",
   },
-  womanRopes: {
-    id: "8520584",
-    src: "https://videos.pexels.com/video-files/8520584/8520584-uhd_2732_1122_25fps.mp4",
-    description: "Woman battle ropes in urban gym, plan teaser preview",
+  gymRow: {
+    id: "C0086",
+    src: "/media/videos/gym-row-loop.mp4",
+    poster: "/media/images/track/under-stands-kit-bw.jpg",
+    description: "Close-up rowing erg effort in the gym",
   },
-} satisfies Record<string, StockVideo>;
+} satisfies Record<string, BrandVideo>;

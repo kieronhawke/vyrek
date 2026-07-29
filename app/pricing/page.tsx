@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/media/images/v2/bento-plan.jpg",
+        url: "/media/images/track/straight-elevated-bw.jpg",
         width: 1200,
         height: 630,
         alt: "Open Suth Performance dated weekly plan",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     title: "Pricing, £8.99/mo Hyrox training",
     description:
       "All four programmes, dated weekly plan, £8.99/mo with a 7-day free trial.",
-    images: ["/media/images/v2/bento-plan.jpg"],
+    images: ["/media/images/track/straight-elevated-bw.jpg"],
   },
 };
 

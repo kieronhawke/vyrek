@@ -60,11 +60,9 @@ export default function AboutPage() {
             intensity={70}
             className="absolute inset-0 -z-10"
           >
-            {/* PLACEHOLDER BACKDROP: replace with a real photo of Ben racing
-                (wide crop, dark treatment) when supplied. A stock person here
-                would read as Ben, so the slot stays honest until then. */}
+            {/* Own shoot footage (see docs/assets/asset-database.md). */}
             <Image
-              src="/media/images/ben/ben-racing-placeholder.jpg"
+              src="/media/images/track/sunflare-stride-bw.jpg"
               alt=""
               fill
               priority
@@ -113,12 +111,10 @@ export default function AboutPage() {
                   Doubles alongside his brother Harry.
                 </p>
                 <figure className="-mx-4 my-8 overflow-hidden rounded-2xl md:mx-0">
-                  {/* PLACEHOLDER: replace with a real photo of Ben and Harry
-                      racing (sled, run, or finish line). */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/media/images/ben/ben-racing-placeholder.jpg"
-                    alt="Placeholder for a photo of Ben and Harry Sutherland racing HYROX Doubles."
+                    src="/media/images/track/pair-frontal-colour.jpg"
+                    alt="Ben and Harry Sutherland running side by side on the track"
                     className="aspect-[16/10] w-full object-cover"
                     loading="lazy"
                     decoding="async"
@@ -197,12 +193,10 @@ export default function AboutPage() {
                   does not make sense, you ask him in the app and he answers.
                 </p>
                 <figure className="-mx-4 mt-10 overflow-hidden rounded-2xl md:mx-0">
-                  {/* PLACEHOLDER: replace with a real photo of Ben coaching
-                      an athlete (gym floor, session review, or track). */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/media/images/ben/ben-coaching-placeholder.jpg"
-                    alt="Placeholder for a photo of Ben Sutherland coaching an athlete."
+                    src="/media/images/track/gym-coach-row-colour.jpg"
+                    alt="Coaching an athlete through a rowing interval in the gym"
                     className="aspect-[21/9] w-full object-cover"
                     loading="lazy"
                     decoding="async"

@@ -18,8 +18,8 @@ export const AUTHORS: Record<string, Author> = {
     name: "Ben Sutherland",
     role: "Founder · HYROX Elite 15 athlete",
     bio: "Ben races in the HYROX Elite 15, competing in Doubles with his brother Harry. Pro Doubles wins include Rotterdam and Glasgow. He coaches athletes from their first race to professional level.",
-    // PLACEHOLDER: replace with Ben's real headshot when supplied.
-    photo: "/media/images/ben/ben-portrait-placeholder.jpg",
+    // Crop from the team shoot; swap for a dedicated headshot if preferred.
+    photo: "/media/images/track/coach-avatar-colour.jpg",
     sameAs: ["https://instagram.com/bennysuth95"],
   },
   "suth-team": {
@@ -27,7 +27,7 @@ export const AUTHORS: Record<string, Author> = {
     name: "The Suth Performance team",
     role: "Coaches and editors",
     bio: "The Suth Performance programming team, led by HYROX Elite 15 athlete Ben Sutherland.",
-    photo: "/media/images/v2/bento-coaches.jpg",
+    photo: "/media/images/track/trio-stride-colour.jpg",
     sameAs: [],
   },
 };

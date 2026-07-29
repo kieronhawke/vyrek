@@ -193,7 +193,7 @@ export default async function PlanTemplatePage({
             </SplitHeading>
             <figure className="-mx-4 mt-8 overflow-hidden rounded-2xl md:mx-0">
               <Image
-                src={`/media/images/v2/programme-${p.programmeSlug}.jpg`}
+                src={`/media/images/track/programme-${p.programmeSlug}.jpg`}
                 alt={`${p.title}. Athlete training for the ${p.programmeSlug.replace("-", " ")} programme.`}
                 width={1920}
                 height={914}

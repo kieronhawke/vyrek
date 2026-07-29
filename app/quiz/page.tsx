@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/media/images/v2/programme-first-race.jpg",
+        url: "/media/images/track/programme-first-race.jpg",
         width: 1200,
         height: 630,
         alt: "Athlete in a training session",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title: "Find your Hyrox plan in three minutes",
     description:
       "Personalised 12-week Hyrox plan, dated to your race. See your Week 1 before you pay.",
-    images: ["/media/images/v2/programme-first-race.jpg"],
+    images: ["/media/images/track/programme-first-race.jpg"],
   },
 };
 

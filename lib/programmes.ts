@@ -10,7 +10,7 @@ export type Programme = {
   audience: string;
   weeks: number;
   difficulty: "Beginner" | "Intermediate" | "Advanced" | "Partner";
-  /** Background image (Pexels poster. DEMO, swap for Hyrox station imagery). */
+  /** Background image, own track photography (docs/assets/asset-database.md). */
   image: string;
 };
 
@@ -22,7 +22,7 @@ export const PROGRAMMES: Programme[] = [
     audience: "Never raced. Build to your first finish line.",
     weeks: 12,
     difficulty: "Beginner",
-    image: "/media/images/v2/programme-first-race.jpg",
+    image: "/media/images/track/programme-first-race.jpg",
   },
   {
     slug: "sub-90",
@@ -31,7 +31,7 @@ export const PROGRAMMES: Programme[] = [
     audience: "Completed Hyrox. Break the 90-minute barrier.",
     weeks: 12,
     difficulty: "Intermediate",
-    image: "/media/images/v2/programme-sub-90-v2.jpg",
+    image: "/media/images/track/programme-sub-90.jpg",
   },
   {
     slug: "doubles",
@@ -40,7 +40,7 @@ export const PROGRAMMES: Programme[] = [
     audience: "Train together. Race together. One plan, two athletes.",
     weeks: 12,
     difficulty: "Partner",
-    image: "/media/images/v2/programme-doubles.jpg",
+    image: "/media/images/track/programme-doubles.jpg",
   },
   {
     slug: "pro",
@@ -49,6 +49,6 @@ export const PROGRAMMES: Programme[] = [
     audience: "Sub-75 athletes chasing podiums.",
     weeks: 12,
     difficulty: "Advanced",
-    image: "/media/images/v2/programme-pro.jpg",
+    image: "/media/images/track/programme-pro.jpg",
   },
 ];

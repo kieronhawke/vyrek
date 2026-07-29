@@ -23,7 +23,7 @@ export function ReassuranceScreen2({ onContinue }: { onContinue: () => void }) {
           <div className="mt-8 grid grid-cols-2 gap-3">
             <div className="col-span-2 aspect-[16/10] overflow-hidden rounded-lg bg-suth-elevated">
               <img
-                src="/media/images/v2/bento-plan.jpg"
+                src="/media/images/track/straight-elevated-bw.jpg"
                 alt=""
                 className="h-full w-full object-cover"
                 loading="lazy"
@@ -32,7 +32,7 @@ export function ReassuranceScreen2({ onContinue }: { onContinue: () => void }) {
             </div>
             <div className="aspect-square overflow-hidden rounded-lg bg-suth-elevated">
               <img
-                src="/media/images/v2/programme-doubles.jpg"
+                src="/media/images/track/programme-doubles.jpg"
                 alt=""
                 className="h-full w-full object-cover"
                 loading="lazy"
@@ -41,7 +41,7 @@ export function ReassuranceScreen2({ onContinue }: { onContinue: () => void }) {
             </div>
             <div className="aspect-square overflow-hidden rounded-lg bg-suth-elevated">
               <img
-                src="/media/images/v2/bento-progress.jpg"
+                src="/media/images/track/bend-lanes-bw.jpg"
                 alt=""
                 className="h-full w-full object-cover"
                 loading="lazy"

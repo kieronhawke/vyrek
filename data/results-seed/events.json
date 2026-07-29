@@ -20,7 +20,7 @@
     "status": "live",
     "slotCount": 50,
     "totalAthletes": 15726,
-    "heroImage": "/media/images/v2/hero-cinematic.jpg",
+    "heroImage": "/media/images/track/pair-frontal-bw.jpg",
     "divisions": [
       { "divisionCode": "hyrox-men", "athleteCount": 1439, "leaderTimeSeconds": 3678, "leaderAthleteSlug": "theo-richardson" },
       { "divisionCode": "hyrox-women", "athleteCount": 982, "leaderTimeSeconds": 4254, "leaderAthleteSlug": "hannah-ward" },
@@ -53,7 +53,7 @@
     "status": "upcoming",
     "slotCount": 42,
     "totalAthletes": 0,
-    "heroImage": "/media/images/v2/programme-doubles.jpg",
+    "heroImage": "/media/images/track/programme-doubles.jpg",
     "divisions": [
       { "divisionCode": "hyrox-men", "athleteCount": 0 },
       { "divisionCode": "hyrox-women", "athleteCount": 0 },
@@ -85,7 +85,7 @@
     "status": "finished",
     "slotCount": 38,
     "totalAthletes": 8412,
-    "heroImage": "/media/images/v2/station-fresh.jpg",
+    "heroImage": "/media/images/track/gym-skierg-colour.jpg",
     "divisions": [
       { "divisionCode": "hyrox-men", "athleteCount": 1108, "leaderTimeSeconds": 3592, "leaderAthleteSlug": "tom-bradshaw" },
       { "divisionCode": "hyrox-women", "athleteCount": 794, "leaderTimeSeconds": 4188 },
@@ -117,7 +117,7 @@
     "status": "upcoming",
     "slotCount": 32,
     "totalAthletes": 0,
-    "heroImage": "/media/images/v2/programme-pro.jpg",
+    "heroImage": "/media/images/track/programme-pro.jpg",
     "divisions": [
       { "divisionCode": "hyrox-men", "athleteCount": 0 },
       { "divisionCode": "hyrox-women", "athleteCount": 0 },
@@ -145,7 +145,7 @@
     "status": "finished",
     "slotCount": 35,
     "totalAthletes": 7521,
-    "heroImage": "/media/images/v2/programme-first-race.jpg",
+    "heroImage": "/media/images/track/programme-first-race.jpg",
     "divisions": [
       { "divisionCode": "hyrox-men", "athleteCount": 1042, "leaderTimeSeconds": 3712 },
       { "divisionCode": "hyrox-women", "athleteCount": 728, "leaderTimeSeconds": 4322 },

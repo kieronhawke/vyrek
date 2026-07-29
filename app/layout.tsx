@@ -42,6 +42,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
+  // PRE-LAUNCH HARD RULE: no indexing until Kieron explicitly clears it
+  // (and re-confirm with him even then). Belt to the X-Robots-Tag header
+  // braces in next.config.ts; that header wins over any per-page value.
+  robots: { index: false, follow: false },
   title: {
     default: "Suth Performance. Train like a Hyrox athlete",
     template: "%s · Suth Performance",
@@ -74,9 +78,9 @@ export const metadata: Metadata = {
     locale: "en_GB",
     images: [
       {
-        url: "/media/images/v2/programme-first-race.jpg",
-        width: 1920,
-        height: 1080,
+        url: "/media/images/track/og-default.jpg",
+        width: 1200,
+        height: 630,
         alt: "Suth Performance, personalised Hyrox training",
       },
     ],
@@ -86,7 +90,7 @@ export const metadata: Metadata = {
     title: "Suth Performance. Train like a Hyrox athlete",
     description:
       "Personalised Hyrox training programmes built by an Elite 15 coach.",
-    images: ["/media/images/v2/programme-first-race.jpg"],
+    images: ["/media/images/track/og-default.jpg"],
   },
 };
 

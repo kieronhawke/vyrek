@@ -18,20 +18,16 @@ const CARDS = [
     title: "An Elite 15 athlete on your programme.",
     body:
       "Reviews your weekly progress, answers questions, and adjusts your training as you improve.",
-    // PLACEHOLDER: replace with a real photo of Ben when supplied.
-    image: "/media/images/ben/ben-portrait-placeholder.jpg",
-    alt: "Placeholder for a photo of Ben Sutherland, founder and head coach",
+    image: "/media/images/track/gym-coach-row-colour.jpg",
+    alt: "Coach standing over an athlete mid rowing interval in the gym",
   },
   {
     tag: "Dated weekly programme",
     title: "Every workout, dated to your race.",
     body:
       "No guessing what to do next. Open the app, see today's session, hit it, log it. Your plan adapts each Sunday.",
-    // 1.1A: replaced the phone-mockup shot. Now shows an athlete with
-    // their training notebook + chartreuse [ WEEK 04 ] overlay so the
-    // "dated weekly" claim is visually anchored.
-    image: "/media/images/v2/workout-dated.jpg",
-    alt: "Athlete planning a training week in a notebook",
+    image: "/media/images/track/straight-elevated-colour.jpg",
+    alt: "Elevated view of two athletes striding down the track straight",
     badge: "WEEK 04",
   },
   {
@@ -39,20 +35,16 @@ const CARDS = [
     title: "Built backwards from the 8 stations.",
     body:
       "Sled push, ski erg, wall balls, sandbag lunges. Every block has a purpose.",
-    // Was a sled-push shot users said felt off. New: wall-ball mid-rep,
-    // race-pace station work.
-    image: "/media/images/v2/station-fresh.jpg",
-    alt: "Athlete mid wall-ball rep at race pace",
+    image: "/media/images/track/gym-skierg-colour.jpg",
+    alt: "Athlete mid ski erg pull in the gym",
   },
   {
     tag: "Progression you can see",
     title: "Track your splits, your sled times, your wall ball cycles.",
     body:
       "Every week your data sharpens the next plan.",
-    // Was a watch-metrics shot. New: phone + watch combo logging data
-    // — reads "your progress, in the app" rather than just "fitness watch".
-    image: "/media/images/v2/metrics-fresh.jpg",
-    alt: "Athlete logging training data on phone and watch",
+    image: "/media/images/track/solo-watch-bw.jpg",
+    alt: "Athlete checking a training watch on the track between reps",
   },
 ];
 

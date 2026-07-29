@@ -95,7 +95,7 @@ export function PlanValueSection() {
       <div className="mt-6 flex items-center gap-4 rounded-2xl border border-suth-accent/30 bg-suth-elevated p-4">
         <div className="relative size-16 shrink-0 overflow-hidden rounded-full bg-suth-overlay">
           <Image
-            src="/media/images/ben/ben-portrait-placeholder.jpg"
+            src="/media/images/track/coach-avatar-colour.jpg"
             alt="Ben Sutherland, founder and head coach"
             fill
             sizes="64px"

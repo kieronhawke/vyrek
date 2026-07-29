@@ -17,6 +17,12 @@ import type { NextConfig } from "next";
  * scripts are nonce-wired.
  */
 const BASELINE_HEADERS = [
+  // PRE-LAUNCH HARD RULE (Kieron, 2026-07-29): the site must NOT be
+  // indexed by search engines until Kieron explicitly says so, and even
+  // then only after re-confirming with him. This response header outranks
+  // any per-page metadata, so nothing on the site can opt back in while
+  // it is present. Remove this single entry to open indexing.
+  { key: "X-Robots-Tag", value: "noindex, nofollow" },
   {
     key: "Strict-Transport-Security",
     value: "max-age=63072000; includeSubDomains; preload",

@@ -15,31 +15,31 @@ export const metadata: Metadata = {
 
 const SHOTS = [
   {
-    src: "/media/images/v2/hero-cinematic.jpg",
+    src: "/media/images/track/pair-frontal-bw.jpg",
     title: "Home: hero",
     note: "Landing page hero, mobile crop.",
     credit: "Suth Performance",
   },
   {
-    src: "/media/images/v2/bento-plan.jpg",
+    src: "/media/images/track/straight-elevated-bw.jpg",
     title: "Plan: Week 1 grid",
     note: "Day-by-day grid showing a personalised first week.",
     credit: "Suth Performance",
   },
   {
-    src: "/media/images/v2/bento-progress.jpg",
+    src: "/media/images/track/bend-lanes-bw.jpg",
     title: "Progression view",
     note: "Athlete logging splits and station times across a 12-week block.",
     credit: "Suth Performance",
   },
   {
-    src: "/media/images/v2/quiz-interstitial-1.jpg",
+    src: "/media/images/track/palms-sunflare-pair-bw.jpg",
     title: "Quiz: interstitial",
     note: "Mid-funnel reassurance screen from the 15-screen plan-builder quiz.",
     credit: "Suth Performance",
   },
   {
-    src: "/media/images/ben/ben-portrait-placeholder.jpg",
+    src: "/media/images/track/coach-avatar-colour.jpg",
     title: "Founder portrait: Ben Sutherland",
     note: "Placeholder. Approved press photography of Ben to follow.",
     credit: "Suth Performance",

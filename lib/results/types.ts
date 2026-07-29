@@ -59,7 +59,7 @@ export type RaceEvent = {
   divisions: EventDivision[];
   totalAthletes: number;
   slotCount: number; // wave slots
-  heroImage?: string; // /media/images/v2/...
+  heroImage?: string; // /media/images/track/...
 };
 
 export type Athlete = {

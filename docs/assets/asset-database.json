@@ -1,0 +1,879 @@
+{
+  "generated": "2026-07-29",
+  "source": "Google Drive exports: Track Pics, Track Vids (Elite 15 Race Pics download was empty, see notes)",
+  "licence": "Owner-supplied, copyright-free for Suth Performance use (per Kieron, 2026-07-29)",
+  "originals": "photos/suth-track/{pics,vids}/ (gitignored) and ~/Downloads",
+  "notes": [
+    "Elite 15 Race Pics zip (218 bytes) contained an empty folder; re-download needed.",
+    "Duplicate files with \"(1)\" suffix in the Drive export were byte-identical and excluded.",
+    "Kit in several shots carries THETA RACE TEAM / AEPT branding; noted per asset where readable.",
+    "C0110/C0111/C0112/C0126 were shot with rotated metadata and need 90-degree correction before use."
+  ],
+  "photos": [
+    {
+      "file": "DSC05139.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Wide empty track, tall palms, lone athlete in far distance",
+      "quality": 4,
+      "uses": [
+        "section backdrop",
+        "about scene-setting"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05179-2.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Pair running front-on down the straight, palms behind, colour grade",
+      "quality": 5,
+      "uses": [
+        "hero",
+        "landing feature",
+        "programmes card"
+      ],
+      "branding": "AEPT caps, orca vests"
+    },
+    {
+      "file": "DSC05179.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Pair running front-on, black and white edit of 05179-2",
+      "quality": 5,
+      "uses": [
+        "hero",
+        "about story",
+        "OG image"
+      ],
+      "branding": "AEPT caps, orca vests"
+    },
+    {
+      "file": "DSC05196.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Distant pair on back straight in low light, near-silhouette",
+      "quality": 3,
+      "uses": [
+        "moody divider",
+        "quote background"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05280-2.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Rear elevated view of pair rounding onto the bend, red track, colour",
+      "quality": 4,
+      "uses": [
+        "how-it-works",
+        "programmes"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05280.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Rear elevated pair on bend, black and white edit",
+      "quality": 4,
+      "uses": [
+        "section image",
+        "blog cover"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05293.jpg",
+      "width": 3936,
+      "height": 2624,
+      "orient": "landscape",
+      "bw": false,
+      "subject": "LANDSCAPE: empty stands with two runners passing, muted colour",
+      "quality": 4,
+      "uses": [
+        "mobile hero",
+        "OG image",
+        "wide banner"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05317.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Elevated bend with painted lane numbers, pair running, black and white",
+      "quality": 5,
+      "uses": [
+        "analysis/benchmarks",
+        "blog cover",
+        "poster-style section"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05370.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Sun flare over track, pair mid-stride below floodlight, black and white",
+      "quality": 5,
+      "uses": [
+        "hero",
+        "quote background",
+        "about"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05409-2.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Front-on close pair, stadium steps behind, colour",
+      "quality": 5,
+      "uses": [
+        "hero",
+        "coaching section"
+      ],
+      "branding": "AEPT caps, orca vest"
+    },
+    {
+      "file": "DSC05409.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Front-on close pair, black and white edit of 05409-2",
+      "quality": 5,
+      "uses": [
+        "hero",
+        "about",
+        "press portrait alternative"
+      ],
+      "branding": "AEPT caps, orca vest"
+    },
+    {
+      "file": "DSC05412-2.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Rear close crop of pair, vest text readable, black and white",
+      "quality": 4,
+      "uses": [
+        "together/team section"
+      ],
+      "branding": "THETA RACE TEAM vests readable"
+    },
+    {
+      "file": "DSC05412.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Rear close crop of pair, colour",
+      "quality": 4,
+      "uses": [
+        "together/team section"
+      ],
+      "branding": "THETA RACE TEAM vests readable"
+    },
+    {
+      "file": "DSC05429.jpg",
+      "width": 2456,
+      "height": 3684,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Very tall palms, tiny runners passing below, black and white",
+      "quality": 4,
+      "uses": [
+        "editorial divider",
+        "blog cover"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05430-2.jpg",
+      "width": 2490,
+      "height": 3735,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Tall palms and street lamp, runners small in frame, teal colour",
+      "quality": 4,
+      "uses": [
+        "editorial divider"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05430.jpg",
+      "width": 2490,
+      "height": 3735,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Tall palms scene, black and white edit",
+      "quality": 4,
+      "uses": [
+        "editorial divider"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05527-2.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "High elevated view of straight, pair small, black and white",
+      "quality": 4,
+      "uses": [
+        "plan/overview section"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05527-3.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "High elevated view of straight, colour",
+      "quality": 4,
+      "uses": [
+        "plan/overview section"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05543.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Scoreboard bend, solo runner, colour",
+      "quality": 4,
+      "uses": [
+        "race analysis",
+        "events"
+      ],
+      "branding": "Gauchos scoreboard readable"
+    },
+    {
+      "file": "DSC05568-2.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Elevated rear pair on straight, colour",
+      "quality": 4,
+      "uses": [
+        "section image"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05568.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Elevated pair with floodlight pole, black and white",
+      "quality": 4,
+      "uses": [
+        "section image"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05576-2.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Elevated pair on straight from stands, colour",
+      "quality": 4,
+      "uses": [
+        "section image"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05576.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Elevated pair, dark black and white edit",
+      "quality": 3,
+      "uses": [
+        "moody divider"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05581-2.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Wide stadium bend, town beyond, runners distant, colour",
+      "quality": 4,
+      "uses": [
+        "wide banner",
+        "events"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05581.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Wide stadium bend, black and white edit",
+      "quality": 4,
+      "uses": [
+        "wide banner"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05593-2.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Palms with sun flare, pair standing on track, colour",
+      "quality": 5,
+      "uses": [
+        "recovery/rest section",
+        "about"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05593.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Palms sun flare pair standing, black and white edit",
+      "quality": 5,
+      "uses": [
+        "recovery section",
+        "quote background"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05606-2.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Rear view walking pair, stadium staircase, colour",
+      "quality": 4,
+      "uses": [
+        "recovery",
+        "coaching support"
+      ],
+      "branding": "THETA RACE TEAM partially readable"
+    },
+    {
+      "file": "DSC05606.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Rear walking pair by staircase, black and white edit",
+      "quality": 4,
+      "uses": [
+        "recovery",
+        "contact"
+      ],
+      "branding": "THETA RACE TEAM partially readable"
+    },
+    {
+      "file": "DSC05640.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Under the stands: bike erg, chairs, kit bags, athletes changing, black and white",
+      "quality": 4,
+      "uses": [
+        "stations/equipment",
+        "nutrition",
+        "behind-the-scenes"
+      ],
+      "branding": "GILL on equipment"
+    },
+    {
+      "file": "DSC05846.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Solo athlete checking watch on empty track, palms behind, black and white",
+      "quality": 5,
+      "uses": [
+        "today/plan",
+        "tracking/quiz",
+        "blog cover"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05912-2.jpg",
+      "width": 2963,
+      "height": 1481,
+      "orient": "landscape",
+      "bw": true,
+      "subject": "PANORAMIC LANDSCAPE: two athletes standing on track, stands and palms, black and white",
+      "quality": 4,
+      "uses": [
+        "mobile hero",
+        "wide banner"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05912.jpg",
+      "width": 3772,
+      "height": 1886,
+      "orient": "landscape",
+      "bw": true,
+      "subject": "PANORAMIC LANDSCAPE: wider crop of standing pair, black and white",
+      "quality": 4,
+      "uses": [
+        "mobile hero",
+        "OG image"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05933.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Three runners on far bend, high-jump mat right, dark colour",
+      "quality": 3,
+      "uses": [
+        "group/community section"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05941.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Three runners in step, elevated close, colour",
+      "quality": 5,
+      "uses": [
+        "community",
+        "programmes",
+        "coaching"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05947.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": true,
+      "subject": "Wide stands with three tiny runners on straight, black and white",
+      "quality": 4,
+      "uses": [
+        "wide banner",
+        "divider"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "DSC05957.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Rear view three runners passing scoreboard, colour",
+      "quality": 4,
+      "uses": [
+        "events",
+        "community"
+      ],
+      "branding": "Gauchos scoreboard readable"
+    },
+    {
+      "file": "DSC05976.jpg",
+      "width": 2624,
+      "height": 3936,
+      "orient": "portrait",
+      "bw": false,
+      "subject": "Front-on three runners in overcast light, palms, colour",
+      "quality": 3,
+      "uses": [
+        "community"
+      ],
+      "branding": "none readable"
+    }
+  ],
+  "videos": [
+    {
+      "file": "C0083.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 10.5,
+      "sizeMB": 134,
+      "subject": "Rowing erg session in gym, athlete seated then rowing, others behind",
+      "quality": 4,
+      "uses": [
+        "stations (row)",
+        "training section loop"
+      ],
+      "branding": "kit logos small"
+    },
+    {
+      "file": "C0084.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 4.5,
+      "sizeMB": 59,
+      "subject": "Ski erg pulls in warehouse gym, short clip",
+      "quality": 3,
+      "uses": [
+        "stations (ski erg)"
+      ],
+      "branding": "gym wall art"
+    },
+    {
+      "file": "C0085.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 8.5,
+      "sizeMB": 113,
+      "subject": "Ski erg side profile, rowers in background",
+      "quality": 4,
+      "uses": [
+        "stations (ski erg)"
+      ],
+      "branding": "BLITZ frame text"
+    },
+    {
+      "file": "C0086.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 20.5,
+      "sizeMB": 268,
+      "subject": "Close-up rowing erg, intense effort, sweat",
+      "quality": 5,
+      "uses": [
+        "stations (row)",
+        "intensity section"
+      ],
+      "branding": "kit logo small"
+    },
+    {
+      "file": "C0087.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 10,
+      "sizeMB": 122,
+      "subject": "Rear view two athletes on ergs in dark gym",
+      "quality": 4,
+      "uses": [
+        "training loop",
+        "members section"
+      ],
+      "branding": "THETA on shirt"
+    },
+    {
+      "file": "C0092.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 18,
+      "sizeMB": 227,
+      "subject": "Empty stands pan under blue sky, no athletes",
+      "quality": 3,
+      "uses": [
+        "background texture",
+        "section break"
+      ],
+      "branding": "none"
+    },
+    {
+      "file": "C0093.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 19.5,
+      "sizeMB": 247,
+      "subject": "Walking recovery between reps, candid, then rear track view",
+      "quality": 4,
+      "uses": [
+        "recovery section",
+        "about"
+      ],
+      "branding": "AEPT cap, RACE TEAM vest"
+    },
+    {
+      "file": "C0094.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 15.5,
+      "sizeMB": 206,
+      "subject": "Running toward camera then follow shot down straight, golden light",
+      "quality": 5,
+      "uses": [
+        "hero",
+        "landing feature"
+      ],
+      "branding": "orca vests"
+    },
+    {
+      "file": "C0095.MP4",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30",
+      "duration": 58.6,
+      "sizeMB": 130,
+      "subject": "Long take: pair running various angles, front-on close-ups",
+      "quality": 4,
+      "uses": [
+        "hero",
+        "b-roll pool"
+      ],
+      "branding": "orca vests"
+    },
+    {
+      "file": "C0096.MP4",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30",
+      "duration": 39,
+      "sizeMB": 84,
+      "subject": "Side pan of pair striding down straight, shadows long",
+      "quality": 5,
+      "uses": [
+        "hero",
+        "programmes loop"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "C0097.MP4",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30",
+      "duration": 40.5,
+      "sizeMB": 92,
+      "subject": "Pair running toward camera at bend, then rear follow",
+      "quality": 4,
+      "uses": [
+        "b-roll"
+      ],
+      "branding": "kit logos"
+    },
+    {
+      "file": "C0102.MP4",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30",
+      "duration": 41.5,
+      "sizeMB": 92,
+      "subject": "Low-angle track-level sun flare, runners pass through frame distant",
+      "quality": 5,
+      "uses": [
+        "HERO (cinematic)",
+        "quote background loop"
+      ],
+      "branding": "none"
+    },
+    {
+      "file": "C0105.MP4",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30",
+      "duration": 65.6,
+      "sizeMB": 147,
+      "subject": "Long take: pair running bend and straight, elevated and side angles",
+      "quality": 4,
+      "uses": [
+        "b-roll pool"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "C0109.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 14,
+      "sizeMB": 176,
+      "subject": "Rowing erg side profile against bright window, coach standing",
+      "quality": 4,
+      "uses": [
+        "coaching section",
+        "stations (row)"
+      ],
+      "branding": "FIT sign partial"
+    },
+    {
+      "file": "C0110.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 16.5,
+      "sizeMB": 210,
+      "subject": "ROTATED 90: dark silhouette on erg against window",
+      "quality": 2,
+      "uses": [
+        "needs rotation, backup only"
+      ],
+      "branding": "none"
+    },
+    {
+      "file": "C0111.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 9,
+      "sizeMB": 122,
+      "subject": "ROTATED 90: dark silhouette movement",
+      "quality": 2,
+      "uses": [
+        "needs rotation, backup only"
+      ],
+      "branding": "none"
+    },
+    {
+      "file": "C0112.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 2.5,
+      "sizeMB": 38,
+      "subject": "ROTATED 90: very short dark clip",
+      "quality": 1,
+      "uses": [
+        "skip"
+      ],
+      "branding": "none"
+    },
+    {
+      "file": "C0122.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 6.5,
+      "sizeMB": 84,
+      "subject": "Rear follow of three runners onto bend, discus cage",
+      "quality": 4,
+      "uses": [
+        "community",
+        "programmes"
+      ],
+      "branding": "RACE TEAM vests"
+    },
+    {
+      "file": "C0123.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 6,
+      "sizeMB": 80,
+      "subject": "Side profile three runners sprint past stands, clean composition",
+      "quality": 5,
+      "uses": [
+        "hero",
+        "landing loop"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "C0124.MP4",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30",
+      "duration": 22.5,
+      "sizeMB": 55,
+      "subject": "Side profile runners past stands, longer take, 1080p",
+      "quality": 4,
+      "uses": [
+        "hero alternative",
+        "b-roll"
+      ],
+      "branding": "none readable"
+    },
+    {
+      "file": "C0126.MP4",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30",
+      "duration": 29.5,
+      "sizeMB": 67,
+      "subject": "ROTATED 90: runners past stands portrait",
+      "quality": 2,
+      "uses": [
+        "needs rotation, social/vertical"
+      ],
+      "branding": "none"
+    },
+    {
+      "file": "C0127.MP4",
+      "width": 3840,
+      "height": 2160,
+      "fps": "30",
+      "duration": 10,
+      "sizeMB": 126,
+      "subject": "Wide stands, runners tiny passing right to left",
+      "quality": 3,
+      "uses": [
+        "background loop"
+      ],
+      "branding": "none"
+    },
+    {
+      "file": "C0130.MP4",
+      "width": 1920,
+      "height": 1080,
+      "fps": "30",
+      "duration": 61.6,
+      "sizeMB": 134,
+      "subject": "Long wide take of stands, runner passes occasionally",
+      "quality": 3,
+      "uses": [
+        "background loop"
+      ],
+      "branding": "none"
+    }
+  ]
+}

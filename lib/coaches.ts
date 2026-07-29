@@ -11,7 +11,7 @@ export type CoachTile = {
   credentials: string[];
   bio?: string;
   socials?: { instagram?: string; tiktok?: string };
-  /** Looping background video (Pexels CDN) used on the public hub tile. */
+  /** Looping background video (self-hosted) used on the public hub tile. */
   video?: { src: string; poster?: string };
   /** Static portrait image, preferred over video where available. */
   image?: string;
@@ -30,8 +30,8 @@ export const COACHES: CoachTile[] = [
     credentials: ["HYROX ELITE 15", "PRO DOUBLES RACE WINNER", "BEGINNER TO PRO COACHING"],
     bio: "Ben Sutherland races in the HYROX Elite 15, competing in Doubles with his brother Harry. He qualified for the Elite 15 at Miami, has multiple Pro Doubles wins including Rotterdam and Glasgow, and his best Doubles times sit around the 49 to 51 minute mark. He coaches athletes from their first race to professional level.",
     socials: { instagram: "https://instagram.com/bennysuth95" },
-    // PLACEHOLDER: replace with Ben's real portrait when supplied.
-    image: "/media/images/ben/ben-portrait-placeholder.jpg",
+    // From the team shoot; swap for a dedicated portrait of Ben if preferred.
+    image: "/media/images/track/solo-watch-bw.jpg",
     kind: "coach",
   },
   {
@@ -40,7 +40,7 @@ export const COACHES: CoachTile[] = [
     role: "HOW THE PROGRAMMING WORKS",
     credentials: [],
     bio: "Structured, progressive blocks that work backwards from the eight stations and eight runs. Every week is dated to your race, rebuilt each Sunday from what you logged.",
-    image: "/media/images/v2/coach-2.jpg",
+    image: "/media/images/track/pair-bend-rear-colour.jpg",
     kind: "principle",
   },
   {
@@ -49,7 +49,7 @@ export const COACHES: CoachTile[] = [
     role: "WHAT EVERY ATHLETE GETS",
     credentials: [],
     bio: "The same structure Ben uses to prepare for Elite 15 racing, scaled to your level. First-timer or pro, the programming principles do not change. The loading does.",
-    image: "/media/images/v2/coach-3.jpg",
+    image: "/media/images/track/sunflare-stride-bw.jpg",
     kind: "principle",
   },
 ];

@@ -26,22 +26,22 @@ const VIGNETTES: Vignette[] = [
     stamp: "Tuesday, 6:15 am",
     title: "Day 2. Hyrox-specific session.",
     body: "Run plus sled push intervals. 45 minutes. Log it in the app.",
-    image: "/media/images/v2/programme-first-race.jpg",
-    alt: "Athlete running and pushing a sled in a gym",
+    image: "/media/images/track/trio-stride-colour.jpg",
+    alt: "Three athletes running in step on the track",
   },
   {
     stamp: "Thursday, 7:30 pm",
     title: "Strength block.",
     body: "Compound lifts and Hyrox-relevant accessories. 60 minutes. Video form checks on key sets.",
-    image: "/media/images/v2/programme-sub-90-v2.jpg",
-    alt: "Athlete lifting in a gym during a strength block",
+    image: "/media/images/track/gym-row-close-colour.jpg",
+    alt: "Close-up of a hard rowing interval in the gym",
   },
   {
     stamp: "Saturday, 8:00 am",
     title: "Race simulation. The big one.",
     body: "8 stations and 8 by 1km run. 90 minutes. The session that builds belief.",
-    image: "/media/images/v2/programme-pro.jpg",
-    alt: "Athlete mid race-simulation",
+    image: "/media/images/track/scoreboard-bend-solo-colour.jpg",
+    alt: "Solo runner rounding the track bend past the scoreboard",
   },
 ];
 

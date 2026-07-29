@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/media/images/v2/partners-coach-warm.jpg",
+        url: "/media/images/track/pair-close-frontal-colour.jpg",
         width: 1200,
         height: 630,
         alt: "Suth Performance coach in a gym session",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: "Suth Performance Partner Programme",
     description:
       "Earn 30 to 50 percent lifetime commission. Monthly BACS payouts.",
-    images: ["/media/images/v2/partners-coach-warm.jpg"],
+    images: ["/media/images/track/pair-close-frontal-colour.jpg"],
   },
 };
 
@@ -147,7 +147,7 @@ export default function PartnersPage() {
         >
           <div aria-hidden className="absolute inset-0 -z-10">
             <Image
-              src="/media/images/v2/bento-coaches.jpg"
+              src="/media/images/track/trio-stride-colour.jpg"
               alt=""
               fill
               priority
@@ -268,9 +268,9 @@ export default function PartnersPage() {
                   // Coaches card uses h2 (real Adobe Stock from /photos)
                   // so the partner-acquisition page leads with a real
                   // person; the other two stay on Pexels stock.
-                  "/media/images/v2/partners-coach-warm.jpg",
-                  "/media/images/v2/about-portrait.jpg",
-                  "/media/images/v2/testimonial-doubles.jpg",
+                  "/media/images/track/pair-close-frontal-colour.jpg",
+                  "/media/images/track/walk-stairs-colour.jpg",
+                  "/media/images/track/pair-rear-close-colour.jpg",
                 ][i];
                 return (
                   <li

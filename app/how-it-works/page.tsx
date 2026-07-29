@@ -25,7 +25,7 @@ const STEPS: Step[] = [
   {
     number: "01",
     label: "Take the quiz",
-    image: "/media/images/v2/quiz-interstitial-1.jpg",
+    image: "/media/images/track/solo-watch-bw.jpg",
     body: [
       "Around 3 minutes. We ask about your race, your experience, the time you can commit, the kit you can train with, and any injuries to plan around.",
       "Single-select questions auto-advance. Multi-select uses a Continue button. Your answers save as you go, so a refresh, a phone call, or a closed tab doesn't cost you anything.",
@@ -34,7 +34,7 @@ const STEPS: Step[] = [
   {
     number: "02",
     label: "See your Week 1",
-    image: "/media/images/v2/bento-plan.jpg",
+    image: "/media/images/track/straight-elevated-colour.jpg",
     body: [
       "Real workouts, dated, before you pay. Day-by-day for the next seven days, structured to fit the time you have and the kit you have access to.",
       "Tap any day to open the full session: warm-up, main block, cool-down. Total time, intensity zone, every block listed. No demo screens. This is your actual first week.",
@@ -43,7 +43,7 @@ const STEPS: Step[] = [
   {
     number: "03",
     label: "Start your trial",
-    image: "/media/images/v2/programme-first-race.jpg",
+    image: "/media/images/track/pair-frontal-colour.jpg",
     body: [
       "7 days free. No commitment.",
       "From day 1, Ben Sutherland, your Elite 15 coach, is monitoring your progress, ready to answer questions about your training, your form, your race strategy.",
@@ -54,10 +54,7 @@ const STEPS: Step[] = [
   {
     number: "04",
     label: "Train and adapt",
-    // 1.1D: was bento-progress (watch metrics) — read as
-    // "self-tracker" rather than "coach reviews + adapts your plan".
-    // New shot puts athlete + coach reviewing data together.
-    image: "/media/images/v2/adapt-coaching.jpg",
+    image: "/media/images/track/gym-coach-row-colour.jpg",
     body: [
       "Every Sunday, your plan rebuilds based on what you logged.",
       "Hit a session feeling strong? Next week pushes harder. Missed two sessions? We rebuild with more recovery.",

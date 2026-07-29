@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     locale: "en_GB",
     images: [
       {
-        url: "/media/images/v2/programme-first-race.jpg",
+        url: "/media/images/track/programme-first-race.jpg",
         width: 1200,
         height: 630,
         alt: "Hyrox athlete training",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "Hyrox training across the UK. Suth Performance",
     description:
       "Personalised 12-week Hyrox plans for every UK city.",
-    images: ["/media/images/v2/programme-first-race.jpg"],
+    images: ["/media/images/track/programme-first-race.jpg"],
   },
   robots: { index: true, follow: true },
 };
