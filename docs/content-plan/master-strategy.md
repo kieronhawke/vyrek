@@ -8,6 +8,8 @@ The brief: a minimum of 400 HYROX posts and 300 personal-training posts, each
 planned with target, keyword, rationale, volume, method, SEO strategy, image
 plan, metadata and mobile/sharing treatment.
 
+**Delivered: 792 posts — 454 HYROX, 338 PT.**
+
 ---
 
 ## 1. The honest maths first
@@ -17,9 +19,10 @@ posts share that budget with location pages. At a blog share of ~15/month:
 
 | Milestone | When |
 |---|---|
-| Wave 1 complete (70 highest-value posts) | ~month 5 |
-| 400 HYROX posts | ~month 27 |
-| Full 700+ inventory | ~month 47 |
+| Wave 1 complete (87 highest-value posts) | ~month 6 |
+| Waves 1–2 (257 posts) | ~month 17 |
+| 454 HYROX posts | ~month 30 |
+| Full 792-post inventory | ~month 53 |
 
 This is a **multi-year editorial pipeline, sequenced by commercial value** —
 that is what the `wave` column encodes. Attempting 700 posts in months would
@@ -37,6 +40,29 @@ is the map; the waves are the route.
 - Posts with `status = refresh` are existing live posts upgraded to this
   standard — refreshes are cheap wins and **do not count against the
   new-page velocity cap.**
+
+## 1b. Five research findings that drive the whole plan
+
+From the live competitor audits (`competitor-findings.md`):
+
+1. **"HYROX training plan" and "hyrox stations" have no independent
+   specialist in the top 5.** Big-DA gyms hold them with thin content; a
+   tutoring marketplace ranks for the stations query. Biggest openings in
+   the niche.
+2. **"Couch to HYROX" is owned by nobody.** The top-of-funnel term for our
+   entire beginner segment is unclaimed. Wave 1, flagship pillar.
+3. **The Elite 15 byline is a proven ranking factor.** A competitor ranks
+   top-5 on a hugely contested term substantially on "From Elite 15
+   Athlete [name]" in the title. Ben has that credential natively — it goes
+   in **title tags**, not just the About page.
+4. **Venue intelligence is a structural gap.** Everyone writes city guides
+   (dates, tickets, hotels). Nobody writes floor surfaces, arena heat,
+   course-length variance, wave timing or RoxZone geometry — the things a
+   competitor actually needs.
+5. **UK PT search is contaminated by course sellers.** OriGym and similar
+   rank for client keyword strings with "become a PT" intent. Every
+   client-intent title must signal buyer framing ("cost you", "should you",
+   "before you pay") or Google reads us as their near-duplicate.
 
 ## 2. Why these targets (selection logic)
 
@@ -187,6 +213,27 @@ Mapped per cluster, not per whim:
   bookings) — posts are judged on assisted conversions, not pageviews.
 - Quarterly: cull-or-improve review of anything with zero impressions at
   9 months (thin-content hygiene Google rewards).
+
+## 8b. Five cheap moves the research surfaced
+
+Not posts, but they multiply what the posts achieve. Each is a day or less
+of work:
+
+1. **Put "Elite 15" in title tags** where it is honestly relevant. Proven
+   ranking factor in this niche (finding 3 above). Costs nothing.
+2. **Publish an editorial-standards page** naming the source hierarchy:
+   official HYROX data → peer-reviewed position stands (ISSN/ACSM/IOC) →
+   Ben's own logged training. A rival does this and it is a strong E-E-A-T
+   signal for cheap.
+3. **Submit a separate image sitemap.** A competitor ranks in Google Images
+   off the back of one. Trivial to add.
+4. **Build the free-tools bundle** (pace calculator, session timer,
+   equipment substitution table, packing checklist). Rivals use exactly
+   this to acquire links, and no UK brand owns the PT-side equivalents —
+   cost calculator, coaching-model quiz, regional price index.
+5. **Serialise the big clusters.** Multi-part masterclasses published on a
+   cadence build internal linking and return visits better than standalone
+   posts. The race-week and station clusters are natural series.
 
 ## 9. Dependencies and blockers (honest list)
 

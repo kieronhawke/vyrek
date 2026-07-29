@@ -16,6 +16,7 @@ personal training. Prepared 29 July 2026 to Kieron's brief.
 | `post-template-spec.md` | How an individual post gets built: structure, voice, checklist, workflow. |
 | `image-and-media-plan.md` | Image sourcing ladder, AI generation standards, authenticity QA, OG treatment, performance. |
 | `competitor-findings.md` | Competitor content audit and the gaps the plan exploits. |
+| `hyrox_seeds.py` / `pt_seeds.py` / `build_inventory.py` | The generators. Edit the seed files and re-run `python3 build_inventory.py` to regenerate both CSVs. Volumes/KD are joined from `docs/strategy/data/keywords.csv` at build time and are never hand-typed, so no invented figure can enter the plan. |
 
 ## CSV columns
 
@@ -41,12 +42,15 @@ personal training. Prepared 29 July 2026 to Kieron's brief.
 
 ## Headline numbers
 
-- **711 posts total**: 407 HYROX + 304 PT
-- **122 posts** target keywords with real Semrush volume data
+- **792 posts total**: 454 HYROX + 338 PT
+- **122 posts** target keywords with real Semrush volume data; the rest
+  come from the question inventory (196 real questions collected from live
+  SERPs) and confirmed competitor gaps
+- **38 pillars · 666 guides · 88 glossary/FAQ micro-posts**
 - **30 posts** are refreshes of existing live content — the fastest wins
-- **17 posts** blocked on the results-data decision
-- Image mix: 100 own-photo, 127 data-graphic, 352 AI-generated, plus
-  132 glossary/FAQ micro-posts that mostly use typographic cards
+- **23 posts** blocked on the results-data decision
+- Image mix: 115 own-photo, 187 data-graphic, 490 AI-generated
+- Waves: 87 · 170 · 266 · 269
 
 ## Integrity check
 

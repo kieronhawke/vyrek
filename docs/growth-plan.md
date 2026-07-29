@@ -86,6 +86,29 @@ Pricing psychology carried from the pack + competitor research:
   costs — that comparison goes on every location page.
 - Every tier upgrade path is visible inside the product.
 
+### 3.1 Pricing policy (Kieron, 29 July 2026)
+
+**No pricing is published anywhere on the site.** Every path leads to a
+free consultation (or free session/training call) with Ben; packages and
+prices are agreed on the call. Implemented sitewide the same day: all
+marketing prices stripped, /pricing rebuilt as a no-numbers Coaching
+Options page, /free-consultation lead-capture page live. Legal pages and
+member billing retain real prices. Tension flagged honestly: the SERP
+research found no coaching competitor publishes prices and argued
+transparency converts; the call-first model trades that for lead quality
+and tailored closes — revisit with funnel data.
+
+### 3.2 Funnel tone split (Kieron, 29 July 2026)
+
+Two distinct paths through the assessment funnel:
+- **Beginner path**: no HYROX intimidation at the entry. Caring, soft,
+  motivational; anxiety-reduction copy throughout; HYROX introduced later
+  as an option, never a prerequisite.
+- **HYROX path**: talks like a coach who respects them — race history,
+  targets, station weaknesses, the questions athletes actually want asked.
+Both end at the same place: the free call with Ben. This is quiz v4
+(pack's 28-screen dual-branch spec) — next build phase.
+
 ## 4. The funnel (consultative core)
 
 The user-facing shape, per Kieron's brief: a free, valuable front-end
@@ -252,6 +275,18 @@ reminders); the existing partner programme pointed at gyms and run clubs;
 seasonal spikes (January, ticket-release days, pre-race weeks per city);
 original data studies + annual "State of HYROX" report when the results
 layer exists.
+
+## 8.5 HYROX SERP research (who ranks, what we beat them on)
+
+Full report: **docs/hyrox-seo-competitor-research.md**. Headlines: the
+"hyrox coach" SERPs are dominated by the official directory and
+become-a-coach content, with client intent barely served; city terms are
+won by gym class pages that name no coaches; "couch to hyrox" is
+near-vacant and ours to take; free long-form plans beat paid pages;
+bare calculators are saturated. Nobody in the market pairs a named elite
+athlete with personalised coaching and published methodology — that
+combination is the moat. Quick wins: Ben's optimised profile on
+coaches.hyrox.com, and pursuing official Online Training Partner status.
 
 ## 9. Competition
 
