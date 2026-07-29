@@ -80,3 +80,21 @@ Originals: photos/suth-track/{pics,vids}/ (gitignored) and ~/Downloads
 | C0126.MP4 | 1920x1080@30 | 29.5s | 67MB | 2/5 | ROTATED 90: runners past stands portrait | none | needs rotation, social/vertical |
 | C0127.MP4 | 3840x2160@30 | 10s | 126MB | 3/5 | Wide stands, runners tiny passing right to left | none | background loop |
 | C0130.MP4 | 1920x1080@30 | 61.6s | 134MB | 3/5 | Long wide take of stands, runner passes occasionally | none | background loop |
+
+## Generated guide images (AI, not photographs)
+
+`public/media/images/guides/station-*.jpg`, created 2026-07-29 with Google
+Gemini 2.5 Flash Image for the eight station guides (the shoot has no
+sled, wall-ball, burpee, or farmers footage). Illustrative only, no real
+athletes depicted. Swap for real station photography when available.
+
+| File | Subject |
+|---|---|
+| station-ski-erg.jpg | Vertical ski erg, mid pull |
+| station-sled-push.jpg | Weighted sled drive on turf |
+| station-sled-pull.jpg | Rope sled pull |
+| station-burpees.jpg | Burpee broad jump mid-leap |
+| station-row.jpg | Rowing erg at full drive |
+| station-farmers.jpg | Farmers carry with kettlebells |
+| station-sandbag.jpg | Sandbag walking lunge |
+| station-wall-balls.jpg | Wall ball throw at target |

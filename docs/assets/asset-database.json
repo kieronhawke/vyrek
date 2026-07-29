@@ -7,7 +7,8 @@
     "Elite 15 Race Pics zip (218 bytes) contained an empty folder; re-download needed.",
     "Duplicate files with \"(1)\" suffix in the Drive export were byte-identical and excluded.",
     "Kit in several shots carries THETA RACE TEAM / AEPT branding; noted per asset where readable.",
-    "C0110/C0111/C0112/C0126 were shot with rotated metadata and need 90-degree correction before use."
+    "C0110/C0111/C0112/C0126 were shot with rotated metadata and need 90-degree correction before use.",
+    "public/media/images/guides/station-*.jpg are AI-GENERATED (Google Gemini 2.5 Flash Image) illustrations of the eight HYROX stations, created 2026-07-29 because the shoot has no sled/wall-ball/burpee/farmers footage. They are illustrative, not photographs of Ben. Swap for real station photography when available."
   ],
   "photos": [
     {
@@ -874,6 +875,48 @@
         "background loop"
       ],
       "branding": "none"
+    }
+  ],
+  "generatedImages": [
+    {
+      "file": "station-ski-erg.jpg",
+      "source": "Gemini 2.5 Flash Image",
+      "subject": "Athlete on vertical ski erg, mid pull"
+    },
+    {
+      "file": "station-sled-push.jpg",
+      "source": "Gemini 2.5 Flash Image",
+      "subject": "Athlete driving weighted sled on turf"
+    },
+    {
+      "file": "station-sled-pull.jpg",
+      "source": "Gemini 2.5 Flash Image",
+      "subject": "Athlete rope-pulling weighted sled"
+    },
+    {
+      "file": "station-burpees.jpg",
+      "source": "Gemini 2.5 Flash Image",
+      "subject": "Burpee broad jump mid-leap"
+    },
+    {
+      "file": "station-row.jpg",
+      "source": "Gemini 2.5 Flash Image",
+      "subject": "Rowing erg at full drive"
+    },
+    {
+      "file": "station-farmers.jpg",
+      "source": "Gemini 2.5 Flash Image",
+      "subject": "Farmers carry with kettlebells"
+    },
+    {
+      "file": "station-sandbag.jpg",
+      "source": "Gemini 2.5 Flash Image",
+      "subject": "Sandbag walking lunge"
+    },
+    {
+      "file": "station-wall-balls.jpg",
+      "source": "Gemini 2.5 Flash Image",
+      "subject": "Wall ball throw at target"
     }
   ]
 }

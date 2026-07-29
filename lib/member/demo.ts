@@ -854,7 +854,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     durationSec: 90,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/track/programme-pro.jpg",
+    thumbnail: "/media/images/guides/station-sled-push.jpg",
   },
   {
     id: "v2",
@@ -862,7 +862,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     durationSec: 120,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/track/gym-ergs-dark-colour.jpg",
+    thumbnail: "/media/images/guides/station-wall-balls.jpg",
   },
   {
     id: "v3",
@@ -886,7 +886,7 @@ export const DEMO_VIDEOS: WorkoutVideo[] = [
     durationSec: 95,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/track/gym-row-close-colour.jpg",
+    thumbnail: "/media/images/guides/station-sandbag.jpg",
   },
   {
     id: "v6",
@@ -905,7 +905,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 145,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/track/gym-skierg-colour.jpg",
+    thumbnail: "/media/images/guides/station-ski-erg.jpg",
   },
   {
     id: "v8",
@@ -913,7 +913,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 165,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/track/gym-row-close-colour.jpg",
+    thumbnail: "/media/images/guides/station-sled-pull.jpg",
   },
   {
     id: "v9",
@@ -921,7 +921,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 110,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/track/gym-ergs-dark-colour.jpg",
+    thumbnail: "/media/images/guides/station-burpees.jpg",
   },
   {
     id: "v10",
@@ -929,7 +929,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 135,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/track/gym-row-close-colour.jpg",
+    thumbnail: "/media/images/guides/station-row.jpg",
   },
   {
     id: "v11",
@@ -937,7 +937,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 85,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/track/under-stands-kit-bw.jpg",
+    thumbnail: "/media/images/guides/station-farmers.jpg",
   },
   {
     id: "v12",
@@ -961,7 +961,7 @@ const DEMO_VIDEOS_EXTRA: WorkoutVideo[] = [
     durationSec: 125,
     category: "Technique",
     coach: "Ben Sutherland",
-    thumbnail: "/media/images/track/straight-elevated-colour.jpg",
+    thumbnail: "/media/images/guides/station-wall-balls.jpg",
   },
 ];
 
