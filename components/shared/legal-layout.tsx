@@ -5,7 +5,7 @@ import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { SplitHeading } from "@/components/shared/split-heading";
 
-const LAST_UPDATED_LABEL = "22 May 2026";
+const LAST_UPDATED_LABEL = "29 July 2026";
 
 export function LegalLayout({
   eyebrow,

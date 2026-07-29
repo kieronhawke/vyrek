@@ -136,6 +136,15 @@ export default function CookiesPage() {
         Suth Performance uses, why we use them, and how to opt out. We list every cookie
         we set, by category, in the tables below.
       </ProseP>
+      {/* PLACEHOLDER — COMPANY DETAILS: replace the bracketed values below
+          with the real registered company name, Companies House number, and
+          registered office address before launch. */}
+      <ProseP>
+        Suth Performance is operated by [REGISTERED COMPANY NAME TO BE
+        CONFIRMED], a company registered in England and Wales, company number
+        [COMPANIES HOUSE NUMBER TO BE CONFIRMED], registered office
+        [REGISTERED OFFICE ADDRESS TO BE CONFIRMED].
+      </ProseP>
 
       <ProseH2>What is a cookie?</ProseH2>
       <ProseP>
