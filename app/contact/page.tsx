@@ -20,16 +20,16 @@ const CONTACTS = [
     note: "Anything that does not fit a more specific inbox.",
   },
   {
-    tag: "Support",
-    label: "Product support",
+    tag: "Coaching",
+    label: "Coaching support",
     email: "support@suthperformance.com",
-    note: "Billing, plan issues, account changes, refunds.",
+    note: "Training questions, plan issues, billing, account changes, refunds.",
   },
   {
     tag: "Press",
-    label: "Press and partnerships",
+    label: "Press enquiries",
     email: "press@suthperformance.com",
-    note: "Media enquiries, athlete features, brand collaborations.",
+    note: "Media enquiries, interviews with Ben, brand collaborations.",
   },
 ];
 
@@ -108,6 +108,22 @@ export default function ContactPage() {
                   Website Settings → Setup Instructions.
                 */}
               </div>
+            </div>
+
+            <div className="mt-12 border-t border-suth-border-subtle pt-10">
+              <Eyebrow>Follow Ben</Eyebrow>
+              <p className="mt-3 text-base text-suth-text-secondary md:text-lg">
+                Training, racing, and behind the scenes:{" "}
+                <a
+                  href="https://instagram.com/bennysuth95"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-suth-accent underline-offset-4 hover:underline"
+                >
+                  @bennysuth95 on Instagram
+                </a>
+                .
+              </p>
             </div>
 
             <div className="mt-12 border-t border-suth-border-subtle pt-10">
