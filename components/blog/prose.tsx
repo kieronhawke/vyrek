@@ -156,9 +156,14 @@ function Hr() {
 }
 
 function Table({ children }: { children?: ReactNode }) {
+  // `min-w-0` is load-bearing: without it a grid/flex parent defaults to
+  // min-width:auto, refuses to shrink below the table's intrinsic width, and
+  // the whole page scrolls sideways on mobile instead of just the table.
   return (
-    <div className="mt-6 overflow-x-auto">
-      <table className="w-full text-sm md:text-base">{children}</table>
+    <div className="mt-6 min-w-0 max-w-full overflow-x-auto">
+      <table className="w-full min-w-[32rem] text-sm md:min-w-0 md:text-base">
+        {children}
+      </table>
     </div>
   );
 }

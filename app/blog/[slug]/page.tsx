@@ -234,9 +234,11 @@ export default async function BlogPostPage({
               >
                 <TableOfContents />
               </div>
+              {/* min-w-0 lets wide children (tables, charts, code) scroll
+                  inside themselves rather than widening the whole page. */}
               <div
                 id="article-body"
-                className="lg:col-start-2 lg:row-start-1"
+                className="min-w-0 lg:col-start-2 lg:row-start-1"
               >
                 <MDXRemote
                   source={post.content}
