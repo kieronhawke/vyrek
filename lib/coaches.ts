@@ -30,8 +30,8 @@ export const COACHES: CoachTile[] = [
     credentials: ["HYROX ELITE 15", "PRO DOUBLES RACE WINNER", "BEGINNER TO PRO COACHING"],
     bio: "Ben Sutherland races in the HYROX Elite 15, competing in Doubles with his brother Harry. He qualified for the Elite 15 at Miami, has multiple Pro Doubles wins including Rotterdam and Glasgow, and his best Doubles times sit around the 49 to 51 minute mark. He coaches athletes from their first race to professional level.",
     socials: { instagram: "https://instagram.com/bennysuth95" },
-    // From the team shoot; swap for a dedicated portrait of Ben if preferred.
-    image: "/media/images/track/solo-watch-bw.jpg",
+    // Real portrait of Ben, July 2026 intake. Replaces the team-shoot stand-in.
+    image: "/media/images/camp/camp-portrait-forders-banner.jpg",
     kind: "coach",
   },
   {

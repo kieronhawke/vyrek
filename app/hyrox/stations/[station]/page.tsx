@@ -20,18 +20,46 @@ import {
 } from "@/lib/hyrox-stations";
 import { siteUrl } from "@/lib/blog/urls";
 
-// AI-generated station illustrations (see docs/assets/asset-database.md).
-// Captioned as illustrations on-page; swap for real race photography when
-// it exists.
-const STATION_IMAGES: Record<string, string> = {
-  "ski-erg": "/media/images/guides/station-ski-erg.jpg",
-  "sled-push": "/media/images/guides/station-sled-push.jpg",
-  "sled-pull": "/media/images/guides/station-sled-pull.jpg",
-  "burpee-broad-jumps": "/media/images/guides/station-burpees.jpg",
-  rowing: "/media/images/guides/station-row.jpg",
-  "farmers-carry": "/media/images/guides/station-farmers.jpg",
-  "sandbag-lunges": "/media/images/guides/station-sandbag.jpg",
-  "wall-balls": "/media/images/guides/station-wall-balls.jpg",
+// Real photography from the July 2026 intake (docs/photo-library-2026-07.md),
+// except sled pull, which nothing in the set covers and so keeps its AI
+// illustration and the honest caption that goes with it.
+const STATION_IMAGES: Record<
+  string,
+  { src: string; alt: string; illustration?: boolean }
+> = {
+  "ski-erg": {
+    src: "/media/images/camp/camp-skierg-drive-dawn-wide.jpg",
+    alt: "Ben Sutherland driving down through a SkiErg pull at a training camp",
+  },
+  "sled-push": {
+    src: "/media/images/race/race-sled-push-wide.jpg",
+    alt: "Ben Sutherland low behind the sled, driving it down the lane at a race",
+  },
+  "sled-pull": {
+    src: "/media/images/guides/station-sled-pull.jpg",
+    alt: "Illustration of the sled pull station",
+    illustration: true,
+  },
+  "burpee-broad-jumps": {
+    src: "/media/images/camp/camp-burpee-broad-jump-turf-wide.jpg",
+    alt: "Hands down on the turf at the start of a burpee broad jump",
+  },
+  rowing: {
+    src: "/media/images/camp/camp-row-erg-front-wide.jpg",
+    alt: "Ben Sutherland mid-effort on the rower, seen across the flywheel",
+  },
+  "farmers-carry": {
+    src: "/media/images/race/chicago-farmers-carry-wide.jpg",
+    alt: "Two athletes carrying kettlebells down the farmers carry lane",
+  },
+  "sandbag-lunges": {
+    src: "/media/images/race/race-sandbag-lunge-wide.jpg",
+    alt: "Ben Sutherland lunging under a sandbag racked across his shoulders",
+  },
+  "wall-balls": {
+    src: "/media/images/race/race-wall-ball-wide.jpg",
+    alt: "Ben Sutherland in the bottom of a wall ball squat, eyes on the target",
+  },
 };
 
 export const revalidate = 86400;
@@ -189,14 +217,16 @@ export default async function StationPage({
               <figure className="-mx-4 mt-8 overflow-hidden rounded-2xl md:mx-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={STATION_IMAGES[s.slug]}
-                  alt={`Illustration of the ${s.name} station`}
+                  src={STATION_IMAGES[s.slug].src}
+                  alt={STATION_IMAGES[s.slug].alt}
                   className="aspect-[16/9] w-full object-cover"
                   loading="eager"
                   decoding="async"
                 />
                 <figcaption className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-                  Illustration, not race footage
+                  {STATION_IMAGES[s.slug].illustration
+                    ? "Illustration, not race footage"
+                    : "Our own photography"}
                 </figcaption>
               </figure>
             ) : null}
