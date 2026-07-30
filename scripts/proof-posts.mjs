@@ -64,7 +64,23 @@ const HEDGE =
 
 const CTA_HINTS = [
   /plan maker/i, /free assessment/i, /book a call/i, /coaching/i,
-  /the hub/i, /assessment/i, /get in touch/i, /work with/i,
+  /free consultation/i, /assessment/i, /get in touch/i, /work with/i,
+];
+
+/**
+ * Site policy (Kieron, 29 July 2026, docs/growth-plan.md §3.1): NO Suth
+ * pricing is published anywhere on the site. Every path ends at the free
+ * consultation. Quoting third-party market rates (what a local trainer
+ * charges, what a race entry costs) is fine and is often the point of the
+ * post — what must never appear is our own price.
+ */
+const OUR_PRICE = [
+  [/\bthe hub (?:sits at|is|costs)\b/i, "names a price for the Hub"],
+  [/\b(?:we|I) charge\b/i, "'we/I charge' — our pricing is not published"],
+  [/£\s?\d+(?:\.\d+)?\s*(?:a|per|\/)\s*month\b/i, "a monthly price — check it is not ours"],
+  [/\bour (?:price|pricing|rates?|fees?)\b(?!\s+(?:is not|are not))/i, "refers to our pricing"],
+  [/\b(?:coaching|the hub|one[- ]to[- ]one) (?:starts|starting) (?:at|from)\b/i, "quotes our entry price"],
+  [/\b\d+[- ]day (?:free )?trial\b/i, "a trial offer — check it is a competitor's, not ours"],
 ];
 
 const RICH = /<(BarChart|StatTile|Meter|Breakdown|Checklist|RaceCostCalculator|PaceCalculator|PtCostCalculator|ComparisonTable|RaceAnalytics|KeyTakeaways|Callout|StatGrid|SledCalculator|Leaderboard)/;
@@ -88,8 +104,15 @@ for (const file of files) {
   for (const k of need) {
     if (!new RegExp(`^${k}:`, "m").test(fm)) issues.push(`missing frontmatter: ${k}`);
   }
+  // app/layout.tsx applies `template: "%s · Suth Performance"`, so the title
+  // Google actually renders is seoTitle + 20 characters. Check that, not the
+  // raw field, or every post ships ~20 chars over the truncation point.
+  const SUFFIX = " · Suth Performance".length;
   const seoT = fm.match(/^seoTitle:\s*"(.*)"/m)?.[1];
-  if (seoT && seoT.length > 60) issues.push(`seoTitle ${seoT.length} chars (aim ≤60)`);
+  if (seoT && seoT.length + SUFFIX > 65)
+    issues.push(
+      `rendered title ${seoT.length + SUFFIX} chars incl. " · Suth Performance" (aim ≤65, so seoTitle ≤45)`,
+    );
   const seoD = fm.match(/^seoDescription:\s*"(.*)"/m)?.[1];
   if (seoD && (seoD.length < 120 || seoD.length > 160))
     issues.push(`seoDescription ${seoD.length} chars (aim 120–160)`);
@@ -105,6 +128,12 @@ for (const file of files) {
   for (const [re, msg] of SPELLING) {
     const m = body.match(re);
     if (m) issues.push(`spelling: ${msg} (“${m[0].trim()}”)`);
+  }
+
+  // ── No-pricing policy ──
+  for (const [re, msg] of OUR_PRICE) {
+    const m = body.match(re);
+    if (m) issues.push(`pricing policy: ${msg} (“${m[0].trim()}”)`);
   }
 
   // ── Unsourced statistics (hard rule 1) ──
@@ -123,7 +152,11 @@ for (const file of files) {
   const words = body.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
   if (words < 700) issues.push(`${words} words — short for a guide`);
   if (!RICH.test(body)) issues.push("no chart, callout or calculator — this is a wall of text");
-  if (!CTA_HINTS.some((re) => re.test(body))) issues.push("no call to action found");
+  // Every post gets the global <PostFinalCta> from the template, so this is
+  // never "no CTA at all" — it means no contextual CTA inside the body,
+  // which converts better than a footer block alone.
+  if (!CTA_HINTS.some((re) => re.test(body)))
+    issues.push("no in-body CTA (global footer CTA still renders)");
 
   // First 60 words should answer, not preamble.
   const firstPara = body.split(/\n\n/).find((p) => p.trim() && !p.trim().startsWith("<") && !p.trim().startsWith("#"));

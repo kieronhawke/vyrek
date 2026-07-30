@@ -197,11 +197,13 @@ export default async function CityPage({
               <CtaButton href="/quiz" size="md">
                 Find your plan →
               </CtaButton>
+              {/* No-pricing policy: secondary action is the free
+                  consultation, never a price page. */}
               <Link
-                href="/pricing"
+                href="/free-consultation"
                 className="inline-flex h-12 items-center gap-2 rounded-pill border border-suth-border bg-suth-elevated px-5 text-sm font-medium text-suth-text transition-colors hover:border-suth-border-strong"
               >
-                See pricing
+                Talk to Ben, free
               </Link>
             </div>
           </div>

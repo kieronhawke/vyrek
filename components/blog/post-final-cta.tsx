@@ -9,9 +9,12 @@ export function PostFinalCta() {
       <h2 className="mt-3 text-balance text-2xl font-black leading-tight tracking-[-0.025em] text-suth-text md:text-3xl">
         Want this written into your own 12-week plan?
       </h2>
+      {/* No-pricing policy (Kieron, 29 July 2026, growth-plan.md §3.1): no
+          price is published and no copy implies a paywall. The secondary
+          action goes to the free consultation, not /pricing. */}
       <p className="mt-3 max-w-md text-base leading-relaxed text-suth-text-secondary md:text-lg">
-        Three-minute quiz, real Week 1 before you pay. Built by an Elite 15
-        coach, calibrated to your kit and your race date.
+        Three-minute quiz and you will see your first week free. Built by an
+        Elite 15 coach, calibrated to your kit and your race date.
       </p>
       <div className="mt-6 flex flex-wrap items-center gap-3">
         <Link
@@ -21,10 +24,10 @@ export function PostFinalCta() {
           See your Week 1 free →
         </Link>
         <Link
-          href="/pricing"
+          href="/free-consultation"
           className="inline-flex h-12 items-center justify-center rounded-pill border border-suth-border bg-transparent px-5 text-base font-medium text-suth-text transition-colors duration-fast ease-out hover:border-suth-border-strong focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-suth-accent"
         >
-          See pricing
+          Talk to Ben, free
         </Link>
       </div>
     </section>

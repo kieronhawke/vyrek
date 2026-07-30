@@ -399,7 +399,11 @@ export function PaceCalculator() {
 export function PtCostCalculator() {
   const [sessionPrice, setSessionPrice] = useState(45);
   const [sessionsPerWeek, setSessionsPerWeek] = useState(2);
-  const [onlinePrice, setOnlinePrice] = useState(129);
+  // Market-typical online coaching fee, NOT ours. Site policy (Kieron,
+  // 29 July 2026) is that no Suth price is published anywhere — every path
+  // ends at the free consultation. Keep this a neutral, user-editable
+  // market figure and never seed it with our own rate.
+  const [onlinePrice, setOnlinePrice] = useState(100);
   const headingId = useId();
 
   const localMonthly = sessionPrice * sessionsPerWeek * 4.33;
@@ -442,7 +446,12 @@ export function PtCostCalculator() {
             className={inputCls}
           />
         </Field>
-        <Money label="Online coaching per month" value={onlinePrice} onChange={setOnlinePrice} />
+        <Money
+          label="Online coaching per month"
+          hint="Put in whatever a coach has quoted you. Online coaching typically runs from around £70 to £350."
+          value={onlinePrice}
+          onChange={setOnlinePrice}
+        />
       </div>
 
       <div className="grid gap-px border-t border-suth-border-subtle bg-suth-border-subtle sm:grid-cols-3">
