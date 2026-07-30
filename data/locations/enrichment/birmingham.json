@@ -9,5 +9,58 @@
       "source": "internal:lib/hyrox-events.ts",
       "verifiedOn": "2026-07-29"
     }
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Edgbaston Reservoir parkrun",
+        "area": "Edgbaston Reservoir",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Cannon Hill parkrun, Birmingham",
+        "area": "Cannon Hill, Birmingham",
+        "distanceKm": 3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Perry Hall parkrun",
+        "area": "Perry Hall Park",
+        "distanceKm": 5.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Oaklands parkrun",
+        "area": "Oaklands Recreation Ground",
+        "distanceKm": 5.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Sandwell Valley parkrun",
+        "area": "Sandwell Park Farm",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Woodgate Valley Country Park parkrun",
+        "area": "Woodgate Valley Country Park",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Sutton Park parkrun",
+        "area": "Sutton Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
   }
 }

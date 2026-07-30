@@ -1,0 +1,28 @@
+{
+  "slug": "york",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "York parkrun",
+        "area": "York Racecourse",
+        "distanceKm": 3.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Heslington parkrun",
+        "area": "York Sport Village",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "York Community Woodland parkrun",
+        "area": "York Community Woodland",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}

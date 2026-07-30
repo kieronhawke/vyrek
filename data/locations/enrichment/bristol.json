@@ -1,0 +1,49 @@
+{
+  "slug": "bristol",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Ashton Court parkrun",
+        "area": "Ashton Court, Bristol",
+        "distanceKm": 3.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Eastville parkrun",
+        "area": "Eastville Park",
+        "distanceKm": 3.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Blaise Castle parkrun",
+        "area": "Blaise Castle Estate",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Somerdale Pavilion parkrun",
+        "area": "Somerdale Pavilion",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Pomphrey Hill parkrun",
+        "area": "Pomphrey Hill Playing Fields",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Three Brooks parkrun",
+        "area": "Three Brooks",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}

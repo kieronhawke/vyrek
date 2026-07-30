@@ -1,0 +1,21 @@
+{
+  "slug": "aberdeen",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Aberdeen parkrun",
+        "area": "Aberdeen Beach Esplanade",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Hazlehead parkrun, Aberdeen",
+        "area": "Hazlehead Park",
+        "distanceKm": 5.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}

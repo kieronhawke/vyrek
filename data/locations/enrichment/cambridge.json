@@ -1,0 +1,42 @@
+{
+  "slug": "cambridge",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Coldham’s Common parkrun",
+        "area": "Coldham’s Common",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Brook Leys parkrun",
+        "area": "Brook Leys",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Milton Country parkrun",
+        "area": "Milton Country Park, Cambridge",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Fulbourn Hospital parkrun",
+        "area": "Fulbourn Hospital",
+        "distanceKm": 5.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Bug Hunter Waters parkrun",
+        "area": "Bug Hunter Waters",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "slug": "norwich",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Sloughbottom parkrun",
+        "area": "Sloughbottom Park,",
+        "distanceKm": 2.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Catton parkrun",
+        "area": "Catton Park",
+        "distanceKm": 3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Norwich parkrun",
+        "area": "Eaton Park, Norwich",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Fitzmaurice Park parkrun",
+        "area": "Fitzmaurice Park",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Colney Lane parkrun",
+        "area": "UEA Colney Lane Playing Fields",
+        "distanceKm": 5.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Brundall parkrun",
+        "area": "Countryside Park",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "slug": "oxford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "University Parks parkrun",
+        "area": "University Parks",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Harcourt Hill parkrun",
+        "area": "Harcourt Hill Campus",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Oxford parkrun",
+        "area": "Cutteslowe and Sunnymead Park, Oxford",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Horspath parkrun",
+        "area": "Horspath Sports Ground & Athletic Track",
+        "distanceKm": 5.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Abingdon parkrun",
+        "area": "Rye Meadow, Abingdon",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}

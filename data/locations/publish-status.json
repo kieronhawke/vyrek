@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-31",
+  "generatedAt": "2026-07-30",
   "gate": {
     "minPopulatedFields": 5,
     "mandatoryCategories": [
@@ -10,7 +10,9 @@
   "locations": {
     "london": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -18,7 +20,9 @@
     },
     "manchester": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -26,7 +30,9 @@
     },
     "birmingham": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -34,7 +40,9 @@
     },
     "glasgow": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -74,7 +82,9 @@
     },
     "bristol": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -90,7 +100,9 @@
     },
     "nottingham": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -98,7 +110,9 @@
     },
     "cardiff": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -114,7 +128,9 @@
     },
     "coventry": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -122,7 +138,9 @@
     },
     "bradford": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -162,7 +180,9 @@
     },
     "southampton": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -170,7 +190,9 @@
     },
     "reading": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -194,7 +216,9 @@
     },
     "northampton": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -202,7 +226,9 @@
     },
     "portsmouth": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -226,7 +252,9 @@
     },
     "aberdeen": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -250,7 +278,9 @@
     },
     "york": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -266,7 +296,9 @@
     },
     "norwich": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -282,7 +314,9 @@
     },
     "exeter": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -298,7 +332,9 @@
     },
     "oxford": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -306,7 +342,9 @@
     },
     "cambridge": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -314,7 +352,9 @@
     },
     "brighton": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -370,7 +410,9 @@
     },
     "bournemouth": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -378,7 +420,9 @@
     },
     "poole": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -402,7 +446,9 @@
     },
     "watford": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -410,7 +456,9 @@
     },
     "slough": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -466,7 +514,9 @@
     },
     "bath": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -474,7 +524,9 @@
     },
     "canterbury": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -762,7 +814,9 @@
     },
     "worcester": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -770,7 +824,9 @@
     },
     "bedford": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -778,7 +834,9 @@
     },
     "chelmsford": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -786,7 +844,9 @@
     },
     "redhill": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -794,7 +854,9 @@
     },
     "southend-on-sea": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -802,7 +864,9 @@
     },
     "croydon": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"
@@ -810,7 +874,9 @@
     },
     "ilford": {
       "publishable": false,
-      "populatedFields": [],
+      "populatedFields": [
+        "parkrun_locations"
+      ],
       "missingMandatory": [
         "gym/facility record",
         "results/performance data point"

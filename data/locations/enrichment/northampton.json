@@ -1,0 +1,42 @@
+{
+  "slug": "northampton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Northampton parkrun",
+        "area": "Northampton Racecourse",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "University of Northampton parkrun",
+        "area": "University of Northampton",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Sixfields Upton parkrun",
+        "area": "Upton Country Park",
+        "distanceKm": 3.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Brixworth Country parkrun",
+        "area": "Brixworth Country Park",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Salcey Forest parkrun",
+        "area": "Salcey Forest",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}

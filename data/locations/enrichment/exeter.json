@@ -1,0 +1,42 @@
+{
+  "slug": "exeter",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Exeter Riverside parkrun",
+        "area": "Exeter Quay & River Valley Park",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Haldon Forest parkrun",
+        "area": "Haldon Forest Park",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Cranbrook Country Park parkrun",
+        "area": "Cranbrook Country Park",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Greendale Farm Shop parkrun",
+        "area": "Greendale Farm Shop",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Killerton parkrun",
+        "area": "Killerton, Broadclyst",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}
