@@ -95,16 +95,130 @@ every publish.
 commonly no call to action (24 posts) and no chart or callout at all. Those
 are worth a sweep — they are the cheapest wins in the archive.
 
-## The three reference posts
+## Posts written so far (10 of 792)
 
-Built to the full standard as the template for everything else:
+All wave 1. Tracked in the CSVs as `status = published` with the shipped
+slug in `notes`.
 
-- `what-is-a-good-hyrox-time` — BarChart with emphasis, PaceCalculator,
-  KeyTakeaways, first-person Elite 15 authority
-- `how-much-does-hyrox-cost` — Breakdown, RaceCostCalculator, two Callouts
-- `how-much-is-a-personal-trainer-uk` — Breakdown, PtCostCalculator,
-  Checklist, published prices
+| Slug | Target | Blocks used |
+|---|---|---|
+| `what-is-a-good-hyrox-time` | what is a good hyrox time | BarChart (emphasis), PaceCalculator, KeyTakeaways |
+| `how-much-does-hyrox-cost` | hyrox entry fee / cost | Breakdown, RaceCostCalculator, 2 Callouts |
+| `how-much-is-a-personal-trainer-uk` | how much is a personal trainer (1,300/KD12) | Breakdown, PtCostCalculator, Checklist |
+| `hyrox-training-near-me` | hyrox training near me (880/**KD6**) | Checklist, BarChart, Breakdown |
+| `what-does-hyrox-stand-for` | what does hyrox stand for (5,400) | Breakdown, Callouts |
+| `hyrox-rules-standards-penalties` | hyrox rules (720/KD23) | Breakdown, KeyTakeaways |
+| `hyrox-stations-explained` | hyrox stations (2,900/KD29) | BarChart (9 bars), Callouts |
+| `hyrox-workout-explained` | hyrox workout (22,200) | Breakdown, BarChart |
+| `couch-to-hyrox` | couch to hyrox (unclaimed flagship) | Breakdown, BarChart, Checklist |
+| `hyrox-race-day-bag-checklist` | hyrox bag (1,600/KD17) | Checklist, Breakdown |
 
-All three proof clean, build, and were checked at 390px and 1440px with no
-horizontal overflow and no console errors. Calculator reactivity, the table
-toggle and checklist persistence were tested in a real browser.
+They cross-link into a cluster: stations ↔ rules ↔ weights ↔ times ↔ cost,
+with the beginner posts feeding `couch-to-hyrox` and everything funnelling
+to the plan maker or a call.
+
+### Verification run on every one
+
+- `node scripts/proof-posts.mjs` — all clean
+- Production build — 447 pages, no errors
+- Rendered at 390px and 1440px: no horizontal overflow, no console errors
+- Every internal link fetched and confirmed 200
+- Every post confirmed to render at least one chart, calculator or checklist
+- Calculator reactivity, table toggles and checklist persistence driven in a
+  real browser (changing nights moved the race total £300 → £520)
+
+## The no-pricing policy, and one existing post that breaks it
+
+Site policy (Kieron, 29 July 2026, `docs/growth-plan.md` §3.1): **no Suth
+pricing is published anywhere.** Every path ends at the free consultation.
+
+The proofer now enforces this. It flags named Hub prices, "we/I charge",
+monthly figures, "our rates", and trial offers. Quoting *third-party*
+market rates is still fine and is often the point of a post — what must
+never appear is our own price.
+
+**`hyrox-cheapest-vs-best.mdx` conflicts with the policy and needs a
+decision from Kieron.** It is an existing, live post built entirely around
+a price-tier comparison with Suth Performance placed inside it: it
+positions us against £30/mo and £45/mo competitors, references a
+first-week-free trial, and its SEO description leads with "Free PDFs to
+£400/mo". Fixing it is not a find-and-replace — the post's whole premise is
+price comparison, so it needs either a rewrite around value tiers rather
+than price tiers, or retiring. That is an editorial call, not mine to make
+unilaterally, so it is left as-is and flagged here.
+
+## Two funnel inconsistencies found during the sweep
+
+**Fixed: the blog CTA pointed at a page that no longer exists as described.**
+`PostFinalCta` renders on all 58 posts and its secondary button said "See
+pricing" linking to `/pricing`, which has since been rebuilt as a no-numbers
+"Coaching options" page. It now says "Talk to Ben, free" and links to
+`/free-consultation`. Same fix applied to the `/hyrox/[city]` geo pages.
+One component, every post.
+
+This also explains why the proofer flagged 31 posts as having "no call to
+action": they all *do* get the global CTA, it just is not in the body text.
+An in-body contextual CTA still converts better than a footer one, so the
+flag is worth keeping, but it is not the emergency the raw count suggests.
+
+**Flagged, not fixed: "before you pay" appears on about 12 pages.**
+The capture-funnel spec says "every path ends at the free consultation", but
+the landing page, quiz page, how-it-works, about, plan-reveal, geo pages and
+the blog sidebar all still say "See your Week 1 before you pay" — which
+implies a self-serve checkout. Meanwhile `/legal/terms`, `/legal/refunds`
+and the Stripe route still describe a 7-day free trial and subscriptions.
+
+So the site is mid-migration between two models. Deciding whether
+"plan-before-pay" survives as a message alongside consultation-first is a
+strategic call that touches the landing page and the legal copy, so it is
+Kieron's, not mine. Fixing it only in the blog would make the site
+inconsistent with itself, which is worse than leaving it. **Needs a
+decision.**
+
+## Archive sweep (29 July 2026)
+
+The 48 pre-existing posts were swept alongside the new writing. Flags went
+from 80 to 47.
+
+**Fixed across the archive:**
+
+- **35 over-length page titles.** The proofer was checking `seoTitle` in
+  isolation, but `app/layout.tsx` appends `" · Suth Performance"` (20 chars),
+  so the *rendered* title was 20 over what was being measured. Every post
+  was 60–80 characters where Google truncates around 65. All 35 rewritten to
+  ≤45 chars with the keyword front-loaded, and the proofer now checks the
+  rendered length.
+- **A horizontal-overflow bug on mobile.** `hyrox-station-weights-explained`
+  pushed the whole page sideways (504px in a 390px viewport). The table
+  wrapper had `overflow-x-auto`, but its grid parent defaults to
+  `min-width: auto` and refused to shrink, so the page scrolled instead of
+  the table. Fixed with `min-w-0` on both the article body and the table
+  wrapper — this affected any post with a wide table.
+- Long meta description, remaining American spellings.
+
+**Six posts enriched** from walls of text into something with structure:
+`hyrox-vs-crossfit` (decision Breakdown), `hyrox-training-week-structure`
+(BarChart showing the flat return past four days), `wall-balls-scaling-technique`
+(the rep plan as a Breakdown plus a standards warning), `hyrox-taper-week-protocol`
+(what actually decays in seven days), `race-day-nutrition` (race morning
+counted back from your wave), `hyrox-rowing-strategy`. Each also got a
+contextual in-body CTA.
+
+**Still open:** 25 posts remain text-only and 24 lack an in-body CTA. Both
+are genuine improvements rather than faults, since every post does get the
+global footer CTA. Worth working through steadily rather than in one pass.
+
+## Facts discipline
+
+The repo's existing [station weights post](/blog/hyrox-station-weights-explained)
+is the single source of truth for loads and distances. New posts **link to
+it rather than restating the numbers**, which avoids both cannibalisation
+and the risk of two pages drifting apart as standards change between
+seasons.
+
+Where a post needs a benchmark that no dataset backs (what counts as a good
+finish time, which station costs most), it is labelled explicitly as
+coaching judgement in the chart caption and in the opening callout. That is
+the honest way to be useful before the results layer exists, and the proofer
+enforces it: any bare percentage or "average" without a source or hedge
+nearby gets flagged.
