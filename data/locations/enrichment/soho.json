@@ -1,25 +1,25 @@
 {
-  "slug": "croydon",
+  "slug": "soho",
   "terrain": {
     "parkrunLocations": [
       {
-        "name": "Lloyd parkrun, Croydon",
-        "area": "Lloyd Park, Croydon",
-        "distanceKm": 1.5,
+        "name": "Highbury Fields parkrun",
+        "area": "Highbury Fields, Highbury",
+        "distanceKm": 4.3,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       },
       {
-        "name": "Roundshaw Downs parkrun",
-        "area": "Roundshaw Downs, near South Croydon",
-        "distanceKm": 2.4,
+        "name": "Battersea parkrun",
+        "area": "Battersea",
+        "distanceKm": 4.3,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       },
       {
-        "name": "South Norwood parkrun",
-        "area": "South Norwood Country Park",
-        "distanceKm": 4,
+        "name": "Burgess parkrun",
+        "area": "Burgess Park",
+        "distanceKm": 5,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       }

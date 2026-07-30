@@ -1,0 +1,35 @@
+{
+  "slug": "luton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Luton Wardown parkrun",
+        "area": "Wardown Park",
+        "distanceKm": 0.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Houghton Hall parkrun",
+        "area": "Houghton Hall Park",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Dunstable Downs parkrun",
+        "area": "Dunstable Downs",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Rothamsted Park parkrun",
+        "area": "Rothamsted Park",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}

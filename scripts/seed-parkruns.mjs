@@ -27,8 +27,15 @@ const UK_COUNTRY_CODE = 97;
  *  including juniors crowded the real events out of the nearest-N list. */
 const SERIES_5K = 1;
 /** Straight-line radius from the registry centroid. A parkrun further out
- *  than this is not credibly "in" the town for page-copy purposes. */
-const RADIUS_KM = 10;
+ *  than this is not credibly "in" the town for page-copy purposes.
+ *
+ *  London districts need a tighter one: they sit 1-2km apart, so a 10km
+ *  radius returned near-identical lists for Soho, Mayfair and Marylebone.
+ *  Even at 5km these overlap — central London genuinely shares its parks —
+ *  so terrain data alone cannot carry a London district page's uniqueness. */
+const RADIUS_KM_BY_KIND = { "london-area": 5 };
+const RADIUS_KM_DEFAULT = 10;
+const radiusFor = (loc) => RADIUS_KM_BY_KIND[loc.kind] ?? RADIUS_KM_DEFAULT;
 /** Keep pages readable — the nearest N, not every one in the conurbation. */
 const MAX_PER_LOCATION = 8;
 
@@ -101,7 +108,7 @@ for (const loc of registry) {
         distanceKm: Number(haversineKm(loc.lat, loc.lng, lat, lng).toFixed(1)),
       };
     })
-    .filter((e) => e.distanceKm <= RADIUS_KM)
+    .filter((e) => e.distanceKm <= radiusFor(loc))
     .sort((a, b) => a.distanceKm - b.distanceKm)
     .slice(0, MAX_PER_LOCATION)
     .map((e) => ({ ...e, source: FEED_URL, verifiedOn }));

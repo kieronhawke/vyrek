@@ -1,25 +1,25 @@
 {
-  "slug": "croydon",
+  "slug": "highbury",
   "terrain": {
     "parkrunLocations": [
       {
-        "name": "Lloyd parkrun, Croydon",
-        "area": "Lloyd Park, Croydon",
-        "distanceKm": 1.5,
+        "name": "Highbury Fields parkrun",
+        "area": "Highbury Fields, Highbury",
+        "distanceKm": 0.1,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       },
       {
-        "name": "Roundshaw Downs parkrun",
-        "area": "Roundshaw Downs, near South Croydon",
-        "distanceKm": 2.4,
+        "name": "Finsbury parkrun",
+        "area": "Finsbury Park",
+        "distanceKm": 2.6,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       },
       {
-        "name": "South Norwood parkrun",
-        "area": "South Norwood Country Park",
-        "distanceKm": 4,
+        "name": "Hampstead Heath parkrun",
+        "area": "Hampstead Heath",
+        "distanceKm": 4.7,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       }

@@ -1,25 +1,25 @@
 {
-  "slug": "croydon",
+  "slug": "chelsea",
   "terrain": {
     "parkrunLocations": [
       {
-        "name": "Lloyd parkrun, Croydon",
-        "area": "Lloyd Park, Croydon",
-        "distanceKm": 1.5,
+        "name": "Battersea parkrun",
+        "area": "Battersea",
+        "distanceKm": 1.2,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       },
       {
-        "name": "Roundshaw Downs parkrun",
-        "area": "Roundshaw Downs, near South Croydon",
-        "distanceKm": 2.4,
+        "name": "Clapham Common parkrun",
+        "area": "Clapham Common",
+        "distanceKm": 3.8,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       },
       {
-        "name": "South Norwood parkrun",
-        "area": "South Norwood Country Park",
-        "distanceKm": 4,
+        "name": "Fulham Palace parkrun",
+        "area": "Bishops Park",
+        "distanceKm": 4.1,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       }

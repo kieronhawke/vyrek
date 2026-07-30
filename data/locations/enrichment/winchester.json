@@ -1,0 +1,14 @@
+{
+  "slug": "winchester",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Winchester parkrun",
+        "area": "North Walls Recreation Ground",
+        "distanceKm": 0.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}

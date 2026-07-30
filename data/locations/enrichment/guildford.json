@@ -1,25 +1,25 @@
 {
-  "slug": "croydon",
+  "slug": "guildford",
   "terrain": {
     "parkrunLocations": [
       {
-        "name": "Lloyd parkrun, Croydon",
-        "area": "Lloyd Park, Croydon",
+        "name": "Guildford parkrun",
+        "area": "Stoke Park, Guildford",
         "distanceKm": 1.5,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       },
       {
-        "name": "Roundshaw Downs parkrun",
-        "area": "Roundshaw Downs, near South Croydon",
-        "distanceKm": 2.4,
+        "name": "Broadwater parkrun",
+        "area": "Broadwater Park",
+        "distanceKm": 4.5,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       },
       {
-        "name": "South Norwood parkrun",
-        "area": "South Norwood Country Park",
-        "distanceKm": 4,
+        "name": "Woking parkrun",
+        "area": "Woking Park",
+        "distanceKm": 8.5,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       }

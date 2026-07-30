@@ -1,0 +1,21 @@
+{
+  "slug": "westminster",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Battersea parkrun",
+        "area": "Battersea",
+        "distanceKm": 3.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Burgess parkrun",
+        "area": "Burgess Park",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}

@@ -125,7 +125,9 @@
       "country": "Scotland",
       "region": "Scotland",
       "populationK": 488,
-      "legacy": true
+      "legacy": true,
+      "lat": 55.9533,
+      "lng": -3.1884
     },
     {
       "slug": "liverpool",
@@ -134,7 +136,9 @@
       "country": "England",
       "region": "North West",
       "populationK": 486,
-      "legacy": true
+      "legacy": true,
+      "lat": 53.3933,
+      "lng": -2.9166
     },
     {
       "slug": "leeds",
@@ -143,7 +147,9 @@
       "country": "England",
       "region": "Yorkshire",
       "populationK": 488,
-      "legacy": true
+      "legacy": true,
+      "lat": 53.7974,
+      "lng": -1.5438
     },
     {
       "slug": "sheffield",
@@ -152,7 +158,9 @@
       "country": "England",
       "region": "Yorkshire",
       "populationK": 556,
-      "legacy": true
+      "legacy": true,
+      "lat": 53.3807,
+      "lng": -1.4702
     },
     {
       "slug": "bristol",
@@ -186,7 +194,9 @@
       "country": "England",
       "region": "North East",
       "populationK": 300,
-      "legacy": true
+      "legacy": true,
+      "lat": 54.9738,
+      "lng": -1.6132
     },
     {
       "slug": "nottingham",
@@ -257,7 +267,9 @@
       "country": "England",
       "region": "East Midlands",
       "populationK": 369,
-      "legacy": true
+      "legacy": true,
+      "lat": 52.6362,
+      "lng": -1.1332
     },
     {
       "slug": "coventry",
@@ -304,7 +316,9 @@
       "country": "Northern Ireland",
       "region": "Northern Ireland",
       "populationK": 345,
-      "legacy": true
+      "legacy": true,
+      "lat": 54.5964,
+      "lng": -5.9302
     },
     {
       "slug": "stoke-on-trent",
@@ -313,7 +327,9 @@
       "country": "England",
       "region": "West Midlands",
       "populationK": 256,
-      "legacy": true
+      "legacy": true,
+      "lat": 53.0162,
+      "lng": -2.1813
     },
     {
       "slug": "wolverhampton",
@@ -322,7 +338,9 @@
       "country": "England",
       "region": "West Midlands",
       "populationK": 263,
-      "legacy": true
+      "legacy": true,
+      "lat": 52.5848,
+      "lng": -2.1276
     },
     {
       "slug": "plymouth",
@@ -331,7 +349,9 @@
       "country": "England",
       "region": "South West",
       "populationK": 264,
-      "legacy": true
+      "legacy": true,
+      "lat": 50.3714,
+      "lng": -4.1424
     },
     {
       "slug": "southampton",
@@ -384,7 +404,9 @@
       "country": "England",
       "region": "East Midlands",
       "populationK": 261,
-      "legacy": true
+      "legacy": true,
+      "lat": 52.9142,
+      "lng": -1.472
     },
     {
       "slug": "dudley",
@@ -393,7 +415,9 @@
       "country": "England",
       "region": "West Midlands",
       "populationK": 320,
-      "legacy": true
+      "legacy": true,
+      "lat": 52.5111,
+      "lng": -2.0817
     },
     {
       "slug": "northampton",
@@ -446,7 +470,9 @@
       "country": "England",
       "region": "East",
       "populationK": 218,
-      "legacy": true
+      "legacy": true,
+      "lat": 51.8911,
+      "lng": -0.423
     },
     {
       "slug": "preston",
@@ -455,7 +481,9 @@
       "country": "England",
       "region": "North West",
       "populationK": 148,
-      "legacy": true
+      "legacy": true,
+      "lat": 53.7593,
+      "lng": -2.6993
     },
     {
       "slug": "aberdeen",
@@ -495,7 +523,9 @@
       "country": "Scotland",
       "region": "Scotland",
       "populationK": 148,
-      "legacy": true
+      "legacy": true,
+      "lat": 56.4606,
+      "lng": -2.9702
     },
     {
       "slug": "swansea",
@@ -504,7 +534,9 @@
       "country": "Wales",
       "region": "Wales",
       "populationK": 247,
-      "legacy": true
+      "legacy": true,
+      "lat": 51.6196,
+      "lng": -3.9459
     },
     {
       "slug": "york",
@@ -538,7 +570,9 @@
       "country": "England",
       "region": "East",
       "populationK": 230,
-      "legacy": true
+      "legacy": true,
+      "lat": 52.0407,
+      "lng": -0.7594
     },
     {
       "slug": "norwich",
@@ -572,7 +606,9 @@
       "country": "England",
       "region": "South West",
       "populationK": 184,
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5615,
+      "lng": -1.7854
     },
     {
       "slug": "exeter",
@@ -600,7 +636,9 @@
       "country": "England",
       "region": "North West",
       "populationK": 211,
-      "legacy": true
+      "legacy": true,
+      "lat": 53.4016,
+      "lng": -2.5682
     },
     {
       "slug": "oxford",
@@ -672,7 +710,9 @@
       "country": "England",
       "region": "South East",
       "populationK": 92,
-      "legacy": true
+      "legacy": true,
+      "lat": 50.8287,
+      "lng": -0.1746
     },
     {
       "slug": "ipswich",
@@ -681,7 +721,9 @@
       "country": "England",
       "region": "East",
       "populationK": 145,
-      "legacy": true
+      "legacy": true,
+      "lat": 52.0579,
+      "lng": 1.1528
     },
     {
       "slug": "huddersfield",
@@ -690,7 +732,9 @@
       "country": "England",
       "region": "Yorkshire",
       "populationK": 162,
-      "legacy": true
+      "legacy": true,
+      "lat": 53.6467,
+      "lng": -1.7822
     },
     {
       "slug": "wakefield",
@@ -699,7 +743,9 @@
       "country": "England",
       "region": "Yorkshire",
       "populationK": 109,
-      "legacy": true
+      "legacy": true,
+      "lat": 53.683,
+      "lng": -1.4967
     },
     {
       "slug": "blackpool",
@@ -708,7 +754,9 @@
       "country": "England",
       "region": "North West",
       "populationK": 139,
-      "legacy": true
+      "legacy": true,
+      "lat": 53.8179,
+      "lng": -3.051
     },
     {
       "slug": "middlesbrough",
@@ -717,7 +765,9 @@
       "country": "England",
       "region": "North East",
       "populationK": 174,
-      "legacy": true
+      "legacy": true,
+      "lat": 54.576,
+      "lng": -1.2344
     },
     {
       "slug": "bournemouth",
@@ -776,7 +826,9 @@
       "country": "England",
       "region": "Yorkshire",
       "populationK": 109,
-      "legacy": true
+      "legacy": true,
+      "lat": 53.431,
+      "lng": -1.3552
     },
     {
       "slug": "telford",
@@ -785,7 +837,9 @@
       "country": "England",
       "region": "West Midlands",
       "populationK": 142,
-      "legacy": true
+      "legacy": true,
+      "lat": 52.6781,
+      "lng": -2.4514
     },
     {
       "slug": "watford",
@@ -838,7 +892,9 @@
       "country": "England",
       "region": "South",
       "populationK": 113,
-      "legacy": true
+      "legacy": true,
+      "lat": 51.2628,
+      "lng": -1.0862
     },
     {
       "slug": "guildford",
@@ -847,7 +903,9 @@
       "country": "England",
       "region": "South East",
       "populationK": 78,
-      "legacy": true
+      "legacy": true,
+      "lat": 51.2356,
+      "lng": -0.5732
     },
     {
       "slug": "chester",
@@ -856,7 +914,9 @@
       "country": "England",
       "region": "North West",
       "populationK": 90,
-      "legacy": true
+      "legacy": true,
+      "lat": 53.1909,
+      "lng": -2.8909
     },
     {
       "slug": "stirling",
@@ -865,7 +925,9 @@
       "country": "Scotland",
       "region": "Scotland",
       "populationK": 37,
-      "legacy": true
+      "legacy": true,
+      "lat": 56.1181,
+      "lng": -3.936
     },
     {
       "slug": "inverness",
@@ -874,7 +936,9 @@
       "country": "Scotland",
       "region": "Scotland",
       "populationK": 47,
-      "legacy": true
+      "legacy": true,
+      "lat": 57.479,
+      "lng": -4.2257
     },
     {
       "slug": "lincoln",
@@ -883,7 +947,9 @@
       "country": "England",
       "region": "East Midlands",
       "populationK": 104,
-      "legacy": true
+      "legacy": true,
+      "lat": 53.2294,
+      "lng": -0.5405
     },
     {
       "slug": "bath",
@@ -936,7 +1002,9 @@
       "country": "England",
       "region": "East",
       "populationK": 87,
-      "legacy": true
+      "legacy": true,
+      "lat": 51.7531,
+      "lng": -0.338
     },
     {
       "slug": "winchester",
@@ -945,7 +1013,9 @@
       "country": "England",
       "region": "South",
       "populationK": 45,
-      "legacy": true
+      "legacy": true,
+      "lat": 51.0613,
+      "lng": -1.3132
     },
     {
       "slug": "salisbury",
@@ -954,7 +1024,9 @@
       "country": "England",
       "region": "South",
       "populationK": 45,
-      "legacy": true
+      "legacy": true,
+      "lat": 51.0691,
+      "lng": -1.7954
     },
     {
       "slug": "camden",
@@ -962,7 +1034,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5428,
+      "lng": -0.1625
     },
     {
       "slug": "hackney",
@@ -970,7 +1044,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5432,
+      "lng": -0.0494
     },
     {
       "slug": "islington",
@@ -978,7 +1054,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5384,
+      "lng": -0.0999
     },
     {
       "slug": "shoreditch",
@@ -986,7 +1064,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5267,
+      "lng": -0.0799
     },
     {
       "slug": "westminster",
@@ -994,7 +1074,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5004,
+      "lng": -0.1265
     },
     {
       "slug": "kensington",
@@ -1010,7 +1092,9 @@
           "kdPercent": 11,
           "cpcUsd": 4.14
         }
-      ]
+      ],
+      "lat": 51.499,
+      "lng": -0.1991
     },
     {
       "slug": "chelsea",
@@ -1018,7 +1102,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.4889,
+      "lng": -0.1654
     },
     {
       "slug": "fulham",
@@ -1026,7 +1112,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.4744,
+      "lng": -0.2068
     },
     {
       "slug": "hammersmith",
@@ -1034,7 +1122,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.492,
+      "lng": -0.2236
     },
     {
       "slug": "wandsworth",
@@ -1042,7 +1132,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.457,
+      "lng": -0.1933
     },
     {
       "slug": "clapham",
@@ -1050,7 +1142,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.4614,
+      "lng": -0.1386
     },
     {
       "slug": "brixton",
@@ -1058,7 +1152,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.4634,
+      "lng": -0.1148
     },
     {
       "slug": "battersea",
@@ -1066,7 +1162,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.4708,
+      "lng": -0.1722
     },
     {
       "slug": "wimbledon",
@@ -1074,7 +1172,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.4215,
+      "lng": -0.2064
     },
     {
       "slug": "putney",
@@ -1082,7 +1182,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.4625,
+      "lng": -0.2163
     },
     {
       "slug": "greenwich",
@@ -1090,7 +1192,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.4821,
+      "lng": -0.0045
     },
     {
       "slug": "lewisham",
@@ -1098,7 +1202,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.4624,
+      "lng": -0.0102
     },
     {
       "slug": "bermondsey",
@@ -1106,7 +1212,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.497,
+      "lng": -0.0633
     },
     {
       "slug": "southwark",
@@ -1114,7 +1222,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5061,
+      "lng": -0.1011
     },
     {
       "slug": "tower-hamlets",
@@ -1122,7 +1232,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5146,
+      "lng": -0.0351
     },
     {
       "slug": "canary-wharf",
@@ -1130,7 +1242,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5049,
+      "lng": -0.019
     },
     {
       "slug": "stratford",
@@ -1146,7 +1260,9 @@
           "kdPercent": 12,
           "cpcUsd": 1.78
         }
-      ]
+      ],
+      "lat": 51.5407,
+      "lng": 0.0016
     },
     {
       "slug": "walthamstow",
@@ -1154,7 +1270,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5845,
+      "lng": -0.0188
     },
     {
       "slug": "highbury",
@@ -1162,7 +1280,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5458,
+      "lng": -0.1027
     },
     {
       "slug": "holloway",
@@ -1170,7 +1290,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5572,
+      "lng": -0.1184
     },
     {
       "slug": "notting-hill",
@@ -1178,7 +1300,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.511,
+      "lng": -0.2055
     },
     {
       "slug": "paddington",
@@ -1186,7 +1310,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5162,
+      "lng": -0.1745
     },
     {
       "slug": "mayfair",
@@ -1194,7 +1320,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5111,
+      "lng": -0.1471
     },
     {
       "slug": "soho",
@@ -1202,7 +1330,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5141,
+      "lng": -0.135
     },
     {
       "slug": "pimlico",
@@ -1210,7 +1340,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.489,
+      "lng": -0.1399
     },
     {
       "slug": "vauxhall",
@@ -1218,7 +1350,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.4875,
+      "lng": -0.1229
     },
     {
       "slug": "marylebone",
@@ -1226,7 +1360,9 @@
       "kind": "london-area",
       "country": "England",
       "region": "London",
-      "legacy": true
+      "legacy": true,
+      "lat": 51.5196,
+      "lng": -0.152
     },
     {
       "slug": "worcester",
@@ -1419,5 +1555,6 @@
         }
       ]
     }
-  ]
+  ],
+  "coordinateSource": "Nominatim (OpenStreetMap), https://nominatim.openstreetmap.org/ — town/city centroids, 4dp. Counties deliberately have none."
 }

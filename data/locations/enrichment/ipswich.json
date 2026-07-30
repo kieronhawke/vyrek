@@ -1,25 +1,25 @@
 {
-  "slug": "croydon",
+  "slug": "ipswich",
   "terrain": {
     "parkrunLocations": [
       {
-        "name": "Lloyd parkrun, Croydon",
-        "area": "Lloyd Park, Croydon",
-        "distanceKm": 1.5,
+        "name": "Christchurch Park parkrun",
+        "area": "Christchurch Park",
+        "distanceKm": 0.6,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       },
       {
-        "name": "Roundshaw Downs parkrun",
-        "area": "Roundshaw Downs, near South Croydon",
-        "distanceKm": 2.4,
+        "name": "Kesgrave parkrun",
+        "area": "Kesgrave",
+        "distanceKm": 7.2,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       },
       {
-        "name": "South Norwood parkrun",
-        "area": "South Norwood Country Park",
-        "distanceKm": 4,
+        "name": "Alton Water parkrun",
+        "area": "Alton Water Reservoir",
+        "distanceKm": 9.3,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       }

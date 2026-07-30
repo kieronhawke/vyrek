@@ -1,0 +1,21 @@
+{
+  "slug": "blackpool",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Blackpool parkrun",
+        "area": "Stanley Park",
+        "distanceKm": 2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Lytham Hall parkrun",
+        "area": "Lytham Hall",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}

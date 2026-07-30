@@ -1,25 +1,25 @@
 {
-  "slug": "croydon",
+  "slug": "lincoln",
   "terrain": {
     "parkrunLocations": [
       {
-        "name": "Lloyd parkrun, Croydon",
-        "area": "Lloyd Park, Croydon",
-        "distanceKm": 1.5,
+        "name": "Yarborough Leisure Centre parkrun",
+        "area": "Yarborough Leisure Centre",
+        "distanceKm": 2,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       },
       {
-        "name": "Roundshaw Downs parkrun",
-        "area": "Roundshaw Downs, near South Croydon",
-        "distanceKm": 2.4,
+        "name": "Lincoln parkrun",
+        "area": "Boultham Park",
+        "distanceKm": 2.7,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       },
       {
-        "name": "South Norwood parkrun",
-        "area": "South Norwood Country Park",
-        "distanceKm": 4,
+        "name": "Doddington Hall parkrun",
+        "area": "Doddington Hall",
+        "distanceKm": 7.4,
         "source": "https://images.parkrun.com/events.json",
         "verifiedOn": "2026-07-30"
       }

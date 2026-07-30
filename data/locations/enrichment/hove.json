@@ -1,0 +1,49 @@
+{
+  "slug": "hove",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hove Promenade parkrun",
+        "area": "Hove Lawns",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Brighton & Hove parkrun",
+        "area": "Hove Park, Brighton",
+        "distanceKm": 1.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Preston Park parkrun, Brighton",
+        "area": "Preston Park",
+        "distanceKm": 2.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Bevendean Down parkrun",
+        "area": "Bevendean Down",
+        "distanceKm": 5.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "East Brighton parkrun",
+        "area": "East Brighton Park",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Downs Link parkrun, Shoreham-by-Sea",
+        "area": "Downs Link, Shoreham-by-Sea",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "swindon",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Seven Fields parkrun",
+        "area": "Seven Fields Nature Reserve and Penhill Sports Fie",
+        "distanceKm": 2.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      },
+      {
+        "name": "Lydiard parkrun",
+        "area": "Lydiard Park, Swindon",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "inverness",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Torvean parkrun",
+        "area": "Torvean Park",
+        "distanceKm": 2.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-07-30"
+      }
+    ]
+  }
+}
