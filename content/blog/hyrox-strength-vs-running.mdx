@@ -34,6 +34,18 @@ For a 90-minute first-time finisher, the time splits roughly:
 
 So running is ~58% of the race; stations are ~38%; transitions are ~4%. For a 60-minute elite finisher the running share drops to ~50% because their station times compress more than their run times.
 
+<BarChart
+  title="Where a 90-minute race actually goes"
+  caption="Share of total race time for a first-time 90-minute finisher. Roughly modelled from typical splits, not measured data, so treat it as a shape rather than a number."
+  emphasis="Running"
+  unit="% of race"
+  data={[
+    { label: "Running", value: 58, note: "8 × 1 km at around 6:30/km, plus the warm-up runs. More than half the race." },
+    { label: "Stations", value: 38, note: "Eight stations at roughly 4-5 minutes each." },
+    { label: "Transitions", value: 4, note: "The unprogrammed seconds nobody trains." },
+  ]}
+/>
+
 The implication: **running fitness is more than half of your race**, and the easiest way to improve a finish time is usually to run faster, not lift heavier.
 
 ## The 70/30 training rule
@@ -59,6 +71,16 @@ Two reasons to deviate from 70/30:
 **2. You're a strength-first athlete with weak running.** Heavy lifting background, never run more than 3 km comfortably. Shift to 80/20 in favour of running for the first 6 weeks of the build. You need aerobic capacity before specific Hyrox-pattern work makes sense.
 
 What you should NEVER do: 50/50. Splitting training time evenly produces a middling runner with above-average strength, exactly the profile that fails to break 90.
+
+<Breakdown
+  title="Which ratio is yours"
+  items={[
+    { label: "First-time racer", value: "70/30", detail: "The default. Around 3.5-4.5 hours of running and aerobic work against roughly an hour of pure strength." },
+    { label: "Already a strong runner", value: "60/40", detail: "Sub-22 minute 5 km with a long-run base. The aerobic ceiling is there; add a second strength session and drop the recovery jog." },
+    { label: "Strength-first, weak running", value: "80/20", detail: "Heavy lifting background, never run past 3 km comfortably. Hold this for the first six weeks before any Hyrox-pattern work." },
+    { label: "Nobody, ever", value: "50/50", detail: "Produces a middling runner with above-average strength. That is the exact profile that stalls at 95 minutes." },
+  ]}
+/>
 
 ## Why pure runners blow up at station 4
 

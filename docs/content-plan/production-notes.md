@@ -85,15 +85,20 @@ statistic hard rule 1 exists to prevent.
   "let's dive in", em dashes used stylistically)
 - American spellings
 - numbers presented as fact with no source or hedge nearby
-- thin structure, walls of text with no chart or callout, missing CTAs
+- thin structure, and runs of unbroken prose over 200 words
+- posts carrying no data element a reader can use
+- missing in-body CTAs
+- publication dates in the future, and `updatedAt` before `publishedAt`
 - long opening paragraphs that bury the answer
 
 Flags are prompts for a human read, not automatic failures. Run it before
 every publish.
 
-**It currently flags 80 issues across the 48 pre-existing posts**, most
-commonly no call to action (24 posts) and no chart or callout at all. Those
-are worth a sweep — they are the cheapest wins in the archive.
+**It currently flags 46 issues across 58 posts:** 24 with no in-body CTA, 20
+with no data element, and two one-offs. Those two categories are the cheapest
+remaining wins in the archive. See the section below on why the wall-of-text
+count dropped from 19 to nearly nothing — the check, not the archive, was
+wrong.
 
 ## Posts written so far (58 live, 44 mapped to the plan)
 
@@ -299,3 +304,45 @@ is the funnel lane's call, so those were left alone. The 24 rows reading "See
 transparent coaching prices" were changed to "See coaching options", matching
 the live `/pricing` and `/plans` labels, because promising a price the site
 does not publish is a broken promise under the no-pricing policy.
+
+## The "wall of text" check was measuring the wrong thing (31 July 2026)
+
+The proofer flagged 19 posts as walls of text. Most of them were not. The check
+was `RICH.test(body)` — does this post use one of our JSX components — which is
+a different question from whether a reader faces unbroken prose. It called
+`hyrox-at-home-simulations` a wall of text with 43 rows of markdown table in it,
+and passed `hyrox-mental-cues-mid-race`, which had one decorative Callout and
+almost nothing else.
+
+It now measures the thing it is named after: the longest run of prose with no
+break in it. Headings, lists, tables, components and bold lead-in paragraphs
+(`**Sled push.** ...`) all count as breaks, because all of them break up a page.
+The threshold is 200 words.
+
+Measured across all 58 posts, the longest unbroken run was 228 words and the
+median 133. By the honest measure almost nothing was wrong, and the one post
+that genuinely was — 224 unbroken words in the pricing-rationale section of
+`how-much-is-a-personal-trainer-uk` — is now broken into bold-led beats.
+
+Component usage is still worth tracking, so it survives as a separate and
+softer note: "no data element (chart, table, checklist or calculator) —
+consider what a reader could use here". Twenty posts carry it. It is an
+opportunity, not a defect, and it is worded that way. `Callout` deliberately
+does not count towards it: it is decoration, not something a reader can use.
+
+**Five posts got genuine structure while working this out**, drawn from content
+already in them rather than invented:
+
+- `hyrox-sub-90-secrets` — the six habits, which the post announced as a list
+  and then buried across six H2s, are now a Breakdown up front.
+- `hyrox-strength-vs-running` — the 58/38/4 race-time split, previously a
+  sentence, is a BarChart. The 70/30 training ratios are a Breakdown.
+- `hyrox-mental-cues-mid-race` — the eight cues are a scannable reference,
+  which is what a racer actually wants from that post.
+- `hyrox-vs-spartan-vs-deka` — entry fees and venues move from prose into a
+  ComparisonTable. Third-party prices, which the no-pricing policy allows.
+- `hyrox-uk-calendar-2026` — a race-weekend sequence Checklist.
+
+The lesson worth keeping: a linter that is easy to satisfy by adding a Callout
+will be satisfied by adding a Callout. Measure the reader's experience, not our
+component usage.
