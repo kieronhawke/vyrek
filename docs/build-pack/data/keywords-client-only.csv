@@ -1,0 +1,308 @@
+keyword,segment,buyer_type,intent,volume,kd_percent,cpc_usd,opportunity_score,priority,cluster,status
+hyrox,Hyrox,Client,Navigational,110000,65,0.53,38500,P4 Long Term,Fundamentals,not_started
+hyrox london,Hyrox,Client,Informational,18100,26,0.99,13394,P2 High Value,Race Events,not_started
+hyrox workout,Hyrox,Client,Informational,22200,46,0.32,11988,P3 Build,Workouts,not_started
+hyrox results,Hyrox,Client,Informational,14800,19,2.63,11988,P1 Quick Win,Results & Data,not_started
+hyrox glasgow,Hyrox,Client,Informational,6600,17,1.62,5478,P1 Quick Win,Race Events,not_started
+hyrox birmingham,Hyrox,Client,Informational,6600,30,0,4620,P2 High Value,Race Events,not_started
+hyrox glasgow 2026,Hyrox,Client,Informational,5400,16,2,4536,P1 Quick Win,Race Events,not_started
+hyrox london 2025,Hyrox,Client,Informational,5400,26,0,3996,P2 High Value,Race Events,not_started
+hyrox events,Hyrox,Client,Informational,6600,41,1.54,3894,P3 Build,Race Events,not_started
+what does hyrox stand for,Hyrox,Client,Informational,5400,28,0.92,3888,P2 High Value,Fundamentals,not_started
+hyrox london 2026,Hyrox,Client,Informational,4400,22,1.17,3432,P1 Quick Win,Race Events,not_started
+hyrox dublin,Hyrox,Client,Transactional,4400,23,0.41,3388,P1 Quick Win,Race Events,not_started
+hyrox birmingham 2025,Hyrox,Client,Informational,4400,23,0,3388,P1 Quick Win,Race Events,not_started
+hyrox trainers,Hyrox,Client,Commercial,2900,22,0.68,2262,P1 Quick Win,Gear,not_started
+hyrox stations,Hyrox,Client,Informational,2900,29,0.21,2059,P2 High Value,Stations & Rules,not_started
+hyrox exercises,Hyrox,Client,Informational,2400,27,0.2,1752,P2 High Value,Workouts,not_started
+hyrox meaning,Hyrox,Client,Informational,2900,41,0.36,1711,P3 Build,Fundamentals,not_started
+hyrox training,Hyrox,Client,Informational,3600,56,0.63,1584,P4 Long Term,Training Plans,not_started
+hyrox weights,Hyrox,Client,Informational,1900,18,0.55,1558,P1 Quick Win,Stations & Rules,not_started
+london hyrox,Hyrox,Client,Informational,1900,21,1.17,1501,P1 Quick Win,Race Events,not_started
+hyrox sled push weight,Hyrox,Client,Informational,1900,25,0.35,1425,P1 Quick Win,Stations & Rules,not_started
+hyrox training plan,Hyrox,Client,Info/Commercial,2900,52,0.49,1392,P4 Long Term,Training Plans,not_started
+cardiff hyrox,Hyrox,Client,Informational,1600,16,2.26,1344,P1 Quick Win,Race Events,not_started
+hyrox bag,Hyrox,Client,Informational,1600,17,0.89,1328,P1 Quick Win,Gear,not_started
+how much is a personal trainer,Personal Training,Client,Informational,1300,12,0.71,1144,P1 Quick Win,PT Pricing,not_started
+hyrox madrid,Hyrox,Client,Informational,1300,21,0,1027,P1 Quick Win,Race Events,not_started
+london hyrox 2025,Hyrox,Client,Informational,1300,27,0,949,P2 High Value,Race Events,not_started
+hyrox malaga,Hyrox,Client,Informational,1000,9,0,910,P1 Quick Win,Race Events,not_started
+what is hyrox training,Hyrox,Client,Informational,1900,53,0.08,893,P4 Long Term,Training Plans,not_started
+hyrox workouts,Hyrox,Client,Informational,1300,34,0.32,858,P2 High Value,Training Plans,not_started
+personal trainer manchester uk,Personal Training,Client,Commercial,1000,15,3.46,850,P1 Quick Win,PT Location,not_started
+how much is a physical trainer,Personal Training,Client,Informational,1000,15,0.71,850,P1 Quick Win,PT Pricing,not_started
+hyrox training near me,Hyrox,Client,Transactional,880,6,0.83,827,P1 Quick Win,Coaching & Gyms,not_started
+what is a hyrox,Hyrox,Client,Informational,1300,39,0.09,793,P3 Build,Fundamentals,not_started
+hyrox rome,Hyrox,Client,Informational,1000,22,0,780,P1 Quick Win,Race Events,not_started
+hyrox start list,Hyrox,Client,Transactional/Nav,1300,41,2.03,767,P3 Build,Results & Data,not_started
+hyrox races,Hyrox,Client,Info/Transactional,1600,53,0.95,752,P4 Long Term,Race Events,not_started
+best trainers for hyrox,Hyrox,Client,Commercial,1000,25,0.88,750,P1 Quick Win,Gear,not_started
+dublin hyrox,Hyrox,Client,Info/Transactional,880,22,0,686,P1 Quick Win,Race Events,not_started
+hyrox olympia,Hyrox,Client,Informational,720,18,0,590,P1 Quick Win,Race Events,not_started
+hyrox start times,Hyrox,Client,Transactional/Nav,1000,42,0,580,P3 Build,Results & Data,not_started
+hyrox sled weight,Hyrox,Client,Informational,720,22,0.72,562,P1 Quick Win,Stations & Rules,not_started
+hyrox rules,Hyrox,Client,Navigational,720,23,0.69,554,P1 Quick Win,Stations & Rules,not_started
+personal trainer bristol,Personal Training,Client,Commercial,590,10,1.03,531,P1 Quick Win,PT Location,not_started
+hyrox rankings,Hyrox,Client,Info/Transactional,590,16,2.12,496,P1 Quick Win,Results & Data,not_started
+hydrox london,Hyrox,Client,Informational,590,18,0.99,484,P1 Quick Win,Race Events,not_started
+hyrox womens weights,Hyrox,Client,Informational,590,18,0.77,484,P1 Quick Win,Stations & Rules,not_started
+hyrox oslo,Hyrox,Client,Informational,590,24,0,448,P1 Quick Win,Race Events,not_started
+hyrox format,Hyrox,Client,Informational,720,38,0.09,446,P3 Build,Stations & Rules,not_started
+best hyrox trainers,Hyrox,Client,Commercial,590,28,0.71,425,P2 High Value,Gear,not_started
+what is hyrox short for,Hyrox,Client,Informational,590,32,0.21,401,P2 High Value,Fundamentals,not_started
+hyrox ticket,Hyrox,Client,Transactional/Nav,720,46,0.98,389,P3 Build,Tickets,not_started
+hyrox shop,Hyrox,Client,Info/Transactional,480,20,0.51,384,P2 High Value,Gear,not_started
+hyrox trainers women,Hyrox,Client,Info/Commercial,480,21,0.69,379,P2 High Value,Gear,not_started
+hyrox chicago,Hyrox,Client,Informational,480,23,0,370,P2 High Value,Race Events,not_started
+hyrox distances,Hyrox,Client,Informational,480,26,0.14,355,P2 High Value,Stations & Rules,not_started
+hyrox doubles rules,Hyrox,Client,Informational,480,26,0,355,P2 High Value,Stations & Rules,not_started
+group personal training,Personal Training,Client,Commercial,390,10,1.34,351,P2 High Value,PT Service,not_started
+hyrox what is it,Hyrox,Client,Informational,590,41,0.06,348,P3 Build,Fundamentals,not_started
+personal trainer bournemouth,Personal Training,Client,Commercial,390,11,0.93,347,P2 High Value,PT Location,not_started
+trainer costs,Personal Training,Client,Informational,390,12,0.59,343,P2 High Value,PT Pricing,not_started
+hyrox racing,Hyrox,Client,Informational,1000,66,0.95,340,P4 Long Term,Fundamentals,not_started
+hyrox poland,Hyrox,Client,Informational,390,13,0,339,P2 High Value,Race Events,not_started
+hyrox poznan,Hyrox,Client,Informational,390,14,0,335,P2 High Value,Race Events,not_started
+hyrox race format,Hyrox,Client,Informational,590,44,0.16,330,P3 Build,Stations & Rules,not_started
+hyrox workout plan,Hyrox,Client,Info/Commercial,590,47,0.52,313,P3 Build,Training Plans,not_started
+hyrox station order,Hyrox,Client,Informational,390,20,0.76,312,P2 High Value,Stations & Rules,not_started
+personal trainer northampton,Personal Training,Client,Commercial,320,11,1.14,285,P2 High Value,PT Location,not_started
+hyrox stands for,Hyrox,Client,Informational,390,28,0,281,P2 High Value,Fundamentals,not_started
+what is a good hyrox time,Hyrox,Client,Informational,320,13,0,278,P2 High Value,Results & Data,not_started
+personal fitness trainer nottingham,Personal Training,Client,Commercial,320,13,0.99,278,P2 High Value,PT Location,not_started
+hyrox elite 15,Hyrox,Client,Info/Transactional,390,29,0,277,P2 High Value,Coaching & Gyms,not_started
+hyrox merchandise,Hyrox,Client,Informational,390,29,0.52,277,P2 High Value,Gear,not_started
+hyrox calendar,Hyrox,Client,Informational,390,30,1.85,273,P2 High Value,Race Events,not_started
+hyrox burpee broad jump,Hyrox,Client,Informational,320,15,0,272,P2 High Value,Stations & Rules,not_started
+hyrox mens weights,Hyrox,Client,Informational,320,15,0.43,272,P2 High Value,Stations & Rules,not_started
+hyrox weights for men,Hyrox,Client,Informational,320,15,0.17,272,P2 High Value,Stations & Rules,not_started
+personal trainer brighton,Personal Training,Client,Commercial,320,15,1.29,272,P2 High Value,PT Location,not_started
+personal trainer cambridge,Personal Training,Client,Commercial,320,15,0.99,272,P2 High Value,PT Location,not_started
+fitness trainer cardiff,Personal Training,Client,Commercial,320,15,1.02,272,P2 High Value,PT Location,not_started
+hydrox training,Hyrox,Client,Informational,720,63,0.5,266,P4 Long Term,Misspellings,not_started
+what is hydrox,Hyrox,Client,Informational,590,55,0.09,266,P4 Long Term,Fundamentals,not_started
+hyrox equipment,Hyrox,Client,Informational,320,17,0.84,266,P2 High Value,Gear,not_started
+sled pull weight hyrox,Hyrox,Client,Informational,320,18,0.31,262,P2 High Value,Stations & Rules,not_started
+sled push hyrox weight,Hyrox,Client,Informational,320,19,0.34,259,P2 High Value,Stations & Rules,not_started
+hyrox bags,Hyrox,Client,Informational,320,19,1.32,259,P2 High Value,Gear,not_started
+madrid hyrox,Hyrox,Client,Informational,320,20,0,256,P2 High Value,Race Events,not_started
+how to train for hyrox,Hyrox,Client,Informational,480,47,0.33,254,P3 Build,Training Plans,not_started
+hyrox riga,Hyrox,Client,Info/Transactional,320,21,0,253,P2 High Value,Race Events,not_started
+hyrox result,Hyrox,Client,Informational,320,22,0,250,P2 High Value,Results & Data,not_started
+hyrox world champs,Hyrox,Client,Informational,390,37,0,246,P3 Build,Race Events,not_started
+hyrox stand for,Hyrox,Client,Informational,320,24,0,243,P2 High Value,Fundamentals,not_started
+what is hyrox workout,Hyrox,Client,Informational,390,38,0.07,242,P3 Build,Workouts,not_started
+hyrox exercise order,Hyrox,Client,Informational,390,39,0.13,238,P3 Build,Workouts,not_started
+hyrox dates,Hyrox,Client,Informational,390,40,0,234,P3 Build,Race Events,not_started
+personal trainer southampton,Personal Training,Client,Commercial,260,12,1.05,229,P2 High Value,PT Location,not_started
+personal trainer coventry uk,Personal Training,Client,Commercial,260,13,1.06,226,P2 High Value,PT Location,not_started
+personal trainer york,Personal Training,Client,Commercial,260,14,0.92,224,P2 High Value,PT Location,not_started
+cost of personal trainer,Personal Training,Client,Info/Commercial,260,14,0.59,224,P2 High Value,PT Pricing,not_started
+hyrox wod,Hyrox,Client,Informational,260,16,0,218,P2 High Value,Workouts,not_started
+hyrox world records,Hyrox,Client,Informational,260,17,0,216,P2 High Value,Results & Data,not_started
+hyrox stations and weights,Hyrox,Client,Informational,260,21,0.37,205,P2 High Value,Stations & Rules,not_started
+hyrox age groups,Hyrox,Client,Informational,260,22,0.9,203,P2 High Value,Stations & Rules,not_started
+hydrox workout,Hyrox,Client,Informational,320,40,0.32,192,P3 Build,Workouts,not_started
+hydrox sport,Hyrox,Client,Informational,390,51,0.25,191,P4 Long Term,Misspellings,not_started
+personal trainers birmingham uk,Personal Training,Client,Commercial,210,9,0.87,191,P2 High Value,PT Location,not_started
+hyrox weight,Hyrox,Client,Informational,260,28,0.41,187,P2 High Value,Stations & Rules,not_started
+norwich personal trainer,Personal Training,Client,Commercial,210,11,0.93,187,P2 High Value,PT Location,not_started
+personal trainer aberdeen,Personal Training,Client,Commercial,210,12,0.75,185,P2 High Value,PT Location,not_started
+personal trainer watford,Personal Training,Client,Commercial,210,12,1.1,185,P2 High Value,PT Location,not_started
+personal trainer reading uk,Personal Training,Client,Commercial,210,12,1,185,P2 High Value,PT Location,not_started
+hyrox world championship,Hyrox,Client,Informational,390,53,0,183,P4 Long Term,Race Events,not_started
+fitness trainer northampton,Personal Training,Client,Commercial,210,14,1.14,181,P2 High Value,PT Location,not_started
+hyrox world championships,Hyrox,Client,Info/Transactional,390,54,0,179,P4 Long Term,Race Events,not_started
+hyrox world championships 2025,Hyrox,Client,Info/Transactional,320,44,0,179,P3 Build,Race Events,not_started
+personal trainers in manchester,Personal Training,Client,Commercial,210,15,3.46,179,P2 High Value,PT Location,not_started
+female personal trainer london,Personal Training,Client,Commercial,210,15,2.58,179,P2 High Value,PT Location,not_started
+what's hyrox,Hyrox,Client,Informational,320,45,0.1,176,P3 Build,Fundamentals,not_started
+hyrox burpee broad jumps,Hyrox,Client,Informational,210,17,0,174,P2 High Value,Stations & Rules,not_started
+burpee broad jump hyrox,Hyrox,Client,Informational,210,17,0,174,P2 High Value,Stations & Rules,not_started
+hyrox fitness,Hyrox,Client,Informational,480,65,0.31,168,P4 Long Term,Fundamentals,not_started
+hyrox circuit,Hyrox,Client,Informational,390,57,0.34,168,P4 Long Term,Workouts,not_started
+hyrox poland 2025,Hyrox,Client,Transactional/Nav,210,20,0,168,P2 High Value,Race Events,not_started
+hyrox lunge weight,Hyrox,Client,Informational,210,20,0.33,168,P2 High Value,Stations & Rules,not_started
+hyrox times results,Hyrox,Client,Informational,210,21,0,166,P2 High Value,Results & Data,not_started
+hyrox chicago results,Hyrox,Client,Informational,210,21,0,166,P2 High Value,Results & Data,not_started
+hyrox women's doubles,Hyrox,Client,Informational,210,21,0,166,P2 High Value,Stations & Rules,not_started
+hyrox for beginners,Hyrox,Client,Informational,210,21,0.28,166,P2 High Value,Beginner,not_started
+hyrox belgium,Hyrox,Client,Info/Transactional,210,22,0,164,P2 High Value,Race Events,not_started
+hyrox results today,Hyrox,Client,Informational,210,23,0,162,P2 High Value,Results & Data,not_started
+hyrox open weights,Hyrox,Client,Informational,210,23,0.72,162,P2 High Value,Stations & Rules,not_started
+hyrox 2025,Hyrox,Client,Informational,390,60,0,156,P4 Long Term,Race Events,not_started
+hydrox competition,Hyrox,Client,Navigational,390,60,0.29,156,P4 Long Term,Misspellings,not_started
+personal trainer leicestershire,Personal Training,Client,Commercial,170,9,0.92,155,P3 Build,PT Location,not_started
+personal trainer southampton uk,Personal Training,Client,Commercial,170,9,1.05,155,P3 Build,PT Location,not_started
+personal trainer canterbury,Personal Training,Client,Commercial,170,9,0.74,155,P3 Build,PT Location,not_started
+personal training cardiff,Personal Training,Client,Commercial,170,9,1.02,155,P3 Build,PT Location,not_started
+hyrox flex add on,Hyrox,Client,Informational,170,10,0,153,P3 Build,Tickets,not_started
+personal training bournemouth,Personal Training,Client,Commercial,170,10,1.14,153,P3 Build,PT Location,not_started
+corporate personal training,Personal Training,Client,Informational,170,10,0,153,P3 Build,PT Service,not_started
+is hyrox crossfit,Hyrox,Client,Informational,210,28,0,151,P2 High Value,Fundamentals,not_started
+personal trainer kensington,Personal Training,Client,Commercial,170,11,4.14,151,P3 Build,PT Location,not_started
+personal trainer bedford,Personal Training,Client,Commercial,170,11,0.88,151,P3 Build,PT Location,not_started
+hyrox course,Hyrox,Client,Informational,320,53,1.21,150,P4 Long Term,Training Plans,not_started
+personal trainer birmingham uk,Personal Training,Client,Commercial,170,12,0.87,150,P3 Build,PT Location,not_started
+fitness trainer aberdeen,Personal Training,Client,Commercial,170,12,0.91,150,P3 Build,PT Location,not_started
+personal trainer croydon,Personal Training,Client,Commercial,170,13,1.04,148,P3 Build,PT Location,not_started
+personal trainer poole,Personal Training,Client,Commercial,170,13,0.79,148,P3 Build,PT Location,not_started
+hyrox account,Hyrox,Client,Transactional/Nav,320,54,0,147,P4 Long Term,Tickets,not_started
+hyrox workout example,Hyrox,Client,Informational,260,44,0.42,146,P3 Build,Workouts,not_started
+hyrox burpee broad jump rules,Hyrox,Client,Informational,170,17,0.42,141,P3 Build,Stations & Rules,not_started
+hyrox time,Hyrox,Client,Informational,210,34,0,139,P2 High Value,Results & Data,not_started
+hyrox exercise list,Hyrox,Client,Informational,210,34,0.09,139,P2 High Value,Workouts,not_started
+hyrox lunges weight,Hyrox,Client,Informational,170,22,0.33,133,P3 Build,Stations & Rules,not_started
+hyrox clothes,Hyrox,Client,Informational,170,23,0.64,131,P3 Build,Gear,not_started
+hyrox exercises order,Hyrox,Client,Informational,210,38,0.13,130,P3 Build,Workouts,not_started
+what does hyrox consist of,Hyrox,Client,Informational,210,38,0.08,130,P3 Build,Fundamentals,not_started
+personal trainer kent,Personal Training,Client,Commercial,140,9,0.96,127,P3 Build,PT Location,not_started
+personal trainer slough,Personal Training,Client,Commercial,140,9,0.96,127,P3 Build,PT Location,not_started
+personal training 1 on 1,Personal Training,Client,Informational,140,9,1.52,127,P3 Build,PT Service,not_started
+hyrox womens,Hyrox,Client,Informational,210,40,0.52,126,P3 Build,Stations & Rules,not_started
+hyrox lunges,Hyrox,Client,Informational,170,26,0,126,P3 Build,Stations & Rules,not_started
+trainers for hyrox,Hyrox,Client,Commercial,170,26,0.76,126,P3 Build,Gear,not_started
+fitness trainer for seniors,Personal Training,Client,Commercial,140,10,0.96,126,P3 Build,PT Niche,not_started
+hyrox challenge,Hyrox,Client,Informational,390,68,0.19,125,P4 Long Term,Fundamentals,not_started
+hyrox glasgow start times,Hyrox,Client,Informational,140,11,0,125,P3 Build,Results & Data,not_started
+aberdeen personal trainer,Personal Training,Client,Commercial,140,11,0.84,125,P3 Build,PT Location,not_started
+personal trainer for over 60 near me,Personal Training,Client,Transactional,140,11,0,125,P3 Build,PT Niche,not_started
+beginner hyrox workout,Hyrox,Client,Informational,170,27,0.56,124,P3 Build,Beginner,not_started
+hyrox italy,Hyrox,Client,Navigational,140,12,0,123,P3 Build,Race Events,not_started
+personal training bristol,Personal Training,Client,Commercial,140,12,1.03,123,P3 Build,PT Location,not_started
+personal trainer for elderly,Personal Training,Client,Commercial,140,12,0.81,123,P3 Build,PT Niche,not_started
+gym membership for over 60s,Personal Training,Client,Informational,140,12,0.42,123,P3 Build,PT Niche,not_started
+hirox sport,Hyrox,Client,Informational,260,53,0.26,122,P4 Long Term,Misspellings,not_started
+hyrox schedule,Hyrox,Client,Info/Transactional,210,42,0,122,P3 Build,Race Events,not_started
+personal trainer cambridge uk,Personal Training,Client,Commercial,140,13,0.99,122,P3 Build,PT Location,not_started
+personal trainer worcester,Personal Training,Client,Commercial,140,13,0.68,122,P3 Build,PT Location,not_started
+personal trainer york uk,Personal Training,Client,Commercial,140,13,0.92,122,P3 Build,PT Location,not_started
+personal fitness trainer worcester,Personal Training,Client,Commercial,140,13,0.68,122,P3 Build,PT Location,not_started
+hyrox spain,Hyrox,Client,Navigational,170,29,0,121,P3 Build,Race Events,not_started
+hyrox competitions,Hyrox,Client,Info/Transactional,260,54,0.35,120,P4 Long Term,Race Events,not_started
+how long to train for hyrox,Hyrox,Client,Informational,140,14,0.49,120,P3 Build,Training Plans,not_started
+home personal trainer,Personal Training,Client,Commercial,140,14,1.62,120,P3 Build,PT Service,not_started
+hyrox youtube,Hyrox,Client,Navigational,170,30,0,119,P3 Build,Community,not_started
+personal trainer oxford uk,Personal Training,Client,Commercial,140,15,1.57,119,P3 Build,PT Location,not_started
+personal trainers birmingham,Personal Training,Client,Commercial,140,15,0.8,119,P3 Build,PT Location,not_started
+birmingham personal trainer,Personal Training,Client,Commercial,140,15,0.8,119,P3 Build,PT Location,not_started
+physical trainers for seniors,Personal Training,Client,Commercial,140,15,0.81,119,P3 Build,PT Niche,not_started
+hyrox scotland,Hyrox,Client,Informational,140,16,0,118,P3 Build,Race Events,not_started
+hyrox world,Hyrox,Client,Navigational,260,55,0,117,P4 Long Term,Fundamentals,not_started
+hirox sports,Hyrox,Client,Informational,260,56,0.26,114,P4 Long Term,Misspellings,not_started
+12 week hyrox training plan,Hyrox,Client,Informational,140,19,1.24,113,P3 Build,Training Plans,not_started
+hyrox 365,Hyrox,Client,Navigational,140,19,0,113,P3 Build,Coaching & Gyms,not_started
+hyrox training program,Hyrox,Client,Informational,260,57,0.69,112,P4 Long Term,Training Plans,not_started
+what is the hyrox workout,Hyrox,Client,Informational,170,34,0.09,112,P3 Build,Workouts,not_started
+what is hyrox race,Hyrox,Client,Informational,210,47,0.07,111,P3 Build,Fundamentals,not_started
+sled weight hyrox,Hyrox,Client,Informational,140,21,0.78,111,P3 Build,Stations & Rules,not_started
+hyrox pro,Hyrox,Client,Info/Transactional,260,58,0,109,P4 Long Term,Stations & Rules,not_started
+hyrox routine,Hyrox,Client,Informational,170,36,0.2,109,P3 Build,Training Plans,not_started
+hyrox exercise,Hyrox,Client,Informational,170,36,0.18,109,P3 Build,Workouts,not_started
+hyrox movements,Hyrox,Client,Informational,140,22,0.08,109,P3 Build,Workouts,not_started
+hyrox glasgow map,Hyrox,Client,Informational,140,23,0,108,P3 Build,Race Events,not_started
+hyrox hamburg,Hyrox,Client,Informational,140,23,0,108,P3 Build,Race Events,not_started
+hyrox style workout,Hyrox,Client,Informational,210,49,1.08,107,P3 Build,Workouts,not_started
+full hyrox workout,Hyrox,Client,Informational,140,24,0,106,P3 Build,Workouts,not_started
+elite 15 hyrox,Hyrox,Client,Informational,140,24,0,106,P3 Build,Coaching & Gyms,not_started
+hyrox doubles world record,Hyrox,Client,Informational,110,5,0,105,P3 Build,Results & Data,not_started
+hydrox uk,Hyrox,Client,Navigational,260,60,1.31,104,P4 Long Term,Misspellings,not_started
+hyrox activities,Hyrox,Client,Informational,170,39,0.13,104,P3 Build,Training Plans,not_started
+hyrox lunges distance,Hyrox,Client,Informational,140,28,0,101,P3 Build,Stations & Rules,not_started
+personal trainer poole dorset,Personal Training,Client,Commercial,110,9,0.79,100,P3 Build,PT Location,not_started
+senior fitness personal trainer,Personal Training,Client,Commercial,110,9,0.96,100,P3 Build,PT Niche,not_started
+hyrox locations,Hyrox,Client,Informational,140,29,0,99,P3 Build,Race Events,not_started
+personal trainer norwich uk,Personal Training,Client,Commercial,110,10,0.93,99,P3 Build,PT Location,not_started
+personal trainers exeter,Personal Training,Client,Commercial,110,10,1.13,99,P3 Build,PT Location,not_started
+weight loss personal trainer,Personal Training,Client,Commercial,110,10,3.09,99,P3 Build,PT Niche,not_started
+fat loss personal trainer,Personal Training,Client,Commercial,110,10,1.88,99,P3 Build,PT Niche,not_started
+personal trainer chelmsford uk,Personal Training,Client,Commercial,110,11,0.99,98,P3 Build,PT Location,not_started
+personal trainer portsmouth uk,Personal Training,Client,Commercial,110,11,0.95,98,P3 Build,PT Location,not_started
+hyrox simulation workout,Hyrox,Client,Informational,110,12,0.71,97,P3 Build,Workouts,not_started
+personal trainer chelmsford,Personal Training,Client,Commercial,110,12,1.69,97,P3 Build,PT Location,not_started
+personal trainer bradford west yorkshire,Personal Training,Client,Commercial,110,12,0.78,97,P3 Build,PT Location,not_started
+personal trainers nottingham,Personal Training,Client,Commercial,110,12,0.86,97,P3 Build,PT Location,not_started
+manchester trainer,Personal Training,Client,Informational,110,12,0.5,97,P3 Build,PT Location,not_started
+personal trainer nutritionist near me,Personal Training,Client,Transactional,110,12,1.81,97,P3 Build,PT Service,not_started
+lose weight trainer,Personal Training,Client,Commercial,110,12,1.88,97,P3 Build,PT Niche,not_started
+mini hyrox workout,Hyrox,Client,Informational,110,13,0.86,96,P3 Build,Workouts,not_started
+hyrox gift,Hyrox,Client,Informational,110,13,0.35,96,P3 Build,Gear,not_started
+fitness trainer slough,Personal Training,Client,Commercial,110,13,0.96,96,P3 Build,PT Location,not_started
+hyrox doubles workout,Hyrox,Client,Informational,140,32,0.51,95,P3 Build,Workouts,not_started
+hyrox 12 week training plan pdf,Hyrox,Client,Informational,110,14,1.91,95,P3 Build,Training Plans,not_started
+personal trainers in birmingham,Personal Training,Client,Commercial,110,14,0.8,95,P3 Build,PT Location,not_started
+corporate personal trainer,Personal Training,Client,Commercial,110,14,3.07,95,P3 Build,PT Service,not_started
+personal trainer for older people,Personal Training,Client,Informational,110,14,0.81,95,P3 Build,PT Niche,not_started
+hyrox competition workout,Hyrox,Client,Informational,170,45,0.23,94,P3 Build,Workouts,not_started
+free hyrox training plan,Hyrox,Client,Commercial,110,15,0.93,94,P3 Build,Training Plans,not_started
+hyrox sandbag weights,Hyrox,Client,Informational,110,15,0.7,94,P3 Build,Stations & Rules,not_started
+how much is a hyrox ticket,Hyrox,Client,Informational,110,15,0,94,P3 Build,Tickets,not_started
+personal trainer bath uk,Personal Training,Client,Commercial,110,15,0.98,94,P3 Build,PT Location,not_started
+hyrox glasgow live stream,Hyrox,Client,Informational,110,16,0,92,P3 Build,Race Events,not_started
+hyrox sandbag lunges weight,Hyrox,Client,Informational,110,16,0.16,92,P3 Build,Stations & Rules,not_started
+hyrox weights men,Hyrox,Client,Informational,110,17,0.18,91,P3 Build,Stations & Rules,not_started
+hyrox workout plans,Hyrox,Client,Informational,170,47,0.87,90,P3 Build,Training Plans,not_started
+hyrox fitness test,Hyrox,Client,Informational,110,19,0,89,P3 Build,Beginner,not_started
+hyrox partner workout,Hyrox,Client,Informational,110,20,0,88,P3 Build,Workouts,not_started
+hyrox training programme,Hyrox,Client,Informational,170,49,0.69,87,P3 Build,Training Plans,not_started
+hyrox burpee broad jump distance,Hyrox,Client,Informational,110,22,0,86,P3 Build,Stations & Rules,not_started
+hyrox training plan for beginners,Hyrox,Client,Info/Commercial,110,22,0.77,86,P3 Build,Beginner,not_started
+hyrox competition near me,Hyrox,Client,Transactional/Nav,170,50,0.58,85,P3 Build,Race Events,not_started
+hyrox ireland,Hyrox,Client,Info/Transactional,140,39,0,85,P3 Build,Race Events,not_started
+how to train for a hyrox,Hyrox,Client,Informational,140,40,0.32,84,P3 Build,Training Plans,not_started
+hyrox training workouts,Hyrox,Client,Informational,170,51,0.63,83,P4 Long Term,Training Plans,not_started
+hyrox plan,Hyrox,Client,Informational,140,41,0.66,83,P3 Build,Training Plans,not_started
+hyrox session,Hyrox,Client,Informational,210,61,0.92,82,P4 Long Term,Workouts,not_started
+hyrox.glasgow,Hyrox,Client,Informational,90,9,1.05,82,P3 Build,Race Events,not_started
+personal trainer ilford,Personal Training,Client,Commercial,90,9,1.78,82,P3 Build,PT Location,not_started
+personal trainer redhill,Personal Training,Client,Commercial,90,9,1.22,82,P3 Build,PT Location,not_started
+personal trainers in cardiff,Personal Training,Client,Commercial,90,10,0.74,81,P3 Build,PT Location,not_started
+personal trainer canterbury uk,Personal Training,Client,Commercial,90,10,0.88,81,P3 Build,PT Location,not_started
+personalised fitness,Personal Training,Client,Commercial,90,11,6.14,80,P3 Build,PT Service,not_started
+hyrox running,Hyrox,Client,Informational,110,28,0.78,79,P3 Build,Workouts,not_started
+personal trainer essex,Personal Training,Client,Commercial,90,12,1.17,79,P3 Build,PT Location,not_started
+personal trainer southend,Personal Training,Client,Commercial,90,12,0.79,79,P3 Build,PT Location,not_started
+personal trainer stratford london,Personal Training,Client,Commercial,90,12,1.78,79,P3 Build,PT Location,not_started
+hyrox events uk 2025,Hyrox,Client,Informational,110,29,0,78,P3 Build,Race Events,not_started
+cardiff personal trainer,Personal Training,Client,Commercial,90,13,0.74,78,P3 Build,PT Location,not_started
+personal trainer prices london,Personal Training,Client,Informational,90,13,1.23,78,P3 Build,PT Location,not_started
+personal trainer prices,Personal Training,Client,Informational,90,13,1.23,78,P3 Build,PT Pricing,not_started
+weight training for women near me,Personal Training,Client,Transactional,90,13,0.69,78,P3 Build,PT Niche,not_started
+hyrox australia,Hyrox,Client,Navigational,110,30,0,77,P3 Build,Race Events,not_started
+personal trainer near me female,Personal Training,Client,Transactional,90,14,1.16,77,P3 Build,PT Service,not_started
+personal trainer to build muscle,Personal Training,Client,Informational,90,14,1.85,77,P3 Build,PT Niche,not_started
+hyrox diet,Hyrox,Client,Informational,90,16,0.53,76,P3 Build,Nutrition,not_started
+hyrox training plans,Hyrox,Client,Commercial,140,47,0.78,74,P3 Build,Training Plans,not_started
+training for hyrox,Hyrox,Client,Informational,140,47,0.4,74,P3 Build,Training Plans,not_started
+hyrox strength workout,Hyrox,Client,Informational,110,33,0.95,74,P3 Build,Workouts,not_started
+hyrox ticket prices,Hyrox,Client,Transactional,110,33,0,74,P3 Build,Tickets,not_started
+hyrox entry fee,Hyrox,Client,Info/Transactional,110,34,0,73,P3 Build,Tickets,not_started
+hyrox workout for beginners,Hyrox,Client,Informational,110,35,0.53,72,P3 Build,Beginner,not_started
+hyrox app,Hyrox,Client,Informational,90,20,1.96,72,P3 Build,Coaching & Gyms,not_started
+train for hyrox,Hyrox,Client,Informational,140,50,0.39,70,P3 Build,Training Plans,not_started
+hyrox singles,Hyrox,Client,Informational,140,50,0,70,P3 Build,Stations & Rules,not_started
+hyrox beginner training plan,Hyrox,Client,Informational,90,22,0.68,70,P3 Build,Beginner,not_started
+hyrox events in order,Hyrox,Client,Informational,140,51,0,69,P4 Long Term,Race Events,not_started
+hyrox germany,Hyrox,Client,Info/Transactional,110,37,0,69,P3 Build,Race Events,not_started
+what is a hyrox workout,Hyrox,Client,Informational,110,37,0.07,69,P3 Build,Workouts,not_started
+hydrox events,Hyrox,Client,Info/Transactional,140,54,1.54,64,P4 Long Term,Misspellings,not_started
+hyrdox,Hyrox,Client,Informational,140,54,0.77,64,P4 Long Term,Misspellings,not_started
+hyrox definition,Hyrox,Client,Informational,140,57,0,60,P4 Long Term,Fundamentals,not_started
+hyrox programmes,Hyrox,Client,Commercial,90,33,1.24,60,P3 Build,Training Plans,not_started
+hyrox beginner workouts,Hyrox,Client,Informational,90,35,0.75,59,P3 Build,Beginner,not_started
+hyrox run,Hyrox,Client,Informational,170,66,0.78,58,P4 Long Term,Workouts,not_started
+hyrox programme,Hyrox,Client,Informational,110,47,1.83,58,P3 Build,Training Plans,not_started
+hyrox workout examples,Hyrox,Client,Informational,90,37,0.57,57,P3 Build,Workouts,not_started
+what are the hyrox exercises,Hyrox,Client,Informational,90,38,0.09,56,P3 Build,Workouts,not_started
+hyrox gym workout,Hyrox,Client,Informational,110,51,0.5,54,P4 Long Term,Workouts,not_started
+womens hyrox,Hyrox,Client,Info/Transactional,110,51,0.99,54,P4 Long Term,Stations & Rules,not_started
+hyrox beginner,Hyrox,Client,Informational,90,45,0.37,50,P3 Build,Beginner,not_started
+what is hyroc,Hyrox,Client,Informational,110,56,0.09,48,P4 Long Term,Misspellings,not_started
+hyrox training programs,Hyrox,Client,Info/Commercial,110,57,0.99,47,P4 Long Term,Training Plans,not_started
+hryox,Hyrox,Client,Navigational,110,59,0.36,45,P4 Long Term,Misspellings,not_started
+how does hyrox work,Hyrox,Client,Informational,90,52,0.06,43,P4 Long Term,Fundamentals,not_started
+hyrox circuit workout,Hyrox,Client,Informational,90,55,0.88,41,P4 Long Term,Workouts,not_started
+hyrox.,Hyrox,Client,Navigational,110,66,0.53,37,P4 Long Term,Misspellings,not_started
+hyrox world championships results,Hyrox,Client,Informational,90,,0,,Needs KD,Results & Data,not_started
+hyrox ranking,Hyrox,Client,Informational,40,,2.32,,Needs KD,Results & Data,not_started
+hyrox paris results,Hyrox,Client,Informational,30,,0,,Needs KD,Results & Data,not_started

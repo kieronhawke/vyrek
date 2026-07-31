@@ -1,0 +1,35 @@
+SUV ATHLETIC — BUILD PACK
+Generated 30 July 2026 (rev 2)
+
+START-HERE.md                                            6,405 bytes
+context/00-BUILD-ORDER.md                                4,003 bytes
+context/00-README-AMENDMENTS.md                            980 bytes
+context/01-brand-and-identity.md                         2,914 bytes
+context/02-audience-and-onboarding.md                    6,155 bytes
+context/03-seo-architecture.md                           4,921 bytes
+context/04-location-page-system.md                       6,045 bytes
+context/05-content-clusters.md                           6,285 bytes
+context/06-traffic-playbook.md                           5,657 bytes
+context/07-product-spec.md                               1,890 bytes
+context/08-open-questions.md                             2,940 bytes
+data/README.md                                           1,546 bytes
+data/keyword-database.xlsx                              68,321 bytes
+data/keywords-client-only.csv                           31,443 bytes
+data/keywords-excluded.csv                              13,888 bytes
+data/keywords.csv                                       45,228 bytes
+data/location-targets.csv                                5,732 bytes
+research/competitive-landscape.md                        1,702 bytes
+rules/HARD-RULES.md                                      3,565 bytes
+rules/uniqueness-validator.md                            2,090 bytes
+spec/09-admin-control-centre.md                         24,234 bytes
+spec/10-programming-and-personalisation.md              18,822 bytes
+spec/11-client-account.md                               16,306 bytes
+spec/12-product-tiers.md                                10,886 bytes
+spec/13-pricing-and-value.md                            13,459 bytes
+spec/14-design-system.md                                13,074 bytes
+spec/15-data-model.md                                   11,013 bytes
+spec/16-testing.md                                       7,988 bytes
+spec/17-contextual-guidance.md                           5,262 bytes
+spec/18-integrations-and-notifications.md                7,134 bytes
+
+31 files
