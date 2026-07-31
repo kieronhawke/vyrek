@@ -208,3 +208,59 @@ added a case for the genuine fallback.
   handling across DST.
 - Operator Mode `/admin` still waiting on auth.
 
+---
+
+## PHASE D — THE RACE CONFLICT RESOLVER ✅ 31 July 2026
+
+`spec/10 §2` calls this the standout feature. It is the periodisation
+conflict resolution Ben currently does by hand in Excel — "the highest-value
+thing in Ben's head and the hardest thing to hire for".
+
+### Shipped
+
+| What | Where |
+|---|---|
+| The resolver — conflicts, options, trade-offs | `lib/control/race-conflicts.ts` |
+| The three-race client `spec/16 §11` names | `lib/control/fixtures.ts` |
+| Coach Mode Plans, showing it live | `app/coach/plans/page.tsx` |
+
+Six conflict types: a race inside another's recovery window, overlapping
+tapers, multiple A races, **discipline degradation**, insufficient build
+runway, and travel before a race.
+
+The discipline check is the one that earns the feature. On Ben's own example
+it produces: *"Ultra marathon then Hyrox Pro Doubles, 21 days apart. A
+high-volume endurance block degrades the strength and anaerobic power a Hyrox
+result depends on."* No calendar check finds that — the races are three weeks
+apart and look fine.
+
+**It never returns an answer.** One option per race treated as the A race,
+plus the honest split, each naming what it costs. `spec/10 §1`: the system
+builds the skeleton, Ben supplies the judgement, and naming the sacrifice is
+the strongest human signal there is. A test asserts the returned shape
+contains no "recommended", "chosen" or "best" anywhere.
+
+Blocking conflicts require acknowledgement before send rather than hard-
+blocking. A tool that refuses to let an expert override it is a tool an
+expert stops using; the requirement is that he cannot send *without seeing
+it*.
+
+### Tested — 136 unit tests, 99.16% statements, 100% functions and lines
+
+- **24 resolver tests**, opening with Ben's exact ultra → GNR → Hyrox
+  scenario and asserting each conflict it should surface.
+- Boundary cases: the exact recovery day counts as clear of it; well-spaced
+  races produce no options at all.
+- Order-independence and non-mutation of the input.
+- The candour test: the split option must still describe itself as usually
+  the worst choice, because an optimistic framing here is exactly the
+  frictionless accommodation `spec/10 §1` warns against.
+
+### Outstanding
+
+- Choosing an option and drafting the client message lands with the plan
+  builder in Phase D proper.
+- Still unblocked and next: progression rules, percentile and predicted
+  finish, automation rule evaluation with cooldowns and the global cap,
+  proration, DST handling.
+

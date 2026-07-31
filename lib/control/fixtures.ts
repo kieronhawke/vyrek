@@ -1,3 +1,5 @@
+import type { Race } from "@/lib/control/race-conflicts";
+
 /**
  * Seed fixtures — docs/build-pack/spec/16 §11.
  *
@@ -125,6 +127,46 @@ export const LEADS: Lead[] = [
   { id: "l_03", name: "Sample Lead C", segment: "faster", status: "contacted", ageHours: 76 },
   { id: "l_04", name: "Sample Lead D", segment: "unsure", status: "call_booked", ageHours: 120 },
 ];
+
+/**
+ * spec/16 §11 names this fixture explicitly: "One client with the three-race
+ * conflict (ultra -> GNR -> Hyrox Pro Doubles) to exercise the resolver."
+ * It is Ben's own example from spec/10 §2.
+ */
+export const CONFLICT_CLIENT_ID = "c_01";
+
+export const RACE_ENTRIES: Array<{ accountId: string } & Race> = [
+  {
+    accountId: CONFLICT_CLIENT_ID,
+    id: "r_ultra",
+    name: "Ultra marathon",
+    date: new Date("2026-09-05T00:00:00Z"),
+    discipline: "ultra",
+    priority: "A",
+  },
+  {
+    accountId: CONFLICT_CLIENT_ID,
+    id: "r_gnr",
+    name: "Great North Run",
+    date: new Date("2026-09-19T00:00:00Z"),
+    discipline: "half_marathon",
+    priority: "A",
+  },
+  {
+    accountId: CONFLICT_CLIENT_ID,
+    id: "r_hyrox",
+    name: "Hyrox Pro Doubles",
+    date: new Date("2026-09-26T00:00:00Z"),
+    discipline: "hyrox",
+    priority: "A",
+  },
+];
+
+export function listRacesForAccount(accountId: string): Race[] {
+  return RACE_ENTRIES.filter((r) => r.accountId === accountId).map(
+    ({ accountId: _drop, ...race }) => race,
+  );
+}
 
 /* ─── Accessors — the seam Phase A replaces with real queries ────────── */
 
