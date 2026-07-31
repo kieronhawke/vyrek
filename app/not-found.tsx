@@ -16,7 +16,7 @@ const TRAILS = [
   {
     label: "Take the quiz",
     href: "/quiz",
-    note: "Three minutes. See your Week 1 before you pay.",
+    note: "Three minutes. See your Week 1 for free.",
     eyebrow: "→ Start here",
   },
   {

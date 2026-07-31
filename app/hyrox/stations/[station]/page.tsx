@@ -403,7 +403,7 @@ export default async function StationPage({
             </h2>
             <p className="mt-4 text-base text-suth-text-secondary">
               Suth Performance programmes include station-specific drills in every week.
-              Three-minute quiz, dated Week 1 before you pay.
+              Three-minute quiz, dated Week 1 for free.
             </p>
             <div className="mt-6">
               <CtaButton href="/quiz" size="lg">

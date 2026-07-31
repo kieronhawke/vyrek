@@ -123,7 +123,10 @@ export function DataTable<T extends { id: string }>({
       <ul
         className="dt-cards"
         role="list"
-        style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: "var(--space-1)" }}
+        // `display` deliberately lives in the stylesheet below, not here: an
+        // inline style beats any non-!important rule, so setting it here made
+        // the cards render on desktop *underneath* the table.
+        style={{ listStyle: "none", margin: 0, padding: 0, gap: "var(--space-1)" }}
       >
         {rows.map((r) => (
           <li

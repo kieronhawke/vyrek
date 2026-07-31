@@ -47,7 +47,8 @@ For every Hyrox-adjacent question, Suth Performance should be one of three thing
 
 This means:
 - Every station gets a 1,500-word guide (✅ done. 8 stations)
-- Every UK city gets a localised landing (✅ done. 103 cities/boroughs)
+- Every UK city gets a localised landing (✅ done. 94 cities/boroughs; the
+  earlier figure of 103 was wrong)
 - Every comparison ("Hyrox vs X") gets a comparison page (✅ done. 5 comparisons)
 - Every goal time gets a plan template (✅ done. 4 sub-X templates)
 - Every audience gets an audience-specific page (✅ done. 4 audience plans)

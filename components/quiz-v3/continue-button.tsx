@@ -11,16 +11,24 @@ export function ContinueButton({
   onClick,
   label = "Continue →",
   loading = false,
+  ariaLabel,
 }: {
   disabled?: boolean;
   onClick: () => void;
   label?: string;
   loading?: boolean;
+  /**
+   * Overrides the accessible name where two buttons share visible text but
+   * do different things. Must still contain the visible label so voice
+   * control ("click send my plan to Ben") keeps working.
+   */
+  ariaLabel?: string;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
+      aria-label={ariaLabel}
       disabled={disabled || loading}
       aria-disabled={disabled || loading}
       className={cn(

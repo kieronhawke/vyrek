@@ -31,7 +31,19 @@ import { EquipmentScreen } from "@/components/quiz-v3/screens/equipment";
 import { PartnerScreen } from "@/components/quiz-v3/screens/partner";
 import { InjuriesScreen } from "@/components/quiz-v3/screens/injuries";
 import { InjuryDetailScreen } from "@/components/quiz-v3/screens/injury-detail";
+import { SupportPreferenceScreen } from "@/components/quiz-v3/screens/support-preference";
+import {
+  EmailCaptureScreen,
+  isEmailValid,
+} from "@/components/quiz-v3/screens/email-capture";
 import { validateAccountForm } from "@/components/quiz-v3/screens/account-creation";
+import {
+  BarriersScreen,
+  GoalScreen,
+  ReadinessScreen,
+  StartingPointScreen,
+  TriedBeforeScreen,
+} from "@/components/quiz-v3/screens/beginner";
 
 // Heavy screens that pull in third-party JS (react-day-picker, gsap), defer
 // them so the initial /quiz bundle stays light. Each is reached only after
@@ -57,6 +69,14 @@ const ReassuranceScreen2 = dynamic(
   () =>
     import("@/components/quiz-v3/screens/reassurance-2").then((m) => ({
       default: m.ReassuranceScreen2,
+    })),
+  { ssr: false },
+);
+
+const MeetBenScreen = dynamic(
+  () =>
+    import("@/components/quiz-v3/screens/meet-ben").then((m) => ({
+      default: m.MeetBenScreen,
     })),
   { ssr: false },
 );
@@ -91,16 +111,26 @@ import { supabaseBrowser } from "@/lib/supabase/client";
 import {
   applyIntentPreSelect,
   applyProgrammeShortcutV3,
+  applyRailPreSelect,
+  applySupportPreSelect,
   determineProgramme,
   injuryNeedsDetail,
+  isBeginnerRail,
+  type BarrierValue,
   type IntentValue,
   type ProgrammeFromUrl,
   type QuizAnswers,
 } from "@/lib/quiz-flow";
+import { sift } from "@/lib/quiz-sift";
 
 type ScreenKind =
   | "welcome"
   | "primary-intent"
+  | "goal"
+  | "starting-point"
+  | "tried-before"
+  | "barriers"
+  | "readiness"
   | "reassurance-1"
   | "experience"
   | "best-time"
@@ -113,8 +143,11 @@ type ScreenKind =
   | "location"
   | "equipment"
   | "partner"
+  | "email-capture"
   | "injuries"
   | "injury-detail"
+  | "support-preference"
+  | "meet-ben"
   | "plan-summary"
   | "account-creation"
   | "calculating";
@@ -126,18 +159,34 @@ type ScreenDef = {
 
 const SCREENS: ScreenDef[] = [
   { kind: "welcome" },
-  { kind: "primary-intent" },
+  // Skipped when the entry surface already told us the rail, so a visitor
+  // from a personal-training page isn't asked what brought them here.
+  { kind: "primary-intent", showIf: (a) => !a.rail },
+  { kind: "goal", showIf: isBeginnerRail },
+  { kind: "starting-point", showIf: isBeginnerRail },
   { kind: "reassurance-1" },
-  { kind: "experience" },
+  { kind: "tried-before", showIf: isBeginnerRail },
+  // The race and calibration questions are meaningless to someone who has
+  // never heard of HYROX, which is exactly what the old single-flow quiz
+  // asked them at screen two.
+  { kind: "experience", showIf: (a) => !isBeginnerRail(a) },
   {
     kind: "best-time",
     showIf: (a) =>
-      a.experience === "raced-few" || a.experience === "raced-many",
+      !isBeginnerRail(a) &&
+      (a.experience === "raced-few" || a.experience === "raced-many"),
   },
-  { kind: "race-date" },
+  { kind: "race-date", showIf: (a) => !isBeginnerRail(a) },
   { kind: "reassurance-2" },
-  { kind: "activity-baseline" },
-  { kind: "calibration" },
+  // Email lands straight after the value interstitial and before the long
+  // tail of logistics questions, so the ~60% who leave later are still
+  // reachable by the abandonment sequence.
+  { kind: "email-capture" },
+  { kind: "barriers", showIf: isBeginnerRail },
+  { kind: "activity-baseline", showIf: (a) => !isBeginnerRail(a) },
+  // Calibration is framed around sled, wall ball and farmers carry weights.
+  // Beginner rail skips it rather than ask a question it can't parse.
+  { kind: "calibration", showIf: (a) => !isBeginnerRail(a) },
   { kind: "frequency" },
   { kind: "session-length" },
   { kind: "location" },
@@ -156,6 +205,15 @@ const SCREENS: ScreenDef[] = [
     // Only for specific injuries; "none" and "other" skip straight on.
     showIf: (a) => injuryNeedsDetail(a.injuries),
   },
+  // The sift. Last question before the reveal, so it is asked only after
+  // the user has invested: commitment first, choice second.
+  // Hidden when the entry surface already answered it (the club page CTA).
+  { kind: "support-preference", showIf: (a) => !a.supportLocked },
+  // Readiness is for Ben, so it is only worth asking of people heading his
+  // way. Someone who picked self-serve is not going into his diary.
+  { kind: "readiness", showIf: (a) => a.supportPreference !== "self" },
+  // The human moment, immediately before the reveal.
+  { kind: "meet-ben" },
   { kind: "plan-summary" },
   { kind: "account-creation" },
   { kind: "calculating" },
@@ -177,6 +235,10 @@ function questionScreenIndex(
 ): [number, number] {
   const questionKinds: ScreenKind[] = [
     "primary-intent",
+    "goal",
+    "starting-point",
+    "tried-before",
+    "barriers",
     "experience",
     "best-time",
     "race-date",
@@ -187,8 +249,11 @@ function questionScreenIndex(
     "location",
     "equipment",
     "partner",
+    "email-capture",
     "injuries",
     "injury-detail",
+    "support-preference",
+    "readiness",
     "plan-summary",
     "account-creation",
   ];
@@ -212,6 +277,8 @@ function QuizV3Inner() {
   // URL pre-fill (intent= or program=). Apply once on mount.
   const intentParam = params.get("intent");
   const programParam = params.get("program") as ProgrammeFromUrl | null;
+  const railParam = params.get("rail");
+  const supportParam = params.get("support");
   const appliedPrefillRef = useRef(false);
   useEffect(() => {
     if (!hydrated || !state) return;
@@ -219,6 +286,12 @@ function QuizV3Inner() {
     appliedPrefillRef.current = true;
 
     let next = state.answers;
+    if (railParam) {
+      next = applyRailPreSelect(next, railParam);
+    }
+    if (supportParam) {
+      next = applySupportPreSelect(next, supportParam);
+    }
     if (intentParam) {
       next = applyIntentPreSelect(next, intentParam);
     }
@@ -228,7 +301,15 @@ function QuizV3Inner() {
     if (next !== state.answers) {
       mergeAnswers(next);
     }
-  }, [hydrated, state, intentParam, programParam, mergeAnswers]);
+  }, [
+    hydrated,
+    state,
+    intentParam,
+    programParam,
+    railParam,
+    supportParam,
+    mergeAnswers,
+  ]);
 
   const answers = useMemo<QuizAnswers>(
     () => state?.answers ?? { intent: [] },
@@ -251,10 +332,18 @@ function QuizV3Inner() {
     screenMountTimeRef.current = Date.now();
   }, [current?.kind]);
 
-  // Email + password local drafts for account screen.
-  const [emailDraft, setEmailDraft] = useState("");
+  // Email + password local drafts for account screen. Email and marketing
+  // start as null meaning "not edited here", so they fall through to what
+  // the user already gave us on the mid-flow email screen. Derived rather
+  // than synced in an effect: an edit on the final screen still wins, and
+  // there is no cascading render.
+  const [emailDraft, setEmailDraft] = useState<string | null>(null);
   const [passwordDraft, setPasswordDraft] = useState("");
-  const [marketingDraft, setMarketingDraft] = useState(false);
+  const [marketingDraft, setMarketingDraft] = useState<boolean | null>(null);
+
+  const emailValue = emailDraft ?? state?.answers.email ?? "";
+  const marketingValue =
+    marketingDraft ?? state?.answers.marketingOptIn ?? false;
 
   // Fire screen_viewed event on every screen change.
   useEffect(() => {
@@ -344,7 +433,7 @@ function QuizV3Inner() {
 
   const onSubmitAccount = useCallback(async () => {
     if (!state) return;
-    const validation = validateAccountForm(emailDraft, passwordDraft);
+    const validation = validateAccountForm(emailValue, passwordDraft);
     if (!validation.ok) {
       setAccountError(validation.error);
       haptic("warning");
@@ -365,8 +454,8 @@ function QuizV3Inner() {
         window.localStorage.setItem(
           "suth:quiz:v3:account-submit-snapshot",
           JSON.stringify({
-            email: emailDraft.trim().toLowerCase(),
-            marketingOptIn: marketingDraft,
+            email: emailValue.trim().toLowerCase(),
+            marketingOptIn: marketingValue,
             answers: {
               ...state.answers,
               raceDate:
@@ -387,7 +476,7 @@ function QuizV3Inner() {
       // 1. Create the Supabase Auth user from the browser.
       const supabase = supabaseBrowser();
       const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: emailDraft.trim().toLowerCase(),
+        email: emailValue.trim().toLowerCase(),
         password: passwordDraft,
       });
 
@@ -430,8 +519,8 @@ function QuizV3Inner() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           authUserId,
-          email: emailDraft.trim().toLowerCase(),
-          marketingOptIn: marketingDraft,
+          email: emailValue.trim().toLowerCase(),
+          marketingOptIn: marketingValue,
           quizState: {
             uuid: state.uuid,
             answers: {
@@ -476,7 +565,7 @@ function QuizV3Inner() {
       });
       capture("account_created", {
         user_uuid: state.uuid,
-        email_marketing_opt_in: marketingDraft,
+        email_marketing_opt_in: marketingValue,
         programme: determineProgramme(state.answers),
       });
 
@@ -493,9 +582,9 @@ function QuizV3Inner() {
     }
   }, [
     state,
-    emailDraft,
+    emailValue,
     passwordDraft,
-    marketingDraft,
+    marketingValue,
     haptic,
     advance,
     screens.length,
@@ -527,7 +616,7 @@ function QuizV3Inner() {
           </h1>
           <p className="mt-5 max-w-md text-base leading-relaxed text-suth-text-secondary md:text-lg">
             We&apos;ll ask about your race date, experience, equipment, and
-            schedule. You&apos;ll see your dated Week 1 before you pay.
+            schedule. You&apos;ll see your dated Week 1 for free.
           </p>
           <div
             aria-label="Loading quiz"
@@ -552,27 +641,52 @@ function QuizV3Inner() {
   });
   const [pos, total] = questionScreenIndex(screens, current.kind);
 
+  // Declared before the full-bleed block because those screens take it too:
+  // without a back control they are one-way doors, which breaks the
+  // "back navigation always" rule and strands anyone who reaches the reveal
+  // and wants to change an answer.
+  const backHandler = screenIndex > 0 ? back : undefined;
+
   // ── Full-bleed screens (no shell)
   if (current.kind === "welcome") {
     return <WelcomeCarousel onAdvance={advance} />;
   }
   if (current.kind === "reassurance-1") {
-    return <ReassuranceScreen1 onContinue={advance} />;
+    return (
+      <ReassuranceScreen1 onContinue={advance} onBack={backHandler} />
+    );
   }
   if (current.kind === "reassurance-2") {
-    return <ReassuranceScreen2 onContinue={advance} />;
+    return (
+      <ReassuranceScreen2 onContinue={advance} onBack={backHandler} />
+    );
+  }
+  if (current.kind === "meet-ben") {
+    return (
+      <MeetBenScreen
+        onBack={backHandler}
+        beginner={isBeginnerRail(state.answers)}
+        onContinue={() => {
+          capture("quiz_meet_ben_continued", {
+            beginner: isBeginnerRail(state.answers),
+            user_uuid: state.uuid,
+          });
+          advance();
+        }}
+      />
+    );
   }
   if (current.kind === "calculating") {
     return <CalculatingScreen answers={state.answers} />;
   }
 
   // ── Question screens (in shell)
-  const backHandler = screenIndex > 0 ? back: undefined;
 
   if (current.kind === "primary-intent") {
     const intent = state.answers.intent ?? [];
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -601,6 +715,7 @@ function QuizV3Inner() {
     const value = state.answers.experience;
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -627,6 +742,7 @@ function QuizV3Inner() {
     const value = state.answers.bestTime;
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -653,6 +769,7 @@ function QuizV3Inner() {
     const value = state.answers.raceDate;
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -696,6 +813,7 @@ function QuizV3Inner() {
     const value = state.answers.activity;
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -725,6 +843,7 @@ function QuizV3Inner() {
     const valid = isCalibrationValid({ sex, weightKg: weight });
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -762,6 +881,7 @@ function QuizV3Inner() {
     const value = state.answers.days;
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -788,6 +908,7 @@ function QuizV3Inner() {
     const value = state.answers.sessionLength;
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -814,6 +935,7 @@ function QuizV3Inner() {
     const value = state.answers.location;
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -840,6 +962,7 @@ function QuizV3Inner() {
     const selected = state.answers.equipment ?? [];
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -870,6 +993,7 @@ function QuizV3Inner() {
     const value = state.answers.partner;
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -896,6 +1020,7 @@ function QuizV3Inner() {
     const value = state.answers.injuries;
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -931,6 +1056,7 @@ function QuizV3Inner() {
     const { injuryRecency, injuryTriggers, injuryCare } = state.answers;
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -968,26 +1094,258 @@ function QuizV3Inner() {
     );
   }
 
-  if (current.kind === "plan-summary") {
+  if (current.kind === "goal") {
+    const value = state.answers.goal;
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
         hasAnswers={hasAnswers}
         footer={
           <ContinueButton
-            label="Save my plan →"
-            onClick={() => {
-              capture("quiz_summary_continued", {
-                time_on_summary_ms:
-                  Date.now() - screenMountTimeRef.current,
-                user_uuid: state.uuid,
-              });
-              haptic("success");
-              advance();
-            }}
+            disabled={!value}
+            onClick={() => continueWithHaptic(value)}
           />
+        }
+      >
+        <GoalScreen
+          value={value}
+          onChange={(v) => {
+            haptic("light");
+            setAnswer("goal", v);
+          }}
+        />
+      </QuizShell>
+    );
+  }
+
+  if (current.kind === "starting-point") {
+    const value = state.answers.startingPoint;
+    return (
+      <QuizShell
+        answers={state.answers}
+        currentScreen={pos}
+        totalScreens={total}
+        onBack={backHandler}
+        hasAnswers={hasAnswers}
+        footer={
+          <ContinueButton
+            disabled={!value}
+            onClick={() => continueWithHaptic(value)}
+          />
+        }
+      >
+        <StartingPointScreen
+          value={value}
+          onChange={(v) => {
+            haptic("light");
+            setAnswer("startingPoint", v);
+          }}
+        />
+      </QuizShell>
+    );
+  }
+
+  if (current.kind === "tried-before") {
+    const value = state.answers.triedBefore;
+    return (
+      <QuizShell
+        answers={state.answers}
+        currentScreen={pos}
+        totalScreens={total}
+        onBack={backHandler}
+        hasAnswers={hasAnswers}
+        footer={
+          <ContinueButton
+            disabled={!value}
+            onClick={() => continueWithHaptic(value)}
+          />
+        }
+      >
+        <TriedBeforeScreen
+          value={value}
+          onChange={(v) => {
+            haptic("light");
+            setAnswer("triedBefore", v);
+          }}
+        />
+      </QuizShell>
+    );
+  }
+
+  if (current.kind === "barriers") {
+    const selected = state.answers.barriers ?? [];
+    return (
+      <QuizShell
+        answers={state.answers}
+        currentScreen={pos}
+        totalScreens={total}
+        onBack={backHandler}
+        hasAnswers={hasAnswers}
+        footer={
+          // Multi-select never auto-advances (hard rule), and an empty
+          // answer is allowed: "nothing has got in the way" is legitimate.
+          <ContinueButton onClick={() => continueWithHaptic(selected)} />
+        }
+      >
+        <BarriersScreen
+          selected={selected}
+          onToggle={(v: BarrierValue) => {
+            haptic("light");
+            setAnswer("barriers", (curr) => {
+              const list = curr ?? [];
+              return list.includes(v)
+                ? list.filter((x) => x !== v)
+                : [...list, v];
+            });
+          }}
+        />
+      </QuizShell>
+    );
+  }
+
+  if (current.kind === "readiness") {
+    const value = state.answers.readiness;
+    return (
+      <QuizShell
+        answers={state.answers}
+        currentScreen={pos}
+        totalScreens={total}
+        onBack={backHandler}
+        hasAnswers={hasAnswers}
+        footer={
+          <ContinueButton
+            disabled={!value}
+            onClick={() => continueWithHaptic(value)}
+          />
+        }
+      >
+        <ReadinessScreen
+          value={value}
+          onChange={(v) => {
+            haptic("light");
+            setAnswer("readiness", v);
+          }}
+        />
+      </QuizShell>
+    );
+  }
+
+  if (current.kind === "email-capture") {
+    const value = state.answers.email ?? "";
+    const optIn = state.answers.marketingOptIn ?? false;
+    return (
+      <QuizShell
+        answers={state.answers}
+        currentScreen={pos}
+        totalScreens={total}
+        onBack={backHandler}
+        hasAnswers={hasAnswers}
+        footer={
+          <ContinueButton
+            disabled={!isEmailValid(value)}
+            onClick={() => continueWithHaptic({ hasEmail: true })}
+          />
+        }
+      >
+        <EmailCaptureScreen
+          value={value}
+          marketingOptIn={optIn}
+          // Nag only once they have committed to typing something, never on
+          // an empty field they haven't reached yet.
+          showError={value.trim().length > 3}
+          onChange={(v) => setAnswer("email", v)}
+          onMarketingChange={(v) => {
+            haptic("light");
+            setAnswer("marketingOptIn", v);
+          }}
+        />
+      </QuizShell>
+    );
+  }
+
+  if (current.kind === "support-preference") {
+    const value = state.answers.supportPreference;
+    return (
+      <QuizShell
+        answers={state.answers}
+        currentScreen={pos}
+        totalScreens={total}
+        onBack={backHandler}
+        hasAnswers={hasAnswers}
+        footer={
+          <ContinueButton
+            disabled={!value}
+            onClick={() => continueWithHaptic(value)}
+          />
+        }
+      >
+        <SupportPreferenceScreen
+          rail={state.answers.rail ?? "athlete"}
+          value={value}
+          onChange={(v) => {
+            haptic("light");
+            setAnswer("supportPreference", v);
+          }}
+        />
+      </QuizShell>
+    );
+  }
+
+  if (current.kind === "plan-summary") {
+    // On the coached route the money action is the inline lead form, which
+    // sits below the fold on a phone. A sticky "Save my plan" would be the
+    // only CTA in view and would walk people straight past it, so on that
+    // route the sticky button drives into the form instead of past it.
+    const coachedRoute = sift(state.answers).route === "coached";
+    return (
+      <QuizShell
+        answers={state.answers}
+        currentScreen={pos}
+        totalScreens={total}
+        onBack={backHandler}
+        hasAnswers={hasAnswers}
+        footer={
+          coachedRoute ? (
+            <ContinueButton
+              label="Send my plan to Ben →"
+              // Same visible words as the inline submit, deliberately: it
+              // is a mirror of it. The accessible name says which one this
+              // is, so a screen reader doesn't hear two identical buttons
+              // that do different things.
+              ariaLabel="Send my plan to Ben, go to the form"
+              onClick={() => {
+                haptic("medium");
+                capture("quiz_summary_jump_to_lead", {
+                  user_uuid: state.uuid,
+                });
+                document
+                  .getElementById("lead-capture")
+                  ?.scrollIntoView({ behavior: "smooth", block: "center" });
+                // Focusing the first field is what makes the button feel
+                // like it did something when the form is already in view
+                // on a wide screen.
+                window.setTimeout(() => {
+                  document.getElementById("lead-capture-name")?.focus();
+                }, 350);
+              }}
+            />
+          ) : (
+            <ContinueButton
+              label="Save my plan →"
+              onClick={() => {
+                capture("quiz_summary_continued", {
+                  time_on_summary_ms:
+                    Date.now() - screenMountTimeRef.current,
+                  user_uuid: state.uuid,
+                });
+                haptic("success");
+                advance();
+              }}
+            />
+          )
         }
       >
         <PlanSummaryScreen answers={state.answers} />
@@ -998,6 +1356,7 @@ function QuizV3Inner() {
   if (current.kind === "account-creation") {
     return (
       <QuizShell
+        answers={state.answers}
         currentScreen={pos}
         totalScreens={total}
         onBack={backHandler}
@@ -1006,15 +1365,15 @@ function QuizV3Inner() {
           <ContinueButton
             label="Save my plan →"
             loading={creating}
-            disabled={creating || !emailDraft || passwordDraft.length < 8}
+            disabled={creating || !emailValue || passwordDraft.length < 8}
             onClick={onSubmitAccount}
           />
         }
       >
         <AccountCreationScreen
-          email={emailDraft}
+          email={emailValue}
           password={passwordDraft}
-          marketingOptIn={marketingDraft}
+          marketingOptIn={marketingValue}
           error={accountError}
           onEmailChange={(v) => {
             setEmailDraft(v);
@@ -1062,7 +1421,7 @@ function QuizColdLoadFallback() {
         </h1>
         <p className="mt-5 max-w-md text-base leading-relaxed text-suth-text-secondary md:text-lg">
           We&apos;ll ask about your race date, experience, equipment, and
-          schedule. You&apos;ll see your dated Week 1 before you pay.
+          schedule. You&apos;ll see your dated Week 1 for free.
         </p>
         <div aria-label="Loading quiz" className="mt-10 flex items-center gap-2">
           <span className="inline-flex size-2 animate-pulse rounded-full bg-suth-accent" />

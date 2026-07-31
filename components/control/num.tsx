@@ -32,7 +32,7 @@ export function Num({
     tone === "muted"
       ? "var(--text-muted)"
       : tone === "faint"
-        ? "var(--text-faint)"
+        ? "var(--text-muted)"
         : tone === "accent"
           ? "var(--accent)"
           : tone === "warn"

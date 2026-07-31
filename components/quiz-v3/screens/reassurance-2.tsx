@@ -1,16 +1,24 @@
 "use client";
 
 import { ContinueButton } from "@/components/quiz-v3/continue-button";
+import { InterstitialBack } from "@/components/quiz-v3/interstitial-back";
 
 /**
  * Screen 7. Padding interstitial #2. Headline + 3-photo grid + Continue.
  */
-export function ReassuranceScreen2({ onContinue }: { onContinue: () => void }) {
+export function ReassuranceScreen2({
+  onContinue,
+  onBack,
+}: {
+  onContinue: () => void;
+  onBack?: () => void;
+}) {
   return (
     <section
       aria-label="Programme overview"
-      className="flex min-h-svh flex-col bg-suth-base pt-[var(--safe-top)]"
+      className="relative flex min-h-svh flex-col bg-suth-base pt-[var(--safe-top)]"
     >
+      <InterstitialBack onBack={onBack} />
       <div className="flex-1 overflow-y-auto px-6 pb-8">
         <div className="mx-auto max-w-md pt-8">
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">

@@ -61,7 +61,7 @@ const COLUMNS: Column<Session>[] = [
       s.converted ? (
         <span style={{ color: "var(--accent)" }}>Quiz completed</span>
       ) : (
-        <span style={{ color: "var(--text-faint)" }}>—</span>
+        <span style={{ color: "var(--text-muted)" }}>—</span>
       ),
     csv: (s) => (s.converted ? "converted" : ""),
   },

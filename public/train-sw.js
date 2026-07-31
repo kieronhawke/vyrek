@@ -13,12 +13,56 @@
  * problem than the one this solves.
  */
 
-const CACHE = "suth-train-v1";
+const CACHE = "suth-train-v2";
 const SHELL = "/train";
+
+/**
+ * Caching the shell HTML alone is not enough, and the offline test proved it.
+ *
+ * A service worker only sees requests made *after* it controls the page. On
+ * the very first visit the browser has already fetched the JS and CSS by the
+ * time this worker installs, so the runtime cache-first handler below never
+ * sees them and never stores them. Reopen offline and the HTML comes back
+ * from cache, references chunks that were never cached, React never hydrates,
+ * and the screen sits on "Loading your session…" with the workout stranded in
+ * IndexedDB behind it.
+ *
+ * So at install we fetch the shell ourselves and precache every script and
+ * stylesheet it references. Next.js hashes those filenames, which is exactly
+ * why they cannot be hard-coded here — they have to be read out of the built
+ * HTML at install time.
+ *
+ * The upshot is that one online visit to /train is enough. Previously it
+ * silently took two.
+ */
+async function precacheShell(cache) {
+  const res = await fetch(SHELL, { cache: "reload" });
+  await cache.put(SHELL, res.clone());
+
+  const html = await res.text();
+  const assets = new Set();
+  for (const [, url] of html.matchAll(/<script[^>]+src="([^"]+)"/g)) assets.add(url);
+  for (const [, url] of html.matchAll(
+    /<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"/g,
+  )) {
+    assets.add(url);
+  }
+
+  // Same-origin only, and one failure must not abandon the rest: a missing
+  // preload hint should not cost the user their offline app.
+  await Promise.all(
+    [...assets]
+      .filter((u) => u.startsWith("/"))
+      .map((u) => cache.add(u).catch(() => undefined)),
+  );
+}
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.add(SHELL)).then(() => self.skipWaiting()),
+    caches
+      .open(CACHE)
+      .then(precacheShell)
+      .then(() => self.skipWaiting()),
   );
 });
 

@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   description:
     "Online personal training from a HYROX Elite 15 athlete. Personalised weekly programming that adapts to you, wherever you are in the UK. Starts with a free consultation.",
   alternates: { canonical: `${siteUrl()}/personal-trainer` },
+  // See the note on the /hyrox-training hub: the layout defaults to
+  // index: false and this hub never overrode it.
+  robots: { index: true, follow: true },
 };
 
 export default function PersonalTrainerHub() {
@@ -33,10 +36,17 @@ export default function PersonalTrainerHub() {
               fraction of local PT rates. Pick your area or go straight to
               the quiz.
             </p>
+            {/* `rail=beginner` runs the fitness flow rather than the HYROX
+                one. Someone looking for a personal trainer has already told
+                us what they want by being on this page, and the old link
+                dropped them into a quiz that asked their race time. */}
             <div className="mt-7">
-              <CtaButton href="/quiz" size="lg">
-                Start the 3-minute quiz
+              <CtaButton href="/quiz?rail=beginner" size="lg">
+                Build my free plan
               </CtaButton>
+              <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                3 minutes · Free · No card
+              </p>
             </div>
           </header>
           <div className="mx-auto mt-16 max-w-4xl space-y-10">

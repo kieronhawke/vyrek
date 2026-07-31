@@ -1,17 +1,25 @@
 "use client";
 
 import { ContinueButton } from "@/components/quiz-v3/continue-button";
+import { InterstitialBack } from "@/components/quiz-v3/interstitial-back";
 
 /**
  * Screen 3. Reassurance interstitial #1. Full-bleed portrait, testimonial,
  * stat, then Continue. Marchon-verified pattern, Suth Performance-themed.
  */
-export function ReassuranceScreen1({ onContinue }: { onContinue: () => void }) {
+export function ReassuranceScreen1({
+  onContinue,
+  onBack,
+}: {
+  onContinue: () => void;
+  onBack?: () => void;
+}) {
   return (
     <section
       aria-label="Reassurance"
       className="relative isolate flex min-h-svh flex-col bg-suth-base"
     >
+      <InterstitialBack onBack={onBack} />
       <div className="absolute inset-0 z-0">
         <img
           src="/media/images/track/palms-sunflare-pair-bw.jpg"

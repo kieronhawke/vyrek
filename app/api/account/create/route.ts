@@ -78,6 +78,17 @@ function normaliseAnswers(
     injuryRecency: a.injuryRecency,
     injuryTriggers: Array.isArray(a.injuryTriggers) ? a.injuryTriggers : undefined,
     injuryCare: a.injuryCare,
+    // Onboarding funnel fields. This whitelist is what actually reaches the
+    // quiz_responses row, so anything missing here is silently dropped:
+    // without supportPreference Ben would never see which way the lead
+    // sifted, which is the first thing he needs before a call.
+    rail: a.rail,
+    goal: a.goal,
+    startingPoint: a.startingPoint,
+    triedBefore: a.triedBefore,
+    barriers: Array.isArray(a.barriers) ? a.barriers : undefined,
+    supportPreference: a.supportPreference,
+    readiness: a.readiness,
   };
 }
 

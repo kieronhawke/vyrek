@@ -116,7 +116,7 @@ export function AdminShell({
               width: "100%",
               background: "transparent",
               border: "none",
-              color: "var(--text-faint)",
+              color: "var(--text-muted)",
               fontSize: "var(--text-xs)",
               cursor: "pointer",
               textAlign: "left",

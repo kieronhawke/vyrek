@@ -432,6 +432,8 @@ when auth is wired.
 | The Operator shell: 216px sidebar, 48px top bar, 13 modules, count badges | `components/control/admin-shell.tsx` |
 | The core table: sticky header, 40px rows, mono numerics, CSV on every table | `components/control/data-table.tsx` |
 | Dashboard, Clients, Payments, Activity | `app/control-preview/admin/*` |
+| Leads, Plans, Diary, Messages, Finance, SEO, Assets, Settings, Accounts | `app/control-preview/admin/*` |
+| Stat strip + module footnote, shared by every module | `components/control/stat-strip.tsx` |
 
 **Built on an ungated preview path deliberately.** The real mount is `/admin`,
 which `middleware.ts` already gates. Building here first means the shell and
@@ -452,15 +454,59 @@ hiding thirteen modules behind a hamburger, and tables become cards, because
 The gate caught the layout stacking wrong — sidebar and content sat side by
 side below 768px and the page overflowed. Fixed.
 
+### Every module opens with its numbers
+
+Each of the thirteen modules leads with the two to four figures that would
+make someone act — leads waiting over 24h, plans with no coach's note, 2FA
+required but unset — and only then shows the table. A bare grid makes you
+read every row to find out whether anything is wrong.
+
 ### Tested
 
-- **161 unit tests**
-- **344 Playwright assertions**: eleven surfaces × six devices, plus the
-  three offline contracts, against a production build.
+- **168 unit tests** across 9 files, including the CSV stress set: embedded
+  quotes, commas, apostrophes, newlines, non-Latin text, an empty set, and a
+  10,000-row export asserted at 10,001 lines (`spec/16 §10` scale).
+- **823 Playwright assertions green**: 820 gate assertions (20 surfaces ×
+  the device matrix) plus the three offline contracts.
+- **Gates extended from 11 surfaces to 20** — every admin module now carries
+  the same six checks: zero horizontal scroll, 44px touch targets, no text
+  below 12px, zero axe violations at WCAG AA, mono numerics, visual baseline.
+
+**The suite was testing the wrong server.** `playwright.config.ts` pointed at
+`http://localhost:3000` and its `webServer` booted `pnpm dev`, so every run
+either fought another terminal's dev server on that port or silently tested
+whatever that terminal had running — which is what the earlier bursts of mass
+failures with no error in the log actually were. It also made the offline test
+unprovable: `next dev` recompiles per request and emits no stable hashed
+chunks, so a service worker cannot cache a shell that survives a reload. The
+config now builds and serves on port 3100. Every number below was measured
+against a production build.
+
+Four real defects the gates caught, all fixed rather than waived:
+
+1. The admin body stacked wrong below 768px — sidebar and content sat side
+   by side and the page overflowed horizontally.
+2. `--text-faint` (#6B6B6B) was doing de-emphasis work on `--surface` at
+   3.45:1, failing AA. De-emphasised is not disabled; that text still has to
+   be read. Every such use moved to `--text-muted`, and the token comment now
+   reserves `--text-faint` for genuinely inoperable controls.
+3. Every desktop admin page rendered the mobile card stack *underneath* its
+   table. The card list carried an inline `display: grid`, and an inline
+   style beats a non-`!important` rule, so `.dt-cards { display: none }`
+   never applied. A new gate asserts exactly one of the two views is visible,
+   on all 20 surfaces, at every width.
+4. `loadQueue()` could hang forever. `indexedDB.open()` has a third outcome
+   besides success and error — never settling, which is what a connection
+   left behind by a killed page causes. The player sat on "Loading your
+   session…" with twelve logged sets stranded on the device behind it. The
+   read is now bounded and falls through to the localStorage mirror, and the
+   service worker precaches the shell's real hashed chunks at install rather
+   than hoping to intercept them on a second visit.
 
 ### Still not built
 
-Leads, Plans, Diary, Messages, Finance, SEO, Assets, Settings, Accounts —
-9 of 13 modules. Sending (SMS and email), marketing campaigns, website
-settings and the real session store all need Supabase, Twilio or Resend.
+Sending (SMS and email), marketing campaigns, editable website settings and
+the real session store all need Supabase, Twilio or Resend. Every module
+carries a footnote naming exactly what is missing and why, so the screens do
+not read as finished when they are not.
 

@@ -36,7 +36,7 @@ const STEPS: Step[] = [
     label: "See your Week 1",
     image: "/media/images/track/straight-elevated-colour.jpg",
     body: [
-      "Real workouts, dated, before you pay. Day-by-day for the next seven days, structured to fit the time you have and the kit you have access to.",
+      "Real workouts, dated, for free. Day-by-day for the next seven days, structured to fit the time you have and the kit you have access to.",
       "Tap any day to open the full session: warm-up, main block, cool-down. Total time, intensity zone, every block listed. No demo screens. This is your actual first week.",
     ],
   },
@@ -153,7 +153,7 @@ export default function HowItWorksPage() {
                 Ready to find your plan?
               </h2>
               <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
-                Three-minute quiz. Real Week 1 before you pay.
+                Three-minute quiz. Real Week 1, free.
               </p>
               <div className="mt-8">
                 <CtaButton href="/quiz" size="lg">

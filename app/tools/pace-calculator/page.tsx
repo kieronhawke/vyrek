@@ -123,7 +123,7 @@ export default function PaceCalculatorPage() {
             <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
               Predicting your time is useful. Hitting it requires a 12-week
               build that targets your actual limiter. Suth Performance&apos;s quiz takes
-              three minutes and produces a dated Week 1 before you pay.
+              three minutes and produces a dated Week 1 for free.
             </p>
             <div className="mt-8">
               <CtaButton href="/quiz" size="lg">

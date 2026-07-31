@@ -10,8 +10,12 @@ import { siteUrl } from "@/lib/blog/urls";
 export const metadata: Metadata = {
   title: "Hyrox training across the UK · Suth Performance",
   description:
-    "Personalised Hyrox training programmes across the UK, built by a HYROX Elite 15 athlete. Find your city and see your Week 1 before you pay.",
+    "Personalised Hyrox training programmes across the UK, built by a HYROX Elite 15 athlete. Find your city and see your Week 1 for free.",
   alternates: { canonical: `${siteUrl()}/hyrox-training` },
+  // app/layout.tsx defaults to index: false. The detail pages under this hub
+  // override it but the hub never did, so it would have stayed out of the
+  // index after the switch flipped, orphaning everything it links to.
+  robots: { index: true, follow: true },
 };
 
 export default function HyroxTrainingHub() {

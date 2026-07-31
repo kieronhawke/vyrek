@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect, type ReactNode } from "react";
+import { PlanPanel, PlanStrip } from "@/components/quiz-v3/plan-panel";
+import type { QuizAnswers } from "@/lib/quiz-flow";
 
 /**
  * Shared chrome for every quiz V3 screen except the welcome carousel,
@@ -11,6 +13,11 @@ import { useState, useEffect, type ReactNode } from "react";
  *
  * `currentScreen` is 1-indexed for display; the orchestrator passes the index
  * into the visible-screen list.
+ *
+ * Layout is two-pane from `md` up: question on the left, the live plan panel
+ * on the right. Below `md` the panel becomes a collapsible strip under the
+ * progress bar. Previously this was `max-w-md` at every breakpoint, which
+ * made the whole quiz a phone-width column on desktop.
  */
 export function QuizShell({
   currentScreen,
@@ -20,6 +27,7 @@ export function QuizShell({
   children,
   footer,
   hideBack,
+  answers,
 }: {
   currentScreen: number;
   totalScreens: number;
@@ -28,6 +36,8 @@ export function QuizShell({
   children: ReactNode;
   footer?: ReactNode;
   hideBack?: boolean;
+  /** Omit to render the shell without the live plan panel. */
+  answers?: QuizAnswers;
 }) {
   const router = useRouter();
   const pct = Math.max(0, Math.min(1, currentScreen / totalScreens));
@@ -106,17 +116,29 @@ export function QuizShell({
         </button>
       </header>
 
-      <div className="flex-1 overflow-y-auto px-5 pb-32">
-        <div className="mx-auto max-w-md pt-4">{children}</div>
-      </div>
+      <div className="flex min-h-0 flex-1">
+        <div className="flex min-w-0 flex-1 flex-col">
+          {answers ? <PlanStrip answers={answers} /> : null}
 
-      {footer && (
-        <footer className="sticky bottom-0 border-t border-suth-border-subtle bg-suth-base/90 pb-[max(1rem,var(--safe-bottom))] pt-4 backdrop-blur-md">
-          <div className="mx-auto flex max-w-md items-center justify-stretch gap-3 px-5">
-            {footer}
+          <div className="flex-1 overflow-y-auto px-5 pb-32 md:flex md:flex-col md:px-8 md:pb-10">
+            {/* `my-auto` rather than `justify-center`: auto margins centre a
+                short question without clipping the top of a tall one. */}
+            <div className="mx-auto max-w-md pt-4 md:my-auto md:max-w-lg md:pt-8 lg:max-w-xl">
+              {children}
+            </div>
           </div>
-        </footer>
-      )}
+
+          {footer && (
+            <footer className="sticky bottom-0 border-t border-suth-border-subtle bg-suth-base/90 pb-[max(1rem,var(--safe-bottom))] pt-4 backdrop-blur-md md:pb-6">
+              <div className="mx-auto flex max-w-md items-center justify-stretch gap-3 px-5 md:max-w-lg md:px-8 lg:max-w-xl">
+                {footer}
+              </div>
+            </footer>
+          )}
+        </div>
+
+        {answers ? <PlanPanel answers={answers} /> : null}
+      </div>
 
       {/* Brand-themed leave-quiz confirm. Previously a native
           window.confirm which looked like a phishing prompt on iOS
@@ -182,7 +204,17 @@ export function withViewTransition(update: () => void) {
   };
   const d = document as DocWithVT;
   if (typeof d.startViewTransition === "function") {
-    d.startViewTransition(update);
+    // The API rejects `finished` with InvalidStateError whenever a transition
+    // is skipped, which happens routinely if the user advances twice quickly
+    // or the tab is hidden mid-advance. Unhandled, that surfaces as an
+    // uncaught rejection (and takes the Next dev server down with it).
+    // Swallowing it is correct: a skipped animation is not an error.
+    const transition = d.startViewTransition(update) as {
+      finished?: Promise<unknown>;
+      ready?: Promise<unknown>;
+    } | null;
+    transition?.finished?.catch(() => {});
+    transition?.ready?.catch(() => {});
   } else {
     update();
   }

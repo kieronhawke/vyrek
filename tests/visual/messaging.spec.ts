@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type APIRequestContext } from "@playwright/test";
 import {
   SMS_SAMPLES,
   isGsm7,
@@ -64,6 +64,27 @@ test.describe("SMS", () => {
   });
 });
 
+/**
+ * The email tests below render through `/api/dev/messaging-check`, which
+ * deliberately 404s in production — it exposes internal lifecycle copy and
+ * has no business being reachable on the live site.
+ *
+ * The rest of the suite now runs against a production build, because the
+ * offline test in spec/16 §2 cannot be proven against `next dev`. So these
+ * skip rather than fail, with the reason stated: a skip that says why is
+ * honest, a green tick that never ran is not.
+ *
+ * To actually run them:  pnpm dev  &&  PLAYWRIGHT_BASE_URL=http://localhost:3000 \
+ *   pnpm exec playwright test tests/visual/messaging.spec.ts --project=desktop-1440
+ */
+async function skipUnlessDevRouteIsUp(request: APIRequestContext) {
+  const probe = await request.get("/api/dev/messaging-check").catch(() => null);
+  test.skip(
+    !probe?.ok(),
+    "needs the dev-only /api/dev/messaging-check route; run against `pnpm dev`",
+  );
+}
+
 test.describe("Email templates", () => {
   /**
    * Rendered inside Next via a dev-only route rather than imported here:
@@ -72,6 +93,7 @@ test.describe("Email templates", () => {
    * means we're validating the same render path that actually sends.
    */
   test("every template renders cleanly", async ({ request }) => {
+    await skipUnlessDevRouteIsUp(request);
     const res = await request.get("/api/dev/messaging-check");
     expect(res.ok(), "dev messaging-check route unavailable").toBe(true);
     const { count, results } = (await res.json()) as {
@@ -134,11 +156,13 @@ test.describe("Email rendering environments", () => {
   for (const id of IDS) {
     test(`${id} holds up in light mode, with images off, and at 320px`, async ({
       browser,
+      request,
     }, testInfo) => {
       test.skip(
         testInfo.project.name !== "desktop-1440",
         "drives its own viewports",
       );
+      await skipUnlessDevRouteIsUp(request);
 
       const cases = [
         { name: "dark", colorScheme: "dark" as const, width: 390, block: false },

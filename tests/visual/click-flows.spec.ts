@@ -125,7 +125,10 @@ test("contact: each mailto link is well-formed", async ({ page }) => {
   await page.goto("/contact");
   const emails = ["hello@suthperformance.com", "support@suthperformance.com", "press@suthperformance.com"];
   for (const email of emails) {
-    const link = page.locator(`a[href="mailto:${email}"]`);
+    // `.first()`: hello@ legitimately appears in the page body *and* the
+    // footer, and strict mode fails on two matches. What is being asserted
+    // is that the address is present and well-formed, not that it is unique.
+    const link = page.locator(`a[href="mailto:${email}"]`).first();
     await expect(link).toBeVisible();
   }
 });
@@ -160,17 +163,29 @@ test("hamburger drawer opens on mobile and contains all primary links", async ({
   await expect(drawer.getByRole("link", { name: "journal" })).toBeVisible();
 });
 
-test("partner application: client validation rejects empty submit", async ({
+test("partner application: an empty step cannot be advanced", async ({
   page,
 }) => {
   await page.goto("/partners/apply");
-  await page.getByRole("button", { name: /submit application/i }).click();
-  // The first required input should report invalid via the browser
-  const nameInput = page.getByLabel(/your name/i);
-  const validity = await nameInput.evaluate(
-    (el) => (el as HTMLInputElement).validity.valid,
-  );
-  expect(validity).toBe(false);
+
+  // The form became a multi-screen flow, so the old assertion — click
+  // "Submit application", expect the browser to mark a text input invalid —
+  // described a page that no longer exists. The guarantee it was protecting
+  // still holds, and is now enforced a better way: `canAdvance()` gates the
+  // button, so an unanswered screen cannot be got past at all rather than
+  // being submitted and bounced.
+  const advance = page.getByRole("button", { name: /continue|submit/i }).last();
+  await expect(advance).toBeVisible();
+
+  // Screen 1 is an intro with nothing to answer, so it is meant to be
+  // advanceable. Screen 2 asks for a name, and is the first screen where an
+  // empty answer must block progress.
+  await advance.click();
+  await expect(page.getByLabel(/name/i).first()).toBeVisible();
+  await expect(
+    advance,
+    "an empty name was allowed through to the next screen",
+  ).toBeDisabled();
 });
 
 test("quiz welcome: tapping next slide advances the carousel", async ({

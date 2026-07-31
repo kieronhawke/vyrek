@@ -13,8 +13,28 @@ import { TOPIC_HUBS } from "@/lib/topic-hubs";
 import { siteUrl as canonicalSiteUrl } from "@/lib/site-url";
 const SITE_URL = canonicalSiteUrl();
 
+/**
+ * The geo templates carry no per-location content date, so stamping them with
+ * `new Date()` made the sitemap claim all 284 geo URLs had changed on every
+ * build. A sitemap that cries wolf gets its `lastmod` ignored, which is the
+ * opposite of what it is for. Until locations carry their own `verifiedOn`
+ * dates (phase D), this is a hand-maintained stamp: bump it when the geo
+ * templates or their copy change materially, not when the build runs.
+ */
+const GEO_CONTENT_UPDATED = new Date("2026-07-29T00:00:00Z");
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
+
+  /**
+   * Five posts carry `publishedAt` dates weeks ahead (the drip schedule in
+   * docs/content-plan/publishing-schedule.md), but nothing filters them, so
+   * they are live today with a future date. A `lastmod` in the future is
+   * treated as untrustworthy and can get the whole file's dates ignored, so
+   * clamp to now. This is the symptom, not the cause: see the note in that
+   * schedule doc about whether future-dated posts should publish at all.
+   */
+  const notInFuture = (d: Date) => (d.getTime() > now.getTime() ? now : d);
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/`, lastModified: now, priority: 1.0, changeFrequency: "weekly" },
@@ -54,15 +74,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await listPostMeta();
   const postRoutes: MetadataRoute.Sitemap = posts.map((p) => ({
     url: `${SITE_URL}/blog/${p.slug}`,
-    lastModified: new Date(p.updatedAt ?? p.publishedAt),
+    lastModified: notInFuture(new Date(p.updatedAt ?? p.publishedAt)),
     priority: 0.7,
     changeFrequency: "monthly",
   }));
 
+  // A listing page is only as fresh as the newest post on it, so derive the
+  // stamp rather than claiming it changed on this build.
+  const newestIn = (match: (p: (typeof posts)[number]) => boolean) => {
+    const dates = posts
+      .filter(match)
+      .map((p) => new Date(p.updatedAt ?? p.publishedAt).getTime());
+    return dates.length
+      ? notInFuture(new Date(Math.max(...dates)))
+      : GEO_CONTENT_UPDATED;
+  };
+
   const categoryRoutes: MetadataRoute.Sitemap = Object.keys(CATEGORIES).map(
     (slug) => ({
       url: `${SITE_URL}/blog/category/${slug}`,
-      lastModified: now,
+      lastModified: newestIn((p) => p.category === slug),
       priority: 0.5,
       changeFrequency: "weekly",
     }),
@@ -71,7 +102,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const authorRoutes: MetadataRoute.Sitemap = Object.keys(AUTHORS).map(
     (slug) => ({
       url: `${SITE_URL}/blog/author/${slug}`,
-      lastModified: now,
+      lastModified: newestIn((p) => p.author?.slug === slug),
       priority: 0.4,
       changeFrequency: "monthly",
     }),
@@ -80,25 +111,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // ── Programmatic SEO routes ────────────────────────────────────
   const cityRoutes: MetadataRoute.Sitemap = UK_LOCATIONS.map((loc) => ({
     url: `${SITE_URL}/hyrox/${loc.slug}`,
-    lastModified: now,
+    lastModified: GEO_CONTENT_UPDATED,
     priority: 0.7,
     changeFrequency: "weekly",
   }));
 
   // Conversion landing pages: two variants per location plus their hubs.
   const geoLandingRoutes: MetadataRoute.Sitemap = [
-    { url: `${SITE_URL}/hyrox-training`, lastModified: now, priority: 0.8, changeFrequency: "weekly" as const },
-    { url: `${SITE_URL}/personal-trainer`, lastModified: now, priority: 0.8, changeFrequency: "weekly" as const },
+    { url: `${SITE_URL}/hyrox-training`, lastModified: GEO_CONTENT_UPDATED, priority: 0.8, changeFrequency: "weekly" as const },
+    { url: `${SITE_URL}/personal-trainer`, lastModified: GEO_CONTENT_UPDATED, priority: 0.8, changeFrequency: "weekly" as const },
     ...UK_LOCATIONS.flatMap((loc) => [
       {
         url: `${SITE_URL}/hyrox-training/${loc.slug}`,
-        lastModified: now,
+        lastModified: GEO_CONTENT_UPDATED,
         priority: 0.75,
         changeFrequency: "weekly" as const,
       },
       {
         url: `${SITE_URL}/personal-trainer/${loc.slug}`,
-        lastModified: now,
+        lastModified: GEO_CONTENT_UPDATED,
         priority: 0.75,
         changeFrequency: "weekly" as const,
       },

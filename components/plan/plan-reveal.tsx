@@ -412,7 +412,7 @@ export function PlanReveal({
                   Want your own plan?
                 </h3>
                 <p className="mt-3 text-sm text-suth-text-secondary">
-                  Three-minute quiz. Week 1 dated and ready before you pay.
+                  Three-minute quiz. Week 1 dated and ready, for free.
                 </p>
                 <Link
                   href="/quiz"

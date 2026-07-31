@@ -67,7 +67,9 @@ export function MarketingNav() {
   // Swap to "Apply to join" pointing at the partner application.
   const onPartnerRoute = pathname.startsWith("/partners");
   const ctaHref = onPartnerRoute ? "/partners/apply" : "/quiz";
-  const ctaLabel = onPartnerRoute ? "Apply to join" : "Start training";
+  // "Start training" names no outcome and matches nothing at the other
+  // end. The quiz builds a plan, so the button says so.
+  const ctaLabel = onPartnerRoute ? "Apply to join" : "Build my plan";
 
   return (
     <header

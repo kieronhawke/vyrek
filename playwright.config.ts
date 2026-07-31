@@ -13,7 +13,22 @@ import { defineConfig, devices } from "@playwright/test";
  * Next on demand.
  */
 
-const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
+/**
+ * Port 3100, and a production build, both deliberately.
+ *
+ * Port: 3000 is where a developer's own `pnpm dev` lives, and several
+ * terminals work in this repo at once. Pointing the suite there meant
+ * Playwright either fought another terminal's server or silently tested
+ * whatever that terminal happened to have running. Repeated mass failures
+ * with no error in the log turned out to be exactly this.
+ *
+ * Build: `next dev` recompiles per request and does not emit stable hashed
+ * chunks, so a service worker cannot cache a shell that still works after a
+ * reload. The offline test in spec/16 §2 — the one that must pass on every
+ * commit — is unprovable against dev and will fail for a reason that has
+ * nothing to do with the code. It needs `next start`.
+ */
+const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3100";
 
 export default defineConfig({
   testDir: "./tests",
@@ -104,9 +119,12 @@ export default defineConfig({
   webServer: process.env.PLAYWRIGHT_NO_SERVER
     ? undefined
     : {
-        command: "pnpm dev",
+        // Build then serve, not `pnpm dev` — see the note on baseURL above.
+        command: "pnpm build && pnpm exec next start -p 3100",
         url: baseURL,
+        // Reuse a server already on 3100 locally, so the usual loop is
+        // "build once, iterate on tests" rather than a rebuild per run.
         reuseExistingServer: !process.env.CI,
-        timeout: 120_000,
+        timeout: 300_000,
       },
 });

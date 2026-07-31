@@ -379,7 +379,7 @@ export default function AboutPage() {
                 Ready to find your plan?
               </h2>
               <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
-                Three-minute quiz. Real Week 1 before you pay.
+                Three-minute quiz. Real Week 1, free.
               </p>
               <div className="mt-8">
                 <CtaButton href="/quiz" size="lg">

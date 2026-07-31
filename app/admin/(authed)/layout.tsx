@@ -21,6 +21,7 @@ const NAV: { href: string; label: string; group: string }[] = [
   { href: "/admin/payouts", label: "Payouts", group: "Partners" },
   { href: "/admin/blog", label: "Blog posts", group: "Content" },
   { href: "/admin/waitlist", label: "Waitlist", group: "Marketing" },
+  { href: "/admin/messaging", label: "Emails & texts", group: "Marketing" },
   { href: "/admin/quiz", label: "Quiz responses", group: "Marketing" },
 ];
 

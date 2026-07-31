@@ -114,8 +114,8 @@ the one station guide still running on an AI illustration.
 
 ## 5. What is already wired in
 
-Done on 30 July 2026, build and typecheck clean, proofer flag count unchanged
-at 47.
+Done on 30 July 2026, build and typecheck clean, and the proofer's flag set
+is byte-identical before and after (50 flags, none of them image-related).
 
 **Station guides.** `app/hyrox/stations/[station]/page.tsx` now serves real
 photography for seven of the eight stations. `STATION_IMAGES` changed from a

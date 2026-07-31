@@ -38,8 +38,13 @@ export async function generateMetadata({
   const loc = getLocationBySlug(city);
   if (!loc) return { title: "Not found" };
   const url = `${siteUrl()}/hyrox/${loc.slug}`;
-  const title = `Hyrox training in ${loc.name}, personalised 12-week plans`;
-  const description = `Personalised Hyrox training programmes for ${loc.name} athletes. Built by an Elite 15 coach, with a dated Week 1 and a free consultation. Find your plan in three minutes.`;
+  // Intent split, per docs/phase-d-groundwork-report.md finding 1. This URL is
+  // the race-city guide; /hyrox-training/{slug} is the coaching conversion
+  // page. The two carried the same title for 94 locations and competed with
+  // each other. The internal links already described the split ("read the full
+  // guide"), so this aligns the titles to what the site already says.
+  const title = `Hyrox in ${loc.name}: races, training and how to start`;
+  const description = `A guide to Hyrox for ${loc.name} athletes: your nearest race venue, what the eight stations demand, and how to train for them around the gym you already use.`;
   return {
     title,
     description,
@@ -62,7 +67,11 @@ function buildFaqs(loc: UkLocation) {
   return [
     {
       q: `Is there a Hyrox gym in ${loc.name}?`,
-      a: `Yes, ${loc.name} has a growing network of affiliate gyms running Hyrox-pattern classes. Suth Performance isn't a gym; we're a personalised training platform you can use alongside any gym. Members in ${loc.name} train at their usual gym (or at home) and follow a programme built around the exact equipment they have available.`,
+      // Do not assert what gyms exist here. Affiliate status cannot be
+      // verified from any free source (see docs/phase-d-groundwork-report.md),
+      // and this answer is templated across 94 locations and emitted as
+      // FAQPage structured data. Hard rule 1.
+      a: `Suth Performance isn't a gym and doesn't run classes in ${loc.name}. It's a personalised training platform you use alongside whatever you already train with, whether that's a Hyrox affiliate gym, a standard commercial gym, or a home setup. The quiz asks what equipment you can get to, and your plan only includes work you can actually do.`,
     },
     {
       q: `What's the nearest Hyrox race to ${loc.name}?`,
@@ -71,7 +80,10 @@ function buildFaqs(loc: UkLocation) {
     },
     {
       q: `How much does Hyrox coaching cost in ${loc.name}?`,
-      a: `Local 1:1 Hyrox coaching in ${loc.name} typically ranges from £60 to £150 per hour. Suth Performance delivers Elite 15 level programming online, personalised and dated to your race, at a fraction of that cost. Pricing is tailored to you and starts with a free consultation.`,
+      // The old answer quoted a £60 to £150 local hourly range for all 94
+      // locations. Nothing sources that, and it published a price we cannot
+      // stand behind while declining to publish our own.
+      a: `Face-to-face 1:1 coaching is normally charged by the hour and booked session by session, so the cost tracks how often you train. Suth Performance is online programming from an Elite 15 athlete, personalised and dated to your race. Pricing is tailored to you and starts with a free consultation with Ben.`,
     },
     {
       q: `Can I train for Hyrox in ${loc.name} as a beginner?`,
@@ -185,12 +197,11 @@ export default async function CityPage({
               as="h1"
               className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[44px] lg:text-[52px]"
             >
-              Hyrox training in {loc.name}
+              Hyrox in {loc.name}
             </SplitHeading>
             <p className="mt-6 text-base leading-relaxed text-suth-text-secondary md:text-lg">
-              Personalised 12-week Hyrox programmes for athletes in {loc.name}.
-              See your Week 1 dated and ready in three minutes, before you
-              pay a penny.
+              Where {loc.name} athletes race, what the eight stations ask of
+              you, and how to train for them around the gym you already use.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">

@@ -25,8 +25,8 @@ export const WELCOME_SLIDES: WelcomeSlide[] = [
 
 /**
  * Screen 1. Instagram-story-style carousel. The only auto-advancing screen
- * in the V3 flow. Swipe, tap, or wait, each slide is 4s, total 12s for the
- * full sequence. Bottom CTA skips remaining slides.
+ * in the V3 flow: swipe, tap anywhere, or wait out SLIDE_DURATION_MS per
+ * slide. The bottom CTA skips straight into the questions.
  */
 export function WelcomeCarousel({
   slides = WELCOME_SLIDES,
@@ -140,19 +140,22 @@ export function WelcomeCarousel({
       </button>
 
       {/* pointer-events-none on the wrapper lets the next-slide button
-          underneath receive taps on empty space; the heading + CTA opt back
-          in with pointer-events-auto so they remain interactive. */}
-      <div className="pointer-events-none relative z-10 flex min-h-svh flex-col justify-end px-6 pb-[max(2rem,calc(var(--safe-bottom)+2rem))]">
+          underneath receive taps on empty space; only the CTA opts back in.
+          The heading deliberately does NOT: it used to be pointer-events-auto
+          and on a phone it wraps across the middle of the screen, so tapping
+          the centre to advance hit the headline and did nothing. A dead zone
+          over the biggest tap target on the entry screen. */}
+      <div className="pointer-events-none relative z-10 mx-auto flex min-h-svh w-full max-w-lg flex-col justify-end px-6 pb-[max(2rem,calc(var(--safe-bottom)+2rem))] md:mx-0 md:max-w-xl md:px-12">
         <h1
           id="welcome-heading"
-          className="pointer-events-auto max-w-[14ch] text-4xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-5xl"
+          className="max-w-[14ch] text-4xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-6xl"
         >
           {slide?.headline}
         </h1>
         <button
           type="button"
           onClick={onAdvance}
-          className="pointer-events-auto mt-8 inline-flex h-14 w-full items-center justify-center rounded-pill bg-suth-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,transform] duration-fast ease-out hover:bg-suth-accent-hover active:scale-[0.98]"
+          className="pointer-events-auto mt-8 inline-flex h-14 w-full max-w-sm items-center justify-center rounded-pill bg-suth-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,transform] duration-fast ease-out hover:bg-suth-accent-hover active:scale-[0.98]"
         >
           Find your plan →
         </button>

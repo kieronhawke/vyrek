@@ -6,12 +6,16 @@ import type { gsap as GsapType } from "gsap";
 import {
   PROGRAMME_DISPLAY,
   determineProgramme,
+  isBeginnerRail,
+  programmeLabel,
   determineStartDate,
   determineRaceDate,
   calculateWeeksUntilRace,
   type QuizAnswers,
 } from "@/lib/quiz-flow";
-import { getBenefits } from "@/lib/plan-generator";
+import { getBeginnerBenefits, getBenefits } from "@/lib/plan-generator";
+import { recommendationLine, sift } from "@/lib/quiz-sift";
+import { ConsultationCapture } from "@/components/quiz-v3/consultation-capture";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 /**
@@ -25,10 +29,13 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const programme = determineProgramme(answers);
-  const benefits = getBenefits(programme);
   const startDate = determineStartDate();
   const raceDate = determineRaceDate(startDate, answers.raceDate);
   const weeksUntil = calculateWeeksUntilRace(raceDate);
+  // On the beginner rail there is no race, so anything framed around one
+  // has to be reframed around the twelve weeks instead.
+  const beginner = isBeginnerRail(answers);
+  const benefits = beginner ? getBeginnerBenefits() : getBenefits(programme);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -103,18 +110,30 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
         data-summary-line
         className="mt-3 text-balance text-3xl font-black leading-tight tracking-[-0.04em] text-suth-text md:text-4xl"
       >
-        {PROGRAMME_DISPLAY[programme]} Programme
+        {programmeLabel(answers) ?? PROGRAMME_DISPLAY[programme]} Programme
       </h1>
 
       <p
         data-summary-line
         className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg"
       >
-        Built around your race on{" "}
-        <span className="text-suth-text">
-          {format(raceDate, "EEEE, d MMMM yyyy")}
-        </span>
-        .
+        {beginner ? (
+          <>
+            Twelve weeks, starting{" "}
+            <span className="text-suth-text">
+              {format(startDate, "EEEE, d MMMM yyyy")}
+            </span>
+            .
+          </>
+        ) : (
+          <>
+            Built around your race on{" "}
+            <span className="text-suth-text">
+              {format(raceDate, "EEEE, d MMMM yyyy")}
+            </span>
+            .
+          </>
+        )}
       </p>
 
       <div
@@ -197,34 +216,86 @@ export function PlanSummaryScreen({ answers }: { answers: QuizAnswers }) {
           </span>
         </p>
         <p>
-          Race-ready:{" "}
+          {beginner ? "Week 12:" : "Race-ready:"}{" "}
           <span className="text-suth-text">
             {format(raceDate, "EEEE d MMMM yyyy")}
           </span>
         </p>
         <p className="text-sm text-suth-text-tertiary">
-          {weeksUntil} weeks to your race
+          {beginner
+            ? // Length of the block itself, measured start to finish. The
+              // race-facing number counts from today, which on a 12-week
+              // plan starting next Tuesday rounds up to a wrong "13".
+              `${calculateWeeksUntilRace(raceDate, startDate)} weeks of training`
+            : `${weeksUntil} weeks to your race`}
         </p>
       </div>
 
-      <div
-        data-summary-line
-        className="mt-8 rounded-lg border border-suth-accent/40 bg-suth-accent/[0.06] p-5"
-      >
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
-          What you pay
-        </p>
-        <p className="mt-2 text-base font-medium leading-snug text-suth-text">
-          It starts with a free consultation with Ben, and pricing is
-          tailored to your goals. No card needed, cancel anytime.
-        </p>
-        <a
-          href="/free-consultation"
-          className="mt-3 inline-block text-sm font-medium text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
-        >
-          Book your free consultation →
-        </a>
+      <div data-summary-line className="mt-8">
+        <RouteBlock answers={answers} />
       </div>
+    </div>
+  );
+}
+
+/**
+ * The route out of the quiz, chosen by the sift.
+ *
+ * Coached leads get the call with Ben. Club leads get the trial, and are
+ * told plainly that nobody will ring them: a good share of them picked
+ * self-serve precisely because they don't want a phone call, and saying so
+ * out loud converts. When the user answered "not sure" we recommend one and
+ * show the reasoning, but never hide the other option.
+ *
+ * Spec: docs/onboarding-funnel-proposal.md section 5.6.
+ */
+function RouteBlock({ answers }: { answers: QuizAnswers }) {
+  const result = sift(answers);
+  const reason = recommendationLine(result);
+
+  const coached = <ConsultationCapture answers={answers} />;
+
+  const club = (
+    <div className="rounded-lg border border-suth-border bg-suth-elevated p-5">
+      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+        Your next step
+      </p>
+      <p className="mt-2 text-base font-medium leading-snug text-suth-text">
+        Your plan is ready. Start free for seven days inside Suth Club.
+      </p>
+      <a
+        href="/club"
+        className="mt-3 inline-block text-sm font-medium text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
+      >
+        Start 7 days free →
+      </a>
+      <p className="mt-3 text-xs leading-relaxed text-suth-text-tertiary">
+        No card needed. Cancel any time. Nobody will call you.
+      </p>
+    </div>
+  );
+
+  const [primary, secondary] =
+    result.route === "coached" ? [coached, club] : [club, coached];
+
+  return (
+    <div className="space-y-4">
+      {reason ? (
+        <p className="text-sm leading-relaxed text-suth-text-secondary">
+          {reason}
+        </p>
+      ) : null}
+      {primary}
+      {/* An explicit choice gets one clear next step. Only a recommendation
+          shows the road not taken, so the user can overrule us. */}
+      {result.explicit ? null : (
+        <details className="group">
+          <summary className="cursor-pointer list-none text-sm font-medium text-suth-text-tertiary underline decoration-suth-border-strong underline-offset-4 hover:text-suth-text-secondary">
+            Or see the other option
+          </summary>
+          <div className="mt-4">{secondary}</div>
+        </details>
+      )}
     </div>
   );
 }

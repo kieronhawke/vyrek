@@ -66,11 +66,14 @@ export function variantCopy(variant: GeoVariant, loc: UkLocation) {
         },
       ] as Benefit[],
       priceHeading: `What Hyrox coaching costs in ${name}`,
+      // No invented figure here. "£60+" was unsourced and rendered on 94
+      // pages, which is hard rule 1, and it published a competitor price
+      // while we decline to publish our own. The comparison works on shape.
       priceLocal: {
         label: `1:1 Hyrox coaching in ${name}`,
-        price: "£60+",
-        per: "per hour",
-        points: ["Booked session by session", "Progress lives in the coach's head", "Limited to their availability"],
+        price: "Hourly",
+        per: "session by session",
+        points: ["Paid again every time you train", "Progress lives in the coach's head", "Limited to their availability"],
       },
       faqs: buildHyroxFaqs(loc),
       crossLink: {
@@ -116,10 +119,11 @@ export function variantCopy(variant: GeoVariant, loc: UkLocation) {
       },
     ] as Benefit[],
     priceHeading: `What personal training costs in ${name}`,
+    // As above: "£40+" was unsourced across 94 pages.
     priceLocal: {
       label: `A personal trainer in ${name}`,
-      price: "£40+",
-      per: "per session",
+      price: "Per session",
+      per: "every session",
       points: ["Two sessions a week adds up fast", "Progress stops when sessions stop", "Tied to one gym's floor"],
     },
     faqs: buildPtFaqs(loc),
@@ -138,11 +142,14 @@ function buildHyroxFaqs(loc: UkLocation): Faq[] {
       q: `How do I start Hyrox training in ${loc.name}?`,
       a: `Take the three-minute quiz. It asks about your race date, experience, available days, and the equipment you can use in ${loc.name}. You see your full Week 1, dated and structured, before you decide anything.`,
     },
+    // The "nearest race to {name}" question belongs to the guide at
+    // /hyrox/{slug}, which owns the research intent. Asking it here too meant
+    // the same location emitted near-identical FAQPage markup on two URLs.
     {
-      q: `What's the nearest Hyrox race to ${loc.name}?`,
+      q: `Do I have to be racing to start?`,
       a: venue
-        ? `${venue.name} in ${venue.city} is the closest major venue to ${loc.name} and hosts Hyrox race weekends annually. Your programme is built backwards from whichever race you enter.`
-        : `${loc.name} athletes typically race at ExCeL London, Birmingham NEC, or Manchester Central, all of which host Hyrox weekends every year. Your programme is built backwards from whichever race you enter.`,
+        ? `No. Plenty of athletes start training before they enter anything, then pick a date later. If you already know you are aiming at ${venue.name} in ${venue.city}, the programme builds backwards from it. If you don't, it builds towards general readiness until you choose.`
+        : `No. Plenty of athletes start training before they enter anything, then pick a date later. Once you choose a race the programme rebuilds backwards from that date; until then it works towards general readiness.`,
     },
     {
       q: "Do I need a Hyrox gym to follow the programme?",
@@ -202,7 +209,7 @@ const STEPS = [
   {
     n: "02",
     title: "See your Week 1",
-    body: "Real dated workouts before you pay. No demo screens.",
+    body: "Real dated workouts, free. No demo screens.",
   },
   {
     n: "03",
@@ -557,7 +564,7 @@ export function GeoLanding({
                   : "Start training with a plan that knows you."}
               </h2>
               <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
-                Three-minute quiz. Real Week 1 before you pay.
+                Three-minute quiz. Real Week 1, free.
               </p>
               <div className="mt-8">
                 <CtaButton href="/quiz" size="lg">

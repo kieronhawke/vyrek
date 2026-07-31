@@ -338,7 +338,7 @@ greenfield.
 | A | Package ladder pages + pricing restructure; /coaching (1:1, application) and /hyrox-coach pages; call-booking + admin lead pipeline + payment links | Ben's capacity (Q3), package sign-off |
 | B | Free HYROX plan maker (PDF + account capture) + abandonment emails | Resend domain |
 | C | Quiz v4 dual-branch (28-screen spec) with call CTA | A |
-| D | Location DB expansion + uniqueness validator + rollout at 20-30/mo; location FAQs | none — start data job now |
+| D | Location DB expansion + uniqueness validator + rollout at 20-30/mo; location FAQs | **blocked**, see below: the gym mandatory has no free source and the results mandatory is open question 1 |
 | E | Content clusters + niche pages at 15-25/mo | none |
 | F | Coaching Hub content build-out (Ben filming), Q&A, logging P0 | Ben's content time |
 | G | Results layer + calculators + leaderboard | **Open question 1 — do not build on a scrape** |
@@ -350,7 +350,19 @@ Carried from the pack (docs/strategy/08), still open, now owned by Kieron:
 
 1. **Results data source** — partnership vs claim-your-profile vs scrape.
    Claim-your-profile is unblocked; scraping needs a UK solicitor's
-   opinion on database rights first. Blocks G and quiz PB lookup.
+   opinion on database rights first. Blocks G and quiz PB lookup, and
+   because every location page needs one results data point, it blocks
+   D as well.
+1b. **Gym data source** (added 30 July 2026). The uniqueness gate also
+   requires one gym or facility record per location, and the free routes
+   were tested and do not work: the HYROX club directory and HyroxVault
+   both 403, no chain publishes a machine-readable locator, and PureGym
+   names no branches while aggregator blogs confidently list some, so
+   those blogs are not a usable source. Google Places (keyed, paid) or
+   human verification are the two honest options. Hard rule 1 forbids
+   inventing the records and the validator has no bypass flag.
+   **Consequence: 0 of 104 locations can publish today**, and the 94
+   legacy location pages already live would all fail the gate.
 2. ~~Domain/handles~~ — resolved by brand correction: Suth Performance on
    suthperformance.com. Social handle audit still needed (@bennysuth95 is
    Ben's personal; does the brand get its own?).

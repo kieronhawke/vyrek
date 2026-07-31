@@ -151,6 +151,13 @@
  * ~7.9:1). The locked palette is unchanged. --text-faint is reserved for
  * genuinely disabled controls, which WCAG 1.4.3 exempts, and for large
  * text where 3:1 is the bar. Recorded in QUESTIONS.md.
+ *
+ * The same rule caught a second case in the operator modules: --text-faint
+ * was doing de-emphasis work — an outbound message marker, a non-buyer
+ * keyword, an em-dash placeholder — on --surface (#141414), where it is
+ * 3.45:1. De-emphasised is not disabled: that text still has to be read.
+ * Those all moved to --text-muted. Treat --text-faint as reserved for
+ * controls a user genuinely cannot operate, and nothing else.
  */
 [data-surface="control"] .eyebrow {
   font-size: var(--text-2xs);

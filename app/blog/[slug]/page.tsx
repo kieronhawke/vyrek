@@ -313,7 +313,7 @@ export default async function BlogPostPage({
                     Want this written into a 12-week plan for your race?
                   </p>
                   <p className="mt-2 text-xs leading-relaxed text-suth-text-tertiary">
-                    Three-minute quiz. See Week 1 before you pay.
+                    Three-minute quiz. See Week 1 for free.
                   </p>
                   <Link
                     href="/quiz"

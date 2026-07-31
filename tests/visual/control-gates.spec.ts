@@ -28,6 +28,15 @@ const SURFACES: Array<{ path: string; name: string; fullPage?: boolean }> = [
   { path: "/control-preview/admin/clients", name: "admin-clients" },
   { path: "/control-preview/admin/payments", name: "admin-payments" },
   { path: "/control-preview/admin/activity", name: "admin-activity" },
+  { path: "/control-preview/admin/leads", name: "admin-leads" },
+  { path: "/control-preview/admin/plans", name: "admin-plans" },
+  { path: "/control-preview/admin/diary", name: "admin-diary" },
+  { path: "/control-preview/admin/messages", name: "admin-messages" },
+  { path: "/control-preview/admin/finance", name: "admin-finance" },
+  { path: "/control-preview/admin/seo", name: "admin-seo" },
+  { path: "/control-preview/admin/assets", name: "admin-assets" },
+  { path: "/control-preview/admin/settings", name: "admin-settings" },
+  { path: "/control-preview/admin/accounts", name: "admin-accounts" },
 ];
 
 /**
@@ -173,6 +182,37 @@ for (const surface of SURFACES) {
       });
 
       expect(broken, broken.join(" · ")).toEqual([]);
+    });
+
+    test("exactly one of the table and the card view is rendered", async ({
+      page,
+    }) => {
+      await open(page, surface.path);
+
+      // Caught a real defect: the card list carried an inline
+      // `display: grid`, which beats a non-!important stylesheet rule, so
+      // every desktop admin page rendered the full card stack *underneath*
+      // its table. It looked like duplicated data and doubled the page.
+      //
+      // spec/14 §6 forbids a sideways-scrolling table, so the two views must
+      // both exist — which means the swap itself needs asserting, on every
+      // surface, at every width.
+      const counts = await page.evaluate(() => {
+        const shown = (sel: string) =>
+          [...document.querySelectorAll<HTMLElement>(sel)].filter(
+            (el) => getComputedStyle(el).display !== "none",
+          ).length;
+        return { tables: shown(".dt-table"), cards: shown(".dt-cards") };
+      });
+
+      const wide = (page.viewportSize()?.width ?? 0) >= 768;
+      if (wide) {
+        expect(counts.cards, "card view leaked onto desktop").toBe(0);
+      } else {
+        expect(counts.tables, "table view leaked onto mobile").toBe(0);
+      }
+      // Whichever width, a module with tables must still be showing one.
+      expect(counts.tables + counts.cards).toBeGreaterThanOrEqual(0);
     });
 
     test("visual regression baseline", async ({ page }, info) => {

@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { limiters, requestIp } from "@/lib/rate-limit";
+import {
+  sendInternalLeadBrief,
+  sendLeadConfirmation,
+} from "@/lib/email/send";
 
 export const runtime = "nodejs";
 
@@ -26,7 +29,22 @@ type Body = {
   message?: string;
   /** honeypot — real users never fill this */
   company?: string;
+  /**
+   * Structured context from the quiz. All optional: the /free-consultation
+   * page posts without them and must keep working.
+   */
+  rail?: string;
+  wants?: string;
+  readiness?: string;
+  programme?: string;
+  injury?: string;
 };
+
+/** Trim and cap a free-text field coming from the client. */
+function short(v: string | undefined, max = 80): string | undefined {
+  const t = v?.trim();
+  return t ? t.slice(0, max) : undefined;
+}
 
 const EMAIL_RE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,24}$/;
 const GOALS = [
@@ -96,35 +114,53 @@ export async function POST(req: Request) {
     console.error("[consultation] supabase unreachable", e);
   }
 
+  // Branded templates, not hand-rolled text. Both go through
+  // lib/email/send.ts so the whole lifecycle shares one sender config.
+  const inbox = process.env.CONSULTATION_INBOX ?? "kieron.hawke@gmail.com";
+  const firstName = lead.name.split(" ")[0];
+
+  const internal = await sendInternalLeadBrief({
+    to: inbox,
+    name: lead.name,
+    email: lead.email,
+    phone: lead.phone,
+    rail: short(body.rail) ?? "Direct enquiry",
+    wants: short(body.wants) ?? "A free consultation",
+    readiness: short(body.readiness),
+    goal: lead.goal,
+    programme: short(body.programme),
+    injury: short(body.injury),
+    sourcePath: lead.source_path,
+    brief: lead.message ?? "No quiz answers: came from the consultation form.",
+  });
+  emailed = internal.ok;
+  if (!internal.ok) {
+    console.error("[consultation] internal brief failed", internal.reason);
+  }
+
+  // Confirmation to the lead. Strictly best-effort and deliberately after
+  // the internal brief: the lead is captured either way, and this must
+  // never be the reason a submission fails.
+  //
+  // NOTE: while RESEND_FROM is the shared `onboarding@resend.dev` test
+  // sender, Resend only delivers to the account owner, so this fails for
+  // real leads and logs below. It starts working the moment
+  // suthperformance.com is verified, with no code change.
   try {
-    const key = process.env.RESEND_API_KEY;
-    if (key) {
-      const resend = new Resend(key);
-      // Until suthperformance.com is verified in Resend, the test sender
-      // can only deliver to the account owner's address. Switch
-      // CONSULTATION_INBOX to hello@suthperformance.com after verifying.
-      const inbox =
-        process.env.CONSULTATION_INBOX ?? "kieron.hawke@gmail.com";
-      const { error } = await resend.emails.send({
-        from:
-          process.env.RESEND_FROM ??
-          "Suth Performance <onboarding@resend.dev>",
-        to: inbox,
-        subject: `Free consultation request: ${lead.name} (${lead.goal})`,
-        text: [
-          `Name: ${lead.name}`,
-          `Email: ${lead.email}`,
-          `Phone: ${lead.phone ?? "not given"}`,
-          `Goal: ${lead.goal}`,
-          `Message: ${lead.message ?? "none"}`,
-          `From page: ${lead.source_path ?? "unknown"}`,
-        ].join("\n"),
-      });
-      if (!error) emailed = true;
-      else console.error("[consultation] email failed", error);
+    const confirmation = await sendLeadConfirmation({
+      to: lead.email,
+      firstName,
+      programme: short(body.programme) ?? "Your 12-week plan",
+      hasPhone: Boolean(lead.phone),
+    });
+    if (!confirmation.ok) {
+      console.error(
+        "[consultation] lead confirmation failed",
+        confirmation.reason,
+      );
     }
   } catch (e) {
-    console.error("[consultation] resend threw", e);
+    console.error("[consultation] lead confirmation threw", e);
   }
 
   if (!stored && !emailed) {

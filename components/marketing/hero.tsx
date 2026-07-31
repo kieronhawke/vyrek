@@ -136,7 +136,7 @@ export function Hero() {
         <p className="hero-intro mt-5 max-w-md text-base leading-relaxed text-suth-text-secondary md:max-w-xl md:text-lg">
           Programmed by HYROX Elite 15 athlete Ben Sutherland. From your
           first race to chasing podiums: one personalised 12-week plan,
-          dated to your race date. See your Week 1 before you pay.
+          dated to your race date. See your Week 1 for free.
         </p>
         <div className="hero-intro hero-intro-late mt-7 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-5">
           <Link

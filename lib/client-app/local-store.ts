@@ -34,6 +34,33 @@ function hasIndexedDB(): boolean {
   }
 }
 
+/**
+ * How long the IndexedDB path gets before we stop waiting on it.
+ *
+ * `indexedDB.open()` has a third outcome besides success and error: it can
+ * simply never settle. A connection left open by a page that was killed
+ * rather than closed will block the next open, and `onblocked` may never
+ * fire either. The offline test caught exactly this — force-close the app
+ * mid-session, reopen, and the read never resolved, so the player sat on
+ * "Loading your session…" forever with twelve logged sets stranded on the
+ * device behind it.
+ *
+ * That is the failure HARD-RULES §2 exists to prevent, and it is worse than
+ * it looks: the data was safe, but unreachable, which the athlete cannot
+ * tell apart from lost. So the read is bounded, and a stall falls through to
+ * the localStorage mirror — which is why the mirror is written on every set.
+ */
+const IDB_TIMEOUT_MS = 1500;
+
+function withTimeout<T>(work: Promise<T>, ms: number): Promise<T> {
+  return Promise.race([
+    work,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error("indexeddb timed out")), ms),
+    ),
+  ]);
+}
+
 function openDb(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, DB_VERSION);
@@ -45,6 +72,9 @@ function openDb(): Promise<IDBDatabase> {
     };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);
+    // An older connection is still holding the database. Say so rather than
+    // waiting on an event that may never arrive.
+    req.onblocked = () => reject(new Error("indexeddb blocked"));
   });
 }
 
@@ -52,15 +82,28 @@ function openDb(): Promise<IDBDatabase> {
 export async function loadQueue(): Promise<Queue> {
   if (hasIndexedDB()) {
     try {
-      const db = await openDb();
-      const items = await new Promise<QueueItem[] | undefined>((resolve, reject) => {
-        const tx = db.transaction(STORE, "readonly");
-        const req = tx.objectStore(STORE).get(RECORD_ID);
-        req.onsuccess = () =>
-          resolve((req.result as { id: string; items: QueueItem[] } | undefined)?.items);
-        req.onerror = () => reject(req.error);
-      });
-      db.close();
+      const items = await withTimeout(
+        (async () => {
+          const db = await openDb();
+          try {
+            return await new Promise<QueueItem[] | undefined>((resolve, reject) => {
+              const tx = db.transaction(STORE, "readonly");
+              const req = tx.objectStore(STORE).get(RECORD_ID);
+              req.onsuccess = () =>
+                resolve(
+                  (req.result as { id: string; items: QueueItem[] } | undefined)
+                    ?.items,
+                );
+              req.onerror = () => reject(req.error);
+            });
+          } finally {
+            // Closed even when the read throws, so a failure here cannot
+            // become the blocked connection that stalls the next open.
+            db.close();
+          }
+        })(),
+        IDB_TIMEOUT_MS,
+      );
       if (items) return { items };
     } catch {
       // Fall through to localStorage rather than losing the session.

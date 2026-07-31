@@ -262,7 +262,7 @@ export function CommandPalette() {
                       background: i === index ? "var(--surface)" : "transparent",
                       border: "none",
                       borderRadius: 0,
-                      color: pending ? "var(--text-faint)" : "var(--text)",
+                      color: pending ? "var(--text-muted)" : "var(--text)",
                       textAlign: "left",
                       fontSize: "var(--text-sm)",
                       cursor: pending ? "not-allowed" : "pointer",

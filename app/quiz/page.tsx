@@ -4,12 +4,12 @@ import QuizV3 from "@/components/quiz-v3/quiz-flow";
 export const metadata: Metadata = {
   title: "Quiz. Find your Hyrox plan in three minutes · Suth Performance",
   description:
-    "Three-minute quiz to build your personalised Hyrox plan. Programme, weekly schedule, sled and wall ball loads calibrated to you. See Week 1 before you pay.",
+    "Three-minute quiz to build your personalised Hyrox plan. Programme, weekly schedule, sled and wall ball loads calibrated to you. See Week 1 for free.",
   alternates: { canonical: "/quiz" },
   openGraph: {
     title: "Find your Hyrox plan in three minutes",
     description:
-      "Personalised 12-week Hyrox plan, dated to your race. Take the three-minute quiz, see your Week 1 before you pay.",
+      "Personalised 12-week Hyrox plan, dated to your race. Take the three-minute quiz, see your Week 1 for free.",
     url: "/quiz",
     type: "website",
     images: [
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Find your Hyrox plan in three minutes",
     description:
-      "Personalised 12-week Hyrox plan, dated to your race. See your Week 1 before you pay.",
+      "Personalised 12-week Hyrox plan, dated to your race. See your Week 1 for free.",
     images: ["/media/images/track/programme-first-race.jpg"],
   },
 };
