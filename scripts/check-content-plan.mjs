@@ -119,9 +119,15 @@ for (const p of posts) {
   if (!slug) continue;
   if (!published.includes(slug))
     problems.push(`${p.id} claims to have shipped as /blog/${slug}, which does not exist in content/blog/`);
+  // Two rows on one URL is deliberate keyword consolidation as often as it is
+  // a mistake ("hyrox bag" and "hyrox packing list" want one page, not two),
+  // so this warns rather than blocks. What must never happen is a row
+  // claiming a URL that does not exist — that one is a hard failure above.
   if (claimed.has(slug))
-    problems.push(`/blog/${slug} is claimed by two plan rows: ${claimed.get(slug)} and ${p.id}`);
-  claimed.set(slug, p.id);
+    warnings.push(
+      `/blog/${slug} is claimed by two plan rows: ${claimed.get(slug)} and ${p.id} — consolidation or mistake?`,
+    );
+  else claimed.set(slug, p.id);
 }
 
 // 4c. Live posts nobody planned. Not a fault (the site predates the plan),
@@ -193,17 +199,30 @@ if (warnings.length) {
     /overlaps published/.test(w) ? "overlap with a live post"
       : /records no "shipped/.test(w) ? "published row with no URL recorded"
       : /records no "live at/.test(w) ? "refresh row with no URL recorded"
+      : /claimed by two plan rows/.test(w) ? "one URL serving two plan rows"
       : /flagged semrush/.test(w) ? "semrush flag with no volume"
       : /points at multiple hubs/.test(w) ? "cluster pointing at multiple hubs"
       : "other";
   const byKind = new Map();
-  for (const w of warnings) byKind.set(kind(w), (byKind.get(kind(w)) ?? 0) + 1);
+  for (const w of warnings) {
+    const k = kind(w);
+    if (!byKind.has(k)) byKind.set(k, []);
+    byKind.get(k).push(w);
+  }
   console.log(`${warnings.length} warning(s):`);
-  for (const [k, n] of [...byKind].sort((a, b) => b[1] - a[1]))
-    console.log(`  ${String(n).padStart(4)} × ${k}`);
+  for (const [k, list] of [...byKind].sort((a, b) => b[1].length - a[1].length))
+    console.log(`  ${String(list.length).padStart(4)} × ${k}`);
   console.log("");
-  for (const w of warnings.slice(0, 25)) console.log("  ! " + w);
-  if (warnings.length > 25) console.log(`  … ${warnings.length - 25} more`);
+  // Print a slice of the biggest kind, but always at least one example of
+  // every kind — a single rare warning must not hide behind 60 common ones.
+  const shown = new Set();
+  for (const [, list] of byKind) {
+    for (const w of list.slice(0, Math.max(1, Math.floor(25 / byKind.size)))) {
+      console.log("  ! " + w);
+      shown.add(w);
+    }
+  }
+  if (warnings.length > shown.size) console.log(`  … ${warnings.length - shown.size} more`);
   console.log("");
 }
 if (problems.length) {

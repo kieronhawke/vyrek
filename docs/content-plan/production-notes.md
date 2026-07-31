@@ -253,28 +253,45 @@ Pre-existing `refresh` marks were treated as authoritative throughout. Where
 one existed, it won over anything the matcher proposed, because whoever set
 it had a specific live post in mind.
 
+### Resolved on 31 July
+
+**Three pairs of live posts were cannibalising each other.** All three are now
+separated by intent rather than merged, so no URL was lost and each owns a
+distinct query. Each pair cross-links, in both directions, at the point where a
+reader would want the other one:
+
+| Was competing | Now owns |
+|---|---|
+| `couch-to-hyrox` | "couch to hyrox" — the 24-week route from not running at all |
+| `hyrox-couch-to-finish` | "16 week hyrox training plan" — 4-week pre-block plus the standard 12 |
+| `hyrox-race-day-bag-checklist` | "hyrox bag" — what to pack the night before |
+| `hyrox-race-day-kit-checklist-2026` | "what to wear hyrox" — shoes and clothing |
+| `hyrox-race-day-warm-up` | the full 90-minute protocol from arrival |
+| `hyrox-pre-race-warmup-protocol` | the compressed 35 minutes for when you arrive late |
+
+Two of those six were retitled into plan rows that already existed and were
+sitting unwritten: H154 "What to wear for HYROX" and H115 "16-week HYROX plan".
+The work was done, it was just pointed at the wrong query.
+
+The kit post also lost its bag-packing section, which duplicated the bag post
+outright; it now points there instead.
+
+**The five future publication dates are fixed.** They were the tail of a
+synthetic editorial spread (posts are dated January to August, all committed on
+22 May) that had simply overshot today. Dates moved into free late-July slots,
+relative order preserved, so nothing claims to be published in the future.
+
 ### Still open, and not mechanical
-
-**Two live posts duplicate two others.** Both pairs chase one query:
-
-- `couch-to-hyrox` (24-week) and `hyrox-couch-to-finish` (16-week). Same
-  audience, same intent, same head term.
-- `hyrox-race-day-bag-checklist` and `hyrox-race-day-kit-checklist-2026`.
-  Both are race-day packing lists, ~975 words each.
-
-Two of those four shipped in the 29 July batch, so this is self-inflicted and
-recent. Merge or differentiate is an editorial call, not a script's.
-
-**Five posts are dated in the future** (to 28 August). `lib/blog/posts.ts`
-sorts on `publishedAt` but never filters it, so there is no scheduling gate:
-those posts are live now, carrying a `datePublished` that has not happened.
-Either the dates come back to real ones or the filter gets built. The proofer
-now flags any future date so this cannot recur silently.
 
 **Two `refresh` rows point at nothing.** H162 (48-hour pre-race fuelling) and
 H230 (recovery for hybrid athletes) are marked as upgrades to a live URL, but
 no live post matches either. They are new posts mislabelled, or the post they
-meant was renamed. The checker now warns on both.
+meant has been renamed. The checker warns on both.
+
+**One URL now serves two plan rows.** H152 ("hyrox bag") and H161 ("hyrox
+packing list") both map to `/blog/hyrox-race-day-bag-checklist`. That is
+deliberate keyword consolidation rather than a mistake, which is why the
+checker warns rather than fails on it, but it is worth a second opinion.
 
 **Fourteen `cta_primary`/`cta_secondary` values still read "Start the 7-day
 Hub trial".** "The Hub" is superseded by Suth Club, and whether a trial exists
