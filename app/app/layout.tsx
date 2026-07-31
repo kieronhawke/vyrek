@@ -24,7 +24,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function MemberLayout({ children }: { children: React.ReactNode }) {
+export default function MemberLayout({
+  children,
+  base = "/app",
+}: {
+  children: React.ReactNode;
+  /** Route prefix, so the preview mount reuses this shell verbatim. */
+  base?: string;
+}) {
   return (
     <div
       data-surface="control"
@@ -43,7 +50,7 @@ export default function MemberLayout({ children }: { children: React.ReactNode }
       >
         {children}
       </main>
-      <ClientTabs />
+      <ClientTabs base={base} />
     </div>
   );
 }

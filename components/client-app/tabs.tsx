@@ -17,8 +17,16 @@ const TABS = [
   { href: "/app/account", label: "Account", glyph: "◍" },
 ] as const;
 
-export function ClientTabs() {
+/**
+ * `base` exists so the same tab bar serves the real, auth-gated mount at
+ * /app and the ungated preview at /control-preview/app. Without it the
+ * preview's tabs navigate straight into the gate and bounce to /login,
+ * which makes the preview useless for looking at the thing it previews.
+ */
+export function ClientTabs({ base = "/app" }: { base?: string }) {
   const pathname = usePathname();
+  const hrefFor = (href: string) =>
+    href === "/app" ? base : href.startsWith("/app/") ? base + href.slice(4) : href;
 
   return (
     <nav
@@ -36,12 +44,12 @@ export function ClientTabs() {
       }}
     >
       {TABS.map((tab) => {
-        const active =
-          tab.href === "/app" ? pathname === "/app" : pathname.startsWith(tab.href);
+        const href = hrefFor(tab.href);
+        const active = href === base ? pathname === base : pathname.startsWith(href);
         return (
           <Link
             key={tab.href}
-            href={tab.href}
+            href={href}
             aria-current={active ? "page" : undefined}
             style={{
               minHeight: 64,
