@@ -10,7 +10,10 @@
     "lint": "eslint",
     "test:visual": "playwright test",
     "test:visual:report": "playwright show-report tests/visual/report",
-    "test:visual:install": "playwright install chromium webkit"
+    "test:visual:install": "playwright install chromium webkit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
@@ -70,6 +73,7 @@
     "puppeteer-core": "^25.0.4",
     "sharp": "^0.34.5",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.10"
   }
 }

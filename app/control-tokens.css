@@ -1,0 +1,179 @@
+/**
+ * CONTROL CENTRE DESIGN TOKENS
+ *
+ * The design system from docs/build-pack/spec/14, implemented exactly.
+ *
+ * WHY THIS IS A SEPARATE, SCOPED TOKEN SET
+ *
+ * spec/14 §2 says the palette is "already tokenised in the codebase". It is
+ * close, but seven of the fifteen values differ from the marketing site's
+ * existing `--suth-*` tokens:
+ *
+ *   token            spec/14    site      differs
+ *   --border         #262626    #2A2A2A   yes
+ *   --border-strong  #383838    #3D3D3D   yes
+ *   --text           #FAFAFA    #F5F5F3   yes
+ *   --text-muted     #A3A3A3    #A8A8A6   yes
+ *   --text-faint     #6B6B6B    #8A8A88   yes
+ *   --warn           #FBBF24    #F59E0B   yes
+ *   --danger         #F87171    #EF4444   yes
+ *   --info           #60A5FA    (absent)  yes
+ *
+ * spec/14 §2 is headed "LOCKED, DO NOT REINTERPRET", so the spec values win
+ * here. But retokenising the marketing site would restyle 58 blog posts and
+ * 130 location pages that are live, and would collide with another terminal
+ * currently working in those files.
+ *
+ * So: the spec palette is scoped to `[data-surface="control"]`, which the
+ * admin, Coach Mode and the client app opt into. The marketing site is
+ * untouched. Recorded in QUESTIONS.md so the divergence is deliberate and
+ * visible rather than discovered later.
+ */
+
+[data-surface="control"] {
+  /* ── Colour — spec/14 §2, all fifteen ───────────────────────────── */
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --surface-raised: #1c1c1c;
+  --border: #262626;
+  --border-strong: #383838;
+  --accent: #a3e635;
+  --accent-hover: #84cc16;
+  --accent-glow: #bef264;
+  --accent-faint: #1a3d08;
+  --text: #fafafa;
+  --text-muted: #a3a3a3;
+  --text-faint: #6b6b6b;
+  --warn: #fbbf24;
+  --danger: #f87171;
+  --info: #60a5fa;
+
+  /* ── Type scale — spec/14 §3 ────────────────────────────────────── */
+  /* Admin body is 13px, not 16px. It is a control panel; density is the
+     point. The client app overrides to 15px, read one-handed in a gym. */
+  --text-2xs: 11px;
+  --text-2xs-lh: 1.3;
+  --text-xs: 12px;
+  --text-xs-lh: 1.4;
+  --text-sm: 13px;
+  --text-sm-lh: 1.5;
+  --text-base: 15px;
+  --text-base-lh: 1.6;
+  --text-lg: 18px;
+  --text-lg-lh: 1.5;
+  --text-xl: 24px;
+  --text-xl-lh: 1.3;
+  --text-2xl: 32px;
+  --text-2xl-lh: 1.2;
+  --metric: 48px;
+  --metric-lh: 1;
+  --metric-lg: 72px;
+  --metric-lg-lh: 1;
+
+  /* ── Spacing — 8px grid, spec/14 §5. No exceptions. ─────────────── */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --space-10: 80px;
+
+  /* ── Radius — sharp where data lives, soft where actions live ───── */
+  --radius-table: 0;
+  --radius-input: 0;
+  --radius-card: 6px;
+  --radius-button: 6px;
+
+  /* ── Layout — spec/14 §5 ────────────────────────────────────────── */
+  --sidebar-w: 216px;
+  --sidebar-w-collapsed: 56px;
+  --topbar-h: 48px;
+  --content-max: 1440px;
+  --row-h: 40px;
+  --row-h-dense: 32px;
+  --tabbar-h: 64px;
+
+  /* ── Motion — spec/14 §8 ────────────────────────────────────────── */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --dur-instant: 100ms;
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-slow: 300ms;
+
+  /* ── Type families ──────────────────────────────────────────────── */
+  /* Archivo for display and UI: a grotesque with a genuine condensed cut.
+     Geist Mono for every number, everywhere, with tabular figures. */
+  --font-ui: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-num: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The client app reads at arm's length one-handed, so it steps up to 15px.
+   spec/14 §3. */
+[data-surface="control"][data-density="comfortable"] {
+  font-size: var(--text-base);
+  line-height: var(--text-base-lh);
+}
+
+/**
+ * Every number renders in Geist Mono with tabular figures. spec/14 §3 calls
+ * this "the single most functional decision in the system": it is what makes
+ * times, weights, money and percentages align in a column without manual
+ * tracking. The <Num> component is the enforcement mechanism; this class is
+ * what it applies.
+ */
+[data-surface="control"] .num {
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: -0.01em;
+}
+
+/* Table headers and eyebrows: 11px Archivo 600, +0.06em, uppercase. */
+/**
+ * CONTRAST NOTE — a real conflict in the spec, resolved deliberately.
+ *
+ * spec/14 §2 assigns --text-faint (#6B6B6B) to "Tertiary, disabled", and
+ * §3 makes 11px uppercase the table-header and eyebrow style. But
+ * #6B6B6B on #0A0A0A is 3.67:1, and WCAG AA needs 4.5:1 for text this
+ * size. spec/14 §10 requires "WCAG AA contrast minimum throughout" and
+ * spec/16 §5 requires zero AA violations, so the two cannot both hold.
+ *
+ * Resolved by role, not by hex: eyebrows use --text-muted (#A3A3A3,
+ * ~7.9:1). The locked palette is unchanged. --text-faint is reserved for
+ * genuinely disabled controls, which WCAG 1.4.3 exempts, and for large
+ * text where 3:1 is the bar. Recorded in QUESTIONS.md.
+ */
+[data-surface="control"] .eyebrow {
+  font-size: var(--text-2xs);
+  line-height: var(--text-2xs-lh);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Focus ring: 2px accent-glow, on every interactive element. spec/14 §10. */
+[data-surface="control"] :focus-visible {
+  outline: 2px solid var(--accent-glow);
+  outline-offset: 2px;
+}
+
+/* spec/14 §8: prefers-reduced-motion disables all non-essential motion. */
+@media (prefers-reduced-motion: reduce) {
+  [data-surface="control"] *,
+  [data-surface="control"] *::before,
+  [data-surface="control"] *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

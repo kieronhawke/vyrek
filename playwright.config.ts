@@ -33,6 +33,36 @@ export default defineConfig({
     video: "retain-on-failure",
   },
   projects: [
+    // ── docs/build-pack/spec/16 §3 — THE DEVICE MATRIX ─────────────────
+    // Six devices, every PR. Named `dm-*` so the whole matrix can be run
+    // with `--grep-invert` or selected with `--project=dm-...`.
+    {
+      name: "dm-iphone-se",
+      use: { ...devices["iPhone SE"], viewport: { width: 375, height: 667 } },
+    },
+    {
+      name: "dm-iphone-15-pro",
+      use: { ...devices["iPhone 15 Pro"], viewport: { width: 393, height: 852 } },
+    },
+    {
+      name: "dm-iphone-15-pro-max",
+      use: { ...devices["iPhone 15 Pro Max"], viewport: { width: 430, height: 932 } },
+    },
+    {
+      name: "dm-pixel-8",
+      use: { ...devices["Pixel 7"], viewport: { width: 412, height: 915 } },
+    },
+    {
+      name: "dm-ipad-mini",
+      use: { ...devices["iPad Mini"], viewport: { width: 744, height: 1133 } },
+    },
+    {
+      // Narrowest real device. If it survives here it survives anywhere.
+      name: "dm-galaxy-fold",
+      use: { ...devices["Galaxy S9+"], viewport: { width: 344, height: 882 } },
+    },
+
+    // ── Pre-existing marketing-site projects ───────────────────────────
     {
       name: "mobile-375",
       use: { ...devices["iPhone SE"], viewport: { width: 375, height: 667 } },
