@@ -32,6 +32,9 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# ...but the template is committed on purpose: spec/18 §2 requires every
+# key present and blank so nobody has to guess what to set.
+!.env.example
 
 # vercel
 .vercel
