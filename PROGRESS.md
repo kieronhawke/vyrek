@@ -324,3 +324,50 @@ whether work is saved.
 - Home, Plan, Progress and Account tabs are not built.
 - Watch sync, session comments, the assistant and guidance cards not started.
 
+---
+
+## DESIGN PASS — THE WORKOUT PLAYER ✅ 31 July 2026
+
+Screenshotted the player on a real mobile viewport for the first time and
+found four problems that the passing tests had not.
+
+### Fixed
+
+1. **The most-tapped button in the product sat mid-screen.** "Log set" was
+   floating at roughly 45% of the viewport — the hardest place to reach with
+   a thumb. It is now a fixed bottom action bar, which is what `spec/14 §6`
+   asks for and what every training app worth copying does.
+2. **No rest timer.** `spec/11 §6` requires one with audio and haptic that
+   survives the screen locking. Added, counting from a timestamp rather than
+   ticks so it stays correct if the tab is throttled, with tap-to-skip and a
+   haptic on completion.
+3. **You could not see your own sets.** Logged sets now list under the
+   exercise with their weight and reps, and a left border showing synced
+   versus still-queued. Being able to check your own work is most of what
+   makes a logging app trustworthy.
+4. **No sense of place in the session.** Added "Exercise 1/4" and a segmented
+   progress bar that fills per exercise.
+
+### Two caught by the gates afterwards
+
+- `<Num>` inside an 11px eyebrow inherited 11px and tripped the text floor.
+  The exercise counter moved to 12px, since anything carrying numbers cannot
+  live at eyebrow size.
+- The sync dot was a 9px `●` character. Replaced with a CSS circle: no font
+  dependency, no text-size floor to argue with, identical everywhere.
+
+### Tested
+
+- **161 unit tests.**
+- **220 Playwright assertions**: seven surfaces × six devices, plus the three
+  offline contracts, all against a production build.
+- Verified by eye at 344px (Galaxy Fold) and 393px: nothing clipped, primary
+  action reachable, zero horizontal scroll.
+
+### Known, not fixed
+
+The shared cookie consent banner overlays the top of `/train`. On an
+app-like screen that is intrusive, but the banner is site-wide
+infrastructure and another terminal is working in those files. Flagged
+rather than changed.
+

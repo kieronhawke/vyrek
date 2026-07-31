@@ -23,6 +23,7 @@ const SURFACES: Array<{ path: string; name: string; fullPage?: boolean }> = [
   { path: "/coach/plans", name: "coach-plans" },
   { path: "/coach/messages", name: "coach-messages" },
   { path: "/coach/diary", name: "coach-diary" },
+  { path: "/train", name: "client-train" },
 ];
 
 /** Only run these on the six matrix projects, not the marketing ones. */

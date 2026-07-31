@@ -60,6 +60,9 @@ const SESSION: { workoutLogId: string; title: string; exercises: Exercise[] } = 
   ],
 };
 
+/** Default rest between sets. Per-exercise rest arrives with the plan in Phase D. */
+const REST_SECONDS = 90;
+
 const SYNC_COPY: Record<string, { label: string; tone: string }> = {
   synced: { label: "All saved", tone: "var(--text-muted)" },
   pending: { label: "Saving…", tone: "var(--text-muted)" },
@@ -139,6 +142,36 @@ export function WorkoutPlayer() {
     };
   }, []);
 
+  /**
+   * Rest timer. spec/11 §6 requires audio and haptic and that it works with
+   * the screen locked — the wake lock above covers the screen, and the
+   * end-of-rest cue fires from a timestamp rather than a tick count so it
+   * stays correct if the tab is throttled in the background.
+   */
+  const [restEndsAt, setRestEndsAt] = useState<number | null>(null);
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    if (restEndsAt === null) return;
+    const id = window.setInterval(() => {
+      const t = Date.now();
+      setNow(t);
+      // Ending the rest inside the tick rather than in a second effect
+      // watching the derived value: one state pass, and the haptic fires
+      // exactly once.
+      if (t >= restEndsAt) {
+        setRestEndsAt(null);
+        if (navigator.vibrate) navigator.vibrate([80, 60, 80]);
+      }
+    }, 250);
+    return () => window.clearInterval(id);
+  }, [restEndsAt]);
+
+  // round, not ceil: a 90s rest read "91s" for its first tick because a few
+  // milliseconds had already elapsed when the interval first fired.
+  const restLeft =
+    restEndsAt === null ? 0 : Math.max(0, Math.round((restEndsAt - now) / 1000));
+
   const persist = useCallback((next: Queue) => {
     setQueue(next);
     // Fire and forget: the UI must never wait on storage either.
@@ -164,6 +197,7 @@ export function WorkoutPlayer() {
       );
       persist(next);
       if (navigator.vibrate) navigator.vibrate(12);
+      setRestEndsAt(Date.now() + REST_SECONDS * 1000);
     },
     [queue, exercise, reps, weight, persist],
   );
@@ -221,9 +255,82 @@ export function WorkoutPlayer() {
     );
   }
 
+  const setsHere = queue.items
+    .filter((i) => i.set.exerciseId === exercise.id)
+    .sort((a, b) => a.set.setNumber - b.set.setNumber);
+
   return (
-    <div data-testid="workout-player">
-      <p className="eyebrow">{SESSION.title}</p>
+    <div
+      data-testid="workout-player"
+      style={{
+        minHeight: "100svh",
+        display: "flex",
+        flexDirection: "column",
+        // Room for the fixed action bar, plus the home indicator.
+        paddingBottom: "calc(148px + env(safe-area-inset-bottom))",
+      }}
+    >
+      {/* ── Session progress. You should always know where you are. ──── */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "var(--space-2)",
+          marginBottom: "var(--space-2)",
+        }}
+      >
+        <span className="eyebrow">{SESSION.title}</span>
+        <span
+          style={{
+            fontSize: "var(--text-xs)",
+            fontWeight: 600,
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+            color: "var(--text-muted)",
+          }}
+        >
+          Exercise <Num align="left">{index + 1}</Num>/
+          <Num align="left">{SESSION.exercises.length}</Num>
+        </span>
+      </div>
+
+      {/* One dot per exercise, filled as its sets complete. Cheap to read
+          at a glance, which is all it needs to be mid-session. */}
+      <div
+        aria-hidden
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${SESSION.exercises.length}, 1fr)`,
+          gap: 4,
+          marginBottom: "var(--space-3)",
+        }}
+      >
+        {SESSION.exercises.map((ex, i) => {
+          const done = queue.items.filter((q) => q.set.exerciseId === ex.id).length;
+          const pct = Math.min(100, (done / ex.targetSets) * 100);
+          return (
+            <span
+              key={ex.id}
+              style={{
+                height: 3,
+                background: "var(--surface-raised)",
+                position: "relative",
+                outline: i === index ? "1px solid var(--border-strong)" : "none",
+              }}
+            >
+              <span
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: `${pct}%`,
+                  background: "var(--accent)",
+                }}
+              />
+            </span>
+          );
+        })}
+      </div>
 
       <div
         aria-live="polite"
@@ -232,15 +339,22 @@ export function WorkoutPlayer() {
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "var(--space-1)",
-          margin: "var(--space-1) 0 var(--space-3)",
+          gap: 6,
+          marginBottom: "var(--space-3)",
           fontSize: "var(--text-xs)",
           color: SYNC_COPY[state].tone,
         }}
       >
-        <span aria-hidden style={{ fontSize: 10 }}>
-          ●
-        </span>
+        <span
+          aria-hidden
+          style={{
+            width: 7,
+            height: 7,
+            borderRadius: "50%",
+            background: "currentColor",
+            flexShrink: 0,
+          }}
+        />
         {SYNC_COPY[state].label}
         {outstanding > 0 ? (
           <>
@@ -253,7 +367,7 @@ export function WorkoutPlayer() {
         ) : null}
       </div>
 
-      {/* One exercise at a time, large type, readable from a bench. */}
+      {/* One exercise at a time, large, readable from a bench. */}
       <h1
         style={{
           fontSize: "var(--text-2xl)",
@@ -265,67 +379,142 @@ export function WorkoutPlayer() {
       >
         {exercise.name}
       </h1>
-      <p style={{ color: "var(--text-muted)", margin: "0 0 var(--space-4)" }}>
+      <p style={{ color: "var(--text-muted)", margin: "0 0 var(--space-3)" }}>
         <Num align="left">{loggedForExercise}</Num> of{" "}
-        <Num align="left">{exercise.targetSets}</Num> sets ·{" "}
+        <Num align="left">{exercise.targetSets}</Num> sets
         {exercise.lastWeightKg ? (
           <>
-            last time <Num align="left">{exercise.lastWeightKg}</Num>kg ×{" "}
+            {" · last time "}
+            <Num align="left">{exercise.lastWeightKg}</Num>kg ×{" "}
             <Num align="left">{exercise.lastReps}</Num>
           </>
-        ) : (
-          "first time"
-        )}
+        ) : null}
       </p>
+
+      {/* ── What you have already done. Being able to see your own work
+              is the difference between trusting the app and not. ─────── */}
+      {setsHere.length > 0 ? (
+        <ul
+          role="list"
+          data-testid="logged-sets"
+          style={{
+            listStyle: "none",
+            margin: "0 0 var(--space-3)",
+            padding: 0,
+            display: "grid",
+            gap: 2,
+          }}
+        >
+          {setsHere.map((item) => (
+            <li
+              key={item.set.clientGeneratedId}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "var(--space-1) var(--space-2)",
+                background: "var(--surface)",
+                borderLeft: `2px solid ${
+                  item.status === "synced" ? "var(--accent)" : "var(--text-faint)"
+                }`,
+                fontSize: "var(--text-sm)",
+              }}
+            >
+              <span style={{ color: "var(--text-muted)" }}>
+                Set <Num align="left">{item.set.setNumber}</Num>
+              </span>
+              <span>
+                <Num align="left">{item.set.weightKg}</Num>kg ×{" "}
+                <Num align="left">{item.set.reps}</Num>
+              </span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
 
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
           gap: "var(--space-2)",
-          marginBottom: "var(--space-3)",
         }}
       >
         <Stepper label="Weight (kg)" value={weight} step={2} onChange={setWeight} />
         <Stepper label="Reps" value={reps} step={1} onChange={setReps} />
       </div>
 
-      <button
-        type="button"
-        data-testid="log-set"
-        onClick={() => logSet(loggedForExercise + 1)}
-        style={{
-          width: "100%",
-          minHeight: 56,
-          background: "var(--accent)",
-          color: "#0A0A0A",
-          border: "none",
-          borderRadius: "var(--radius-button)",
-          fontSize: "var(--text-lg)",
-          fontWeight: 700,
-          cursor: "pointer",
-        }}
-      >
-        Log set {loggedForExercise + 1}
-      </button>
-
+      {/* ── The action bar. Fixed to the bottom because this is the most
+              tapped control in the product and a thumb reaches the bottom
+              third of a phone, not the middle. spec/14 §6. ──────────── */}
       <div
         style={{
-          display: "flex",
-          gap: "var(--space-2)",
-          marginTop: "var(--space-3)",
+          position: "fixed",
+          insetInline: 0,
+          bottom: 0,
+          zIndex: 30,
+          background: "var(--bg)",
+          borderTop: "1px solid var(--border)",
+          padding: "var(--space-2)",
+          paddingBottom: "calc(var(--space-2) + env(safe-area-inset-bottom))",
+          display: "grid",
+          gap: "var(--space-1)",
         }}
       >
-        <NavButton
-          label="Previous"
-          disabled={index === 0}
-          onClick={() => goToExercise(index - 1)}
-        />
-        <NavButton
-          label="Next exercise"
-          disabled={index >= SESSION.exercises.length - 1}
-          onClick={() => goToExercise(index + 1)}
-        />
+        {restLeft > 0 ? (
+          <button
+            type="button"
+            data-testid="rest-timer"
+            onClick={() => setRestEndsAt(null)}
+            style={{
+              minHeight: 44,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "var(--space-1)",
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
+              borderRadius: "var(--radius-button)",
+              color: "var(--text-muted)",
+              fontSize: "var(--text-sm)",
+              cursor: "pointer",
+            }}
+          >
+            Rest <Num align="left" tone="accent">{restLeft}</Num>s · tap to skip
+          </button>
+        ) : null}
+
+        <button
+          type="button"
+          data-testid="log-set"
+          onClick={() => logSet(loggedForExercise + 1)}
+          style={{
+            width: "100%",
+            minHeight: 60,
+            background: "var(--accent)",
+            color: "#0A0A0A",
+            border: "none",
+            borderRadius: "var(--radius-button)",
+            fontSize: "var(--text-lg)",
+            fontWeight: 700,
+            cursor: "pointer",
+          }}
+        >
+          Log set {loggedForExercise + 1}
+        </button>
+
+        {/* Navigation is secondary and reads that way. */}
+        <div style={{ display: "flex", gap: "var(--space-1)" }}>
+          <NavButton
+            label="Previous"
+            disabled={index === 0}
+            onClick={() => goToExercise(index - 1)}
+          />
+          <NavButton
+            label="Next exercise"
+            disabled={index >= SESSION.exercises.length - 1}
+            onClick={() => goToExercise(index + 1)}
+          />
+        </div>
       </div>
     </div>
   );
@@ -421,7 +610,7 @@ function NavButton({
       disabled={disabled}
       style={{
         flex: 1,
-        minHeight: 48,
+        minHeight: 44,
         background: "transparent",
         color: disabled ? "var(--text-faint)" : "var(--text)",
         border: "1px solid var(--border)",

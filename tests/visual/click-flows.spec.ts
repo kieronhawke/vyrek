@@ -28,21 +28,21 @@ test("nav: primary links navigate (desktop)", async ({ page }, testInfo) => {
   expect(page.url()).toContain("/blog");
 });
 
-test("nav: Start training CTA goes to quiz (desktop)", async ({
+test("nav: primary CTA goes to quiz (desktop)", async ({
   page,
 }, testInfo) => {
-  // The desktop Start training pill in the header is `hidden sm:inline-flex`.
+  // The desktop CTA pill in the header is `hidden sm:inline-flex`.
   // Mobile users get the same CTA inside the hamburger drawer (covered
   // separately).
   test.skip(testInfo.project.name.startsWith("mobile"), "desktop CTA only");
 
   await page.goto("/");
-  await page.getByRole("link", { name: /start training/i }).first().click();
+  await page.getByRole("link", { name: /build my plan/i }).first().click();
   await page.waitForURL("**/quiz**");
   expect(page.url()).toContain("/quiz");
 });
 
-test("mobile hamburger: Start training CTA reachable", async ({
+test("mobile hamburger: primary CTA reachable", async ({
   page,
 }, testInfo) => {
   test.skip(!testInfo.project.name.startsWith("mobile"), "mobile only");
@@ -51,7 +51,7 @@ test("mobile hamburger: Start training CTA reachable", async ({
   await page.getByRole("button", { name: /open navigation/i }).click();
   const drawer = page.locator("#mobile-nav-drawer");
   await expect(drawer).toBeVisible();
-  await drawer.getByRole("link", { name: /start training/i }).click();
+  await drawer.getByRole("link", { name: /build my plan/i }).click();
   await page.waitForURL("**/quiz**");
   expect(page.url()).toContain("/quiz");
 });
