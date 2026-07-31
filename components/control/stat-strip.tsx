@@ -20,6 +20,21 @@ export type Stat = {
   note?: string;
 };
 
+/**
+ * Geist Mono is fixed-pitch at roughly 0.6em per character, so the width a
+ * value needs is predictable from its length alone. --metric is 48px, which
+ * a six-figure currency amount cannot fit in a column this narrow; stepping
+ * down keeps `£50,880` on one line and still leaves a count like `4` big
+ * enough to read across a desk.
+ */
+function metricSizeFor(value: string): string {
+  const n = value.length;
+  if (n <= 3) return "var(--metric)";
+  if (n <= 5) return "38px";
+  if (n <= 7) return "30px";
+  return "24px";
+}
+
 export function StatStrip({ stats }: { stats: Stat[] }) {
   return (
     <ul
@@ -29,10 +44,9 @@ export function StatStrip({ stats }: { stats: Stat[] }) {
         // `min(100%, …)` rather than a bare minmax: on a 375px phone a bare
         // 190px track still resolves to 190px inside a narrower container and
         // the grid pushes the page sideways. The gate caught exactly that on
-        // Finance, Settings and Accounts. 190px is set by content, not taste:
-        // --metric is 48px, so a seven-character figure like £50,880 needs
-        // roughly 200px of mono before it will fit.
-        gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 190px), 1fr))",
+        // Finance, Settings and Accounts. 170px is set by content, not taste:
+        // it is what the longest label plus a stepped-down metric needs.
+        gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 170px), 1fr))",
         gap: "var(--space-1)",
         listStyle: "none",
         margin: "0 0 var(--space-3)",
@@ -48,15 +62,30 @@ export function StatStrip({ stats }: { stats: Stat[] }) {
             borderRadius: "var(--radius-card)",
             padding: "var(--space-2)",
             minWidth: 0,
-            // Belt and braces: whatever ends up in `value`, it wraps rather
-            // than escaping the card. The strip is for figures, but a wrong
-            // value should look wrong, not break the page.
-            overflowWrap: "anywhere",
           }}
         >
-          <Num align="left" size="metric" tone={s.tone}>
-            {s.value}
-          </Num>
+          {/*
+            The metric scales to its own length instead of the card scaling to
+            the metric. Letting it wrap looked fine in a gate — no overflow,
+            no failure — and read as "£4,24 / 0" on screen, because a wrapped
+            number is still a number as far as a layout check is concerned.
+            Digits must never break, so this is nowrap, sized to fit, and
+            truncated as the last resort rather than pushing the page sideways.
+          */}
+          <span
+            style={{
+              display: "block",
+              fontSize: metricSizeFor(s.value),
+              lineHeight: 1.05,
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            <Num align="left" tone={s.tone}>
+              {s.value}
+            </Num>
+          </span>
           <p className="eyebrow" style={{ marginTop: 4 }}>
             {s.label}
           </p>
