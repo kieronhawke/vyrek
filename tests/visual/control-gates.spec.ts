@@ -24,6 +24,10 @@ const SURFACES: Array<{ path: string; name: string; fullPage?: boolean }> = [
   { path: "/coach/messages", name: "coach-messages" },
   { path: "/coach/diary", name: "coach-diary" },
   { path: "/train", name: "client-train" },
+  { path: "/control-preview/admin", name: "admin-dashboard" },
+  { path: "/control-preview/admin/clients", name: "admin-clients" },
+  { path: "/control-preview/admin/payments", name: "admin-payments" },
+  { path: "/control-preview/admin/activity", name: "admin-activity" },
 ];
 
 /**

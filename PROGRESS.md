@@ -421,3 +421,46 @@ when auth is wired.
   marketing campaigns, website settings and the statistics module are all
   still unbuilt, and most need Supabase, Twilio or Resend.
 
+---
+
+## OPERATOR MODE — SHELL + THREE MODULES ✅ 31 July 2026
+
+### Shipped
+
+| What | Where |
+|---|---|
+| The Operator shell: 216px sidebar, 48px top bar, 13 modules, count badges | `components/control/admin-shell.tsx` |
+| The core table: sticky header, 40px rows, mono numerics, CSV on every table | `components/control/data-table.tsx` |
+| Dashboard, Clients, Payments, Activity | `app/control-preview/admin/*` |
+
+**Built on an ungated preview path deliberately.** The real mount is `/admin`,
+which `middleware.ts` already gates. Building here first means the shell and
+every module are covered by the device matrix and the axe gate *now* rather
+than being unverifiable until auth lands. The components are the ones
+`/admin` will import; only the route prefix differs.
+
+Payments reads its state straight from the dunning state machine, so the
+"Chasing" column and the ladder below it cannot drift from the tested logic.
+
+### Mobile
+
+`spec/09` says the admin must be *fully usable* on mobile, not merely
+responsive. So: the sidebar becomes a horizontal module scroller rather than
+hiding thirteen modules behind a hamburger, and tables become cards, because
+`spec/14 §6` forbids a sideways-scrolling table outright.
+
+The gate caught the layout stacking wrong — sidebar and content sat side by
+side below 768px and the page overflowed. Fixed.
+
+### Tested
+
+- **161 unit tests**
+- **344 Playwright assertions**: eleven surfaces × six devices, plus the
+  three offline contracts, against a production build.
+
+### Still not built
+
+Leads, Plans, Diary, Messages, Finance, SEO, Assets, Settings, Accounts —
+9 of 13 modules. Sending (SMS and email), marketing campaigns, website
+settings and the real session store all need Supabase, Twilio or Resend.
+
