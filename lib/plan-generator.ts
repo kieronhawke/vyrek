@@ -622,6 +622,50 @@ const BENEFITS: Record<Programme, Benefit[]> = {
   ],
 };
 
+/**
+ * Beginner-rail benefits.
+ *
+ * The programme sets above are all written for someone with a race in the
+ * diary: sled loads, wall balls, station mastery, the start line. Shown to
+ * a person whose answer was "I want more energy", that copy does the
+ * opposite of reassure, so the beginner rail gets its own five.
+ *
+ * Same five-row shape, no jargon, no HYROX, and the promises are the ones
+ * beginners actually said they wanted: structure, someone watching, and
+ * permission to start where they are.
+ */
+const BEGINNER_BENEFITS: Benefit[] = [
+  {
+    number: "01",
+    title: "Built for where you are now",
+    body: "Week one starts at your level, not someone else's. It gets harder only as you do.",
+  },
+  {
+    number: "02",
+    title: "Twelve weeks, already in the diary",
+    body: "Every session dated, with what to do and how long it takes. No deciding at the door.",
+  },
+  {
+    number: "03",
+    title: "It changes as you do",
+    body: "Every Sunday the plan rebuilds around what you actually managed that week, not what we hoped.",
+  },
+  {
+    number: "04",
+    title: "Coached by an Elite 15 athlete",
+    body: "Ben Sutherland competes at the top of the sport, and he coaches people who have never set foot in a gym.",
+  },
+  {
+    number: "05",
+    title: "Built around your life",
+    body: "Your days, your session length, your kit, and anything you need to train around.",
+  },
+];
+
 export function getBenefits(programme: Programme): Benefit[] {
   return BENEFITS[programme];
+}
+
+export function getBeginnerBenefits(): Benefit[] {
+  return BEGINNER_BENEFITS;
 }

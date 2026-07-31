@@ -139,3 +139,72 @@ spec/16 §4's 100ms budget.
 - Phase A's real content — schema, audit trigger, auth, roles — still blocked.
 - Palette actions are inert by design until Phases C–E.
 
+---
+
+## PHASE A/C/D — SCHEMA + THE BUSINESS LOGIC ✅ 31 July 2026
+
+Supabase is still paused, so this is the work that genuinely does not need a
+live database: the schema itself, and the pure logic `spec/16 §6` names as
+requiring exhaustive unit tests. All of it is the hard part of Phases A, C
+and D, and none of it was blocked.
+
+### Shipped
+
+| What | Where | Phase |
+|---|---|---|
+| Identity, leads, client profile, commercials, notes, audit | `supabase/migrations/0100_control_centre_identity.sql` | A |
+| **Append-only `audit_log`**, enforced by database triggers | same | A |
+| `data_access_log` and encrypted health columns | same | A |
+| Every index `spec/15` says not to skip | same | A |
+| **The dunning ladder** as a pure state machine | `lib/control/dunning.ts` | C |
+| **The uniqueness validator**, with no bypass | `lib/control/uniqueness.ts` | pre-SEO |
+
+The migration is authored but **not yet applied** — it cannot be until the
+project is unpaused. It is written so it can be reviewed and run as-is.
+
+`audit_log` rejects UPDATE and DELETE with a database trigger rather than in
+application code, because `spec/16 §7` tests it at the database level and an
+application-only rule is one service-role query away from being untrue.
+
+Health fields are stored as `bytea` ciphertext. The application encrypts
+before insert and writes to `data_access_log` on every read, per Article 9.
+
+### Tested — 112 unit tests, 98.88% statements, 100% functions and lines
+
+Against `spec/16 §6`'s 80% floor on business logic.
+
+- **Dunning, 21 tests.** Every rung, every boundary as inclusive, idempotent
+  re-runs after a crash, paid and paused stopping conditions, and the human
+  handover staying true once reached. Plus an explicit sweep asserting
+  `shouldCancel` is false at every day in every state, and that no template
+  in the ladder so much as mentions cancelling — HARD-RULES §6.
+- **Uniqueness, 24 tests.** Every threshold boundary: exactly at the minimum,
+  one below, a high score blocked for a missing mandatory category, and each
+  field's own rule (3 resolved stations, 2 named routes, a race needing both
+  distance and travel time). Includes a test that `validateUniqueness` takes
+  exactly one argument, so there is nowhere to pass a bypass.
+- **The sift, 17 tests.** Explicit choices beating the score in both
+  directions, the tie-break at exactly zero going to the club rather than
+  Ben's diary, and reasons never citing a signal that disagrees with the
+  verdict.
+- **Lead brief, 18 tests**, including that it always emits a goal the
+  consultation endpoint accepts, and stays inside the 2000-character cap when
+  every field is populated.
+- **Fixtures, 15 tests** on the ordering and counts behind Ben's Today screen.
+
+### Corrected
+
+One test assertion of mine was wrong rather than the code: I expected an
+empty quiz to produce the generic fallback line, but the "keeping things
+open" signal fires and produces a better, specific one. Fixed the test and
+added a case for the genuine fallback.
+
+### Outstanding
+
+- Migration **not applied**. Needs the project unpaused.
+- Still to build in this vein, all unblocked: the race conflict resolver
+  (Phase D), progression rules, percentile and predicted finish, automation
+  rule evaluation with cooldowns and the global cap, proration, and timezone
+  handling across DST.
+- Operator Mode `/admin` still waiting on auth.
+

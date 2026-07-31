@@ -560,11 +560,24 @@ export function listLocationSlugs(): string[] {
 /**
  * Group locations by region for the directory page (/hyrox/cities).
  */
+/**
+ * London itself carries region "Greater London" while its 32 boroughs carry
+ * "London", which split one place into two hub groups: a group of 32 and a
+ * group of one. Merged here for grouping only. The `region` field stays as it
+ * is because `/hyrox/[city]` feeds it to the Place schema as
+ * `containedInPlace`, where "Greater London" is the correct parent for London
+ * and "London" would be circular.
+ */
+const REGION_GROUP_ALIASES: Record<string, string> = {
+  "Greater London": "London",
+};
+
 export function groupLocationsByRegion(): Record<string, UkLocation[]> {
   const out: Record<string, UkLocation[]> = {};
   for (const l of UK_LOCATIONS) {
-    if (!out[l.region]) out[l.region] = [];
-    out[l.region].push(l);
+    const group = REGION_GROUP_ALIASES[l.region] ?? l.region;
+    if (!out[group]) out[group] = [];
+    out[group].push(l);
   }
   // Sort each region by population desc.
   for (const k of Object.keys(out)) {

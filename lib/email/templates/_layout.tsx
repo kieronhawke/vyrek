@@ -1,0 +1,387 @@
+import {
+  Body,
+  Container,
+  Head,
+  Hr,
+  Html,
+  Img,
+  Link,
+  Preview,
+  Section,
+  Text,
+  type LinkProps,
+} from "@react-email/components";
+import type { ReactNode } from "react";
+import {
+  ACCENT,
+  BG,
+  BORDER,
+  SURFACE,
+  TEXT,
+  TEXT_DIM,
+  TEXT_FAINT,
+  bodyStyle,
+  containerStyle,
+  ctaPrimary,
+  fontStack,
+  hrRule,
+  monoEyebrow,
+  monoStack,
+} from "@/lib/email/templates/_styles";
+
+/**
+ * Shared chrome for every Suth Performance email.
+ *
+ * Before this, each template repeated its own Html/Head/Body/Container and
+ * a text-only "[ SUTH PERFORMANCE ]" eyebrow, so nothing carried the brand
+ * and nothing linked back to the site. This gives all of them one header,
+ * one footer, one set of links, and one signature from Ben.
+ *
+ * Email-client constraints this is built around, none of them optional:
+ *
+ *  - Inline styles only. Gmail strips <style> blocks and every class.
+ *  - Single column, max 560px, fluid below that. Multi-column breaks in
+ *    Outlook and on phones.
+ *  - Images are blocked by default in a lot of clients, so the logo carries
+ *    real alt text and no email depends on an image to make sense.
+ *  - Absolute URLs everywhere. Relative paths resolve against the mail
+ *    client's own domain and 404.
+ *  - Minimum 16px body text: anything smaller triggers iOS auto-zoom and
+ *    the layout jumps.
+ *  - Buttons are padded links, not <button>. Buttons don't work in email.
+ */
+
+/**
+ * The bgcolor attribute, spread onto raw table elements. React's types
+ * dropped it (it is deprecated HTML) but Outlook still needs it, so it goes
+ * on as a plain attribute record.
+ */
+const OUTLOOK_BG = { bgcolor: BG } as Record<string, string>;
+
+/** Absolute base for links and images. Never use a relative path here. */
+function base(): string {
+  // The www host is the canonical one: the apex 308-redirects to it. Email
+  // clients are far less forgiving of redirects than browsers, and some
+  // simply will not follow one for an <img>, so links and images must point
+  // at the final destination rather than the hop.
+  return (
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+    "https://www.suthperformance.com"
+  );
+}
+
+export function url(path: string): string {
+  return `${base()}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
+/**
+ * Adds a UTM tag so email traffic is attributable in analytics rather than
+ * landing in "direct" and looking like it came from nowhere.
+ */
+export function trackedUrl(path: string, campaign: string): string {
+  const u = new URL(url(path));
+  u.searchParams.set("utm_source", "email");
+  u.searchParams.set("utm_medium", "lifecycle");
+  u.searchParams.set("utm_campaign", campaign);
+  return u.toString();
+}
+
+const headerStyle = {
+  paddingBottom: 8,
+};
+
+const h1Style = {
+  color: TEXT,
+  fontFamily: fontStack,
+  fontSize: 28,
+  fontWeight: 800,
+  letterSpacing: "-0.02em",
+  lineHeight: "1.15",
+  margin: "16px 0 0",
+};
+
+const pStyle = {
+  color: TEXT_DIM,
+  fontFamily: fontStack,
+  fontSize: 16,
+  lineHeight: "1.6",
+  margin: "16px 0 0",
+};
+
+const footerLinkStyle = {
+  color: TEXT_FAINT,
+  fontFamily: fontStack,
+  fontSize: 13,
+  textDecoration: "underline",
+};
+
+/** Body copy. Use instead of raw <Text> so sizing stays consistent. */
+export function P({
+  children,
+  dim = true,
+}: {
+  children: ReactNode;
+  dim?: boolean;
+}) {
+  return <Text style={{ ...pStyle, color: dim ? TEXT_DIM : TEXT }}>{children}</Text>;
+}
+
+export function H1({ children }: { children: ReactNode }) {
+  return <Text style={h1Style}>{children}</Text>;
+}
+
+export function Eyebrow({ children }: { children: ReactNode }) {
+  return <Text style={monoEyebrow}>[ {children} ]</Text>;
+}
+
+/** Primary call to action. One per email: two competing buttons halves both. */
+export function Btn({
+  href,
+  children,
+}: {
+  href: string;
+  children: ReactNode;
+} & Partial<LinkProps>) {
+  return (
+    <Section style={{ margin: "28px 0 8px" }}>
+      <Link href={href} style={ctaPrimary}>
+        {children}
+      </Link>
+    </Section>
+  );
+}
+
+/** Boxed aside: plan details, what happens next, a summary of answers. */
+export function Panel({
+  title,
+  children,
+}: {
+  title?: string;
+  children: ReactNode;
+}) {
+  return (
+    <Section
+      style={{
+        background: SURFACE,
+        border: `1px solid ${BORDER}`,
+        borderRadius: 8,
+        margin: "24px 0 0",
+        padding: "20px 22px",
+      }}
+    >
+      {title ? (
+        <Text
+          style={{
+            ...monoEyebrow,
+            color: TEXT_FAINT,
+            margin: "0 0 12px",
+          }}
+        >
+          {title}
+        </Text>
+      ) : null}
+      {children}
+    </Section>
+  );
+}
+
+/** Label/value row inside a Panel. */
+export function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <Text
+      style={{
+        color: TEXT,
+        fontFamily: fontStack,
+        fontSize: 15,
+        lineHeight: "1.5",
+        margin: "0 0 8px",
+      }}
+    >
+      <span style={{ color: TEXT_FAINT }}>{label}: </span>
+      {value}
+    </Text>
+  );
+}
+
+/** Ben's signature. Every lifecycle email is from a person, never a brand. */
+export function SignOff({ line }: { line?: string }) {
+  return (
+    <>
+      {line ? <P>{line}</P> : null}
+      <Text
+        style={{
+          color: TEXT,
+          fontFamily: fontStack,
+          fontSize: 16,
+          lineHeight: "1.6",
+          margin: "24px 0 0",
+        }}
+      >
+        Ben
+        <br />
+        <span style={{ color: TEXT_FAINT, fontSize: 14 }}>
+          Ben Sutherland · Suth Performance
+        </span>
+      </Text>
+    </>
+  );
+}
+
+export function EmailLayout({
+  preview,
+  children,
+  /** Adds the one-click unsubscribe line. Off for transactional mail. */
+  marketing = false,
+  campaign = "general",
+}: {
+  preview: string;
+  children: ReactNode;
+  marketing?: boolean;
+  campaign?: string;
+}) {
+  return (
+    <Html lang="en">
+      <Head>
+        {/* Declares the design as dark so Gmail, Apple Mail and Outlook.com
+            stop auto-inverting it. Without this a dark email gets its
+            colours "helpfully" flipped and the result is unreadable. */}
+        <meta name="color-scheme" content="dark" />
+        <meta name="supported-color-schemes" content="dark" />
+      </Head>
+      {/* The preview line is the third piece of copy in an inbox after the
+          sender and subject, and the most commonly wasted. */}
+      <Preview>{preview}</Preview>
+      <Body style={bodyStyle}>
+        {/* Outlook's Word rendering engine ignores CSS backgrounds on
+            <body>. A full-width wrapper table carrying the deprecated
+            bgcolor attribute is the only thing it reliably honours, and
+            it is what keeps the design dark instead of falling back to
+            white with near-white text on it. */}
+        <table
+          role="presentation"
+          width="100%"
+          cellPadding={0}
+          cellSpacing={0}
+          border={0}
+          style={{ background: BG, width: "100%" }}
+          {...OUTLOOK_BG}
+        >
+          <tbody>
+            <tr>
+              <td align="center" style={{ background: BG }} {...OUTLOOK_BG}>
+        <Container style={containerStyle}>
+          <Section style={headerStyle}>
+            {/* A large share of recipients block images by default, so the
+                alt text is the logo for them. Styled to match the wordmark
+                rather than left as a default blue underlined link. */}
+            <Link
+              href={trackedUrl("/", campaign)}
+              style={{ color: TEXT, textDecoration: "none" }}
+            >
+              <Img
+                src={url("/email/logo-wordmark.png")}
+                width="180"
+                height="109"
+                alt="Suth Performance"
+                style={{
+                  display: "block",
+                  border: 0,
+                  outline: "none",
+                  color: TEXT,
+                  fontFamily: fontStack,
+                  fontSize: 20,
+                  fontWeight: 800,
+                  letterSpacing: "-0.02em",
+                  textDecoration: "none",
+                }}
+              />
+            </Link>
+          </Section>
+
+          {children}
+
+          <Hr style={hrRule} />
+
+          <Section>
+            <Text
+              style={{
+                color: TEXT_FAINT,
+                fontFamily: fontStack,
+                fontSize: 13,
+                lineHeight: "1.7",
+                margin: 0,
+              }}
+            >
+              <Link href={trackedUrl("/club", campaign)} style={footerLinkStyle}>
+                Suth Club
+              </Link>
+              {"  ·  "}
+              <Link
+                href={trackedUrl("/hyrox", campaign)}
+                style={footerLinkStyle}
+              >
+                HYROX guides
+              </Link>
+              {"  ·  "}
+              <Link
+                href={trackedUrl("/blog", campaign)}
+                style={footerLinkStyle}
+              >
+                Journal
+              </Link>
+              {"  ·  "}
+              <Link
+                href={trackedUrl("/contact", campaign)}
+                style={footerLinkStyle}
+              >
+                Contact
+              </Link>
+            </Text>
+
+            <Text
+              style={{
+                color: TEXT_FAINT,
+                fontFamily: monoStack,
+                fontSize: 11,
+                letterSpacing: "0.16em",
+                lineHeight: "1.8",
+                margin: "16px 0 0",
+                textTransform: "uppercase",
+              }}
+            >
+              Suth Performance · Made in UK
+            </Text>
+
+            {marketing ? (
+              <Text
+                style={{
+                  color: TEXT_FAINT,
+                  fontFamily: fontStack,
+                  fontSize: 12,
+                  lineHeight: "1.6",
+                  margin: "10px 0 0",
+                }}
+              >
+                You&apos;re getting this because you asked us for a training
+                plan.{" "}
+                <Link
+                  href={trackedUrl("/account", campaign)}
+                  style={footerLinkStyle}
+                >
+                  Unsubscribe
+                </Link>{" "}
+                in one click, any time.
+              </Text>
+            ) : null}
+          </Section>
+        </Container>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </Body>
+    </Html>
+  );
+}
+
+export { ACCENT, BG, BORDER, SURFACE, TEXT, TEXT_DIM, TEXT_FAINT };

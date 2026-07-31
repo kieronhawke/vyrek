@@ -57,8 +57,64 @@ export type InjuryCareValue = "physio" | "self-managed" | "not-assessed";
 
 export type Programme = "first-race" | "sub-90" | "doubles" | "pro";
 
+/* ─── Onboarding funnel (docs/onboarding-funnel-proposal.md) ─────────── */
+
+/**
+ * Which door the user came through. Set by the entry surface where we know
+ * it (a /personal-trainer page implies "beginner", a /hyrox page implies
+ * "athlete") and asked on screen 1 only when we don't.
+ */
+export type QuizRail = "beginner" | "athlete";
+
+/** Beginner-rail goal. Deliberately outcome-led, never body-shaming. */
+export type GoalValue =
+  | "lose-weight"
+  | "get-stronger"
+  | "more-energy"
+  | "confidence"
+  | "family-health";
+
+export type StartingPointValue =
+  | "years-off"
+  | "bit-active"
+  | "no-structure"
+  | "was-fit-once";
+
+export type TriedBeforeValue = "several" | "once-twice" | "first-go";
+
+export type BarrierValue =
+  | "time"
+  | "didnt-know-what"
+  | "boredom"
+  | "gyms-intimidate"
+  | "injury"
+  | "doing-it-alone";
+
+/**
+ * The sift. The single screen that decides which of the three funnel
+ * outcomes someone gets. Asked late, after they have invested, and never
+ * phrased as a budget question.
+ */
+export type SupportPreference = "coached" | "self" | "unsure";
+
+/** Readiness signal, coached route only. Tells Ben how warm the lead is. */
+export type ReadinessValue = "this-week" | "this-month" | "just-looking";
+
 export type QuizAnswers = {
   intent: IntentValue[];
+  rail?: QuizRail;
+  goal?: GoalValue;
+  startingPoint?: StartingPointValue;
+  triedBefore?: TriedBeforeValue;
+  barriers?: BarrierValue[];
+  supportPreference?: SupportPreference;
+  /** Set when the sift came from the URL rather than the screen. */
+  supportLocked?: boolean;
+  readiness?: ReadinessValue;
+  /** Captured mid-flow, never at the end, never behind a password. */
+  email?: string;
+  /** Asked once, on the email screen, and carried to the final step. */
+  marketingOptIn?: boolean;
   experience?: ExperienceValue;
   bestTime?: BestTimeValue;
   raceDate?: Date;
@@ -202,6 +258,73 @@ export function applyIntentPreSelect(
     ...current,
     intent: [...existing, intent as IntentValue],
   };
+}
+
+/**
+ * `/quiz?rail=beginner` (or `athlete`). The entry surface pre-answers
+ * screen one: someone arriving from /personal-trainer/leeds has already
+ * told us what they want, and spending the highest-attention screen in the
+ * funnel asking them again is waste.
+ *
+ * An unrecognised or absent value leaves `rail` undefined, which keeps the
+ * original HYROX flow exactly as it was.
+ */
+export function applyRailPreSelect(
+  current: QuizAnswers,
+  rail: string | null,
+): QuizAnswers {
+  if (rail !== "beginner" && rail !== "athlete") return current;
+  if (current.rail === rail) return current;
+  return { ...current, rail };
+}
+
+/** True only for an explicit beginner rail, never for the undefined default. */
+export function isBeginnerRail(a: QuizAnswers): boolean {
+  return a.rail === "beginner";
+}
+
+/**
+ * `/quiz?support=self`, used by the Suth Club page's CTA.
+ *
+ * Someone who has just clicked "Start 7 days free" has answered the sift
+ * already. Asking them again mid-quiz would be the funnel arguing with
+ * them. `supportLocked` records that it came from the URL rather than the
+ * screen, so the sift can be hidden without its visibility flickering as
+ * the user answers (which would shift every screen index under them).
+ */
+export function applySupportPreSelect(
+  current: QuizAnswers,
+  support: string | null,
+): QuizAnswers {
+  if (support !== "self" && support !== "coached") return current;
+  if (current.supportLocked) return current;
+  return { ...current, supportPreference: support, supportLocked: true };
+}
+
+/**
+ * Programme names on the beginner rail, named after what the person said
+ * they want rather than after a race they have never heard of. The internal
+ * programme is still the same one; this is only what we call it to them.
+ */
+const BEGINNER_PROGRAMME_LABEL: Record<GoalValue, string> = {
+  "lose-weight": "Weight loss",
+  "get-stronger": "Strength",
+  "more-energy": "Energy and fitness",
+  confidence: "Back to yourself",
+  "family-health": "Health and fitness",
+};
+
+/**
+ * What we call the plan in front of the user. Returns null when we don't
+ * yet know enough to name it, so the live panel can show a placeholder
+ * instead of guessing.
+ */
+export function programmeLabel(a: QuizAnswers): string | null {
+  if (isBeginnerRail(a)) {
+    return a.goal ? BEGINNER_PROGRAMME_LABEL[a.goal] : null;
+  }
+  const hasDirection = (a.intent ?? []).length > 0 || Boolean(a.experience);
+  return hasDirection ? PROGRAMME_DISPLAY[determineProgramme(a)] : null;
 }
 
 export function applyProgrammeShortcutV3(
