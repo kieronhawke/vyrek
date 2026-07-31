@@ -371,3 +371,53 @@ app-like screen that is intrusive, but the banner is site-wide
 infrastructure and another terminal is working in those files. Flagged
 rather than changed.
 
+---
+
+## MEMBER AREA — ALL FIVE TABS ✅ 31 July 2026
+
+### Shipped
+
+| Tab | What it does |
+|---|---|
+| **Home** | Leads with Ben's note, then today's session as one large card and a Start button. Seven-dot week, race countdown. |
+| **Plan** | The full week as session cards with exercises, plus the download menu (spreadsheet, PDF, calendar) stubbed to Phase D. |
+| **Train** | The offline-first player, already shipped. |
+| **Progress** | Predicted finish trending against target, and all eight stations with their percentile against the field — the thing `spec/13 §4` says no competitor has. |
+| **Account** | Subscription, health info with a visible "Ben can see this", notification toggles, data export. |
+| **Sign in** | Email-link only, deliberately passwordless. |
+
+Home leads with Ben rather than with the plan, per `spec/11 §1`: a private
+client is paying for access to a person and the product should feel like it.
+
+The split bar carries the percentile work, because a station benchmark
+against the field is exactly "a value measured against a target", which is
+the only thing that device is for (`spec/14 §4`).
+
+### A discovery worth recording
+
+`/app/*` is **already gated** by `middleware.ts`, which bounces
+unauthenticated visits to `/login`. That is correct for a members' area, and
+it means these five surfaces cannot join the device-matrix gates yet: the
+gates would measure the login redirect. Adding a test-only bypass to shipped
+middleware would be a real security smell for the sake of a screenshot, so
+they are excluded with a comment explaining why, and they join the matrix
+when auth is wired.
+
+### Tested
+
+- **161 unit tests**, **220 Playwright assertions** across the seven
+  reachable surfaces and six devices, plus the three offline contracts, all
+  against a production build.
+
+### Honest gaps
+
+- Member pages are typechecked, linted and reviewed, but **not yet gated**
+  for scroll, touch targets, text size or axe. That happens with auth.
+- Sign-in is **disabled, not wired** — it needs the passwordless auth change
+  in QUESTIONS §19.
+- Download formats, session comments, watch sync, the assistant and guidance
+  cards are not built.
+- **Operator admin remains 0 of 13 modules.** SMS and email sending,
+  marketing campaigns, website settings and the statistics module are all
+  still unbuilt, and most need Supabase, Twilio or Resend.
+

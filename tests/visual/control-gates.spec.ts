@@ -26,6 +26,21 @@ const SURFACES: Array<{ path: string; name: string; fullPage?: boolean }> = [
   { path: "/train", name: "client-train" },
 ];
 
+/**
+ * The member area at /app/* is deliberately absent from the list above.
+ *
+ * middleware.ts already gates /app/* and bounces unauthenticated visits to
+ * /login, which is correct for a members' area — but it means these gates
+ * would measure the login redirect rather than the page. Adding a test-only
+ * bypass to shipped middleware would be a real security smell for the sake
+ * of a screenshot.
+ *
+ * They join the matrix the moment auth is wired (QUESTIONS.md §19 and the
+ * Supabase blocker). Until then they are covered by typecheck, lint and
+ * review, and their components — SessionCard, SplitBar, Num — are gated
+ * through the surfaces above.
+ */
+
 /** Only run these on the six matrix projects, not the marketing ones. */
 function matrixOnly(projectName: string) {
   return projectName.startsWith("dm-");

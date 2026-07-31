@@ -1,163 +1,146 @@
-import { format } from "date-fns";
-import Link from "next/link";
-import { assertMember } from "@/lib/member/auth";
-import { programmeLabel } from "@/lib/member/demo";
-import { SectionEyebrow } from "@/components/member/section-eyebrow";
-import { MemberSignOut } from "@/components/member/sign-out";
-import { MemberSubscriptionPanel } from "@/components/member/subscription-panel";
+import { Num } from "@/components/control/num";
+import { MEMBER } from "@/lib/client-app/member-fixtures";
 
-export const dynamic = "force-dynamic";
+/**
+ * ACCOUNT — spec/11 §4.
+ *
+ * Subscription, plan preferences, health info with a visible "Ben can see
+ * this" indicator, and granular consents with an export button. The health
+ * indicator is not decoration: spec/09 §14 makes that data Article 9
+ * special category, and being plain about who sees it is part of the
+ * lawful basis.
+ */
 
-export default async function AccountPage() {
-  const ctx = await assertMember("/app/account");
-  const programme = programmeLabel(ctx.programme);
-
+function Row({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: string;
+  tone?: string;
+}) {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
-      <header className="mb-6">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
-          [ ACCOUNT ]
-        </p>
-        <h1 className="mt-1 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-3xl">
-          Profile
-        </h1>
-        <p className="mt-1 text-sm text-suth-text-secondary">
-          Manage your subscription, settings, and referral link.
-        </p>
-      </header>
-
-      {/* Profile card */}
-      <section className="mb-8">
-        <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
-          <div className="flex items-center gap-3">
-            <div className="flex size-12 items-center justify-center rounded-full border border-suth-border bg-suth-base text-base font-semibold uppercase text-suth-text">
-              {ctx.user.email[0]?.toUpperCase()}
-            </div>
-            <div className="min-w-0">
-              <p className="truncate text-base font-bold text-suth-text">
-                {ctx.user.email}
-              </p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-                Member since{" "}
-                {ctx.customer?.created_at
-                  ? format(new Date(ctx.customer.created_at), "MMM yyyy")
-                  : "-"}
-              </p>
-            </div>
-          </div>
-          <dl className="mt-5 grid grid-cols-2 gap-3 text-sm">
-            <div className="rounded-md border border-suth-border-subtle bg-suth-base/40 p-3">
-              <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-                Programme
-              </dt>
-              <dd className="mt-1 text-suth-text">{programme}</dd>
-            </div>
-            <div className="rounded-md border border-suth-border-subtle bg-suth-base/40 p-3">
-              <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-                Referral code
-              </dt>
-              <dd className="mt-1 font-mono text-xs text-suth-text">
-                {ctx.customer?.referral_code ?? "-"}
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </section>
-
-      {/* Subscription */}
-      <section className="mb-8">
-        <SectionEyebrow title="Subscription" />
-        <MemberSubscriptionPanel subscription={ctx.subscription} />
-      </section>
-
-      {/* PRs */}
-      <section className="mb-8">
-        <SectionEyebrow title="Performance" />
-        <Link
-          href="/app/account/pr"
-          className="flex items-center justify-between gap-3 rounded-lg border border-suth-border-subtle bg-suth-elevated p-4 transition-colors hover:border-suth-border-strong"
-        >
-          <div>
-            <p className="text-sm font-semibold text-suth-text">
-              Personal records
-            </p>
-            <p className="mt-1 text-xs text-suth-text-tertiary">
-              Strength, cardio, and station bests. Updated when you log a session.
-            </p>
-          </div>
-          <span className="font-mono text-xs text-suth-accent">→</span>
-        </Link>
-      </section>
-
-      {/* Partner programme link (refer-a-friend was removed; partner
-          programme is the canonical earn path) */}
-      <section className="mb-8">
-        <SectionEyebrow title="Earn" />
-        <Link
-          href="/partners"
-          className="flex items-center justify-between gap-3 rounded-lg border border-suth-border-subtle bg-suth-elevated p-4 transition-colors hover:border-suth-border-strong"
-        >
-          <div>
-            <p className="text-sm font-semibold text-suth-text">
-              Partner programme
-            </p>
-            <p className="mt-1 text-xs text-suth-text-tertiary">
-              For coaches and creators. 30-50% lifetime recurring.
-            </p>
-          </div>
-          <span className="font-mono text-xs text-suth-accent">→</span>
-        </Link>
-      </section>
-
-      {/* Settings */}
-      <section className="mb-8">
-        <SectionEyebrow title="Settings" />
-        <ul role="list" className="space-y-2">
-          <SettingRow label="Email + notifications" href="#email" />
-          <SettingRow label="Password + security" href="#password" />
-          <SettingRow label="Units (kg / lb / miles)" href="#units" />
-          <SettingRow label="Privacy + data" href="/legal/privacy" external />
-        </ul>
-      </section>
-
-      {/* Sign out */}
-      <section className="mb-12">
-        <SectionEyebrow title="Session" />
-        <MemberSignOut />
-      </section>
-
-      <p className="text-center font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-        Need help? Email{" "}
-        <a href="mailto:support@suthperformance.com" className="text-suth-accent">
-          support@suthperformance.com
-        </a>
-      </p>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        gap: "var(--space-2)",
+        minHeight: 44,
+        padding: "0 var(--space-2)",
+        borderBottom: "1px solid var(--border)",
+      }}
+    >
+      <span style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
+        {label}
+      </span>
+      <span style={{ fontSize: "var(--text-sm)", color: tone ?? "var(--text)" }}>
+        {value}
+      </span>
     </div>
   );
 }
 
-function SettingRow({
-  label,
-  href,
-  external,
-}: {
-  label: string;
-  href: string;
-  external?: boolean;
-}) {
+export default function MemberAccount() {
   return (
-    <li>
-      <a
-        href={href}
-        target={external ? "_blank" : undefined}
-        rel={external ? "noreferrer" : undefined}
-        className="flex items-center justify-between gap-3 rounded-lg border border-suth-border-subtle bg-suth-elevated/60 px-4 py-3 transition-colors hover:border-suth-border-strong"
+    <>
+      <p className="eyebrow">Your account</p>
+      <h1
+        style={{
+          fontSize: "var(--text-2xl)",
+          lineHeight: "var(--text-2xl-lh)",
+          fontWeight: 800,
+          letterSpacing: "-0.02em",
+          margin: "var(--space-1) 0 var(--space-3)",
+        }}
       >
-        <span className="text-sm text-suth-text">{label}</span>
-        <span className="font-mono text-xs text-suth-text-tertiary">
-          {external ? "↗" : "→"}
-        </span>
-      </a>
-    </li>
+        {MEMBER.firstName}
+      </h1>
+
+      <h2 className="eyebrow" style={{ marginBottom: "var(--space-1)" }}>
+        Your plan
+      </h2>
+      <div
+        style={{
+          background: "var(--surface)",
+          border: "1px solid var(--border)",
+          borderRadius: "var(--radius-card)",
+          marginBottom: "var(--space-3)",
+        }}
+      >
+        <Row label="Programme" value="Personal Programming" />
+        <Row label="Coach" value="Ben Sutherland" />
+        <Row label="Next payment" value="12 August" />
+        <Row label="Cancel" value="Any time, from here" tone="var(--text-muted)" />
+      </div>
+
+      <h2 className="eyebrow" style={{ marginBottom: "var(--space-1)" }}>
+        Health information
+      </h2>
+      <div
+        style={{
+          background: "var(--surface)",
+          border: "1px solid var(--border)",
+          borderRadius: "var(--radius-card)",
+          padding: "var(--space-2)",
+          marginBottom: "var(--space-3)",
+        }}
+      >
+        <p
+          style={{
+            margin: 0,
+            fontSize: "var(--text-sm)",
+            color: "var(--text-muted)",
+          }}
+        >
+          Ben can see this. Nobody else can, and it is encrypted on our side.
+          You can change or remove it at any time.
+        </p>
+      </div>
+
+      <h2 className="eyebrow" style={{ marginBottom: "var(--space-1)" }}>
+        Notifications
+      </h2>
+      <div
+        style={{
+          background: "var(--surface)",
+          border: "1px solid var(--border)",
+          borderRadius: "var(--radius-card)",
+          marginBottom: "var(--space-3)",
+        }}
+      >
+        <Row label="Session reminders" value="On" />
+        <Row label="Plan ready" value="On" />
+        <Row label="Ben's weekly email" value="On" />
+        <Row label="Offers and news" value="Off" tone="var(--text-muted)" />
+      </div>
+
+      <h2 className="eyebrow" style={{ marginBottom: "var(--space-1)" }}>
+        Your data
+      </h2>
+      <div
+        style={{
+          background: "var(--surface)",
+          border: "1px solid var(--border)",
+          borderRadius: "var(--radius-card)",
+        }}
+      >
+        <Row label="Sessions logged" value="47" />
+        <Row label="Member since" value="April 2026" />
+        <Row label="Download everything" value="Request →" tone="var(--accent)" />
+      </div>
+
+      <p
+        style={{
+          marginTop: "var(--space-3)",
+          fontSize: "var(--text-xs)",
+          color: "var(--text-muted)",
+        }}
+      >
+        <Num align="left">47</Num> sessions logged. Sample account until the
+        database is connected.
+      </p>
+    </>
   );
 }
