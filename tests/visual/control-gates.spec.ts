@@ -12,8 +12,17 @@ import AxeBuilder from "@axe-core/playwright";
  * a new screen opts into the matrix, and it is the only thing a later phase
  * needs to remember to do.
  */
-const SURFACES: Array<{ path: string; name: string }> = [
-  { path: "/control-preview", name: "design-system" },
+const SURFACES: Array<{ path: string; name: string; fullPage?: boolean }> = [
+  // fullPage only where the screen is a document. Coach Mode has a fixed
+  // bottom tab bar, and a fullPage capture renders it partway down the image
+  // rather than pinned — a baseline that looks broken and hides real
+  // regressions behind an artefact.
+  { path: "/control-preview", name: "design-system", fullPage: true },
+  { path: "/coach", name: "coach-today" },
+  { path: "/coach/clients", name: "coach-clients" },
+  { path: "/coach/plans", name: "coach-plans" },
+  { path: "/coach/messages", name: "coach-messages" },
+  { path: "/coach/diary", name: "coach-diary" },
 ];
 
 /** Only run these on the six matrix projects, not the marketing ones. */
@@ -152,7 +161,7 @@ for (const surface of SURFACES) {
       // spec/16 §9: 0.1% threshold, baselines reviewed on change and never
       // auto-accepted.
       await expect(page).toHaveScreenshot(`${surface.name}.png`, {
-        fullPage: true,
+        fullPage: surface.fullPage ?? false,
         maxDiffPixelRatio: 0.001,
         animations: "disabled",
       });

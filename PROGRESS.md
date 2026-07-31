@@ -77,3 +77,65 @@ file header and in QUESTIONS.md.
 - The brand question in QUESTIONS.md §4 is unanswered. The proof surface
   carries no wordmark yet, so nothing is blocked by it today, but the Phase A
   top bar needs it.
+
+---
+
+## PHASE A (part 1) — COACH MODE SHELL + COMMAND PALETTE ✅ 31 July 2026
+
+Phase A proper is blocked on Supabase. These are the parts of it that need no
+database: the two-mode shell (Coach half), the command palette, and the seed
+fixtures every later phase will test against.
+
+### Shipped
+
+| What | Where |
+|---|---|
+| Seed fixtures, incl. the cases spec/16 §11 names | `lib/control/fixtures.ts` |
+| Coach Mode layout — 56px header, fixed 64px tab bar + safe area | `app/coach/layout.tsx` |
+| **Today** — three counts, then one list, sorted by who needs Ben first | `app/coach/page.tsx` |
+| Clients, Plans, Messages, Diary — honest phase-labelled empty states | `app/coach/*/page.tsx` |
+| Bottom tab bar, five tabs, never a hamburger | `components/control/coach-tabs.tsx` |
+| **Command palette (⌘K)** — clients, leads, pages, actions | `components/control/command-palette.tsx` |
+
+Today is built to spec/10 §5: `programmed_until`, whether they have paid, and
+the next race. **No financial metric appears anywhere in Coach Mode**, per
+spec/09 §0. Flags read as sentences — "Hasn't opened her plan in 8 days" —
+never as enum names.
+
+Pending palette actions render disabled with the phase that owns them rather
+than being hidden, so nothing silently does nothing when clicked.
+
+### Tested
+
+- **28 unit tests** on the split bar (up from 18).
+- **186 Playwright assertions** — six surfaces × six devices, all green.
+- Typecheck and lint clean.
+
+### Three defects found and fixed
+
+1. **The split bar signalled backwards for runway.** A client with 2 days of
+   programming left painted the same danger red as one who had already run
+   out, and 26 days against a 28-day billing date painted amber while 2 days
+   against a 9-day date painted calm. The ratio-based "close" is meaningless
+   for runway: urgency is an absolute number of days. Added
+   `criticalAtOrBelow` and `warnAtOrBelow`, with 10 regression tests.
+2. **Tab labels were 11px**, tripping the below-12px gate. This exposed a
+   contradiction I had not spotted: `spec/14 §3` sets 11px for eyebrows,
+   `spec/16 §3` gates text below 12px. The gate exempts `.eyebrow` only, and
+   the conflict is now recorded as QUESTIONS §41.
+3. **The visual baseline was misleading.** A `fullPage` capture renders a
+   fixed bottom tab bar partway down the image. App-like screens now capture
+   the viewport; only the design-system reference stays fullPage.
+
+Also corrected: the command palette reset state inside an effect, costing a
+second render pass on every open — the wrong place to spend frames against
+spec/16 §4's 100ms budget.
+
+### Outstanding
+
+- **Operator Mode (`/admin`) not started.** The existing `/admin` has live
+  pages behind Supabase auth; migrating it needs the database up, so it waits
+  rather than being half-moved.
+- Phase A's real content — schema, audit trigger, auth, roles — still blocked.
+- Palette actions are inert by design until Phases C–E.
+

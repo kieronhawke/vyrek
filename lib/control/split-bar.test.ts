@@ -128,3 +128,92 @@ describe("split fill colours match spec/14 §4", () => {
     }
   });
 });
+
+describe("criticalAtOrBelow — runway rather than progress", () => {
+  // Regression: a client with 2 days of programming left painted the same
+  // danger red as one who had already run out, because "short of target"
+  // was being treated as "past". The floor is what separates them.
+  it("is past at or below the floor, whatever the target says", () => {
+    expect(
+      splitBar({ value: 0, target: 9, max: 30, criticalAtOrBelow: 0 }).state,
+    ).toBe("past");
+    expect(
+      splitBar({ value: -3, target: 9, max: 30, criticalAtOrBelow: 0 }).state,
+    ).toBe("past");
+  });
+
+  it("leaves a client with days left short of the floor alone", () => {
+    const bar = splitBar({
+      value: 2,
+      target: 9,
+      max: 30,
+      criticalAtOrBelow: 0,
+    });
+    expect(bar.state).not.toBe("past");
+  });
+
+  it("still reports ahead when runway clears the target", () => {
+    expect(
+      splitBar({ value: 26, target: 9, max: 30, criticalAtOrBelow: 0 }).state,
+    ).toBe("ahead");
+  });
+
+  it("ignores a non-finite floor", () => {
+    expect(
+      splitBar({ value: 5, target: 10, criticalAtOrBelow: NaN }).state,
+    ).not.toBe("past");
+  });
+
+  it("keeps the geometry correct at the floor", () => {
+    const bar = splitBar({ value: 0, target: 9, max: 30, criticalAtOrBelow: 0 });
+    expect(bar.fillPct).toBe(0);
+    expect(bar.markerPct).toBe(30);
+  });
+});
+
+describe("warnAtOrBelow — absolute urgency, not ratio", () => {
+  // Regression: with ratio-only states, 26 days of runway against a 28-day
+  // billing date rendered amber ("within 15% of target") while 2 days
+  // against a 9-day date rendered calm. Exactly backwards for a coach.
+  const runway = (days: number, billing: number) =>
+    splitBar({
+      value: days,
+      target: billing,
+      max: 30,
+      criticalAtOrBelow: 0,
+      warnAtOrBelow: 7,
+    }).state;
+
+  it("warns on genuinely short runway", () => {
+    expect(runway(2, 9)).toBe("close");
+    expect(runway(7, 21)).toBe("close");
+  });
+
+  it("stays calm on healthy runway, whatever the billing date", () => {
+    expect(runway(26, 28)).toBe("ahead");
+    expect(runway(11, 12)).toBe("ahead");
+    expect(runway(18, 21)).toBe("ahead");
+  });
+
+  it("still fails below the floor", () => {
+    expect(runway(0, 9)).toBe("past");
+    expect(runway(-3, 4)).toBe("past");
+  });
+
+  it("orders the thresholds: floor beats warning", () => {
+    expect(
+      splitBar({
+        value: 0,
+        target: 10,
+        criticalAtOrBelow: 0,
+        warnAtOrBelow: 7,
+      }).state,
+    ).toBe("past");
+  });
+
+  it("leaves the ratio behaviour untouched when no thresholds are given", () => {
+    expect(splitBar({ value: 9, target: 10 }).state).toBe("close");
+    expect(splitBar({ value: 4, target: 10 }).state).toBe("on-track");
+  });
+});
+
