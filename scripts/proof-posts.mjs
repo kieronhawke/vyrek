@@ -118,6 +118,15 @@ for (const file of files) {
     issues.push(`seoDescription ${seoD.length} chars (aim 120–160)`);
   const alt = fm.match(/^heroAlt:\s*"(.*)"/m)?.[1];
   if (alt !== undefined && alt.trim().length < 15) issues.push("heroAlt too short to be useful");
+  // lib/blog/posts.ts sorts by publishedAt but never filters on it, so a
+  // future date does not hold a post back — it ships now, dated ahead, and
+  // puts a future datePublished into the Article schema.
+  const pub = fm.match(/^publishedAt:\s*"(\d{4}-\d{2}-\d{2})"/m)?.[1];
+  const today = new Date().toISOString().slice(0, 10);
+  if (pub && pub > today)
+    issues.push(`publishedAt ${pub} is in the future — the post is live now, there is no scheduling gate`);
+  const upd = fm.match(/^updatedAt:\s*"(\d{4}-\d{2}-\d{2})"/m)?.[1];
+  if (pub && upd && upd < pub) issues.push(`updatedAt ${upd} is before publishedAt ${pub}`);
   if (!/^faqs:/m.test(fm)) issues.push("no FAQs — loses the FAQPage schema and the AI-citation surface");
 
   // ── Voice ──
@@ -125,8 +134,16 @@ for (const file of files) {
     const m = body.match(re);
     if (m) issues.push(`voice: ${msg} (“${m[0].trim()}”)`);
   }
+  // Spelling runs on prose only. URLs are not prose: the quiz reads
+  // `?program=` (quiz-flow.tsx), so a British-English rule flagging
+  // "program → programme" would demand we break the link. Strip link
+  // targets and bare paths, keep the visible link text.
+  const prose = body
+    .replace(/\]\([^)]*\)/g, "]")
+    .replace(/\bhref\s*=\s*["'][^"']*["']/g, "")
+    .replace(/https?:\/\/\S+/g, "");
   for (const [re, msg] of SPELLING) {
-    const m = body.match(re);
+    const m = prose.match(re);
     if (m) issues.push(`spelling: ${msg} (“${m[0].trim()}”)`);
   }
 

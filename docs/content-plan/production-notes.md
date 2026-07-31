@@ -95,7 +95,7 @@ every publish.
 commonly no call to action (24 posts) and no chart or callout at all. Those
 are worth a sweep — they are the cheapest wins in the archive.
 
-## Posts written so far (10 of 792)
+## Posts written so far (58 live, 44 mapped to the plan)
 
 All wave 1. Tracked in the CSVs as `status = published` with the shipped
 slug in `notes`.
@@ -222,3 +222,63 @@ coaching judgement in the chart caption and in the opening callout. That is
 the honest way to be useful before the results layer exists, and the proofer
 enforces it: any bare percentage or "average" without a source or hedge
 nearby gets flagged.
+
+## Plan reconciled against the live site (31 July 2026)
+
+The plan and the site had drifted. The plan's `slug` column holds the slug a
+row was *planned* under, and posts ship under much shorter slugs, so the two
+never matched by slug alone. Ten rows recorded the real URL in `notes`; the
+other thirty-four did not, and the plan under-reported the live site by
+27 posts.
+
+The mapping now lives in `notes`, in two forms that mean different things:
+
+| Status | Note | Meaning |
+|---|---|---|
+| `published` | `shipped as /blog/<slug>` | Row is done. No work left. |
+| `refresh` | `live at /blog/<slug>` | A live URL exists; the plan still intends to upgrade it. |
+
+Keeping those apart matters. Sixteen of the rows reconciled here were already
+marked `refresh` by hand, and refreshes are an active queue: 4–6 a month,
+free against the new-page budget, the fastest ranking gains available.
+Collapsing them into `published` would have silently deleted sixteen pieces
+of planned work.
+
+**Where that leaves the count:** 58 posts live, 44 mapped to a plan row
+(17 `published`, 27 `refresh`), 14 live posts with no plan row at all.
+`check-content-plan.mjs` now prints this and fails the build if a row claims
+a URL that does not exist, or if two rows claim the same one.
+
+Pre-existing `refresh` marks were treated as authoritative throughout. Where
+one existed, it won over anything the matcher proposed, because whoever set
+it had a specific live post in mind.
+
+### Still open, and not mechanical
+
+**Two live posts duplicate two others.** Both pairs chase one query:
+
+- `couch-to-hyrox` (24-week) and `hyrox-couch-to-finish` (16-week). Same
+  audience, same intent, same head term.
+- `hyrox-race-day-bag-checklist` and `hyrox-race-day-kit-checklist-2026`.
+  Both are race-day packing lists, ~975 words each.
+
+Two of those four shipped in the 29 July batch, so this is self-inflicted and
+recent. Merge or differentiate is an editorial call, not a script's.
+
+**Five posts are dated in the future** (to 28 August). `lib/blog/posts.ts`
+sorts on `publishedAt` but never filters it, so there is no scheduling gate:
+those posts are live now, carrying a `datePublished` that has not happened.
+Either the dates come back to real ones or the filter gets built. The proofer
+now flags any future date so this cannot recur silently.
+
+**Two `refresh` rows point at nothing.** H162 (48-hour pre-race fuelling) and
+H230 (recovery for hybrid athletes) are marked as upgrades to a live URL, but
+no live post matches either. They are new posts mislabelled, or the post they
+meant was renamed. The checker now warns on both.
+
+**Fourteen `cta_primary`/`cta_secondary` values still read "Start the 7-day
+Hub trial".** "The Hub" is superseded by Suth Club, and whether a trial exists
+is the funnel lane's call, so those were left alone. The 24 rows reading "See
+transparent coaching prices" were changed to "See coaching options", matching
+the live `/pricing` and `/plans` labels, because promising a price the site
+does not publish is a broken promise under the no-pricing policy.

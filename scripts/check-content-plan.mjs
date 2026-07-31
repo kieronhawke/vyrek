@@ -84,16 +84,49 @@ const published = existsSync(blogDir)
   ? readdirSync(blogDir).filter((f) => f.endsWith(".mdx")).map((f) => f.replace(/\.mdx$/, ""))
   : [];
 const tokens = (s) => new Set(s.split("-").filter((w) => w.length > 3));
+
+// The plan's `slug` column is the slug a row was *planned* under. Posts ship
+// with shorter slugs, so the real URL lives in notes. Two forms, and the
+// difference matters:
+//   "shipped as /blog/x"  status=published — done, no work left
+//   "live at /blog/x"     status=refresh   — exists, still to be upgraded
+const liveUrl = (p) => p.notes.match(/(?:shipped as|live at) \/blog\/([a-z0-9-]+)/)?.[1] ?? null;
+
 for (const p of posts) {
   for (const pub of published) {
     const a = tokens(p.slug), b = tokens(pub);
     const shared = [...a].filter((w) => b.has(w));
-    if (shared.length >= 3 && p.status !== "refresh")
+    // A row that has shipped, or that is scheduled to upgrade a live URL,
+    // is *meant* to overlap. Only unreconciled rows are worth flagging.
+    const reconciled = p.status === "refresh" || p.status === "published";
+    if (shared.length >= 3 && !reconciled)
       warnings.push(
         `${p.id} "${p.slug}" overlaps published "${pub}" (shared: ${shared.join(", ")}) — mark refresh or differentiate`,
       );
   }
 }
+
+// 4b. The plan↔site mapping must stay true. A row claiming to have shipped
+// as a URL that no longer exists means a post was renamed or deleted and the
+// plan silently became fiction, which is how it drifted 27 rows out of date.
+const claimed = new Map();
+for (const p of posts) {
+  const slug = liveUrl(p);
+  if (p.status === "published" && !slug)
+    warnings.push(`${p.id} is marked published but records no "shipped as /blog/<slug>" note`);
+  if (p.status === "refresh" && !slug)
+    warnings.push(`${p.id} is marked refresh but records no "live at /blog/<slug>" note — which URL does it upgrade?`);
+  if (!slug) continue;
+  if (!published.includes(slug))
+    problems.push(`${p.id} claims to have shipped as /blog/${slug}, which does not exist in content/blog/`);
+  if (claimed.has(slug))
+    problems.push(`/blog/${slug} is claimed by two plan rows: ${claimed.get(slug)} and ${p.id}`);
+  claimed.set(slug, p.id);
+}
+
+// 4c. Live posts nobody planned. Not a fault (the site predates the plan),
+// but they are invisible to the schedule and the budget until someone knows.
+const unplanned = published.filter((s) => !claimed.has(s));
 
 // 5. Invented volume data.
 for (const p of posts) {
@@ -143,10 +176,32 @@ const counts = posts.reduce((acc, p) => {
 
 console.log(`\nContent plan: ${counts.total} posts (${JSON.stringify(counts.bySection)})`);
 console.log(`Evidenced keywords: ${counts.evidenced} · waves: ${JSON.stringify(counts.byWave)}`);
-console.log(`Status: ${JSON.stringify(counts.byStatus)}\n`);
+console.log(`Status: ${JSON.stringify(counts.byStatus)}`);
+console.log(
+  `Live: ${published.length} posts in content/blog · ${claimed.size} mapped to a plan row · ${unplanned.length} unplanned\n`,
+);
+if (unplanned.length) {
+  console.log(`${unplanned.length} live post(s) with no plan row:`);
+  for (const s of unplanned) console.log("  · " + s);
+  console.log("");
+}
 
 if (warnings.length) {
+  // Only 25 print, so summarise by kind first — otherwise the tail is
+  // invisible and a new class of warning can hide behind the overlap noise.
+  const kind = (w) =>
+    /overlaps published/.test(w) ? "overlap with a live post"
+      : /records no "shipped/.test(w) ? "published row with no URL recorded"
+      : /records no "live at/.test(w) ? "refresh row with no URL recorded"
+      : /flagged semrush/.test(w) ? "semrush flag with no volume"
+      : /points at multiple hubs/.test(w) ? "cluster pointing at multiple hubs"
+      : "other";
+  const byKind = new Map();
+  for (const w of warnings) byKind.set(kind(w), (byKind.get(kind(w)) ?? 0) + 1);
   console.log(`${warnings.length} warning(s):`);
+  for (const [k, n] of [...byKind].sort((a, b) => b[1] - a[1]))
+    console.log(`  ${String(n).padStart(4)} × ${k}`);
+  console.log("");
   for (const w of warnings.slice(0, 25)) console.log("  ! " + w);
   if (warnings.length > 25) console.log(`  … ${warnings.length - 25} more`);
   console.log("");
