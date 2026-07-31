@@ -264,3 +264,63 @@ it*.
   finish, automation rule evaluation with cooldowns and the global cap,
   proration, DST handling.
 
+---
+
+## CLIENT ACCOUNT — OFFLINE WORKOUT LOGGING ✅ 31 July 2026
+
+`HARD-RULES §2` had nothing implemented behind it, and the offline test
+`spec/16 §2` calls "the most important in the suite" had nothing to test.
+It does now.
+
+### Shipped
+
+| What | Where |
+|---|---|
+| Queue logic — ordering, backoff, dedupe, reconciliation | `lib/client-app/workout-queue.ts` |
+| Durable local store, IndexedDB with a localStorage mirror | `lib/client-app/local-store.ts` |
+| **The workout player** | `components/client-app/workout-player.tsx` |
+| Idempotent sync endpoint | `app/api/client/workout-sets/route.ts` |
+| **Service worker, scoped to `/train`** | `public/train-sw.js` |
+| Client app tab bar | `components/client-app/tabs.tsx` |
+| **The offline test, all three scenarios** | `tests/visual/offline-workout.spec.ts` |
+
+The player is local-first: a tap writes to the queue and to IndexedDB before
+anything touches the network, and the UI never awaits a request. Steppers
+rather than inputs so there is no keyboard mid-set, last session's numbers as
+the default, screen wake lock, haptics, and a sync indicator that says plainly
+whether work is saved.
+
+### Tested — 161 unit tests, 189 Playwright assertions
+
+- **25 queue tests**, including the spec's twelve-sets-across-four-exercises
+  case and a flapping simulation, asserting no loss and no duplicates.
+- **The offline contract, all three scenarios passing**: twelve sets logged
+  offline surviving a force-close and reopen still offline, then syncing
+  exactly once; network flapping mid-session; and a failing server never
+  losing sets or blocking the UI.
+
+### Three things the test caught that I would not have
+
+1. **No service worker meant offline reopen was impossible.** The queue
+   survived in IndexedDB, but the navigation itself needed the network, so
+   the data was unreachable behind a browser error page. `spec/11 §9`
+   requires the shell cached; the test is what surfaced it. The worker is
+   scoped to `/train` only — a stale cached shell on the SEO-critical
+   marketing site would be a far worse problem than the one it solves.
+2. **`storageState` does not reproduce a force-close.** Service workers,
+   cache and IndexedDB are profile-scoped, so the test now uses a persistent
+   context — which is also much closer to force-quitting an app on a phone.
+3. **Service workers cannot be tested against `next dev`.** Dev chunks are
+   not stably cached, so React never hydrated offline. The suite now runs
+   against a production build, which is the honest environment anyway.
+
+### Outstanding
+
+- **The endpoint validates and acknowledges but does not yet persist.**
+  Supabase is paused. That is safe for the device — its queue only clears on
+  an acknowledgement it then reconciles — but sets are not durable
+  server-side yet. Wiring the insert is a Phase A task; the contract will not
+  change.
+- Home, Plan, Progress and Account tabs are not built.
+- Watch sync, session comments, the assistant and guidance cards not started.
+

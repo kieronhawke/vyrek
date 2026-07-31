@@ -38,45 +38,66 @@ export default defineConfig({
     // with `--grep-invert` or selected with `--project=dm-...`.
     {
       name: "dm-iphone-se",
+      testIgnore: /offline-workout\.spec\.ts/,
       use: { ...devices["iPhone SE"], viewport: { width: 375, height: 667 } },
     },
     {
       name: "dm-iphone-15-pro",
+      testIgnore: /offline-workout\.spec\.ts/,
       use: { ...devices["iPhone 15 Pro"], viewport: { width: 393, height: 852 } },
     },
     {
       name: "dm-iphone-15-pro-max",
+      testIgnore: /offline-workout\.spec\.ts/,
       use: { ...devices["iPhone 15 Pro Max"], viewport: { width: 430, height: 932 } },
     },
     {
       name: "dm-pixel-8",
+      testIgnore: /offline-workout\.spec\.ts/,
       use: { ...devices["Pixel 7"], viewport: { width: 412, height: 915 } },
     },
     {
       name: "dm-ipad-mini",
+      testIgnore: /offline-workout\.spec\.ts/,
       use: { ...devices["iPad Mini"], viewport: { width: 744, height: 1133 } },
     },
     {
       // Narrowest real device. If it survives here it survives anywhere.
       name: "dm-galaxy-fold",
+      testIgnore: /offline-workout\.spec\.ts/,
       use: { ...devices["Galaxy S9+"], viewport: { width: 344, height: 882 } },
+    },
+
+    {
+      // The offline contract (spec/16 §2) runs here rather than on the
+      // device-matrix projects: Playwright's iPhone descriptors default to
+      // WebKit, whose offline emulation is less reliable, and the contract
+      // is about storage and queueing rather than layout. Mobile viewport,
+      // Chromium engine.
+      name: "offline",
+      use: { ...devices["Pixel 7"], viewport: { width: 393, height: 852 } },
+      testMatch: /offline-workout\.spec\.ts/,
     },
 
     // ── Pre-existing marketing-site projects ───────────────────────────
     {
       name: "mobile-375",
+      testIgnore: /offline-workout\.spec\.ts/,
       use: { ...devices["iPhone SE"], viewport: { width: 375, height: 667 } },
     },
     {
       name: "mobile-390",
+      testIgnore: /offline-workout\.spec\.ts/,
       use: { ...devices["iPhone 13"], viewport: { width: 390, height: 844 } },
     },
     {
       name: "tablet-768",
+      testIgnore: /offline-workout\.spec\.ts/,
       use: { ...devices["iPad (gen 7)"], viewport: { width: 768, height: 1024 } },
     },
     {
       name: "desktop-1440",
+      testIgnore: /offline-workout\.spec\.ts/,
       use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } },
     },
   ],

@@ -14,7 +14,7 @@ export default defineConfig({
     exclude: ["tests/visual/**", "node_modules/**"],
     environment: "node",
     coverage: {
-      include: ["lib/control/**", "lib/quiz-sift.ts", "lib/lead-brief.ts"],
+      include: ["lib/control/**", "lib/client-app/**", "lib/quiz-sift.ts", "lib/lead-brief.ts"],
       thresholds: { lines: 80, functions: 80, branches: 80, statements: 80 },
     },
   },
