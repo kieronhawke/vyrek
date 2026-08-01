@@ -1,0 +1,42 @@
+{
+  "slug": "south-ockendon",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Thurrock parkrun, Orsett Heath",
+        "area": "Pyramid Centre",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ingrebourne Hill parkrun",
+        "area": "Ingrebourne Hill",
+        "distanceKm": 6.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Harrow Lodge parkrun",
+        "area": "Harrow Lodge Park",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Whitecliffe Lake parkrun",
+        "area": "Whitecliffe Lake",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dartford parkrun",
+        "area": "Central Park",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

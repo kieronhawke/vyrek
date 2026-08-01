@@ -1,0 +1,42 @@
+{
+  "slug": "manchester-city-centre",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Peel parkrun",
+        "area": "Peel Park",
+        "distanceKm": 1.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Alexandra parkrun, Moss Side",
+        "area": "Alexandra Park",
+        "distanceKm": 3.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Philips Park parkrun",
+        "area": "Philips Park",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Manchester parkrun",
+        "area": "Platt Fields Park",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stretford parkrun",
+        "area": "Longford Park",
+        "distanceKm": 4.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

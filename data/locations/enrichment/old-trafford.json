@@ -1,0 +1,49 @@
+{
+  "slug": "old-trafford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Stretford parkrun",
+        "area": "Longford Park",
+        "distanceKm": 1.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Alexandra parkrun, Moss Side",
+        "area": "Alexandra Park",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sale Water parkrun",
+        "area": "Sale Water Park",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peel parkrun",
+        "area": "Peel Park",
+        "distanceKm": 3.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kingsway Park parkrun, Urmston",
+        "area": "Kingsway Park, Urmston",
+        "distanceKm": 3.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Manchester parkrun",
+        "area": "Platt Fields Park",
+        "distanceKm": 4.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

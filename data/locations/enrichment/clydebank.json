@@ -1,0 +1,56 @@
+{
+  "slug": "clydebank",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Erskine Waterfront parkrun",
+        "area": "Erskine Waterfront",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Drumchapel parkrun",
+        "area": "Garscadden Woods East",
+        "distanceKm": 3.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Victoria parkrun, Glasgow",
+        "area": "Victoria Park",
+        "distanceKm": 5.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Elder Park parkrun",
+        "area": "Elder Park",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Linwood parkrun",
+        "area": "ON-X Linwood",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ruchill parkrun",
+        "area": "Ruchill Park",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pollok parkrun, Glasgow",
+        "area": "Pollok Park, Glasgow",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

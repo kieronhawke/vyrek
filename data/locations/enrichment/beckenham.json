@@ -1,0 +1,63 @@
+{
+  "slug": "beckenham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Beckenham Place parkrun",
+        "area": "Beckenham Place Park",
+        "distanceKm": 1.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bethlem Royal Hospital parkrun",
+        "area": "Bethlem Royal Hospital",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Norwood parkrun",
+        "area": "South Norwood Country Park",
+        "distanceKm": 2.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crystal Palace parkrun",
+        "area": "Crystal Palace Park",
+        "distanceKm": 3.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bromley parkrun",
+        "area": "Norman Park, Bromley",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Catford parkrun",
+        "area": "Mountsfield Park",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dulwich parkrun",
+        "area": "Dulwich Park, Dulwich",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hilly Fields parkrun",
+        "area": "Hilly Fields",
+        "distanceKm": 5.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

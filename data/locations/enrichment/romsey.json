@@ -1,0 +1,35 @@
+{
+  "slug": "romsey",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Ganger Farm parkrun",
+        "area": "Ganger Farm Sports Park",
+        "distanceKm": 3.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bartley Park parkrun",
+        "area": "Bartley Park",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Eastleigh parkrun",
+        "area": "Fleming Park Old Golf Course, Eastleigh",
+        "distanceKm": 9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southampton parkrun",
+        "area": "Southampton Common",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

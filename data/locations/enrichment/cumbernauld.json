@@ -1,0 +1,21 @@
+{
+  "slug": "cumbernauld",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Palacerigg Country parkrun",
+        "area": "Palacerigg Country Park",
+        "distanceKm": 2.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Drumpellier Country parkrun",
+        "area": "Drumpellier Country Park",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

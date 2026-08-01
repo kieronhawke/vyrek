@@ -1,0 +1,63 @@
+{
+  "slug": "newtownabbey",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Valley parkrun, Newtownabbey",
+        "area": "Valley Leisure Centre",
+        "distanceKm": 1.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Waterworks parkrun, Belfast",
+        "area": "Waterworks, North Belfast",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Belfast Victoria parkrun",
+        "area": "Victoria Park, Belfast",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Paisley Park parkrun",
+        "area": "Paisley Park",
+        "distanceKm": 7.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ormeau parkrun",
+        "area": "Ormeau Park",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Orangefield parkrun",
+        "area": "Orangefield & Greenville Park",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stormont parkrun",
+        "area": "Stormont Estate",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Falls parkrun, Belfast",
+        "area": "Falls Park, Belfast",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "chatham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Great Lines parkrun, Medway",
+        "area": "Great Lines Heritage ParkPark",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Shorne Woods parkrun",
+        "area": "Shorne Woods Country Park",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Maidstone River Park parkrun",
+        "area": "River Medway",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leybourne Lakes parkrun",
+        "area": "Leybourne Lakes Country Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

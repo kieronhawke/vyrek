@@ -7,14 +7,14 @@
         "area": "Alvaston Park",
         "distanceKm": 2.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Markeaton parkrun",
         "area": "Markeaton",
         "distanceKm": 3.2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

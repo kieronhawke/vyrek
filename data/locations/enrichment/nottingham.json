@@ -7,56 +7,56 @@
         "area": "Forest Recreation Gound, Nottingham",
         "distanceKm": 1.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Victoria Embankment parkrun, Nottingham",
         "area": "Victoria Embankment",
         "distanceKm": 2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Colwick parkrun",
         "area": "Colwick Country Park, Nottingham",
         "distanceKm": 3.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Holme Pierrepont parkrun",
         "area": "Holme Pierrepont Country Park",
         "distanceKm": 3.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Wollaton Hall parkrun",
         "area": "Wollaton Hall and Deer Park",
         "distanceKm": 4.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Clifton parkrun",
         "area": "Clifton Playing Fields",
         "distanceKm": 4.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Beeston parkrun",
         "area": "Weirfields Recreation Ground",
         "distanceKm": 5.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Gedling parkrun",
         "area": "Gedling Country Park",
         "distanceKm": 6.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

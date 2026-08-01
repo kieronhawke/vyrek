@@ -1,0 +1,28 @@
+{
+  "slug": "reigate",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Reigate Priory parkrun",
+        "area": "Priory Park",
+        "distanceKm": 0.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Banstead Woods parkrun",
+        "area": "Banstead Woods, Coulsdon",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mole Valley parkrun",
+        "area": "Denbies Wine Estate",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

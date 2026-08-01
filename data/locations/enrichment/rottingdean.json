@@ -1,0 +1,56 @@
+{
+  "slug": "rottingdean",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "East Brighton parkrun",
+        "area": "East Brighton Park",
+        "distanceKm": 3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bevendean Down parkrun",
+        "area": "Bevendean Down",
+        "distanceKm": 5.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peacehaven parkrun",
+        "area": "Centenary Park",
+        "distanceKm": 5.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Preston Park parkrun, Brighton",
+        "area": "Preston Park",
+        "distanceKm": 7.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hove Promenade parkrun",
+        "area": "Hove Lawns",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brighton & Hove parkrun",
+        "area": "Hove Park, Brighton",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Malling Rec parkrun",
+        "area": "Malling Rec",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

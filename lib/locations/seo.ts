@@ -19,12 +19,19 @@ import { HYROX_EVENTS } from "@/lib/hyrox-events";
  *
  * The rule
  * --------
- * A location page is indexable only if the keyword database evidences demand
- * for it. 37 of 104 registry entries carry Semrush evidence; the other 67 are
- * long-tail guesses. Unevidenced pages stay live and reachable — internal
- * links, direct traffic and the region hubs all keep working — but they are
- * noindex until they earn their way in, either through keyword evidence or
- * through the gym and results layers that phase D is blocked on.
+ * Every location with real local data indexes. Kieron's directive of
+ * 1 August 2026 is every big town and city in the UK, and the registry now
+ * carries 879 of them from GeoNames.
+ *
+ * The safeguard is not a shortlist, it is the data: a page indexes when it has
+ * something local to say. In practice that means parkrun terrain, which 846 of
+ * the 879 carry, seeded from parkrun's own feed with real distances. A place
+ * with no terrain data and no keyword evidence has nothing on it that another
+ * page does not also have, so it stays out of the index until it does.
+ *
+ * Keyword evidence still matters, it just is not the gate any more: it drives
+ * priority in the sitemap and tells us which pages to write a human paragraph
+ * for first.
  *
  * Nothing here invents a fact. Every number is either computed from
  * coordinates (and labelled as straight-line) or read from a sourced record.
@@ -104,7 +111,8 @@ export type GeoSeo = {
   evidencedVolume: number;
   /** Lowest keyword difficulty across the evidence. Undefined if none. */
   bestKd?: number;
-  /** The one rule: evidence means index, no evidence means hold. */
+  /** Indexable when the page has something local on it: terrain data, a
+   *  hand-written paragraph, or evidenced demand. Not a shortlist. */
   indexable: boolean;
   parkruns: { name: string; area?: string; distanceKm?: number; source: string }[];
   nearestRace?: NearestRace;
@@ -157,7 +165,8 @@ export function getGeoSeo(slug: string): GeoSeo {
     bestKd: evidence.length
       ? Math.min(...evidence.map((k) => k.kdPercent))
       : undefined,
-    indexable: evidence.length > 0,
+    // Local substance, not a shortlist: terrain data or evidenced demand.
+    indexable: parkruns.length > 0 || evidence.length > 0,
     parkruns,
     nearestRace,
     hostsRace: nearestRace ? nearestRace.straightLineKm <= 15 : false,
@@ -165,15 +174,24 @@ export function getGeoSeo(slug: string): GeoSeo {
 }
 
 /**
- * Robots directive for a geo page. Unevidenced places stay crawlable and
- * followable so internal link equity still flows through them to the pages
- * that are indexed; they simply do not compete for a query nobody types.
+ * Robots directive for a geo page. A place with no local data at all stays
+ * crawlable and followable, so link equity still flows through it, but out of
+ * the index until it has something of its own to say.
  */
 export function geoRobots(slug: string): {
   index: boolean;
   follow: boolean;
 } {
   return { index: getGeoSeo(slug).indexable, follow: true };
+}
+
+/** Sitemap priority: evidenced places first, then everything else. */
+export function geoPriority(slug: string): number {
+  const g = getGeoSeo(slug);
+  if (g.evidencedVolume >= 500) return 0.9;
+  if (g.evidencedVolume > 0) return 0.8;
+  if (g.parkruns.length >= 3) return 0.6;
+  return 0.5;
 }
 
 /**

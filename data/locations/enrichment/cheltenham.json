@@ -1,0 +1,21 @@
+{
+  "slug": "cheltenham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cheltenham parkrun",
+        "area": "Pittville Park",
+        "distanceKm": 1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "King George V Playing Field parkrun, Cheltenham",
+        "area": "King George V Playing Field",
+        "distanceKm": 2.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

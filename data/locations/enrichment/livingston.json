@@ -1,0 +1,28 @@
+{
+  "slug": "livingston",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Livingston parkrun",
+        "area": "Almondvale Park",
+        "distanceKm": 1.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beecraigs Country Park parkrun",
+        "area": "Beecraigs Country Park",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Auldcathie District parkrun",
+        "area": "Auldcathie District Park",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "mirfield",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Dewsbury parkrun",
+        "area": "Crow Nest Park, Dewsbury",
+        "distanceKm": 3.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Huddersfield parkrun",
+        "area": "Greenhead Park, Huddersfield",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oakwell Hall parkrun",
+        "area": "Oakwell Hall Country Park",
+        "distanceKm": 7.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

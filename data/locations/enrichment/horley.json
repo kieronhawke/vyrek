@@ -1,0 +1,28 @@
+{
+  "slug": "horley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Reigate Priory parkrun",
+        "area": "Priory Park",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ifield Mill Pond parkrun",
+        "area": "Ifield Mill Pond",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tilgate parkrun",
+        "area": "Tilgate Park, Crawley",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

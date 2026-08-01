@@ -1,0 +1,42 @@
+{
+  "slug": "seaham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Heritage Coastal Path parkrun, Easington",
+        "area": "Heritage Coastal Path, Easington",
+        "distanceKm": 5.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Silksworth parkrun",
+        "area": "Silksworth Sports Centre, Sunderland",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Elemore Park parkrun",
+        "area": "Elemore Park",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cotsford Fields parkrun",
+        "area": "Cotsford Fields",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Herrington Country parkrun",
+        "area": "Herrington Country Park",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

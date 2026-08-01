@@ -1,0 +1,21 @@
+{
+  "slug": "potters-bar",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Oak Hill parkrun",
+        "area": "Oak Hill Park, East Barnet",
+        "distanceKm": 6.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Grovelands parkrun, Enfield",
+        "area": "Grovelands Park, Enfield",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "thetford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Thetford parkrun",
+        "area": "Abbey Meadows",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brandon Country Park parkrun",
+        "area": "Brandon Country Park",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

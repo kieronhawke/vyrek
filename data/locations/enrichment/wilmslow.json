@@ -1,0 +1,56 @@
+{
+  "slug": "wilmslow",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Wilmslow parkrun",
+        "area": "The Carrs Park",
+        "distanceKm": 0.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Alderley Park parkrun",
+        "area": "Alderley Park",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cheadle Hulme parkrun",
+        "area": "Bruntwood Park, Cheadle",
+        "distanceKm": 5.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bramhall parkrun",
+        "area": "Bramhall Park, near Stockport",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burnage parkrun",
+        "area": "Varley Park, Stockport SK4 3EA",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fletcher Moss parkrun",
+        "area": "Fletcher Moss Park",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wythenshawe parkrun",
+        "area": "Wythenshawe Park, Wythenshawe",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

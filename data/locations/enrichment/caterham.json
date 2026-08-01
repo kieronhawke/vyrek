@@ -1,0 +1,35 @@
+{
+  "slug": "caterham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Riddlesdown parkrun",
+        "area": "Riddlesdown, Warlingham",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Banstead Woods parkrun",
+        "area": "Banstead Woods, Coulsdon",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Roundshaw Downs parkrun",
+        "area": "Roundshaw Downs, near South Croydon",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lloyd parkrun, Croydon",
+        "area": "Lloyd Park, Croydon",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

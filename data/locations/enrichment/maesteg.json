@@ -1,0 +1,21 @@
+{
+  "slug": "maesteg",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Maesteg parkrun",
+        "area": "Welfare Park",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Aberfields parkrun",
+        "area": "Aberfields",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

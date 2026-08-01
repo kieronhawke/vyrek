@@ -1,0 +1,35 @@
+{
+  "slug": "kingston-upon-hull",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hull parkrun",
+        "area": "East Park, Hull",
+        "distanceKm": 3.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peter Pan parkrun",
+        "area": "Peter Pan Park",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Humber Bridge parkrun",
+        "area": "Humber Bridge Country Park",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Baysgarth Park parkrun",
+        "area": "Baysgarth Park",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

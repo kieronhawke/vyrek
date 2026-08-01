@@ -1,0 +1,21 @@
+{
+  "slug": "conisbrough",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cusworth Hall parkrun",
+        "area": "Cusworth Hall Museum & Park",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rotherham parkrun",
+        "area": "Rotherham",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "didcot",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Didcot parkrun",
+        "area": "Ladygrove Park",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Abingdon parkrun",
+        "area": "Rye Meadow, Abingdon",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "shrewsbury",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Shrewsbury parkrun",
+        "area": "The Quarry",
+        "distanceKm": 0.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Haughmond Hill parkrun",
+        "area": "Haughmond Hill",
+        "distanceKm": 5.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

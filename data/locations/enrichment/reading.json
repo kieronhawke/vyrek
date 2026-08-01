@@ -7,42 +7,42 @@
         "area": "Thames Riverside, Reading",
         "distanceKm": 2.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Prospect parkrun",
         "area": "Prospect Park",
         "distanceKm": 2.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Green Park parkrun",
         "area": "Green Park",
         "distanceKm": 2.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Woodley parkrun",
         "area": "Woodford Park",
         "distanceKm": 4.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Dinton Pastures parkrun",
         "area": "Dinton Pastures Country Park",
         "distanceKm": 6.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Henley-on-Thames parkrun",
         "area": "Henley-on-Thames",
         "distanceKm": 9.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

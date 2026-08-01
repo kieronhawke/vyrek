@@ -1,0 +1,14 @@
+{
+  "slug": "glenrothes",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Riverside Park parkrun, Glenrothes",
+        "area": "Riverside Park, Glenrothes",
+        "distanceKm": 0.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

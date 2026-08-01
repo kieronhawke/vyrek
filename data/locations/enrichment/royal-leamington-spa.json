@@ -1,0 +1,21 @@
+{
+  "slug": "royal-leamington-spa",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Leamington parkrun",
+        "area": "Newbold Comyn, Leamington",
+        "distanceKm": 1.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Warwick Racecourse parkrun",
+        "area": "Warwick Racecourse",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

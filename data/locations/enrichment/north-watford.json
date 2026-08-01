@@ -1,0 +1,56 @@
+{
+  "slug": "north-watford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cassiobury parkrun",
+        "area": "Cassiobury Park",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leavesden Country parkrun",
+        "area": "Leavesden Country Park",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Holywell King George V Playing Fields parkrun",
+        "area": "Holywell King George V Playing Fields",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Oxhey parkrun",
+        "area": "South Oxhey Playing Fields",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Aldenham parkrun",
+        "area": "Aldenham Country Park",
+        "distanceKm": 6.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rickmansworth parkrun",
+        "area": "Rickmansworth Aquadrome",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St Albans parkrun",
+        "area": "Verulam Park, St Albans",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

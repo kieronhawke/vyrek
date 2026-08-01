@@ -1,0 +1,28 @@
+{
+  "slug": "stroud",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Stratford Park parkrun, Stroud",
+        "area": "Stratford Park",
+        "distanceKm": 1.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stonehouse parkrun",
+        "area": "Oldends Lane Playing Fields",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kingsway parkrun, Gloucester",
+        "area": "Kingsway Sports Pavillion",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

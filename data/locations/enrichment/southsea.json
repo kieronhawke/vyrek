@@ -1,0 +1,21 @@
+{
+  "slug": "southsea",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Southsea parkrun",
+        "area": "Southsea Esplanade",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Great Salterns parkrun",
+        "area": "Great Salterns Recreation Ground",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "ammanford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Llyn Llech Owain parkrun",
+        "area": "Llyn Llech Owain",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brynaman parkrun",
+        "area": "Brynamman Rugby Club",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

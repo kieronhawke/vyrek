@@ -1,0 +1,14 @@
+{
+  "slug": "saint-neots",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Pocket parkrun",
+        "area": "Pocket Park",
+        "distanceKm": 0.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

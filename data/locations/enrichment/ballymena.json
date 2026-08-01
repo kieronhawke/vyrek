@@ -1,0 +1,14 @@
+{
+  "slug": "ballymena",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Ecos parkrun, Ballymena",
+        "area": "Ecos Park, Ballymena",
+        "distanceKm": 1.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

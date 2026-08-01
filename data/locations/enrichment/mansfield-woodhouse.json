@@ -1,0 +1,35 @@
+{
+  "slug": "mansfield-woodhouse",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Mansfield parkrun",
+        "area": "Mansfield",
+        "distanceKm": 1.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Vicar Water Country Park parkrun",
+        "area": "Vicar Water Country Park",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sherwood Pines parkrun",
+        "area": "Sherwood Pines Forest Park",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brierley Forest parkrun",
+        "area": "Brierley Forest",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

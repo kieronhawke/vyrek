@@ -1,0 +1,21 @@
+{
+  "slug": "saint-peters",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Margate parkrun",
+        "area": "Margate",
+        "distanceKm": 2.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pegwell Bay parkrun",
+        "area": "Pegwell Bay",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

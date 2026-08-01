@@ -1,0 +1,21 @@
+{
+  "slug": "coalville",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Sence Valley Forest Park parkrun",
+        "area": "Sence Valley Forest Park",
+        "distanceKm": 3.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beacon Hill Country Park parkrun",
+        "area": "Beacon Hill Country Park",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

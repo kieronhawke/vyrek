@@ -1,0 +1,56 @@
+{
+  "slug": "felling",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Windy Nook parkrun",
+        "area": "Windy Nook Nature Park",
+        "distanceKm": 1.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gateshead parkrun",
+        "area": " Saltwell Park, Gateshead",
+        "distanceKm": 2.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leazes parkrun",
+        "area": "Leazes Park",
+        "distanceKm": 4.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jesmond Dene parkrun",
+        "area": "Jesmond Dene",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Town Moor parkrun",
+        "area": "Exhibition Park, Newcastle",
+        "distanceKm": 4.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rising Sun parkrun",
+        "area": "The Rising Sun Country Park",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Denton Dene parkrun",
+        "area": "Denton Dene",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

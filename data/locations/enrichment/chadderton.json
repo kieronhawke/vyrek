@@ -1,0 +1,42 @@
+{
+  "slug": "chadderton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Chadderton Hall parkrun",
+        "area": "Chadderton Hall Park",
+        "distanceKm": 1.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oldham parkrun",
+        "area": "Alexandra Park, Oldham",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Philips Park parkrun",
+        "area": "Philips Park",
+        "distanceKm": 7.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stamford Park parkrun",
+        "area": "Stamford Park",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Heaton parkrun",
+        "area": "Heaton Park, Manchester",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "bordon",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hogmoor Inclosure parkrun",
+        "area": "Hogmoor Inclosure",
+        "distanceKm": 1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Alice Holt parkrun",
+        "area": "Alice Holt Forest",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

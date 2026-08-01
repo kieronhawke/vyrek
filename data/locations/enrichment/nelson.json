@@ -1,0 +1,21 @@
+{
+  "slug": "nelson",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Pendle parkrun",
+        "area": "Holt House Playing Fields",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burnley parkrun",
+        "area": "Towneley Park, Burnley",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

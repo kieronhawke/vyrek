@@ -1,0 +1,42 @@
+{
+  "slug": "blackwall",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Greenwich Peninsula parkrun",
+        "area": "Greenwich Peninsula",
+        "distanceKm": 1.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mile End parkrun",
+        "area": "Mile End Park, London",
+        "distanceKm": 2.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beckton parkrun",
+        "area": "Beckton District Park South",
+        "distanceKm": 3.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southwark parkrun",
+        "area": "Southwark Park",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Charlton parkrun",
+        "area": "Charlton Park",
+        "distanceKm": 4.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

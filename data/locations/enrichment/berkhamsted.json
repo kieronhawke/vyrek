@@ -1,0 +1,14 @@
+{
+  "slug": "berkhamsted",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Gadebridge parkrun",
+        "area": "Gadebridge Park",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

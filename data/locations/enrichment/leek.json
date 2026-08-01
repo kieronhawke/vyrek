@@ -1,0 +1,14 @@
+{
+  "slug": "leek",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Birchall Playing Fields parkrun",
+        "area": "Birchall Playing Fields",
+        "distanceKm": 1.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

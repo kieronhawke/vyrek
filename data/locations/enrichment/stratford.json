@@ -7,35 +7,35 @@
         "area": "Hackney Marshes",
         "distanceKm": 2.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Wanstead Flats parkrun",
         "area": "Wanstead Flats, Epping Forest",
         "distanceKm": 2.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Mile End parkrun",
         "area": "Mile End Park, London",
         "distanceKm": 3.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Greenwich Peninsula parkrun",
         "area": "Greenwich Peninsula",
         "distanceKm": 4.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Beckton parkrun",
         "area": "Beckton District Park South",
         "distanceKm": 4.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

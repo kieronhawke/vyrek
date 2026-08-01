@@ -1,0 +1,56 @@
+{
+  "slug": "arnold",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Gedling parkrun",
+        "area": "Gedling Country Park",
+        "distanceKm": 3.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bestwood Village parkrun",
+        "area": "Bestwood Country Park",
+        "distanceKm": 3.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Forest Rec parkrun",
+        "area": "Forest Recreation Gound, Nottingham",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Colwick parkrun",
+        "area": "Colwick Country Park, Nottingham",
+        "distanceKm": 6.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Holme Pierrepont parkrun",
+        "area": "Holme Pierrepont Country Park",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wollaton Hall parkrun",
+        "area": "Wollaton Hall and Deer Park",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Victoria Embankment parkrun, Nottingham",
+        "area": "Victoria Embankment",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

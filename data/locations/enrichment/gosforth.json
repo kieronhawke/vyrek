@@ -1,0 +1,56 @@
+{
+  "slug": "gosforth",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Town Moor parkrun",
+        "area": "Exhibition Park, Newcastle",
+        "distanceKm": 1.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jesmond Dene parkrun",
+        "area": "Jesmond Dene",
+        "distanceKm": 1.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leazes parkrun",
+        "area": "Leazes Park",
+        "distanceKm": 2.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Denton Dene parkrun",
+        "area": "Denton Dene",
+        "distanceKm": 5.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rising Sun parkrun",
+        "area": "The Rising Sun Country Park",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gateshead parkrun",
+        "area": " Saltwell Park, Gateshead",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Windy Nook parkrun",
+        "area": "Windy Nook Nature Park",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "slug": "hazel-grove",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Woodbank parkrun",
+        "area": "Woodbank Memorial Park, Stockport",
+        "distanceKm": 3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bramhall parkrun",
+        "area": "Bramhall Park, near Stockport",
+        "distanceKm": 3.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Marple parkrun",
+        "area": "Brabyns Park, Stockport",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cheadle Hulme parkrun",
+        "area": "Bruntwood Park, Cheadle",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lyme Park parkrun",
+        "area": "Lyme Park",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burnage parkrun",
+        "area": "Varley Park, Stockport SK4 3EA",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fletcher Moss parkrun",
+        "area": "Fletcher Moss Park",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hyde parkrun",
+        "area": "Hyde Park",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

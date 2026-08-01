@@ -1,0 +1,28 @@
+{
+  "slug": "glen-parva",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Braunstone parkrun",
+        "area": "Braunstone, Leicester",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leicester Victoria parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Abbey Park parkrun",
+        "area": "Abbey Park",
+        "distanceKm": 7.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

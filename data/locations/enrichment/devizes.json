@@ -1,0 +1,14 @@
+{
+  "slug": "devizes",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Quakers Walk parkrun",
+        "area": "Quakers Walk",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

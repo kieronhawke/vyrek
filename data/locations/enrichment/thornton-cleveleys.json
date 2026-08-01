@@ -1,0 +1,21 @@
+{
+  "slug": "thornton-cleveleys",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Fleetwood Promenade parkrun",
+        "area": "Outer Promenade",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Blackpool parkrun",
+        "area": "Stanley Park",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

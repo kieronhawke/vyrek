@@ -1,0 +1,21 @@
+{
+  "slug": "colchester",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Colchester Castle parkrun",
+        "area": "Castle Park",
+        "distanceKm": 0.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Highwoods parkrun",
+        "area": "Highwoods Country Park",
+        "distanceKm": 2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

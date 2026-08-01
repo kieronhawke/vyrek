@@ -1,0 +1,42 @@
+{
+  "slug": "tottenham-hale",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Lordship Recreation Ground parkrun",
+        "area": "Lordship Recreation Ground",
+        "distanceKm": 1.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pymmes parkrun",
+        "area": "Pymmes Park, Edmonton",
+        "distanceKm": 2.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Walthamstow parkrun",
+        "area": "Highams Park",
+        "distanceKm": 3.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Finsbury parkrun",
+        "area": "Finsbury Park",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ally Pally parkrun",
+        "area": "Alexandra Palace, Haringey",
+        "distanceKm": 4.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

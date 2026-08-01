@@ -1,0 +1,21 @@
+{
+  "slug": "accrington",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hyndburn parkrun",
+        "area": "Wilson Playing Fields",
+        "distanceKm": 3.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burnley parkrun",
+        "area": "Towneley Park, Burnley",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

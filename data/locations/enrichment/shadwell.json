@@ -1,0 +1,63 @@
+{
+  "slug": "shadwell",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Mile End parkrun",
+        "area": "Mile End Park, London",
+        "distanceKm": 1.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southwark parkrun",
+        "area": "Southwark Park",
+        "distanceKm": 1.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burgess parkrun",
+        "area": "Burgess Park",
+        "distanceKm": 3.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Greenwich Peninsula parkrun",
+        "area": "Greenwich Peninsula",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Highbury Fields parkrun",
+        "area": "Highbury Fields, Highbury",
+        "distanceKm": 5.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hackney Marshes parkrun",
+        "area": "Hackney Marshes",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hilly Fields parkrun",
+        "area": "Hilly Fields",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peckham Rye parkrun",
+        "area": "Peckham Rye Park",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

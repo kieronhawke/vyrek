@@ -1,0 +1,28 @@
+{
+  "slug": "burnley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Burnley parkrun",
+        "area": "Towneley Park, Burnley",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pendle parkrun",
+        "area": "Holt House Playing Fields",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hyndburn parkrun",
+        "area": "Wilson Playing Fields",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

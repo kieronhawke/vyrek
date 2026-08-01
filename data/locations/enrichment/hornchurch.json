@@ -1,0 +1,28 @@
+{
+  "slug": "hornchurch",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Harrow Lodge parkrun",
+        "area": "Harrow Lodge Park",
+        "distanceKm": 1.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Raphael parkrun",
+        "area": "Raphael Park",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ingrebourne Hill parkrun",
+        "area": "Ingrebourne Hill",
+        "distanceKm": 3.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

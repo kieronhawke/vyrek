@@ -1,0 +1,21 @@
+{
+  "slug": "harwich",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Harwich parkrun",
+        "area": "Cliff Park",
+        "distanceKm": 0.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Felixstowe parkrun",
+        "area": "Undercliff Road West",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

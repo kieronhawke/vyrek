@@ -1,0 +1,28 @@
+{
+  "slug": "furzedown",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Tooting Common parkrun",
+        "area": "Tooting Common",
+        "distanceKm": 0.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clapham Common parkrun",
+        "area": "Clapham Common",
+        "distanceKm": 3.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brockwell parkrun, Herne Hill",
+        "area": "Brockwell Park, Herne Hill",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

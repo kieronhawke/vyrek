@@ -1,0 +1,63 @@
+{
+  "slug": "surbiton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bushy parkrun",
+        "area": "Bushy Park, Teddington",
+        "distanceKm": 3.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kingston parkrun",
+        "area": "Kingston Riverside",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nonsuch parkrun",
+        "area": "Nonsuch Park, Cheam",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Morden parkrun",
+        "area": "Morden",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Richmond parkrun",
+        "area": "Richmond Park, Richmond upon Thames",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wimbledon Common parkrun",
+        "area": "Wimbledon Common",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crane Park parkrun",
+        "area": "Crane Park, Twickenham",
+        "distanceKm": 7.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Old Deer Park parkrun",
+        "area": "Old Deer Park, Richmond",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

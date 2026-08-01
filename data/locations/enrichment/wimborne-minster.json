@@ -1,0 +1,21 @@
+{
+  "slug": "wimborne-minster",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Upton House parkrun",
+        "area": "Upton Country Park",
+        "distanceKm": 5.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Poole parkrun",
+        "area": "Poole Park, Poole",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

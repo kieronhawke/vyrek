@@ -1,0 +1,14 @@
+{
+  "slug": "bridgend",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Porthcawl parkrun",
+        "area": "Porthcawl Seafront",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "nether-edge",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Endcliffe parkrun",
+        "area": "Endcliffe Park, Sheffield",
+        "distanceKm": 1.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Millhouses parkrun",
+        "area": "Millhouses Park",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Graves parkrun",
+        "area": "Graves Park, Sheffield",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sheffield Castle parkrun",
+        "area": "Manor Fields Park",
+        "distanceKm": 3.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

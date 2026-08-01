@@ -1,0 +1,35 @@
+{
+  "slug": "sutton-coldfield",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Sutton Park parkrun",
+        "area": "Sutton Park",
+        "distanceKm": 2.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Perry Hall parkrun",
+        "area": "Perry Hall Park",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kingsbury Water parkrun",
+        "area": "Kingsbury Water Park",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Babbs Mill parkrun",
+        "area": "Babbs Mill Local Nature Reserve",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

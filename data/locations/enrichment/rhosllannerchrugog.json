@@ -1,0 +1,21 @@
+{
+  "slug": "rhosllannerchrugog",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Erddig parkrun",
+        "area": "Erddig Hall",
+        "distanceKm": 3.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Old Railway Trail parkrun, Llangollen",
+        "area": "Old Railway Trail",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

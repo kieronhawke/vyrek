@@ -1,0 +1,35 @@
+{
+  "slug": "longton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hanley parkrun",
+        "area": "Hanley Park, Hanley",
+        "distanceKm": 4.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Trentham Gardens parkrun",
+        "area": "Trentham Gardens",
+        "distanceKm": 4.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Wammy parkrun",
+        "area": "The Wammy",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Vale Park parkrun, Burslem",
+        "area": "Vale Park, Burslem",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

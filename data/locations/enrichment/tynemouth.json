@@ -1,0 +1,35 @@
+{
+  "slug": "tynemouth",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "South Shields parkrun",
+        "area": "South Shields",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Whitley Bay parkrun",
+        "area": "Whitley Bay Links Common",
+        "distanceKm": 3.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rising Sun parkrun",
+        "area": "The Rising Sun Country Park",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fulwell Quarry parkrun",
+        "area": "Fulwell Quarry",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

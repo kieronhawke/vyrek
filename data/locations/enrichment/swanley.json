@@ -1,0 +1,63 @@
+{
+  "slug": "swanley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Swanley parkrun",
+        "area": "Swanley Park",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Foots Cray Meadows parkrun",
+        "area": "Foots Cray Meadows",
+        "distanceKm": 4.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dartford Heath parkrun",
+        "area": "Heath Lane",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lullingstone parkrun",
+        "area": "Lullingstone Country Park",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hoblingwell parkrun",
+        "area": "Hoblingwell Wood Recreation Ground",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Orpington parkrun",
+        "area": "Goddington Park",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dartford parkrun",
+        "area": "Central Park",
+        "distanceKm": 5.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bexley parkrun",
+        "area": "Danson Park, Bexley",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

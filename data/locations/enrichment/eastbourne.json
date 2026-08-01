@@ -1,0 +1,21 @@
+{
+  "slug": "eastbourne",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Eastbourne parkrun",
+        "area": "Shinewater Park, Eastbourne",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Abbot’s Wood parkrun",
+        "area": "Abbot’s Wood",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

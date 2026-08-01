@@ -1,0 +1,28 @@
+{
+  "slug": "sunderland",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Silksworth parkrun",
+        "area": "Silksworth Sports Centre, Sunderland",
+        "distanceKm": 2.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fulwell Quarry parkrun",
+        "area": "Fulwell Quarry",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Herrington Country parkrun",
+        "area": "Herrington Country Park",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "great-sankey",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Warrington parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 4.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sutton Manor parkrun",
+        "area": "Sutton Manor Colliery",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Widnes parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Phoenix parkrun",
+        "area": "Phoenix Park",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

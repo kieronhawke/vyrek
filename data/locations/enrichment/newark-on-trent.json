@@ -1,0 +1,21 @@
+{
+  "slug": "newark-on-trent",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Newark parkrun",
+        "area": "Sconce and Devon Park",
+        "distanceKm": 0.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brackenhurst Campus parkrun",
+        "area": "Brackenhurst Campus",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

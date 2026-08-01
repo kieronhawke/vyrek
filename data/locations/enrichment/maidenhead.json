@@ -1,0 +1,21 @@
+{
+  "slug": "maidenhead",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Maidenhead parkrun",
+        "area": "Braywick Park",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Higginson parkrun, Marlow",
+        "area": "Higginson Park,",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

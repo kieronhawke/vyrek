@@ -1,0 +1,28 @@
+{
+  "slug": "bishopstoke",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Itchen Valley Country parkrun",
+        "area": "Itchen Valley Country Park",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Eastleigh parkrun",
+        "area": "Fleming Park Old Golf Course, Eastleigh",
+        "distanceKm": 3.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southampton parkrun",
+        "area": "Southampton Common",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

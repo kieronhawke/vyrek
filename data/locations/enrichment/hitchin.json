@@ -1,0 +1,28 @@
+{
+  "slug": "hitchin",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Letchworth parkrun",
+        "area": "Grange Recreation Ground",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stevenage parkrun",
+        "area": "Six Hills Way",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Henlow Bridge Lakes parkrun",
+        "area": "Henlow Bridge Lakes",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

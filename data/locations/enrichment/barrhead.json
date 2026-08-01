@@ -1,0 +1,42 @@
+{
+  "slug": "barrhead",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Pollok parkrun, Glasgow",
+        "area": "Pollok Park, Glasgow",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Elder Park parkrun",
+        "area": "Elder Park",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Queen’s parkrun, Glasgow",
+        "area": "Queen’s Park",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Linwood parkrun",
+        "area": "ON-X Linwood",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Victoria parkrun, Glasgow",
+        "area": "Victoria Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

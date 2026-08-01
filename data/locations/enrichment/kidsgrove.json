@@ -1,0 +1,35 @@
+{
+  "slug": "kidsgrove",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Vale Park parkrun, Burslem",
+        "area": "Vale Park, Burslem",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Wammy parkrun",
+        "area": "The Wammy",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Congleton parkrun",
+        "area": "Astbury Mere",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hanley parkrun",
+        "area": "Hanley Park, Hanley",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

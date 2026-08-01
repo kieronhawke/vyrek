@@ -1,0 +1,28 @@
+{
+  "slug": "kilburn",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hampstead Heath parkrun",
+        "area": "Hampstead Heath",
+        "distanceKm": 1.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gladstone parkrun",
+        "area": "Gladstone Park, London",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wormwood Scrubs parkrun",
+        "area": "Wormwood Scrubs Park",
+        "distanceKm": 4.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -7,42 +7,42 @@
         "area": "Cardiff Blackweir",
         "distanceKm": 2.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Grangemoor parkrun",
         "area": "Cardiff",
         "distanceKm": 3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Tremorfa parkrun",
         "area": "Tremorfa Park",
         "distanceKm": 3.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Trelai Park parkrun",
         "area": "Trelai Park",
         "distanceKm": 3.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Llanishen Park parkrun",
         "area": "Llanishen Park",
         "distanceKm": 5.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Cosmeston Lakes parkrun",
         "area": "Cosmeston Lakes Country Park",
         "distanceKm": 6.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

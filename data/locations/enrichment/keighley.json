@@ -1,0 +1,35 @@
+{
+  "slug": "keighley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cliffe Castle parkrun",
+        "area": "Cliffe Castle Park",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Myrtle parkrun",
+        "area": "Myrtle Park",
+        "distanceKm": 5.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Roberts Park parkrun",
+        "area": "Roberts Park",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "East Holmes Field parkrun",
+        "area": "East Holmes Field, Ilkley",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

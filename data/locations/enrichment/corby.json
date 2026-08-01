@@ -1,0 +1,14 @@
+{
+  "slug": "corby",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Corby parkrun",
+        "area": "West Glebe Recreation Ground",
+        "distanceKm": 0.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

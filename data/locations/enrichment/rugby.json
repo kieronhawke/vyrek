@@ -1,0 +1,14 @@
+{
+  "slug": "rugby",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Rugby parkrun",
+        "area": "Whinfield Recreation Ground",
+        "distanceKm": 1.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

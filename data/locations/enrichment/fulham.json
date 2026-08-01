@@ -7,28 +7,28 @@
         "area": "Bishops Park",
         "distanceKm": 0.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Battersea parkrun",
         "area": "Battersea",
         "distanceKm": 3.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Wimbledon Common parkrun",
         "area": "Wimbledon Common",
         "distanceKm": 4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Clapham Common parkrun",
         "area": "Clapham Common",
         "distanceKm": 4.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

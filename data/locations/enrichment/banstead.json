@@ -1,0 +1,56 @@
+{
+  "slug": "banstead",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Banstead Woods parkrun",
+        "area": "Banstead Woods, Coulsdon",
+        "distanceKm": 2.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nonsuch parkrun",
+        "area": "Nonsuch Park, Cheam",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Roundshaw Downs parkrun",
+        "area": "Roundshaw Downs, near South Croydon",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Morden parkrun",
+        "area": "Morden",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Riddlesdown parkrun",
+        "area": "Riddlesdown, Warlingham",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Reigate Priory parkrun",
+        "area": "Priory Park",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lloyd parkrun, Croydon",
+        "area": "Lloyd Park, Croydon",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "garston",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Ellesmere Port parkrun",
+        "area": "Whitby Park",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Princes parkrun, Liverpool",
+        "area": "Princes Park, Liverpool",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

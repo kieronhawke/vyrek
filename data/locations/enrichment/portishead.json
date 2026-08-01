@@ -1,0 +1,28 @@
+{
+  "slug": "portishead",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Clevedon Salthouse Fields parkrun",
+        "area": "Clevedon Salthouse Park",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Blaise Castle parkrun",
+        "area": "Blaise Castle Estate",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ashton Court parkrun",
+        "area": "Ashton Court, Bristol",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "keynsham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Somerdale Pavilion parkrun",
+        "area": "Somerdale Pavilion",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pomphrey Hill parkrun",
+        "area": "Pomphrey Hill Playing Fields",
+        "distanceKm": 7.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Eastville parkrun",
+        "area": "Eastville Park",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brickfields Park parkrun",
+        "area": "Brickfields Park",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "bury",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Clarence parkrun",
+        "area": "Clarence Park",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bolton parkrun",
+        "area": "Leverhulme Park, Bolton",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Heaton parkrun",
+        "area": "Heaton Park, Manchester",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "formby",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Crosby parkrun",
+        "area": "Crosby Leisure Centre",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kew Woods parkrun",
+        "area": "Kew Woods",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

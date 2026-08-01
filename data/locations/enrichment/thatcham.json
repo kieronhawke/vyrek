@@ -1,0 +1,21 @@
+{
+  "slug": "thatcham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Greenham Common parkrun, Newbury",
+        "area": "Greenham Common, Newbury",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Victoria Park parkrun, Newbury",
+        "area": "Victoria Park, Newbury",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "braunstone",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Braunstone parkrun",
+        "area": "Braunstone, Leicester",
+        "distanceKm": 0.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leicester Victoria parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 3.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Abbey Park parkrun",
+        "area": "Abbey Park",
+        "distanceKm": 4.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Watermead Country Park parkrun",
+        "area": "Watermead Country Park",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

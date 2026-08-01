@@ -1,0 +1,42 @@
+{
+  "slug": "hatfield",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Stanborough parkrun",
+        "area": "Stanborough",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oaklands College parkrun",
+        "area": "Oaklands College",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jersey Farm parkrun",
+        "area": "Jersey Farm Woodland Park",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Panshanger parkrun",
+        "area": "Panshanger Park",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St Albans parkrun",
+        "area": "Verulam Park, St Albans",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

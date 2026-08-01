@@ -1,0 +1,35 @@
+{
+  "slug": "guisborough",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Flatts Lane parkrun",
+        "area": "Flatts Lane Woodland Country Park",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Marshall Drive parkrun, Brotton",
+        "area": "Marshall Playing Field",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Redcar parkrun",
+        "area": "Locke Park, Redcar",
+        "distanceKm": 9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stewart parkrun, Middlesbrough",
+        "area": "Stewart Park, Middlesbrough",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

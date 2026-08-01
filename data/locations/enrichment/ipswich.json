@@ -7,21 +7,21 @@
         "area": "Christchurch Park",
         "distanceKm": 0.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Kesgrave parkrun",
         "area": "Kesgrave",
         "distanceKm": 7.2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Alton Water parkrun",
         "area": "Alton Water Reservoir",
         "distanceKm": 9.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

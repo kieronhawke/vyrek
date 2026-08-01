@@ -1,0 +1,63 @@
+{
+  "slug": "hampton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bushy parkrun",
+        "area": "Bushy Park, Teddington",
+        "distanceKm": 2.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crane Park parkrun",
+        "area": "Crane Park, Twickenham",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hanworth parkrun",
+        "area": "Hanworth Park",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hazelwood parkrun",
+        "area": "Hazelwood Centre",
+        "distanceKm": 3.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kingston parkrun",
+        "area": "Kingston Riverside",
+        "distanceKm": 4.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bedfont Lakes parkrun",
+        "area": "Bedfont Lakes Country Park",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Richmond parkrun",
+        "area": "Richmond Park, Richmond upon Thames",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Old Deer Park parkrun",
+        "area": "Old Deer Park, Richmond",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

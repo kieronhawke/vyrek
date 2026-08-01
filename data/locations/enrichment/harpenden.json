@@ -1,0 +1,42 @@
+{
+  "slug": "harpenden",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Rothamsted Park parkrun",
+        "area": "Rothamsted Park",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jersey Farm parkrun",
+        "area": "Jersey Farm Woodland Park",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St Albans parkrun",
+        "area": "Verulam Park, St Albans",
+        "distanceKm": 7.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oaklands College parkrun",
+        "area": "Oaklands College",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Luton Wardown parkrun",
+        "area": "Wardown Park",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "ascot",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bracknell parkrun",
+        "area": "Great Hollands Recreation Ground",
+        "distanceKm": 7.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Egham Orbit parkrun",
+        "area": "Egham Orbit",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

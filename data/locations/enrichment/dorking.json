@@ -1,0 +1,21 @@
+{
+  "slug": "dorking",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Mole Valley parkrun",
+        "area": "Denbies Wine Estate",
+        "distanceKm": 1.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Reigate Priory parkrun",
+        "area": "Priory Park",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

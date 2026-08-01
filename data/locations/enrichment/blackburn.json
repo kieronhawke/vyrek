@@ -1,0 +1,21 @@
+{
+  "slug": "blackburn",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Witton parkrun",
+        "area": "Witton Country Park",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hyndburn parkrun",
+        "area": "Wilson Playing Fields",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

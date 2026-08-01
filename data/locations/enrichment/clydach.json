@@ -1,0 +1,28 @@
+{
+  "slug": "clydach",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Parc Coed Gwilym parkrun",
+        "area": "Parc Coed Gwilym",
+        "distanceKm": 2.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gnoll parkrun",
+        "area": "Gnoll Estate Country Park",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Swansea Bay parkrun",
+        "area": "Swansea Bay",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

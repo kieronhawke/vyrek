@@ -1,0 +1,42 @@
+{
+  "slug": "peacehaven",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Peacehaven parkrun",
+        "area": "Centenary Park",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Seaford Beach parkrun",
+        "area": "Newhaven and Seaford Sailing Club",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "East Brighton parkrun",
+        "area": "East Brighton Park",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bevendean Down parkrun",
+        "area": "Bevendean Down",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Malling Rec parkrun",
+        "area": "Malling Rec",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "slug": "borehamwood",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Aldenham parkrun",
+        "area": "Aldenham Country Park",
+        "distanceKm": 2.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Canons Park parkrun",
+        "area": "Canons Park",
+        "distanceKm": 4.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sunny Hill parkrun",
+        "area": "Sunny Hill Park",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Oxhey parkrun",
+        "area": "South Oxhey Playing Fields",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oak Hill parkrun",
+        "area": "Oak Hill Park, East Barnet",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cassiobury parkrun",
+        "area": "Cassiobury Park",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Harrow parkrun",
+        "area": "Harrow Recreation Ground",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Holywell King George V Playing Fields parkrun",
+        "area": "Holywell King George V Playing Fields",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

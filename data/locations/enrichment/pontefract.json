@@ -1,0 +1,21 @@
+{
+  "slug": "pontefract",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Pontefract parkrun",
+        "area": "Pontefract Racecourse",
+        "distanceKm": 1.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nostell parkrun",
+        "area": "Nostell Priory",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

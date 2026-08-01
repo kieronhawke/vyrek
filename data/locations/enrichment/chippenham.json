@@ -1,0 +1,21 @@
+{
+  "slug": "chippenham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Chippenham parkrun",
+        "area": "Monkton Park",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Melksham parkrun",
+        "area": "King George V Park",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

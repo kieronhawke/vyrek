@@ -1,0 +1,56 @@
+{
+  "slug": "chertsey",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Homewood parkrun",
+        "area": "Ottershaw Memorial Fields",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Egham Orbit parkrun",
+        "area": "Egham Orbit",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brooklands parkrun",
+        "area": "Brooklands Community Park",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hazelwood parkrun",
+        "area": "Hazelwood Centre",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bedfont Lakes parkrun",
+        "area": "Bedfont Lakes Country Park",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woking parkrun",
+        "area": "Woking Park",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hanworth parkrun",
+        "area": "Hanworth Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

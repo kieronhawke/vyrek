@@ -1,0 +1,56 @@
+{
+  "slug": "cambuslang",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cuningar Loop parkrun",
+        "area": "Cuningar Loop",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tollcross parkrun, Glasgow",
+        "area": "Tollcross",
+        "distanceKm": 4.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Queen’s parkrun, Glasgow",
+        "area": "Queen’s Park",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Strathclyde parkrun",
+        "area": "Strathclyde Country Park",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Drumpellier Country parkrun",
+        "area": "Drumpellier Country Park",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pollok parkrun, Glasgow",
+        "area": "Pollok Park, Glasgow",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Springburn parkrun, Glasgow",
+        "area": "Springburn Park",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

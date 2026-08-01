@@ -1,0 +1,42 @@
+{
+  "slug": "royton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Chadderton Hall parkrun",
+        "area": "Chadderton Hall Park",
+        "distanceKm": 2.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oldham parkrun",
+        "area": "Alexandra Park, Oldham",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stamford Park parkrun",
+        "area": "Stamford Park",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Heaton parkrun",
+        "area": "Heaton Park, Manchester",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Philips Park parkrun",
+        "area": "Philips Park",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

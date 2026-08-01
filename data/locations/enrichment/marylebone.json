@@ -7,21 +7,21 @@
         "area": "Hampstead Heath",
         "distanceKm": 4.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Highbury Fields parkrun",
         "area": "Highbury Fields, Highbury",
         "distanceKm": 4.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Battersea parkrun",
         "area": "Battersea",
         "distanceKm": 4.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

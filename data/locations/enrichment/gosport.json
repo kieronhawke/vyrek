@@ -1,0 +1,49 @@
+{
+  "slug": "gosport",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Lee-on-the-Solent parkrun",
+        "area": "Lee-on-the-Solent",
+        "distanceKm": 5.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southsea parkrun",
+        "area": "Southsea Esplanade",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Great Salterns parkrun",
+        "area": "Great Salterns Recreation Ground",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Portsmouth Lakeside parkrun",
+        "area": "Lakeside North Harbour",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fareham parkrun",
+        "area": "Cams Hall Estate",
+        "distanceKm": 6.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Medina I.O.W. parkrun",
+        "area": "Seaclose Park, Medina, I.O.W.",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

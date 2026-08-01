@@ -1,0 +1,35 @@
+{
+  "slug": "bedlington",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Blyth Links parkrun",
+        "area": "Blyth Links",
+        "distanceKm": 6.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ashington Community Woodland parkrun",
+        "area": "Ashington Community Woodland",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Carlisle Park parkrun, Morpeth",
+        "area": "Carlisle Park",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Newbiggin-by-the-Sea parkrun",
+        "area": "Newbiggin Promenade",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

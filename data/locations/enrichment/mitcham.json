@@ -1,0 +1,63 @@
+{
+  "slug": "mitcham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Morden parkrun",
+        "area": "Morden",
+        "distanceKm": 3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tooting Common parkrun",
+        "area": "Tooting Common",
+        "distanceKm": 3.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clapham Common parkrun",
+        "area": "Clapham Common",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wimbledon Common parkrun",
+        "area": "Wimbledon Common",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Roundshaw Downs parkrun",
+        "area": "Roundshaw Downs, near South Croydon",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nonsuch parkrun",
+        "area": "Nonsuch Park, Cheam",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brockwell parkrun, Herne Hill",
+        "area": "Brockwell Park, Herne Hill",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crystal Palace parkrun",
+        "area": "Crystal Palace Park",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

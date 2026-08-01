@@ -1,0 +1,21 @@
+{
+  "slug": "brymbo",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Erddig parkrun",
+        "area": "Erddig Hall",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Park in the Past parkrun",
+        "area": "Park in the Past",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

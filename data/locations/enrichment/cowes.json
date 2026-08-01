@@ -1,0 +1,14 @@
+{
+  "slug": "cowes",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Lee-on-the-Solent parkrun",
+        "area": "Lee-on-the-Solent",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "weston-super-mare",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Marine Parade parkrun",
+        "area": "Marine Parade",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

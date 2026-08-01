@@ -1,0 +1,21 @@
+{
+  "slug": "ayr",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Ayr parkrun",
+        "area": "Rozelle Park",
+        "distanceKm": 3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Troon parkrun",
+        "area": "South Beach Esplanade",
+        "distanceKm": 9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

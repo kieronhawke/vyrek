@@ -1,0 +1,35 @@
+{
+  "slug": "woking",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Woking parkrun",
+        "area": "Woking Park",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Homewood parkrun",
+        "area": "Ottershaw Memorial Fields",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brooklands parkrun",
+        "area": "Brooklands Community Park",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Guildford parkrun",
+        "area": "Stoke Park, Guildford",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -7,21 +7,21 @@
         "area": "Wimbledon Common",
         "distanceKm": 2.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Morden parkrun",
         "area": "Morden",
         "distanceKm": 3.2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Tooting Common parkrun",
         "area": "Tooting Common",
         "distanceKm": 4.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

@@ -1,0 +1,28 @@
+{
+  "slug": "newton-aycliffe",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hackworth parkrun",
+        "area": "Hackworth Park",
+        "distanceKm": 4.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sedgefield parkrun",
+        "area": "Hardwick Park, Sedgefield",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jubilee parkrun",
+        "area": "Jubilee Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

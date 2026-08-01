@@ -1,0 +1,42 @@
+{
+  "slug": "paisley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Linwood parkrun",
+        "area": "ON-X Linwood",
+        "distanceKm": 5.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pollok parkrun, Glasgow",
+        "area": "Pollok Park, Glasgow",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Elder Park parkrun",
+        "area": "Elder Park",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Victoria parkrun, Glasgow",
+        "area": "Victoria Park",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Erskine Waterfront parkrun",
+        "area": "Erskine Waterfront",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

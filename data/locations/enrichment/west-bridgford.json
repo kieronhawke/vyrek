@@ -1,0 +1,63 @@
+{
+  "slug": "west-bridgford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Victoria Embankment parkrun, Nottingham",
+        "area": "Victoria Embankment",
+        "distanceKm": 1.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Colwick parkrun",
+        "area": "Colwick Country Park, Nottingham",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Holme Pierrepont parkrun",
+        "area": "Holme Pierrepont Country Park",
+        "distanceKm": 2.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clifton parkrun",
+        "area": "Clifton Playing Fields",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Forest Rec parkrun",
+        "area": "Forest Recreation Gound, Nottingham",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rushcliffe parkrun",
+        "area": "Rushcliffe Country Park",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beeston parkrun",
+        "area": "Weirfields Recreation Ground",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wollaton Hall parkrun",
+        "area": "Wollaton Hall and Deer Park",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

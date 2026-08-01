@@ -1,0 +1,49 @@
+{
+  "slug": "yateley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Sandhurst Memorial parkrun",
+        "area": "Sandhurst Memorial Park",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "California Country parkrun",
+        "area": "California Country Park",
+        "distanceKm": 4.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bracknell parkrun",
+        "area": "Great Hollands Recreation Ground",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Edenbrook Country parkrun",
+        "area": "Edenbrook Country Park",
+        "distanceKm": 7.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Frimley Lodge parkrun",
+        "area": "Frimley Lodge Park",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rushmoor parkrun",
+        "area": "Queens Avenue",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

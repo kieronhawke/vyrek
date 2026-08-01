@@ -1,0 +1,49 @@
+{
+  "slug": "rochford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hockley Woods parkrun",
+        "area": "Hockley Woods",
+        "distanceKm": 4.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chalkwell Beach parkrun",
+        "area": "Chalkwell Beach",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hadleigh parkrun, Essex",
+        "area": "Hadleigh Country Park",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Woodham Ferrers parkrun",
+        "area": "Marsh Farm Country Park",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southend parkrun",
+        "area": "Gunners Park",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burnham-on-Crouch parkrun",
+        "area": "Riverside Country Park",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "bebington",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Birkenhead parkrun",
+        "area": "Birkenhead Park",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Princes parkrun, Liverpool",
+        "area": "Princes Park, Liverpool",
+        "distanceKm": 5.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

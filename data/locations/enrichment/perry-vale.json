@@ -1,0 +1,63 @@
+{
+  "slug": "perry-vale",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Crystal Palace parkrun",
+        "area": "Crystal Palace Park",
+        "distanceKm": 2.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peckham Rye parkrun",
+        "area": "Peckham Rye Park",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beckenham Place parkrun",
+        "area": "Beckenham Place Park",
+        "distanceKm": 2.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dulwich parkrun",
+        "area": "Dulwich Park, Dulwich",
+        "distanceKm": 2.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Catford parkrun",
+        "area": "Mountsfield Park",
+        "distanceKm": 2.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hilly Fields parkrun",
+        "area": "Hilly Fields",
+        "distanceKm": 3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brockwell parkrun, Herne Hill",
+        "area": "Brockwell Park, Herne Hill",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Norwood parkrun",
+        "area": "South Norwood Country Park",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

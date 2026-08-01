@@ -1,0 +1,49 @@
+{
+  "slug": "south-norwood",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "South Norwood parkrun",
+        "area": "South Norwood Country Park",
+        "distanceKm": 1.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crystal Palace parkrun",
+        "area": "Crystal Palace Park",
+        "distanceKm": 2.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bethlem Royal Hospital parkrun",
+        "area": "Bethlem Royal Hospital",
+        "distanceKm": 3.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lloyd parkrun, Croydon",
+        "area": "Lloyd Park, Croydon",
+        "distanceKm": 3.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beckenham Place parkrun",
+        "area": "Beckenham Place Park",
+        "distanceKm": 4.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dulwich parkrun",
+        "area": "Dulwich Park, Dulwich",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

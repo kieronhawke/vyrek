@@ -1,0 +1,14 @@
+{
+  "slug": "saint-andrews",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "St Andrews parkrun",
+        "area": "Craigtoun Country Park",
+        "distanceKm": 3.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

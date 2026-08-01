@@ -1,0 +1,28 @@
+{
+  "slug": "burntwood",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Chasewater parkrun",
+        "area": "Chasewater Country Park",
+        "distanceKm": 2.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beacon parkrun",
+        "area": "Beacon Park",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cannock Chase parkrun",
+        "area": "Cannock Chase",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

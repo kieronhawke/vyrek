@@ -1,0 +1,35 @@
+{
+  "slug": "fleet",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Edenbrook Country parkrun",
+        "area": "Edenbrook Country Park",
+        "distanceKm": 2.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rushmoor parkrun",
+        "area": "Queens Avenue",
+        "distanceKm": 5.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sandhurst Memorial parkrun",
+        "area": "Sandhurst Memorial Park",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Frimley Lodge parkrun",
+        "area": "Frimley Lodge Park",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "ilkeston",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Shipley Country parkrun",
+        "area": "Shipley Country Park",
+        "distanceKm": 5.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wollaton Hall parkrun",
+        "area": "Wollaton Hall and Deer Park",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Long Eaton parkrun",
+        "area": "West Park Leisure Centre",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beeston parkrun",
+        "area": "Weirfields Recreation Ground",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

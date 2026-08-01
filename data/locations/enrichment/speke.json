@@ -1,0 +1,35 @@
+{
+  "slug": "speke",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Knowsley parkrun",
+        "area": "Stadt Moers Park",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Widnes parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ellesmere Port parkrun",
+        "area": "Whitby Park",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Princes parkrun, Liverpool",
+        "area": "Princes Park, Liverpool",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

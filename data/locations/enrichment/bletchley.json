@@ -1,0 +1,28 @@
+{
+  "slug": "bletchley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Milton Keynes parkrun",
+        "area": "Willen Lake, Milton Keynes",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rushmere parkrun",
+        "area": "Rushmere Country Park",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Linford Wood parkrun",
+        "area": "Linford Wood",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "larne",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Larne parkrun",
+        "area": "Carnfunnock Country Park",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

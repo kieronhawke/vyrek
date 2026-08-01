@@ -1,0 +1,21 @@
+{
+  "slug": "belper",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Shipley Country parkrun",
+        "area": "Shipley Country Park",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Markeaton parkrun",
+        "area": "Markeaton",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

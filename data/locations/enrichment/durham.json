@@ -1,0 +1,42 @@
+{
+  "slug": "durham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Durham parkrun",
+        "area": "Graham Sports Centre, Durham",
+        "distanceKm": 1.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ushaw Historic House parkrun",
+        "area": "Ushaw Historic House",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Riverside parkrun",
+        "area": "Riverside Park, Chester-le-Street",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jubilee parkrun",
+        "area": "Jubilee Park",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Elemore Park parkrun",
+        "area": "Elemore Park",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

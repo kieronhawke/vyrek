@@ -1,0 +1,21 @@
+{
+  "slug": "braintree",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Great Notley parkrun",
+        "area": "Great Notley Country Park",
+        "distanceKm": 3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Markshall parkrun",
+        "area": "Markshall",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

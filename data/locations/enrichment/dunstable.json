@@ -1,0 +1,28 @@
+{
+  "slug": "dunstable",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Houghton Hall parkrun",
+        "area": "Houghton Hall Park",
+        "distanceKm": 1.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dunstable Downs parkrun",
+        "area": "Dunstable Downs",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Luton Wardown parkrun",
+        "area": "Wardown Park",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

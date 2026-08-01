@@ -1,0 +1,49 @@
+{
+  "slug": "washington",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Herrington Country parkrun",
+        "area": "Herrington Country Park",
+        "distanceKm": 3.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Windy Nook parkrun",
+        "area": "Windy Nook Nature Park",
+        "distanceKm": 5.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Riverside parkrun",
+        "area": "Riverside Park, Chester-le-Street",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Silksworth parkrun",
+        "area": "Silksworth Sports Centre, Sunderland",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gateshead parkrun",
+        "area": " Saltwell Park, Gateshead",
+        "distanceKm": 7.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fulwell Quarry parkrun",
+        "area": "Fulwell Quarry",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "harlow",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Harlow parkrun",
+        "area": "Harlow Town Park",
+        "distanceKm": 0.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Barclay parkrun",
+        "area": "Barclay Park",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

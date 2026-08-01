@@ -1,0 +1,28 @@
+{
+  "slug": "consett",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Blackhill parkrun",
+        "area": "Blackhill and Consett Heritage Park",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chopwell Wood parkrun",
+        "area": "Chopwell Wood",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oakey Park parkrun",
+        "area": "Oakey Park",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

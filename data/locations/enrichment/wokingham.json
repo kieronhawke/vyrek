@@ -1,0 +1,49 @@
+{
+  "slug": "wokingham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "California Country parkrun",
+        "area": "California Country Park",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dinton Pastures parkrun",
+        "area": "Dinton Pastures Country Park",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bracknell parkrun",
+        "area": "Great Hollands Recreation Ground",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woodley parkrun",
+        "area": "Woodford Park",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sandhurst Memorial parkrun",
+        "area": "Sandhurst Memorial Park",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Reading parkrun",
+        "area": "Thames Riverside, Reading",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

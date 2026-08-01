@@ -1,0 +1,14 @@
+{
+  "slug": "march",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "March parkrun",
+        "area": "Williamson Park",
+        "distanceKm": 0.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "cwmbran",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cwmbran parkrun",
+        "area": "Northfields Recreation Ground",
+        "distanceKm": 1.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pontypool parkrun",
+        "area": "Pontypool Park",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Riverfront parkrun",
+        "area": "The Riverfront",
+        "distanceKm": 7.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

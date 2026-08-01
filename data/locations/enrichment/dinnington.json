@@ -1,0 +1,14 @@
+{
+  "slug": "dinnington",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Rother Valley parkrun",
+        "area": "Rother Valley Country Park",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

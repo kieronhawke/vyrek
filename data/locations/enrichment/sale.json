@@ -1,0 +1,63 @@
+{
+  "slug": "sale",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Sale Water parkrun",
+        "area": "Sale Water Park",
+        "distanceKm": 2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wythenshawe parkrun",
+        "area": "Wythenshawe Park, Wythenshawe",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stretford parkrun",
+        "area": "Longford Park",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kingsway Park parkrun, Urmston",
+        "area": "Kingsway Park, Urmston",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Alexandra parkrun, Moss Side",
+        "area": "Alexandra Park",
+        "distanceKm": 5.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fletcher Moss parkrun",
+        "area": "Fletcher Moss Park",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Manchester parkrun",
+        "area": "Platt Fields Park",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peel parkrun",
+        "area": "Peel Park",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

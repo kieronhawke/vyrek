@@ -1,0 +1,14 @@
+{
+  "slug": "weymouth",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Weymouth parkrun",
+        "area": "Lodmoor County Park",
+        "distanceKm": 1.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

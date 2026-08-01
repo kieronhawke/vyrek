@@ -7,35 +7,35 @@
         "area": "Hackney Marshes",
         "distanceKm": 2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Mile End parkrun",
         "area": "Mile End Park, London",
         "distanceKm": 3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Highbury Fields parkrun",
         "area": "Highbury Fields, Highbury",
         "distanceKm": 3.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Finsbury parkrun",
         "area": "Finsbury Park",
         "distanceKm": 4.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Wanstead Flats parkrun",
         "area": "Wanstead Flats, Epping Forest",
         "distanceKm": 4.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

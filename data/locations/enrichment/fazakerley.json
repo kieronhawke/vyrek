@@ -1,0 +1,35 @@
+{
+  "slug": "fazakerley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Croxteth Hall parkrun",
+        "area": "Croxteth Hall Country Park",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crosby parkrun",
+        "area": "Crosby Leisure Centre",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Princes parkrun, Liverpool",
+        "area": "Princes Park, Liverpool",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Knowsley parkrun",
+        "area": "Stadt Moers Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "bedworth",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bedworth parkrun",
+        "area": "Miners Welfare Park",
+        "distanceKm": 0.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Holbrooks parkrun",
+        "area": "Holbrooks Park",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hastings High School parkrun",
+        "area": "Hastings High School",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

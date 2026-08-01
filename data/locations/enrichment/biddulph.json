@@ -1,0 +1,21 @@
+{
+  "slug": "biddulph",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Congleton parkrun",
+        "area": "Astbury Mere",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Vale Park parkrun, Burslem",
+        "area": "Vale Park, Burslem",
+        "distanceKm": 7.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

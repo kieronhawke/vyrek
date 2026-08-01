@@ -1,0 +1,21 @@
+{
+  "slug": "peterborough",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Ferry Meadows parkrun",
+        "area": "Ferry Meadows Country Park",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Manor Field parkrun, Whittlesey",
+        "area": "Manor Field (Manor Leisure Centre)",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

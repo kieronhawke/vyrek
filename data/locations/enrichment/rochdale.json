@@ -1,0 +1,35 @@
+{
+  "slug": "rochdale",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Watergrove parkrun, Rochdale",
+        "area": "Watergrove Reservoir",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chadderton Hall parkrun",
+        "area": "Chadderton Hall Park",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clarence parkrun",
+        "area": "Clarence Park",
+        "distanceKm": 9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oldham parkrun",
+        "area": "Alexandra Park, Oldham",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

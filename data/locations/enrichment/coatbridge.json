@@ -1,0 +1,35 @@
+{
+  "slug": "coatbridge",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Drumpellier Country parkrun",
+        "area": "Drumpellier Country Park",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Strathclyde parkrun",
+        "area": "Strathclyde Country Park",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Palacerigg Country parkrun",
+        "area": "Palacerigg Country Park",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tollcross parkrun, Glasgow",
+        "area": "Tollcross",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

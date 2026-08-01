@@ -1,0 +1,35 @@
+{
+  "slug": "swadlincote",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Coronation Park parkrun",
+        "area": "Coronation Park",
+        "distanceKm": 2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Conkers parkrun",
+        "area": "Conkers Park",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rosliston parkrun",
+        "area": "Rosliston Forestry Centre",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Battlestead Croft parkrun",
+        "area": "Battlestead Croft",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

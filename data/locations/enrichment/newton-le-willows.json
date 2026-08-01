@@ -1,0 +1,35 @@
+{
+  "slug": "newton-le-willows",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Pennington Flash parkrun",
+        "area": "Pennington Flash",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Warrington parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sutton Manor parkrun",
+        "area": "Sutton Manor Colliery",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St Helens parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

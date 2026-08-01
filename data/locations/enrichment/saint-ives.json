@@ -1,0 +1,21 @@
+{
+  "slug": "saint-ives",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Frank’s Farm parkrun",
+        "area": "Frank’s Farm",
+        "distanceKm": 9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Huntingdon parkrun",
+        "area": "Huntingdon",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "slug": "west-bromwich",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Sandwell Valley parkrun",
+        "area": "Sandwell Park Farm",
+        "distanceKm": 1.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brunswick Park parkrun",
+        "area": "Brunswick Park",
+        "distanceKm": 4.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Perry Hall parkrun",
+        "area": "Perry Hall Park",
+        "distanceKm": 5.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Edgbaston Reservoir parkrun",
+        "area": "Edgbaston Reservoir",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Walsall Arboretum parkrun",
+        "area": "Walsall Arboretum",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woodgate Valley Country Park parkrun",
+        "area": "Woodgate Valley Country Park",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cannon Hill parkrun, Birmingham",
+        "area": "Cannon Hill, Birmingham",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "East Park parkrun",
+        "area": "East Park",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

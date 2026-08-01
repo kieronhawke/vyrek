@@ -1,0 +1,21 @@
+{
+  "slug": "redcar",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Redcar parkrun",
+        "area": "Locke Park, Redcar",
+        "distanceKm": 1.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Marshall Drive parkrun, Brotton",
+        "area": "Marshall Playing Field",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "mexborough",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Rotherham parkrun",
+        "area": "Rotherham",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cusworth Hall parkrun",
+        "area": "Cusworth Hall Museum & Park",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

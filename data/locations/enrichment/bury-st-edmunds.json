@@ -1,0 +1,21 @@
+{
+  "slug": "bury-st-edmunds",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bury St Edmunds parkrun",
+        "area": "Nowton Park",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "West Stow Country parkrun",
+        "area": "West Stow Country",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

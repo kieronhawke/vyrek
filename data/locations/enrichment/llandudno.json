@@ -1,0 +1,21 @@
+{
+  "slug": "llandudno",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Conwy parkrun",
+        "area": "Conwy Cob, Llandudno Junction, Conwy",
+        "distanceKm": 4.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Y Promenâd parkrun, Llandrillo-yn-Rhos",
+        "area": "Y Promenâd, Llandrillo-yn-Rhos",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

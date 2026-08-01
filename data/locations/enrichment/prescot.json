@@ -1,0 +1,42 @@
+{
+  "slug": "prescot",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Knowsley parkrun",
+        "area": "Stadt Moers Park",
+        "distanceKm": 2.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sutton Manor parkrun",
+        "area": "Sutton Manor Colliery",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St Helens parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 5.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Croxteth Hall parkrun",
+        "area": "Croxteth Hall Country Park",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Widnes parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 7.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

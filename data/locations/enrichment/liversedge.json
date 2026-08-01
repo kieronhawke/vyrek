@@ -1,0 +1,35 @@
+{
+  "slug": "liversedge",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Dewsbury parkrun",
+        "area": "Crow Nest Park, Dewsbury",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oakwell Hall parkrun",
+        "area": "Oakwell Hall Country Park",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bowling Park parkrun",
+        "area": "Bowling Park",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Huddersfield parkrun",
+        "area": "Greenhead Park, Huddersfield",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

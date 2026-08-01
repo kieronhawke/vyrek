@@ -1,0 +1,49 @@
+{
+  "slug": "wednesbury",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Brunswick Park parkrun",
+        "area": "Brunswick Park",
+        "distanceKm": 1.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sandwell Valley parkrun",
+        "area": "Sandwell Park Farm",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Walsall Arboretum parkrun",
+        "area": "Walsall Arboretum",
+        "distanceKm": 5.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "East Park parkrun",
+        "area": "East Park",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Perry Hall parkrun",
+        "area": "Perry Hall Park",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wolverhampton parkrun",
+        "area": "West Park",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

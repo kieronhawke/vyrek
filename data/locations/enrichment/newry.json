@@ -1,0 +1,14 @@
+{
+  "slug": "newry",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Newry Greenway parkrun",
+        "area": "Newry Greenway",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

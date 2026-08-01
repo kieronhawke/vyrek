@@ -1,0 +1,49 @@
+{
+  "slug": "irlam",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Kingsway Park parkrun, Urmston",
+        "area": "Kingsway Park, Urmston",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Worsley Woods parkrun",
+        "area": "Worsley Woods, Salford",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sale Water parkrun",
+        "area": "Sale Water Park",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stretford parkrun",
+        "area": "Longford Park",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pennington Flash parkrun",
+        "area": "Pennington Flash",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wythenshawe parkrun",
+        "area": "Wythenshawe Park, Wythenshawe",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

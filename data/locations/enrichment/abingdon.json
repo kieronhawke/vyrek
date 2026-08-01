@@ -1,0 +1,35 @@
+{
+  "slug": "abingdon",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Abingdon parkrun",
+        "area": "Rye Meadow, Abingdon",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Didcot parkrun",
+        "area": "Ladygrove Park",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Harcourt Hill parkrun",
+        "area": "Harcourt Hill Campus",
+        "distanceKm": 7.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Horspath parkrun",
+        "area": "Horspath Sports Ground & Athletic Track",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

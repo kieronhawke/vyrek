@@ -1,0 +1,35 @@
+{
+  "slug": "east-kilbride",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cuningar Loop parkrun",
+        "area": "Cuningar Loop",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tollcross parkrun, Glasgow",
+        "area": "Tollcross",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Strathclyde parkrun",
+        "area": "Strathclyde Country Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Queen’s parkrun, Glasgow",
+        "area": "Queen’s Park",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

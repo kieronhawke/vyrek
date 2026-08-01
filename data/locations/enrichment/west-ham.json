@@ -1,0 +1,63 @@
+{
+  "slug": "west-ham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Wanstead Flats parkrun",
+        "area": "Wanstead Flats, Epping Forest",
+        "distanceKm": 3.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beckton parkrun",
+        "area": "Beckton District Park South",
+        "distanceKm": 3.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Greenwich Peninsula parkrun",
+        "area": "Greenwich Peninsula",
+        "distanceKm": 3.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hackney Marshes parkrun",
+        "area": "Hackney Marshes",
+        "distanceKm": 3.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mile End parkrun",
+        "area": "Mile End Park, London",
+        "distanceKm": 3.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Barking parkrun",
+        "area": "Barking Park",
+        "distanceKm": 5.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Valentines parkrun",
+        "area": "Valentines Park, Redbridge",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thames Path parkrun, Woolwich",
+        "area": "Thames Path, Woolwich",
+        "distanceKm": 5.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

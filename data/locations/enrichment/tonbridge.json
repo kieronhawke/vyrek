@@ -1,0 +1,28 @@
+{
+  "slug": "tonbridge",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Tonbridge parkrun",
+        "area": "Juddians Rugby Club",
+        "distanceKm": 0.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Royal Tunbridge Wells parkrun",
+        "area": "Dunorlan Park",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kingdom parkrun",
+        "area": "Kingdom",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

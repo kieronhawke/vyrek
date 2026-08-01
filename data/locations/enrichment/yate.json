@@ -1,0 +1,28 @@
+{
+  "slug": "yate",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Chipping Sodbury parkrun",
+        "area": "The Ridings",
+        "distanceKm": 1.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pomphrey Hill parkrun",
+        "area": "Pomphrey Hill Playing Fields",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Three Brooks parkrun",
+        "area": "Three Brooks",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

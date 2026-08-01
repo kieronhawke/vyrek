@@ -1,0 +1,28 @@
+{
+  "slug": "darton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Barnsley parkrun",
+        "area": "Locke Park, Barnsley",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wakefield Thornes parkrun",
+        "area": "Thornes Park",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Penistone parkrun",
+        "area": "Penistone Show Ground",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

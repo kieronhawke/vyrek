@@ -1,0 +1,14 @@
+{
+  "slug": "haslingden",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hyndburn parkrun",
+        "area": "Wilson Playing Fields",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

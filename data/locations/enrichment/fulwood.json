@@ -1,0 +1,42 @@
+{
+  "slug": "fulwood",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Millhouses parkrun",
+        "area": "Millhouses Park",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Endcliffe parkrun",
+        "area": "Endcliffe Park, Sheffield",
+        "distanceKm": 3.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Graves parkrun",
+        "area": "Graves Park, Sheffield",
+        "distanceKm": 5.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hillsborough parkrun",
+        "area": "Hillsborough Park",
+        "distanceKm": 7.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sheffield Castle parkrun",
+        "area": "Manor Fields Park",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

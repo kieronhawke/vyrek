@@ -1,0 +1,21 @@
+{
+  "slug": "portadown",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Citypark parkrun, Craigavon",
+        "area": "Citypark Park, Craigavon",
+        "distanceKm": 4.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lurgan Park parkrun",
+        "area": "Lurgan Park",
+        "distanceKm": 9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

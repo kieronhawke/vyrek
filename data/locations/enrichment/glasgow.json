@@ -17,56 +17,56 @@
         "area": "Ruchill Park",
         "distanceKm": 3.2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Queen’s parkrun, Glasgow",
         "area": "Queen’s Park",
         "distanceKm": 3.2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Springburn parkrun, Glasgow",
         "area": "Springburn Park",
         "distanceKm": 3.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Cuningar Loop parkrun",
         "area": "Cuningar Loop",
         "distanceKm": 3.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Elder Park parkrun",
         "area": "Elder Park",
         "distanceKm": 4.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Tollcross parkrun, Glasgow",
         "area": "Tollcross",
         "distanceKm": 4.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Pollok parkrun, Glasgow",
         "area": "Pollok Park, Glasgow",
         "distanceKm": 4.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Victoria parkrun, Glasgow",
         "area": "Victoria Park",
         "distanceKm": 5.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

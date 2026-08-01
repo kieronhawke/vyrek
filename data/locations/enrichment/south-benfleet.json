@@ -1,0 +1,56 @@
+{
+  "slug": "south-benfleet",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hadleigh parkrun, Essex",
+        "area": "Hadleigh Country Park",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thorney Bay Beach parkrun",
+        "area": "Thorney Bay Beach",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Basildon parkrun",
+        "area": "Northlands Park",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wickford Memorial parkrun",
+        "area": "Wickford Memorial Park",
+        "distanceKm": 7.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hockley Woods parkrun",
+        "area": "Hockley Woods",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chalkwell Beach parkrun",
+        "area": "Chalkwell Beach",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Woodham Ferrers parkrun",
+        "area": "Marsh Farm Country Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

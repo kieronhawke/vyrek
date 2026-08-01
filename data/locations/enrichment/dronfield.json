@@ -1,0 +1,42 @@
+{
+  "slug": "dronfield",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Graves parkrun",
+        "area": "Graves Park, Sheffield",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Millhouses parkrun",
+        "area": "Millhouses Park",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sheffield Castle parkrun",
+        "area": "Manor Fields Park",
+        "distanceKm": 7.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Endcliffe parkrun",
+        "area": "Endcliffe Park, Sheffield",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Poolsbrook parkrun",
+        "area": "Poolsbrook Country Park",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

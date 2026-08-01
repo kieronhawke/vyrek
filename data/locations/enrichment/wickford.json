@@ -1,0 +1,49 @@
+{
+  "slug": "wickford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Wickford Memorial parkrun",
+        "area": "Wickford Memorial Park",
+        "distanceKm": 1.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Basildon parkrun",
+        "area": "Northlands Park",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Woodham Ferrers parkrun",
+        "area": "Marsh Farm Country Park",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Billericay parkrun",
+        "area": "Lake Meadows Park",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hadleigh parkrun, Essex",
+        "area": "Hadleigh Country Park",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hockley Woods parkrun",
+        "area": "Hockley Woods",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

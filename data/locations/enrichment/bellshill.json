@@ -1,0 +1,21 @@
+{
+  "slug": "bellshill",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Strathclyde parkrun",
+        "area": "Strathclyde Country Park",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Drumpellier Country parkrun",
+        "area": "Drumpellier Country Park",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

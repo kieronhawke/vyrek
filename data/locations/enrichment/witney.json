@@ -1,0 +1,21 @@
+{
+  "slug": "witney",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Witney parkrun",
+        "area": "West Witney Sports & Social Club",
+        "distanceKm": 2.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kilkenny Lane Country parkrun",
+        "area": "Kilkenny Lane Country",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

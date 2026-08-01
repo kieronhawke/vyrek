@@ -1,0 +1,28 @@
+{
+  "slug": "wigan",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Haigh Woodland parkrun",
+        "area": "Haigh Country Park",
+        "distanceKm": 3.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pennington Flash parkrun",
+        "area": "Pennington Flash",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tawd Valley parkrun",
+        "area": "Tawd Valley Park",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

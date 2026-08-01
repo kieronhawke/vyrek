@@ -1,0 +1,35 @@
+{
+  "slug": "mansfield",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Mansfield parkrun",
+        "area": "Mansfield",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Vicar Water Country Park parkrun",
+        "area": "Vicar Water Country Park",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brierley Forest parkrun",
+        "area": "Brierley Forest",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sherwood Pines parkrun",
+        "area": "Sherwood Pines Forest Park",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

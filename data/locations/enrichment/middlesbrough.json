@@ -7,21 +7,21 @@
         "area": "Albert Park, Middlesbrough",
         "distanceKm": 1.2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Stewart parkrun, Middlesbrough",
         "area": "Stewart Park, Middlesbrough",
         "distanceKm": 4.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Flatts Lane parkrun",
         "area": "Flatts Lane Woodland Country Park",
         "distanceKm": 6.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

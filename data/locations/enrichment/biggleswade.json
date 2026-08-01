@@ -1,0 +1,14 @@
+{
+  "slug": "biggleswade",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Henlow Bridge Lakes parkrun",
+        "area": "Henlow Bridge Lakes",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

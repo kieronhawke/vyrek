@@ -1,0 +1,14 @@
+{
+  "slug": "cleethorpes",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cleethorpes parkrun",
+        "area": "Cleethorpes Country Park",
+        "distanceKm": 2.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

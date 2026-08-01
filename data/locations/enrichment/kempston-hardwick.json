@@ -1,0 +1,35 @@
+{
+  "slug": "kempston-hardwick",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Great Denham parkrun",
+        "area": "Great Denham",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Millennium Country parkrun, Forest of Marston Vale",
+        "area": "Forest of Marston Vale - Millennium Coun",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jubilee parkrun, Bedford",
+        "area": "Jubilee, Bedford",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bedford parkrun",
+        "area": "Bedford Park, Bedford",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

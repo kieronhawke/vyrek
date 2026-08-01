@@ -1,0 +1,21 @@
+{
+  "slug": "newton-abbot",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Teignmouth Promenade parkrun",
+        "area": "Teignmouth Promenade",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Parke parkrun",
+        "area": "Parke Estate",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

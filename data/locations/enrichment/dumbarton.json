@@ -1,0 +1,21 @@
+{
+  "slug": "dumbarton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Levengrove parkrun",
+        "area": "Levengrove Park,",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Erskine Waterfront parkrun",
+        "area": "Erskine Waterfront",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

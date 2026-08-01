@@ -1,0 +1,42 @@
+{
+  "slug": "hoddesdon",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Barclay parkrun",
+        "area": "Barclay Park",
+        "distanceKm": 0.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Westmill parkrun",
+        "area": "Westmill Farm",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Harlow parkrun",
+        "area": "Harlow Town Park",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gunpowder parkrun",
+        "area": "Gunpowder Park, Waltham Abbey",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Panshanger parkrun",
+        "area": "Panshanger Park",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

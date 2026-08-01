@@ -1,0 +1,63 @@
+{
+  "slug": "abbey-wood",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Thames Path parkrun, Woolwich",
+        "area": "Thames Path, Woolwich",
+        "distanceKm": 2.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bexley parkrun",
+        "area": "Danson Park, Bexley",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Charlton parkrun",
+        "area": "Charlton Park",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Avery Hill parkrun",
+        "area": "Avery Hill Park, Greenwich",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beckton parkrun",
+        "area": "Beckton District Park South",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sutcliffe parkrun",
+        "area": "Sutcliffe Park Nature Reserve",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Barking parkrun",
+        "area": "Barking Park",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Foots Cray Meadows parkrun",
+        "area": "Foots Cray Meadows",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

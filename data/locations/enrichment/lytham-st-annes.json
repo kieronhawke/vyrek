@@ -1,0 +1,28 @@
+{
+  "slug": "lytham-st-annes",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Lytham Hall parkrun",
+        "area": "Lytham Hall",
+        "distanceKm": 1.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Blackpool parkrun",
+        "area": "Stanley Park",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southport parkrun",
+        "area": "Hesketh Park",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

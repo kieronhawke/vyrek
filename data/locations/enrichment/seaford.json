@@ -1,0 +1,21 @@
+{
+  "slug": "seaford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Seaford Beach parkrun",
+        "area": "Newhaven and Seaford Sailing Club",
+        "distanceKm": 1.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peacehaven parkrun",
+        "area": "Centenary Park",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

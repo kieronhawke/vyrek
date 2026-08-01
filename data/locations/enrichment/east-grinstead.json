@@ -1,0 +1,21 @@
+{
+  "slug": "east-grinstead",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "East Grinstead parkrun",
+        "area": "East Court",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wakehurst parkrun",
+        "area": "Wakehurst",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "evington",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Leicester Victoria parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 4.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Abbey Park parkrun",
+        "area": "Abbey Park",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Braunstone parkrun",
+        "area": "Braunstone, Leicester",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "earl-shilton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hastings High School parkrun",
+        "area": "Hastings High School",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Market Bosworth Country Park parkrun",
+        "area": "Market Bosworth Country Park",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

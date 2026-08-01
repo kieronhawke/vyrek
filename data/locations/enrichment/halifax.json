@@ -1,0 +1,35 @@
+{
+  "slug": "halifax",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Halifax parkrun",
+        "area": "Shroggs Park",
+        "distanceKm": 2.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Huddersfield parkrun",
+        "area": "Greenhead Park, Huddersfield",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Horton Park parkrun",
+        "area": "Horton Park",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bowling Park parkrun",
+        "area": "Bowling Park",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

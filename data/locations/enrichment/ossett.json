@@ -1,0 +1,35 @@
+{
+  "slug": "ossett",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Dewsbury parkrun",
+        "area": "Crow Nest Park, Dewsbury",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wakefield Thornes parkrun",
+        "area": "Thornes Park",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Middleton Woods parkrun",
+        "area": "Middleton Park",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oakwell Hall parkrun",
+        "area": "Oakwell Hall Country Park",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

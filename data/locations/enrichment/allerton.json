@@ -1,0 +1,28 @@
+{
+  "slug": "allerton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Princes parkrun, Liverpool",
+        "area": "Princes Park, Liverpool",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Knowsley parkrun",
+        "area": "Stadt Moers Park",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Croxteth Hall parkrun",
+        "area": "Croxteth Hall Country Park",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "godalming",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Broadwater parkrun",
+        "area": "Broadwater Park",
+        "distanceKm": 1.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Guildford parkrun",
+        "area": "Stoke Park, Guildford",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "torquay",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Torbay Velopark parkrun",
+        "area": "Torbay Velopark",
+        "distanceKm": 5.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Teignmouth Promenade parkrun",
+        "area": "Teignmouth Promenade",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

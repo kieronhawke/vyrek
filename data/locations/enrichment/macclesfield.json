@@ -1,0 +1,28 @@
+{
+  "slug": "macclesfield",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Macclesfield parkrun",
+        "area": "South Park",
+        "distanceKm": 1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Alderley Park parkrun",
+        "area": "Alderley Park",
+        "distanceKm": 7.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lyme Park parkrun",
+        "area": "Lyme Park",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "northwich",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Northwich parkrun",
+        "area": "Carey Park",
+        "distanceKm": 0.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

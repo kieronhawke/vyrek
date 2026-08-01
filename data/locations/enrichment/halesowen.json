@@ -1,0 +1,35 @@
+{
+  "slug": "halesowen",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Woodgate Valley Country Park parkrun",
+        "area": "Woodgate Valley Country Park",
+        "distanceKm": 2.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dudley parkrun",
+        "area": "The Dell Stadium",
+        "distanceKm": 7.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Edgbaston Reservoir parkrun",
+        "area": "Edgbaston Reservoir",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sandwell Valley parkrun",
+        "area": "Sandwell Park Farm",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

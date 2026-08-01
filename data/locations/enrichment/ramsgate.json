@@ -1,0 +1,21 @@
+{
+  "slug": "ramsgate",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Pegwell Bay parkrun",
+        "area": "Pegwell Bay",
+        "distanceKm": 4.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Margate parkrun",
+        "area": "Margate",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

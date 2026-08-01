@@ -1,0 +1,21 @@
+{
+  "slug": "pontypridd",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Pontypridd parkrun",
+        "area": "Ynysangharad War Memorial Park",
+        "distanceKm": 0.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Penallta parkrun",
+        "area": "Penallta House",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "dorchester",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "The Great Field parkrun",
+        "area": "The Great Field",
+        "distanceKm": 1.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

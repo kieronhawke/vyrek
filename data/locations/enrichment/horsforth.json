@@ -1,0 +1,63 @@
+{
+  "slug": "horsforth",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bramley parkrun",
+        "area": "Bramley Park",
+        "distanceKm": 3.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Armley parkrun",
+        "area": "Armley Park",
+        "distanceKm": 5.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chevin Forest parkrun",
+        "area": "Chevin Forest Park",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woodhouse Moor parkrun",
+        "area": "Woodhouse Moor, Leeds",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Potternewton parkrun",
+        "area": "Potternewton Park",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cross Flatts parkrun",
+        "area": "Cross Flatts Park",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Roundhay parkrun",
+        "area": "Roundhay Park, Leeds",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lister Park parkrun, Bradford",
+        "area": "Lister Park, Bradford",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "rugeley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cannock Chase parkrun",
+        "area": "Cannock Chase",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

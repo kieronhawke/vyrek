@@ -1,0 +1,42 @@
+{
+  "slug": "bowthorpe",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Colney Lane parkrun",
+        "area": "UEA Colney Lane Playing Fields",
+        "distanceKm": 2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Norwich parkrun",
+        "area": "Eaton Park, Norwich",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sloughbottom parkrun",
+        "area": "Sloughbottom Park,",
+        "distanceKm": 3.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Catton parkrun",
+        "area": "Catton Park",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fitzmaurice Park parkrun",
+        "area": "Fitzmaurice Park",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "peterlee",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cotsford Fields parkrun",
+        "area": "Cotsford Fields",
+        "distanceKm": 2.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Heritage Coastal Path parkrun, Easington",
+        "area": "Heritage Coastal Path, Easington",
+        "distanceKm": 3.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Elemore Park parkrun",
+        "area": "Elemore Park",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

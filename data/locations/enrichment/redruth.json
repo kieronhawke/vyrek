@@ -1,0 +1,21 @@
+{
+  "slug": "redruth",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Heartlands parkrun",
+        "area": "Heartlands,",
+        "distanceKm": 3.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Penryn Campus parkrun",
+        "area": "Penryn Campus",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

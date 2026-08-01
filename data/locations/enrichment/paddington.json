@@ -7,21 +7,21 @@
         "area": "Battersea",
         "distanceKm": 4.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Wormwood Scrubs parkrun",
         "area": "Wormwood Scrubs Park",
         "distanceKm": 4.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Hampstead Heath parkrun",
         "area": "Hampstead Heath",
         "distanceKm": 4.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

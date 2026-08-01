@@ -1,0 +1,21 @@
+{
+  "slug": "heswall",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Birkenhead parkrun",
+        "area": "Birkenhead Park",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Flint Castle parkrun",
+        "area": "Flint Castle",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

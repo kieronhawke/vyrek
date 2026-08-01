@@ -1,0 +1,28 @@
+{
+  "slug": "newport-pagnell",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bury Field parkrun",
+        "area": "Bury Field",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Milton Keynes parkrun",
+        "area": "Willen Lake, Milton Keynes",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Linford Wood parkrun",
+        "area": "Linford Wood",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -7,28 +7,28 @@
         "area": "West Park",
         "distanceKm": 1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "East Park parkrun",
         "area": "East Park",
         "distanceKm": 1.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Perton Playing Fields parkrun",
         "area": "Perton Playing Fields",
         "distanceKm": 4.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Brunswick Park parkrun",
         "area": "Brunswick Park",
         "distanceKm": 8.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

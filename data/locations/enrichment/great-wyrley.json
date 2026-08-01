@@ -1,0 +1,28 @@
+{
+  "slug": "great-wyrley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Chasewater parkrun",
+        "area": "Chasewater Country Park",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cannock Chase parkrun",
+        "area": "Cannock Chase",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Walsall Arboretum parkrun",
+        "area": "Walsall Arboretum",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

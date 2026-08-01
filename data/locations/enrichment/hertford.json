@@ -1,0 +1,35 @@
+{
+  "slug": "hertford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Westmill parkrun",
+        "area": "Westmill Farm",
+        "distanceKm": 3.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Panshanger parkrun",
+        "area": "Panshanger Park",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Barclay parkrun",
+        "area": "Barclay Park",
+        "distanceKm": 5.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stanborough parkrun",
+        "area": "Stanborough",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

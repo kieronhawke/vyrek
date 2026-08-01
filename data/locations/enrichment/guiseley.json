@@ -1,0 +1,49 @@
+{
+  "slug": "guiseley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Chevin Forest parkrun",
+        "area": "Chevin Forest Park",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Roberts Park parkrun",
+        "area": "Roberts Park",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lister Park parkrun, Bradford",
+        "area": "Lister Park, Bradford",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bramley parkrun",
+        "area": "Bramley Park",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Myrtle parkrun",
+        "area": "Myrtle Park",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "East Holmes Field parkrun",
+        "area": "East Holmes Field, Ilkley",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -7,56 +7,56 @@
         "area": "Hilly Fields",
         "distanceKm": 1.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Catford parkrun",
         "area": "Mountsfield Park",
         "distanceKm": 1.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Sutcliffe parkrun",
         "area": "Sutcliffe Park Nature Reserve",
         "distanceKm": 2.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Peckham Rye parkrun",
         "area": "Peckham Rye Park",
         "distanceKm": 3.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Charlton parkrun",
         "area": "Charlton Park",
         "distanceKm": 4.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Southwark parkrun",
         "area": "Southwark Park",
         "distanceKm": 4.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Greenwich Peninsula parkrun",
         "area": "Greenwich Peninsula",
         "distanceKm": 4.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Beckenham Place parkrun",
         "area": "Beckenham Place Park",
         "distanceKm": 4.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

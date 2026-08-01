@@ -1,0 +1,21 @@
+{
+  "slug": "st-austell",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Eden Project parkrun",
+        "area": "Eden Project",
+        "distanceKm": 2.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Lost Gardens of Heligan parkrun",
+        "area": "The Lost Gardens of Heligan",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

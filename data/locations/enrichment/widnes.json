@@ -1,0 +1,35 @@
+{
+  "slug": "widnes",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Widnes parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Phoenix parkrun",
+        "area": "Phoenix Park",
+        "distanceKm": 4.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sutton Manor parkrun",
+        "area": "Sutton Manor Colliery",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Knowsley parkrun",
+        "area": "Stadt Moers Park",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "barry",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Barry Island parkrun",
+        "area": "Barry Island Promenade",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cosmeston Lakes parkrun",
+        "area": "Cosmeston Lakes Country Park",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Grangemoor parkrun",
+        "area": "Cardiff",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Trelai Park parkrun",
+        "area": "Trelai Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

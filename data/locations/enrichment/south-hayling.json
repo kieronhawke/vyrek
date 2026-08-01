@@ -1,0 +1,35 @@
+{
+  "slug": "south-hayling",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Southsea parkrun",
+        "area": "Southsea Esplanade",
+        "distanceKm": 4.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Great Salterns parkrun",
+        "area": "Great Salterns Recreation Ground",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Portsmouth Lakeside parkrun",
+        "area": "Lakeside North Harbour",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Havant parkrun",
+        "area": "Staunton Country Park",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

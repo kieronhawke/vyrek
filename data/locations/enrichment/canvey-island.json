@@ -1,0 +1,42 @@
+{
+  "slug": "canvey-island",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Thorney Bay Beach parkrun",
+        "area": "Thorney Bay Beach",
+        "distanceKm": 1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hadleigh parkrun, Essex",
+        "area": "Hadleigh Country Park",
+        "distanceKm": 3.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chalkwell Beach parkrun",
+        "area": "Chalkwell Beach",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Basildon parkrun",
+        "area": "Northlands Park",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hockley Woods parkrun",
+        "area": "Hockley Woods",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

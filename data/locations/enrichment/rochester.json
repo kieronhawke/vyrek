@@ -1,0 +1,35 @@
+{
+  "slug": "rochester",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Great Lines parkrun, Medway",
+        "area": "Great Lines Heritage ParkPark",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Shorne Woods parkrun",
+        "area": "Shorne Woods Country Park",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jeskyns Community Woodland parkrun",
+        "area": "Jeskyns Community Woodland",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leybourne Lakes parkrun",
+        "area": "Leybourne Lakes Country Park",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

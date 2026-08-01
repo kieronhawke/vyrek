@@ -1,0 +1,28 @@
+{
+  "slug": "billingham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Albert parkrun, Middlesbrough",
+        "area": "Albert Park, Middlesbrough",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wynyard Woodland parkrun",
+        "area": "Wynyard Woodland, Stockton-on-Tees",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stewart parkrun, Middlesbrough",
+        "area": "Stewart Park, Middlesbrough",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

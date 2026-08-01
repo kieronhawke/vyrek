@@ -7,21 +7,21 @@
         "area": "Lloyd Park, Croydon",
         "distanceKm": 1.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Roundshaw Downs parkrun",
         "area": "Roundshaw Downs, near South Croydon",
         "distanceKm": 2.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "South Norwood parkrun",
         "area": "South Norwood Country Park",
         "distanceKm": 4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

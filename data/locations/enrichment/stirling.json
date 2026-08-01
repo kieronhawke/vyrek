@@ -7,14 +7,14 @@
         "area": "University of Stirling",
         "distanceKm": 3.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Plean parkrun",
         "area": "Plean Country Park",
         "distanceKm": 7.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

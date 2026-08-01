@@ -1,0 +1,21 @@
+{
+  "slug": "cleveleys",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Fleetwood Promenade parkrun",
+        "area": "Outer Promenade",
+        "distanceKm": 5.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Blackpool parkrun",
+        "area": "Stanley Park",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

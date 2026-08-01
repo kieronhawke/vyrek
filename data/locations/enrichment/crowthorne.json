@@ -1,0 +1,42 @@
+{
+  "slug": "crowthorne",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bracknell parkrun",
+        "area": "Great Hollands Recreation Ground",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sandhurst Memorial parkrun",
+        "area": "Sandhurst Memorial Park",
+        "distanceKm": 2.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "California Country parkrun",
+        "area": "California Country Park",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Frimley Lodge parkrun",
+        "area": "Frimley Lodge Park",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dinton Pastures parkrun",
+        "area": "Dinton Pastures Country Park",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

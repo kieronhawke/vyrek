@@ -1,0 +1,21 @@
+{
+  "slug": "leighton-buzzard",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Rushmere parkrun",
+        "area": "Rushmere Country Park",
+        "distanceKm": 3.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dunstable Downs parkrun",
+        "area": "Dunstable Downs",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

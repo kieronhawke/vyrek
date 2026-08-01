@@ -1,0 +1,21 @@
+{
+  "slug": "irvine",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Eglinton parkrun",
+        "area": "Eglinton Country Park",
+        "distanceKm": 2.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Troon parkrun",
+        "area": "South Beach Esplanade",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

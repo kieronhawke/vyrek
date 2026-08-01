@@ -1,0 +1,21 @@
+{
+  "slug": "lichfield",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Beacon parkrun",
+        "area": "Beacon Park",
+        "distanceKm": 1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chasewater parkrun",
+        "area": "Chasewater Country Park",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "hinckley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hastings High School parkrun",
+        "area": "Hastings High School",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bedworth parkrun",
+        "area": "Miners Welfare Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Market Bosworth Country Park parkrun",
+        "area": "Market Bosworth Country Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

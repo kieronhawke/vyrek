@@ -1,0 +1,14 @@
+{
+  "slug": "ripon",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Fountains Abbey parkrun",
+        "area": "Fountains Abbey",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

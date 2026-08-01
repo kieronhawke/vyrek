@@ -1,0 +1,21 @@
+{
+  "slug": "whitstable",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Whitstable parkrun",
+        "area": "Whitstable Promenade",
+        "distanceKm": 1.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Canterbury parkrun",
+        "area": "The Pavillion",
+        "distanceKm": 7.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "gerrards-cross",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Black Park parkrun",
+        "area": "Black Park Country Park, Slough",
+        "distanceKm": 5.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rickmansworth parkrun",
+        "area": "Rickmansworth Aquadrome",
+        "distanceKm": 7.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Church Mead parkrun",
+        "area": "Church Mead",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

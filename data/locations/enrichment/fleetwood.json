@@ -1,0 +1,14 @@
+{
+  "slug": "fleetwood",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Fleetwood Promenade parkrun",
+        "area": "Outer Promenade",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

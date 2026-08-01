@@ -1,0 +1,35 @@
+{
+  "slug": "deeside",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Wepre parkrun",
+        "area": "Wepre Park",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Flint Castle parkrun",
+        "area": "Flint Castle",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Park in the Past parkrun",
+        "area": "Park in the Past",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chester parkrun",
+        "area": "Countess of Chester Country Park",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "ebbw-vale",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bryn Bach parkrun",
+        "area": "Parc Bryn Bach, Tredegar",
+        "distanceKm": 4.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Aberbeeg parkrun",
+        "area": "Ebbw Valley Cycle Track",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

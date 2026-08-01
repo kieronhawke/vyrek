@@ -1,0 +1,14 @@
+{
+  "slug": "chesterfield",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Poolsbrook parkrun",
+        "area": "Poolsbrook Country Park",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

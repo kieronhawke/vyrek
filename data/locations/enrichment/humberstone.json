@@ -1,0 +1,35 @@
+{
+  "slug": "humberstone",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Abbey Park parkrun",
+        "area": "Abbey Park",
+        "distanceKm": 3.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leicester Victoria parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 3.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Watermead Country Park parkrun",
+        "area": "Watermead Country Park",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Braunstone parkrun",
+        "area": "Braunstone, Leicester",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

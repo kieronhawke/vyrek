@@ -1,0 +1,14 @@
+{
+  "slug": "brough",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Humber Bridge parkrun",
+        "area": "Humber Bridge Country Park",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

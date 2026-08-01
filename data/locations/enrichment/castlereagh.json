@@ -1,0 +1,63 @@
+{
+  "slug": "castlereagh",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Orangefield parkrun",
+        "area": "Orangefield & Greenville Park",
+        "distanceKm": 1.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ormeau parkrun",
+        "area": "Ormeau Park",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Belfast Victoria parkrun",
+        "area": "Victoria Park, Belfast",
+        "distanceKm": 3.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stormont parkrun",
+        "area": "Stormont Estate",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Belvoir Forest parkrun",
+        "area": "Belvoir Forest",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Queen’s parkrun, Belfast",
+        "area": "Queen's Uni Sport, Upper Malone",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Falls parkrun, Belfast",
+        "area": "Falls Park, Belfast",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Waterworks parkrun, Belfast",
+        "area": "Waterworks, North Belfast",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

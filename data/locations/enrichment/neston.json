@@ -1,0 +1,28 @@
+{
+  "slug": "neston",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Flint Castle parkrun",
+        "area": "Flint Castle",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wepre parkrun",
+        "area": "Wepre Park",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ellesmere Port parkrun",
+        "area": "Whitby Park",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

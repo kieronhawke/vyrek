@@ -1,0 +1,21 @@
+{
+  "slug": "nailsea",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Clevedon Salthouse Fields parkrun",
+        "area": "Clevedon Salthouse Park",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ashton Court parkrun",
+        "area": "Ashton Court, Bristol",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

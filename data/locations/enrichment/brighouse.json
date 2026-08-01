@@ -1,0 +1,49 @@
+{
+  "slug": "brighouse",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Huddersfield parkrun",
+        "area": "Greenhead Park, Huddersfield",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Halifax parkrun",
+        "area": "Shroggs Park",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oakwell Hall parkrun",
+        "area": "Oakwell Hall Country Park",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Horton Park parkrun",
+        "area": "Horton Park",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bowling Park parkrun",
+        "area": "Bowling Park",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dewsbury parkrun",
+        "area": "Crow Nest Park, Dewsbury",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

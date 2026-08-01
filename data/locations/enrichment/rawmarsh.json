@@ -1,0 +1,28 @@
+{
+  "slug": "rawmarsh",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Rotherham parkrun",
+        "area": "Rotherham",
+        "distanceKm": 3.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Concord parkrun, Sheffield",
+        "area": "Concord Park, Sheffield",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Waverley Lakes parkrun",
+        "area": "Waverley Lakes",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

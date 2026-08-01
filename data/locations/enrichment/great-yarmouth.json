@@ -1,0 +1,21 @@
+{
+  "slug": "great-yarmouth",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Great Yarmouth North Beach parkrun",
+        "area": "Great Yarmouth North Beach",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gorleston Cliffs parkrun",
+        "area": "Gorleston Cliffs Promenade",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

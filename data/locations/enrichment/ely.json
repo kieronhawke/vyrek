@@ -1,0 +1,28 @@
+{
+  "slug": "ely",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Ben’s Yard parkrun, Ely",
+        "area": "Ben’s Yard, Ely",
+        "distanceKm": 3.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Littleport parkrun",
+        "area": "Littleport Recreation Ground,",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Soham Village College parkrun",
+        "area": "Soham Village College",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

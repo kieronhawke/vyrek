@@ -1,0 +1,28 @@
+{
+  "slug": "carrickfergus",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Carrickfergus parkrun",
+        "area": "Amphitheatre Wellness Centre",
+        "distanceKm": 0.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crawfordsburn Country parkrun",
+        "area": "Crawfordsburn Country Park",
+        "distanceKm": 7.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Valley parkrun, Newtownabbey",
+        "area": "Valley Leisure Centre",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

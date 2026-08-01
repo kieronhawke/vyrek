@@ -1,0 +1,14 @@
+{
+  "slug": "norris-green",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Croxteth Hall parkrun",
+        "area": "Croxteth Hall Country Park",
+        "distanceKm": 2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

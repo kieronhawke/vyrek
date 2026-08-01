@@ -1,0 +1,28 @@
+{
+  "slug": "worthing",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Worthing parkrun",
+        "area": "Worthing promenade",
+        "distanceKm": 1.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lancing Beach Green parkrun",
+        "area": "28 Brighton Road",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Downs Link parkrun, Shoreham-by-Sea",
+        "area": "Downs Link, Shoreham-by-Sea",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

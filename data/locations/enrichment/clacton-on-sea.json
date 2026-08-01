@@ -1,0 +1,21 @@
+{
+  "slug": "clacton-on-sea",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Clacton Seafront parkrun",
+        "area": "Clacton Seafront",
+        "distanceKm": 1.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Walton Promenade parkrun",
+        "area": "Walton Promenade",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

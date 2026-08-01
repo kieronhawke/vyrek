@@ -1,0 +1,21 @@
+{
+  "slug": "tamworth",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Tamworth Castle Grounds parkrun",
+        "area": "Tamworth Castle Grounds",
+        "distanceKm": 0.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kingsbury Water parkrun",
+        "area": "Kingsbury Water Park",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

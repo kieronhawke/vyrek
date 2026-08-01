@@ -1,0 +1,21 @@
+{
+  "slug": "littlehampton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Littlehampton Prom parkrun",
+        "area": "Promenade",
+        "distanceKm": 1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bognor Regis parkrun",
+        "area": "Hotham Park",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

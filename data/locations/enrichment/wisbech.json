@@ -1,0 +1,14 @@
+{
+  "slug": "wisbech",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Wisbech parkrun",
+        "area": "Wisbech Park",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

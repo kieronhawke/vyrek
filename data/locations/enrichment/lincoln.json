@@ -7,21 +7,21 @@
         "area": "Yarborough Leisure Centre",
         "distanceKm": 2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Lincoln parkrun",
         "area": "Boultham Park",
         "distanceKm": 2.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Doddington Hall parkrun",
         "area": "Doddington Hall",
         "distanceKm": 7.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

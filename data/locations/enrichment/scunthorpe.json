@@ -1,0 +1,21 @@
+{
+  "slug": "scunthorpe",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Scunthorpe parkrun",
+        "area": "Central Park",
+        "distanceKm": 0.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Normanby Hall parkrun",
+        "area": "Normanby Hall Country Park",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

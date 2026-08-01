@@ -1,0 +1,49 @@
+{
+  "slug": "penarth",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Grangemoor parkrun",
+        "area": "Cardiff",
+        "distanceKm": 2.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cosmeston Lakes parkrun",
+        "area": "Cosmeston Lakes Country Park",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tremorfa parkrun",
+        "area": "Tremorfa Park",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Trelai Park parkrun",
+        "area": "Trelai Park",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cardiff parkrun",
+        "area": "Cardiff Blackweir",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Barry Island parkrun",
+        "area": "Barry Island Promenade",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

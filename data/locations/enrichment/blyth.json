@@ -1,0 +1,35 @@
+{
+  "slug": "blyth",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Blyth Links parkrun",
+        "area": "Blyth Links",
+        "distanceKm": 2.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Newbiggin-by-the-Sea parkrun",
+        "area": "Newbiggin Promenade",
+        "distanceKm": 6.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ashington Community Woodland parkrun",
+        "area": "Ashington Community Woodland",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Whitley Bay parkrun",
+        "area": "Whitley Bay Links Common",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

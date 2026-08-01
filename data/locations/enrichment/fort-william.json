@@ -1,0 +1,14 @@
+{
+  "slug": "fort-william",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Fort William parkrun",
+        "area": "Nevis Range",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

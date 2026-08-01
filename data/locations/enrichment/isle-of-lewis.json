@@ -1,0 +1,14 @@
+{
+  "slug": "isle-of-lewis",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Lews Castle parkrun",
+        "area": "Lews Castle Grounds",
+        "distanceKm": 1.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

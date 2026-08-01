@@ -1,0 +1,28 @@
+{
+  "slug": "buckley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Wepre parkrun",
+        "area": "Wepre Park",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Park in the Past parkrun",
+        "area": "Park in the Past",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Flint Castle parkrun",
+        "area": "Flint Castle",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "arbroath",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "West Links parkrun",
+        "area": "West Links Park",
+        "distanceKm": 1.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

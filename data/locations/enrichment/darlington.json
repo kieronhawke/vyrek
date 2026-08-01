@@ -1,0 +1,14 @@
+{
+  "slug": "darlington",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Darlington South Park parkrun",
+        "area": "South Park",
+        "distanceKm": 1.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "slug": "lower-earley",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Dinton Pastures parkrun",
+        "area": "Dinton Pastures Country Park",
+        "distanceKm": 3.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woodley parkrun",
+        "area": "Woodford Park",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Reading parkrun",
+        "area": "Thames Riverside, Reading",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Green Park parkrun",
+        "area": "Green Park",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "California Country parkrun",
+        "area": "California Country Park",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Prospect parkrun",
+        "area": "Prospect Park",
+        "distanceKm": 6.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

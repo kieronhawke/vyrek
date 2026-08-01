@@ -7,28 +7,28 @@
         "area": "Bedford Park, Bedford",
         "distanceKm": 1.2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Jubilee parkrun, Bedford",
         "area": "Jubilee, Bedford",
         "distanceKm": 2.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Great Denham parkrun",
         "area": "Great Denham",
         "distanceKm": 3.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Millennium Country parkrun, Forest of Marston Vale",
         "area": "Forest of Marston Vale - Millennium Coun",
         "distanceKm": 9.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

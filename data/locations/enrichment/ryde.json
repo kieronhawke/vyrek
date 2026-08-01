@@ -1,0 +1,21 @@
+{
+  "slug": "ryde",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Medina I.O.W. parkrun",
+        "area": "Seaclose Park, Medina, I.O.W.",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lee-on-the-Solent parkrun",
+        "area": "Lee-on-the-Solent",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

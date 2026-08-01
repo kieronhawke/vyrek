@@ -1,0 +1,49 @@
+{
+  "slug": "smethwick",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Edgbaston Reservoir parkrun",
+        "area": "Edgbaston Reservoir",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sandwell Valley parkrun",
+        "area": "Sandwell Park Farm",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Perry Hall parkrun",
+        "area": "Perry Hall Park",
+        "distanceKm": 5.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woodgate Valley Country Park parkrun",
+        "area": "Woodgate Valley Country Park",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cannon Hill parkrun, Birmingham",
+        "area": "Cannon Hill, Birmingham",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brunswick Park parkrun",
+        "area": "Brunswick Park",
+        "distanceKm": 7.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "newcastle-under-lyme",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "The Wammy parkrun",
+        "area": "The Wammy",
+        "distanceKm": 2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hanley parkrun",
+        "area": "Hanley Park, Hanley",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Trentham Gardens parkrun",
+        "area": "Trentham Gardens",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Vale Park parkrun, Burslem",
+        "area": "Vale Park, Burslem",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

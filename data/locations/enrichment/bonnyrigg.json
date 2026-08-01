@@ -1,0 +1,28 @@
+{
+  "slug": "bonnyrigg",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Vogrie parkrun",
+        "area": "Vogrie Country Park",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Portobello parkrun, Edinburgh",
+        "area": "Figgate Park",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Holyrood parkrun",
+        "area": "Holyrood Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

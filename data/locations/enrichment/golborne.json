@@ -1,0 +1,21 @@
+{
+  "slug": "golborne",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Pennington Flash parkrun",
+        "area": "Pennington Flash",
+        "distanceKm": 3.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St Helens parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

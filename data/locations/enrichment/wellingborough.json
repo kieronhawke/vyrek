@@ -1,0 +1,28 @@
+{
+  "slug": "wellingborough",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Queensway parkrun",
+        "area": "Queensway",
+        "distanceKm": 2.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Irchester Country parkrun",
+        "area": "Irchester Country Park",
+        "distanceKm": 2.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kettering parkrun",
+        "area": "Wicksteed Park",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

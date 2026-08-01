@@ -1,0 +1,21 @@
+{
+  "slug": "kirkcaldy",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Kirkcaldy parkrun",
+        "area": "Beveridge Park",
+        "distanceKm": 1.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Riverside Park parkrun, Glenrothes",
+        "area": "Riverside Park, Glenrothes",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

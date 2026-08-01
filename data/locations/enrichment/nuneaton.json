@@ -1,0 +1,28 @@
+{
+  "slug": "nuneaton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bedworth parkrun",
+        "area": "Miners Welfare Park",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hastings High School parkrun",
+        "area": "Hastings High School",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Holbrooks parkrun",
+        "area": "Holbrooks Park",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

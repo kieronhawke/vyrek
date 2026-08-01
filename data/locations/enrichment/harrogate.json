@@ -1,0 +1,21 @@
+{
+  "slug": "harrogate",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Harrogate parkrun",
+        "area": "The Stray, Harrogate",
+        "distanceKm": 1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Conyngham Hall parkrun",
+        "area": "Conyngham Hall",
+        "distanceKm": 4.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

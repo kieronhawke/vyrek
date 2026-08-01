@@ -1,0 +1,14 @@
+{
+  "slug": "bodmin",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Lanhydrock parkrun",
+        "area": "Lanhydrock House",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

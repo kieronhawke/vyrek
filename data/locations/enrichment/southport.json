@@ -1,0 +1,21 @@
+{
+  "slug": "southport",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Southport parkrun",
+        "area": "Hesketh Park",
+        "distanceKm": 2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kew Woods parkrun",
+        "area": "Kew Woods",
+        "distanceKm": 2.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

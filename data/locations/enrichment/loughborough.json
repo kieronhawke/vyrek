@@ -1,0 +1,21 @@
+{
+  "slug": "loughborough",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Dishley parkrun, Loughborough",
+        "area": "Loughborough Rugby Club",
+        "distanceKm": 3.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beacon Hill Country Park parkrun",
+        "area": "Beacon Hill Country Park",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

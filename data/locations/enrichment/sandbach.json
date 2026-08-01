@@ -1,0 +1,21 @@
+{
+  "slug": "sandbach",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Crewe parkrun",
+        "area": "Queens Park",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Congleton parkrun",
+        "area": "Astbury Mere",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

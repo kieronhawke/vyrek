@@ -1,0 +1,21 @@
+{
+  "slug": "coleraine",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Christie parkrun",
+        "area": "Christie",
+        "distanceKm": 1.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Portrush parkrun",
+        "area": "East Strand Beach, Portrush",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "strood",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Shorne Woods parkrun",
+        "area": "Shorne Woods Country Park",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Great Lines parkrun, Medway",
+        "area": "Great Lines Heritage ParkPark",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

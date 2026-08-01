@@ -1,0 +1,28 @@
+{
+  "slug": "bathgate",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Polkemmet Country parkrun",
+        "area": "Polkemmet Country Park",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beecraigs Country Park parkrun",
+        "area": "Beecraigs Country Park",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Livingston parkrun",
+        "area": "Almondvale Park",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

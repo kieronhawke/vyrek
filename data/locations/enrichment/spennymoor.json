@@ -1,0 +1,28 @@
+{
+  "slug": "spennymoor",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Jubilee parkrun",
+        "area": "Jubilee Park",
+        "distanceKm": 0.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Durham parkrun",
+        "area": "Graham Sports Centre, Durham",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hackworth parkrun",
+        "area": "Hackworth Park",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

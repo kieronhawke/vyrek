@@ -1,0 +1,35 @@
+{
+  "slug": "gloucester",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Gloucester City parkrun",
+        "area": "Gloucester Park",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gloucester North parkrun",
+        "area": "Plock Court Playing Fields",
+        "distanceKm": 1.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kingsway parkrun, Gloucester",
+        "area": "Kingsway Sports Pavillion",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "King George V Playing Field parkrun, Cheltenham",
+        "area": "King George V Playing Field",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

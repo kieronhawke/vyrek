@@ -1,0 +1,21 @@
+{
+  "slug": "hartlepool",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hartlepool parkrun",
+        "area": "Hartlepool",
+        "distanceKm": 1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cotsford Fields parkrun",
+        "area": "Cotsford Fields",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

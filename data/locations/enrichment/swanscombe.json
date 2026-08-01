@@ -1,0 +1,56 @@
+{
+  "slug": "swanscombe",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Whitecliffe Lake parkrun",
+        "area": "Whitecliffe Lake",
+        "distanceKm": 1.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cyclopark parkrun",
+        "area": "Cyclopark",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thurrock parkrun, Orsett Heath",
+        "area": "Pyramid Centre",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dartford parkrun",
+        "area": "Central Park",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jeskyns Community Woodland parkrun",
+        "area": "Jeskyns Community Woodland",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dartford Heath parkrun",
+        "area": "Heath Lane",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Shorne Woods parkrun",
+        "area": "Shorne Woods Country Park",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

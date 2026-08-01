@@ -6,7 +6,8 @@ import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { SplitHeading } from "@/components/shared/split-heading";
 import { CtaButton } from "@/components/shared/cta-button";
-import { groupLocationsByRegion } from "@/lib/uk-locations";
+import { groupLocationsByRegion, regionSlug, getLocationBySlug } from "@/lib/uk-locations";
+import { RACE_CITY_SLUGS } from "@/lib/locations/seo";
 import { siteUrl } from "@/lib/blog/urls";
 
 export const revalidate = 86400;
@@ -66,10 +67,14 @@ export default function HyroxLocationsPage() {
     "@type": "ItemList",
     name: "Hyrox training locations across the UK",
     numberOfItems: total,
-    itemListElement: Object.values(grouped).flat().map((loc, i) => ({
+    itemListElement: Object.values(grouped)
+      .flat()
+      .map((loc, i) => ({
         "@type": "ListItem",
         position: i + 1,
-        url: `${siteUrl()}/hyrox/${loc.slug}`,
+        // The coaching page is the one that renders for every town; only the
+        // five race cities keep a /hyrox/{city} URL.
+        url: `${siteUrl()}/hyrox-training/${loc.slug}`,
         name: `Hyrox training in ${loc.name}`,
       })),
   };
@@ -117,35 +122,54 @@ export default function HyroxLocationsPage() {
             </div>
           </div>
 
+          {/* Only five cities keep a /hyrox/{city} page; the rest of the 879
+              towns redirect to their coaching page, so linking them all from
+              here was 879 links straight into a 308. Race cities directly,
+              everything else via the region directories. */}
           <section className="mx-auto mt-20 max-w-5xl border-t border-suth-border-subtle pt-12">
-            <Eyebrow>{total} UK locations</Eyebrow>
+            <Eyebrow>Race cities</Eyebrow>
             <h2 className="mt-3 text-2xl font-black leading-tight tracking-[-0.04em] text-suth-text md:text-3xl">
-              Pick your city or borough.
+              Where the UK races happen.
             </h2>
-            <div className="mt-10 space-y-12">
+            <ul role="list" className="mt-8 flex flex-wrap gap-2.5">
+              {RACE_CITY_SLUGS.map((slug) => {
+                const loc = getLocationBySlug(slug);
+                if (!loc) return null;
+                return (
+                  <li key={slug}>
+                    <Link
+                      href={`/hyrox/${slug}`}
+                      className="inline-flex h-11 items-center rounded-pill border border-suth-border bg-suth-elevated px-5 text-sm font-medium text-suth-text transition-colors hover:border-suth-border-strong"
+                    >
+                      Hyrox {loc.name}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <h2 className="mt-14 text-2xl font-black leading-tight tracking-[-0.04em] text-suth-text md:text-3xl">
+              Training in your town.
+            </h2>
+            <p className="mt-3 max-w-2xl text-base leading-relaxed text-suth-text-secondary">
+              {total} towns and cities across the UK, each with its nearest race
+              venue and the measured 5 km courses closest to it.
+            </p>
+            <ul role="list" className="mt-6 flex flex-wrap gap-2.5">
               {regions.map((region) => (
-                <div key={region}>
-                  <h3 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
-                    {region}
-                  </h3>
-                  <ul
-                    role="list"
-                    className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+                <li key={region}>
+                  <Link
+                    href={`/hyrox-training/in/${regionSlug(region)}`}
+                    className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm font-medium text-suth-text transition-colors hover:border-suth-border-strong"
                   >
-                    {grouped[region].map((loc) => (
-                      <li key={loc.slug}>
-                        <Link
-                          href={`/hyrox/${loc.slug}`}
-                          className="block py-1.5 text-sm text-suth-text-secondary transition-colors hover:text-suth-text"
-                        >
-                          {loc.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    {region}
+                    <span className="ml-2 font-mono text-[11px] tabular-nums text-suth-text-tertiary">
+                      {grouped[region].length}
+                    </span>
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </section>
         </Container>
       </main>

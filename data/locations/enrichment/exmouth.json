@@ -1,0 +1,21 @@
+{
+  "slug": "exmouth",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Exmouth parkrun",
+        "area": "Exmouth",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Greendale Farm Shop parkrun",
+        "area": "Greendale Farm Shop",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

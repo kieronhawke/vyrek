@@ -1,0 +1,21 @@
+{
+  "slug": "saltash",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Central parkrun, Plymouth",
+        "area": "Central Park",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mount Edgcumbe parkrun",
+        "area": "Mount Edgcumbe House and Country Park",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

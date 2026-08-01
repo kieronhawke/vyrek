@@ -1,0 +1,21 @@
+{
+  "slug": "frinton-on-sea",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Walton Promenade parkrun",
+        "area": "Walton Promenade",
+        "distanceKm": 2.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clacton Seafront parkrun",
+        "area": "Clacton Seafront",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

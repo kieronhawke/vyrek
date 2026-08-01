@@ -1,0 +1,14 @@
+{
+  "slug": "deal",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Walmer and Deal Seafront parkrun",
+        "area": "The Beach",
+        "distanceKm": 1.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

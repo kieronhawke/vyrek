@@ -1,0 +1,21 @@
+{
+  "slug": "brierley-hill",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Dudley parkrun",
+        "area": "The Dell Stadium",
+        "distanceKm": 1.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woodgate Valley Country Park parkrun",
+        "area": "Woodgate Valley Country Park",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

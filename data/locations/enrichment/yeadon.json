@@ -1,0 +1,42 @@
+{
+  "slug": "yeadon",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Chevin Forest parkrun",
+        "area": "Chevin Forest Park",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bramley parkrun",
+        "area": "Bramley Park",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Roberts Park parkrun",
+        "area": "Roberts Park",
+        "distanceKm": 7.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lister Park parkrun, Bradford",
+        "area": "Lister Park, Bradford",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Armley parkrun",
+        "area": "Armley Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

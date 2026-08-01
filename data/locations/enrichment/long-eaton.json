@@ -1,0 +1,49 @@
+{
+  "slug": "long-eaton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Long Eaton parkrun",
+        "area": "West Park Leisure Centre",
+        "distanceKm": 1.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beeston parkrun",
+        "area": "Weirfields Recreation Ground",
+        "distanceKm": 4.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wollaton Hall parkrun",
+        "area": "Wollaton Hall and Deer Park",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clifton parkrun",
+        "area": "Clifton Playing Fields",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rushcliffe parkrun",
+        "area": "Rushcliffe Country Park",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Victoria Embankment parkrun, Nottingham",
+        "area": "Victoria Embankment",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

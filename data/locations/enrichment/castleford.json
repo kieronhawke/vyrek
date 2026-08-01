@@ -1,0 +1,35 @@
+{
+  "slug": "castleford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Pontefract parkrun",
+        "area": "Pontefract Racecourse",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rothwell parkrun",
+        "area": "Springhead Park",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nostell parkrun",
+        "area": "Nostell Priory",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Temple Newsam parkrun",
+        "area": "Temple Newsam Estate",
+        "distanceKm": 9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

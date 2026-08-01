@@ -1,0 +1,63 @@
+{
+  "slug": "basford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Forest Rec parkrun",
+        "area": "Forest Recreation Gound, Nottingham",
+        "distanceKm": 1.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wollaton Hall parkrun",
+        "area": "Wollaton Hall and Deer Park",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Victoria Embankment parkrun, Nottingham",
+        "area": "Victoria Embankment",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beeston parkrun",
+        "area": "Weirfields Recreation Ground",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Colwick parkrun",
+        "area": "Colwick Country Park, Nottingham",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bestwood Village parkrun",
+        "area": "Bestwood Country Park",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Holme Pierrepont parkrun",
+        "area": "Holme Pierrepont Country Park",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clifton parkrun",
+        "area": "Clifton Playing Fields",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

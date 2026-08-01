@@ -1,0 +1,14 @@
+{
+  "slug": "sittingbourne",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Sittingbourne parkrun",
+        "area": "Milton Creek Country Park",
+        "distanceKm": 1.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

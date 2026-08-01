@@ -1,0 +1,21 @@
+{
+  "slug": "new-milton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Highcliffe Beach parkrun",
+        "area": "Highcliffe Beach",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lymington Woodside parkrun",
+        "area": "Woodside Gardens",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "chapeltown",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Concord parkrun, Sheffield",
+        "area": "Concord Park, Sheffield",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hillsborough parkrun",
+        "area": "Hillsborough Park",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Barnsley parkrun",
+        "area": "Locke Park, Barnsley",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rotherham parkrun",
+        "area": "Rotherham",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

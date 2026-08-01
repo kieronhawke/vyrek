@@ -1,0 +1,35 @@
+{
+  "slug": "eastleigh",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Eastleigh parkrun",
+        "area": "Fleming Park Old Golf Course, Eastleigh",
+        "distanceKm": 1.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Itchen Valley Country parkrun",
+        "area": "Itchen Valley Country Park",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southampton parkrun",
+        "area": "Southampton Common",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ganger Farm parkrun",
+        "area": "Ganger Farm Sports Park",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

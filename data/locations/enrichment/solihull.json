@@ -1,0 +1,35 @@
+{
+  "slug": "solihull",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Brueton parkrun",
+        "area": "Brueton Park, Solihull",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oaklands parkrun",
+        "area": "Oaklands Recreation Ground",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Babbs Mill parkrun",
+        "area": "Babbs Mill Local Nature Reserve",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cannon Hill parkrun, Birmingham",
+        "area": "Cannon Hill, Birmingham",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

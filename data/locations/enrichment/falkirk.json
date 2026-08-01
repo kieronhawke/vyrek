@@ -1,0 +1,21 @@
+{
+  "slug": "falkirk",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Falkirk parkrun",
+        "area": "Callendar Park, Falkirk",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Plean parkrun",
+        "area": "Plean Country Park",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

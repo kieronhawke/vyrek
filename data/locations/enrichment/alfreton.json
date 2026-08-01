@@ -1,0 +1,14 @@
+{
+  "slug": "alfreton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Brierley Forest parkrun",
+        "area": "Brierley Forest",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

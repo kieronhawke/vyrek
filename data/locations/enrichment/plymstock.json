@@ -1,0 +1,28 @@
+{
+  "slug": "plymstock",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Central parkrun, Plymouth",
+        "area": "Central Park",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Plymvalley parkrun",
+        "area": "Plymbridge Woods",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mount Edgcumbe parkrun",
+        "area": "Mount Edgcumbe House and Country Park",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

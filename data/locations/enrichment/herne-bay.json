@@ -1,0 +1,21 @@
+{
+  "slug": "herne-bay",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Whitstable parkrun",
+        "area": "Whitstable Promenade",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Canterbury parkrun",
+        "area": "The Pavillion",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

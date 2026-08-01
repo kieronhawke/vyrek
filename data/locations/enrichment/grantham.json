@@ -1,0 +1,21 @@
+{
+  "slug": "grantham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Belton House parkrun",
+        "area": "Belton House",
+        "distanceKm": 3.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Belvoir Castle parkrun",
+        "area": "Belvoir Castle",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

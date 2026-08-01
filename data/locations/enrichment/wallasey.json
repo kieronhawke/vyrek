@@ -1,0 +1,28 @@
+{
+  "slug": "wallasey",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Birkenhead parkrun",
+        "area": "Birkenhead Park",
+        "distanceKm": 3.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crosby parkrun",
+        "area": "Crosby Leisure Centre",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Princes parkrun, Liverpool",
+        "area": "Princes Park, Liverpool",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "kippax",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Temple Newsam parkrun",
+        "area": "Temple Newsam Estate",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rothwell parkrun",
+        "area": "Springhead Park",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pontefract parkrun",
+        "area": "Pontefract Racecourse",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

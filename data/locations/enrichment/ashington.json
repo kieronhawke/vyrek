@@ -1,0 +1,35 @@
+{
+  "slug": "ashington",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Ashington Community Woodland parkrun",
+        "area": "Ashington Community Woodland",
+        "distanceKm": 1.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Newbiggin-by-the-Sea parkrun",
+        "area": "Newbiggin Promenade",
+        "distanceKm": 3.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Carlisle Park parkrun, Morpeth",
+        "area": "Carlisle Park",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Blyth Links parkrun",
+        "area": "Blyth Links",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

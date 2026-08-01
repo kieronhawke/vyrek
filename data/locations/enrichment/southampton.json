@@ -7,35 +7,35 @@
         "area": "Southampton Common",
         "distanceKm": 2.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Netley Abbey parkrun",
         "area": "Royal Victoria Country Park",
         "distanceKm": 6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Itchen Valley Country parkrun",
         "area": "Itchen Valley Country Park",
         "distanceKm": 6.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Bartley Park parkrun",
         "area": "Bartley Park",
         "distanceKm": 7.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Eastleigh parkrun",
         "area": "Fleming Park Old Golf Course, Eastleigh",
         "distanceKm": 8.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

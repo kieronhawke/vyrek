@@ -1,0 +1,21 @@
+{
+  "slug": "briton-ferry",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Gnoll parkrun",
+        "area": "Gnoll Estate Country Park",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Parc Coed Gwilym parkrun",
+        "area": "Parc Coed Gwilym",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

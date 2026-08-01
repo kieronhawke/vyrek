@@ -1,0 +1,21 @@
+{
+  "slug": "sutton-in-ashfield",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Brierley Forest parkrun",
+        "area": "Brierley Forest",
+        "distanceKm": 2.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mansfield parkrun",
+        "area": "Mansfield",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

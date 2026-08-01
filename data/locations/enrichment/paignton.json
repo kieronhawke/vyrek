@@ -1,0 +1,21 @@
+{
+  "slug": "paignton",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Torbay Velopark parkrun",
+        "area": "Torbay Velopark",
+        "distanceKm": 1.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sharpham Estate parkrun",
+        "area": "Sharpham Estate",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "newport",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Riverfront parkrun",
+        "area": "The Riverfront",
+        "distanceKm": 0.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Newport parkrun",
+        "area": "Tredegar House, Newport",
+        "distanceKm": 3.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cwmbran parkrun",
+        "area": "Northfields Recreation Ground",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Coed Cefn-pwll-du parkrun",
+        "area": "Coed Cefn-pwll-du",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "hythe",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Netley Abbey parkrun",
+        "area": "Royal Victoria Country Park",
+        "distanceKm": 4.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southampton parkrun",
+        "area": "Southampton Common",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bartley Park parkrun",
+        "area": "Bartley Park",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

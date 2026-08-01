@@ -1,0 +1,14 @@
+{
+  "slug": "south-ruislip",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Northala Fields parkrun",
+        "area": "Northala Fields Park",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

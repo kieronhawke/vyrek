@@ -1,0 +1,63 @@
+{
+  "slug": "burngreave",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Sheffield Castle parkrun",
+        "area": "Manor Fields Park",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hillsborough parkrun",
+        "area": "Hillsborough Park",
+        "distanceKm": 3.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Concord parkrun, Sheffield",
+        "area": "Concord Park, Sheffield",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Endcliffe parkrun",
+        "area": "Endcliffe Park, Sheffield",
+        "distanceKm": 4.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Graves parkrun",
+        "area": "Graves Park, Sheffield",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Millhouses parkrun",
+        "area": "Millhouses Park",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Waverley Lakes parkrun",
+        "area": "Waverley Lakes",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rotherham parkrun",
+        "area": "Rotherham",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

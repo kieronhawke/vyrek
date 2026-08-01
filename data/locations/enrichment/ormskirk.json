@@ -1,0 +1,21 @@
+{
+  "slug": "ormskirk",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Ormskirk parkrun",
+        "area": "Edge Hill University",
+        "distanceKm": 1.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tawd Valley parkrun",
+        "area": "Tawd Valley Park",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "bartley-green",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Woodgate Valley Country Park parkrun",
+        "area": "Woodgate Valley Country Park",
+        "distanceKm": 1.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Edgbaston Reservoir parkrun",
+        "area": "Edgbaston Reservoir",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cannon Hill parkrun, Birmingham",
+        "area": "Cannon Hill, Birmingham",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sandwell Valley parkrun",
+        "area": "Sandwell Park Farm",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "oadby",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Leicester Victoria parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Abbey Park parkrun",
+        "area": "Abbey Park",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Braunstone parkrun",
+        "area": "Braunstone, Leicester",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Watermead Country Park parkrun",
+        "area": "Watermead Country Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

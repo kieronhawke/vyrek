@@ -1,0 +1,21 @@
+{
+  "slug": "grangemouth",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Falkirk parkrun",
+        "area": "Callendar Park, Falkirk",
+        "distanceKm": 3.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bo’ness Foreshore parkrun",
+        "area": "Bo’ness Foreshore",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

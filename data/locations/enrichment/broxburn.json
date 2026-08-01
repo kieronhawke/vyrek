@@ -1,0 +1,35 @@
+{
+  "slug": "broxburn",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Auldcathie District parkrun",
+        "area": "Auldcathie District Park",
+        "distanceKm": 3.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Livingston parkrun",
+        "area": "Almondvale Park",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beecraigs Country Park parkrun",
+        "area": "Beecraigs Country Park",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oriam parkrun",
+        "area": "Oriam, Heriot Watt University",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

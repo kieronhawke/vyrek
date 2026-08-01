@@ -1,0 +1,14 @@
+{
+  "slug": "horwich",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Haigh Woodland parkrun",
+        "area": "Haigh Country Park",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

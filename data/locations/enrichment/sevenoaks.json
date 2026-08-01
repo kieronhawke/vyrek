@@ -1,0 +1,21 @@
+{
+  "slug": "sevenoaks",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Squerryes Winery parkrun",
+        "area": "Squerryes Winery",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lullingstone parkrun",
+        "area": "Lullingstone Country Park",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -7,21 +7,21 @@
         "area": "Linford Wood",
         "distanceKm": 2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Milton Keynes parkrun",
         "area": "Willen Lake, Milton Keynes",
         "distanceKm": 2.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       },
       {
         "name": "Bury Field parkrun",
         "area": "Bury Field",
         "distanceKm": 5.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-07-30"
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

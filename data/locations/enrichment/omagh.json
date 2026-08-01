@@ -1,0 +1,14 @@
+{
+  "slug": "omagh",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Omagh parkrun",
+        "area": "Omagh",
+        "distanceKm": 0.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "rawtenstall",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Burnley parkrun",
+        "area": "Towneley Park, Burnley",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

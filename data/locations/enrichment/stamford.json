@@ -1,0 +1,14 @@
+{
+  "slug": "stamford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Rutland Water parkrun",
+        "area": "Rutland Water Reservoir",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

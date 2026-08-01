@@ -1,0 +1,28 @@
+{
+  "slug": "westbury",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Thoulstone parkrun",
+        "area": "Thoulstone",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southwick Country parkrun",
+        "area": "Southwick Country Park",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Old Showfield parkrun",
+        "area": "The Old Showfield",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

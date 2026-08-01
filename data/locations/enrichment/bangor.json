@@ -1,0 +1,21 @@
+{
+  "slug": "bangor",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bangor parkrun, Northern Ireland",
+        "area": "Ward Park",
+        "distanceKm": 0.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crawfordsburn Country parkrun",
+        "area": "Crawfordsburn Country Park",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

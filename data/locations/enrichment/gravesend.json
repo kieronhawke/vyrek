@@ -1,0 +1,42 @@
+{
+  "slug": "gravesend",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cyclopark parkrun",
+        "area": "Cyclopark",
+        "distanceKm": 2.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jeskyns Community Woodland parkrun",
+        "area": "Jeskyns Community Woodland",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Whitecliffe Lake parkrun",
+        "area": "Whitecliffe Lake",
+        "distanceKm": 4.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Shorne Woods parkrun",
+        "area": "Shorne Woods Country Park",
+        "distanceKm": 5.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thurrock parkrun, Orsett Heath",
+        "area": "Pyramid Centre",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

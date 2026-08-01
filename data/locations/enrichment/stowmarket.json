@@ -1,0 +1,14 @@
+{
+  "slug": "stowmarket",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Chilton Fields parkrun",
+        "area": "Chilton Fields",
+        "distanceKm": 1.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

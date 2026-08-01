@@ -1,0 +1,35 @@
+{
+  "slug": "mountsorrel",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Watermead Country Park parkrun",
+        "area": "Watermead Country Park",
+        "distanceKm": 4.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beacon Hill Country Park parkrun",
+        "area": "Beacon Hill Country Park",
+        "distanceKm": 5.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Abbey Park parkrun",
+        "area": "Abbey Park",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dishley parkrun, Loughborough",
+        "area": "Loughborough Rugby Club",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "bognor-regis",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bognor Regis parkrun",
+        "area": "Hotham Park",
+        "distanceKm": 1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chichester parkrun",
+        "area": "Oaklands Park",
+        "distanceKm": 9.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Littlehampton Prom parkrun",
+        "area": "Promenade",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

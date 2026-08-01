@@ -1,0 +1,35 @@
+{
+  "slug": "newtownards",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Comber parkrun",
+        "area": "Parkway",
+        "distanceKm": 5.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bangor parkrun, Northern Ireland",
+        "area": "Ward Park",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crawfordsburn Country parkrun",
+        "area": "Crawfordsburn Country Park",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stormont parkrun",
+        "area": "Stormont Estate",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

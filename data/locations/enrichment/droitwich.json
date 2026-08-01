@@ -1,0 +1,21 @@
+{
+  "slug": "droitwich",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Worcester parkrun",
+        "area": "Worcester Woods Country Park",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Worcester Pitchcroft parkrun",
+        "area": "The Pitchcroft, Worcester Racecourse",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

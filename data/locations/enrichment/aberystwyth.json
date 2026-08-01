@@ -1,0 +1,14 @@
+{
+  "slug": "aberystwyth",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Aberystwyth parkrun",
+        "area": "Plascrug Park",
+        "distanceKm": 0.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}
