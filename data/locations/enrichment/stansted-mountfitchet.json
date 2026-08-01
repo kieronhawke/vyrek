@@ -121,6 +121,14 @@
         "verifiedOn": "2026-08-01"
       },
       {
+        "name": "Silver Leys Polo Club",
+        "type": "sports-centre",
+        "website": "https://silverleyspolo.com/",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
         "name": "The Bishop’s Stortford High School Playing Fields",
         "type": "sports-centre",
         "distanceKm": 7.8,

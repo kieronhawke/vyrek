@@ -167,6 +167,43 @@ export function listRegionSlugs(): string[] {
   return Object.keys(groupLocationsByRegion()).map(regionSlug);
 }
 
+/* ── Counties as pages ───────────────────────────────────────────────
+   "personal trainer kent", "personal trainer essex" and "personal trainer
+   leicestershire" all carry evidenced search volume, but a county has no
+   centroid worth using: parkruns near the middle of Kent is a meaningless
+   sentence. So a county gets a directory of its towns rather than a location
+   page, which is the honest answer to that query anyway. */
+
+export function countySlug(county: string): string {
+  return county.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+}
+
+/** Counties with enough towns to be worth a page of their own. */
+export function listCountySlugs(): string[] {
+  const counts = new Map<string, number>();
+  for (const l of UK_LOCATIONS) {
+    if (!l.county) continue;
+    counts.set(l.county, (counts.get(l.county) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .filter(([, n]) => n >= 8)
+    .map(([c]) => countySlug(c));
+}
+
+export function getCountyBySlug(
+  slug: string,
+): { county: string; locations: UkLocation[] } | undefined {
+  const county = [...new Set(UK_LOCATIONS.map((l) => l.county).filter(Boolean))]
+    .find((c) => countySlug(c!) === slug);
+  if (!county) return undefined;
+  return {
+    county,
+    locations: UK_LOCATIONS.filter((l) => l.county === county).sort(
+      (a, b) => b.populationK - a.populationK,
+    ),
+  };
+}
+
 export function getRegionBySlug(
   slug: string,
 ): { region: string; locations: UkLocation[] } | undefined {

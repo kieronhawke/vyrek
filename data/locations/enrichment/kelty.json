@@ -105,6 +105,14 @@
         "verifiedOn": "2026-08-01"
       },
       {
+        "name": "Knockhill Racing Circuit",
+        "type": "sports-centre",
+        "website": "https://www.knockhill.com/",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
         "name": "Moorside Park",
         "type": "sports-centre",
         "distanceKm": 7.7,

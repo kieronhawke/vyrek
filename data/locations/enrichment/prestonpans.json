@@ -116,6 +116,14 @@
         "verifiedOn": "2026-08-01"
       },
       {
+        "name": "Portobello Swim Centre",
+        "type": "sports-centre",
+        "website": "https://www.edinburghleisure.co.uk/venues/portobello-swim-centre",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
         "name": "Go Ape Dalkieth",
         "type": "sports-centre",
         "distanceKm": 8,

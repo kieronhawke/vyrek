@@ -108,6 +108,21 @@
         "verifiedOn": "2026-08-01"
       },
       {
+        "name": "The BEST (Burnley Enterprise of Sport & Training) Centre",
+        "type": "gym",
+        "website": "https://www.thebestcentre.com/",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burnley FC Training Ground",
+        "type": "sports-centre",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
         "name": "Pendle Ski Centre",
         "type": "sports-centre",
         "distanceKm": 7.9,

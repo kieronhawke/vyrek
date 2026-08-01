@@ -25,15 +25,6 @@
         "verifiedOn": "2026-08-01"
       },
       {
-        "name": "Anytime Fitness",
-        "type": "gym",
-        "chain": "Anytime Fitness",
-        "website": "https://www.anytimefitness.co.uk/gyms/uk-0021/lewisham-greater-london-se13-6ur/",
-        "distanceKm": 1,
-        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
-      },
-      {
         "name": "The Lane",
         "type": "gym",
         "website": "https://thelaneldn.com",
@@ -156,6 +147,13 @@
         "name": "Air Thrill",
         "type": "sports-centre",
         "website": "https://www.airthrill.co.uk",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ladywell Arena Sportshall",
+        "type": "sports-centre",
         "distanceKm": 2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
         "verifiedOn": "2026-08-01"

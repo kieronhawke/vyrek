@@ -172,6 +172,25 @@ function slugify(name) {
 /** GeoNames feature codes that are places people would search for. */
 const PLACE_CODES = new Set(["PPL", "PPLA", "PPLA2", "PPLA3", "PPLA4", "PPLC", "PPLX", "PPLL"]);
 
+/**
+ * Mainland GB plus the isles. GeoNames' GB extract includes the Sovereign
+ * Base Areas in Cyprus, which are British territory and emphatically not
+ * somewhere anyone searches for a personal trainer in.
+ */
+const GB_BOUNDS = { minLat: 49.5, maxLat: 61.2, minLng: -9, maxLng: 2.1 };
+
+/**
+ * Known GeoNames errors, corrected by hand.
+ *
+ * Loughton: the feed puts Essex Loughton's population (33,346) on the
+ * Shropshire hamlet's coordinates, and gives the real Essex town a population
+ * of zero. Left alone it produces a 33k "town" in a Shropshire field with no
+ * gyms within eight kilometres, which is exactly how it surfaced.
+ */
+const CORRECTIONS = {
+  loughton: { lat: 51.646, lng: 0.054, county: "Essex", region: "East" },
+};
+
 /** Names that are administrative areas rather than towns anyone searches. */
 const NOT_A_TOWN =
   /\b(district|county borough|borough of|city and borough|metropolitan|unitary|shire$)\b/i;
@@ -232,7 +251,17 @@ for (const line of readFileSync(txt, "utf8").split("\n")) {
     continue;
   }
   if (NOT_A_TOWN.test(name)) continue;
-  const county = countyByCode.get(`GB.${admin1}.${admin2}`);
+  const flat = Number(lat);
+  const flng = Number(lng);
+  if (
+    flat < GB_BOUNDS.minLat || flat > GB_BOUNDS.maxLat ||
+    flng < GB_BOUNDS.minLng || flng > GB_BOUNDS.maxLng
+  )
+    continue;
+  // Store the county under the name people use. GeoNames gives the legal
+  // entity ("City and Borough of Leeds", "Royal Borough of Windsor and
+  // Maidenhead"), which nobody types and which reads badly as a page title.
+  const county = bareCounty(countyByCode.get(`GB.${admin1}.${admin2}`)) || undefined;
   rows.push({
     slug: slugify(name),
     name,
@@ -250,6 +279,7 @@ for (const line of readFileSync(txt, "utf8").split("\n")) {
     lng: Number(Number(lng).toFixed(3)),
   });
 }
+
 
 // Highest population wins a duplicate slug: GeoNames lists a few names twice
 // (Ashford, Bangor, Newport…) and the larger is the one people search for.
@@ -300,6 +330,34 @@ const SOUTH_SPLIT = {
 };
 for (const [slug, entry] of existingBySlug) {
   if (entry.region === "South") entry.region = SOUTH_SPLIT[slug] ?? "South East";
+}
+
+// County names are re-normalised after the merge too: an entry stored before
+// bareCounty() existed keeps its legal name otherwise, and "City and Borough
+// of Leeds" is nobody's search term.
+for (const entry of existingBySlug.values()) {
+  if (entry.county) {
+    const clean = bareCounty(entry.county);
+    if (clean) entry.county = clean;
+  }
+}
+
+// Corrections are authoritative: they exist precisely because the stored
+// value is wrong, so they have to be applied after the merge, not before it.
+for (const [slug, fix] of Object.entries(CORRECTIONS)) {
+  const entry = existingBySlug.get(slug);
+  if (entry) Object.assign(entry, fix);
+}
+
+for (const [slug, l] of [...existingBySlug]) {
+  if (
+    l.lat != null &&
+    (l.lat < GB_BOUNDS.minLat || l.lat > GB_BOUNDS.maxLat ||
+     l.lng < GB_BOUNDS.minLng || l.lng > GB_BOUNDS.maxLng)
+  ) {
+    existingBySlug.delete(slug);
+    console.log(`dropped ${slug}: outside Great Britain`);
+  }
 }
 
 const merged = [...existingBySlug.values()].sort(

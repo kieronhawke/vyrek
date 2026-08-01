@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { PROGRAMMES } from "@/lib/programmes";
 import { listPostMeta, CATEGORIES } from "@/lib/blog/posts";
 import { AUTHORS } from "@/lib/blog/authors";
-import { UK_LOCATIONS, listRegionSlugs } from "@/lib/uk-locations";
+import { UK_LOCATIONS, listRegionSlugs, listCountySlugs } from "@/lib/uk-locations";
 import { getGeoSeo, geoPriority, isRaceCity } from "@/lib/locations/seo";
 import { STATIONS } from "@/lib/hyrox-stations";
 import { PLAN_TEMPLATES } from "@/lib/plan-templates";
@@ -131,6 +131,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...listRegionSlugs().flatMap((r) => [
       { url: `${SITE_URL}/hyrox-training/in/${r}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
       { url: `${SITE_URL}/personal-trainer/in/${r}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
+    ]),
+    // County directories: "personal trainer kent" and friends are evidenced
+    // queries that no single town page answers.
+    ...listCountySlugs().flatMap((c) => [
+      { url: `${SITE_URL}/hyrox-training/county/${c}`, lastModified: now, priority: 0.7, changeFrequency: "weekly" as const },
+      { url: `${SITE_URL}/personal-trainer/county/${c}`, lastModified: now, priority: 0.7, changeFrequency: "weekly" as const },
     ]),
     ...UK_LOCATIONS.filter((loc) => getGeoSeo(loc.slug).indexable).flatMap((loc) => [
       {

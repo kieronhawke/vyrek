@@ -117,6 +117,13 @@
         "distanceKm": 6.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
         "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Forrestburn Speed Hillclimb",
+        "type": "sports-centre",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
       }
     ]
   },

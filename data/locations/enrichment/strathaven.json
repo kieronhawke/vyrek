@@ -1,3 +1,154 @@
 {
-  "slug": "strathaven"
+  "slug": "strathaven",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Larkhall Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 8.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gasworks Park",
+        "type": "sports-centre",
+        "distanceKm": 8.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Eddlewood Bowling Club",
+        "type": "sports-centre",
+        "distanceKm": 9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hareleeshill Sports Barn",
+        "type": "sports-centre",
+        "distanceKm": 9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "K-Park Training Academy",
+        "type": "sports-centre",
+        "distanceKm": 9.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Larkhall Circuit",
+        "type": "sports-centre",
+        "website": "https://larkhallcircuit.com/",
+        "distanceKm": 10,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ballerup Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 10.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nuffield Health Fitness & Wellbeing",
+        "type": "gym",
+        "chain": "Nuffield Health Fitness & Wellbeing",
+        "website": "https://www.nuffieldhealth.com/gyms/east-kilbride",
+        "distanceKm": 10.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Alistair McCoist Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 10.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bilco's play barn",
+        "type": "sports-centre",
+        "distanceKm": 10.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "New Age Fitness",
+        "type": "gym",
+        "distanceKm": 10.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Xercise4Less",
+        "type": "gym",
+        "chain": "Xercise4Less",
+        "distanceKm": 11,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jock Stein Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 11,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hang On",
+        "type": "sports-centre",
+        "website": "https://hangonclimbing.com/",
+        "distanceKm": 11.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burnbank Bowling Club",
+        "type": "sports-centre",
+        "distanceKm": 11.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Water Palace",
+        "type": "sports-centre",
+        "distanceKm": 11.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "John Wright Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 11.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym",
+        "type": "gym",
+        "chain": "The Gym",
+        "website": "https://www.thegymgroup.com/find-a-gym/hamilton-gyms/hamilton/",
+        "distanceKm": 11.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hamilton Palace Sports Grounds",
+        "type": "sports-centre",
+        "distanceKm": 11.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hamilton Ice Rink",
+        "type": "sports-centre",
+        "distanceKm": 11.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
 }

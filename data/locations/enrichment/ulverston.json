@@ -73,6 +73,13 @@
         "distanceKm": 7.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
         "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Askam Rugby League Club",
+        "type": "sports-centre",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
       }
     ]
   },

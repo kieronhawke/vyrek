@@ -50,6 +50,14 @@
         "distanceKm": 6.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
         "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Todmorden Lawn Tennis Club",
+        "type": "sports-centre",
+        "website": "http://www.todmordentennis.co.uk",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
       }
     ]
   },

@@ -139,6 +139,7 @@ mkdirSync(ENRICH_DIR, { recursive: true });
 let withGyms = 0;
 let totalRecords = 0;
 let none = 0;
+let widened = 0;
 
 for (const loc of registry) {
   if (loc.lat == null || loc.lng == null) continue;
@@ -147,12 +148,38 @@ for (const loc of registry) {
   const cj = Math.floor(loc.lng / CELL);
 
   const near = [];
-  for (let i = ci - 1; i <= ci + 1; i++) {
-    for (let j = cj - 1; j <= cj + 1; j++) {
+  const span = 2; // 5x5 cells ~ 55 km, enough for the widened sweep
+  for (let i = ci - span; i <= ci + span; i++) {
+    for (let j = cj - span; j <= cj + span; j++) {
       const bucket = grid.get(`${i}:${j}`);
       if (bucket) near.push(...bucket);
     }
   }
+
+  /* Rural towns come back empty at 8 km. Widening for everyone would pull a
+     city's gyms onto a village page, so the wider search only runs when the
+     tight one found nothing, and the page says how far out it had to look. */
+  const collect = (radius) => {
+    const seenLocal = new Set();
+    const out = [];
+    for (const s of near) {
+      const d = haversineKm(here, s);
+      if (d > radius) continue;
+      const k = s.name.toLowerCase();
+      if (seenLocal.has(k)) continue;
+      seenLocal.add(k);
+      out.push({
+        name: s.name,
+        type: s.type,
+        chain: s.chain,
+        website: s.website,
+        distanceKm: Number(d.toFixed(1)),
+        source: SOURCE,
+        verifiedOn: TODAY,
+      });
+    }
+    return out;
+  };
 
   const seen = new Set();
   const gyms = [];
@@ -174,18 +201,22 @@ for (const loc of registry) {
   }
   gyms.sort((a, b) => a.distanceKm - b.distanceKm);
 
+  // Nothing within the tight radius: widen once rather than ship a blank page.
+  const finalGyms = gyms.length ? gyms : collect(RADIUS_KM * 2.5).sort((a, b) => a.distanceKm - b.distanceKm);
+
   const file = path.join(ENRICH_DIR, `${loc.slug}.json`);
   const existing = existsSync(file)
     ? JSON.parse(readFileSync(file, "utf8"))
     : { slug: loc.slug };
 
-  if (gyms.length) {
+  if (finalGyms.length) {
     existing.gyms = {
       ...(existing.gyms ?? {}),
-      equippedGyms: gyms.slice(0, MAX_PER_TOWN),
+      equippedGyms: finalGyms.slice(0, MAX_PER_TOWN),
     };
     withGyms++;
-    totalRecords += Math.min(gyms.length, MAX_PER_TOWN);
+    totalRecords += Math.min(finalGyms.length, MAX_PER_TOWN);
+    if (!gyms.length) widened++;
   } else {
     none++;
     if (existing.gyms) delete existing.gyms.equippedGyms;
@@ -196,5 +227,6 @@ for (const loc of registry) {
 console.log("");
 console.log(`radius            : ${RADIUS_KM} km`);
 console.log(`towns with gyms   : ${withGyms}`);
+console.log(`widened to ${RADIUS_KM * 2.5} km : ${widened}`);
 console.log(`towns with none   : ${none}`);
 console.log(`total gym records : ${totalRecords}`);

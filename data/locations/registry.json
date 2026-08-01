@@ -108,7 +108,7 @@
           "cpcUsd": 0.8
         }
       ],
-      "county": "City and Borough of Birmingham"
+      "county": "Birmingham"
     },
     {
       "slug": "leicestershire",
@@ -212,7 +212,7 @@
       "legacy": true,
       "lat": 55.9533,
       "lng": -3.1884,
-      "county": "City of Edinburgh"
+      "county": "Edinburgh"
     },
     {
       "slug": "leeds",
@@ -224,7 +224,7 @@
       "legacy": true,
       "lat": 53.7974,
       "lng": -1.5438,
-      "county": "City and Borough of Leeds"
+      "county": "Leeds"
     },
     {
       "slug": "liverpool",
@@ -262,7 +262,7 @@
           "cpcUsd": 1.03
         }
       ],
-      "county": "City of Bristol"
+      "county": "Bristol"
     },
     {
       "slug": "croydon",
@@ -331,7 +331,7 @@
       "legacy": true,
       "lat": 52.6362,
       "lng": -1.1332,
-      "county": "City of Leicester"
+      "county": "Leicester"
     },
     {
       "slug": "coventry",
@@ -363,7 +363,7 @@
       "legacy": true,
       "lat": 54.5964,
       "lng": -5.9302,
-      "county": "City of Belfast"
+      "county": "Belfast"
     },
     {
       "slug": "nottingham",
@@ -408,7 +408,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Metropolitan Borough of Wirral",
+      "county": "Wirral",
       "populationK": 325,
       "lat": 53.393,
       "lng": -3.015
@@ -443,7 +443,7 @@
       "kind": "city",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City of Kingston upon Hull",
+      "county": "Kingston upon Hull",
       "populationK": 314,
       "lat": 53.745,
       "lng": -0.335
@@ -594,7 +594,7 @@
       "kind": "city",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Oldham",
+      "county": "Oldham",
       "populationK": 237,
       "lat": 53.541,
       "lng": -2.118
@@ -790,7 +790,7 @@
           "cpcUsd": 1.14
         }
       ],
-      "county": "Bournemouth, Christchurch and Poole Council"
+      "county": "Bournemouth, Christchurch and Poole"
     },
     {
       "slug": "sutton",
@@ -813,7 +813,7 @@
       "legacy": true,
       "lat": 51.5615,
       "lng": -1.7854,
-      "county": "Borough of Swindon"
+      "county": "Swindon"
     },
     {
       "slug": "southend-on-sea",
@@ -851,7 +851,7 @@
       "kind": "city",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Wigan",
+      "county": "Wigan",
       "populationK": 175,
       "lat": 53.543,
       "lng": -2.637
@@ -1015,7 +1015,7 @@
           "cpcUsd": 0.92
         }
       ],
-      "county": "City of York"
+      "county": "York"
     },
     {
       "slug": "oxford",
@@ -1061,7 +1061,7 @@
           "cpcUsd": 0.79
         }
       ],
-      "county": "Bournemouth, Christchurch and Poole Council"
+      "county": "Bournemouth, Christchurch and Poole"
     },
     {
       "slug": "harrow",
@@ -1213,7 +1213,7 @@
       "kind": "city",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Bolton",
+      "county": "Bolton",
       "populationK": 141,
       "lat": 53.583,
       "lng": -2.433
@@ -1236,7 +1236,7 @@
       "kind": "city",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Stockport",
+      "county": "Stockport",
       "populationK": 139,
       "lat": 53.41,
       "lng": -2.158
@@ -1320,7 +1320,7 @@
       "kind": "city",
       "country": "England",
       "region": "North West",
-      "county": "City and Borough of Salford",
+      "county": "Salford",
       "populationK": 130,
       "lat": 53.488,
       "lng": -2.29
@@ -1478,7 +1478,7 @@
       "kind": "town",
       "country": "England",
       "region": "West Midlands",
-      "county": "City and Borough of Birmingham",
+      "county": "Birmingham",
       "populationK": 110,
       "lat": 52.567,
       "lng": -1.817
@@ -1504,7 +1504,7 @@
       "legacy": true,
       "lat": 53.683,
       "lng": -1.4967,
-      "county": "City and Borough of Wakefield"
+      "county": "Wakefield"
     },
     {
       "slug": "rotherham",
@@ -1669,7 +1669,7 @@
       "kind": "city",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Rochdale",
+      "county": "Rochdale",
       "populationK": 98,
       "lat": 53.618,
       "lng": -2.155
@@ -1834,7 +1834,7 @@
       "kind": "city",
       "country": "England",
       "region": "East",
-      "county": "Borough of Thurrock",
+      "county": "Thurrock",
       "populationK": 90,
       "lat": 51.476,
       "lng": 0.325
@@ -2313,7 +2313,7 @@
       "kind": "city",
       "country": "England",
       "region": "South East",
-      "county": "Royal Borough of Windsor and Maidenhead",
+      "county": "Windsor and Maidenhead",
       "populationK": 70,
       "lat": 51.523,
       "lng": -0.72
@@ -2347,7 +2347,7 @@
       "kind": "town",
       "country": "England",
       "region": "South West",
-      "county": "Borough of Torbay",
+      "county": "Torbay",
       "populationK": 68,
       "lat": 50.436,
       "lng": -3.568
@@ -2458,7 +2458,7 @@
       "kind": "city",
       "country": "England",
       "region": "South West",
-      "county": "Borough of Torbay",
+      "county": "Torbay",
       "populationK": 65,
       "lat": 50.462,
       "lng": -3.525
@@ -2656,7 +2656,7 @@
       "kind": "city",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Halton",
+      "county": "Halton",
       "populationK": 61,
       "lat": 53.362,
       "lng": -2.734
@@ -2678,7 +2678,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Halton",
+      "county": "Halton",
       "populationK": 61,
       "lat": 53.342,
       "lng": -2.731
@@ -2711,7 +2711,7 @@
       "kind": "city",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Bury",
+      "county": "Bury",
       "populationK": 61,
       "lat": 53.6,
       "lng": -2.3
@@ -2789,7 +2789,7 @@
       "kind": "city",
       "country": "England",
       "region": "North West",
-      "county": "Metropolitan Borough of Wirral",
+      "county": "Wirral",
       "populationK": 59,
       "lat": 53.423,
       "lng": -3.065
@@ -2844,7 +2844,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Metropolitan Borough of Wirral",
+      "county": "Wirral",
       "populationK": 58,
       "lat": 53.35,
       "lng": -3.017
@@ -2903,7 +2903,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Leeds",
+      "county": "Leeds",
       "populationK": 57,
       "lat": 53.74,
       "lng": -1.599
@@ -2947,7 +2947,7 @@
       "kind": "city",
       "country": "Northern Ireland",
       "region": "Northern Ireland",
-      "county": "City of Belfast",
+      "county": "Belfast",
       "populationK": 57,
       "lat": 54.574,
       "lng": -5.885
@@ -3310,7 +3310,7 @@
       "kind": "city",
       "country": "Wales",
       "region": "Wales",
-      "county": "Bridgend county borough",
+      "county": "Bridgend",
       "populationK": 50,
       "lat": 51.506,
       "lng": -3.577
@@ -3365,7 +3365,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Torfaen County Borough",
+      "county": "Torfaen",
       "populationK": 49,
       "lat": 51.654,
       "lng": -3.023
@@ -3509,7 +3509,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Rochdale",
+      "county": "Rochdale",
       "populationK": 46,
       "lat": 53.55,
       "lng": -2.2
@@ -3621,7 +3621,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Wakefield",
+      "county": "Wakefield",
       "populationK": 45,
       "lat": 53.691,
       "lng": -1.313
@@ -3654,7 +3654,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Wakefield",
+      "county": "Wakefield",
       "populationK": 45,
       "lat": 53.726,
       "lng": -1.363
@@ -3687,7 +3687,7 @@
       "kind": "city",
       "country": "Wales",
       "region": "Wales",
-      "county": "Merthyr Tydfil County Borough",
+      "county": "Merthyr Tydfil",
       "populationK": 44,
       "lat": 51.748,
       "lng": -3.378
@@ -3698,7 +3698,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Wigan",
+      "county": "Wigan",
       "populationK": 44,
       "lat": 53.496,
       "lng": -2.52
@@ -3764,7 +3764,7 @@
       "kind": "city",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Tameside",
+      "county": "Tameside",
       "populationK": 44,
       "lat": 53.489,
       "lng": -2.099
@@ -4018,7 +4018,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Bridgend county borough",
+      "county": "Bridgend",
       "populationK": 41,
       "lat": 51.522,
       "lng": -3.555
@@ -4290,7 +4290,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Oldham",
+      "county": "Oldham",
       "populationK": 38,
       "lat": 53.545,
       "lng": -2.14
@@ -4333,7 +4333,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Leeds",
+      "county": "Leeds",
       "populationK": 37,
       "lat": 53.864,
       "lng": -1.687
@@ -4421,7 +4421,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "City and Borough of Salford",
+      "county": "Salford",
       "populationK": 37,
       "lat": 53.483,
       "lng": -2.333
@@ -4465,7 +4465,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "City and Borough of Salford",
+      "county": "Salford",
       "populationK": 36,
       "lat": 53.517,
       "lng": -2.4
@@ -4476,7 +4476,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Wigan",
+      "county": "Wigan",
       "populationK": 36,
       "lat": 53.514,
       "lng": -2.468
@@ -4509,7 +4509,7 @@
       "kind": "city",
       "country": "Wales",
       "region": "Wales",
-      "county": "Torfaen County Borough",
+      "county": "Torfaen",
       "populationK": 36,
       "lat": 51.701,
       "lng": -3.044
@@ -4542,7 +4542,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Tameside",
+      "county": "Tameside",
       "populationK": 36,
       "lat": 53.451,
       "lng": -2.079
@@ -4871,11 +4871,11 @@
       "name": "Loughton",
       "kind": "town",
       "country": "England",
-      "region": "West Midlands",
-      "county": "Shropshire",
+      "region": "East",
+      "county": "Essex",
       "populationK": 33,
-      "lat": 52.433,
-      "lng": -2.567
+      "lat": 51.646,
+      "lng": 0.054
     },
     {
       "slug": "ebbw-vale",
@@ -4938,7 +4938,7 @@
       "kind": "london-area",
       "country": "England",
       "region": "West Midlands",
-      "county": "City and Borough of Birmingham",
+      "county": "Birmingham",
       "populationK": 33,
       "lat": 52.501,
       "lng": -1.827
@@ -4960,7 +4960,7 @@
       "kind": "town",
       "country": "England",
       "region": "South East",
-      "county": "Royal Borough of Windsor and Maidenhead",
+      "county": "Windsor and Maidenhead",
       "populationK": 32,
       "lat": 51.483,
       "lng": -0.6
@@ -4993,7 +4993,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Bury",
+      "county": "Bury",
       "populationK": 32,
       "lat": 53.533,
       "lng": -2.283
@@ -5037,7 +5037,7 @@
       "kind": "london-area",
       "country": "England",
       "region": "West Midlands",
-      "county": "City and Borough of Birmingham",
+      "county": "Birmingham",
       "populationK": 32,
       "lat": 52.5,
       "lng": -1.883
@@ -5192,7 +5192,7 @@
       "kind": "town",
       "country": "England",
       "region": "South West",
-      "county": "Bournemouth, Christchurch and Poole Council",
+      "county": "Bournemouth, Christchurch and Poole",
       "populationK": 31,
       "lat": 50.736,
       "lng": -1.781
@@ -5214,7 +5214,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Caerphilly County Borough",
+      "county": "Caerphilly",
       "populationK": 31,
       "lat": 51.575,
       "lng": -3.218
@@ -5324,7 +5324,7 @@
       "kind": "town",
       "country": "England",
       "region": "East",
-      "county": "Borough of Thurrock",
+      "county": "Thurrock",
       "populationK": 30,
       "lat": 51.523,
       "lng": 0.434
@@ -5390,7 +5390,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Bury",
+      "county": "Bury",
       "populationK": 30,
       "lat": 53.562,
       "lng": -2.325
@@ -5489,7 +5489,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Metropolitan Borough of Wirral",
+      "county": "Wirral",
       "populationK": 29,
       "lat": 53.327,
       "lng": -3.096
@@ -5533,7 +5533,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Stockport",
+      "county": "Stockport",
       "populationK": 29,
       "lat": 53.376,
       "lng": -2.19
@@ -5753,7 +5753,7 @@
       "kind": "london-area",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Rochdale",
+      "county": "Rochdale",
       "populationK": 28,
       "lat": 53.592,
       "lng": -2.219
@@ -5787,7 +5787,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Tameside",
+      "county": "Tameside",
       "populationK": 27,
       "lat": 53.484,
       "lng": -2.059
@@ -5842,7 +5842,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Tameside",
+      "county": "Tameside",
       "populationK": 27,
       "lat": 53.457,
       "lng": -2.118
@@ -5875,7 +5875,7 @@
       "kind": "london-area",
       "country": "England",
       "region": "West Midlands",
-      "county": "City and Borough of Birmingham",
+      "county": "Birmingham",
       "populationK": 27,
       "lat": 52.45,
       "lng": -1.817
@@ -5908,7 +5908,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Bolton",
+      "county": "Bolton",
       "populationK": 26,
       "lat": 53.549,
       "lng": -2.525
@@ -6051,7 +6051,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Bolton",
+      "county": "Bolton",
       "populationK": 26,
       "lat": 53.55,
       "lng": -2.4
@@ -6205,7 +6205,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Oldham",
+      "county": "Oldham",
       "populationK": 25,
       "lat": 53.548,
       "lng": -2.005
@@ -6238,7 +6238,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Leeds",
+      "county": "Leeds",
       "populationK": 25,
       "lat": 53.795,
       "lng": -1.661
@@ -6293,7 +6293,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Wigan",
+      "county": "Wigan",
       "populationK": 25,
       "lat": 53.533,
       "lng": -2.583
@@ -6392,7 +6392,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Bury",
+      "county": "Bury",
       "populationK": 24,
       "lat": 53.55,
       "lng": -2.3
@@ -6535,7 +6535,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Wigan",
+      "county": "Wigan",
       "populationK": 24,
       "lat": 53.477,
       "lng": -2.597
@@ -6546,7 +6546,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Tameside",
+      "county": "Tameside",
       "populationK": 24,
       "lat": 53.48,
       "lng": -2.145
@@ -6678,7 +6678,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "City and Borough of Salford",
+      "county": "Salford",
       "populationK": 23,
       "lat": 53.5,
       "lng": -2.35
@@ -6700,7 +6700,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Oldham",
+      "county": "Oldham",
       "populationK": 23,
       "lat": 53.565,
       "lng": -2.123
@@ -6755,7 +6755,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Leeds",
+      "county": "Leeds",
       "populationK": 23,
       "lat": 53.729,
       "lng": -1.497
@@ -6887,7 +6887,7 @@
       "kind": "town",
       "country": "England",
       "region": "West Midlands",
-      "county": "City and Borough of Birmingham",
+      "county": "Birmingham",
       "populationK": 23,
       "lat": 52.435,
       "lng": -1.997
@@ -6931,7 +6931,7 @@
       "kind": "town",
       "country": "England",
       "region": "East",
-      "county": "Borough of Thurrock",
+      "county": "Thurrock",
       "populationK": 22,
       "lat": 51.508,
       "lng": 0.283
@@ -6975,7 +6975,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Wakefield",
+      "county": "Wakefield",
       "populationK": 22,
       "lat": 53.68,
       "lng": -1.58
@@ -7030,7 +7030,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Wigan",
+      "county": "Wigan",
       "populationK": 22,
       "lat": 53.524,
       "lng": -2.494
@@ -7230,7 +7230,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Bridgend county borough",
+      "county": "Bridgend",
       "populationK": 21,
       "lat": 51.609,
       "lng": -3.658
@@ -7285,7 +7285,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Leeds",
+      "county": "Leeds",
       "populationK": 21,
       "lat": 53.876,
       "lng": -1.712
@@ -7351,7 +7351,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Tameside",
+      "county": "Tameside",
       "populationK": 21,
       "lat": 53.475,
       "lng": -2.088
@@ -7450,7 +7450,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Oldham",
+      "county": "Oldham",
       "populationK": 21,
       "lat": 53.505,
       "lng": -2.166
@@ -7528,7 +7528,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Caerphilly County Borough",
+      "county": "Caerphilly",
       "populationK": 20,
       "lat": 51.608,
       "lng": -3.101
@@ -7649,7 +7649,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Stockport",
+      "county": "Stockport",
       "populationK": 20,
       "lat": 53.383,
       "lng": -2.117
@@ -7913,7 +7913,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Wakefield",
+      "county": "Wakefield",
       "populationK": 19,
       "lat": 53.597,
       "lng": -1.28
@@ -8045,7 +8045,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "City and Borough of Salford",
+      "county": "Salford",
       "populationK": 19,
       "lat": 53.443,
       "lng": -2.423
@@ -8056,7 +8056,7 @@
       "kind": "town",
       "country": "England",
       "region": "East Midlands",
-      "county": "City of Leicester",
+      "county": "Leicester",
       "populationK": 19,
       "lat": 52.647,
       "lng": -1.086
@@ -8067,7 +8067,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Bolton",
+      "county": "Bolton",
       "populationK": 19,
       "lat": 53.601,
       "lng": -2.55
@@ -8078,7 +8078,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Leeds",
+      "county": "Leeds",
       "populationK": 19,
       "lat": 53.843,
       "lng": -1.638
@@ -8353,7 +8353,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Metropolitan Borough of Wirral",
+      "county": "Wirral",
       "populationK": 18,
       "lat": 53.4,
       "lng": -3.117
@@ -8551,7 +8551,7 @@
       "kind": "town",
       "country": "England",
       "region": "South East",
-      "county": "Royal Borough of Windsor and Maidenhead",
+      "county": "Windsor and Maidenhead",
       "populationK": 18,
       "lat": 51.411,
       "lng": -0.675
@@ -8617,7 +8617,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Leeds",
+      "county": "Leeds",
       "populationK": 18,
       "lat": 53.829,
       "lng": -1.538
@@ -8813,7 +8813,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Bury",
+      "county": "Bury",
       "populationK": 17,
       "lat": 53.648,
       "lng": -2.317
@@ -9000,7 +9000,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Caerphilly County Borough",
+      "county": "Caerphilly",
       "populationK": 17,
       "lat": 51.664,
       "lng": -3.256
@@ -9099,7 +9099,7 @@
       "kind": "town",
       "country": "England",
       "region": "South West",
-      "county": "Borough of Torbay",
+      "county": "Torbay",
       "populationK": 17,
       "lat": 50.394,
       "lng": -3.516
@@ -9110,7 +9110,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Stockport",
+      "county": "Stockport",
       "populationK": 17,
       "lat": 53.417,
       "lng": -2.117
@@ -9132,7 +9132,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Stockport",
+      "county": "Stockport",
       "populationK": 17,
       "lat": 53.358,
       "lng": -2.165
@@ -9253,7 +9253,7 @@
       "kind": "town",
       "country": "England",
       "region": "South West",
-      "county": "Bournemouth, Christchurch and Poole Council",
+      "county": "Bournemouth, Christchurch and Poole",
       "populationK": 16,
       "lat": 50.783,
       "lng": -1.983
@@ -9374,7 +9374,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Bridgend county borough",
+      "county": "Bridgend",
       "populationK": 16,
       "lat": 51.479,
       "lng": -3.704
@@ -9440,7 +9440,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Leeds",
+      "county": "Leeds",
       "populationK": 16,
       "lat": 53.767,
       "lng": -1.371
@@ -9946,7 +9946,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Caerphilly County Borough",
+      "county": "Caerphilly",
       "populationK": 15,
       "lat": 51.668,
       "lng": -3.208
@@ -10122,7 +10122,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Leeds",
+      "county": "Leeds",
       "populationK": 15,
       "lat": 53.906,
       "lng": -1.694
@@ -10232,7 +10232,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Leeds",
+      "county": "Leeds",
       "populationK": 15,
       "lat": 53.792,
       "lng": -1.381
@@ -10298,7 +10298,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Metropolitan Borough of Wirral",
+      "county": "Wirral",
       "populationK": 15,
       "lat": 53.349,
       "lng": -2.979
@@ -10474,7 +10474,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Leeds",
+      "county": "Leeds",
       "populationK": 14,
       "lat": 53.928,
       "lng": -1.387
@@ -10540,7 +10540,7 @@
       "kind": "town",
       "country": "England",
       "region": "East",
-      "county": "Borough of Thurrock",
+      "county": "Thurrock",
       "populationK": 14,
       "lat": 51.462,
       "lng": 0.359
@@ -10650,7 +10650,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Bridgend county borough",
+      "county": "Bridgend",
       "populationK": 14,
       "lat": 51.517,
       "lng": -3.7
@@ -10782,7 +10782,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Rochdale",
+      "county": "Rochdale",
       "populationK": 14,
       "lat": 53.644,
       "lng": -2.096
@@ -10804,7 +10804,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Wakefield",
+      "county": "Wakefield",
       "populationK": 14,
       "lat": 53.708,
       "lng": -1.256
@@ -10859,7 +10859,7 @@
       "kind": "london-area",
       "country": "England",
       "region": "West Midlands",
-      "county": "City and Borough of Birmingham",
+      "county": "Birmingham",
       "populationK": 14,
       "lat": 52.5,
       "lng": -1.917
@@ -11112,7 +11112,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Metropolitan Borough of Wirral",
+      "county": "Wirral",
       "populationK": 14,
       "lat": 53.368,
       "lng": -3.055
@@ -11134,7 +11134,7 @@
       "kind": "london-area",
       "country": "England",
       "region": "South West",
-      "county": "Bournemouth, Christchurch and Poole Council",
+      "county": "Bournemouth, Christchurch and Poole",
       "populationK": 14,
       "lat": 50.751,
       "lng": -1.969
@@ -11442,7 +11442,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Stockport",
+      "county": "Stockport",
       "populationK": 13,
       "lat": 53.395,
       "lng": -2.063
@@ -11464,7 +11464,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "City and Borough of Salford",
+      "county": "Salford",
       "populationK": 13,
       "lat": 53.533,
       "lng": -2.417
@@ -11486,7 +11486,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Oldham",
+      "county": "Oldham",
       "populationK": 13,
       "lat": 53.538,
       "lng": -2.073
@@ -11761,7 +11761,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Caerphilly County Borough",
+      "county": "Caerphilly",
       "populationK": 13,
       "lat": 51.683,
       "lng": -3.233
@@ -11849,7 +11849,7 @@
       "kind": "london-area",
       "country": "England",
       "region": "East",
-      "county": "Borough of Thurrock",
+      "county": "Thurrock",
       "populationK": 13,
       "lat": 51.489,
       "lng": 0.294
@@ -12015,7 +12015,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Merthyr Tydfil County Borough",
+      "county": "Merthyr Tydfil",
       "populationK": 12,
       "lat": 51.665,
       "lng": -3.307
@@ -12070,7 +12070,7 @@
       "kind": "town",
       "country": "England",
       "region": "South East",
-      "county": "Royal Borough of Windsor and Maidenhead",
+      "county": "Windsor and Maidenhead",
       "populationK": 12,
       "lat": 51.401,
       "lng": -0.656
@@ -12213,7 +12213,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Oldham",
+      "county": "Oldham",
       "populationK": 12,
       "lat": 53.517,
       "lng": -2.133
@@ -12257,7 +12257,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City of York",
+      "county": "York",
       "populationK": 12,
       "lat": 54.014,
       "lng": -1.071
@@ -12455,7 +12455,7 @@
       "kind": "town",
       "country": "England",
       "region": "East Midlands",
-      "county": "City of Leicester",
+      "county": "Leicester",
       "populationK": 12,
       "lat": 52.667,
       "lng": -1.117
@@ -12477,7 +12477,7 @@
       "kind": "town",
       "country": "England",
       "region": "East Midlands",
-      "county": "City of Leicester",
+      "county": "Leicester",
       "populationK": 12,
       "lat": 52.65,
       "lng": -1.117
@@ -12609,7 +12609,7 @@
       "kind": "london-area",
       "country": "England",
       "region": "South West",
-      "county": "City of Bristol",
+      "county": "Bristol",
       "populationK": 12,
       "lat": 51.415,
       "lng": -2.621
@@ -12939,7 +12939,7 @@
       "kind": "city",
       "country": "England",
       "region": "East Midlands",
-      "county": "District of Rutland",
+      "county": "Rutland",
       "populationK": 11,
       "lat": 52.667,
       "lng": -0.733
@@ -13082,7 +13082,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Wigan",
+      "county": "Wigan",
       "populationK": 11,
       "lat": 53.533,
       "lng": -2.617
@@ -13390,7 +13390,7 @@
       "kind": "town",
       "country": "England",
       "region": "East Midlands",
-      "county": "City of Leicester",
+      "county": "Leicester",
       "populationK": 11,
       "lat": 52.604,
       "lng": -1.146
@@ -13577,7 +13577,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Oldham",
+      "county": "Oldham",
       "populationK": 11,
       "lat": 53.549,
       "lng": -2.005
@@ -13863,7 +13863,7 @@
       "kind": "town",
       "country": "England",
       "region": "South West",
-      "county": "Bournemouth, Christchurch and Poole Council",
+      "county": "Bournemouth, Christchurch and Poole",
       "populationK": 10,
       "lat": 50.73,
       "lng": -1.945
@@ -13896,7 +13896,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Tameside",
+      "county": "Tameside",
       "populationK": 10,
       "lat": 53.515,
       "lng": -2.035
@@ -13962,7 +13962,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Bolton",
+      "county": "Bolton",
       "populationK": 10,
       "lat": 53.563,
       "lng": -2.378
@@ -14028,7 +14028,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Bolton",
+      "county": "Bolton",
       "populationK": 10,
       "lat": 53.533,
       "lng": -2.383
@@ -14039,7 +14039,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Wakefield",
+      "county": "Wakefield",
       "populationK": 10,
       "lat": 53.661,
       "lng": -1.56
@@ -14270,7 +14270,7 @@
       "kind": "town",
       "country": "England",
       "region": "South West",
-      "county": "Bournemouth, Christchurch and Poole Council",
+      "county": "Bournemouth, Christchurch and Poole",
       "populationK": 10,
       "lat": 50.757,
       "lng": -1.994
@@ -14380,7 +14380,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Wigan",
+      "county": "Wigan",
       "populationK": 10,
       "lat": 53.509,
       "lng": -2.593
@@ -14391,7 +14391,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Bridgend county borough",
+      "county": "Bridgend",
       "populationK": 10,
       "lat": 51.54,
       "lng": -3.596
@@ -14402,7 +14402,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Caerphilly County Borough",
+      "county": "Caerphilly",
       "populationK": 10,
       "lat": 51.647,
       "lng": -3.135
@@ -14468,7 +14468,7 @@
       "kind": "london-area",
       "country": "England",
       "region": "East",
-      "county": "Borough of Thurrock",
+      "county": "Thurrock",
       "populationK": 10,
       "lat": 51.481,
       "lng": 0.363
@@ -14589,7 +14589,7 @@
       "kind": "town",
       "country": "England",
       "region": "South West",
-      "county": "Borough of Torbay",
+      "county": "Torbay",
       "populationK": 10,
       "lat": 50.463,
       "lng": -3.557
@@ -14600,7 +14600,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Metropolitan Borough of Wirral",
+      "county": "Wirral",
       "populationK": 10,
       "lat": 53.373,
       "lng": -3.123
@@ -14692,16 +14692,6 @@
       "populationK": 10,
       "lat": 51.524,
       "lng": -0.181
-    },
-    {
-      "slug": "dhekelia",
-      "name": "Dhekelia",
-      "kind": "town",
-      "country": "England",
-      "region": "England",
-      "populationK": 10,
-      "lat": 34.984,
-      "lng": 33.734
     },
     {
       "slug": "hale-barns",
@@ -14852,7 +14842,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Caerphilly County Borough",
+      "county": "Caerphilly",
       "populationK": 9,
       "lat": 51.76,
       "lng": -3.286
@@ -14874,7 +14864,7 @@
       "kind": "town",
       "country": "Scotland",
       "region": "Scotland",
-      "county": "City of Edinburgh",
+      "county": "Edinburgh",
       "populationK": 9,
       "lat": 55.991,
       "lng": -3.398
@@ -14929,7 +14919,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Bridgend county borough",
+      "county": "Bridgend",
       "populationK": 9,
       "lat": 51.524,
       "lng": -3.5
@@ -14962,7 +14952,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Rochdale",
+      "county": "Rochdale",
       "populationK": 9,
       "lat": 53.611,
       "lng": -2.113
@@ -15006,7 +14996,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Tameside",
+      "county": "Tameside",
       "populationK": 9,
       "lat": 53.467,
       "lng": -2
@@ -15116,7 +15106,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Wakefield",
+      "county": "Wakefield",
       "populationK": 9,
       "lat": 53.613,
       "lng": -1.354
@@ -15479,7 +15469,7 @@
       "kind": "london-area",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Tameside",
+      "county": "Tameside",
       "populationK": 9,
       "lat": 53.441,
       "lng": -2.098
@@ -15655,7 +15645,7 @@
       "kind": "town",
       "country": "England",
       "region": "East",
-      "county": "Borough of Thurrock",
+      "county": "Thurrock",
       "populationK": 8,
       "lat": 51.478,
       "lng": 0.277
@@ -15666,7 +15656,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Metropolitan Borough of Wirral",
+      "county": "Wirral",
       "populationK": 8,
       "lat": 53.373,
       "lng": -3.184
@@ -15743,7 +15733,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Bury",
+      "county": "Bury",
       "populationK": 8,
       "lat": 53.613,
       "lng": -2.341
@@ -16238,7 +16228,7 @@
       "kind": "town",
       "country": "England",
       "region": "South West",
-      "county": "Borough of Swindon",
+      "county": "Swindon",
       "populationK": 8,
       "lat": 51.631,
       "lng": -1.711
@@ -16491,7 +16481,7 @@
       "kind": "town",
       "country": "Scotland",
       "region": "Scotland",
-      "county": "City of Edinburgh",
+      "county": "Edinburgh",
       "populationK": 8,
       "lat": 55.907,
       "lng": -3.256
@@ -16656,7 +16646,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Caerphilly County Borough",
+      "county": "Caerphilly",
       "populationK": 8,
       "lat": 51.592,
       "lng": -3.199
@@ -16667,7 +16657,7 @@
       "kind": "town",
       "country": "England",
       "region": "East",
-      "county": "Borough of Thurrock",
+      "county": "Thurrock",
       "populationK": 8,
       "lat": 51.5,
       "lng": 0.252
@@ -16931,7 +16921,7 @@
       "kind": "town",
       "country": "England",
       "region": "South East",
-      "county": "Royal Borough of Windsor and Maidenhead",
+      "county": "Windsor and Maidenhead",
       "populationK": 8,
       "lat": 51.54,
       "lng": -0.737
@@ -16942,7 +16932,7 @@
       "kind": "town",
       "country": "England",
       "region": "South East",
-      "county": "Royal Borough of Windsor and Maidenhead",
+      "county": "Windsor and Maidenhead",
       "populationK": 8,
       "lat": 51.533,
       "lng": -0.761
@@ -17041,7 +17031,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Rochdale",
+      "county": "Rochdale",
       "populationK": 7,
       "lat": 53.65,
       "lng": -2.133
@@ -17404,7 +17394,7 @@
       "kind": "town",
       "country": "England",
       "region": "South East",
-      "county": "Royal Borough of Windsor and Maidenhead",
+      "county": "Windsor and Maidenhead",
       "populationK": 7,
       "lat": 51.458,
       "lng": -0.587
@@ -17448,7 +17438,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Caerphilly County Borough",
+      "county": "Caerphilly",
       "populationK": 7,
       "lat": 51.667,
       "lng": -3.133
@@ -17811,7 +17801,7 @@
       "kind": "town",
       "country": "Scotland",
       "region": "Scotland",
-      "county": "City of Edinburgh",
+      "county": "Edinburgh",
       "populationK": 7,
       "lat": 55.896,
       "lng": -3.308
@@ -18097,7 +18087,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Caerphilly County Borough",
+      "county": "Caerphilly",
       "populationK": 7,
       "lat": 51.596,
       "lng": -3.268
@@ -18328,7 +18318,7 @@
       "kind": "town",
       "country": "England",
       "region": "South West",
-      "county": "Borough of Swindon",
+      "county": "Swindon",
       "populationK": 6,
       "lat": 51.524,
       "lng": -1.796
@@ -18526,7 +18516,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Wakefield",
+      "county": "Wakefield",
       "populationK": 6,
       "lat": 53.615,
       "lng": -1.287
@@ -18592,7 +18582,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City of York",
+      "county": "York",
       "populationK": 6,
       "lat": 54.04,
       "lng": -1.035
@@ -18724,7 +18714,7 @@
       "kind": "town",
       "country": "England",
       "region": "East",
-      "county": "Borough of Thurrock",
+      "county": "Thurrock",
       "populationK": 6,
       "lat": 51.484,
       "lng": 0.242
@@ -19054,7 +19044,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Metropolitan Borough of Wirral",
+      "county": "Wirral",
       "populationK": 6,
       "lat": 53.39,
       "lng": -3.181
@@ -19395,7 +19385,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Caerphilly County Borough",
+      "county": "Caerphilly",
       "populationK": 6,
       "lat": 51.678,
       "lng": -3.135
@@ -19615,7 +19605,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Leeds",
+      "county": "Leeds",
       "populationK": 6,
       "lat": 53.904,
       "lng": -1.345
@@ -19637,7 +19627,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Torfaen County Borough",
+      "county": "Torfaen",
       "populationK": 6,
       "lat": 51.774,
       "lng": -3.085
@@ -19736,7 +19726,7 @@
       "kind": "town",
       "country": "Scotland",
       "region": "Scotland",
-      "county": "City of Edinburgh",
+      "county": "Edinburgh",
       "populationK": 6,
       "lat": 55.884,
       "lng": -3.34
@@ -19989,7 +19979,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Leeds",
+      "county": "Leeds",
       "populationK": 6,
       "lat": 53.784,
       "lng": -1.568
@@ -20242,7 +20232,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Wigan",
+      "county": "Wigan",
       "populationK": 5,
       "lat": 53.572,
       "lng": -2.693
@@ -20308,7 +20298,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Wakefield",
+      "county": "Wakefield",
       "populationK": 5,
       "lat": 53.622,
       "lng": -1.411
@@ -20440,7 +20430,7 @@
       "kind": "london-area",
       "country": "England",
       "region": "North West",
-      "county": "Metropolitan Borough of Wirral",
+      "county": "Wirral",
       "populationK": 5,
       "lat": 53.36,
       "lng": -2.994
@@ -20616,7 +20606,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Caerphilly County Borough",
+      "county": "Caerphilly",
       "populationK": 5,
       "lat": 51.651,
       "lng": -3.232
@@ -20693,7 +20683,7 @@
       "kind": "town",
       "country": "England",
       "region": "East",
-      "county": "Borough of Thurrock",
+      "county": "Thurrock",
       "populationK": 5,
       "lat": 51.481,
       "lng": 0.417
@@ -20759,7 +20749,7 @@
       "kind": "town",
       "country": "England",
       "region": "Yorkshire",
-      "county": "City and Borough of Wakefield",
+      "county": "Wakefield",
       "populationK": 5,
       "lat": 53.656,
       "lng": -1.43
@@ -20792,7 +20782,7 @@
       "kind": "town",
       "country": "England",
       "region": "South East",
-      "county": "Royal Borough of Windsor and Maidenhead",
+      "county": "Windsor and Maidenhead",
       "populationK": 5,
       "lat": 51.559,
       "lng": -0.708
@@ -20924,7 +20914,7 @@
       "kind": "town",
       "country": "England",
       "region": "North West",
-      "county": "Borough of Bolton",
+      "county": "Bolton",
       "populationK": 5,
       "lat": 53.592,
       "lng": -2.58
@@ -21034,7 +21024,7 @@
       "kind": "town",
       "country": "Wales",
       "region": "Wales",
-      "county": "Merthyr Tydfil County Borough",
+      "county": "Merthyr Tydfil",
       "populationK": 5,
       "lat": 51.724,
       "lng": -3.366

@@ -109,14 +109,6 @@
         "verifiedOn": "2026-08-01"
       },
       {
-        "name": "Total Fitness",
-        "type": "gym",
-        "chain": "Total Fitness",
-        "distanceKm": 2.5,
-        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
-      },
-      {
         "name": "Cheetham Hill Sports Club",
         "type": "sports-centre",
         "website": "https://cheethamhillsportsclub.com/",
@@ -215,6 +207,14 @@
         "chain": "Salford City Council",
         "website": "https://www.salfordcommunityleisure.co.uk/sport/locations/swinton-and-pendlebury-leisure-centre",
         "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Claremont Tennis & Social Club",
+        "type": "sports-centre",
+        "website": "https://www.tennissalford.co.uk/",
+        "distanceKm": 4.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
         "verifiedOn": "2026-08-01"
       }

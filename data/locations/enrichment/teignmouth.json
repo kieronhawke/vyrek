@@ -66,6 +66,20 @@
         "verifiedOn": "2026-08-01"
       },
       {
+        "name": "Kingsteignton Heated Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Abbrook Park",
+        "type": "sports-centre",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
         "name": "PureGym",
         "type": "gym",
         "chain": "PureGym",

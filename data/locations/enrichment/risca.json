@@ -135,6 +135,29 @@
         "verifiedOn": "2026-08-01"
       },
       {
+        "name": "Station Gym",
+        "type": "gym",
+        "website": "https://stationgym.co.uk",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hot Yoga Health",
+        "type": "gym",
+        "website": "https://www.hotyogahealth.uk/",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "KB Boxing",
+        "type": "gym",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
         "name": "Elite Fitness",
         "type": "gym",
         "website": "https://elitefitnesswales.co.uk/",
@@ -147,6 +170,15 @@
         "type": "gym",
         "website": "https://www.simplygym.net/our-gyms/cwmbran/",
         "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "website": "https://www.puregym.com/gyms/newport-wales/",
+        "distanceKm": 7.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
         "verifiedOn": "2026-08-01"
       },

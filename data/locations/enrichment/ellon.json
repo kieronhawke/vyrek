@@ -25,6 +25,14 @@
         "verifiedOn": "2026-08-01"
       },
       {
+        "name": "The Shed Health Club",
+        "type": "gym",
+        "website": "https://www.theshedhealthclub.co.uk",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
         "name": "North Lodge Park",
         "type": "sports-centre",
         "distanceKm": 7.9,

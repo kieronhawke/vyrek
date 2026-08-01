@@ -88,15 +88,6 @@
         "verifiedOn": "2026-08-01"
       },
       {
-        "name": "Nuffield Health Fitness & Wellbeing",
-        "type": "gym",
-        "chain": "Nuffield Health Fitness & Wellbeing",
-        "website": "https://www.nuffieldhealth.com/gyms/wimbledon",
-        "distanceKm": 1.7,
-        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
-      },
-      {
         "name": "Wimbledon Park Rifle Club",
         "type": "sports-centre",
         "website": "https://wprc.plexjet.net/",
@@ -152,6 +143,13 @@
         "name": "Cedars Lawn Tennis Club",
         "type": "sports-centre",
         "website": "https://clubspark.lta.org.uk/CedarsLawnTennisClub",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "All Star Tennis",
+        "type": "sports-centre",
         "distanceKm": 2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
         "verifiedOn": "2026-08-01"

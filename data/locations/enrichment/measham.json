@@ -45,6 +45,13 @@
         "verifiedOn": "2026-08-01"
       },
       {
+        "name": "IBSTOCK UNITED JUNIOR & YOUTH FC",
+        "type": "sports-centre",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
         "name": "Swadlincote Ski Slope",
         "type": "sports-centre",
         "distanceKm": 7.8,

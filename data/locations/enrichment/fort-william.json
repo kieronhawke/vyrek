@@ -43,6 +43,14 @@
         "distanceKm": 2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
         "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nevis Range Mountain Resort",
+        "type": "sports-centre",
+        "website": "https://www.nevisrange.co.uk/",
+        "distanceKm": 8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
       }
     ]
   }

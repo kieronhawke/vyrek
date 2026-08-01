@@ -441,6 +441,7 @@ export function GeoLanding({
           slug={loc.slug}
           name={loc.name}
           region={loc.region}
+          county={loc.county}
           base={variant === "hyrox" ? "/hyrox-training" : "/personal-trainer"}
         />
 

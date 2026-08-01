@@ -4,6 +4,8 @@ import { CtaButton } from "@/components/shared/cta-button";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import type { UkLocation } from "@/lib/uk-locations";
+import { JsonLd } from "@/lib/blog/jsonld";
+import { siteUrl } from "@/lib/blog/urls";
 
 /**
  * One region, every town in it, for a single page family.
@@ -27,8 +29,37 @@ export function GeoRegionDirectory({
   title: string;
   intro: string;
 }) {
+  const label =
+    base === "/hyrox-training" ? "Hyrox training" : "Personal training";
+  // A directory page is an ItemList of the pages it links to, plus the
+  // breadcrumb that puts it between the hub and the towns. Without these the
+  // 26 region pages carried no structured data at all.
+  const itemList = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `${label} in ${region}`,
+    numberOfItems: locations.length,
+    itemListElement: locations.map((l, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${siteUrl()}${base}/${l.slug}`,
+      name: `${label} in ${l.name}`,
+    })),
+  };
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl() },
+      { "@type": "ListItem", position: 2, name: label, item: `${siteUrl()}${base}` },
+      { "@type": "ListItem", position: 3, name: region },
+    ],
+  };
+
   return (
     <>
+      <JsonLd data={itemList} />
+      <JsonLd data={breadcrumb} />
       <MarketingNav />
       <main className="pb-24 pt-28 md:pt-36">
         <Container>

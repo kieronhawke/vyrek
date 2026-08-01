@@ -110,6 +110,14 @@
         "verifiedOn": "2026-08-01"
       },
       {
+        "name": "Leadgate Cricket Club",
+        "type": "sports-centre",
+        "website": "https://leadgate.play-cricket.com/home",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
         "name": "Pelaw Grange Stadium",
         "type": "sports-centre",
         "website": "http://www.pelawgrange.co.uk/",

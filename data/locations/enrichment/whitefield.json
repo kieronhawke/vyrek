@@ -72,14 +72,6 @@
         "verifiedOn": "2026-08-01"
       },
       {
-        "name": "Total Fitness",
-        "type": "gym",
-        "chain": "Total Fitness",
-        "distanceKm": 0.5,
-        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
-      },
-      {
         "name": "The Gym",
         "type": "gym",
         "chain": "The Gym",
@@ -207,6 +199,15 @@
         "name": "Cheetham Hill Sports Club",
         "type": "sports-centre",
         "website": "https://cheethamhillsportsclub.com/",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Salford Sports Village",
+        "type": "sports-centre",
+        "chain": "Salford City Council",
+        "website": "https://salfordcommunityleisure.co.uk/location/salford-sports-village/",
         "distanceKm": 4.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
         "verifiedOn": "2026-08-01"

@@ -110,6 +110,13 @@
         "verifiedOn": "2026-08-01"
       },
       {
+        "name": "Queen Elizabeth Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
         "name": "PureGym",
         "type": "gym",
         "chain": "PureGym",
@@ -128,6 +135,13 @@
         "name": "Broadstone Golf Club",
         "type": "sports-centre",
         "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pavillion",
+        "type": "sports-centre",
+        "distanceKm": 8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
         "verifiedOn": "2026-08-01"
       }

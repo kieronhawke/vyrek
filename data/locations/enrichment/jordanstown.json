@@ -128,6 +128,13 @@
         "verifiedOn": "2026-08-01"
       },
       {
+        "name": "Academy Sports and Community Hub",
+        "type": "sports-centre",
+        "distanceKm": 6.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
         "name": "YMCA",
         "type": "sports-centre",
         "chain": "YMCA",
@@ -139,13 +146,6 @@
         "name": "Grove Wellbeing Centre",
         "type": "gym",
         "chain": "Better",
-        "distanceKm": 7.1,
-        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
-      },
-      {
-        "name": "Carrickfergus Bowling Club",
-        "type": "sports-centre",
         "distanceKm": 7.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
         "verifiedOn": "2026-08-01"

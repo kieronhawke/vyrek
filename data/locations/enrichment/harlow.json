@@ -162,8 +162,9 @@
         "verifiedOn": "2026-08-01"
       },
       {
-        "name": "Challenge Gym",
-        "type": "gym",
+        "name": "St Margaretsbury Sports & Social Club",
+        "type": "sports-centre",
+        "website": "http://www.stmargaretsburysports.co.uk/",
         "distanceKm": 7.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
         "verifiedOn": "2026-08-01"

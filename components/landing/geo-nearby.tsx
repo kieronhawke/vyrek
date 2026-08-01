@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Container } from "@/components/shared/container";
 import { nearbyTowns } from "@/lib/locations/seo";
-import { regionSlug } from "@/lib/uk-locations";
+import { countySlug, listCountySlugs, regionSlug } from "@/lib/uk-locations";
 
 /**
  * The towns next door.
@@ -18,16 +18,21 @@ export function GeoNearby({
   slug,
   name,
   region,
+  county,
   base,
 }: {
   slug: string;
   name: string;
   region: string;
+  county?: string;
   /** "/hyrox-training" or "/personal-trainer" */
   base: string;
 }) {
   const nearby = nearbyTowns(slug, 6);
   if (!nearby.length) return null;
+  // Only counties big enough to have earned a directory page.
+  const cSlug = county ? countySlug(county) : null;
+  const hasCounty = cSlug ? listCountySlugs().includes(cSlug) : false;
 
   return (
     <section
@@ -61,12 +66,22 @@ export function GeoNearby({
               </li>
             ))}
           </ul>
-          <Link
-            href={`${base}/in/${regionSlug(region)}`}
-            className="mt-5 inline-block text-sm font-medium text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
-          >
-            Everywhere we cover in {region} →
-          </Link>
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+            {hasCounty ? (
+              <Link
+                href={`${base}/county/${cSlug}`}
+                className="text-sm font-medium text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
+              >
+                Every town in {county} →
+              </Link>
+            ) : null}
+            <Link
+              href={`${base}/in/${regionSlug(region)}`}
+              className="text-sm font-medium text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
+            >
+              Everywhere we cover in {region} →
+            </Link>
+          </div>
         </div>
       </Container>
     </section>

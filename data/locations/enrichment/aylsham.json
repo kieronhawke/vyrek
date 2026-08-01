@@ -17,5 +17,164 @@
         "verifiedOn": "2026-08-01"
       }
     ]
+  },
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Rossis Leisure",
+        "type": "sports-centre",
+        "distanceKm": 8.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Horsford Range",
+        "type": "sports-centre",
+        "distanceKm": 9.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Victory Swim and Fitness Centre",
+        "type": "sports-centre",
+        "website": "https://www.everyoneactive.com/centre/victory-swim-and-fitness-centre/",
+        "distanceKm": 9.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "North Walsham Rugby Club",
+        "type": "sports-centre",
+        "distanceKm": 9.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Yendell's Health and Wellness Hub",
+        "type": "gym",
+        "website": "https://www.yendellshub.com/",
+        "distanceKm": 9.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Combat Action Games",
+        "type": "sports-centre",
+        "website": "https://www.combat-action-games.uk/",
+        "distanceKm": 10.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St Faiths Centre Horsham & Newton",
+        "type": "sports-centre",
+        "distanceKm": 11,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "L.A. Personal Training",
+        "type": "gym",
+        "website": "http://www.leeashford.co.uk/",
+        "distanceKm": 13.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Nest",
+        "type": "sports-centre",
+        "website": "https://www.thenest.org.uk/",
+        "distanceKm": 13.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bob Carter Centre",
+        "type": "sports-centre",
+        "website": "https://bobcartercentre.org/",
+        "distanceKm": 13.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "NR12 Fitness",
+        "type": "gym",
+        "distanceKm": 13.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Karttrak Cromer",
+        "type": "sports-centre",
+        "website": "https://www.karttrak.co.uk/",
+        "distanceKm": 13.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "FireFly Poles Studio",
+        "type": "gym",
+        "website": "https://fireflypoles.co.uk/",
+        "distanceKm": 14.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lakeside Country Club",
+        "type": "sports-centre",
+        "distanceKm": 15.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fully Pumped Gym",
+        "type": "gym",
+        "website": "https://www.fullypumpedgym.co.uk/",
+        "distanceKm": 15.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "West End Cue Club",
+        "type": "sports-centre",
+        "website": "http://www.westendcueclub.co.uk/",
+        "distanceKm": 15.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "David Lloyd Leisure",
+        "type": "sports-centre",
+        "chain": "David Lloyd Clubs",
+        "distanceKm": 15.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "David Lloyd Club Norwich",
+        "type": "sports-centre",
+        "chain": "David Lloyd Clubs",
+        "website": "https://www.davidlloyd.co.uk/clubs/norwich",
+        "distanceKm": 15.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "High Altitude",
+        "type": "sports-centre",
+        "website": "https://highaltitudepk.co.uk/",
+        "distanceKm": 16.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym Group",
+        "type": "gym",
+        "chain": "The Gym Group",
+        "distanceKm": 16.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
   }
 }

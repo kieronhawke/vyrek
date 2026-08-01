@@ -32,6 +32,22 @@
         "verifiedOn": "2026-08-01"
       },
       {
+        "name": "Folc",
+        "type": "gym",
+        "website": "https://www.folcstudio.co.uk/",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "LH Fitness",
+        "type": "gym",
+        "website": "https://www.lhfit.co.uk/",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
         "name": "Pace",
         "type": "gym",
         "distanceKm": 7.9,
