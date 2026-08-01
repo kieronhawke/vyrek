@@ -4,6 +4,7 @@ import { GeoLanding, geoFaqJsonLd } from "@/components/landing/geo-landing";
 import { JsonLd } from "@/lib/blog/jsonld";
 import { getLocationBySlug, listLocationSlugs } from "@/lib/uk-locations";
 import { siteUrl } from "@/lib/blog/urls";
+import { geoRobots } from "@/lib/locations/seo";
 
 export const revalidate = 86400;
 export const dynamicParams = false;
@@ -37,7 +38,10 @@ export async function generateMetadata({
       images: [{ url: "/media/images/track/og-default.jpg", width: 1200, height: 630 }],
     },
     twitter: { card: "summary_large_image", title, description },
-    robots: { index: true, follow: true },
+    // Indexed only where the keyword database evidences demand. The rest
+    // stay live and followable but out of the index, so 67 near-duplicate
+    // pages cannot drag the domain down. See lib/locations/seo.ts.
+    robots: geoRobots(loc.slug),
   };
 }
 

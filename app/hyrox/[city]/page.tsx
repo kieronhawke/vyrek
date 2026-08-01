@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
@@ -20,10 +20,16 @@ import {
 } from "@/lib/uk-locations";
 import { RelatedGrid } from "@/components/shared/related-grid";
 import { siteUrl } from "@/lib/blog/urls";
+import { RACE_CITY_SLUGS } from "@/lib/locations/seo";
+import { HYROX_EVENTS } from "@/lib/hyrox-events";
+import { nextOccurrence, getGeoSeo } from "@/lib/locations/seo";
 
 export const revalidate = 86400;
 // Only the slugs we know are valid render; everything else 404s cleanly.
 export const dynamicParams = false;
+
+// The five slugs that keep a /hyrox/[city] page, and why, live in
+// lib/locations/seo.ts so the training pages can check the same list.
 
 export async function generateStaticParams() {
   return listLocationSlugs().map((city) => ({ city }));
@@ -38,13 +44,18 @@ export async function generateMetadata({
   const loc = getLocationBySlug(city);
   if (!loc) return { title: "Not found" };
   const url = `${siteUrl()}/hyrox/${loc.slug}`;
-  // Intent split, per docs/phase-d-groundwork-report.md finding 1. This URL is
-  // the race-city guide; /hyrox-training/{slug} is the coaching conversion
-  // page. The two carried the same title for 94 locations and competed with
-  // each other. The internal links already described the split ("read the full
-  // guide"), so this aligns the titles to what the site already says.
-  const title = `Hyrox in ${loc.name}: races, training and how to start`;
-  const description = `A guide to Hyrox for ${loc.name} athletes: your nearest race venue, what the eight stations demand, and how to train for them around the gym you already use.`;
+  const isRaceCity = (RACE_CITY_SLUGS as readonly string[]).includes(loc.slug);
+  // Race-information intent, not coaching intent. The title has to answer the
+  // question the searcher typed or the click never happens. This is also the
+  // intent split from docs/phase-d-groundwork-report.md finding 1: this URL is
+  // the race-city guide, /hyrox-training/{slug} is the coaching conversion
+  // page, and the two carried the same title for 94 locations.
+  const title = isRaceCity
+    ? `Hyrox ${loc.name}: venue, dates and how to prepare`
+    : `Hyrox training in ${loc.name}, personalised 12-week plans`;
+  const description = isRaceCity
+    ? `Everything a ${loc.name} Hyrox race weekend involves: the venue, the expected dates, getting there, and the twelve weeks before it. Written by an Elite 15 coach.`
+    : `Personalised Hyrox training programmes for ${loc.name} athletes. Built by an Elite 15 coach, with a dated Week 1 and a free consultation. Find your plan in three minutes.`;
   return {
     title,
     description,
@@ -58,7 +69,7 @@ export async function generateMetadata({
       locale: "en_GB",
     },
     twitter: { card: "summary_large_image", title, description },
-    robots: { index: true, follow: true },
+    robots: { index: isRaceCity, follow: true },
   };
 }
 
@@ -105,7 +116,24 @@ export default async function CityPage({
   const loc = getLocationBySlug(city);
   if (!loc) notFound();
 
+  // 89 of these 94 towns have no "hyrox {town}" search volume, and this page
+  // said much the same thing as /hyrox-training/{town} anyway. A 308 to the
+  // coaching page serves the same intent and keeps the link equity, which a
+  // 404 would throw away.
+  if (!(RACE_CITY_SLUGS as readonly string[]).includes(loc.slug)) {
+    permanentRedirect(`/hyrox-training/${loc.slug}`);
+  }
+
   const faqs = buildFaqs(loc);
+  // The event this city hosts, if any. Cardiff has real search demand and no
+  // race, so its page answers the question honestly rather than pretending.
+  const cityEvent = HYROX_EVENTS.find(
+    (e) => e.venue.city.toLowerCase() === loc.slug,
+  );
+  // Two of the four stored dates have already passed and none carries the
+  // `past` flag, so read the next occurrence rather than the raw value.
+  const cityRaceDate = cityEvent ? nextOccurrence(cityEvent.startDate) : null;
+  const nearestRace = getGeoSeo(loc.slug).nearestRace;
   const url = `${siteUrl()}/hyrox/${loc.slug}`;
   const breadcrumbItems = [
     { name: "Home", url: siteUrl() },
@@ -193,15 +221,19 @@ export default async function CityPage({
 
           <div className="mx-auto max-w-3xl">
             <Eyebrow>Hyrox · {loc.region}</Eyebrow>
+            {/* Race intent, not coaching intent. Someone searching "hyrox
+                london" wants the race: where, when, how to get there. The
+                coaching offer still follows, but it does not lead. */}
             <SplitHeading
               as="h1"
               className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[44px] lg:text-[52px]"
             >
-              Hyrox in {loc.name}
+              Hyrox {loc.name}
             </SplitHeading>
             <p className="mt-6 text-base leading-relaxed text-suth-text-secondary md:text-lg">
-              Where {loc.name} athletes race, what the eight stations ask of
-              you, and how to train for them around the gym you already use.
+              {cityEvent
+                ? `${cityEvent.venue.name} hosts the ${loc.name} race weekend. Here is the venue, the expected dates, how to get there, and what the twelve weeks before it should look like.`
+                : `There is no ${loc.name} date on the current UK calendar. Here is the nearest race, how far it actually is, and how to build the twelve weeks before it.`}
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -219,6 +251,86 @@ export default async function CityPage({
             </div>
           </div>
 
+          {/* ── The race itself ──
+              This is what the search was for. Dates are the calendar cadence,
+              not a confirmed schedule (see lib/hyrox-events.ts), so they are
+              worded as expected rather than fixed. ── */}
+          {cityEvent ? (
+            <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-12">
+              <Eyebrow>The race</Eyebrow>
+              <h2 className="mt-4 text-2xl font-black leading-tight tracking-[-0.03em] text-suth-text md:text-3xl">
+                {cityEvent.venue.name}
+              </h2>
+              <dl className="mt-6 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                    Expected race weekend
+                  </dt>
+                  <dd className="mt-1 text-sm font-semibold text-suth-text">
+                    {new Date(cityRaceDate!.date).toLocaleDateString("en-GB", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </dd>
+                </div>
+                <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                    Where
+                  </dt>
+                  <dd className="mt-1 text-sm font-semibold text-suth-text">
+                    {cityEvent.venue.addressLine}, {cityEvent.venue.postcode}
+                  </dd>
+                </div>
+                <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                    Divisions
+                  </dt>
+                  <dd className="mt-1 text-sm font-semibold text-suth-text">
+                    {cityEvent.divisions.join(", ")}
+                  </dd>
+                </div>
+                <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                    Start your 12-week build
+                  </dt>
+                  <dd className="mt-1 text-sm font-semibold text-suth-text">
+                    {cityRaceDate!.rolledForward
+                      ? "Twelve weeks before the weekend above. The quiz dates every session to it."
+                      : cityEvent.prepWindow}
+                  </dd>
+                </div>
+              </dl>
+              <p className="mt-6 text-base leading-relaxed text-suth-text-secondary md:text-lg">
+                {cityEvent.about}
+              </p>
+              <h3 className="mt-8 text-lg font-black tracking-[-0.02em] text-suth-text">
+                Getting there
+              </h3>
+              <ul className="mt-3 space-y-2 text-base leading-relaxed text-suth-text-secondary">
+                {cityEvent.logistics.map((l) => (
+                  <li key={l} className="flex gap-2">
+                    <span aria-hidden className="text-suth-text-tertiary">
+                      ·
+                    </span>
+                    {l}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 text-[13px] leading-relaxed text-suth-text-tertiary">
+                Dates follow the recent UK calendar cadence and are not a
+                confirmed schedule. Hyrox usually confirms six to nine months
+                ahead, so check the official calendar before booking travel.
+              </p>
+              <Link
+                href={`/hyrox/events/${cityEvent.slug}`}
+                className="mt-5 inline-block text-sm font-medium text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
+              >
+                Full {loc.name} event guide →
+              </Link>
+            </section>
+          ) : null}
+
           {/* Local context */}
           <section className="mx-auto mt-20 max-w-3xl border-t border-suth-border-subtle pt-12">
             <Eyebrow>The {loc.name} Hyrox scene</Eyebrow>
@@ -226,17 +338,18 @@ export default async function CityPage({
               {loc.context ??
                 `${loc.name} has a growing community of Hyrox athletes training across its local gyms. Suth Performance programmes adapt to whatever equipment your gym has, full commercial setup, standard chain gym, or home weights, and recalibrate every Sunday based on the sessions you've logged.`}
             </p>
-            {loc.nearestVenue ? (
+            {/* Computed from coordinates rather than read from the legacy
+                nearestVenue field, which had Cardiff pointing at ExCeL when
+                the NEC is roughly 60 km closer. */}
+            {nearestRace && !cityEvent ? (
               <p className="mt-4 text-base leading-relaxed text-suth-text-secondary md:text-lg">
-                The closest major race venue to {loc.name} is{" "}
-                <span className="text-suth-text">
-                  {loc.nearestVenue.name}
-                </span>{" "}
-                in {loc.nearestVenue.city}. Your Suth Performance programme builds backwards
-                from your chosen race date, pick the day, we&apos;ll dial in the 12
-                weeks before it.
+                The closest race venue to {loc.name} is{" "}
+                <span className="text-suth-text">{nearestRace.venue}</span> in{" "}
+                {nearestRace.city}, roughly {nearestRace.straightLineKm} km away
+                in a straight line. Your Suth Performance programme builds
+                backwards from whichever date you pick.
               </p>
-            ): null}
+            ) : null}
           </section>
 
           {/* Programmes for this city */}

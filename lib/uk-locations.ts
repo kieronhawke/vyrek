@@ -285,6 +285,61 @@ export const UK_LOCATIONS: UkLocation[] = [
     populationK: 153,
     nearestVenue: MANCHESTER_CENTRAL,
   },
+
+  /* Seven towns with Semrush-evidenced "personal trainer {town}" demand that
+     had no page at all: 1,020 a month between them, every one at KD 9-13.
+     They were missing because this catalogue predates the keyword database.
+     Croydon and Ilford sit in London but are not boroughs of the kind the
+     block below generates, and both are searched in their own right. */
+  {
+    slug: "croydon",
+    name: "Croydon",
+    region: "London",
+    populationK: 390,
+    nearestVenue: EXCEL,
+  },
+  {
+    slug: "southend-on-sea",
+    name: "Southend-on-Sea",
+    region: "East",
+    populationK: 183,
+    nearestVenue: EXCEL,
+  },
+  {
+    slug: "ilford",
+    name: "Ilford",
+    region: "London",
+    populationK: 168,
+    nearestVenue: EXCEL,
+  },
+  {
+    slug: "chelmsford",
+    name: "Chelmsford",
+    region: "East",
+    populationK: 112,
+    nearestVenue: EXCEL,
+  },
+  {
+    slug: "bedford",
+    name: "Bedford",
+    region: "East",
+    populationK: 107,
+    nearestVenue: EXCEL,
+  },
+  {
+    slug: "worcester",
+    name: "Worcester",
+    region: "West Midlands",
+    populationK: 103,
+    nearestVenue: NEC,
+  },
+  {
+    slug: "redhill",
+    name: "Redhill",
+    region: "South East",
+    populationK: 40,
+    nearestVenue: EXCEL,
+  },
   {
     slug: "milton-keynes",
     name: "Milton Keynes",

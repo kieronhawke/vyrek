@@ -3,6 +3,7 @@ import { PROGRAMMES } from "@/lib/programmes";
 import { listPostMeta, CATEGORIES } from "@/lib/blog/posts";
 import { AUTHORS } from "@/lib/blog/authors";
 import { UK_LOCATIONS } from "@/lib/uk-locations";
+import { getGeoSeo, isRaceCity } from "@/lib/locations/seo";
 import { STATIONS } from "@/lib/hyrox-stations";
 import { PLAN_TEMPLATES } from "@/lib/plan-templates";
 import { COMPARISONS } from "@/lib/hyrox-comparisons";
@@ -109,7 +110,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   );
 
   // ── Programmatic SEO routes ────────────────────────────────────
-  const cityRoutes: MetadataRoute.Sitemap = UK_LOCATIONS.map((loc) => ({
+  // A sitemap is a list of pages we want indexed, so it has to agree with the
+  // robots tag. Only the five race cities keep a /hyrox/{city} page; the other
+  // 89 now 308 to their coaching page, and listing a redirect here would be a
+  // contradictory signal. Same rule below for the unevidenced locations.
+  const cityRoutes: MetadataRoute.Sitemap = UK_LOCATIONS.filter((loc) =>
+    isRaceCity(loc.slug),
+  ).map((loc) => ({
     url: `${SITE_URL}/hyrox/${loc.slug}`,
     lastModified: GEO_CONTENT_UPDATED,
     priority: 0.7,
@@ -120,7 +127,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const geoLandingRoutes: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/hyrox-training`, lastModified: GEO_CONTENT_UPDATED, priority: 0.8, changeFrequency: "weekly" as const },
     { url: `${SITE_URL}/personal-trainer`, lastModified: GEO_CONTENT_UPDATED, priority: 0.8, changeFrequency: "weekly" as const },
-    ...UK_LOCATIONS.flatMap((loc) => [
+    ...UK_LOCATIONS.filter((loc) => getGeoSeo(loc.slug).indexable).flatMap((loc) => [
       {
         url: `${SITE_URL}/hyrox-training/${loc.slug}`,
         lastModified: GEO_CONTENT_UPDATED,

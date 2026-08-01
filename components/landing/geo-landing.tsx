@@ -12,6 +12,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import type { UkLocation } from "@/lib/uk-locations";
+import { getGeoSeo, isRaceCity, type GeoSeo } from "@/lib/locations/seo";
+import { GeoLocalContext } from "./geo-local-context";
 
 /**
  * Shared geo landing template for the two programmatic funnels:
@@ -30,7 +32,7 @@ export type GeoVariant = "hyrox" | "pt";
 type Benefit = { title: string; body: string; image: string; alt: string };
 type Faq = { q: string; a: string };
 
-export function variantCopy(variant: GeoVariant, loc: UkLocation) {
+export function variantCopy(variant: GeoVariant, loc: UkLocation, seo: GeoSeo) {
   const name = loc.name;
   if (variant === "hyrox") {
     return {
@@ -75,15 +77,19 @@ export function variantCopy(variant: GeoVariant, loc: UkLocation) {
         per: "session by session",
         points: ["Paid again every time you train", "Progress lives in the coach's head", "Limited to their availability"],
       },
-      faqs: buildHyroxFaqs(loc),
+      faqs: buildHyroxFaqs(loc, seo),
       crossLink: {
         href: `/personal-trainer/${loc.slug}`,
         label: `Looking for general coaching instead? Personal training in ${name}`,
       },
-      guideLink: {
-        href: `/hyrox/${loc.slug}`,
-        label: `Read the full Hyrox in ${name} guide`,
-      },
+      // Only the five race cities keep a /hyrox/{city} page; the rest now
+      // redirect here, so linking to them would bounce the reader straight back.
+      guideLink: isRaceCity(loc.slug)
+        ? {
+            href: `/hyrox/${loc.slug}`,
+            label: `Hyrox ${name}: venue, dates and how to prepare`,
+          }
+        : null,
     };
   }
   return {
@@ -126,7 +132,7 @@ export function variantCopy(variant: GeoVariant, loc: UkLocation) {
       per: "every session",
       points: ["Two sessions a week adds up fast", "Progress stops when sessions stop", "Tied to one gym's floor"],
     },
-    faqs: buildPtFaqs(loc),
+    faqs: buildPtFaqs(loc, seo),
     crossLink: {
       href: `/hyrox-training/${loc.slug}`,
       label: `Training for a Hyrox race? Hyrox training in ${name}`,
@@ -135,8 +141,10 @@ export function variantCopy(variant: GeoVariant, loc: UkLocation) {
   };
 }
 
-function buildHyroxFaqs(loc: UkLocation): Faq[] {
+function buildHyroxFaqs(loc: UkLocation, seo: GeoSeo): Faq[] {
   const venue = loc.nearestVenue;
+  const race = seo.nearestRace;
+  const parkrun = seo.parkruns[0];
   return [
     {
       q: `How do I start Hyrox training in ${loc.name}?`,
@@ -151,6 +159,14 @@ function buildHyroxFaqs(loc: UkLocation): Faq[] {
         ? `No. Plenty of athletes start training before they enter anything, then pick a date later. If you already know you are aiming at ${venue.name} in ${venue.city}, the programme builds backwards from it. If you don't, it builds towards general readiness until you choose.`
         : `No. Plenty of athletes start training before they enter anything, then pick a date later. Once you choose a race the programme rebuilds backwards from that date; until then it works towards general readiness.`,
     },
+    ...(parkrun
+      ? [
+          {
+            q: `Where can I practise the runs in ${loc.name}?`,
+            a: `The race is eight 1 km runs, so flat measured ground matters more than a treadmill. ${parkrun.name}${typeof parkrun.distanceKm === "number" ? `, about ${parkrun.distanceKm} km from the centre of ${loc.name},` : ""} is free, measured and timed every Saturday, which makes it the simplest way to check the programme is working. Your plan schedules run work around whatever you have.`,
+          },
+        ]
+      : []),
     {
       q: "Do I need a Hyrox gym to follow the programme?",
       a: `No. The quiz asks what you train with, a full Hyrox gym, a standard commercial gym, or a home setup, and your plan only includes work you can actually do. Substitutions are built in for every station.`,
@@ -166,12 +182,21 @@ function buildHyroxFaqs(loc: UkLocation): Faq[] {
   ];
 }
 
-function buildPtFaqs(loc: UkLocation): Faq[] {
+function buildPtFaqs(loc: UkLocation, seo: GeoSeo): Faq[] {
+  const parkrun = seo.parkruns[0];
   return [
     {
       q: `How is this different from hiring a personal trainer in ${loc.name}?`,
       a: `A local PT charges per session and progress lives in their notebook. Suth Performance gives you a full week-by-week programme, personalised to your equipment and schedule, that recalibrates every Sunday from what you logged. And because it is delivered online, it costs a fraction of what weekly sessions add up to in ${loc.name}.`,
     },
+    ...(parkrun
+      ? [
+          {
+            q: `How will I know it is working?`,
+            a: `Pick a fixed benchmark and repeat it. ${parkrun.name}${typeof parkrun.distanceKm === "number" ? `, about ${parkrun.distanceKm} km from the centre of ${loc.name},` : ""} is free, measured and timed every Saturday morning, so running it every few weeks gives you a number that either moves or does not. That is a harder test than how a session felt, and it is the one we would rather be judged on.`,
+          },
+        ]
+      : []),
     {
       q: "Who writes the programming?",
       a: "Ben Sutherland, a HYROX Elite 15 athlete who races Doubles with his brother Harry and coaches athletes from beginner to professional level. The structure you follow is the structure he trains with, scaled to you.",
@@ -200,24 +225,6 @@ const VERIFIED_PROOF = [
   "Coaches beginner to pro",
 ];
 
-const STEPS = [
-  {
-    n: "01",
-    title: "Take the quiz",
-    body: "Three minutes. Your race or goal, your level, your kit, your days.",
-  },
-  {
-    n: "02",
-    title: "See your Week 1",
-    body: "Real dated workouts, free. No demo screens.",
-  },
-  {
-    n: "03",
-    title: "Train and adapt",
-    body: "Log sessions. Every Sunday the plan recalibrates around you.",
-  },
-];
-
 export function GeoLanding({
   variant,
   loc,
@@ -225,7 +232,8 @@ export function GeoLanding({
   variant: GeoVariant;
   loc: UkLocation;
 }) {
-  const c = variantCopy(variant, loc);
+  const seo = getGeoSeo(loc.slug);
+  const c = variantCopy(variant, loc, seo);
 
   return (
     <>
@@ -336,113 +344,22 @@ export function GeoLanding({
           </Container>
         </section>
 
-        {/* ── Local context ── */}
-        <section
-          aria-labelledby="geo-local-heading"
-          className="border-t border-suth-border-subtle bg-suth-elevated/30 py-16 md:py-20"
-        >
-          <Container>
-            <div className="mx-auto grid max-w-5xl gap-10 md:grid-cols-[1fr_auto] md:items-start md:gap-16">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
-                  [ {variant === "hyrox" ? "Hyrox" : "Training"} in {loc.name} ]
-                </p>
-                <h2
-                  id="geo-local-heading"
-                  className="mt-4 text-[26px] font-black leading-[1.12] tracking-[-0.025em] text-suth-text md:text-[30px]"
-                >
-                  Made for how you train in {loc.name}.
-                </h2>
-                <p className="mt-4 max-w-xl text-base leading-relaxed text-suth-text-secondary">
-                  {loc.context ??
-                    `${loc.name} has a growing functional-fitness scene, and Suth Performance slots straight into it. Whether you train at a full Hyrox affiliate, a standard commercial gym, or at home, your programme is built from the equipment you actually have.`}
-                </p>
-                {c.guideLink ? (
-                  <Link
-                    href={c.guideLink.href}
-                    className="mt-5 inline-block text-sm font-medium text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
-                  >
-                    {c.guideLink.label} →
-                  </Link>
-                ) : null}
-              </div>
-              <dl className="grid shrink-0 grid-cols-2 gap-3 md:w-[340px]">
-                {loc.nearestVenue ? (
-                  <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3">
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-                      Nearest race venue
-                    </dt>
-                    <dd className="mt-1 text-sm font-semibold text-suth-text">
-                      {loc.nearestVenue.name}
-                    </dd>
-                  </div>
-                ) : null}
-                <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3">
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-                    Region
-                  </dt>
-                  <dd className="mt-1 text-sm font-semibold text-suth-text">
-                    {loc.region}
-                  </dd>
-                </div>
-                <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3">
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-                    Programmes
-                  </dt>
-                  <dd className="mt-1 text-sm font-semibold text-suth-text">
-                    First Race to Pro
-                  </dd>
-                </div>
-                <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated px-4 py-3">
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-                    First step
-                  </dt>
-                  <dd className="mt-1 text-sm font-semibold text-suth-text">
-                    Free consultation
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </Container>
-        </section>
+        {/* ── Local context ──
+            Replaced a templated block whose generic fallback paragraph ran on
+            45 of 62 pages verbatim, and whose four tiles included two that were
+            identical across all 94. What is left is sourced and per-place. ── */}
+        <GeoLocalContext
+          seo={seo}
+          name={loc.name}
+          variant={variant}
+          context={loc.context}
+          guideLink={c.guideLink}
+        />
 
-        {/* ── 3 steps ── */}
-        <section
-          aria-labelledby="geo-steps-heading"
-          className="border-t border-suth-border-subtle py-16 md:py-24"
-        >
-          <Container>
-            <h2
-              id="geo-steps-heading"
-              className="mx-auto max-w-2xl text-center text-[28px] font-black leading-[1.1] tracking-[-0.03em] text-suth-text md:text-[36px]"
-            >
-              Three minutes from now, you have a plan.
-            </h2>
-            <ol className="mx-auto mt-10 grid max-w-4xl gap-4 md:mt-14 md:grid-cols-3 md:gap-5">
-              {STEPS.map((s) => (
-                <li
-                  key={s.n}
-                  className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-6"
-                >
-                  <p className="font-mono text-sm font-medium text-suth-accent">
-                    [ {s.n} ]
-                  </p>
-                  <h3 className="mt-3 text-lg font-black tracking-[-0.02em] text-suth-text">
-                    {s.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-suth-text-secondary">
-                    {s.body}
-                  </p>
-                </li>
-              ))}
-            </ol>
-            <div className="mt-10 text-center">
-              <CtaButton href="/quiz" size="md">
-                {c.cta} →
-              </CtaButton>
-            </div>
-          </Container>
-        </section>
+        {/* The generic three-step explainer that sat here is on the home page
+            and the quiz already. On a location page it was 80 words identical
+            across all 94, pushing the shared-copy ratio up while telling a
+            local reader nothing they could not get from the CTA. Removed. */}
 
         {/* ── Price comparison ── */}
         <section
@@ -599,7 +516,8 @@ export function GeoLanding({
 }
 
 export function geoFaqJsonLd(variant: GeoVariant, loc: UkLocation) {
-  const c = variantCopy(variant, loc);
+  const seo = getGeoSeo(loc.slug);
+  const c = variantCopy(variant, loc, seo);
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
