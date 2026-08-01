@@ -59,5 +59,170 @@
         "verifiedOn": "2026-08-01"
       }
     ]
+  },
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Monton Sports Club",
+        "type": "sports-centre",
+        "website": "https://www.montonsportsclub.co.uk/",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bali Haus",
+        "type": "gym",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Monton Bowling and Social Club",
+        "type": "sports-centre",
+        "website": "https://montonbowlingandsocialclub.com/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Moorside High School Sport Centre",
+        "type": "sports-centre",
+        "chain": "Salford City Council",
+        "website": "https://www.salfordcommunityleisure.co.uk/sport/locations/moorside-high-school",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Graham Matthews Cricket Ground",
+        "type": "sports-centre",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Swinton and Pendlebury Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Salford City Council",
+        "website": "https://www.salfordcommunityleisure.co.uk/sport/locations/swinton-and-pendlebury-leisure-centre",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cleavley Track",
+        "type": "sports-centre",
+        "chain": "Salford City Council",
+        "website": "https://www.salfordcommunityleisure.co.uk/sport/locations/cleavley-track",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Winton Bowling, Tennis and Social Club",
+        "type": "sports-centre",
+        "website": "https://www.wintonsocialclub.com/",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "De La Salle Sports & Social Club",
+        "type": "sports-centre",
+        "website": "https://delasallesports.wordpress.com/",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Eccles Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Salford City Council",
+        "website": "https://www.salfordcommunityleisure.co.uk/sport/locations/eccles-leisure-centre",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St Ambrose Barlow High School",
+        "type": "sports-centre",
+        "chain": "Salford City Council",
+        "website": "https://www.salfordcommunityleisure.co.uk/sport/locations/st-ambrose-barlow-high-school",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Roe Green Cricket Club",
+        "type": "sports-centre",
+        "website": "https://roegreencc.com",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Muscle 'n' Fitness Gym",
+        "type": "gym",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Claremont Tennis & Social Club",
+        "type": "sports-centre",
+        "website": "https://www.tennissalford.co.uk/",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Walkden High School",
+        "type": "sports-centre",
+        "chain": "Salford City Council",
+        "website": "https://www.salfordcommunityleisure.co.uk/sport/locations/walkden-high-school",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Eccles Archery Club",
+        "type": "sports-centre",
+        "website": "https://eccles-archery-club.org.uk/",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clifton Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "David Lloyd Clubs",
+        "type": "sports-centre",
+        "chain": "David Lloyd Clubs",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Manor 7s",
+        "type": "gym",
+        "website": "https://www.manor7s.com/",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "YourGym",
+        "type": "gym",
+        "distanceKm": 3.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
   }
 }

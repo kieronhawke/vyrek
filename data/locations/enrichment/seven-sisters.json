@@ -45,5 +45,167 @@
         "verifiedOn": "2026-08-01"
       }
     ]
+  },
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Evoke",
+        "type": "gym",
+        "website": "https://weareevoke.com",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tottenham Green Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.haringey.gov.uk/leisure-parks-culture/leisure-centres/tottenham-green-leisure-centre/activities-tottenham-green",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bind Yoga Studio",
+        "type": "gym",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Legends Gym",
+        "type": "gym",
+        "website": "https://legendsgym.net/haringey",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stronghold Tottenham Hale",
+        "type": "sports-centre",
+        "website": "https://thestrongholduk.com/locations/tottenham-hale/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stoke Newington West Reservoir Centre",
+        "type": "sports-centre",
+        "website": "https://www.better.org.uk/leisure-centre/london/hackney/west-reservoir-centre",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clissold Park Tennis Pavilion",
+        "type": "sports-centre",
+        "website": "https://www.hackneytennis.co.uk/about/tennis-pavillion/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Finsbury Park Sports Stadium",
+        "type": "sports-centre",
+        "website": "https://www.finsburyparksportspartnership.org.uk/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Castle Climbing Centre",
+        "type": "sports-centre",
+        "website": "https://www.castle-climbing.co.uk/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Finsbury Park Bowls Club",
+        "type": "sports-centre",
+        "website": "https://finsburyparkbowlsclub.co.uk/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hotpod Yoga Tottenham Hale",
+        "type": "gym",
+        "website": "https://hotpodyoga.com/studios/tottenham-hale/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "EasyGym",
+        "type": "gym",
+        "website": "https://www.thegymgroup.com/find-a-gym/tottenham-high-road",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Muslceworks Gym",
+        "type": "sports-centre",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hackey Aerial Yoga",
+        "type": "gym",
+        "website": "https://www.hackneyaerialyoga.co.uk/",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clissold Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Better",
+        "website": "http://www.better.org.uk/leisure/clissold-leisure-centre",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mudra Yoga",
+        "type": "gym",
+        "website": "https://www.mudrayogalondon.com/",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "pilates living N16",
+        "type": "gym",
+        "website": "https://www.pilatesliving.co.uk/",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lana & Friends",
+        "type": "gym",
+        "website": "https://lanaandfriends.com/",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Manor LDN",
+        "type": "gym",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "N4 workout",
+        "type": "gym",
+        "website": "https://www.n4workout.com/",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
   }
 }

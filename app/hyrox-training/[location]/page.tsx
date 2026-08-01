@@ -4,7 +4,7 @@ import { GeoLanding, geoFaqJsonLd } from "@/components/landing/geo-landing";
 import { JsonLd } from "@/lib/blog/jsonld";
 import { getLocationBySlug, listLocationSlugs } from "@/lib/uk-locations";
 import { siteUrl } from "@/lib/blog/urls";
-import { geoRobots } from "@/lib/locations/seo";
+import { geoRobots, getGeoSeo } from "@/lib/locations/seo";
 
 export const revalidate = 86400;
 export const dynamicParams = false;

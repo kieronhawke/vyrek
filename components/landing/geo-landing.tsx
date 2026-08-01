@@ -14,6 +14,7 @@ import {
 import type { UkLocation } from "@/lib/uk-locations";
 import { getGeoSeo, isRaceCity, type GeoSeo } from "@/lib/locations/seo";
 import { GeoLocalContext } from "./geo-local-context";
+import { GeoGyms } from "./geo-gyms";
 
 /**
  * Shared geo landing template for the two programmatic funnels:
@@ -43,7 +44,7 @@ export function variantCopy(variant: GeoVariant, loc: UkLocation, seo: GeoSeo) {
           <br className="hidden md:block" /> built around your race.
         </>
       ),
-      sub: `A personalised 12-week Hyrox programme from HYROX Elite 15 athlete Ben Sutherland. Dated to your race, calibrated to your level and the kit you train with in ${name}. See your Week 1 before you decide anything.`,
+      sub: localSub(seo, name, "hyrox"),
       heroImage: "/media/images/track/pair-frontal-bw.jpg",
       heroAlt: "Two athletes running side by side on a sunlit track",
       cta: "Start the 3-minute quiz",
@@ -100,7 +101,7 @@ export function variantCopy(variant: GeoVariant, loc: UkLocation, seo: GeoSeo) {
         <br className="hidden md:block" /> without the hourly rate.
       </>
     ),
-    sub: `Suth Performance is online personal training from HYROX Elite 15 athlete Ben Sutherland. A personalised programme, dated to your calendar, rebuilt every Sunday from what you actually logged. At your ${name} gym or at home.`,
+    sub: localSub(seo, name, "pt"),
     heroImage: "/media/images/track/gym-coach-row-colour.jpg",
     heroAlt: "Coach standing over an athlete mid rowing interval in the gym",
     cta: "Start the 3-minute quiz",
@@ -141,6 +142,56 @@ export function variantCopy(variant: GeoVariant, loc: UkLocation, seo: GeoSeo) {
   };
 }
 
+
+/**
+ * The opening paragraph, built from this town's own numbers.
+ *
+ * The first hundred words carry the most weight, and they were the most
+ * templated part of the page: the same two sentences with the name swapped.
+ * Now they lead with how many gyms are actually here, what is measurable
+ * nearby, and how far the race is, which is both more useful to a reader and
+ * the difference between a template and a page about a place.
+ *
+ * Every clause is dropped if the data behind it is missing, so a thin town
+ * gets a shorter paragraph rather than a padded one.
+ */
+function localSub(seo: GeoSeo, name: string, variant: GeoVariant): string {
+  const bits: string[] = [];
+
+  if (seo.gyms.length) {
+    const chains = seo.chains.slice(0, 2);
+    bits.push(
+      `There are ${seo.gyms.length} gyms and sports centres within reach of the centre of ${name}` +
+        (chains.length ? `, ${chains.join(" and ")} among them` : "") +
+        `, and this programme is written around whichever one you use.`,
+    );
+  } else {
+    bits.push(
+      `A programme written around the kit you can actually get to in ${name}, whether that is a full gym or a corner of the spare room.`,
+    );
+  }
+
+  if (variant === "hyrox" && seo.nearestRace) {
+    bits.push(
+      seo.hostsRace
+        ? `${name} hosts a race, so every session is dated backwards from that weekend.`
+        : `Your nearest race is ${seo.nearestRace.venue}, roughly ${seo.nearestRace.straightLineKm} km away, and every session is dated backwards from it.`,
+    );
+  } else if (seo.parkruns.length) {
+    bits.push(
+      `${seo.parkruns[0].name} is your nearest measured 5 km, which is how you will know it is working.`,
+    );
+  }
+
+  bits.push(
+    variant === "hyrox"
+      ? `Built by HYROX Elite 15 athlete Ben Sutherland. See your Week 1 before you decide anything.`
+      : `Online personal training from HYROX Elite 15 athlete Ben Sutherland, rebuilt every Sunday from what you logged.`,
+  );
+
+  return bits.join(" ");
+}
+
 function buildHyroxFaqs(loc: UkLocation, seo: GeoSeo): Faq[] {
   const venue = loc.nearestVenue;
   const race = seo.nearestRace;
@@ -159,6 +210,14 @@ function buildHyroxFaqs(loc: UkLocation, seo: GeoSeo): Faq[] {
         ? `No. Plenty of athletes start training before they enter anything, then pick a date later. If you already know you are aiming at ${venue.name} in ${venue.city}, the programme builds backwards from it. If you don't, it builds towards general readiness until you choose.`
         : `No. Plenty of athletes start training before they enter anything, then pick a date later. Once you choose a race the programme rebuilds backwards from that date; until then it works towards general readiness.`,
     },
+    ...(seo.gyms.length
+      ? [
+          {
+            q: `Can I train for Hyrox at a normal gym in ${loc.name}?`,
+            a: `Yes, and most people do. There are ${seo.gyms.length} gyms and sports centres within reach of the centre of ${loc.name}${seo.chains.length ? `, including ${seo.chains.slice(0, 3).join(", ")}` : ""}. Six of the eight stations substitute cleanly if the kit is not there, and the quiz asks what you have access to before it writes anything.`,
+          },
+        ]
+      : []),
     ...(parkrun
       ? [
           {
@@ -189,6 +248,14 @@ function buildPtFaqs(loc: UkLocation, seo: GeoSeo): Faq[] {
       q: `How is this different from hiring a personal trainer in ${loc.name}?`,
       a: `A local PT charges per session and progress lives in their notebook. Suth Performance gives you a full week-by-week programme, personalised to your equipment and schedule, that recalibrates every Sunday from what you logged. And because it is delivered online, it costs a fraction of what weekly sessions add up to in ${loc.name}.`,
     },
+    ...(seo.gyms.length
+      ? [
+          {
+            q: `Do I need a specific gym in ${loc.name}?`,
+            a: `No. There are ${seo.gyms.length} gyms and sports centres within reach of the centre of ${loc.name}${seo.chains.length ? `, including ${seo.chains.slice(0, 3).join(", ")}` : ""}, and the programme is written around whichever one you use, or around a home setup if that is easier. The quiz asks before it writes anything.`,
+          },
+        ]
+      : []),
     ...(parkrun
       ? [
           {
@@ -355,6 +422,10 @@ export function GeoLanding({
           context={loc.context}
           guideLink={c.guideLink}
         />
+
+        {/* The named local gyms. The one section only this town's page can
+            carry, and the reason the page is worth indexing. */}
+        <GeoGyms seo={seo} name={loc.name} />
 
         {/* The generic three-step explainer that sat here is on the home page
             and the quiz already. On a location page it was 80 words identical

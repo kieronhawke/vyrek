@@ -115,6 +115,18 @@ export type GeoSeo = {
    *  hand-written paragraph, or evidenced demand. Not a shortlist. */
   indexable: boolean;
   parkruns: { name: string; area?: string; distanceKm?: number; source: string }[];
+  /** Named local gyms and sports centres from OpenStreetMap. The substance
+   *  of a location page: the one thing on it no other town's page has. */
+  gyms: {
+    name: string;
+    type: string;
+    chain?: string;
+    website?: string;
+    distanceKm?: number;
+  }[];
+  /** Gyms that belong to a national chain, which tells a reader whether their
+   *  existing membership works here. */
+  chains: string[];
   nearestRace?: NearestRace;
   /** True when this place hosts a race itself. */
   hostsRace: boolean;
@@ -130,6 +142,14 @@ export function getGeoSeo(slug: string): GeoSeo {
     (a, b) => b.volume - a.volume,
   );
   const enrichment = getEnrichment(slug);
+  const gyms = (enrichment?.gyms?.equippedGyms ?? []).map((g) => ({
+    name: g.name,
+    type: g.type,
+    chain: (g as { chain?: string }).chain,
+    website: (g as { website?: string }).website,
+    distanceKm: (g as { distanceKm?: number }).distanceKm,
+  }));
+  const chains = [...new Set(gyms.map((g) => g.chain).filter(Boolean))] as string[];
   const parkruns = (enrichment?.terrain?.parkrunLocations ?? []).map((p) => ({
     name: p.name,
     area: p.area,
@@ -166,8 +186,10 @@ export function getGeoSeo(slug: string): GeoSeo {
       ? Math.min(...evidence.map((k) => k.kdPercent))
       : undefined,
     // Local substance, not a shortlist: terrain data or evidenced demand.
-    indexable: parkruns.length > 0 || evidence.length > 0,
+    indexable: gyms.length > 0 || parkruns.length > 0 || evidence.length > 0,
     parkruns,
+    gyms,
+    chains,
     nearestRace,
     hostsRace: nearestRace ? nearestRace.straightLineKm <= 15 : false,
   };

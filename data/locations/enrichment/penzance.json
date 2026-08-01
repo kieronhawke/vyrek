@@ -1,0 +1,22 @@
+{
+  "slug": "penzance",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Penzance Sailing Club",
+        "type": "sports-centre",
+        "website": "https://pzsc.org.uk/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Penzance Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

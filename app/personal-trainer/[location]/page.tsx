@@ -4,7 +4,7 @@ import { GeoLanding, geoFaqJsonLd } from "@/components/landing/geo-landing";
 import { JsonLd } from "@/lib/blog/jsonld";
 import { getLocationBySlug, listLocationSlugs } from "@/lib/uk-locations";
 import { siteUrl } from "@/lib/blog/urls";
-import { geoRobots } from "@/lib/locations/seo";
+import { geoRobots, getGeoSeo } from "@/lib/locations/seo";
 
 export const revalidate = 86400;
 export const dynamicParams = false;
@@ -23,7 +23,12 @@ export async function generateMetadata({
   if (!loc) return { title: "Not found" };
   const url = `${siteUrl()}/personal-trainer/${loc.slug}`;
   const title = `Personal trainer in ${loc.name} · online coaching with a free consultation`;
-  const description = `Looking for a personal trainer in ${loc.name}? Get online personal training from a HYROX Elite 15 athlete, at a fraction of local PT rates. Free consultation, no commitment.`;
+  // Per-town, because this is the snippet in the results page. A description
+  // identical across 879 towns gives a searcher no reason to click ours.
+  const g = getGeoSeo(loc.slug);
+  const description = g.gyms.length
+    ? `Personal training in ${loc.name}, online, from a HYROX Elite 15 athlete. Built around any of the ${g.gyms.length} gyms and sports centres near you, or your kit at home. Free consultation, no commitment.`
+    : `Looking for a personal trainer in ${loc.name}? Get online personal training from a HYROX Elite 15 athlete, at a fraction of local PT rates. Free consultation, no commitment.`;
   return {
     title,
     description,
