@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { GeoLanding, geoFaqJsonLd } from "@/components/landing/geo-landing";
+import {
+  GeoLanding,
+  geoFaqJsonLd,
+  geoServiceJsonLd,
+  geoBreadcrumbJsonLd,
+} from "@/components/landing/geo-landing";
 import { JsonLd } from "@/lib/blog/jsonld";
 import { getLocationBySlug, listLocationSlugs } from "@/lib/uk-locations";
 import { siteUrl } from "@/lib/blog/urls";
@@ -22,7 +27,13 @@ export async function generateMetadata({
   const loc = getLocationBySlug(location);
   if (!loc) return { title: "Not found" };
   const url = `${siteUrl()}/personal-trainer/${loc.slug}`;
-  const title = `Personal trainer in ${loc.name} · online coaching with a free consultation`;
+  // app/layout.tsx appends " · Suth Performance" (20 chars), so the title
+  // Google renders is this plus 20. The old one ran to 88 and truncated
+  // mid-phrase. Lead with the exact query, keep the whole thing under 65.
+  // 14 of the longest town names push this past 65 with ", online" on the
+  // end, so drop the qualifier for those rather than let them truncate.
+  const bare = `Personal trainer in ${loc.name}`;
+  const title = bare.length + 8 + 20 <= 65 ? `${bare}, online` : bare;
   // Per-town, because this is the snippet in the results page. A description
   // identical across 879 towns gives a searcher no reason to click ours.
   const g = getGeoSeo(loc.slug);
@@ -61,6 +72,8 @@ export default async function PersonalTrainerLocationPage({
   return (
     <>
       <JsonLd data={geoFaqJsonLd("pt", loc)} />
+      <JsonLd data={geoServiceJsonLd("pt", loc)} />
+      <JsonLd data={geoBreadcrumbJsonLd("pt", loc)} />
       <GeoLanding variant="pt" loc={loc} />
     </>
   );

@@ -1,4 +1,4 @@
-import { getLocation, getEnrichment } from "./index";
+import { getAllLocations, getLocation, getEnrichment } from "./index";
 import type { KeywordEvidence, LocationIdentity } from "./types";
 import { HYROX_EVENTS } from "@/lib/hyrox-events";
 
@@ -205,6 +205,36 @@ export function geoRobots(slug: string): {
   follow: boolean;
 } {
   return { index: getGeoSeo(slug).indexable, follow: true };
+}
+
+/**
+ * The towns nearest this one, for cross-linking.
+ *
+ * Every location page was an orphan: 876 pages, none linking to another. A
+ * crawler arriving at one had nowhere lateral to go, and a reader in a town
+ * with two gyms had no route to the city twenty minutes away that has thirty.
+ * Both problems are fixed by the same handful of links.
+ *
+ * Nearest by straight-line distance, which for towns is a good enough proxy
+ * for "the next place you would drive to".
+ */
+export function nearbyTowns(
+  slug: string,
+  count = 6,
+): { slug: string; name: string; km: number }[] {
+  const here = getLocation(slug);
+  if (here?.lat == null || here?.lng == null) return [];
+  const origin = { lat: here.lat, lng: here.lng };
+  return getAllLocations()
+    .filter((l) => l.slug !== slug && l.lat != null && l.lng != null)
+    .map((l) => ({
+      slug: l.slug,
+      name: l.name,
+      km: Math.round(haversineKm(origin, { lat: l.lat!, lng: l.lng! })),
+    }))
+    .filter((l) => l.km <= 60)
+    .sort((a, b) => a.km - b.km)
+    .slice(0, count);
 }
 
 /** Sitemap priority: evidenced places first, then everything else. */

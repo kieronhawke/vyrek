@@ -12,9 +12,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import type { UkLocation } from "@/lib/uk-locations";
+import { regionSlug } from "@/lib/uk-locations";
+import { siteUrl } from "@/lib/blog/urls";
 import { getGeoSeo, isRaceCity, type GeoSeo } from "@/lib/locations/seo";
 import { GeoLocalContext } from "./geo-local-context";
 import { GeoGyms } from "./geo-gyms";
+import { GeoNearby } from "./geo-nearby";
 
 /**
  * Shared geo landing template for the two programmatic funnels:
@@ -427,6 +430,15 @@ export function GeoLanding({
             carry, and the reason the page is worth indexing. */}
         <GeoGyms seo={seo} name={loc.name} />
 
+        {/* Six links to the towns next door. Without these every location page
+            is an orphan and the set is a list rather than a graph. */}
+        <GeoNearby
+          slug={loc.slug}
+          name={loc.name}
+          region={loc.region}
+          base={variant === "hyrox" ? "/hyrox-training" : "/personal-trainer"}
+        />
+
         {/* The generic three-step explainer that sat here is on the home page
             and the quiz already. On a location page it was 80 words identical
             across all 94, pushing the shared-copy ratio up while telling a
@@ -584,6 +596,72 @@ export function GeoLanding({
       <StickyMobileCta label={c.cta} />
     </>
   );
+}
+
+/**
+ * Service schema with areaServed, plus a breadcrumb.
+ *
+ * These pages carried FAQPage and nothing else, which describes a widget on
+ * the page rather than what the page is. Service + areaServed is the honest
+ * description of a national online service sold into a named place, and it is
+ * what a location page for a business with no premises there should say.
+ * LocalBusiness would be a claim to a physical presence we do not have.
+ */
+export function geoServiceJsonLd(variant: GeoVariant, loc: UkLocation) {
+  const base = variant === "hyrox" ? "/hyrox-training" : "/personal-trainer";
+  const url = `${siteUrl()}${base}/${loc.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name:
+      variant === "hyrox"
+        ? `Hyrox coaching in ${loc.name}`
+        : `Online personal training in ${loc.name}`,
+    serviceType:
+      variant === "hyrox" ? "Hyrox coaching" : "Personal training",
+    url,
+    areaServed: {
+      "@type": "City",
+      name: loc.name,
+      containedInPlace: { "@type": "AdministrativeArea", name: loc.region },
+    },
+    provider: {
+      "@type": "Organization",
+      name: "Suth Performance",
+      url: siteUrl(),
+      founder: { "@type": "Person", name: "Ben Sutherland" },
+    },
+    availableChannel: {
+      "@type": "ServiceChannel",
+      serviceUrl: `${siteUrl()}/quiz`,
+      availableLanguage: "en-GB",
+    },
+  };
+}
+
+export function geoBreadcrumbJsonLd(variant: GeoVariant, loc: UkLocation) {
+  const base = variant === "hyrox" ? "/hyrox-training" : "/personal-trainer";
+  const label = variant === "hyrox" ? "Hyrox training" : "Personal training";
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl() },
+      { "@type": "ListItem", position: 2, name: label, item: `${siteUrl()}${base}` },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: loc.region,
+        item: `${siteUrl()}${base}/in/${regionSlug(loc.region)}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 4,
+        name: loc.name,
+        item: `${siteUrl()}${base}/${loc.slug}`,
+      },
+    ],
+  };
 }
 
 export function geoFaqJsonLd(variant: GeoVariant, loc: UkLocation) {
