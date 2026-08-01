@@ -18,6 +18,7 @@ import { getGeoSeo, isRaceCity, type GeoSeo } from "@/lib/locations/seo";
 import { GeoLocalContext } from "./geo-local-context";
 import { GeoGyms } from "./geo-gyms";
 import { GeoNearby } from "./geo-nearby";
+import { GeoGuide } from "./geo-guide";
 
 /**
  * Shared geo landing template for the two programmatic funnels:
@@ -429,6 +430,10 @@ export function GeoLanding({
         {/* The named local gyms. The one section only this town's page can
             carry, and the reason the page is worth indexing. */}
         <GeoGyms seo={seo} name={loc.name} />
+
+        {/* Several hundred words of guidance that branches on this town's own
+            numbers. The part of the page a reader actually gets value from. */}
+        <GeoGuide seo={seo} name={loc.name} variant={variant} />
 
         {/* Six links to the towns next door. Without these every location page
             is an orphan and the set is a list rather than a graph. */}
