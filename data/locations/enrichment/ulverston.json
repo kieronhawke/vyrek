@@ -1,0 +1,90 @@
+{
+  "slug": "ulverston",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Nirodhah",
+        "type": "gym",
+        "distanceKm": 0,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "U-Gym",
+        "type": "gym",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Wall",
+        "type": "sports-centre",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ulverston Leisure Centre",
+        "type": "sports-centre",
+        "website": "http://www.northcountryleisure.org.uk/south-lakeland/ulverston-leisure-centre",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ulverston Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ulverston Park Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crake Valley Croquet Club",
+        "type": "sports-centre",
+        "website": "https://crakevalleycroquet.org.uk/",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kelland Park",
+        "type": "sports-centre",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Longlands Site Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Walshys gym",
+        "type": "gym",
+        "distanceKm": 7.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Ford parkrun",
+        "area": "Ford Park",
+        "distanceKm": 0.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

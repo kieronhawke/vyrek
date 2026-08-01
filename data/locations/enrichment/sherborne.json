@@ -1,0 +1,47 @@
+{
+  "slug": "sherborne",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Oxley Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bradford Abbas Sports and Social Club",
+        "type": "sports-centre",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rossi Regime",
+        "type": "gym",
+        "website": "http://www.rossisregime.co.uk/",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nuffield Health Fitness & Wellbeing",
+        "type": "gym",
+        "chain": "Nuffield Health Fitness & Wellbeing",
+        "website": "https://www.nuffieldhealth.com/gyms/yeovil",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Anytime Fitness",
+        "type": "gym",
+        "chain": "Anytime Fitness",
+        "website": "https://www.anytimefitness.co.uk/gyms/uk-0300/yeovil-south-west-ba20-1ld/",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

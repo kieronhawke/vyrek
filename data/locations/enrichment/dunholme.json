@@ -1,0 +1,77 @@
+{
+  "slug": "dunholme",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Welton Manor Park Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lifestyle Fitness",
+        "type": "gym",
+        "website": "https://www.lifestylefitness.co.uk/club/cherry-willingham",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Énergie Fitness",
+        "type": "gym",
+        "website": "https://energiefitness.com/gym/lincoln",
+        "distanceKm": 6.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ravendale Sports Ground",
+        "type": "sports-centre",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Curves",
+        "type": "gym",
+        "chain": "Curves",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sports Pavilion",
+        "type": "sports-centre",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sports and Fitness Centre",
+        "type": "sports-centre",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Yarborough Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Yarborough Leisure Centre parkrun",
+        "area": "Yarborough Leisure Centre",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

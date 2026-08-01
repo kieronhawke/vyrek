@@ -1,0 +1,61 @@
+{
+  "slug": "buckingham",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Fortified",
+        "type": "gym",
+        "website": "https://fortifiedgym.com/",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Swan Pool and Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bourton Mill Health and Leisure Club",
+        "type": "gym",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Silverstone Motocross",
+        "type": "sports-centre",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Porsche Experience Silverstone",
+        "type": "sports-centre",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wicken Sports & Social Club",
+        "type": "sports-centre",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Buckingham parkrun",
+        "area": "Bridge Street Skate Park",
+        "distanceKm": 0.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

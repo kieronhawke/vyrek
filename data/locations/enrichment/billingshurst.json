@@ -1,0 +1,36 @@
+{
+  "slug": "billingshurst",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Pavilion",
+        "type": "sports-centre",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Billingshurst Leisure Centre",
+        "type": "gym",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bluecoat Sports Health & Fitness Club",
+        "type": "sports-centre",
+        "distanceKm": 7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southwater Leisure Centre & Gym",
+        "type": "sports-centre",
+        "website": "https://www.theghyll.org/",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

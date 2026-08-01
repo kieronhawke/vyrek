@@ -1,0 +1,187 @@
+{
+  "slug": "knaphill",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Butt 19",
+        "type": "sports-centre",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Butt 18",
+        "type": "sports-centre",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Butt 17",
+        "type": "sports-centre",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Butt 16",
+        "type": "sports-centre",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Butt 15",
+        "type": "sports-centre",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Butt 14",
+        "type": "sports-centre",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Butt 13",
+        "type": "sports-centre",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Butt 12",
+        "type": "sports-centre",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Butt 11",
+        "type": "sports-centre",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "National Shooting Centre",
+        "type": "sports-centre",
+        "distanceKm": 2.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lord Roberts Centre",
+        "type": "sports-centre",
+        "website": "https://www.lrcvenue.co.uk/",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Prime Acrobatics",
+        "type": "sports-centre",
+        "website": "https://primeacrobatics.com/",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woking Sportsbox",
+        "type": "gym",
+        "website": "https://www.freedom-leisure.co.uk/centres/woking-sportsbox/",
+        "distanceKm": 3.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym Group",
+        "type": "gym",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beatbox",
+        "type": "sports-centre",
+        "website": "https://beatboxgym.multiscreensite.com/",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Anytime Fitness",
+        "type": "gym",
+        "chain": "Anytime Fitness",
+        "website": "https://www.anytimefitness.co.uk/gyms/uk-0261/woking-south-east-gu21-5aj/",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pool in the Park",
+        "type": "sports-centre",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Martial X Arts",
+        "type": "sports-centre",
+        "website": "https://martialxacademy.co.uk/",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woking Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.freedom-leisure.co.uk/centres/woking-leisure-centre/",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "David Lloyd Leisure",
+        "type": "sports-centre",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Woking parkrun",
+        "area": "Woking Park",
+        "distanceKm": 4.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Homewood parkrun",
+        "area": "Ottershaw Memorial Fields",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Frimley Lodge parkrun",
+        "area": "Frimley Lodge Park",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Guildford parkrun",
+        "area": "Stoke Park, Guildford",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

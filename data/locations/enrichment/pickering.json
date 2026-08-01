@@ -1,0 +1,70 @@
+{
+  "slug": "pickering",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Changing Room",
+        "type": "sports-centre",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ryedale Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.everyoneactive.com/Centre/Ryedale-Sports-Centre/132/Home",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ryedale Swim & Fitness Centre",
+        "type": "sports-centre",
+        "website": "https://www.everyoneactive.com/centre/ryedale-swim-and-fitness-centre/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ryedale Sports Center",
+        "type": "sports-centre",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Splash Zone",
+        "type": "sports-centre",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Go Ape",
+        "type": "sports-centre",
+        "website": "https://goape.co.uk/locations/dalby",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sutherland Lodge Activity Centre",
+        "type": "sports-centre",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Dalby Forest parkrun",
+        "area": "Dalby Forest Courtyard",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

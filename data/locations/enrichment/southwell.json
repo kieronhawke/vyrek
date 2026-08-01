@@ -1,0 +1,47 @@
+{
+  "slug": "southwell",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Southwell Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southwell Racecourse",
+        "type": "sports-centre",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Caunton Tennis Club",
+        "type": "sports-centre",
+        "website": "http://www.cauntontennisclub.co.uk/",
+        "distanceKm": 7.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Brackenhurst Campus parkrun",
+        "area": "Brackenhurst Campus",
+        "distanceKm": 1.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Newark parkrun",
+        "area": "Sconce and Devon Park",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "slug": "lambeth",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "VauxWall East Climbing Centre",
+        "type": "sports-centre",
+        "chain": "London Climbing Centres",
+        "website": "https://londonclimbingcentres.co.uk/centre/vauxeast/",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Black Prince Community Hub",
+        "type": "sports-centre",
+        "website": "https://blackprincetrust.org.uk/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "House of Vans London",
+        "type": "sports-centre",
+        "website": "https://www.houseofvanslondon.com",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "LSBU Active Gym & Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Castle",
+        "type": "sports-centre",
+        "website": "https://southwarkleisure.co.uk/centres/the-castle-centre/",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Snap Fitness",
+        "type": "gym",
+        "chain": "Snap Fitness",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oliveira Team Brazilian Jiu Jitsu",
+        "type": "gym",
+        "website": "https://oliveira-team.co.uk/",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bannatynes Gym",
+        "type": "gym",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "solo60",
+        "type": "gym",
+        "website": "https://www.solo60.com/locations/spring-mews-vauxhall",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Boxing Gym",
+        "type": "gym",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tempo 301",
+        "type": "gym",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gymbox Elephant and Castle",
+        "type": "gym",
+        "website": "https://www.gymbox.com/gyms/elephant-and-castle",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Barefoot Yoga",
+        "type": "gym",
+        "website": "https://www.barefootyogaandtherapy.com/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sleven",
+        "type": "gym",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kinetic",
+        "type": "sports-centre",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Train Fitness",
+        "type": "gym",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fight City Gym",
+        "type": "gym",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym Group - Elephant & Castle",
+        "type": "gym",
+        "website": "https://www.thegymgroup.com/find-a-gym/south-london-gyms/elephant-and-castle/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hotpod Yoga",
+        "type": "gym",
+        "website": "https://hotpodyoga.com/studios/elephant-and-castle-london/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Ring",
+        "type": "gym",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Burgess parkrun",
+        "area": "Burgess Park",
+        "distanceKm": 2.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Battersea parkrun",
+        "area": "Battersea",
+        "distanceKm": 3.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southwark parkrun",
+        "area": "Southwark Park",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brockwell parkrun, Herne Hill",
+        "area": "Brockwell Park, Herne Hill",
+        "distanceKm": 4.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "slug": "burwell",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Back to Bear",
+        "type": "sports-centre",
+        "website": "https://www.back2bear.org/",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cadwell Park",
+        "type": "sports-centre",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "London Road Pavilion",
+        "type": "sports-centre",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Meridian Leisure Centre",
+        "type": "gym",
+        "distanceKm": 8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

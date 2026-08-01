@@ -1,0 +1,187 @@
+{
+  "slug": "crumpsall",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Cheetham Hill Sports Club",
+        "type": "sports-centre",
+        "website": "https://cheethamhillsportsclub.com/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Abraham Moss Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Manchester Maccabi Community and Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Broughton Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Salford City Council",
+        "website": "https://www.salfordcommunityleisure.co.uk/",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Goals Manchester",
+        "type": "sports-centre",
+        "chain": "Goals",
+        "website": "https://www.goalsfootball.co.uk/our-clubs/north-west/manchester",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Broughton Cricket and Rugby Club",
+        "type": "sports-centre",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "North City Family & Fitness Centre",
+        "type": "gym",
+        "website": "https://www.better.org.uk/leisure-centre/manchester/north-city",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Treetop Trek Manchester",
+        "type": "sports-centre",
+        "website": "https://www.zipworld.co.uk/location/manchester",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Our Lady’s Community Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.olhs-manchester.org.uk/sports-centre/",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Prestwich Cricket, Tennis & Bowling Club",
+        "type": "sports-centre",
+        "website": "https://www.prestwichsport.com/",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St. Margaret's Bowling Club",
+        "type": "sports-centre",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rock Over Climbing",
+        "type": "sports-centre",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Salford Sports Village",
+        "type": "sports-centre",
+        "chain": "Salford City Council",
+        "website": "https://salfordcommunityleisure.co.uk/location/salford-sports-village/",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "IQ Gym",
+        "type": "gym",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Steven Charles Snooker Centre",
+        "type": "sports-centre",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "TeamSport Karting",
+        "type": "sports-centre",
+        "chain": "TeamSport Go Karting",
+        "website": "https://www.team-sport.co.uk/go-kart-tracks/manchester-victoria",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kickair Manchester",
+        "type": "sports-centre",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Olympus Project",
+        "type": "gym",
+        "website": "https://www.theolympusprojects.com/",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fighting Fit",
+        "type": "gym",
+        "website": "https://www.fightingfitmanchester.com/",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hero Training Clubs",
+        "type": "gym",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Heaton parkrun",
+        "area": "Heaton Park, Manchester",
+        "distanceKm": 1.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peel parkrun",
+        "area": "Peel Park",
+        "distanceKm": 3.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Philips Park parkrun",
+        "area": "Philips Park",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

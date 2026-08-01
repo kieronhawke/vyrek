@@ -1,0 +1,219 @@
+{
+  "slug": "purfleet-on-thames",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Parkside Stadium",
+        "type": "sports-centre",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Essex Kick-boxing Centre",
+        "type": "sports-centre",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Arena Essex Raceway",
+        "type": "sports-centre",
+        "website": "http://www.arena-essex-raceway.co.uk/",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lakeside Karting",
+        "type": "sports-centre",
+        "website": "http://www.lakeside-karting.co.uk/",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bannatyne's Health Club",
+        "type": "sports-centre",
+        "website": "https://www.bannatyne.co.uk/healthandfitness/chafford-hundred/",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dartford Valley Rugby Football Club",
+        "type": "sports-centre",
+        "website": "https://www.pitchero.com/clubs/dartfordvalleyrfc",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Snap Fitness",
+        "type": "gym",
+        "chain": "Snap Fitness",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chafford Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Erith Leisure Centre",
+        "type": "gym",
+        "website": "https://www.leisurecentre.com/erith-leisure-centre",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beefs & Babes",
+        "type": "gym",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Becket Sports Centre",
+        "type": "gym",
+        "website": "becketsports.co.uk",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fairfield",
+        "type": "sports-centre",
+        "chain": "Places Leisure",
+        "website": "https://www.placesleisure.org/centres/fairfield-leisure/",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rainham Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "David Lloyd Clubs Dartford",
+        "type": "sports-centre",
+        "chain": "David Lloyd Clubs",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Goals Soccer Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "King Henry School",
+        "type": "sports-centre",
+        "distanceKm": 5.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Claire's Pole Fitness",
+        "type": "gym",
+        "distanceKm": 5.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crayford Weights & Fitness",
+        "type": "gym",
+        "distanceKm": 5.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "website": "https://www.puregym.com/gyms/crayford/",
+        "distanceKm": 5.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Veolia Sports Pavilion",
+        "type": "sports-centre",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Dartford parkrun",
+        "area": "Central Park",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ingrebourne Hill parkrun",
+        "area": "Ingrebourne Hill",
+        "distanceKm": 5.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dartford Heath parkrun",
+        "area": "Heath Lane",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Whitecliffe Lake parkrun",
+        "area": "Whitecliffe Lake",
+        "distanceKm": 7.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thurrock parkrun, Orsett Heath",
+        "area": "Pyramid Centre",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Harrow Lodge parkrun",
+        "area": "Harrow Lodge Park",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bexley parkrun",
+        "area": "Danson Park, Bexley",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Foots Cray Meadows parkrun",
+        "area": "Foots Cray Meadows",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

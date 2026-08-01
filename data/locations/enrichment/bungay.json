@@ -1,0 +1,41 @@
+{
+  "slug": "bungay",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Waveney Valley Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Swift Fitness Gym",
+        "type": "gym",
+        "website": "https://www.swiftfitnessgym.co.uk",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oaklands Leisure Pool",
+        "type": "sports-centre",
+        "website": "http://www.oaklandsleisure.co.uk",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Beccles Quay parkrun",
+        "area": "Beccles Quay",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

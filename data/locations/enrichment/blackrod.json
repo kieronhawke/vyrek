@@ -1,0 +1,164 @@
+{
+  "slug": "blackrod",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Bodypro Personal Training",
+        "type": "gym",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Horwich Leisure Centre",
+        "type": "gym",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bolton Arena",
+        "type": "sports-centre",
+        "website": "https://www.boltonarena.com/",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Go Ape Rivington",
+        "type": "sports-centre",
+        "website": "https://goape.co.uk/locations/rivington",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woodshaw Park",
+        "type": "sports-centre",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rock Over Climbing Bolton",
+        "type": "sports-centre",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wigan Rugby Union Football Club",
+        "type": "sports-centre",
+        "website": "https://www.wiganrufc.co.uk/",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bolton Wanderers Eddie Davies Football Academy",
+        "type": "sports-centre",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wild Bull Fitness",
+        "type": "gym",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Standish Gym",
+        "type": "gym",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Royce's Gym",
+        "type": "gym",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jetts Fitness",
+        "type": "gym",
+        "chain": "Jetts Fitness",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St. Patricks ARLFC",
+        "type": "sports-centre",
+        "distanceKm": 6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fitbank",
+        "type": "gym",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wigan Life Centre",
+        "type": "sports-centre",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PB Fitness Academy",
+        "type": "gym",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Westhoughton Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.boltonleisure.com/westhoughton-community-leisure-centre",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Coppull Leisure Park",
+        "type": "sports-centre",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Coppull Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 6.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Trans4orm",
+        "type": "gym",
+        "website": "https://trans4orm.co.uk",
+        "distanceKm": 6.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Haigh Woodland parkrun",
+        "area": "Haigh Country Park",
+        "distanceKm": 2.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

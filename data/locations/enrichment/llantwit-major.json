@@ -1,0 +1,44 @@
+{
+  "slug": "llantwit-major",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Llantwit Major Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Llandow Circuit",
+        "type": "sports-centre",
+        "website": "https://www.llandow.com/",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Wales Karting Centre",
+        "type": "sports-centre",
+        "website": "https://swkc.co.uk/",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cowbridge Leisure Centre",
+        "type": "gym",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cowbridge Athletic Club",
+        "type": "sports-centre",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

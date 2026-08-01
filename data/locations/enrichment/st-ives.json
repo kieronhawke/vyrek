@@ -1,0 +1,37 @@
+{
+  "slug": "st-ives",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Saint Ives Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Coast2Coast Karting",
+        "type": "sports-centre",
+        "website": "https://www.coast2coastkarting.co.uk/",
+        "distanceKm": 5.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Trevassack Park",
+        "type": "sports-centre",
+        "distanceKm": 6.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Aspire Gym",
+        "type": "gym",
+        "website": "https://www.aspiresw.co.uk/",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

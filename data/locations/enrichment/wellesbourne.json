@@ -1,0 +1,70 @@
+{
+  "slug": "wellesbourne",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Wellesbourne Sports Association",
+        "type": "sports-centre",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wellesbourne Sports & Community Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Croft House Pool",
+        "type": "sports-centre",
+        "website": "https://www.crofthousepool.co.uk/",
+        "distanceKm": 5.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stratford upon Avon Bowls Club",
+        "type": "sports-centre",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Warwick University Boat Club",
+        "type": "sports-centre",
+        "distanceKm": 6.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stratford-upon-Avon Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Everyone Active",
+        "website": "https://www.everyoneactive.com/centre/stratford-leisure-centre/",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Stratford-upon-Avon parkrun",
+        "area": "Stratford-upon-Avon",
+        "distanceKm": 7.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Warwick Racecourse parkrun",
+        "area": "Warwick Racecourse",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

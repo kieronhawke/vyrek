@@ -1,0 +1,189 @@
+{
+  "slug": "burnham",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "The Loft",
+        "type": "gym",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thames Valley Adventure Playground",
+        "type": "sports-centre",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Absolutely Fitness",
+        "type": "gym",
+        "website": "www.absolutely-group.co.uk",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Farnham Royal Cricket Club",
+        "type": "sports-centre",
+        "website": "https://frcc.info/",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "F45 Training",
+        "type": "gym",
+        "chain": "F45 Training",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Absolutely Karting",
+        "type": "sports-centre",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Arena",
+        "type": "sports-centre",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Desborough Bowling Club",
+        "type": "sports-centre",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Farnham Park Playing Fields",
+        "type": "sports-centre",
+        "website": "https://www.buckinghamshire.gov.uk/health-wellbeing-and-sports/parks-and-open-spaces/find-a-park-or-play-area/farnham-park-playing-fields/",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "website": "https://www.puregym.com/gyms/maidenhead/",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The centre",
+        "type": "gym",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Racks",
+        "type": "sports-centre",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bodyfit Gym",
+        "type": "gym",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Indoor Carpet Courts",
+        "type": "sports-centre",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym",
+        "type": "gym",
+        "chain": "The Gym",
+        "website": "https://www.thegymgroup.com/find-a-gym/slough-gyms/slough/",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "David Lloyd",
+        "type": "sports-centre",
+        "chain": "David Lloyd Clubs",
+        "website": "https://www.davidlloyd.co.uk/clubs/maidenhead/",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "ICON",
+        "type": "gym",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cookham Reach Sailing Club",
+        "type": "sports-centre",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Unwind Yoga Studio",
+        "type": "gym",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St Piran's sports hall",
+        "type": "sports-centre",
+        "distanceKm": 4.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Maidenhead parkrun",
+        "area": "Braywick Park",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Upton Court parkrun",
+        "area": "Upton Court Park",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Black Park parkrun",
+        "area": "Black Park Country Park, Slough",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Higginson parkrun, Marlow",
+        "area": "Higginson Park,",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

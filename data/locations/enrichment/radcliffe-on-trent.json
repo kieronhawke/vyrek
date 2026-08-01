@@ -1,0 +1,202 @@
+{
+  "slug": "radcliffe-on-trent",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Radcliffe Olympic F.C",
+        "type": "sports-centre",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dave Bullas Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "DW Sports Fitness",
+        "type": "gym",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "TeamSport Nottingham",
+        "type": "sports-centre",
+        "chain": "TeamSport Go Karting",
+        "website": "https://www.team-sport.co.uk/go-kart-tracks/nottingham",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crossfit",
+        "type": "gym",
+        "distanceKm": 2.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Carlton Town FC",
+        "type": "sports-centre",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Paradigm Gym",
+        "type": "gym",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Posture",
+        "type": "gym",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "More Fitness Gym",
+        "type": "gym",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Carlton le Willows Academy : Table-Tennis Centre",
+        "type": "sports-centre",
+        "website": "https://www.clwacademy.co.uk/",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "OMAC-UK",
+        "type": "sports-centre",
+        "website": "https://www.omac-uk.co.uk/",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Adbolton Sports Ground",
+        "type": "sports-centre",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Colwick Park Adventure Centre",
+        "type": "sports-centre",
+        "chain": "Nottingham City Council",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Powerhouse Gym",
+        "type": "gym",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cotgrave Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Parkwood Leisure",
+        "website": "http://www.leisurecentre.com/cotgrave-leisure-centre",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nottingham Racecourse",
+        "type": "sports-centre",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nottingham Wildcats Arena",
+        "type": "sports-centre",
+        "distanceKm": 5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Carlton Forum Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.gedling.gov.uk/leisure/ourcentres/carltonforumleisurecentre/",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Strength Studio",
+        "type": "gym",
+        "distanceKm": 5.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Holme Pierrepont parkrun",
+        "area": "Holme Pierrepont Country Park",
+        "distanceKm": 3.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Colwick parkrun",
+        "area": "Colwick Country Park, Nottingham",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gedling parkrun",
+        "area": "Gedling Country Park",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Victoria Embankment parkrun, Nottingham",
+        "area": "Victoria Embankment",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Forest Rec parkrun",
+        "area": "Forest Recreation Gound, Nottingham",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clifton parkrun",
+        "area": "Clifton Playing Fields",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

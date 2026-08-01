@@ -1,0 +1,178 @@
+{
+  "slug": "corsham",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Yogatree",
+        "type": "gym",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Precision Pilates",
+        "type": "gym",
+        "website": "https://www.precisionpilatesstudio.co.uk/",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Springfield Community Campus",
+        "type": "sports-centre",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Parkour Facility",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "MOD Corsham Gymnasium",
+        "type": "sports-centre",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "North Wilts Bowls Club",
+        "type": "sports-centre",
+        "website": "https://www.nwbowls.co.uk/",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "CrossFit",
+        "type": "gym",
+        "chain": "CrossFit",
+        "website": "https://www.crossfitchippenham.co.uk/",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chippenham Cricket Club",
+        "type": "sports-centre",
+        "website": "http://www.chippenhamcc.org.uk/",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Snap Fitness",
+        "type": "gym",
+        "chain": "Snap Fitness",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Arc",
+        "type": "sports-centre",
+        "website": "https://www.theclimbingacademy.com/locations/the-arc/",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Box Parish Pavilion",
+        "type": "sports-centre",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chippenham Tennis Club",
+        "type": "sports-centre",
+        "website": "https://www.chippenhamsportsclub.co.uk/sports-sections/tennis/",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Inspire Fitness",
+        "type": "gym",
+        "website": "https://www.inspirechippenham.com/",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "website": "https://www.puregym.com/gyms/chippenham/",
+        "distanceKm": 5.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Olympiad",
+        "type": "sports-centre",
+        "distanceKm": 5.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chippenham Sailing and Canoeing Club",
+        "type": "sports-centre",
+        "distanceKm": 6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Spartans Gym",
+        "type": "gym",
+        "website": "https://www.spartans-gym.co.uk/",
+        "distanceKm": 6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Castle Combe Circuit",
+        "type": "sports-centre",
+        "website": "https://castlecombecircuit.co.uk",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "City Fitness",
+        "type": "gym",
+        "distanceKm": 6.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Melksham Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Chippenham parkrun",
+        "area": "Monkton Park",
+        "distanceKm": 5.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Melksham parkrun",
+        "area": "King George V Park",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

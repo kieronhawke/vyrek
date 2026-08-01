@@ -1,0 +1,211 @@
+{
+  "slug": "hillingdon",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Brunel University Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.brunel.ac.uk/life/sport/facilities/sports-centre",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Indoor Athletics Centre (IAC)",
+        "type": "sports-centre",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym",
+        "type": "gym",
+        "chain": "The Gym",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Uxbridge Lido",
+        "type": "sports-centre",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nuffield Health Fitness & Wellbeing",
+        "type": "gym",
+        "chain": "Nuffield Health Fitness & Wellbeing",
+        "website": "https://www.nuffieldhealth.com/gyms/stockley-park",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Simply Gym Uxbridge",
+        "type": "gym",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "More Energy",
+        "type": "gym",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Botwell Green Sports and Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://better.org.uk/leisure-centre/london/hillingdon/botwell-green",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "C & L Country Club",
+        "type": "sports-centre",
+        "website": "http://www.candlcountryclub.co.uk",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Harlington Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.harlingtonsportscentre.co.uk/",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Station Gym",
+        "type": "gym",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hillingdon Cycle Circuit",
+        "type": "sports-centre",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "McGovern Park",
+        "type": "sports-centre",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Goals",
+        "type": "sports-centre",
+        "chain": "Goals",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ruislip Golf Centre",
+        "type": "sports-centre",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "CrossFit Ickenham",
+        "type": "gym",
+        "website": "https://www.crossfitickenham.com/",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Richings Sports Park",
+        "type": "sports-centre",
+        "website": "https://richingssportspark.co.uk/",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Evreham Sports Centre",
+        "type": "gym",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Grosvenor Vale",
+        "type": "sports-centre",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Stockley Country parkrun",
+        "area": "Stockley Country Park",
+        "distanceKm": 2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Northala Fields parkrun",
+        "area": "Northala Fields Park",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southall parkrun",
+        "area": "Southall Park",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Black Park parkrun",
+        "area": "Black Park Country Park, Slough",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Osterley parkrun",
+        "area": "Osterley Park",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Harrow parkrun",
+        "area": "Harrow Recreation Ground",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Upton Court parkrun",
+        "area": "Upton Court Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

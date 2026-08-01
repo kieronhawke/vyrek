@@ -1,0 +1,198 @@
+{
+  "slug": "waterbeach",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Squash Court",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Inspire Health & Fitness",
+        "type": "gym",
+        "website": "https://www.inspiredfitnessclub.co.uk/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cambridge FootGolf Centre",
+        "type": "sports-centre",
+        "website": "https://www.ukfootgolf.com/cambridge/",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Indoor Arena",
+        "type": "sports-centre",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Milton Community Centre",
+        "type": "sports-centre",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "AlphaFit Performance Centre",
+        "type": "gym",
+        "website": "https://www.alphafit-performancecentre.com/",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cottenham Sports Centre",
+        "type": "sports-centre",
+        "website": "http://cottenhamsportscentre.co.uk/",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Revolution Health and Fitness",
+        "type": "gym",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "RP Fitness",
+        "type": "gym",
+        "website": "https://rpfitness.co.uk/",
+        "distanceKm": 5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sports Centre",
+        "type": "gym",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "BCA Fitness",
+        "type": "gym",
+        "website": "https://www.bcafitness.co.uk/",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Club 100",
+        "type": "gym",
+        "website": "https://club100healthclubs.com/novotel-cambridge",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "ELA Active Impington",
+        "type": "gym",
+        "website": "https://active.tela.org.uk/impington/",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rainbow Rocket North",
+        "type": "sports-centre",
+        "website": "https://rainbowrocket.cc/centre/north/",
+        "distanceKm": 5.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "R3form",
+        "type": "gym",
+        "website": "https://r3formstudio.co.uk/home-marleigh",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Orchard Park Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bridge Fitness and Wellbeing",
+        "type": "gym",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Barn",
+        "type": "gym",
+        "distanceKm": 6.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Satyam Yoga Wellbeing Centre",
+        "type": "gym",
+        "website": "https://www.satyamyogacentre.co.uk/",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Abbey Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.better.org.uk/leisure-centre/cambridge/abbeyleisurecomplex",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Milton Country parkrun",
+        "area": "Milton Country Park, Cambridge",
+        "distanceKm": 3.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Coldham’s Common parkrun",
+        "area": "Coldham’s Common",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bug Hunter Waters parkrun",
+        "area": "Bug Hunter Waters",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fulbourn Hospital parkrun",
+        "area": "Fulbourn Hospital",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brook Leys parkrun",
+        "area": "Brook Leys",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

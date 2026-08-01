@@ -1,0 +1,75 @@
+{
+  "slug": "chinnor",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Chinnor Gym",
+        "type": "gym",
+        "website": "https://chinnorgym.co.uk/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Community Centre",
+        "type": "sports-centre",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Risborough Springs",
+        "type": "sports-centre",
+        "website": "http://www.risboroughspringsswimandfitnesscentre.org/",
+        "distanceKm": 5.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bledlow Ridge Tennis Club",
+        "type": "sports-centre",
+        "website": "https://clubspark.lta.org.uk/BledlowRidgeTennisClub",
+        "distanceKm": 6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Princes Risborough School Community Sports Centre",
+        "type": "sports-centre",
+        "website": "https://princesrisborough.communitybookings.co.uk/",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Racquets",
+        "type": "sports-centre",
+        "distanceKm": 6.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thame United Football Club",
+        "type": "sports-centre",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thame Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fit Life",
+        "type": "gym",
+        "website": "https://fitlife.co.uk/",
+        "distanceKm": 8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "enniskillen",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Lakeland Forum",
+        "type": "gym",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Enniskillen Rangers FC",
+        "type": "sports-centre",
+        "distanceKm": 2.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Enniskillen Rugby Football Club",
+        "type": "sports-centre",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Enniskillen parkrun",
+        "area": "Enniskillen",
+        "distanceKm": 0.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

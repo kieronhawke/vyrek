@@ -1,0 +1,35 @@
+{
+  "slug": "ilminster",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "MawFIT",
+        "type": "gym",
+        "website": "https://www.mawfit.co.uk/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chard Leisure Centre",
+        "type": "gym",
+        "chain": "Freedom Leisure",
+        "website": "https://www.freedom-leisure.co.uk/centres/chard-leisure-centre/",
+        "distanceKm": 7.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Frogmary Green Farm parkrun",
+        "area": "Frogmary Green Farm",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

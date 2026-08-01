@@ -1,0 +1,216 @@
+{
+  "slug": "chiswell-green",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Westminster Lodge Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Everyone Active",
+        "website": "https://www.everyoneactive.com/",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cottonmill Community & Cycling Centre",
+        "type": "sports-centre",
+        "website": "https://www.everyoneactive.com/centre/cottonmill-community-cycling-centre/",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cottonmill Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St Albans Sub Aqua Club",
+        "type": "sports-centre",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clarity Yoga",
+        "type": "sports-centre",
+        "website": "http://www.clarity-yoga-studio.co.uk/",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Yoga Hall",
+        "type": "gym",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clarity Yoga Shala",
+        "type": "gym",
+        "distanceKm": 3.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Waverley Sports and Social Club",
+        "type": "sports-centre",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cotlandswick Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Everyone Active",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Watford Leisure Centre Woodside",
+        "type": "sports-centre",
+        "website": "https://www.everyoneactive.com/Home/tabid/654/Default.aspx",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tornado Junior Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Batchwood Golf Course & Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.1life.co.uk/Batchwood-Golf-Course-and-Sports-Centre/",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Charters Health Club",
+        "type": "sports-centre",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Body Limit Gym",
+        "type": "gym",
+        "website": "https://bodylimitgym.co.uk/",
+        "distanceKm": 5.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Arsenal Football Club Training Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hemel Indoor Tennis Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pavilion",
+        "type": "sports-centre",
+        "distanceKm": 5.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "UCL Sports Ground",
+        "type": "sports-centre",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "OA Tennis",
+        "type": "sports-centre",
+        "website": "https://oatennis.org/",
+        "distanceKm": 5.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "St Albans parkrun",
+        "area": "Verulam Park, St Albans",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leavesden Country parkrun",
+        "area": "Leavesden Country Park",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oaklands College parkrun",
+        "area": "Oaklands College",
+        "distanceKm": 5.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jersey Farm parkrun",
+        "area": "Jersey Farm Woodland Park",
+        "distanceKm": 6.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cassiobury parkrun",
+        "area": "Cassiobury Park",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gadebridge parkrun",
+        "area": "Gadebridge Park",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Aldenham parkrun",
+        "area": "Aldenham Country Park",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rothamsted Park parkrun",
+        "area": "Rothamsted Park",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

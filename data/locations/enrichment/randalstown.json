@@ -1,0 +1,48 @@
+{
+  "slug": "randalstown",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Evolve Health and Performance",
+        "type": "gym",
+        "website": "https://evolve-headquarters.com/",
+        "distanceKm": 5.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Transform Gym",
+        "type": "gym",
+        "distanceKm": 5.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Engine Room",
+        "type": "gym",
+        "website": "https://www.theengineroomni.com",
+        "distanceKm": 5.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Antrim Forum Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Antrim parkrun",
+        "area": "Loughshore Park",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

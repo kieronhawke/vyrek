@@ -1,0 +1,26 @@
+{
+  "slug": "cromer",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Karttrak Cromer",
+        "type": "sports-centre",
+        "website": "https://www.karttrak.co.uk/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Sheringham parkrun",
+        "area": "Sheringham Park",
+        "distanceKm": 7.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

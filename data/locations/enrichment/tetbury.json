@@ -1,0 +1,61 @@
+{
+  "slug": "tetbury",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Westonbirt Leisure",
+        "type": "gym",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Minchinhampton RFC",
+        "type": "sports-centre",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Old Vic Football Club House",
+        "type": "sports-centre",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Activity Zone",
+        "type": "sports-centre",
+        "distanceKm": 7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Whack Club",
+        "type": "gym",
+        "website": "https://whack.club/",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Malmesbury Bowls Club house",
+        "type": "sports-centre",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Tetbury Goods Shed parkrun",
+        "area": "Tetbury Goods Shed",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

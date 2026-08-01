@@ -1,0 +1,166 @@
+{
+  "slug": "waltham",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Grimsby Town FC Training ground",
+        "type": "sports-centre",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Grimsby Rugby Union Football Club",
+        "type": "sports-centre",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chequered Flag Karting",
+        "type": "sports-centre",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Golf Driving Range and Pitch Putt course",
+        "type": "sports-centre",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Holton Le Clay Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Unit One Club",
+        "type": "gym",
+        "website": "https://unitoneclub.co.uk/",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bannatyne Health Club",
+        "type": "gym",
+        "chain": "Bannatyne Health Club",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Fusion Centre",
+        "type": "sports-centre",
+        "website": "https://fusioncentre.co.uk/",
+        "distanceKm": 5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "King George V stadium",
+        "type": "sports-centre",
+        "distanceKm": 5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Grimsby Amateur Boxing Club",
+        "type": "sports-centre",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Performance Lab",
+        "type": "gym",
+        "website": "https://performancelabgrimsby.co.uk/",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hard Work MMA",
+        "type": "gym",
+        "distanceKm": 5.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Haven Gymnasium",
+        "type": "gym",
+        "website": "https://www.havengym.org.uk/cm/",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Grimsby Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Grimsby Leisure Centre Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 5.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cueworld Snooker/Pool Rooms",
+        "type": "sports-centre",
+        "distanceKm": 6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Samurai Hearts Martial Arts Academy",
+        "type": "gym",
+        "website": "https://www.samuraihearts.co.uk/",
+        "distanceKm": 6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym Group",
+        "type": "gym",
+        "chain": "The Gym Group",
+        "website": "https://www.thegymgroup.com/find-a-gym/grimsby-gyms/grimsby/",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mighty Mariners Boxing Academy",
+        "type": "gym",
+        "distanceKm": 6.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cleethorpes Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 6.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cleethorpes parkrun",
+        "area": "Cleethorpes Country Park",
+        "distanceKm": 5.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

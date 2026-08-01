@@ -1,0 +1,75 @@
+{
+  "slug": "soham",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Sweat Gymnasium",
+        "type": "gym",
+        "website": "https://sweatgym.co.uk/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ross Peers Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Beeches",
+        "type": "sports-centre",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "School Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Ness Club",
+        "type": "gym",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burwell Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mildenhall Fen Tigers Speedway",
+        "type": "sports-centre",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Soham Village College parkrun",
+        "area": "Soham Village College",
+        "distanceKm": 0.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ben’s Yard parkrun, Ely",
+        "area": "Ben’s Yard, Ely",
+        "distanceKm": 5.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

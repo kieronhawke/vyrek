@@ -1,0 +1,49 @@
+{
+  "slug": "ballynahinch",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Ballynahinch Community Centre",
+        "type": "sports-centre",
+        "website": "https://www.newrymournedown.org/ballynahinch-community-centre",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Millbridge",
+        "type": "sports-centre",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ballymacarn Park",
+        "type": "sports-centre",
+        "website": "https://hinchrfc.co.uk/",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St Michael's Park",
+        "type": "sports-centre",
+        "website": "http://dromara.weebly.com/",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Montalto Estate parkrun",
+        "area": "Montalto Estate",
+        "distanceKm": 1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

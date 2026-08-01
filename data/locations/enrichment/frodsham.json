@@ -1,0 +1,104 @@
+{
+  "slug": "frodsham",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Brio Leisure",
+        "type": "sports-centre",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Active Nation Runcorn",
+        "type": "gym",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Runcorn Ski Slope",
+        "type": "sports-centre",
+        "distanceKm": 4.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brookvale Recreation Centre",
+        "type": "sports-centre",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Runcorn Baths",
+        "type": "gym",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Planet Ice",
+        "type": "sports-centre",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "New Halton Lesiure Center",
+        "type": "gym",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Widnes Vikings RLFC",
+        "type": "sports-centre",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "JD Gyms",
+        "type": "gym",
+        "chain": "JD Gyms",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Phoenix parkrun",
+        "area": "Phoenix Park",
+        "distanceKm": 5.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Delamere parkrun",
+        "area": "Delamere Forest",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Widnes parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "slug": "monmouth",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Monmouth Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hannah Modget Pilates",
+        "type": "gym",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Whitecliff 4x4",
+        "type": "sports-centre",
+        "distanceKm": 6.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Chippenham Playing Fields parkrun, Monmouth",
+        "area": "Chippenham Playing Fields",
+        "distanceKm": 0.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Forest of Dean parkrun",
+        "area": "Coverham Enclosure, Forest of Dean",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

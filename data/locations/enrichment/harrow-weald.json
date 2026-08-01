@@ -1,0 +1,221 @@
+{
+  "slug": "harrow-weald",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Harrow Weald Lawn Tennis Club",
+        "type": "sports-centre",
+        "website": "https://www.harrowwealdtennisclub.org.uk/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bannister Outdoor Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.everyoneactive.com/centre/bannister-outdoor-sports-centre/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym",
+        "type": "gym",
+        "chain": "The Gym",
+        "website": "https://www.thegymgroup.com/find-a-gym/north-london-gyms/wealdstone/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hatch End Lawn Tennis Club",
+        "type": "sports-centre",
+        "website": "https://www.heltc.org/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hatch End Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Anytime Fitness",
+        "type": "gym",
+        "chain": "Anytime Fitness",
+        "website": "https://www.anytimefitness.co.uk/gyms/uk-0448/london-harrow-and-wealdstone-greater-london-ha3-5ff/",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Harrow Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Harrow Saint Mary's Cricket Club",
+        "type": "sports-centre",
+        "website": "https://www.harrowsaintmaryscricketclub.co.uk/",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stanmore Bowls Club",
+        "type": "sports-centre",
+        "website": "https://www.stanmorebowls.com/",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Harrow Rugby Club",
+        "type": "sports-centre",
+        "website": "https://www.pitchero.com/clubs/harrow",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Park High School Sports Hall",
+        "type": "sports-centre",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Centanary Sports",
+        "type": "sports-centre",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Aspire National Training Centre",
+        "type": "sports-centre",
+        "website": "https://www.aspire.org.uk/",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pinner Lawn Tennis Club",
+        "type": "sports-centre",
+        "website": "https://www.pinnerltc.co.uk/",
+        "distanceKm": 2.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gold's Gym",
+        "type": "gym",
+        "website": "https://www.goldsgym.com/harrowuk/",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kenton Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "St Margaret's Sports Centre",
+        "type": "gym",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Harrowall",
+        "type": "gym",
+        "website": "https://londonclimbingcentres.co.uk/centre/harrowall/",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Buzz Gym",
+        "type": "gym",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lyon Square Gymnasium",
+        "type": "gym",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Canons Park parkrun",
+        "area": "Canons Park",
+        "distanceKm": 2.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Harrow parkrun",
+        "area": "Harrow Recreation Ground",
+        "distanceKm": 3.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Aldenham parkrun",
+        "area": "Aldenham Country Park",
+        "distanceKm": 4.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Oxhey parkrun",
+        "area": "South Oxhey Playing Fields",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Holywell King George V Playing Fields parkrun",
+        "area": "Holywell King George V Playing Fields",
+        "distanceKm": 6.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cassiobury parkrun",
+        "area": "Cassiobury Park",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sunny Hill parkrun",
+        "area": "Sunny Hill Park",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Northala Fields parkrun",
+        "area": "Northala Fields Park",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

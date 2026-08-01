@@ -1,0 +1,176 @@
+{
+  "slug": "sturry",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Stodmarsh Playing Fields",
+        "type": "sports-centre",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Polo Farm Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kingsmead Pools and Fitness",
+        "type": "sports-centre",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The King's School Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Om Studio",
+        "type": "gym",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cousins Lounge",
+        "type": "sports-centre",
+        "distanceKm": 3.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "énergie Fitness",
+        "type": "gym",
+        "chain": "énergie Fitness",
+        "website": "https://energiefitness.com/gym/canterbury",
+        "distanceKm": 3.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sports Hall",
+        "type": "sports-centre",
+        "distanceKm": 3.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "University of Kent Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ladies of Leisure",
+        "type": "gym",
+        "website": "http://www.ladies-of-leisure.net/",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kent County Cricket Club",
+        "type": "sports-centre",
+        "website": "http://www.kent-ccc.co.uk/",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Exclusive Fitness",
+        "type": "gym",
+        "website": "https://www.exclusive-fitness.net/",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chimera Climbing",
+        "type": "sports-centre",
+        "website": "https://www.chimeraclimbingcanterbury.com",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Canterbury Gymnastics Club",
+        "type": "sports-centre",
+        "website": "http://www.canterburygymnastics.co.uk/",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Herne Bay Sports Hub",
+        "type": "sports-centre",
+        "distanceKm": 6.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Snap Fitness",
+        "type": "gym",
+        "chain": "Snap Fitness",
+        "distanceKm": 7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "David Lloyd Herne Bay",
+        "type": "gym",
+        "website": "https://www.davidlloyd.co.uk/clubs/herne-bay/",
+        "distanceKm": 7.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "James Fitness",
+        "type": "gym",
+        "website": "https://www.jamesfitness.co.uk/index.html",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Whitstable RFC",
+        "type": "sports-centre",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Canterbury parkrun",
+        "area": "The Pavillion",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Whitstable parkrun",
+        "area": "Whitstable Promenade",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

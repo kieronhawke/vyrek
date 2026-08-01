@@ -1,0 +1,82 @@
+{
+  "slug": "liphook",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Athlete Movement",
+        "type": "gym",
+        "website": "https://athletemovement.com/",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Edge",
+        "type": "sports-centre",
+        "website": "https://www.placesleisure.org/centres/the-edge/",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woolmer Hill Sports Ground",
+        "type": "sports-centre",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Haslemere Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Everyone Active",
+        "website": "https://www.everyoneactive.com/centre/haslemere-leisure-centre/",
+        "distanceKm": 5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Anytime Fitness",
+        "type": "gym",
+        "chain": "Anytime Fitness",
+        "website": "https://www.anytimefitness.co.uk/gyms/uk-0367/bordon-south-east-gu35-0tn/",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Whitehill & Bordon Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Everyone Active",
+        "website": "https://www.everyoneactive.com/centre/whitehill-bordon-leisure-centre/",
+        "distanceKm": 5.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Unique Physique",
+        "type": "gym",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "CYC:D",
+        "type": "gym",
+        "distanceKm": 6.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hogmoor Inclosure parkrun",
+        "area": "Hogmoor Inclosure",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

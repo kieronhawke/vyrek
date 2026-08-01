@@ -1,0 +1,194 @@
+{
+  "slug": "east-boldon",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Boldon Squash Club",
+        "type": "sports-centre",
+        "website": "https://bccsquash.webs.com/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Boldon Lawn Tennis Club",
+        "type": "sports-centre",
+        "website": "http://boldonlawntennisclub.co.uk/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Community North Sports Complex",
+        "type": "sports-centre",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Boldon CA Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bunny Hill Wellness",
+        "type": "sports-centre",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Temple Park Centre",
+        "type": "sports-centre",
+        "website": "https://www.southtyneside.gov.uk/article/34234/Temple-Park-Centre",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Everlast Gyms",
+        "type": "gym",
+        "chain": "Everlast Gyms",
+        "distanceKm": 2.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ace MMA",
+        "type": "sports-centre",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sunderland Climbing Wall",
+        "type": "sports-centre",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sunderland Wall",
+        "type": "sports-centre",
+        "website": "http://www.sunderlandwall.co.uk",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Team Grassroots",
+        "type": "sports-centre",
+        "website": "https://www.teamgrassroots.co.uk/",
+        "distanceKm": 3.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Billy Hardy Sports Complex",
+        "type": "sports-centre",
+        "distanceKm": 3.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fulwell Day Centre",
+        "type": "sports-centre",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beacon of Light",
+        "type": "sports-centre",
+        "website": "https://www.beaconoflight.co.uk/",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sunderland Aquatic Centre",
+        "type": "sports-centre",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fellgate Fitness Centre",
+        "type": "sports-centre",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "North Lizard Riding School",
+        "type": "sports-centre",
+        "website": "https://northlizardridingschool.co.uk/",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fitness 2000",
+        "type": "gym",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Shields Snooker Centre",
+        "type": "sports-centre",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lukes Lane Sports Pavilion",
+        "type": "sports-centre",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Fulwell Quarry parkrun",
+        "area": "Fulwell Quarry",
+        "distanceKm": 2.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Shields parkrun",
+        "area": "South Shields",
+        "distanceKm": 5.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Silksworth parkrun",
+        "area": "Silksworth Sports Centre, Sunderland",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Herrington Country parkrun",
+        "area": "Herrington Country Park",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Windy Nook parkrun",
+        "area": "Windy Nook Nature Park",
+        "distanceKm": 8.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

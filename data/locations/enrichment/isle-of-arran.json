@@ -1,0 +1,21 @@
+{
+  "slug": "isle-of-arran",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Arran Community Sport Hub",
+        "type": "sports-centre",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lamlash Bowling Club",
+        "type": "sports-centre",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

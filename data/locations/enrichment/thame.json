@@ -1,0 +1,52 @@
+{
+  "slug": "thame",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Racquets",
+        "type": "sports-centre",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thame United Football Club",
+        "type": "sports-centre",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thame Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fit Life",
+        "type": "gym",
+        "website": "https://fitlife.co.uk/",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Unite Personal Training Gym",
+        "type": "gym",
+        "website": "https://unitepersonaltraininggym.co.uk/",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chinnor Gym",
+        "type": "gym",
+        "website": "https://chinnorgym.co.uk/",
+        "distanceKm": 7.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "slug": "braunton",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "North Devon Karting Centre",
+        "type": "sports-centre",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mill Road",
+        "type": "sports-centre",
+        "distanceKm": 7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Marshford",
+        "type": "sports-centre",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Anytime Fitness",
+        "type": "gym",
+        "chain": "Anytime Fitness",
+        "website": "https://www.anytimefitness.co.uk/gyms/uk-0277/barnstaple-south-west-ex31-1tp/",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Woolacombe Dunes parkrun",
+        "area": "Woolacombe Dunes",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Barnstaple parkrun",
+        "area": "Rock Park",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bideford parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

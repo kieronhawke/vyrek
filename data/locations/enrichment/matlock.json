@@ -1,0 +1,61 @@
+{
+  "slug": "matlock",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Parkside Fitness",
+        "type": "sports-centre",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Causeway Lane",
+        "type": "sports-centre",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Arc Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Evolution",
+        "type": "sports-centre",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wirksworth Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 6.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wirksworth Swimming Pool",
+        "type": "sports-centre",
+        "website": "https://www.wirksworthswimmingpool.co.uk/",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Black Rocks parkrun",
+        "area": "Black Rocks",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

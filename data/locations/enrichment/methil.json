@@ -1,0 +1,68 @@
+{
+  "slug": "methil",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "East Fife Indoor Bowling Club",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Levenmouth Swimming Pool and Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Odin Strength & Conditioning",
+        "type": "gym",
+        "website": "https://www.odingym.com/",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wellsgreen Golf Range",
+        "type": "sports-centre",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lundin Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Realistic Pilates Fife",
+        "type": "gym",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Shed",
+        "type": "gym",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Riverside Park parkrun, Glenrothes",
+        "area": "Riverside Park, Glenrothes",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "slug": "rainford",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "The Nest",
+        "type": "gym",
+        "website": "https://linktr.ee/thenesteccleston",
+        "distanceKm": 4.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ruskin Fitness Club",
+        "type": "gym",
+        "website": "https://www.ruskinsthelens.com/fitness-club/",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "GymWorks",
+        "type": "gym",
+        "distanceKm": 5.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nye Bevan Pool",
+        "type": "sports-centre",
+        "distanceKm": 5.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "AXA Training Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Queens Park Leisure Centre",
+        "type": "gym",
+        "website": "https://goactive.sthelens.gov.uk/facilities/queens-park-health-fitness.aspx",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bannatyne Health Club",
+        "type": "gym",
+        "chain": "Bannatyne Health Club",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Studio 5",
+        "type": "gym",
+        "distanceKm": 6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "JD Gym",
+        "type": "gym",
+        "chain": "Xercise4Less",
+        "website": "https://www.xercise4less.co.uk/find-a-gym/st-helens-gym/",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "YMCA",
+        "type": "sports-centre",
+        "chain": "YMCA",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "WinFit Centre",
+        "type": "sports-centre",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Winstanley Tennis Club",
+        "type": "sports-centre",
+        "website": "https://winstanleytennisclub.co.uk/",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "FX Leisure",
+        "type": "gym",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Winstanley Park Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 6.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kirkby Lesiure Centre",
+        "type": "gym",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Evans Cycles & Gym",
+        "type": "sports-centre",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Eccleston Park Tennis Club",
+        "type": "sports-centre",
+        "website": "http://epltc.co.uk",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Prescot Cables Football Club",
+        "type": "sports-centre",
+        "website": "https://www.pitchero.com/clubs/prescotcablesfootballclub/",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "St Helens parkrun",
+        "area": "Victoria Park",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tawd Valley parkrun",
+        "area": "Tawd Valley Park",
+        "distanceKm": 5.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ormskirk parkrun",
+        "area": "Edge Hill University",
+        "distanceKm": 8.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Croxteth Hall parkrun",
+        "area": "Croxteth Hall Country Park",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

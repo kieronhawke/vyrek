@@ -1,0 +1,67 @@
+{
+  "slug": "coleford",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Whitecliff 4x4",
+        "type": "sports-centre",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bream Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Monmouth Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hannah Modget Pilates",
+        "type": "gym",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ironmasters Gym",
+        "type": "gym",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Forest of Dean parkrun",
+        "area": "Coverham Enclosure, Forest of Dean",
+        "distanceKm": 1.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mallards Pike parkrun",
+        "area": "Mallards Pike",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chippenham Playing Fields parkrun, Monmouth",
+        "area": "Chippenham Playing Fields",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

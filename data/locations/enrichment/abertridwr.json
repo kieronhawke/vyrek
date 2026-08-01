@@ -1,0 +1,191 @@
+{
+  "slug": "abertridwr",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Mindset Functional Fitness",
+        "type": "gym",
+        "website": "https://mindsetfunctionalfitness.co.uk/",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Climbing Station",
+        "type": "sports-centre",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pacific Fitness",
+        "type": "gym",
+        "website": "https://pacificfitness.co.uk",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Team Rees Gym",
+        "type": "gym",
+        "website": "https://www.teamreesgym.com/",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Arthur's Gym",
+        "type": "sports-centre",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Creazione Fitness Village",
+        "type": "gym",
+        "website": "https://www.creazione.co.uk/",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Caerphilly Leisure Centre",
+        "type": "gym",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The EDGE",
+        "type": "gym",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mean Muscle Gymnasium",
+        "type": "gym",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sports Hall",
+        "type": "sports-centre",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "website": "https://www.puregym.com/gyms/pontypridd/",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Canolfan Hamdden Llanilltud Faerdref",
+        "type": "sports-centre",
+        "website": "https://www.rctcbc.gov.uk/EN/Resident/SportsandLeisure/LeisureCentres/ChooseaCentre/LlantwitFardreLeisureCentre/LlantwitFardreLeisureCentre.aspx",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Centre for Sporting Excellence",
+        "type": "sports-centre",
+        "website": "https://www.facebook.com/pages/category/Stadium--Arena---Sports-Venue/CCB-Centre-for-Sporting-Excellence-769985439756346/",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lido Ponty",
+        "type": "sports-centre",
+        "website": "https://www.rctcbc.gov.uk/EN/Resident/SportsandLeisure/Lido/",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pontypridd Lido Complex",
+        "type": "sports-centre",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "énergie Fitness",
+        "type": "gym",
+        "chain": "énergie Fitness",
+        "distanceKm": 5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Indoor Bowls Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bedwas Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.caerphillyleisurelifestyle.co.uk/en/centre/bedwas-leisure-centre/",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sue Noake Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.caerphillyleisurelifestyle.co.uk/en/centre/sue-noake-leisure-centre/",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ty Coppi Adventures",
+        "type": "sports-centre",
+        "website": "https://www.tycoppiadventures.com/",
+        "distanceKm": 7.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Pontypridd parkrun",
+        "area": "Ynysangharad War Memorial Park",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Penallta parkrun",
+        "area": "Penallta House",
+        "distanceKm": 5.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Coed Cefn-pwll-du parkrun",
+        "area": "Coed Cefn-pwll-du",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Llanishen Park parkrun",
+        "area": "Llanishen Park",
+        "distanceKm": 8.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

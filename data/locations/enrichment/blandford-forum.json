@@ -1,0 +1,39 @@
+{
+  "slug": "blandford-forum",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Blandford Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Winterborne Stickland Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 5.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clayesmore Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Blandford parkrun",
+        "area": "Jubilee Way",
+        "distanceKm": 0.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

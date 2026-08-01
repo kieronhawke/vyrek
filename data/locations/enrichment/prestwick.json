@@ -1,0 +1,170 @@
+{
+  "slug": "prestwick",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Northfield Bowling Complex",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Prestwick Sailing Club",
+        "type": "sports-centre",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crookmoss Bowling Club",
+        "type": "sports-centre",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym",
+        "type": "gym",
+        "chain": "The Gym",
+        "website": "https://www.thegymgroup.com/find-a-gym/ayr-gyms/ayr/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Whitletts Activity Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bannatyne's Leisure",
+        "type": "gym",
+        "website": "https://www.bannatyne.co.uk/healthandfitness/ayr/",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ayr Racecourse",
+        "type": "sports-centre",
+        "website": "https://www.ayr-racecourse.co.uk/",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Citadel Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.south-ayrshire.gov.uk/leisure/citadel-leisure-centre/",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dam Park Stadium",
+        "type": "sports-centre",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ayr Wattfield Bowling Club",
+        "type": "sports-centre",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ayr Lawn Tennis Club",
+        "type": "sports-centre",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ayr Seafield Bowling Club",
+        "type": "sports-centre",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "New Pebble Park",
+        "type": "sports-centre",
+        "distanceKm": 5.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Troon Lawn Tennis Club",
+        "type": "sports-centre",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Troon Bowling Club",
+        "type": "sports-centre",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fit Pit",
+        "type": "gym",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Troon Portland Bowling Club",
+        "type": "sports-centre",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rize Fitness",
+        "type": "gym",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Portland Park",
+        "type": "sports-centre",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Coylton Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Ayr parkrun",
+        "area": "Rozelle Park",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Troon parkrun",
+        "area": "South Beach Esplanade",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

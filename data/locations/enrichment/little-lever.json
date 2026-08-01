@@ -1,0 +1,187 @@
+{
+  "slug": "little-lever",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Leverhulme Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bolton Indian Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bodywise",
+        "type": "gym",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Laceys Boxing Gym",
+        "type": "gym",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thrive",
+        "type": "gym",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Farnworth Leisure Centre",
+        "type": "gym",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burnden Park Fitness Academy",
+        "type": "gym",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bolton Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Heliofitness",
+        "type": "gym",
+        "distanceKm": 2.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Farnworth Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "JD Gyms",
+        "type": "gym",
+        "chain": "JD Gyms",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Manor 7s",
+        "type": "gym",
+        "website": "https://www.manor7s.com/",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Jason Kenny",
+        "type": "gym",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym",
+        "type": "gym",
+        "chain": "The Gym",
+        "website": "https://www.thegymgroup.com/find-a-gym/bolton-gyms/bolton/",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "East Lancashire Paper Mill Cricket Club",
+        "type": "sports-centre",
+        "website": "https://www.elpmcc.co.uk/",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tonge Cricket Club",
+        "type": "sports-centre",
+        "website": "https://tongecc.co.uk/",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clifton Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Total Fitness",
+        "type": "gym",
+        "chain": "Total Fitness",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "David Lloyd Clubs",
+        "type": "sports-centre",
+        "chain": "David Lloyd Clubs",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Elton Sailing Club",
+        "type": "sports-centre",
+        "distanceKm": 4.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bolton parkrun",
+        "area": "Leverhulme Park, Bolton",
+        "distanceKm": 1.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clarence parkrun",
+        "area": "Clarence Park",
+        "distanceKm": 7.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Worsley Woods parkrun",
+        "area": "Worsley Woods, Salford",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Heaton parkrun",
+        "area": "Heaton Park, Manchester",
+        "distanceKm": 8.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

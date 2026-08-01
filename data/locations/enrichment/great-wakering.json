@@ -1,0 +1,87 @@
+{
+  "slug": "great-wakering",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Shoeburyness Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Freedom Leisure",
+        "website": "https://www.freedom-leisure.co.uk/shoeburyness",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southend Leisure & Tennis Centre",
+        "type": "sports-centre",
+        "chain": "Freedom Leisure",
+        "website": "https://www.freedom-leisure.co.uk/southend",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southend Marine Activities Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southend Gymnastics",
+        "type": "sports-centre",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "IndiRock",
+        "type": "sports-centre",
+        "website": "https://indirock.co.uk/",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fitter Body Ladies",
+        "type": "gym",
+        "distanceKm": 6.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "YMCA",
+        "type": "sports-centre",
+        "chain": "YMCA",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Southend parkrun",
+        "area": "Gunners Park",
+        "distanceKm": 3.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burnham-on-Crouch parkrun",
+        "area": "Riverside Country Park",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chalkwell Beach parkrun",
+        "area": "Chalkwell Beach",
+        "distanceKm": 9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

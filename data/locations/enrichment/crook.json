@@ -1,0 +1,71 @@
+{
+  "slug": "crook",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Crook Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://crookleisurecentre.co.uk/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Spectrum Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://spectrumleisurecentre.com/",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wooley Grange Motocross Track",
+        "type": "sports-centre",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tow Law Town AFC",
+        "type": "sports-centre",
+        "website": "https://www.towlawtown.co.uk/",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bishop Auckland RUFC",
+        "type": "sports-centre",
+        "website": "https://www.barufc.com/",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bishop Auckland Snooker Club",
+        "type": "sports-centre",
+        "distanceKm": 7.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hamsterley Forest parkrun",
+        "area": "Hamsterley Forest Outdoor Centre",
+        "distanceKm": 8.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jubilee parkrun",
+        "area": "Jubilee Park",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "slug": "wigton",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Wigton Baths",
+        "type": "sports-centre",
+        "website": "https://www.wigtonbaths.co.uk/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

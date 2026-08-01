@@ -1,0 +1,182 @@
+{
+  "slug": "britwell",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Farnham Royal Cricket Club",
+        "type": "sports-centre",
+        "website": "https://frcc.info/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Farnham Park Playing Fields",
+        "type": "sports-centre",
+        "website": "https://www.buckinghamshire.gov.uk/health-wellbeing-and-sports/parks-and-open-spaces/find-a-park-or-play-area/farnham-park-playing-fields/",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Indoor Carpet Courts",
+        "type": "sports-centre",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Absolutely Fitness",
+        "type": "gym",
+        "website": "www.absolutely-group.co.uk",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The centre",
+        "type": "gym",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym",
+        "type": "gym",
+        "chain": "The Gym",
+        "website": "https://www.thegymgroup.com/find-a-gym/slough-gyms/slough/",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Loft",
+        "type": "gym",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Salt Hill Activity Centre",
+        "type": "sports-centre",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nuffield Health Fitness & Wellbeing",
+        "type": "gym",
+        "chain": "Nuffield Health Fitness & Wellbeing",
+        "website": "https://www.nuffieldhealth.com/gyms/stoke-poges",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Activ8 Gym",
+        "type": "gym",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "easyGym",
+        "type": "gym",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thames Valley Adventure Playground",
+        "type": "sports-centre",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Athens",
+        "type": "sports-centre",
+        "distanceKm": 4.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "New Gym",
+        "type": "sports-centre",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fulmer Cricket Club",
+        "type": "sports-centre",
+        "website": "https://fulmercricketclub.com/",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Old Gym",
+        "type": "sports-centre",
+        "distanceKm": 5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Andrews Boathouse",
+        "type": "sports-centre",
+        "distanceKm": 5.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Windsor Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Remote World Model Car Club",
+        "type": "sports-centre",
+        "website": "https://remoteworldmcc.co.uk",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wren's Club",
+        "type": "gym",
+        "website": "https://www.wrensclub.com/",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Black Park parkrun",
+        "area": "Black Park Country Park, Slough",
+        "distanceKm": 5.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Upton Court parkrun",
+        "area": "Upton Court Park",
+        "distanceKm": 5.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Maidenhead parkrun",
+        "area": "Braywick Park",
+        "distanceKm": 6.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

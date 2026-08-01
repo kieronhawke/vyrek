@@ -1,0 +1,79 @@
+{
+  "slug": "sheerness",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Sheppey Healthy Living Centre",
+        "type": "sports-centre",
+        "website": "http://www.sheppeyhlc.org.uk/",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sheerness Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sheppey Leisure Complex",
+        "type": "sports-centre",
+        "website": "https://www.swaleleisure.com/sheppey-leisure-complex",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sheppey Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Snap Fitness",
+        "type": "gym",
+        "chain": "Snap Fitness",
+        "website": "https://www.snapfitness.com/uk/gyms/neats-court",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kingsferry Gun Club",
+        "type": "sports-centre",
+        "website": "https://kingsferrygunclub.com/",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "The Leas parkrun, Minster",
+        "area": "The Leas",
+        "distanceKm": 2.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southend parkrun",
+        "area": "Gunners Park",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sittingbourne parkrun",
+        "area": "Milton Creek Country Park",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

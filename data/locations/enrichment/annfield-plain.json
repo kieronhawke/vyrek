@@ -1,0 +1,152 @@
+{
+  "slug": "annfield-plain",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "MASAC Gym",
+        "type": "gym",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pea Farm Off Road Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stanley Community Football Centre",
+        "type": "sports-centre",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Louisa Centre",
+        "type": "sports-centre",
+        "website": "https://www.durham.gov.uk/article/19324/The-Louisa-Centre-opening-hours-and-facilities",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ruthless Fitness",
+        "type": "gym",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leadgate Cricket Club",
+        "type": "sports-centre",
+        "website": "https://leadgate.play-cricket.com/home",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Body Blitz Boot Camp",
+        "type": "sports-centre",
+        "website": "http://paulreaybodyblitz.co.uk/",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lintz Cricket Club",
+        "type": "sports-centre",
+        "website": "https://lintz.play-cricket.com/",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Consett Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://durham.gov.uk/consettleisurecentre",
+        "distanceKm": 5.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym",
+        "type": "gym",
+        "chain": "The Gym",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Super Snooker",
+        "type": "sports-centre",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Steel Town Gym",
+        "type": "gym",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Knitsley Mx",
+        "type": "sports-centre",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Evolve",
+        "type": "gym",
+        "website": "http://gfitstudio.co.uk/",
+        "distanceKm": 7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Shotley and Benfieldside Tennis Club",
+        "type": "sports-centre",
+        "website": "https://shotleytennis.co.uk/",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Oakey Park parkrun",
+        "area": "Oakey Park",
+        "distanceKm": 3.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Blackhill parkrun",
+        "area": "Blackhill and Consett Heritage Park",
+        "distanceKm": 6.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chopwell Wood parkrun",
+        "area": "Chopwell Wood",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ushaw Historic House parkrun",
+        "area": "Ushaw Historic House",
+        "distanceKm": 9.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

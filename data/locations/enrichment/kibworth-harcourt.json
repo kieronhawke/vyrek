@@ -1,0 +1,69 @@
+{
+  "slug": "kibworth-harcourt",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Kibworth Bowls Club",
+        "type": "sports-centre",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kibworth Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kibworth Shooting Ground",
+        "type": "sports-centre",
+        "website": "https://www.kibworthshootingground.co.uk/",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fleckney Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Langtons Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oadby Owls Football Club",
+        "type": "sports-centre",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stretton Circuit",
+        "type": "sports-centre",
+        "website": "https://strettoncircuit.co.uk/",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Market Harborough parkrun",
+        "area": "Welland Park",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

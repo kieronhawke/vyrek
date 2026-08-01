@@ -1,0 +1,187 @@
+{
+  "slug": "bishops-cleeve",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Community building",
+        "type": "sports-centre",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Anytime Fitness",
+        "type": "gym",
+        "chain": "Anytime Fitness",
+        "website": "https://www.anytimefitness.co.uk/gyms/uk-0454/bishops-cleeve-south-west-gl52-7ah/",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bishops Cleeve Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bishop's Cleeve Sportsfield",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "GL52 Fitness",
+        "type": "gym",
+        "website": "https://gl52fitness.com/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cheltenham Archers",
+        "type": "sports-centre",
+        "website": "https://www.cheltenhamarchers.com/",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cheltenham Racecourse",
+        "type": "sports-centre",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Seasons Business and Leisure Complex",
+        "type": "sports-centre",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Prescott Speed Hill Climb",
+        "type": "sports-centre",
+        "website": "https://www.prescott-hillclimb.com/",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Simply Gym",
+        "type": "gym",
+        "website": "https://simplygym.co.uk/gyms/cheltenham/",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chi Wai Martial Arts",
+        "type": "gym",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leisure @ Cheltenham",
+        "type": "sports-centre",
+        "website": "https://leisureatcheltenham.com/",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Boulders",
+        "type": "sports-centre",
+        "website": "https://cheltenham.bouldersuk.com/",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym",
+        "type": "gym",
+        "chain": "The Gym",
+        "website": "https://www.thegymgroup.com/find-a-gym/cheltenham-gyms/cheltenham/",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kinetic Sports",
+        "type": "gym",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Énergie Fitness",
+        "type": "gym",
+        "website": "https://www.energiefitness.com/cheltenham",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Stronghold",
+        "type": "gym",
+        "website": "https://the-stronghold.co.uk/",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Armoury",
+        "type": "gym",
+        "website": "http://thearmourygym.org",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crossfit Cheltenham",
+        "type": "gym",
+        "website": "https://www.crossfitcheltenham.co.uk/",
+        "distanceKm": 5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Funky Laser tag",
+        "type": "sports-centre",
+        "website": "https://funky-lasertag.co.uk/",
+        "distanceKm": 5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cheltenham parkrun",
+        "area": "Pittville Park",
+        "distanceKm": 4.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "King George V Playing Field parkrun, Cheltenham",
+        "area": "King George V Playing Field",
+        "distanceKm": 6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tewkesbury parkrun",
+        "area": "Tewkesbury",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

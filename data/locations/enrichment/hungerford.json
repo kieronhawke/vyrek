@@ -1,0 +1,30 @@
+{
+  "slug": "hungerford",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "CrossFit",
+        "type": "gym",
+        "chain": "CrossFit",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Herongate Leisure",
+        "type": "sports-centre",
+        "website": "https://herongate.club/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hungerford Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

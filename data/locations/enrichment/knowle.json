@@ -1,0 +1,156 @@
+{
+  "slug": "knowle",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "MK Reformed",
+        "type": "gym",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Re Coop",
+        "type": "gym",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Silhillians Sports Club and Conference Centre",
+        "type": "sports-centre",
+        "website": "https://silhillians.co.uk/",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Banatyne Health Club & Spa",
+        "type": "gym",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Urbantrix Academy",
+        "type": "gym",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Virgin Active",
+        "type": "gym",
+        "chain": "Virgin Active",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Solihull Sports and Social Club",
+        "type": "sports-centre",
+        "website": "https://www.solihullsportsandsocialclub.co.uk/",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Liberty Leisure",
+        "type": "gym",
+        "website": "https://libertyleisure.com/solihull-leisure-centre-and-gym/eat-drink-relax-solihull/",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Solihull Indoor Bowls Club",
+        "type": "sports-centre",
+        "website": "https://www.solihullibc.co.uk/",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tudor Grange Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.everyoneactive.com/centre/Tudor-Grange-Leisure-Centre/",
+        "distanceKm": 5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "David Lloyd Solihull",
+        "type": "sports-centre",
+        "chain": "David Lloyd Clubs",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "MK Heath Club",
+        "type": "gym",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lakes at Lavender Hall",
+        "type": "sports-centre",
+        "website": "https://thelakesatlavenderhall.co.uk/",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "website": "https://www.puregym.com/gyms/solihull-sears-retail-park/",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "TDF THE LAB",
+        "type": "gym",
+        "distanceKm": 7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Camp Hill Rugby Football Club",
+        "type": "sports-centre",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fitness First",
+        "type": "gym",
+        "chain": "Fitness First",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sero Performance",
+        "type": "gym",
+        "website": "https://seroperformance.co.uk/",
+        "distanceKm": 8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Brueton parkrun",
+        "area": "Brueton Park, Solihull",
+        "distanceKm": 3.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "slug": "barnsbury",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Cally Pool and Gym",
+        "type": "sports-centre",
+        "chain": "Better",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Frame",
+        "type": "gym",
+        "website": "https://moveyourframe.com",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kings Cross Fitness",
+        "type": "gym",
+        "website": "https://www.better.org.uk/kings-cross",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Islington Tennis Centre and Gym",
+        "type": "sports-centre",
+        "chain": "Better",
+        "website": "https://www.better.org.uk/leisure-centre/london/islington/islingtontc/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Third Place Islington",
+        "type": "gym",
+        "website": "https://www.thirdspace.london/islington/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Shaolin Way",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pancras Square Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Better",
+        "website": "https://www.better.org.uk/leisure-centre/london/camden/pancras-square",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fit4less Highbury & Islington",
+        "type": "sports-centre",
+        "website": "http://www.f4l.com/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Movement Studio",
+        "type": "gym",
+        "website": "https://www.themovementstudio.london/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pilates HQ",
+        "type": "gym",
+        "website": "https://www.pilateshq.co.uk",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Highbury Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Better",
+        "website": "https://www.better.org.uk/leisure-centre/london/islington/highbury/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "BodyJunkies",
+        "type": "gym",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Better Gym Holloway",
+        "type": "gym",
+        "website": "https://www.better.org.uk/leisure-centre/london/islington/better-gym-holloway",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cantelowes Gardens Sports Pitch",
+        "type": "sports-centre",
+        "website": "https://www.better.org.uk/leisure-centre/london/camden/talacre-community-sports-centre/941-talacre-community-sports-centre",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "F45 Holloway",
+        "type": "gym",
+        "website": "https://f45training.com/uk/studio/holloway/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Somers Town Community Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rebel Studio",
+        "type": "gym",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ozone Health and Fitness Club",
+        "type": "gym",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Regents Canoe Club & Islington Boat Club",
+        "type": "sports-centre",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mornington Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Highbury Fields parkrun",
+        "area": "Highbury Fields, Highbury",
+        "distanceKm": 1.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Finsbury parkrun",
+        "area": "Finsbury Park",
+        "distanceKm": 3.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hampstead Heath parkrun",
+        "area": "Hampstead Heath",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ally Pally parkrun",
+        "area": "Alexandra Palace, Haringey",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mile End parkrun",
+        "area": "Mile End Park, London",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lordship Recreation Ground parkrun",
+        "area": "Lordship Recreation Ground",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hackney Marshes parkrun",
+        "area": "Hackney Marshes",
+        "distanceKm": 6.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burgess parkrun",
+        "area": "Burgess Park",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "slug": "ingleby-greenhow",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Stokesley Swimming Baths",
+        "type": "sports-centre",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kismet Yoga Studio",
+        "type": "gym",
+        "website": "https://kismetyogastudio.com/",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Carlton Outdoor Education Centre",
+        "type": "gym",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

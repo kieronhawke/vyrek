@@ -1,0 +1,186 @@
+{
+  "slug": "caerleon",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Pura Vida",
+        "type": "gym",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "New Gym",
+        "type": "gym",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Old Gym",
+        "type": "gym",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Driving Range",
+        "type": "sports-centre",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dylans Health Club",
+        "type": "gym",
+        "website": "https://www.celtic-manor.com/home/spa-fitness/our-health-clubs/dylans-health-club/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Celtic Manor Gym",
+        "type": "gym",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Forest Jump at Celtic Manor",
+        "type": "sports-centre",
+        "website": "https://www.celtic-manor.com/activities/forest-jump-high-ropes/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Glebelands Cafe",
+        "type": "sports-centre",
+        "website": "https://www.newportibc.co.uk/",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Newport Indoor Bowls Centre",
+        "type": "sports-centre",
+        "website": "https://www.newportibc.co.uk/",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "KB Boxing",
+        "type": "gym",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "BASE19",
+        "type": "gym",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "website": "https://www.puregym.com/gyms/newport-wales/",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "WOH GYM",
+        "type": "gym",
+        "website": "https://wohgym.co.uk/",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Station Gym",
+        "type": "gym",
+        "website": "https://stationgym.co.uk",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "FitReps",
+        "type": "gym",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "One Gym",
+        "type": "gym",
+        "website": "https://www.onegyms.com/",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "JD Gyms",
+        "type": "gym",
+        "chain": "JD Gyms",
+        "website": "https://www.jdgyms.co.uk/gym/newport/",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Supakart",
+        "type": "sports-centre",
+        "website": "https://www.supakart.co.uk",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Flawless Combat Club",
+        "type": "gym",
+        "website": "https://www.flawlesscombatclub.com/",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Geraint Thomas National Velodrome of Wales",
+        "type": "sports-centre",
+        "website": "https://www.newportlive.co.uk/en/venues/geraint-thomas-national-velodrome-wales/",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Riverfront parkrun",
+        "area": "The Riverfront",
+        "distanceKm": 3.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cwmbran parkrun",
+        "area": "Northfields Recreation Ground",
+        "distanceKm": 5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Newport parkrun",
+        "area": "Tredegar House, Newport",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

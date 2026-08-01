@@ -1,0 +1,67 @@
+{
+  "slug": "thornbury",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "elite fitness",
+        "type": "gym",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thornbury Lawn Tennis Club",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thornbury Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Epic Martial Arts & Fitness",
+        "type": "sports-centre",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Thornbury parkrun",
+        "area": "Mundy Playing Fields",
+        "distanceKm": 0.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Three Brooks parkrun",
+        "area": "Three Brooks",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Berkeley Green parkrun",
+        "area": "Berkeley Green",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Severn Bridge parkrun",
+        "area": "Severn Bridge",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

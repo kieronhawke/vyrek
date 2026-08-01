@@ -1,0 +1,14 @@
+{
+  "slug": "chatteris",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Empress Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

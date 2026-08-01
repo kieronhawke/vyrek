@@ -1,0 +1,59 @@
+{
+  "slug": "magherafelt",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Greenvale Leisure Centre",
+        "type": "gym",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Meadowbank Sports Arena",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rainey Old Boys RFC",
+        "type": "sports-centre",
+        "website": "https://raineyoldboysrfc.com/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "O’Donovan Rossa G.A.C.",
+        "type": "sports-centre",
+        "website": "https://www.rossagaels.org/",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Castledawson GAC",
+        "type": "sports-centre",
+        "website": "http://www.castledawsongac.com/",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ballymaguigan St Treas GFC",
+        "type": "sports-centre",
+        "distanceKm": 5.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Newbridge GAC",
+        "type": "sports-centre",
+        "distanceKm": 6.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

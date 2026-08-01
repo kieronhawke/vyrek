@@ -1,0 +1,36 @@
+{
+  "slug": "rye",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Rye Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Fitness Room",
+        "type": "gym",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rye Lawn Tennis and Squash Club",
+        "type": "sports-centre",
+        "website": "https://ryelawntennisclub.org.uk/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oasis Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

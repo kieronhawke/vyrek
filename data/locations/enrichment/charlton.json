@@ -1,0 +1,222 @@
+{
+  "slug": "charlton",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Charlton Lido and Lifestyle Club",
+        "type": "sports-centre",
+        "chain": "Better",
+        "website": "https://www.better.org.uk/leisure-centre/london/greenwich/charlton-lido",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Reach",
+        "type": "sports-centre",
+        "website": "https://www.thereach.org.uk/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Blackheath Sports Club",
+        "type": "sports-centre",
+        "website": "http://www.blackheathsportsclub.co.uk/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Teamsport London Docklands",
+        "type": "sports-centre",
+        "chain": "TeamSport Go Karting",
+        "website": "https://www.team-sport.co.uk/go-kart-tracks/docklands",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Core Studio",
+        "type": "gym",
+        "website": "https://www.thecorestudio.co.uk/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pilates Plus London",
+        "type": "gym",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burn It Fitness",
+        "type": "gym",
+        "website": "https://burnitfitness.co.uk/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Novo Armory",
+        "type": "gym",
+        "website": "https://novoarmory.com",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Pilates House",
+        "type": "gym",
+        "website": "https://the-pilateshouse.co.uk/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Greenwich Yacht Club",
+        "type": "sports-centre",
+        "website": "https://www.greenwichyachtclub.co.uk/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Royal Wharf Clubhouse",
+        "type": "gym",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Connaught Heights Gym",
+        "type": "gym",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woolwich Waves",
+        "type": "sports-centre",
+        "chain": "Better",
+        "website": "https://www.better.org.uk/leisure-centre/london/greenwich/woolwich-waves",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Yoga Space London",
+        "type": "gym",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Waterside Club",
+        "type": "sports-centre",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Novo Gym",
+        "type": "gym",
+        "website": "https://novogyms.com/greenwich/",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Blackheath High School Sports Grounds",
+        "type": "sports-centre",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Royal Arsenal Gym",
+        "type": "gym",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "7R Gym",
+        "type": "gym",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Royal Docks Watersports Centre",
+        "type": "sports-centre",
+        "website": "https://royaldockswatersports.org",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Charlton parkrun",
+        "area": "Charlton Park",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thames Path parkrun, Woolwich",
+        "area": "Thames Path, Woolwich",
+        "distanceKm": 2.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Greenwich Peninsula parkrun",
+        "area": "Greenwich Peninsula",
+        "distanceKm": 2.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beckton parkrun",
+        "area": "Beckton District Park South",
+        "distanceKm": 3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sutcliffe parkrun",
+        "area": "Sutcliffe Park Nature Reserve",
+        "distanceKm": 3.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Avery Hill parkrun",
+        "area": "Avery Hill Park, Greenwich",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hilly Fields parkrun",
+        "area": "Hilly Fields",
+        "distanceKm": 5.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Catford parkrun",
+        "area": "Mountsfield Park",
+        "distanceKm": 5.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

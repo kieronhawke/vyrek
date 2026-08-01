@@ -1,0 +1,222 @@
+{
+  "slug": "snaresbrook",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Target Fit",
+        "type": "gym",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sylvestrian Leisure Centre",
+        "type": "gym",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Walthamstow Cricket Tennis and Squash Club",
+        "type": "sports-centre",
+        "website": "https://www.wctsc.org.uk/",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wanstead Leisure Centre",
+        "type": "sports-centre",
+        "website": "http://www.vision-rcl.org.uk/wanstead_home.html",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The 1 on 1 Fitness Studio",
+        "type": "gym",
+        "website": "https://www.the1on1fitnessstudio.co.uk/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Salisbury Club",
+        "type": "sports-centre",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wanstead and Snaresbrook Cricket Club",
+        "type": "sports-centre",
+        "website": "https://wanstead.hitscricket.com/Default.aspx",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Linkside Lawn Tennis Club",
+        "type": "sports-centre",
+        "website": "https://www.linksidetennis.co.uk/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fitness Hub East London",
+        "type": "gym",
+        "website": "https://www.fitnesshubeastlondon.com/",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Aldersbrook Lawn Tennis Club",
+        "type": "sports-centre",
+        "website": "https://clubspark.lta.org.uk/AldersbrookLawnTennisClub",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Forest YMCA",
+        "type": "sports-centre",
+        "chain": "YMCA",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leyton Gym",
+        "type": "gym",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leyton Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Better",
+        "website": "https://www.better.org.uk/leisure-centre/london/waltham-forest/leyton-leisure-centre",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fit As Leyton",
+        "type": "gym",
+        "website": "https://www.fitasf-ck.com/",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Blueprint Fitness",
+        "type": "gym",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Studio M",
+        "type": "gym",
+        "website": "https://www.studiom.london/",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wadham Lodge Sports Ground",
+        "type": "sports-centre",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Waltham Forest Feel Good Centre",
+        "type": "sports-centre",
+        "chain": "Better",
+        "website": "https://www.better.org.uk/leisure-centre/london/waltham-forest/waltham-forest-feel-good-centre",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Raw Gym",
+        "type": "gym",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Aldersbrook Bowls Club",
+        "type": "sports-centre",
+        "website": "https://www.aldersbrookbowlsclub.co.uk/",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Wanstead Flats parkrun",
+        "area": "Wanstead Flats, Epping Forest",
+        "distanceKm": 2.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Walthamstow parkrun",
+        "area": "Highams Park",
+        "distanceKm": 2.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Valentines parkrun",
+        "area": "Valentines Park, Redbridge",
+        "distanceKm": 4.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hackney Marshes parkrun",
+        "area": "Hackney Marshes",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Barking parkrun",
+        "area": "Barking Park",
+        "distanceKm": 6.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Roding Valley parkrun",
+        "area": "Roding Valley Recreation Ground",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pymmes parkrun",
+        "area": "Pymmes Park, Edmonton",
+        "distanceKm": 7.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lordship Recreation Ground parkrun",
+        "area": "Lordship Recreation Ground",
+        "distanceKm": 7.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

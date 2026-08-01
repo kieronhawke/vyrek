@@ -1,0 +1,43 @@
+{
+  "slug": "mablethorpe",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "O'Briens Gym",
+        "type": "gym",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mablethorpe Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Linkage Green",
+        "type": "sports-centre",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mablethorpe Athletic FC",
+        "type": "sports-centre",
+        "website": "http://www.mablethorpeathleticfc.co.uk",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Louth and District Model Aero Club",
+        "type": "sports-centre",
+        "distanceKm": 7.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

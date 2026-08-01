@@ -1,0 +1,182 @@
+{
+  "slug": "church-street",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Lisson Green Outdoor Gym",
+        "type": "gym",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Indaba Yoga",
+        "type": "gym",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Greenhouse Centre",
+        "type": "sports-centre",
+        "website": "https://www.greenhousesports.org/",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Little Venice Sports Centre",
+        "type": "sports-centre",
+        "website": "https://better.org.uk/leisure/littlevenicesportscentre",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Total Chi Yoga",
+        "type": "gym",
+        "website": "https://www.totalchi.com/",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "12x3 Gym",
+        "type": "gym",
+        "website": "https://www.12x3gym.co.uk/",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Seymour Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.everyoneactive.com/centre/seymour-leisure-centre/",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "1 Rebel",
+        "type": "gym",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Little Venice Pilates & Physiotherapy",
+        "type": "sports-centre",
+        "website": "https://www.ten.co.uk/our_studios/little-venice-pilates-physiotherapy",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ultimate Performance",
+        "type": "gym",
+        "website": "https://ultimateperformance.com/personal-trainer/london/paddington/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "BXR",
+        "type": "gym",
+        "website": "https://www.bxrlondon.com/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Courts at The Regent's Park",
+        "type": "sports-centre",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "KOBOX",
+        "type": "gym",
+        "website": "https://www.koboxboxingclub.com/",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Paddington Sports Club",
+        "type": "sports-centre",
+        "website": "https://www.psclondon.com/",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Heartcore Fitness",
+        "type": "gym",
+        "website": "https://www.heartcore.co.uk/studios?studio=studio-3",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mayfair Health Club",
+        "type": "gym",
+        "chain": "Virgin Active",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pilates Tonic",
+        "type": "gym",
+        "website": "https://pilatestonic.co.uk/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "1Rebel Bayswater",
+        "type": "gym",
+        "website": "https://www.1rebel.com/uk",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Porchester Centre",
+        "type": "sports-centre",
+        "website": "https://www.everyoneactive.com/centre/porchester-centre/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Paddington Recreation Ground Fitness Suite",
+        "type": "gym",
+        "chain": "Everyone Active",
+        "website": "https://www.everyoneactive.com/centre/paddington-recreation-ground/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hampstead Heath parkrun",
+        "area": "Hampstead Heath",
+        "distanceKm": 3.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wormwood Scrubs parkrun",
+        "area": "Wormwood Scrubs Park",
+        "distanceKm": 4.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

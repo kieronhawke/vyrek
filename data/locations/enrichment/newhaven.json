@@ -1,0 +1,90 @@
+{
+  "slug": "newhaven",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Peacehaven & Telscombe FC training ground",
+        "type": "sports-centre",
+        "website": "http://www.peacehavenfc.com/grounds/peacehaven.htm",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peacehaven Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Downs Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.waveleisure.co.uk/",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Seaford Head Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hdeout",
+        "type": "gym",
+        "distanceKm": 6.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "BN2 8HN",
+        "type": "sports-centre",
+        "distanceKm": 6.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Saltdean Tennis Club",
+        "type": "sports-centre",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "OP3",
+        "type": "gym",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Seaford Beach parkrun",
+        "area": "Newhaven and Seaford Sailing Club",
+        "distanceKm": 2.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peacehaven parkrun",
+        "area": "Centenary Park",
+        "distanceKm": 3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Malling Rec parkrun",
+        "area": "Malling Rec",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "slug": "freshwater",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Fitness Centre",
+        "type": "gym",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Lymington Woodside parkrun",
+        "area": "Woodside Gardens",
+        "distanceKm": 7.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

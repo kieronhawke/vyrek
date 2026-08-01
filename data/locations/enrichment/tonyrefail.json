@@ -1,0 +1,115 @@
+{
+  "slug": "tonyrefail",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "TJ11 Fitness",
+        "type": "gym",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "JN Fitness",
+        "type": "gym",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "website": "https://www.puregym.com/gyms/llantrisant/",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Llantrisant FeelGood Factory",
+        "type": "gym",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Llantrisant Leisure Centre",
+        "type": "gym",
+        "distanceKm": 6.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Indoor Bowls Centre",
+        "type": "sports-centre",
+        "distanceKm": 6.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "énergie Fitness",
+        "type": "gym",
+        "chain": "énergie Fitness",
+        "distanceKm": 6.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lido Ponty",
+        "type": "sports-centre",
+        "website": "https://www.rctcbc.gov.uk/EN/Resident/SportsandLeisure/Lido/",
+        "distanceKm": 6.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pontypridd Lido Complex",
+        "type": "sports-centre",
+        "distanceKm": 6.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ystrad Rhondda Leisure Centre",
+        "type": "gym",
+        "website": "https://www.rctcbc.gov.uk/EN/Resident/SportsandLeisure/LeisureCentres/ChooseaCentre/RhonddaSportsCentre/RhonddaSportsCentre.aspx",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sports Hall",
+        "type": "sports-centre",
+        "distanceKm": 7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Canolfan Hamdden Llanilltud Faerdref",
+        "type": "sports-centre",
+        "website": "https://www.rctcbc.gov.uk/EN/Resident/SportsandLeisure/LeisureCentres/ChooseaCentre/LlantwitFardreLeisureCentre/LlantwitFardreLeisureCentre.aspx",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Pontypridd parkrun",
+        "area": "Ynysangharad War Memorial Park",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Aberfields parkrun",
+        "area": "Aberfields",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

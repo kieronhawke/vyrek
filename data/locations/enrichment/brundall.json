@@ -1,0 +1,61 @@
+{
+  "slug": "brundall",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Sarah Medler Fitness",
+        "type": "gym",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bannatyne's Health Club",
+        "type": "sports-centre",
+        "website": "https://www.bannatyne.co.uk/fitness/norwich.htm",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sprowston Sports and Social Club",
+        "type": "sports-centre",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "War Memorial Recreation Centre",
+        "type": "sports-centre",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Brundall parkrun",
+        "area": "Countryside Park",
+        "distanceKm": 1.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lingwood parkrun",
+        "area": "Lingwood Village Hall",
+        "distanceKm": 4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fitzmaurice Park parkrun",
+        "area": "Fitzmaurice Park",
+        "distanceKm": 5.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

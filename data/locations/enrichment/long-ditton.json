@@ -1,0 +1,219 @@
+{
+  "slug": "long-ditton",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "YMCA",
+        "type": "sports-centre",
+        "chain": "YMCA",
+        "website": "https://ymca.org.uk/locations/ymca-st-pauls-group/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym",
+        "type": "gym",
+        "chain": "The Gym",
+        "website": "https://www.thegymgroup.com/find-a-gym/south-london-gyms/london-surbiton/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thames Ditton Lawn Tennis Club",
+        "type": "sports-centre",
+        "website": "https://clubspark.lta.org.uk/ThamesDittonLawnTennisClub",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Raven's Ait",
+        "type": "sports-centre",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fitbox",
+        "type": "gym",
+        "website": "https://www.fitboxpersonaltraining.co.uk/surbiton/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Motion Training CrossFit",
+        "type": "gym",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kingston Grammar School Sport Ground",
+        "type": "sports-centre",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Surbiton High School Sports Ground",
+        "type": "sports-centre",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Surbiton Hill Methodist Tennis Club",
+        "type": "sports-centre",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Surbiton Racket and Fitness Club",
+        "type": "sports-centre",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "White Spider Indoor Climbing",
+        "type": "sports-centre",
+        "website": "https://spiderclimbing.com/white-spider/",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fitness Centre",
+        "type": "gym",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Riverside Gym",
+        "type": "gym",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sandown Park Golf Centre",
+        "type": "sports-centre",
+        "website": "https://www.sandownparkgolf.com/",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Esher Cricket Club",
+        "type": "sports-centre",
+        "website": "https://eshercc.co.uk/",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Daytona Sandown Park",
+        "type": "sports-centre",
+        "website": "https://www.daytona.co.uk/venues/sandown-park/",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chessington Sports",
+        "type": "sports-centre",
+        "website": "https://www.placesleisure.org/centres/chessington-sports-centre/",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sentinel  Jiu Jitsu",
+        "type": "gym",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "goals",
+        "type": "sports-centre",
+        "chain": "Goals",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hampton Wick Royal Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bushy parkrun",
+        "area": "Bushy Park, Teddington",
+        "distanceKm": 3.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kingston parkrun",
+        "area": "Kingston Riverside",
+        "distanceKm": 4.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Nonsuch parkrun",
+        "area": "Nonsuch Park, Cheam",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crane Park parkrun",
+        "area": "Crane Park, Twickenham",
+        "distanceKm": 7.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hazelwood parkrun",
+        "area": "Hazelwood Centre",
+        "distanceKm": 7.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Richmond parkrun",
+        "area": "Richmond Park, Richmond upon Thames",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Morden parkrun",
+        "area": "Morden",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hanworth parkrun",
+        "area": "Hanworth Park",
+        "distanceKm": 8.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

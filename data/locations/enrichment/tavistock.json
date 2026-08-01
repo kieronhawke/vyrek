@@ -1,0 +1,40 @@
+{
+  "slug": "tavistock",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Meadowlands Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.fusion-lifestyle.com/centres/meadowlands-leisure-pool/",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Body Zone",
+        "type": "gym",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Calstock rowing club",
+        "type": "sports-centre",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Tamar Trails parkrun",
+        "area": "Tamar Trails Centre",
+        "distanceKm": 4.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

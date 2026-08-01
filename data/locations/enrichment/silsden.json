@@ -1,0 +1,168 @@
+{
+  "slug": "silsden",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "The Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "website": "https://www.puregym.com/gyms/keighley/",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Duo Fitness Studio",
+        "type": "gym",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hi-Energy Health Club",
+        "type": "gym",
+        "website": "https://hienergyhealthclub.co.uk/",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Marley Activities and Coaching Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "NRGym",
+        "type": "gym",
+        "website": "https://www.nrgym.co.uk/",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "High Adventure Outdoor Education Centre",
+        "type": "gym",
+        "website": "https://highadventureoec.co.uk/",
+        "distanceKm": 7.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Holistic House",
+        "type": "gym",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Intershape Fitness",
+        "type": "gym",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "XO Fitness",
+        "type": "gym",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ebru Evrim Skipton",
+        "type": "gym",
+        "website": "http://www.o-millsofskipton.co.uk/",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Spirit Of Pilates",
+        "type": "sports-centre",
+        "website": "https://spiritofpilates.co.uk/",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Escape Health Club",
+        "type": "sports-centre",
+        "website": "https://escapegym.uk/",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sandylands Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clip 'n Climb",
+        "type": "sports-centre",
+        "website": "https://clipnclimb.com/",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ilkley Yoga Centre",
+        "type": "gym",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ilkley Swimming Pool and Lido",
+        "type": "sports-centre",
+        "website": "https://www.bradford.gov.uk/sport-and-activities/sports-centres-and-pools/ilkley-pool-and-lido",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Cliffe Castle parkrun",
+        "area": "Cliffe Castle Park",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "East Holmes Field parkrun",
+        "area": "East Holmes Field, Ilkley",
+        "distanceKm": 7.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Skipton parkrun",
+        "area": "Aireville Park",
+        "distanceKm": 8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Myrtle parkrun",
+        "area": "Myrtle Park",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

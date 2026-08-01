@@ -1,0 +1,41 @@
+{
+  "slug": "lerwick",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Clickimin Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Scalloway Primary School Games Hall",
+        "type": "sports-centre",
+        "website": "https://www.shetland.gov.uk/sport-leisure/council-indoor-games-halls/4",
+        "distanceKm": 7.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Scalloway Pool",
+        "type": "sports-centre",
+        "website": "https://www.srt.org.uk/centres/scalloway",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bressay parkrun",
+        "area": "Bressay",
+        "distanceKm": 1.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

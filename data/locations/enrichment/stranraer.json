@@ -1,0 +1,26 @@
+{
+  "slug": "stranraer",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Ryan Centre",
+        "type": "sports-centre",
+        "website": "https://www.dumgal.gov.uk/ryancentre",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Agnew parkrun",
+        "area": "Agnew Park",
+        "distanceKm": 0.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

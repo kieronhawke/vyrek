@@ -1,0 +1,218 @@
+{
+  "slug": "highgate",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "North London Bowling Club",
+        "type": "sports-centre",
+        "website": "https://www.northlondonbowlingclub.co.uk/",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mallinson Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Parliament Hill Fields Changing Rooms",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Parliament Hill Fields Athletics Track",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fit Shape Studio",
+        "type": "gym",
+        "website": "https://fitshape.co.uk/highgate-gym.htm",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Parliament Hill Lido",
+        "type": "sports-centre",
+        "website": "https://www.cityoflondon.gov.uk/things-to-do/green-spaces/hampstead-heath/where-to-go-at-hampstead-heath/parliament-hill-lido",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Armoury Fitness",
+        "type": "sports-centre",
+        "website": "http://www.jubileehalltrust.org/armoury/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Alex Jordan Personal Training",
+        "type": "gym",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Barre Core",
+        "type": "gym",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Archway Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "pH.7",
+        "type": "gym",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Heartcore Hampstead",
+        "type": "gym",
+        "website": "https://weareheartcore.com/en-gb/studios/hampstead/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Globe Tennis Club",
+        "type": "sports-centre",
+        "website": "https://www.globetennisclub.com/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crossfit Tufnell Park",
+        "type": "sports-centre",
+        "website": "https://www.crossfittufnellpark.com",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Clean Body Health Personal Training",
+        "type": "gym",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Down To Earth",
+        "type": "gym",
+        "website": "https://downtoearthlondon.co.uk/tufnell-park/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "FITT Studio",
+        "type": "gym",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Dome",
+        "type": "sports-centre",
+        "website": "https://qcca.org.uk/hire/the-dome/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stormont Lawn Tennis and Squash Club",
+        "type": "sports-centre",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Talacre Community Sports Centre",
+        "type": "sports-centre",
+        "chain": "Better",
+        "website": "https://www.better.org.uk/leisure-centre/london/camden/talacre-community-sports-centre",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hampstead Heath parkrun",
+        "area": "Hampstead Heath",
+        "distanceKm": 1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Finsbury parkrun",
+        "area": "Finsbury Park",
+        "distanceKm": 3.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ally Pally parkrun",
+        "area": "Alexandra Palace, Haringey",
+        "distanceKm": 4.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Highbury Fields parkrun",
+        "area": "Highbury Fields, Highbury",
+        "distanceKm": 4.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gladstone parkrun",
+        "area": "Gladstone Park, London",
+        "distanceKm": 4.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lordship Recreation Ground parkrun",
+        "area": "Lordship Recreation Ground",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sunny Hill parkrun",
+        "area": "Sunny Hill Park",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wormwood Scrubs parkrun",
+        "area": "Wormwood Scrubs Park",
+        "distanceKm": 7.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "slug": "clitheroe",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "CrossFit",
+        "type": "gym",
+        "chain": "CrossFit",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Edisford Sports Complex",
+        "type": "sports-centre",
+        "website": "https://www.ribblevalley.gov.uk/sport-leisure/3g-pitches-grass-pitches-tennis-courts",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Roefield Leisure",
+        "type": "gym",
+        "website": "https://www.roefield.com/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ribblesdale Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Flip Side Fitness",
+        "type": "gym",
+        "website": "https://www.flipsidefitness.co.uk/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Absolute Fitness",
+        "type": "gym",
+        "website": "https://www.absolutefitnessclitheroe.co.uk/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pendle Ski Centre",
+        "type": "sports-centre",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stonyhurst Sports Centre",
+        "type": "sports-centre",
+        "website": "https://sportscentre.stonyhurst.ac.uk",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PLM Fitness",
+        "type": "gym",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Clitheroe Castle parkrun",
+        "area": "Clitheroe Castle Gardens",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hyndburn parkrun",
+        "area": "Wilson Playing Fields",
+        "distanceKm": 9.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

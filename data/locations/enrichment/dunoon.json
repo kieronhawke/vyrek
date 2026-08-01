@@ -1,0 +1,40 @@
+{
+  "slug": "dunoon",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Dunoon Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hunters Quay Holiday Village Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gourock Outdoor Swimming Pool (seasonal) and Gym",
+        "type": "sports-centre",
+        "website": "https://www.inverclydeleisure.com/facilities/gourock-pool/",
+        "distanceKm": 6.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Greenock parkrun",
+        "area": "The Esplanade",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

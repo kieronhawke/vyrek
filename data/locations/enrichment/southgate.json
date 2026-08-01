@@ -1,0 +1,219 @@
+{
+  "slug": "southgate",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Park View Health Clubs",
+        "type": "gym",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Broomfield Park outdoor gym",
+        "type": "sports-centre",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "White Hart Lane Boxing Academy",
+        "type": "sports-centre",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brackendale Lawn Tennis Club",
+        "type": "sports-centre",
+        "website": "https://clubspark.lta.org.uk/BrackendaleLTC",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Perth Road Playing Fields",
+        "type": "sports-centre",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Myddleton Road Outdoor Gym",
+        "type": "sports-centre",
+        "website": "https://www.bowespark.org.uk/2013/04/16/new-myddleton-road-gym/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Equals Results",
+        "type": "gym",
+        "website": "https://equalsresults.co.uk/southgate",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Giants Gym",
+        "type": "gym",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Chapman's Green Tennis Courts",
+        "type": "sports-centre",
+        "website": "https://clubspark.lta.org.uk/ChapmansGreen",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Arnos Pool",
+        "type": "sports-centre",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Vicars Moor Lawn Tennis Club",
+        "type": "sports-centre",
+        "website": "https://clubspark.lta.org.uk/VicarsMoorLTC/",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym",
+        "type": "gym",
+        "chain": "The Gym",
+        "website": "https://www.thegymgroup.com/find-a-gym/north-london-gyms/wood-green-lordship-lane/",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hazelwood Sports Club",
+        "type": "sports-centre",
+        "website": "https://hazelwoodsportsclub.co.uk/",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Flex PT",
+        "type": "gym",
+        "website": "http://www.flexpt.co.uk",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Wood Green Common Multi Use Game Area",
+        "type": "sports-centre",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Southgate Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Better",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "ProtoFit",
+        "type": "gym",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "North London Boxing Club",
+        "type": "gym",
+        "website": "https://northlondonboxing.co.uk",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tottenham Community Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.tottenhamcommunitysportscentre.com/",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bowling Green",
+        "type": "sports-centre",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Grovelands parkrun, Enfield",
+        "area": "Grovelands Park, Enfield",
+        "distanceKm": 2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pymmes parkrun",
+        "area": "Pymmes Park, Edmonton",
+        "distanceKm": 2.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lordship Recreation Ground parkrun",
+        "area": "Lordship Recreation Ground",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ally Pally parkrun",
+        "area": "Alexandra Palace, Haringey",
+        "distanceKm": 2.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oak Hill parkrun",
+        "area": "Oak Hill Park, East Barnet",
+        "distanceKm": 4.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Finsbury parkrun",
+        "area": "Finsbury Park",
+        "distanceKm": 5.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Walthamstow parkrun",
+        "area": "Highams Park",
+        "distanceKm": 6.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Highbury Fields parkrun",
+        "area": "Highbury Fields, Highbury",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

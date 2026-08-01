@@ -32,8 +32,15 @@ export async function generateMetadata({
   // mid-phrase. Lead with the exact query, keep the whole thing under 65.
   // 14 of the longest town names push this past 65 with ", online" on the
   // end, so drop the qualifier for those rather than let them truncate.
+  // Two escape hatches, in order: drop the ", online" qualifier, then drop
+  // the preposition. "Knightsbridge and Belgravia" needs both.
   const bare = `Personal trainer in ${loc.name}`;
-  const title = bare.length + 8 + 20 <= 65 ? `${bare}, online` : bare;
+  const title =
+    bare.length + 8 + 20 <= 65
+      ? `${bare}, online`
+      : bare.length + 20 <= 65
+        ? bare
+        : `Personal trainer, ${loc.name}`;
   // Per-town, because this is the snippet in the results page. A description
   // identical across 879 towns gives a searcher no reason to click ours.
   const g = getGeoSeo(loc.slug);

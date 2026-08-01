@@ -1,0 +1,189 @@
+{
+  "slug": "westbourne",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Harbour Club Notting Hill",
+        "type": "sports-centre",
+        "distanceKm": 0,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Academy Sport",
+        "type": "sports-centre",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burn LDN",
+        "type": "gym",
+        "website": "https://www.burnldn.co.uk",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Porchester Centre",
+        "type": "sports-centre",
+        "website": "https://www.everyoneactive.com/centre/porchester-centre/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Little Venice Pilates & Physiotherapy",
+        "type": "sports-centre",
+        "website": "https://www.ten.co.uk/our_studios/little-venice-pilates-physiotherapy",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "1Rebel Bayswater",
+        "type": "gym",
+        "website": "https://www.1rebel.com/uk",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Paddington Sports Club",
+        "type": "sports-centre",
+        "website": "https://www.psclondon.com/",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "BaySixty6",
+        "type": "sports-centre",
+        "website": "https://baysixty6.com",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Powervibe Fitness Studio",
+        "type": "gym",
+        "website": "https://www.powervibe.co.uk/",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bodyism",
+        "type": "gym",
+        "website": "https://bodyism.com/club/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Body Works West",
+        "type": "gym",
+        "website": "https://bodyworkswest.co.uk/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Westway Sports & Fitness",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Form Studios",
+        "type": "gym",
+        "website": "https://formstudios.co.uk/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Clock Notting Hill",
+        "type": "gym",
+        "website": "https://www.theclock.com/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "12x3 Gym",
+        "type": "gym",
+        "website": "https://www.12x3gym.co.uk/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Heartcore",
+        "type": "gym",
+        "website": "https://www.heartcore.co.uk/studios?studio=studio-2",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Shanti Sadan",
+        "type": "gym",
+        "website": "https://shantisadan.org/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Paddington Recreation Ground Fitness Suite",
+        "type": "gym",
+        "chain": "Everyone Active",
+        "website": "https://www.everyoneactive.com/centre/paddington-recreation-ground/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jubilee Community Leisure Centre",
+        "type": "gym",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Queens Skate Dine Bowl",
+        "type": "sports-centre",
+        "website": "https://queens.london/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Wormwood Scrubs parkrun",
+        "area": "Wormwood Scrubs Park",
+        "distanceKm": 3.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hampstead Heath parkrun",
+        "area": "Hampstead Heath",
+        "distanceKm": 4.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gladstone parkrun",
+        "area": "Gladstone Park, London",
+        "distanceKm": 4.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

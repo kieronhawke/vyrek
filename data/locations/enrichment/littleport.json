@@ -1,0 +1,71 @@
+{
+  "slug": "littleport",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Pymoor Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Paradise Centre",
+        "type": "sports-centre",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Atrium Fitness",
+        "type": "sports-centre",
+        "website": "https://www.atriumfitness.co.uk/",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "City of Ely Bowls Club",
+        "type": "sports-centre",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Hive Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Better",
+        "website": "https://www.better.org.uk/leisure-centre/ely/the-hive",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "FRESH.",
+        "type": "gym",
+        "website": "https://www.freshandwell.co.uk/",
+        "distanceKm": 7.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Littleport parkrun",
+        "area": "Littleport Recreation Ground,",
+        "distanceKm": 0.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ben’s Yard parkrun, Ely",
+        "area": "Ben’s Yard, Ely",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

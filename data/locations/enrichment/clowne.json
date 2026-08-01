@@ -1,0 +1,69 @@
+{
+  "slug": "clowne",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "The Pavillion @ Mount St. Mary's College",
+        "type": "sports-centre",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Area 51 Martial Arts and Tricking Academy",
+        "type": "gym",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Healthy Living Centre",
+        "type": "gym",
+        "website": "https://www.chesterfield.gov.uk/healthylivingcentre",
+        "distanceKm": 6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Killamarsh sports centre",
+        "type": "gym",
+        "distanceKm": 6.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Eckington Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 7.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sheffield Cable Water Ski",
+        "type": "sports-centre",
+        "website": "https://www.sheffieldcablewaterski.com/",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Poolsbrook parkrun",
+        "area": "Poolsbrook Country Park",
+        "distanceKm": 5.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rother Valley parkrun",
+        "area": "Rother Valley Country Park",
+        "distanceKm": 8.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

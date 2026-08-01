@@ -1,0 +1,21 @@
+{
+  "slug": "aylsham",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Blickling parkrun",
+        "area": "Blickling Park",
+        "distanceKm": 2.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "North Walsham parkrun",
+        "area": "North Walsham High School and Sports Centre",
+        "distanceKm": 9.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

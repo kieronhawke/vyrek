@@ -1,0 +1,32 @@
+{
+  "slug": "fordingbridge",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Downton  Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Fordingbridge Recreation Ground parkrun",
+        "area": "Fordingbridge Recreation Ground",
+        "distanceKm": 0.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Moors Valley parkrun",
+        "area": "Moors Valley Country Park and Forest",
+        "distanceKm": 9.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

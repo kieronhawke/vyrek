@@ -1,0 +1,224 @@
+{
+  "slug": "marple",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Marple Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Brabyns Tennis Club",
+        "type": "sports-centre",
+        "website": "https://clubspark.lta.org.uk/BrabynsLawnTennisClub",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hawk Green Cricket Club",
+        "type": "sports-centre",
+        "website": "https://www.hawkgreencc.com/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mellor Sports Club",
+        "type": "sports-centre",
+        "website": "https://www.mellorsportsclub.com/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Compstall Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Farmer Johns MTB Park",
+        "type": "sports-centre",
+        "website": "https://fjmtb.com/",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Romiley Cricket Club",
+        "type": "sports-centre",
+        "website": "https://www.romileycricketclub.co.uk/",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "High Lane Cricket Club",
+        "type": "sports-centre",
+        "website": "https://www.highlanecc.co.uk/",
+        "distanceKm": 3.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woodside Tennis Club",
+        "type": "sports-centre",
+        "website": "https://www.woodsidetennisclub.org/",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woodley Cricket Club",
+        "type": "sports-centre",
+        "website": "https://woodleycheshire.play-cricket.com/",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Disley Amalgamated Sports Club",
+        "type": "sports-centre",
+        "website": "https://www.disleysport.org/",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hyde Cricket & Squash Club",
+        "type": "sports-centre",
+        "website": "https://www.hydecsc.co.uk/",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "website": "https://www.puregym.com/gyms/hazel-grove/?utm_source=local&utm_campaign=local_search-hazel-grove-&utm_medium=organic",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Offerton Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bredbury St Marks Cricket Club",
+        "type": "sports-centre",
+        "website": "https://www.bredburystmarkscricketclub.com/",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woodbank Stadium",
+        "type": "sports-centre",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stockport Sports Village",
+        "type": "sports-centre",
+        "website": "https://www.lifeleisure.net/centre/stockport-sports-village/",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Higher Poynton Tennis Club",
+        "type": "sports-centre",
+        "website": "https://clubspark.lta.org.uk/higherpoyntontennisclub",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Awesome Walls Stockport",
+        "type": "sports-centre",
+        "chain": "Awesome Walls",
+        "website": "https://awesomewalls.co.uk/stockport/",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "New Mills Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Marple parkrun",
+        "area": "Brabyns Park, Stockport",
+        "distanceKm": 1.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woodbank parkrun",
+        "area": "Woodbank Memorial Park, Stockport",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Lyme Park parkrun",
+        "area": "Lyme Park",
+        "distanceKm": 6.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bramhall parkrun",
+        "area": "Bramhall Park, near Stockport",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hyde parkrun",
+        "area": "Hyde Park",
+        "distanceKm": 7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Burnage parkrun",
+        "area": "Varley Park, Stockport SK4 3EA",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cheadle Hulme parkrun",
+        "area": "Bruntwood Park, Cheadle",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Glossop parkrun",
+        "area": "Manor Park",
+        "distanceKm": 10,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

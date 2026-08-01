@@ -1,0 +1,22 @@
+{
+  "slug": "dromore",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Dromore Sports Complex",
+        "type": "sports-centre",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Trillick St. Macartan's GAC",
+        "type": "sports-centre",
+        "website": "http://www.trillick-gac.com/",
+        "distanceKm": 7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

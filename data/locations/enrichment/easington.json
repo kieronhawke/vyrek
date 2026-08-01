@@ -1,0 +1,147 @@
+{
+  "slug": "easington",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "MyoMuscle Gym",
+        "type": "gym",
+        "website": "https://myomusclegym.com/",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "OneGym",
+        "type": "gym",
+        "website": "https://www.onegymfitness.com/locations/peterlee/",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peterlee & Horden Rugby Football Club",
+        "type": "sports-centre",
+        "website": "https://www.pitchero.com/clubs/hordenrugbyclub",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hammer Strength Gym",
+        "type": "gym",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fitness Factory",
+        "type": "gym",
+        "website": "http://www.fitness-factory.uk/",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Horden Cricket Club",
+        "type": "sports-centre",
+        "website": "http://www.hordencricketclub.co.uk/",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peterlee Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Horden Community Welfare Football Club",
+        "type": "sports-centre",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Glebe Centre",
+        "type": "sports-centre",
+        "website": "http://www.glebecentre.co.uk/",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pavilion community sports and leisure centre",
+        "type": "sports-centre",
+        "website": "https://www.peterlee.gov.uk/the-pavilion/",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bruce's Gym",
+        "type": "gym",
+        "website": "http://www.bruces-gym.co.uk/",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Marina Activity Centre",
+        "type": "sports-centre",
+        "website": "https://www.seahammarina.com/seaham-harbour-activity-centre.html",
+        "distanceKm": 6.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "East Coast Fitness",
+        "type": "gym",
+        "website": "https://eastcoast-fitness.com/",
+        "distanceKm": 6.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Seaham Hall Serenity Spa",
+        "type": "sports-centre",
+        "distanceKm": 7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hetton Community Pool And Wellness Centre",
+        "type": "sports-centre",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Heritage Coastal Path parkrun, Easington",
+        "area": "Heritage Coastal Path, Easington",
+        "distanceKm": 2.6,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cotsford Fields parkrun",
+        "area": "Cotsford Fields",
+        "distanceKm": 4.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Elemore Park parkrun",
+        "area": "Elemore Park",
+        "distanceKm": 6.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

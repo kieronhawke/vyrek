@@ -1,0 +1,23 @@
+{
+  "slug": "haddington",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Aubigny Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.enjoyleisure.com/Centre.aspx?comp_id=2",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fern Bothy",
+        "type": "gym",
+        "website": "https://www.fernbothy.com/",
+        "distanceKm": 7.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

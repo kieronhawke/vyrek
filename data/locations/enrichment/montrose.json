@@ -1,0 +1,40 @@
+{
+  "slug": "montrose",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Montrose Swimming Pool and Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Impact Fitness",
+        "type": "gym",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Football Goalposts",
+        "type": "sports-centre",
+        "chain": "Goals",
+        "distanceKm": 6.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Montrose parkrun",
+        "area": "Roselea Football Club",
+        "distanceKm": 1.3,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

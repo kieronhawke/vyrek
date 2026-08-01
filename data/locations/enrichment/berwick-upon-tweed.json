@@ -1,0 +1,37 @@
+{
+  "slug": "berwick-upon-tweed",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "TF Fitness Center & 24 Hour Gym",
+        "type": "gym",
+        "website": "https://www.tffitnesscentre.com/",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tweedmouth Bowling Club",
+        "type": "sports-centre",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Berwick Sailing (and Canoe) Club",
+        "type": "sports-centre",
+        "website": "https://berwicksailingclub.wordpress.com/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Berwick Sports & Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}
