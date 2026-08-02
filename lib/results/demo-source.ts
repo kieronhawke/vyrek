@@ -12,11 +12,10 @@ import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import type { DivisionCode, EventStatus } from "./types";
 import { STATION_IDS, PROFILE_BY_CODE, type StationId, type AgeGroup } from "./model";
-import { buildDistribution, type Distribution } from "./percentiles";
+import { buildDistribution } from "./percentiles";
 import type {
-  ResultsDataSource, EventSummary, RaceEventDetail, RankingPage, RankingRow,
-  AthleteProfile, StartList, StartListWave, SearchResults, RecordsBoard, RecordEntry,
-  ResultDetail,
+  ResultsDataSource, EventSummary, RaceEventDetail, RankingRow,
+  AthleteProfile, StartListWave, RecordEntry, ResultDetail,
 } from "./source";
 
 const DATA_DIR = join(process.cwd(), "data", "results-demo");
@@ -262,8 +261,10 @@ export const demoDataSource: ResultsDataSource = {
 
 /* ─── Helpers ────────────────────────────────────────────────────── */
 
-function stripDivisions(e: RaceEventDetail): EventSummary {
-  const { divisions: _divisions, ...summary } = e;
+/** Drops the division list — `listEvents` returns summaries, not full events. */
+function stripDivisions(event: RaceEventDetail): EventSummary {
+  const { divisions, ...summary } = event;
+  void divisions;
   return summary;
 }
 

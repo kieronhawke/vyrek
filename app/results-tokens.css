@@ -1,0 +1,97 @@
+/* ─── Results section tokens ───────────────────────────────────────────────
+   Scoped additions for the Results section only, kept out of globals.css so
+   the shared token layer stays a one-lane file (VYREK-LANES.md §3).
+
+   Everything here builds on the existing Suth palette. The only genuinely new
+   ideas are the delta pair and the percentile bands. */
+
+:root {
+  /* Delta encoding. Chartreuse = faster than reference, amber = slower.
+     Hue never carries the meaning alone — every delta also renders a
+     +/− sign, so this reads correctly with any colour vision. */
+  --results-faster: var(--suth-accent);
+  --results-slower: #E8A33D;
+  --results-neutral: var(--suth-text-tertiary);
+
+  /* Percentile shading for ranking rows. Deliberately faint: these sit behind
+     live text and must never fight the numerals for attention. */
+  --results-band-1:  rgba(163, 230, 53, 0.14);
+  --results-band-5:  rgba(163, 230, 53, 0.10);
+  --results-band-10: rgba(163, 230, 53, 0.07);
+  --results-band-25: rgba(163, 230, 53, 0.04);
+  --results-band-50: rgba(163, 230, 53, 0.02);
+
+  /* Race strip segment fills. */
+  --results-run:     #2F3A44;
+  --results-station: #3D3A2E;
+  --results-roxzone: #262626;
+
+  /* LIVE pulse. */
+  --results-live: #FF4D4D;
+
+  /* Vertical offset of the fixed marketing nav (h-16), plus the cookie strip
+     when it is showing and the iOS safe area. The Results sub-nav sticks to
+     this rather than to 0, otherwise the two navs stack on top of each other. */
+  --results-nav-offset: calc(4rem + var(--suth-consent-h, 0px) + var(--safe-top, 0px));
+}
+
+@theme inline {
+  --color-results-faster:  var(--results-faster);
+  --color-results-slower:  var(--results-slower);
+  --color-results-neutral: var(--results-neutral);
+  --color-results-run:     var(--results-run);
+  --color-results-station: var(--results-station);
+  --color-results-roxzone: var(--results-roxzone);
+  --color-results-live:    var(--results-live);
+}
+
+/* Every numeral in this section is tabular. The brief allows no exceptions:
+   a timing board where digits shift width is not a timing board. */
+.results-num {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "zero" 1;
+  letter-spacing: -0.01em;
+}
+
+.results-band-top-1  { background-color: var(--results-band-1); }
+.results-band-top-5  { background-color: var(--results-band-5); }
+.results-band-top-10 { background-color: var(--results-band-10); }
+.results-band-top-25 { background-color: var(--results-band-25); }
+.results-band-top-50 { background-color: var(--results-band-50); }
+.results-band-field  { background-color: transparent; }
+
+@keyframes results-live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.45; transform: scale(0.82); }
+}
+
+.results-live-dot {
+  animation: results-live-pulse 1.6s var(--ease-in-out) infinite;
+}
+
+/* Skeletons shimmer rather than spin — the brief bans spinners, and a
+   shimmer shaped like the real content tells you what is coming. */
+@keyframes results-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.results-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--suth-bg-elevated) 25%,
+    var(--suth-bg-overlay) 37%,
+    var(--suth-bg-elevated) 63%
+  );
+  background-size: 200% 100%;
+  animation: results-shimmer 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .results-live-dot,
+  .results-skeleton {
+    animation: none;
+  }
+  .results-skeleton { background: var(--suth-bg-elevated); }
+}

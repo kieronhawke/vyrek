@@ -17,11 +17,11 @@
 import { writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import {
-  makeRng, uniform, intBetween, skewedNormal, normal, pick, weightedPick, shuffle,
+  makeRng, uniform, intBetween, skewedNormal, normal, weightedPick, shuffle,
   makeName, slugify, DEFAULT_NATION_WEIGHTS, type Rng,
 } from "../lib/results/rng.ts";
 import {
-  STATION_IDS, STATION_WEIGHTS, DIVISION_PROFILES, AGE_GROUPS,
+  STATION_IDS, STATION_WEIGHTS, DIVISION_PROFILES,
   isDoubles, isRelay, type StationId, type AgeGroup, type DivisionProfile,
 } from "../lib/results/model.ts";
 

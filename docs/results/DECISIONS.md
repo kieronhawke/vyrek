@@ -115,3 +115,37 @@ and running TypeScript would normally mean adding `tsx` — a dependency, which 
 serialises. Node 26 strips types natively, so the script runs as-is with no build step and no
 dependency. This required `allowImportingTsExtensions: true` in `tsconfig.json` (safe: the
 repo already sets `noEmit`), because Node requires explicit `.ts` import extensions.
+
+### D14 — Six analysis features the reference site has no equivalent for
+Their product tells you your Sled Push was 2:25 and stops. `lib/results/analysis.ts` turns
+splits into things you can act on, all derived from data we already hold so they work
+unchanged on a live feed:
+1. **Roxzone leak** — transition time as a headline number against the division average.
+   The most ignored and most fixable minutes in the sport.
+2. **Pacing consistency** — run drift reduced to one 0–100 score, plus fitted drift per run
+   and negative-split detection.
+3. **Weakest station by percentile, not by seconds** — the slowest station is usually just
+   the longest one; the weakest is the one furthest below your peers.
+4. **What-if projection** — "fixing this station moves you from 412th to 341st". Turns the
+   coaching CTA from a banner into a number.
+5. **Target split plan** — enter a goal time, get the splits and cumulative checkpoints that
+   produce it. Their simulator answers "what would I run?"; this answers "what must I hit?",
+   which is the race-morning question.
+6. **Split plausibility flags** — their athlete pages plot a 42:21 "Run 2" on the same axis
+   as a 3:06, which ruins the chart. We flag implausible splits instead of drawing them as
+   fact. This matters more on a live feed, not less.
+
+### D15 — Results docs and shots stay out of git
+`refs/self-shots/` (the self-critique screenshots) is gitignored alongside `refs/screenshots/`.
+Both are working artefacts; neither belongs in a repo that has fought bloat before.
+
+### D16 — The Results sub-nav sticks below the marketing nav, not at 0
+First self-critique pass caught the sub-nav rendering on top of the wordmark: `MarketingNav`
+is `fixed` at `top-[var(--suth-consent-h)]` with `h-16`. Added `--results-nav-offset` to
+`app/results-tokens.css` — `4rem + consent + safe-top` — used by both the layout spacer and
+the sticky sub-nav, so the two stay in step if the cookie strip appears.
+
+### D17 — Podium cards show a top three, not a winner
+The first version showed one name and a time, which left two-thirds of each card empty and
+told the reader less than the division row further down the page. Now top three with
+gap-to-leader, which fills the card and answers what people arrive asking.

@@ -79,6 +79,7 @@ next-env.d.ts
 # Competitor reference screenshots for the Results build. Local-only:
 # 154MB of retina PNGs, and they are third-party UI we must never ship.
 /refs/screenshots/
+/refs/self-shots/
 
 # Generated demo race data — 52MB, rebuilt by scripts/generate-demo-data.ts
 # from a fixed seed, so it is reproducible and never belongs in git.
