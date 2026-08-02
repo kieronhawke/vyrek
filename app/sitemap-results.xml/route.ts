@@ -1,4 +1,4 @@
-import { getResultsSource } from "@/lib/results";
+import { getResultsSource, getDataMode } from "@/lib/results";
 import { buildRankingSlug } from "@/lib/results/slugs";
 import { siteUrl } from "@/lib/site-url";
 import { STATIONS } from "@/lib/hyrox-stations";
@@ -34,6 +34,18 @@ function urlEntry(loc: string, changefreq: string, priority: string, lastmod?: s
 }
 
 export async function GET() {
+  // The section is noindex while the data is synthetic (see the Results
+  // layout), so submitting these URLs would contradict that.
+  if (getDataMode() === "demo") {
+    return new Response(
+      `<?xml version="1.0" encoding="UTF-8"?>\n`
+      + `<!-- Results run on demo data and are noindex. This sitemap fills in `
+      + `when NEXT_PUBLIC_DATA_MODE=live. -->\n`
+      + `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>`,
+      { headers: { "Content-Type": "application/xml", "Cache-Control": "public, max-age=300" } },
+    );
+  }
+
   const base = siteUrl();
   const source = getResultsSource();
   const events = await source.listEvents();

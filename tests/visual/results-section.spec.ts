@@ -238,6 +238,27 @@ test.describe("automated reports honour the authenticity rules", () => {
   });
 });
 
+test.describe("demo data must not be indexable", () => {
+  test("every results page is noindex while the data is synthetic", async ({ page }) => {
+    for (const path of ["/results", "/ranking/s9-2026-london-hyrox-men", "/athlete/charlie-johansson"]) {
+      await open(page, path);
+      const robots = await page
+        .locator('meta[name="robots"]')
+        .first()
+        .getAttribute("content");
+      expect(robots, `${path} robots meta`).toContain("noindex");
+    }
+  });
+
+  test("the results sitemap submits nothing while on demo data", async ({ request }) => {
+    const response = await request.get("/sitemap-results.xml");
+    expect(response.status()).toBe(200);
+    const xml = await response.text();
+    expect(xml).toContain("<urlset");
+    expect(xml).not.toContain("<url>");
+  });
+});
+
 test.describe("accessibility", () => {
   // One representative page per template family, at mobile width where the
   // layouts differ most.
