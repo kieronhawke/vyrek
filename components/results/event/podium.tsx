@@ -39,7 +39,8 @@ export function PodiumCard({
             <Nationality iso={row.countryIso} />
             <Link
               href={`/result/${row.id}`}
-              className="min-w-0 flex-1 truncate text-sm text-suth-text hover:text-suth-accent
+              data-inline-tap
+              className="min-w-0 flex-1 truncate text-sm leading-5 text-suth-text hover:text-suth-accent
                          focus-visible:outline-2 focus-visible:outline-suth-accent"
             >
               {row.athleteName}
@@ -59,6 +60,7 @@ export function PodiumCard({
 
       <Link
         href={`/ranking/${eventSlug}-${divisionCode}`}
+        data-inline-tap
         className="mt-3 inline-block font-mono text-[10px] uppercase tracking-[0.16em]
                    text-suth-text-tertiary hover:text-suth-accent
                    focus-visible:outline-2 focus-visible:outline-suth-accent"
