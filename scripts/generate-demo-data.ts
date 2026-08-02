@@ -198,6 +198,13 @@ function main() {
   const athleteRaces = new Map<string, unknown[]>();
   let totalResults = 0;
 
+  // Reference splits per division, accumulated as we go. Precomputing these at
+  // build time keeps the simulator and percentile tool off a 2-second
+  // request-time aggregation over ~2,500 results.
+  const refSamples = new Map<string, {
+    finishes: number[]; runs: number[][]; stations: Map<string, number[]>; rox: number[];
+  }>();
+
   for (const seed of EVENT_SEEDS) {
     const slug = `${seed.season}-${seed.year}-${slugify(seed.city)}`;
     const nations = seed.nations ?? DEFAULT_NATION_WEIGHTS;
@@ -310,6 +317,21 @@ function main() {
             ? { partnerNames: [makeName(rng, profile.gender === "women" ? "women" : "men", r.athlete.countryIso)] }
             : {}),
         };
+        if (!refSamples.has(profile.code)) {
+          refSamples.set(profile.code, {
+            finishes: [], runs: Array.from({ length: 8 }, () => [] as number[]),
+            stations: new Map(STATION_IDS.map((s) => [s as string, [] as number[]])), rox: [],
+          });
+        }
+        const bucket = refSamples.get(profile.code)!;
+        bucket.finishes.push(row.finishSeconds);
+        // Every 8th finisher is plenty for a median and keeps memory flat.
+        if (i % 8 === 0) {
+          row.runs.forEach((sec, ri) => { if (bucket.runs[ri]) bucket.runs[ri].push(sec); });
+          for (const st of STATION_IDS) bucket.stations.get(st)!.push(row.stations[st]);
+          bucket.rox.push(row.roxzoneSeconds);
+        }
+
         if (!athleteRaces.has(r.athlete.slug)) athleteRaces.set(r.athlete.slug, []);
         athleteRaces.get(r.athlete.slug)!.push({
           eventSlug: slug, eventCity: seed.city, season: seed.season, year: seed.year,
@@ -369,6 +391,36 @@ function main() {
       races: athleteRaces.get(a.slug),
     }));
 
+  // ── Division reference splits ──────────────────────────────────────
+  const med = (xs: number[]) => {
+    if (xs.length === 0) return 0;
+    const sorted = [...xs].sort((a, b) => a - b);
+    return sorted[Math.floor(sorted.length / 2)];
+  };
+  const atPercentile = (sorted: number[], p: number) => {
+    if (sorted.length === 0) return 0;
+    const pos = ((100 - p) / 100) * (sorted.length - 1);
+    const lo = Math.floor(pos), hi = Math.ceil(pos);
+    return Math.round(lo === hi ? sorted[lo] : sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo));
+  };
+
+  const references = [...refSamples.entries()].map(([code, bucket]) => {
+    const sortedFinishes = [...bucket.finishes].sort((a, b) => a - b);
+    const stations: Record<string, number> = {};
+    for (const [st, xs] of bucket.stations) stations[st] = med(xs);
+    return {
+      division: code,
+      label: DIVISION_PROFILES.find((p) => p.code === code)?.label ?? code,
+      stations,
+      runs: bucket.runs.map(med),
+      roxzoneSeconds: med(bucket.rox),
+      medianFinishSeconds: atPercentile(sortedFinishes, 50),
+      finishBreakpoints: [99, 95, 90, 75, 50, 25, 10].map((p) => atPercentile(sortedFinishes, p)),
+      sampleSize: sortedFinishes.length,
+    };
+  });
+  writeFileSync(join(OUT_DIR, "references.json"), JSON.stringify(references));
+
   writeFileSync(join(OUT_DIR, "events.json"), JSON.stringify(eventIndex));
   writeFileSync(join(OUT_DIR, "athletes.json"), JSON.stringify(athleteIndex));
   writeFileSync(join(OUT_DIR, "meta.json"), JSON.stringify({
@@ -377,6 +429,7 @@ function main() {
     events: eventIndex.length,
     results: totalResults,
     profiledAthletes: athleteIndex.length,
+    referenceDivisions: references.length,
   }, null, 2));
 
   console.log(`✓ ${eventIndex.length} events, ${totalResults.toLocaleString()} results, ${athleteIndex.length.toLocaleString()} profiled athletes`);

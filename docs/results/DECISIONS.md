@@ -165,3 +165,22 @@ VYREK-LANES.md §3. Bar fills carry their own alpha so no opacity modifier is ne
 `<title>{a}: {b}</title>` inside the race strip and pacing chart produced multiple text nodes,
 which React serialises differently on server and client — a hydration mismatch that regenerated
 the whole result page tree on load. Now built as one template string.
+
+### D20 — Athlete comparison lives at `/results/compare`, not `/compare`
+`/compare` is already a live, indexed SEO surface — "Hyrox vs CrossFit / Spartan / marathon /
+triathlon / F45", driven by `lib/hyrox-comparisons.ts` with its own `[slug]` pages. Putting
+athlete-vs-athlete there would be a hard route collision and would destroy working content.
+**Applied:** athlete comparison is `/results/compare`, inside the section that owns it. Every
+link (tools row, athlete Compare button) points there.
+
+### D21 — Reference splits are precomputed at build, not aggregated per request
+The first simulator computed division medians at request time by sampling ~2,500 results, which
+cost **2.0s TTFB** — past the brief's LCP budget on its own. `scripts/generate-demo-data.ts` now
+writes `references.json` alongside the shards, and the page reads it. Warm response dropped to
+**0.08s**. A live feed does the same thing: compute on ingest, never per request.
+
+### D22 — The ladder percentile lives in the percentile engine, not the reference loader
+`percentileFromLadder` initially sat next to the reference-splits loader, which is
+`server-only`. The simulator and percentile tool are client components, so importing it poisoned
+their bundles and 500'd five routes. It is pure maths and belongs in `lib/results/percentiles.ts`
+with the rest of the engine — which is also what keeps every surface agreeing.

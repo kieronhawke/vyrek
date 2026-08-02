@@ -157,3 +157,28 @@ function upperBound(sorted: readonly number[], target: number): number {
   }
   return lo;
 }
+
+/**
+ * Percentile from a precomputed breakpoint ladder [p99, p95, p90, p75, p50,
+ * p25, p10], by linear interpolation.
+ *
+ * Lives here rather than alongside the reference-splits loader because the
+ * simulator and percentile tool are client components: importing them from a
+ * `server-only` module poisons the whole bundle. This is pure maths and is the
+ * same engine every surface uses.
+ */
+export const PERCENTILE_LADDER = [99, 95, 90, 75, 50, 25, 10] as const;
+
+export function percentileFromLadder(breakpoints: readonly number[], seconds: number): number {
+  if (breakpoints.length !== PERCENTILE_LADDER.length) return 0;
+  if (seconds <= breakpoints[0]) return 99;
+  if (seconds >= breakpoints[breakpoints.length - 1]) return 1;
+  for (let i = 1; i < breakpoints.length; i++) {
+    if (seconds <= breakpoints[i]) {
+      const span = breakpoints[i] - breakpoints[i - 1] || 1;
+      const t = (seconds - breakpoints[i - 1]) / span;
+      return PERCENTILE_LADDER[i - 1] + (PERCENTILE_LADDER[i] - PERCENTILE_LADDER[i - 1]) * t;
+    }
+  }
+  return 1;
+}

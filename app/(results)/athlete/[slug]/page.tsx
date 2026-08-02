@@ -144,7 +144,7 @@ export default async function AthletePage({ params }: { params: Promise<{ slug: 
         </div>
 
         <Link
-          href={`/compare?a=${athlete.slug}`}
+          href={`/results/compare?a=${athlete.slug}`}
           className="inline-flex min-h-[44px] shrink-0 items-center rounded-sm border
                      border-suth-border bg-suth-elevated px-4 text-sm text-suth-text
                      transition-colors hover:border-suth-border-strong

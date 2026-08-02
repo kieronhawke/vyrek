@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 
 const TOOLS = [
   { href: "/simulator", label: "Race simulator", detail: "Model your finish, station by station", icon: SlidersHorizontal },
-  { href: "/compare", label: "Compare", detail: "Two athletes, or two of your own races", icon: GitCompareArrows },
+  { href: "/results/compare", label: "Compare", detail: "Two athletes, or two of your own races", icon: GitCompareArrows },
   { href: "/tools/good-hyrox-time", label: "Percentile check", detail: "Where your time actually places you", icon: Percent },
   { href: "/rankings/world-records", label: "Records", detail: "Fastest times by division", icon: Trophy },
 ];
