@@ -1,0 +1,166 @@
+{
+  "slug": "new-york__brooklyn",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Retro Fitness",
+        "type": "gym",
+        "chain": "Retro Fitness",
+        "website": "https://retrofitness.com/location/brooklynnychurchave",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Planet Fitness",
+        "type": "gym",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Blink Fitness",
+        "type": "gym",
+        "chain": "Blink Fitness",
+        "website": "https://locations.blinkfitness.com/ny/brooklyn/833-flatbush-avenue",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Barry's",
+        "type": "gym",
+        "chain": "Barry's",
+        "website": "https://www.barrysbeautybar.com",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Yoga with Phoenix Simone",
+        "type": "gym",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Crunch Fitness",
+        "type": "gym",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Rebel Fitness Bar",
+        "type": "gym",
+        "website": "https://rebelfitnessbar.com",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Mawusi Fitness Training",
+        "type": "gym",
+        "website": "https://mawusifitnesstraining.com",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "VeroyogaNYC",
+        "type": "gym",
+        "website": "https://www.veroyoganyc.com",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "47 BJJ Coop",
+        "type": "sports-centre",
+        "website": "https://www.47bjjcoop.com",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "LeFrak Center at Lakeside",
+        "type": "sports-centre",
+        "website": "https://lakeside.prospectpark.org/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Yoga Tribe Brooklyn",
+        "type": "gym",
+        "website": "https://www.yogatribebrooklyn.com/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Prospect Gymnastics",
+        "type": "sports-centre",
+        "website": "https://www.prospectgymnastics.com/prospect-gymnastics-ditmas-park/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Prospect Park Tennis Center",
+        "type": "sports-centre",
+        "chain": "New York City Department of Parks & Recreation",
+        "website": "https://www.prospectpark.org/visit-the-park/places-to-go/tennis-center/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Old Boys High Field",
+        "type": "sports-centre",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Prospect Fitness",
+        "type": "gym",
+        "website": "https://www.prospectfitness.com",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Park Fitness Gym",
+        "type": "gym",
+        "website": "https://www.parkfitnessgym.com",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Sagoya Yoga",
+        "type": "gym",
+        "website": "https://www.sagoyayoga.com",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Major R. Owens Health & Wellness Community Center",
+        "type": "sports-centre",
+        "website": "https://majorowenscenter.com",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Renew'd",
+        "type": "gym",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

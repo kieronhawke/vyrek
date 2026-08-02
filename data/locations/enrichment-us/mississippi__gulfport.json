@@ -1,0 +1,14 @@
+{
+  "slug": "mississippi__gulfport",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Gaston Hewes Recreation Center",
+        "type": "sports-centre",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

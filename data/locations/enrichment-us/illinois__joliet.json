@@ -1,0 +1,97 @@
+{
+  "slug": "illinois__joliet",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Pat Sullivan Center",
+        "type": "sports-centre",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "VASA Fitness",
+        "type": "gym",
+        "chain": "VASA Fitness",
+        "website": "https://vasafitness.com/locations/il/joliet/",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Inwood Ice Arena",
+        "type": "sports-centre",
+        "distanceKm": 6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Chicagoland Speedway",
+        "type": "sports-centre",
+        "website": "https://www.chicagolandspeedway.com/",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Challenge Fitness / Lockport Twp. Park District",
+        "type": "sports-centre",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Route 66 Raceway",
+        "type": "sports-centre",
+        "website": "https://www.route66raceway.com/",
+        "distanceKm": 7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Planet Fitness",
+        "type": "gym",
+        "chain": "Planet Fitness",
+        "distanceKm": 8.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Range USA",
+        "type": "sports-centre",
+        "distanceKm": 8.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Autobahn Country Club",
+        "type": "sports-centre",
+        "distanceKm": 8.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Body Tech Total Fitness",
+        "type": "gym",
+        "website": "https://bodytechtotalfitness.com/",
+        "distanceKm": 9.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Wintrust Crossroads Sports Complex of New Lenox",
+        "type": "sports-centre",
+        "distanceKm": 9.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Charter Fitness",
+        "type": "gym",
+        "distanceKm": 9.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

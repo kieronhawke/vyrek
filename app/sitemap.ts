@@ -5,6 +5,7 @@ import { AUTHORS } from "@/lib/blog/authors";
 import { UK_LOCATIONS, listRegionSlugs, listCountySlugs } from "@/lib/uk-locations";
 import { getGeoSeo, geoPriority, isRaceCity } from "@/lib/locations/seo";
 import { RACE_CITIES, listCountrySlugs } from "@/lib/race-cities";
+import { US_STATES } from "@/lib/us-states";
 import { STATIONS } from "@/lib/hyrox-stations";
 import { PLAN_TEMPLATES } from "@/lib/plan-templates";
 import { COMPARISONS } from "@/lib/hyrox-comparisons";
@@ -174,6 +175,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...listCountrySlugs().flatMap((c) => [
       { url: `${SITE_URL}/hyrox-training/country/${c}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
       { url: `${SITE_URL}/personal-trainer/country/${c}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
+    ]),
+    /* The 51 US state pages. Priority sits with the UK towns rather than the
+       race cities: a state is a broader query than a city, and the ones that
+       host a race link down to the city page anyway. */
+    ...US_STATES.flatMap((st) => [
+      {
+        url: `${SITE_URL}/hyrox-training/state/${st.slug}`,
+        lastModified: GEO_CONTENT_UPDATED,
+        priority: st.races.length ? 0.8 : 0.7,
+        changeFrequency: "weekly" as const,
+      },
+      {
+        url: `${SITE_URL}/personal-trainer/state/${st.slug}`,
+        lastModified: GEO_CONTENT_UPDATED,
+        priority: st.races.length ? 0.8 : 0.7,
+        changeFrequency: "weekly" as const,
+      },
     ]),
     /* Every city that has hosted a HYROX outside the UK. Priority sits above
        an unevidenced UK town: these carry a race, a venue and a date, which is

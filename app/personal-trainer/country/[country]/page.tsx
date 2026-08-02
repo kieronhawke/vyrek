@@ -7,7 +7,9 @@ import {
   listCountrySlugs,
   raceCityAsLocation,
 } from "@/lib/race-cities";
+import Link from "next/link";
 import { siteUrl } from "@/lib/blog/urls";
+import { US_STATES } from "@/lib/us-states";
 
 /**
  * A country directory for the international race cities.
@@ -66,6 +68,39 @@ export default async function PersonalTrainerCountryPage({
       base="/personal-trainer"
       title={`Personal trainer in ${data.country}`}
       intro={`${data.cities.length} ${data.cities.length === 1 ? "city in" : "cities in"} ${data.country} ${data.cities.length === 1 ? "has" : "have"} hosted a HYROX, ${races} ${races === 1 ? "race" : "races"} between them. Every one has its own page with the gyms actually near the centre and the venue the race is held at. Coaching is online and in English, wherever you train.`}
-    />
+    >
+      {country === "usa" ? (
+        <section
+          aria-label="US states"
+          className="mx-auto mt-14 max-w-4xl border-t border-suth-border-subtle pt-10"
+        >
+          <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+            [ {US_STATES.length} states ]
+          </h2>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-suth-text-secondary">
+            Every state has its own page: the races held there, the gyms in its
+            largest metros, and — where there is no race yet — the nearest one
+            and how far it actually is.
+          </p>
+          <ul className="mt-5 flex flex-wrap gap-2.5">
+            {US_STATES.map((st) => (
+              <li key={st.slug}>
+                <Link
+                  href={`/personal-trainer/state/${st.slug}`}
+                  className="inline-flex h-10 items-center gap-2 rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm font-medium text-suth-text transition-colors hover:border-suth-border-strong"
+                >
+                  {st.name}
+                  {st.races.length ? (
+                    <span className="font-mono text-[10px] text-suth-accent">
+                      {st.races.length}
+                    </span>
+                  ) : null}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+    </GeoRegionDirectory>
   );
 }

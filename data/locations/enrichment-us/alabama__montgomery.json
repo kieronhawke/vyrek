@@ -1,0 +1,21 @@
+{
+  "slug": "alabama__montgomery",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "George H. Lockheart Gym & Pool",
+        "type": "sports-centre",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Lagoon Park Tennis Center",
+        "type": "sports-centre",
+        "distanceKm": 8.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

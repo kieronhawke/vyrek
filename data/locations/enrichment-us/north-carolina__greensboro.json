@@ -1,0 +1,169 @@
+{
+  "slug": "north-carolina__greensboro",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Focus Personal Training Studio",
+        "type": "gym",
+        "website": "https://www.focuspersonaltraining.com/",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Kathleen Price Bryan YMCA",
+        "type": "sports-centre",
+        "chain": "YMCA",
+        "website": "https://www.ymcagreensboro.org/locations/kathleen-price-bryan-family-ymca",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "LeBauer Park",
+        "type": "sports-centre",
+        "website": "https://www.greensborodowntownparks.org/visit",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Find Your Flow Fitness Wellness Studio",
+        "type": "gym",
+        "website": "https://www.findyourflowfitnesswellnessstudio.com/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Downtown Fitness on Elm",
+        "type": "gym",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Southside Studio CoOp",
+        "type": "gym",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "UNCG Tennis Courts",
+        "type": "sports-centre",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Anchor",
+        "type": "gym",
+        "website": "https://anchorpower.co/",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Leonard J. Kaplan Center for Wellness",
+        "type": "gym",
+        "website": "https://recwell.uncg.edu/",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "College Hill CrossFit",
+        "type": "gym",
+        "website": "https://www.collegehillcrossfit.com/",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Pure Barre",
+        "type": "gym",
+        "chain": "Pure Barre",
+        "website": "https://www.purebarre.com/location/greensboro-nc",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Stretch Zone",
+        "type": "gym",
+        "chain": "Stretch Zone",
+        "website": "https://www.stretchzone.com/locations/greensboro-nc",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Orangetheory Fitness",
+        "type": "gym",
+        "chain": "Orangetheory Fitness",
+        "website": "https://www.orangetheory.com/en-us/locations/greensboro-north-carolina-0654",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Radiance Yoga",
+        "type": "gym",
+        "website": "https://radianceyogagreensboro.com/",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "The Workhouse Fitness",
+        "type": "gym",
+        "website": "https://theworkhousefitness.com/",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "YWCA Greensboro",
+        "type": "gym",
+        "website": "https://ywcagsonc.org/",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Core Integrity Pilates",
+        "type": "gym",
+        "website": "https://www.coreintegritypilates.com/",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "TFW Greensboro",
+        "type": "gym",
+        "website": "https://tfwgreensboro.com/",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Greensboro Complex",
+        "type": "sports-centre",
+        "website": "https://www.gsocomplex.com/",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Planet Fitness",
+        "type": "gym",
+        "chain": "Planet Fitness",
+        "website": "https://www.planetfitness.com/gyms/greensboro-golden-gate-nc",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

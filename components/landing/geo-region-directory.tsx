@@ -21,6 +21,7 @@ export function GeoRegionDirectory({
   base,
   title,
   intro,
+  children,
 }: {
   region: string;
   locations: UkLocation[];
@@ -28,6 +29,8 @@ export function GeoRegionDirectory({
   base: string;
   title: string;
   intro: string;
+  /** Rendered under the place list. The USA directory uses it for states. */
+  children?: React.ReactNode;
 }) {
   const label =
     base === "/hyrox-training" ? "Hyrox training" : "Personal training";
@@ -119,6 +122,7 @@ export function GeoRegionDirectory({
               ))}
             </ul>
           </section>
+          {children}
         </Container>
       </main>
       <MarketingFooter />

@@ -1,0 +1,14 @@
+{
+  "slug": "mississippi__west-gulfport",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Bayou Bluff Tennis Club",
+        "type": "sports-centre",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

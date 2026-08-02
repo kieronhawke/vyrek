@@ -1,0 +1,166 @@
+{
+  "slug": "colorado__aurora",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Rhinde Fitness",
+        "type": "gym",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Curves",
+        "type": "gym",
+        "chain": "Curves",
+        "website": "https://www.curves.com/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Chuze Fitness Aurora",
+        "type": "gym",
+        "website": "https://chuzefitness.com/gym-locations/co/aurora/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "VASA Fitness",
+        "type": "gym",
+        "chain": "VASA Fitness",
+        "website": "https://vasa.fitness/4et27aml",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "FieldhouseUSA",
+        "type": "sports-centre",
+        "website": "https://aurora.fieldhouseusa.com/",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Prestige Fitness",
+        "type": "gym",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "24 Hour Fitness",
+        "type": "gym",
+        "chain": "24 Hour Fitness",
+        "website": "https://www.24hourfitness.com/gyms/aurora-co/north-aurora-chambers-sport",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Colorado Rapids Youth Indoor Soccer",
+        "type": "sports-centre",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Crunch",
+        "type": "gym",
+        "chain": "Gold's Gym",
+        "website": "https://www.crunch.com/locations/aurora-colorado",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "TWST Fitness",
+        "type": "gym",
+        "website": "https://twstfitness.com",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Gym / HAWC",
+        "type": "gym",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Beck Recreation Center",
+        "type": "sports-centre",
+        "website": "https://www.auroragov.org/cms/one.aspx?pageId",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Rocky Mountain Lifting Club",
+        "type": "gym",
+        "website": "https://rmlccolorado.com/",
+        "distanceKm": 4.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fitness Center",
+        "type": "sports-centre",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Big Bear Ice Arena",
+        "type": "sports-centre",
+        "website": "https://www.bigbearice.com/",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Central Park Recreation Center",
+        "type": "sports-centre",
+        "chain": "Denver Parks & Recreation",
+        "website": "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Parks-Recreation/Recreation-Centers-Pools/Recreation-Centers/Central-Park-Recreation-Center",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Korean Academy of Taekwondo",
+        "type": "gym",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Übergrippen Indoor Climbing Crag - Denver",
+        "type": "gym",
+        "website": "https://ugclimbing.com",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Montclair Recreation Center",
+        "type": "sports-centre",
+        "chain": "Denver Parks & Recreation",
+        "website": "https://www.denvergov.org/parksandrecreation/DenverParksandRecreation/RecreationCentersPools/RecreationCentersSchedules/MontclairRecreationCenter/tabid/444230/Default.aspx",
+        "distanceKm": 5.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Bladium Sports and Fitness Center",
+        "type": "sports-centre",
+        "distanceKm": 5.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

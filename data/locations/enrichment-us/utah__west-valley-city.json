@@ -1,0 +1,175 @@
+{
+  "slug": "utah__west-valley-city",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Centennial Outdoor Pool",
+        "type": "sports-centre",
+        "website": "https://www.wvc-ut.gov/1786/Centennial-Outdoor-Pool",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "West Valley City Family Fitness Center",
+        "type": "gym",
+        "website": "https://www.wvc-ut.gov/222/Family-Fitness-Center",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "VASA Fitness",
+        "type": "gym",
+        "chain": "VASA Fitness",
+        "website": "https://vasafitness.com/locations/ut/west-valley/",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Planet Fitness",
+        "type": "gym",
+        "chain": "Planet Fitness",
+        "website": "https://www.planetfitness.com/gyms/west-valley-city-ut",
+        "distanceKm": 3.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "High Country Volleyball Club",
+        "type": "sports-centre",
+        "website": "https://highcountryvolleyball.sportngin.com/",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Tenacity Martial Arts",
+        "type": "sports-centre",
+        "website": "https://www.tenacityma.com/",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Taylorsville Recreation Center",
+        "type": "gym",
+        "chain": "Salt Lake County Parks and Recreation",
+        "website": "https://slco.org/taylorsville-rec/",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Taylorsville Pool",
+        "type": "sports-centre",
+        "chain": "Salt Lake County Parks and Recreation",
+        "website": "https://slco.org/taylorsville-pool",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Kearns Recreation Center",
+        "type": "sports-centre",
+        "chain": "Salt Lake County Parks and Recreation",
+        "website": "https://slco.org/kearns-rec/",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Kearns Oquirrh Park Fitness Center",
+        "type": "sports-centre",
+        "website": "https://www.kopfc.com/",
+        "distanceKm": 4.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Lee Kay Public Shooting Center",
+        "type": "sports-centre",
+        "website": "https://wildlife.utah.gov/lee-kay-shooting-center.html",
+        "distanceKm": 5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Lifetime Activities Center (LAC)",
+        "type": "sports-centre",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Redwood Recreation Center",
+        "type": "gym",
+        "chain": "Salt Lake County Parks and Recreation",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Redwood Pool",
+        "type": "sports-centre",
+        "chain": "Salt Lake County Parks and Recreation",
+        "website": "https://slco.org/redwood-pool",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Hotworx",
+        "type": "gym",
+        "chain": "Hotworx",
+        "website": "https://www.hotworx.net/studio/taylorsville-crossroads",
+        "distanceKm": 6.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "EoS Fitness",
+        "type": "gym",
+        "website": "https://eosfitness.com/",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Magna Community Pool",
+        "type": "sports-centre",
+        "chain": "Salt Lake County Parks and Recreation",
+        "website": "https://slco.org/magna-pool",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Magna Fitness and Recreation Center",
+        "type": "gym",
+        "chain": "Salt Lake County Parks and Recreation",
+        "website": "https://slco.org/magna-rec/",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Sunflower Yoga Studio",
+        "type": "gym",
+        "website": "https://www.sunflowerstudioutah.com/",
+        "distanceKm": 8.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "4 Peaks Athletic Center",
+        "type": "sports-centre",
+        "website": "https://4peaksutah.com/",
+        "distanceKm": 8.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

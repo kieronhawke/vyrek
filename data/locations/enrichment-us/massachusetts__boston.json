@@ -1,0 +1,167 @@
+{
+  "slug": "massachusetts__boston",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Women's Fitness of Boston",
+        "type": "gym",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Planet Fitness",
+        "type": "gym",
+        "chain": "Planet Fitness",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Emerson College Fitness Center",
+        "type": "gym",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Boston Sports Club",
+        "type": "gym",
+        "website": "https://www.bostonsportsclubs.com/clubs/government-center",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "EverybodyFights FiDi",
+        "type": "gym",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Equinox",
+        "type": "gym",
+        "chain": "Equinox",
+        "website": "https://www.equinox.com/clubs/boston/franklinst",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "B/SPOKE",
+        "type": "gym",
+        "website": "https://bspokestudios.com/studios/downtown-boston/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Combat Sports Boston",
+        "type": "gym",
+        "website": "https://combatsportsboston.com/",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Beacon Hill Athletic Club",
+        "type": "gym",
+        "website": "https://beaconhillathleticclubs.com/fitness-classes/Massachusetts/North-Station/3767",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Central Rock Gym",
+        "type": "sports-centre",
+        "website": "https://centralrockgym.com/boston/",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "UFC Gym",
+        "type": "gym",
+        "chain": "UFC Gym",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Bobbi Brown and Steven Plofker Gym",
+        "type": "gym",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "TITLE Boxing Club",
+        "type": "gym",
+        "chain": "TITLE Boxing Club",
+        "website": "https://titleboxingclub.com/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Row House",
+        "type": "gym",
+        "website": "https://www.therowhouse.com/location/lovejoy-wharf",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Teddy Ebersol's Red Sox Fields",
+        "type": "sports-centre",
+        "website": "https://www.mlb.com/redsox/community/red-sox-foundation/ebersol",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Invictus",
+        "type": "gym",
+        "website": "https://www.invictusboston.com/back-bay/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "CorePower Yoga",
+        "type": "gym",
+        "chain": "CorePower Yoga",
+        "website": "https://www.corepoweryoga.com/yoga-studios/massachusetts/boston/back-bay",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Wang YMCA of Chinatown",
+        "type": "sports-centre",
+        "website": "https://ymcaboston.org/wang/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "The Handle Bar | South End Location",
+        "type": "gym",
+        "website": "https://www.thehandlebarstudios.com/ourstudios/south-end",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "SoulCycle",
+        "type": "gym",
+        "chain": "SoulCycle",
+        "website": "https://www.soul-cycle.com/studios/ma-boston-backbay/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}
