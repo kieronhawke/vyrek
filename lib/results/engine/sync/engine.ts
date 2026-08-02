@@ -1,0 +1,353 @@
+/**
+ * The sync engine: the shared machinery every ingestion mode runs on.
+ *
+ * Catalog, backfill, live and reconcile differ only in *what they ask for* and
+ * *how often*. What happens to a division once it arrives — parse, normalise,
+ * validate, quarantine, hash, diff, upsert, publish, recount — is one code path
+ * here, so live races and a two-year backfill cannot drift apart in behaviour.
+ *
+ * The rule that shapes everything: **if we cannot fetch, we write nothing.**
+ * Freezing on last-good data is always better than a half-written event, and a
+ * live board that stops updating and says so is better than one that quietly
+ * shows five-minute-old positions as current (brief §11).
+ */
+
+import { createHash } from "node:crypto";
+import type { ResultsRepository } from "../repository";
+import type { SourceAdapter } from "../source/adapter";
+import { AllSourcesFailedError } from "../source/adapter";
+import { Normaliser } from "../normalise/normaliser";
+import { parseDivisionRows } from "../source/mika-parse";
+import { summariseShape, type SentinelVerdict } from "../validate/sentinel";
+import type {
+  EngineDivision,
+  EngineEvent,
+  IngestionMode,
+  RawDivisionPage,
+  SyncState,
+} from "../types";
+import {
+  channelForEvent,
+  type LiveUpdate,
+  type RealtimePublisher,
+} from "./publisher";
+
+export type EngineDeps = {
+  repo: ResultsRepository;
+  adapter: SourceAdapter;
+  publisher?: RealtimePublisher;
+  now?: () => Date;
+};
+
+export type DivisionSyncOutcome = {
+  sourceDivisionId: string;
+  changed: boolean;
+  inserted: number;
+  updated: number;
+  unchanged: number;
+  quarantined: number;
+  shape: SentinelVerdict;
+  /** Set when stored rows fall short of what the source published. */
+  completenessMismatch?: { published: number; stored: number };
+  skippedUnchanged?: boolean;
+};
+
+/** Content hash, since the source sends no ETag (SOURCE.md §6). */
+export function hashRows(page: RawDivisionPage): string {
+  const canonical = page.rows
+    .map((r) =>
+      [r.sourceResultId, r.rankOverall ?? "", r.finishTime ?? "", r.status ?? ""].join("|"),
+    )
+    .sort()
+    .join("\n");
+  return createHash("sha256").update(canonical).digest("hex");
+}
+
+export class SyncEngine {
+  private normaliser: Normaliser;
+  private now: () => Date;
+
+  constructor(private deps: EngineDeps) {
+    this.normaliser = new Normaliser(deps.repo);
+    this.now = deps.now ?? (() => new Date());
+  }
+
+  get repo() {
+    return this.deps.repo;
+  }
+
+  get adapter() {
+    return this.deps.adapter;
+  }
+
+  /**
+   * Fetch, normalise and store one division.
+   *
+   * Returns `changed: false` without touching the database when the content
+   * hash matches the last poll, which is what keeps a 20-second live poll from
+   * rewriting 3,000 rows every 20 seconds.
+   */
+  async syncDivision(opts: {
+    seasonPath: string;
+    event: EngineEvent;
+    division: EngineDivision;
+    sourceDivisionId: string;
+    ingestionRunId?: string;
+    /** Live mode publishes; backfill does not. */
+    publish?: boolean;
+    /** Force a write even when the hash is unchanged (operator "force sync"). */
+    force?: boolean;
+  }): Promise<DivisionSyncOutcome> {
+    const {
+      seasonPath,
+      event,
+      division,
+      sourceDivisionId,
+      ingestionRunId,
+      publish = false,
+      force = false,
+    } = opts;
+
+    const page = await this.deps.adapter.fetchDivision(seasonPath, sourceDivisionId);
+    const hash = hashRows(page);
+    const state = await this.deps.repo.getSyncState(event.sourceEventId ?? event.slug);
+
+    if (!force && state?.lastSeenHash === hash) {
+      await this.deps.repo.upsertSyncState({
+        ...emptyState(event),
+        ...state,
+        lastPolledAt: this.now().toISOString(),
+        lastSuccessAt: this.now().toISOString(),
+        consecutiveFailures: 0,
+      });
+      return {
+        sourceDivisionId,
+        changed: false,
+        inserted: 0,
+        updated: 0,
+        unchanged: page.rows.length,
+        quarantined: 0,
+        shape: { ok: true },
+        skippedUnchanged: true,
+      };
+    }
+
+    // The parser's own view, carried on the page. Reconstructing it from
+    // `page.rows` here would defeat the sentinel entirely: a renamed column
+    // yields zero rows, which reconstructs to "empty shell" and reads as a
+    // quiet event rather than a broken parser.
+    const diagnostics = page.diagnostics ?? {
+      headerFields: [],
+      candidateRows: page.rows.length,
+      parsedRows: page.rows.length,
+      emptyShell: page.rows.length === 0,
+    };
+
+    const outcome = await this.normaliser.normaliseDivision(page, {
+      event,
+      division,
+      ingestionRunId,
+      diagnostics,
+    });
+
+    for (const row of outcome.quarantined) {
+      await this.deps.repo.quarantine(row);
+    }
+
+    const before = publish ? await this.snapshotRanks(division.id) : null;
+    const counts = await this.deps.repo.upsertResults(outcome.rows);
+
+    // Completeness: what the source said it had, against what we stored.
+    let completenessMismatch: DivisionSyncOutcome["completenessMismatch"];
+    if (page.publishedEntrantCount !== undefined && page.publishedEntrantCount > 0) {
+      const stored = await this.deps.repo.countResultsForDivision(division.id);
+      if (stored < page.publishedEntrantCount) {
+        completenessMismatch = { published: page.publishedEntrantCount, stored };
+        await this.deps.repo.raiseAlert({
+          kind: "completeness",
+          severity: "warning",
+          message:
+            `${division.displayName} at ${event.name}: stored ${stored} rows against a ` +
+            `published ${page.publishedEntrantCount}. A page of results may have been missed.`,
+          detail: { ...completenessMismatch, sourceDivisionId },
+          sourceEventId: event.sourceEventId ?? null,
+          acknowledgedAt: null,
+        });
+      }
+      await this.deps.repo.upsertDivision({
+        ...division,
+        publishedEntrantCount: page.publishedEntrantCount,
+        entrantCount: await this.deps.repo.countResultsForDivision(division.id),
+      });
+    }
+
+    if (!outcome.shape.ok) {
+      await this.deps.repo.raiseAlert({
+        kind: "parser_shape",
+        severity: "critical",
+        message: outcome.shape.message,
+        detail: outcome.shape.detail,
+        sourceEventId: event.sourceEventId ?? null,
+        acknowledgedAt: null,
+      });
+    }
+
+    await this.deps.repo.upsertSyncState({
+      ...emptyState(event),
+      ...(state ?? {}),
+      sourceEventId: event.sourceEventId ?? event.slug,
+      eventId: event.id,
+      lastSeenHash: hash,
+      lastPolledAt: this.now().toISOString(),
+      lastSuccessAt: this.now().toISOString(),
+      consecutiveFailures: 0,
+      updatesPaused: false,
+    });
+
+    if (publish && this.deps.publisher && (counts.inserted > 0 || counts.updated > 0)) {
+      await this.publishChanges(event, division, before ?? new Map());
+    }
+
+    return {
+      sourceDivisionId,
+      changed: counts.inserted > 0 || counts.updated > 0,
+      inserted: counts.inserted,
+      updated: counts.updated,
+      unchanged: counts.unchanged,
+      quarantined: outcome.quarantined.length,
+      shape: outcome.shape,
+      completenessMismatch,
+    };
+  }
+
+  /**
+   * Every access method failed.
+   *
+   * Freeze: write nothing, mark any live event `updates_paused` so the board
+   * stops claiming to be current, and alert. Presenting stale data as live is
+   * the one outcome worse than not updating.
+   */
+  async freezeOnFailure(event: EngineEvent, error: unknown): Promise<void> {
+    const sourceEventId = event.sourceEventId ?? event.slug;
+    const state = await this.deps.repo.getSyncState(sourceEventId);
+    const wasLive = state?.isLive ?? event.status === "live";
+
+    await this.deps.repo.upsertSyncState({
+      ...emptyState(event),
+      ...(state ?? {}),
+      sourceEventId,
+      eventId: event.id,
+      lastPolledAt: this.now().toISOString(),
+      consecutiveFailures: (state?.consecutiveFailures ?? 0) + 1,
+      updatesPaused: wasLive,
+    });
+
+    if (wasLive) {
+      await this.deps.repo.setEventStatus(event.id, "updates_paused");
+      if (this.deps.publisher) {
+        await this.deps.publisher.publish(channelForEvent(event.slug), {
+          eventSlug: event.slug,
+          divisionKey: "*",
+          changed: [],
+          updatedAt: this.now().toISOString(),
+          updatesPaused: true,
+        });
+      }
+    }
+
+    await this.deps.repo.raiseAlert({
+      kind: error instanceof AllSourcesFailedError ? "source_unreachable" : "source_unreachable",
+      severity: wasLive ? "critical" : "warning",
+      message:
+        `Source unreachable for ${event.name}; froze on last-good data` +
+        (wasLive ? " and paused live updates." : "."),
+      detail: {
+        error: error instanceof Error ? error.message : String(error),
+        attempts: error instanceof AllSourcesFailedError ? error.attempts : undefined,
+      },
+      sourceEventId: event.sourceEventId ?? null,
+      acknowledgedAt: null,
+    });
+  }
+
+  private async snapshotRanks(divisionId: string): Promise<Map<string, number | null>> {
+    const rows = await this.deps.repo.listResultsForDivision(divisionId);
+    return new Map(rows.map((r) => [r.sourceResultId, r.rankOverall ?? null]));
+  }
+
+  private async publishChanges(
+    event: EngineEvent,
+    division: EngineDivision,
+    before: Map<string, number | null>,
+  ) {
+    const after = await this.deps.repo.listResultsForDivision(division.id);
+    const changed: LiveUpdate["changed"] = [];
+
+    for (const row of after) {
+      const previous = before.get(row.sourceResultId);
+      const isNew = !before.has(row.sourceResultId);
+      if (isNew || previous !== (row.rankOverall ?? null)) {
+        const athlete = await this.deps.repo.getAthleteById(row.athleteId);
+        changed.push({
+          sourceResultId: row.sourceResultId,
+          rankOverall: row.rankOverall ?? null,
+          finishTimeMs: row.finishTimeMs ?? null,
+          athleteName: athlete?.name ?? "",
+        });
+      }
+    }
+
+    if (changed.length === 0) return;
+
+    await this.deps.publisher!.publish(channelForEvent(event.slug), {
+      eventSlug: event.slug,
+      divisionKey: division.divisionKey,
+      changed,
+      updatedAt: this.now().toISOString(),
+    });
+  }
+
+  /** Wraps a run so a crash still closes the `ingestion_runs` row. */
+  async withRun<T>(
+    mode: IngestionMode,
+    triggerSource: string,
+    fn: (runId: string) => Promise<T & { detail?: Record<string, unknown> }>,
+  ): Promise<T> {
+    const run = await this.deps.repo.startRun({ mode, triggerSource });
+    try {
+      const result = await fn(run.id);
+      await this.deps.repo.finishRun(run.id, {
+        status: "ok",
+        requestsMade: this.deps.adapter.requestCount(),
+        ...(result as Record<string, unknown>),
+      });
+      return result;
+    } catch (error) {
+      await this.deps.repo.finishRun(run.id, {
+        status: "error",
+        requestsMade: this.deps.adapter.requestCount(),
+        errors: [{ message: error instanceof Error ? error.message : String(error) }],
+      });
+      throw error;
+    }
+  }
+}
+
+export function emptyState(event: EngineEvent): SyncState {
+  return {
+    sourceEventId: event.sourceEventId ?? event.slug,
+    eventId: event.id,
+    lastSeenHash: null,
+    lastPolledAt: null,
+    lastSuccessAt: null,
+    isLive: false,
+    liveArmedAt: null,
+    liveIntervalSeconds: 20,
+    consecutiveFailures: 0,
+    updatesPaused: false,
+    reconcileUntil: null,
+    reconcileAttempts: 0,
+  };
+}
+
+export { summariseShape, parseDivisionRows };

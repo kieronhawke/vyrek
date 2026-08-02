@@ -142,6 +142,10 @@ export class MemoryResultsRepository implements ResultsRepository {
     return created;
   }
 
+  async getAthleteById(id: string) {
+    return this.athletes.get(id) ?? null;
+  }
+
   async getAthleteBySlug(slug: string) {
     const found = [...this.athletes.values()].find((a) => a.slug === slug);
     // Anonymised athletes have no profile. The row survives for ranking

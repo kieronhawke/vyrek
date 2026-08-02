@@ -119,7 +119,9 @@ writeFileSync(join(OUT, "list-rows.html"), page(build([0, 1, 2, 3, 4, 5, 6, 7]),
 const swapped = build([1, 0, 2, 3, 4, 5, 6, 7]);
 writeFileSync(
   join(OUT, "list-rows-2.html"),
-  page(swapped, 8).replace("01:11:44", "01:11:38"),
+  // replaceAll, not replace: the row prints the time in both the ranking-time
+  // and net-time columns, and correcting only one is not a corrected time.
+  page(swapped, 8).replaceAll("01:11:44", "01:11:38"),
 );
 
 // A division whose published count exceeds the rows served: the completeness

@@ -235,6 +235,18 @@ export type RawResultRow = {
   partnerNames?: string[];
 };
 
+/** What the parser saw, for the shape sentinel. Carried, never reconstructed. */
+export type ParseDiagnostics = {
+  /** Distinct `field-*` names seen in the header row. */
+  headerFields: string[];
+  /** `<li>` blocks that looked like rows. */
+  candidateRows: number;
+  /** Rows that yielded a usable name and time. */
+  parsedRows: number;
+  /** True when the page rendered but contained no data rows at all. */
+  emptyShell: boolean;
+};
+
 export type RawDivisionPage = {
   sourceEventId: string;
   sourceDivisionId: string;
@@ -242,4 +254,5 @@ export type RawDivisionPage = {
   rows: RawResultRow[];
   /** Which access method produced this, for the fallback-chain tests and logs. */
   via: "ajax2" | "html" | "replay" | "demo";
+  diagnostics?: ParseDiagnostics;
 };

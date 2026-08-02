@@ -15,7 +15,7 @@
  * See `docs/results/SOURCE.md` §4–§5 for the observed structure.
  */
 
-import type { RawEventGroup, RawResultRow } from "../types";
+import type { ParseDiagnostics, RawEventGroup, RawResultRow } from "../types";
 
 /** Division code prefixes, from SOURCE.md §3. */
 export const DIVISION_PREFIXES: Record<string, string> = {
@@ -133,16 +133,7 @@ export function parseEventGroups(html: string, seasonPath: string): RawEventGrou
   return [...byWeekend.values()];
 }
 
-export type RowParseDiagnostics = {
-  /** Distinct `field-*` names seen in the header row. */
-  headerFields: string[];
-  /** `<li>` blocks that looked like rows. */
-  candidateRows: number;
-  /** Rows that yielded a usable name and time. */
-  parsedRows: number;
-  /** True when the page rendered but contained no data rows at all. */
-  emptyShell: boolean;
-};
+export type RowParseDiagnostics = ParseDiagnostics;
 
 export type ParsedRows = {
   rows: RawResultRow[];

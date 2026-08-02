@@ -64,6 +64,7 @@ export interface ResultsRepository {
 
   /* ── Athletes ─────────────────────────────────────────────────────── */
   upsertAthlete(athlete: UpsertAthlete): Promise<EngineAthlete>;
+  getAthleteById(id: string): Promise<EngineAthlete | null>;
   getAthleteBySlug(slug: string): Promise<EngineAthlete | null>;
   getAthleteBySourceId(sourceAthleteId: string): Promise<EngineAthlete | null>;
   findAthletesByName(name: string): Promise<EngineAthlete[]>;

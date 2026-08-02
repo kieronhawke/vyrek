@@ -76,6 +76,7 @@ export class ReplayAdapter implements SourceAdapter {
       sourceDivisionId,
       publishedEntrantCount: parsed.publishedEntrantCount,
       rows: parsed.rows,
+      diagnostics: parsed.diagnostics,
       via: "replay",
     };
   }
@@ -91,6 +92,7 @@ export class ReplayAdapter implements SourceAdapter {
       sourceDivisionId,
       publishedEntrantCount: parsed.publishedEntrantCount,
       rows: parsed.rows,
+      diagnostics: parsed.diagnostics,
       via: "replay",
     };
   }

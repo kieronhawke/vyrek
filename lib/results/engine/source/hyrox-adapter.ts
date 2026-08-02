@@ -15,7 +15,7 @@
  */
 
 import { SourceFetcher } from "../fetch/fetcher";
-import type { RawDivisionPage, RawEventGroup } from "../types";
+import type { ParseDiagnostics, RawDivisionPage, RawEventGroup } from "../types";
 import type { SourceAdapter } from "./adapter";
 import { FallbackChain } from "./adapter";
 import {
@@ -67,6 +67,12 @@ abstract class MikaAdapter implements SourceAdapter {
     const sourceEventId = weekendIdOf(sourceDivisionId) ?? sourceDivisionId;
     const rows: RawDivisionPage["rows"] = [];
     let publishedEntrantCount: number | undefined;
+    const merged: ParseDiagnostics = {
+      headerFields: [],
+      candidateRows: 0,
+      parsedRows: 0,
+      emptyShell: true,
+    };
 
     for (let page = 1; page <= MAX_PAGES; page += 1) {
       const { body } = await this.fetcher.fetchText(
@@ -80,6 +86,12 @@ abstract class MikaAdapter implements SourceAdapter {
         publishedEntrantCount = parsed.publishedEntrantCount;
       }
       rows.push(...parsed.rows);
+      // Merged across pages: the header is read once, the counts accumulate, and
+      // "empty shell" only survives if every page was one.
+      if (merged.headerFields.length === 0) merged.headerFields = parsed.diagnostics.headerFields;
+      merged.candidateRows += parsed.diagnostics.candidateRows;
+      merged.parsedRows += parsed.diagnostics.parsedRows;
+      merged.emptyShell = merged.emptyShell && parsed.diagnostics.emptyShell;
 
       // A short page is the last page. Belt and braces against a pager that
       // happily serves page 999 of a 3-page list.
@@ -92,6 +104,7 @@ abstract class MikaAdapter implements SourceAdapter {
       sourceDivisionId,
       publishedEntrantCount,
       rows,
+      diagnostics: merged,
       via: this.name === "mika-ajax2" ? "ajax2" : "html",
     };
   }
@@ -112,6 +125,7 @@ abstract class MikaAdapter implements SourceAdapter {
       sourceDivisionId,
       publishedEntrantCount: parsed.publishedEntrantCount,
       rows: parsed.rows,
+      diagnostics: parsed.diagnostics,
       via: this.name === "mika-ajax2" ? "ajax2" : "html",
     };
   }
