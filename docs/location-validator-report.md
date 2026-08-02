@@ -423,7 +423,7 @@ and it becomes reachable the moment the results layer has a source.
 - **portadown** — has: equipped_gyms, parkrun_locations; missing mandatory: results/performance data point (2/5 fields)
 - **newbury** — has: equipped_gyms, parkrun_locations; missing mandatory: results/performance data point (2/5 fields)
 - **motherwell** — has: equipped_gyms, parkrun_locations; missing mandatory: results/performance data point (2/5 fields)
-- **loughton** — has: equipped_gyms; missing mandatory: results/performance data point (1/5 fields)
+- **loughton** — has: equipped_gyms, parkrun_locations; missing mandatory: results/performance data point (2/5 fields)
 - **ebbw-vale** — has: equipped_gyms, parkrun_locations; missing mandatory: results/performance data point (2/5 fields)
 - **darwen** — has: equipped_gyms, parkrun_locations; missing mandatory: results/performance data point (2/5 fields)
 - **cramlington** — has: equipped_gyms, parkrun_locations; missing mandatory: results/performance data point (2/5 fields)

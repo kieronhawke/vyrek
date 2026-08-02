@@ -4357,7 +4357,8 @@
       "publishable": false,
       "indexed": true,
       "populatedFields": [
-        "equipped_gyms"
+        "equipped_gyms",
+        "parkrun_locations"
       ],
       "missingMandatory": [
         "results/performance data point"
