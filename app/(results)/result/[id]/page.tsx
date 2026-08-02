@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { getResultsSource } from "@/lib/results";
 import { siteUrl } from "@/lib/blog/urls";
 import { buildRankingSlug } from "@/lib/results/slugs";
-import { STATION_IDS } from "@/lib/results/model";
+import { STATION_IDS, stationGuideHref } from "@/lib/results/model";
 import { formatCount, formatOrdinal, formatPercent, formatSplit, formatTime } from "@/lib/results/format";
 import { buildDistribution, percentileOf } from "@/lib/results/percentiles";
 import {
@@ -16,8 +16,11 @@ import { PacingChart } from "@/components/results/result/pacing-chart";
 import { StationBars } from "@/components/results/result/station-bars";
 import { WhatIfCard } from "@/components/results/result/what-if";
 import { ShareResult } from "@/components/results/result/share-result";
+import { ResultExport } from "@/components/results/export/result-export";
 import { StatTile, MicroLabel, Nationality, Time } from "@/components/results/ui/primitives";
 import { CoachingCta } from "@/components/results/coaching-cta";
+import { Reveal } from "@/components/results/ui/reveal";
+import { getDataMode } from "@/lib/results";
 
 /**
  * `/result/{id}` — the crown jewel.
@@ -143,6 +146,7 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
             {result.eventName} · {division} · {result.ageGroup}
           </p>
         </div>
+        <div className="flex shrink-0 flex-wrap items-center gap-2">
         <ShareResult
           athleteName={result.athleteName}
           eventName={result.eventName}
@@ -152,7 +156,27 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
           fieldSize={result.fieldSize}
           division={division}
         />
+        <ResultExport
+          input={{
+            athleteName: result.athleteName,
+            eventName: result.eventName,
+            divisionLabel: result.divisionLabel,
+            runs: result.runs,
+            stations: result.stations,
+            roxzoneSeconds: result.roxzoneSeconds,
+            finishSeconds: result.finishSeconds,
+            averageRuns: result.divisionAverage.runs,
+            averageStations: result.divisionAverage.stations,
+            averageRoxzone: result.divisionAverage.roxzone,
+          }}
+        />
+        </div>
       </header>
+
+      <p className="results-print-footer mt-6 border-t border-suth-border-subtle pt-2 text-[10px] text-suth-text-tertiary">
+        {result.athleteName} · {result.eventName} · {division} · suthperformance.com/results
+        {getDataMode() === "demo" ? " · DEMO DATA, not a record of a real race" : ""}
+      </p>
 
       {flags.length > 0 ? (
         <p className="mt-4 rounded-md border border-suth-warning/30 bg-suth-warning/5 px-4 py-2.5 text-xs text-suth-text-secondary">
@@ -181,7 +205,7 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
         />
       </div>
 
-      <div className="mt-4">
+      <Reveal className="mt-4">
         <RaceStrip
           runs={result.runs}
           stations={result.stations}
@@ -189,7 +213,7 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
           averageRuns={result.divisionAverage.runs}
           averageStations={result.divisionAverage.stations}
         />
-      </div>
+      </Reveal>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
         <PacingChart
@@ -258,7 +282,7 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
               + `The guide is written by Benjamin Sutherland, Elite 15.`
             : "Train what this race exposed, not a generic template."
         }
-        href={weakest ? `/hyrox/stations/${weakest.station}` : "/plans"}
+        href={weakest ? stationGuideHref(weakest.station) : "/plans"}
         cta={weakest ? `Read the ${weakest.label} guide` : "See coaching options"}
       />
 

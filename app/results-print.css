@@ -1,0 +1,101 @@
+/* ─── Print / PDF ──────────────────────────────────────────────────────────
+   Turns a race breakdown into a clean A4 PDF via the browser's own
+   "Save as PDF", which needs no dependency, works on iOS and Android as well
+   as desktop, and produces real selectable text rather than a screenshot.
+
+   The screen design is chartreuse on near-black. Printed, that is a full ink
+   cartridge and unreadable on paper, so print inverts to black on white and
+   keeps the accent only where it carries meaning. */
+
+@media print {
+  /* Chrome/Safari honour this; it stops the browser stripping our backgrounds
+     where we genuinely need them (delta bars, band shading). */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  :root {
+    --suth-bg-base: #FFFFFF;
+    --suth-bg-elevated: #FFFFFF;
+    --suth-bg-overlay: #F4F4F2;
+    --suth-border-subtle: #DDDDD9;
+    --suth-border-default: #C8C8C4;
+    --suth-border-strong: #9A9A96;
+    --suth-text-primary: #101010;
+    --suth-text-secondary: #3A3A38;
+    --suth-text-tertiary: #5C5C5A;
+    --suth-accent: #4D7C0F;        /* darkened so it reads as ink, not highlighter */
+    --suth-accent-hover: #3F6212;
+    --results-faster: #4D7C0F;
+    --results-slower: #B45309;
+    --results-run: #94A3B8;
+    --results-station: #A8A29E;
+    --results-roxzone: #D6D3D1;
+    --results-faster-bar: #84CC16;
+    --results-slower-bar: #F59E0B;
+    --results-segment-fast: #84CC16;
+  }
+
+  html, body {
+    background: #FFFFFF !important;
+    color: #101010 !important;
+  }
+
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  /* Site furniture has no business on a printed race report. */
+  header[class*="fixed"],
+  nav[aria-label="Results sections"],
+  nav[aria-label="Results"],
+  footer,
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  /* Cards read better as hairline-ruled blocks than as filled panels. */
+  .rounded-md,
+  .rounded-sm,
+  .rounded-lg {
+    border-radius: 2px !important;
+    box-shadow: none !important;
+  }
+
+  /* Never split a chart or a stat block across a page boundary. */
+  figure,
+  section,
+  .results-print-block {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  h1 { font-size: 22pt; }
+  h2 { font-size: 13pt; margin-top: 8pt; }
+
+  /* Links printed as bare text — a PDF full of underlined blue is noise. */
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  /* Animations must not leave elements mid-transition in the PDF. */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .results-skeleton { background: #EEEEEC !important; }
+
+  /* A footer line on every page, so a printed report is attributable. */
+  .results-print-footer { display: block !important; }
+}
+
+/* Hidden on screen, shown only in print. */
+.results-print-footer {
+  display: none;
+}

@@ -15,6 +15,7 @@ export function DemoDataPill() {
 
   return (
     <div
+      data-print-hide
       className="pointer-events-none fixed bottom-[calc(var(--safe-bottom)+4.75rem)] right-3 z-40 md:bottom-4 md:right-4"
       role="note"
     >

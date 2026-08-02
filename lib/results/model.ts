@@ -153,6 +153,29 @@ export const STATION_WEIGHTS: Record<StationId, number> = {
   "wall-balls": 0.160,
 };
 
+/**
+ * Station id → the slug of its existing guide page.
+ *
+ * These are NOT the same strings: the guides predate this section and use
+ * `burpee-broad-jumps` (plural) and `rowing`. Linking with the data key
+ * produced two 404s on every result page and the simulator, which only showed
+ * up as failed prefetches in a production build.
+ */
+export const STATION_GUIDE_SLUG: Record<StationId, string> = {
+  "ski-erg": "ski-erg",
+  "sled-push": "sled-push",
+  "sled-pull": "sled-pull",
+  "burpee-broad-jump": "burpee-broad-jumps",
+  "row": "rowing",
+  "farmers-carry": "farmers-carry",
+  "sandbag-lunges": "sandbag-lunges",
+  "wall-balls": "wall-balls",
+};
+
+export function stationGuideHref(station: StationId): string {
+  return `/hyrox/stations/${STATION_GUIDE_SLUG[station]}`;
+}
+
 /** Race-spec loads, for the weights-by-division table on station guides. */
 export const STATION_SPEC: Record<StationId, { detail: string; open: string; pro: string; doubles: string }> = {
   "ski-erg": { detail: "1,000 m", open: "—", pro: "—", doubles: "1,000 m shared" },

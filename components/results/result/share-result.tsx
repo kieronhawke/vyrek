@@ -39,6 +39,7 @@ export function ShareResult({
       <button
         type="button"
         onClick={() => setOpen(true)}
+        data-print-hide
         className="inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-sm border
                    border-suth-accent/40 bg-suth-accent/10 px-4 text-sm font-medium text-suth-accent
                    transition-colors hover:bg-suth-accent/15

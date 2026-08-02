@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Share2, Check, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { STATION_IDS, STATION_LABEL, type StationId } from "@/lib/results/model";
+import { STATION_IDS, STATION_LABEL, stationGuideHref, type StationId } from "@/lib/results/model";
 import { formatTime, formatSplit, formatPercent } from "@/lib/results/format";
 import { percentileFromLadder } from "@/lib/results/percentiles";
 import { MicroLabel, Delta } from "../ui/primitives";
@@ -236,7 +236,7 @@ export function Simulator({
             key={station}
             label={`Run ${i + 1}`}
             stationLabel={STATION_LABEL[station]}
-            stationHref={`/hyrox/stations/${station}`}
+            stationHref={stationGuideHref(station)}
             runSeconds={mode === "build" ? values.runs[i] : targetPlan.runs[i]}
             stationSeconds={mode === "build" ? values.stations[station] : targetPlan.stations[station]}
             referenceRun={reference.runs[i]}

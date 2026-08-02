@@ -1,8 +1,28 @@
+import type { Metadata } from "next";
+import { getDataMode } from "@/lib/results";
 import "@/app/results-tokens.css";
+import "@/app/results-print.css";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { ResultsShell } from "@/components/results/shell/results-shell";
 import { DemoDataPill } from "@/components/results/shell/demo-pill";
+
+/**
+ * While `NEXT_PUBLIC_DATA_MODE=demo` the whole section is noindex.
+ *
+ * The demo dataset is 76,000 invented races attributed to 4,000 invented
+ * names, against real events that real people actually ran. A "Demo data" pill
+ * tells a human reader; it tells Google nothing. Indexing fabricated results
+ * for "hyrox london 2026 results" would be bad for the athletes it names and
+ * worse for the domain that published it.
+ *
+ * Pages inherit this because none of them set `robots` themselves. Setting
+ * NEXT_PUBLIC_DATA_MODE=live flips the section to indexable in one variable —
+ * which is the same switch that swaps the data source.
+ */
+export const metadata: Metadata = getDataMode() === "demo"
+  ? { robots: { index: false, follow: true } }
+  : {};
 
 /**
  * Shell for the whole Results section.

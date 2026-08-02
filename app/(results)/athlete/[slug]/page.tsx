@@ -8,6 +8,7 @@ import { formatTime, formatOrdinal, formatCount, formatRelativeDate } from "@/li
 import { ProgressionChart } from "@/components/results/athlete/progression-chart";
 import { CareerStations, type CareerSplit } from "@/components/results/athlete/career-stations";
 import { ClaimProfile } from "@/components/results/athlete/claim-profile";
+import { AthleteExport } from "@/components/results/export/athlete-export";
 import { StatTile, Nationality, Time, Delta } from "@/components/results/ui/primitives";
 import { CoachingCta } from "@/components/results/coaching-cta";
 
@@ -143,6 +144,7 @@ export default async function AthletePage({ params }: { params: Promise<{ slug: 
           </p>
         </div>
 
+        <div className="flex shrink-0 flex-wrap items-center gap-2">
         <Link
           href={`/results/compare?a=${athlete.slug}`}
           className="inline-flex min-h-[44px] shrink-0 items-center rounded-sm border
@@ -152,6 +154,15 @@ export default async function AthletePage({ params }: { params: Promise<{ slug: 
         >
           Compare
         </Link>
+        <AthleteExport
+          name={athlete.name}
+          races={races.map((r) => ({
+            date: r.date, eventCity: r.eventCity, year: r.year, season: r.season,
+            divisionLabel: r.divisionLabel, rank: r.rank,
+            ageGroupRank: r.ageGroupRank, finishSeconds: r.finishSeconds,
+          }))}
+        />
+        </div>
       </header>
 
       {athlete.isPlaceholder ? (

@@ -184,3 +184,34 @@ writes `references.json` alongside the shards, and the page reads it. Warm respo
 `server-only`. The simulator and percentile tool are client components, so importing it poisoned
 their bundles and 500'd five routes. It is pure maths and belongs in `lib/results/percentiles.ts`
 with the rest of the engine — which is also what keeps every surface agreeing.
+
+### D23 — Sign-up gate removed (confirmed by Kieron)
+Kieron confirmed the brand is Suth Performance and that the results platform is public so the
+content can rank. `GateModal` and `BlurWall` are deleted, along with the orphaned Sprint 1
+`EventCard`/`EventGrid`. Nothing referenced them; typecheck confirmed.
+
+### D24 — PDF via the browser's print pipeline, not a PDF library
+"Save as PDF" prints the page through `app/results-print.css`, which inverts the dark theme to
+ink on paper. No dependency (lane rule 6), selectable text rather than a rasterised screenshot,
+respects the reader's paper size, and works on iOS and Android where Save-as-PDF is in the
+share sheet. Screen-only furniture carries `data-print-hide`; a footer line makes a printed
+report attributable, and it names DEMO DATA while the source is synthetic so an exported PDF
+can never be mistaken for a record of a real race.
+
+### D25 — Exports reflect what is on screen
+The ranking CSV exports the current filter and sort, not the raw division: filter to an age
+group or search a club name and the download matches. Files carry a UTF-8 BOM and CRLF because
+Excel mangles accented names without the first and joins every row without the second — both
+are covered by unit tests.
+
+### D26 — Station guide slugs are mapped, not assumed
+Station data keys and guide slugs are different strings: the existing guides use
+`burpee-broad-jumps` and `rowing`, not `burpee-broad-jump` and `row`. Linking with the data key
+404'd on every result page and the simulator. Because Next only *prefetches* those links, it
+appeared nowhere in dev — no visible error, no failed navigation — and surfaced only as failed
+requests in a production build. One `STATION_GUIDE_SLUG` map in `model.ts` now owns it, with a
+test that reads the real slugs out of `lib/hyrox-stations.ts`.
+
+### D27 — Tests wait on content, never on `networkidle`
+The site runs a presence heartbeat, so the network never goes idle and `networkidle` times out
+against a production server. Every navigation now waits for the page's own `h1`.
