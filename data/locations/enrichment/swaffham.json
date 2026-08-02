@@ -1,0 +1,65 @@
+{
+  "slug": "swaffham",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Everybody Health & FItness",
+        "type": "gym",
+        "website": "http://www.everybodyhealthandfitness.co.uk/",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Swaffham Kickboxing Academy",
+        "type": "sports-centre",
+        "website": "https://www.facebook.com/swaffhamkickboxingacademy/",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Norfolk Yoga Centre",
+        "type": "gym",
+        "website": "http://www.norfolkyogacentre.com/",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Swaffham Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.leisurecentre.com/swaffham-leisure-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hit The Dirt",
+        "type": "sports-centre",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Battleground Airsoft",
+        "type": "sports-centre",
+        "website": "https://www.battlegroundairsoft.co.uk/",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Swaffham parkrun",
+        "area": "The Nicolas Hamond Academy Sports Fields",
+        "distanceKm": 1.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

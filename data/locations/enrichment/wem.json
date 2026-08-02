@@ -1,0 +1,29 @@
+{
+  "slug": "wem",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Wem Swimming and Lifestyle Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Butler Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hawkstone Park Motocross Circuit",
+        "type": "sports-centre",
+        "website": "http://www.hawkstonemx.co.uk/",
+        "distanceKm": 6.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

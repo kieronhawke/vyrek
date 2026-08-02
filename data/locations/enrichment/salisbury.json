@@ -1,0 +1,42 @@
+{
+  "slug": "salisbury",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Salisbury parkrun",
+        "area": "Churchill Gardens",
+        "distanceKm": 0.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Five Rivers Leisure Centre",
+        "type": "gym",
+        "website": "https://www.wiltshire.gov.uk/leisure/sports-and-leisure-centres/five-rivers-health-and-wellbeing-centre",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "website": "https://www.puregym.com/gyms/salisbury/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Odstock Health and Fitness Centre",
+        "type": "gym",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

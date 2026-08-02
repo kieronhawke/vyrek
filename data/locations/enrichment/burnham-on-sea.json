@@ -1,0 +1,33 @@
+{
+  "slug": "burnham-on-sea",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Burnham and Highbridge parkrun",
+        "area": "Apex Park",
+        "distanceKm": 1.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Burnham on Sea Swim & Sports Academy",
+        "type": "sports-centre",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Mendip RC Raceway",
+        "type": "sports-centre",
+        "website": "https://mendiprcraceway.co.uk/",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

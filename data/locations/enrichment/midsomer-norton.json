@@ -1,0 +1,65 @@
+{
+  "slug": "midsomer-norton",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "The Gym Group",
+        "type": "gym",
+        "chain": "The Gym Group",
+        "website": "https://www.thegymgroup.com/find-a-gym/midsomer-norton-gyms/midsomer-norton",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Midsomer Norton Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.writhlingtonleisure.co.uk/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Snapfitness",
+        "type": "gym",
+        "website": "https://www.snapfitness.com/uk/gyms/radstock",
+        "distanceKm": 2.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Joe Tucker Fitness",
+        "type": "gym",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Indigo Archery",
+        "type": "sports-centre",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dragonfly Leisure",
+        "type": "sports-centre",
+        "website": "https://www.dragonflyleisure.co.uk/",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Five Arches parkrun",
+        "area": "Norton-Radstock Greenway",
+        "distanceKm": 2.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

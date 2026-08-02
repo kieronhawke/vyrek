@@ -2,7 +2,8 @@ import type { MetadataRoute } from "next";
 import { PROGRAMMES } from "@/lib/programmes";
 import { listPostMeta, CATEGORIES } from "@/lib/blog/posts";
 import { AUTHORS } from "@/lib/blog/authors";
-import { UK_LOCATIONS } from "@/lib/uk-locations";
+import { UK_LOCATIONS, listRegionSlugs, listCountySlugs } from "@/lib/uk-locations";
+import { getGeoSeo, geoPriority, isRaceCity } from "@/lib/locations/seo";
 import { STATIONS } from "@/lib/hyrox-stations";
 import { PLAN_TEMPLATES } from "@/lib/plan-templates";
 import { COMPARISONS } from "@/lib/hyrox-comparisons";
@@ -15,13 +16,17 @@ const SITE_URL = canonicalSiteUrl();
 
 /**
  * The geo templates carry no per-location content date, so stamping them with
- * `new Date()` made the sitemap claim all 284 geo URLs had changed on every
+ * `new Date()` made the sitemap claim every geo URL had changed on every
  * build. A sitemap that cries wolf gets its `lastmod` ignored, which is the
  * opposite of what it is for. Until locations carry their own `verifiedOn`
  * dates (phase D), this is a hand-maintained stamp: bump it when the geo
  * templates or their copy change materially, not when the build runs.
+ *
+ * Bumped 2026-08-02: the geo programme went from 94 hand-typed locations to
+ * 1,882 sourced ones, with new region and county directory layers and rewritten
+ * town copy. Every geo URL in this file genuinely did change on that date.
  */
-const GEO_CONTENT_UPDATED = new Date("2026-07-29T00:00:00Z");
+const GEO_CONTENT_UPDATED = new Date("2026-08-02T00:00:00Z");
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
@@ -109,7 +114,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   );
 
   // ── Programmatic SEO routes ────────────────────────────────────
-  const cityRoutes: MetadataRoute.Sitemap = UK_LOCATIONS.map((loc) => ({
+  // A sitemap is a list of pages we want indexed, so it has to agree with the
+  // robots tag. Only the five race cities keep a /hyrox/{city} page; the other
+  // 89 now 308 to their coaching page, and listing a redirect here would be a
+  // contradictory signal. Same rule below for the unevidenced locations.
+  const cityRoutes: MetadataRoute.Sitemap = UK_LOCATIONS.filter((loc) =>
+    isRaceCity(loc.slug),
+  ).map((loc) => ({
     url: `${SITE_URL}/hyrox/${loc.slug}`,
     lastModified: GEO_CONTENT_UPDATED,
     priority: 0.7,
@@ -120,17 +131,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const geoLandingRoutes: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/hyrox-training`, lastModified: GEO_CONTENT_UPDATED, priority: 0.8, changeFrequency: "weekly" as const },
     { url: `${SITE_URL}/personal-trainer`, lastModified: GEO_CONTENT_UPDATED, priority: 0.8, changeFrequency: "weekly" as const },
-    ...UK_LOCATIONS.flatMap((loc) => [
+    // Region directories: the middle layer between the hubs and 846 towns.
+    ...listRegionSlugs().flatMap((r) => [
+      { url: `${SITE_URL}/hyrox-training/in/${r}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
+      { url: `${SITE_URL}/personal-trainer/in/${r}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
+    ]),
+    // County directories: "personal trainer kent" and friends are evidenced
+    // queries that no single town page answers.
+    ...listCountySlugs().flatMap((c) => [
+      { url: `${SITE_URL}/hyrox-training/county/${c}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
+      { url: `${SITE_URL}/personal-trainer/county/${c}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
+    ]),
+    ...UK_LOCATIONS.filter((loc) => getGeoSeo(loc.slug).indexable).flatMap((loc) => [
       {
         url: `${SITE_URL}/hyrox-training/${loc.slug}`,
         lastModified: GEO_CONTENT_UPDATED,
-        priority: 0.75,
+        priority: geoPriority(loc.slug),
         changeFrequency: "weekly" as const,
       },
       {
         url: `${SITE_URL}/personal-trainer/${loc.slug}`,
         lastModified: GEO_CONTENT_UPDATED,
-        priority: 0.75,
+        priority: geoPriority(loc.slug),
         changeFrequency: "weekly" as const,
       },
     ]),

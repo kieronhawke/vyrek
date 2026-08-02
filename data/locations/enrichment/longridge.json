@@ -1,0 +1,22 @@
+{
+  "slug": "longridge",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Longridge Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fitness Centre",
+        "type": "gym",
+        "website": "http://www.canberraclub.co.uk/",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

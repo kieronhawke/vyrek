@@ -1,0 +1,120 @@
+{
+  "slug": "newton-aycliffe",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hackworth parkrun",
+        "area": "Hackworth Park",
+        "distanceKm": 4.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sedgefield parkrun",
+        "area": "Hardwick Park, Sedgefield",
+        "distanceKm": 7.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Jubilee parkrun",
+        "area": "Jubilee Park",
+        "distanceKm": 9.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Newton Aycliffe Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.durham.gov.uk/newtonaycliffeleisurecentre",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Oakleaf Sports Complex",
+        "type": "sports-centre",
+        "website": "https://www.great-aycliffe.gov.uk/oakleafsportscomplex/home-sports/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "ROF 59 Climbing Centre",
+        "type": "gym",
+        "website": "https://rof59climbingcentre.com",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Shildon Sunnydale Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.durham.gov.uk/shildonsunnydaleleisurecentre",
+        "distanceKm": 4.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dean Street",
+        "type": "sports-centre",
+        "website": "https://shildonafc.com/",
+        "distanceKm": 5.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sedgefield Racecourse",
+        "type": "sports-centre",
+        "website": "https://www.sedgefield-racecourse.co.uk/",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "OneGym",
+        "type": "gym",
+        "website": "https://www.onegymfitness.com/locations/bishop-auckland/",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ferryhill Sport & Education Centre",
+        "type": "sports-centre",
+        "website": "https://ferryhillsportandeducationcentre.org/",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Hardwick Motocross",
+        "type": "sports-centre",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "website": "https://www.puregym.com/gyms/bishop-auckland",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Woodhouse Close Leisure Complex",
+        "type": "sports-centre",
+        "website": "https://www.durham.gov.uk/woodhousecloseleisurecomplex",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

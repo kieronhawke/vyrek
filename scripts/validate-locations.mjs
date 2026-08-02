@@ -105,7 +105,7 @@ const FIELDS = [
   ],
   ["race_history", (e) => nonEmpty(e.races?.raceHistory), null],
   ["next_3_races", (e) => nonEmpty(e.races?.next3Races), null],
-  ["local_athlete_count", (e) => (e.results?.localAthleteCount ?? 0) > 0, "results"],
+  ["local_athlete_count", (e) => (e.results?.localAthleteCount?.count ?? 0) > 0, "results"],
   ["local_median_time", (e) => Boolean(e.results?.localMedianTime), "results"],
   ["local_fastest_time", (e) => Boolean(e.results?.localFastestTime), "results"],
   ["notable_local_athletes", (e) => nonEmpty(e.results?.notableLocalAthletes), "results"],

@@ -1,0 +1,151 @@
+{
+  "slug": "market-weighton",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "North Cave Indoor Bowls Centre",
+        "type": "sports-centre",
+        "distanceKm": 9.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pocklington Sports and Social Club",
+        "type": "sports-centre",
+        "distanceKm": 9.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pocklington Karate Centre",
+        "type": "sports-centre",
+        "distanceKm": 10.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Francis Scaife Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 10.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Centre for Sport and Fitness",
+        "type": "sports-centre",
+        "distanceKm": 10.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Cave Castle Health Club",
+        "type": "sports-centre",
+        "distanceKm": 11.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "CrossFit YO4",
+        "type": "gym",
+        "distanceKm": 11.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Cave Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.southcavesportscentre.co.uk/",
+        "distanceKm": 11.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "York Raceway",
+        "type": "sports-centre",
+        "website": "http://www.yorkraceway.org.uk/",
+        "distanceKm": 11.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beverley Clay Target Centre",
+        "type": "sports-centre",
+        "distanceKm": 12.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Leconfield Recreation Club",
+        "type": "sports-centre",
+        "distanceKm": 13.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sports Hall",
+        "type": "sports-centre",
+        "distanceKm": 15.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sports Hall Ancillary Block",
+        "type": "sports-centre",
+        "distanceKm": 15.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "The Gym",
+        "type": "gym",
+        "chain": "The Gym",
+        "website": "https://www.thegymgroup.com/find-a-gym/beverley-gyms/beverley/",
+        "distanceKm": 15.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tudor Court Fitness Centre",
+        "type": "gym",
+        "distanceKm": 16,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Try Fitness Gym",
+        "type": "gym",
+        "distanceKm": 16.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Blackburn Sports & Social Club",
+        "type": "sports-centre",
+        "distanceKm": 16.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Beverley Leisure Complex",
+        "type": "sports-centre",
+        "distanceKm": 16.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Hunsley Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 17.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Total Fitness",
+        "type": "sports-centre",
+        "distanceKm": 17.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

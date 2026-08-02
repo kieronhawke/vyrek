@@ -1,0 +1,45 @@
+{
+  "slug": "thirsk",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Ouch Potato Fitness",
+        "type": "gym",
+        "website": "https://ouchpotato.co.uk/thirsk/",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thirsk Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Thirsk Athletic Sports and Social Club",
+        "type": "sports-centre",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Unit Eleven Fitness",
+        "type": "gym",
+        "website": "https://www.uniteleven-fitness.co.uk/#/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "South Kilvington Cricket Club",
+        "type": "sports-centre",
+        "website": "https://southkilvington.play-cricket.com/home",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

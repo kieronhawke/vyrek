@@ -1,0 +1,25 @@
+{
+  "slug": "cheddar",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Churchill Academy and Sixth Form",
+        "type": "sports-centre",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Sharpham Road Playing Fields parkrun",
+        "area": "Sharpham Road Playing Fields",
+        "distanceKm": 1.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

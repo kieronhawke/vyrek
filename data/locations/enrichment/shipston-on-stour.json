@@ -1,0 +1,27 @@
+{
+  "slug": "shipston-on-stour",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Shipston Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Everyone Active",
+        "website": "https://everyoneactive.com",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Fire Service College parkrun",
+        "area": "Fire Service College",
+        "distanceKm": 8.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

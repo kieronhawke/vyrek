@@ -1,0 +1,25 @@
+{
+  "slug": "pembroke",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Best Western Lamphey Court Hotel and Spa - Pool",
+        "type": "sports-centre",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Milford Waterfront parkrun",
+        "area": "Milford Waterfront",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

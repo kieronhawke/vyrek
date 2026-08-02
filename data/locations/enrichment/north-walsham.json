@@ -1,0 +1,48 @@
+{
+  "slug": "north-walsham",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Victory Swim and Fitness Centre",
+        "type": "sports-centre",
+        "website": "https://www.everyoneactive.com/centre/victory-swim-and-fitness-centre/",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Yendell's Health and Wellness Hub",
+        "type": "gym",
+        "website": "https://www.yendellshub.com/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rossis Leisure",
+        "type": "sports-centre",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "North Walsham Rugby Club",
+        "type": "sports-centre",
+        "distanceKm": 6.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "North Walsham parkrun",
+        "area": "North Walsham High School and Sports Centre",
+        "distanceKm": 0.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

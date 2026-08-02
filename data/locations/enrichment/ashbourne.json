@@ -1,0 +1,25 @@
+{
+  "slug": "ashbourne",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Ashbourne/Mayfield Crown Green Bowls Club",
+        "type": "sports-centre",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Ashbourne Recreation Ground parkrun",
+        "area": "Ashbourne Recreation Ground",
+        "distanceKm": 0.4,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "slug": "looe",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Lux Park",
+        "type": "sports-centre",
+        "distanceKm": 11.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Liskeard Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 11.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fowey Sports Hub",
+        "type": "sports-centre",
+        "distanceKm": 13.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Kimberley Stadium",
+        "type": "sports-centre",
+        "distanceKm": 17.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Saltash Leisure Centre",
+        "type": "sports-centre",
+        "website": "http://www.tempusleisure.org.uk/default.aspx?page=619",
+        "distanceKm": 17.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Changing rooms",
+        "type": "sports-centre",
+        "distanceKm": 17.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Saltash Tennis Centre",
+        "type": "sports-centre",
+        "distanceKm": 17.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Saltash Bowls Club",
+        "type": "sports-centre",
+        "distanceKm": 17.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

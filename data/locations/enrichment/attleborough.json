@@ -1,0 +1,46 @@
+{
+  "slug": "attleborough",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Pilates Habit",
+        "type": "gym",
+        "website": "https://pilateshabit.co.uk/",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Attleborough Snooker Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "New Revolution Health and Fitness Club",
+        "type": "gym",
+        "website": "https://nrhealthclub.co.uk/locations/attleborough",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Battle Stations Airsoft",
+        "type": "sports-centre",
+        "website": "https://www.battleairsoft.co.uk/",
+        "distanceKm": 7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Snetterton Motor Racing Circuit",
+        "type": "sports-centre",
+        "website": "https://www.snetterton.co.uk/",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

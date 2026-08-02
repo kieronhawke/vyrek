@@ -1,0 +1,22 @@
+{
+  "slug": "norton",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Ryedale indoor Bowls Club",
+        "type": "sports-centre",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Malton Community Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.maltonsport.org/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

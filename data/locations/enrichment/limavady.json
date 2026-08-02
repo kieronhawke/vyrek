@@ -1,0 +1,26 @@
+{
+  "slug": "limavady",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Limitless NI",
+        "type": "sports-centre",
+        "website": "https://limitlessni.com/",
+        "distanceKm": 6.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Limavady parkrun",
+        "area": "Blackburn Park",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

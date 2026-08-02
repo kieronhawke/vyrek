@@ -1,0 +1,41 @@
+{
+  "slug": "crewkerne",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Lift Fitness",
+        "type": "gym",
+        "website": "https://lift-fitness.co.uk/",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Crewkerne Aqua Centre",
+        "type": "sports-centre",
+        "website": "https://aquacentre.co.uk/",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Phoenix Fitness",
+        "type": "gym",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Frogmary Green Farm parkrun",
+        "area": "Frogmary Green Farm",
+        "distanceKm": 6.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

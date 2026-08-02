@@ -1,0 +1,70 @@
+{
+  "slug": "selkirk",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Selkirk Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Scottish Borders Council",
+        "website": "https://www.liveborders.org.uk/swimming/swimming-pools/selkirk-leisure-centre/",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Broomhill Farm Equestrian Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "TriFitness",
+        "type": "gym",
+        "chain": "Scottish Borders Council",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tweedbank Indoor Bowling Club",
+        "type": "sports-centre",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tweedbank Outdoor Sports Complex",
+        "type": "sports-centre",
+        "chain": "Scottish Borders Council",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Queens Leisure Centre",
+        "type": "gym",
+        "chain": "Scottish Borders Council",
+        "distanceKm": 8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Tweedbank Sports Complex",
+        "type": "sports-centre",
+        "chain": "Scottish Borders Council",
+        "distanceKm": 8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

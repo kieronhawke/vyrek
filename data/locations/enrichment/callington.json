@@ -1,0 +1,25 @@
+{
+  "slug": "callington",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Calstock rowing club",
+        "type": "sports-centre",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Tamar Trails parkrun",
+        "area": "Tamar Trails Centre",
+        "distanceKm": 8.7,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

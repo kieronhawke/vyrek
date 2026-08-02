@@ -90,7 +90,7 @@ export type RaceRef = SourcedRecord & {
 export type ResultsLayer = {
   /** BLOCKED on growth-plan open question 1 (results data source).
    * Leave empty until that resolves; the gate requiring it is deliberate. */
-  localAthleteCount?: number & SourcedRecord;
+  localAthleteCount?: SourcedRecord & { count: number };
   localMedianTime?: string;
   localFastestTime?: string;
   notableLocalAthletes?: (SourcedRecord & { name: string; note: string })[];
@@ -123,7 +123,14 @@ export type LocationEnrichment = {
   terrain?: {
     runningRoutes?: RunningRoute[];
     trackFacilities?: (SourcedRecord & { name: string })[];
-    parkrunLocations?: (SourcedRecord & { name: string })[];
+    /** Adult 5k parkruns only, seeded by scripts/seed-parkruns.mjs from
+     *  parkrun's own events feed. distanceKm is straight-line from the
+     *  registry centroid, so treat it as "roughly", never as a journey. */
+    parkrunLocations?: (SourcedRecord & {
+      name: string;
+      area?: string;
+      distanceKm?: number;
+    })[];
   };
   community?: {
     runClubs?: (SourcedRecord & { name: string })[];

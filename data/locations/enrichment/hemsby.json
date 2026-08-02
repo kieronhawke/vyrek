@@ -1,0 +1,32 @@
+{
+  "slug": "hemsby",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "The Old Hall",
+        "type": "gym",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Flegg High parkrun",
+        "area": "Flegg High Ormiston Academy",
+        "distanceKm": 3.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Great Yarmouth North Beach parkrun",
+        "area": "Great Yarmouth North Beach",
+        "distanceKm": 9.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

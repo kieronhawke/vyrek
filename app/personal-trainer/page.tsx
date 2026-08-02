@@ -4,7 +4,7 @@ import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
 import { CtaButton } from "@/components/shared/cta-button";
-import { groupLocationsByRegion } from "@/lib/uk-locations";
+import { groupLocationsByRegion, regionSlug } from "@/lib/uk-locations";
 import { siteUrl } from "@/lib/blog/urls";
 
 export const metadata: Metadata = {
@@ -50,13 +50,23 @@ export default function PersonalTrainerHub() {
             </div>
           </header>
           <div className="mx-auto mt-16 max-w-4xl space-y-10">
+            {/* Top towns per region, then the region page for the rest.
+                Listing all 879 here made a 600 KB page with 1,748 links. */}
             {Object.entries(regions).map(([region, locs]) => (
               <section key={region} aria-label={region}>
-                <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-                  [ {region} ]
-                </h2>
+                <div className="flex flex-wrap items-baseline justify-between gap-3">
+                  <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+                    [ {region} ]
+                  </h2>
+                  <Link
+                    href={`/personal-trainer/in/${regionSlug(region)}`}
+                    className="font-mono text-[11px] uppercase tracking-[0.18em] text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
+                  >
+                    All {locs.length} in {region} →
+                  </Link>
+                </div>
                 <ul className="mt-4 flex flex-wrap gap-2.5">
-                  {locs.map((l) => (
+                  {locs.slice(0, 18).map((l) => (
                     <li key={l.slug}>
                       <Link
                         href={`/personal-trainer/${l.slug}`}

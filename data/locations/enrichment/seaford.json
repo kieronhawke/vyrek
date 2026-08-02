@@ -1,0 +1,55 @@
+{
+  "slug": "seaford",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Seaford Beach parkrun",
+        "area": "Newhaven and Seaford Sailing Club",
+        "distanceKm": 1.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peacehaven parkrun",
+        "area": "Centenary Park",
+        "distanceKm": 6.9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Seaford Head Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Downs Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.waveleisure.co.uk/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peacehaven & Telscombe FC training ground",
+        "type": "sports-centre",
+        "website": "http://www.peacehavenfc.com/grounds/peacehaven.htm",
+        "distanceKm": 6.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Peacehaven Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

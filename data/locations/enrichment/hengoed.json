@@ -1,0 +1,147 @@
+{
+  "slug": "hengoed",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Sue Noake Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.caerphillyleisurelifestyle.co.uk/en/centre/sue-noake-leisure-centre/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Centre for Sporting Excellence",
+        "type": "sports-centre",
+        "website": "https://www.facebook.com/pages/category/Stadium--Arena---Sports-Venue/CCB-Centre-for-Sporting-Excellence-769985439756346/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Islwyn Indoor Bowls club",
+        "type": "sports-centre",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "website": "https://www.puregym.com/gyms/blackwood",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Ty Coppi Adventures",
+        "type": "sports-centre",
+        "website": "https://www.tycoppiadventures.com/",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Elite Fitness",
+        "type": "gym",
+        "website": "https://elitefitnesswales.co.uk/",
+        "distanceKm": 4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Markham Community House and Leisure Centre",
+        "type": "gym",
+        "distanceKm": 6.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Rock UK Summit Centre Indoor Rock Climbing",
+        "type": "sports-centre",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Newbridge Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.caerphilly.gov.uk/Things-To-Do/Sports-and-Leisure/Leisure-centres",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Fitness Factory Blackwood",
+        "type": "gym",
+        "website": "https://www.fitness-factory.co.uk",
+        "distanceKm": 6.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Abercynon Sports Centre",
+        "type": "gym",
+        "website": "https://www.rctcbc.gov.uk/EN/Resident/SportsandLeisure/LeisureCentres/ChooseaCentre/AbercynonSportsCentre/AbercynonSportsCentre.aspx",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Deri RFC",
+        "type": "sports-centre",
+        "distanceKm": 7.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bedwas Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.caerphillyleisurelifestyle.co.uk/en/centre/bedwas-leisure-centre/",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Caerphilly Leisure Centre",
+        "type": "gym",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Penallta parkrun",
+        "area": "Penallta House",
+        "distanceKm": 1.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Aberbeeg parkrun",
+        "area": "Ebbw Valley Cycle Track",
+        "distanceKm": 9,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Coed Cefn-pwll-du parkrun",
+        "area": "Coed Cefn-pwll-du",
+        "distanceKm": 9.1,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Pontypridd parkrun",
+        "area": "Ynysangharad War Memorial Park",
+        "distanceKm": 9.2,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

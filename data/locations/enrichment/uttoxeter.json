@@ -1,0 +1,41 @@
+{
+  "slug": "uttoxeter",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "GT Fitness",
+        "type": "sports-centre",
+        "website": "https://www.gtfit.co.uk/",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Uttoxeter Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Eaton Hall Shooting Ground",
+        "type": "sports-centre",
+        "website": "https://www.doveridgeclaysports.co.uk",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Bramshall Road parkrun",
+        "area": "Bramshall Road Park",
+        "distanceKm": 0.5,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

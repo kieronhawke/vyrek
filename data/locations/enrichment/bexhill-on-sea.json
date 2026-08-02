@@ -1,0 +1,174 @@
+{
+  "slug": "bexhill-on-sea",
+  "terrain": {
+    "parkrunLocations": [
+      {
+        "name": "Hastings parkrun",
+        "area": "Hastings",
+        "distanceKm": 4.8,
+        "source": "https://images.parkrun.com/events.json",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  },
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Bexhill Leisure Centre",
+        "type": "gym",
+        "chain": "Freedom Leisure",
+        "website": "http://www.freedom-leisure.co.uk/centres.asp?section=245",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Sidley Martlets Bowls Club",
+        "type": "sports-centre",
+        "website": "http://www.sidleymartletsbowlsclub.org.uk/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Physiques Gym",
+        "type": "gym",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bexhill Amateur Athletic Club",
+        "type": "sports-centre",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Amherst Road Sports & Social Club",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Freestyle Combat Academy",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "O’Sullivan's Snooker & Pool Club",
+        "type": "sports-centre",
+        "website": "http://www.osullivanssnookerclub.com",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Up-Grade Martial Arts",
+        "type": "sports-centre",
+        "website": "https://up-gradetraining.org/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Veena & The Moon",
+        "type": "gym",
+        "website": "https://www.veenaandthemoon.com/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bexhill Tennis Club",
+        "type": "sports-centre",
+        "website": "https://sites.google.com/a/pitiana.com/bexhill-tennis-club",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bexhill Sailing Club",
+        "type": "sports-centre",
+        "website": "https://bexhillsailing.club",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Gullivers Bowls Club",
+        "type": "sports-centre",
+        "website": "http://gulliversbowlsclub.co.uk",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Stackz",
+        "type": "gym",
+        "website": "https://www.stackzgym.co.uk/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bexhill Rowing Club",
+        "type": "sports-centre",
+        "website": "http://bexhillrowingclub.co.uk/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Battle Abbey School Swimming Pool",
+        "type": "sports-centre",
+        "website": "https://battleabbeyschool.com/prep-school/prep-school-swimming-pool/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Egerton Park Indoor Bowls Club",
+        "type": "sports-centre",
+        "website": "https://www.epibc.co.uk/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bexhill Amateur Boxing Club",
+        "type": "sports-centre",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bexhill Cricket Club",
+        "type": "sports-centre",
+        "website": "http://www.bexhillcricketclub.co.uk/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Bexhill United F.C.",
+        "type": "sports-centre",
+        "website": "http://www.pitchero.com/clubs/bexhillunited",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Polegrove Bowls Club",
+        "type": "sports-centre",
+        "website": "https://polegrovebowlsclub.org.uk/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}

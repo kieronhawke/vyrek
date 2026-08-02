@@ -1,0 +1,29 @@
+{
+  "slug": "halesworth",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Perform Fitness",
+        "type": "gym",
+        "website": "https://performfitnessgym.com/halesworth",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Dairy Hill Sports Complex",
+        "type": "sports-centre",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      },
+      {
+        "name": "Halesworth Campus",
+        "type": "sports-centre",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-01"
+      }
+    ]
+  }
+}
