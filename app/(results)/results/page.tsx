@@ -19,7 +19,9 @@ import { SlidersHorizontal, GitCompareArrows, Percent, Trophy } from "lucide-rea
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "HYROX Results, Rankings & Race Analytics | Suth Performance",
+  // layout.tsx appends " · Suth Performance", so naming it here doubled
+  // it — and with a pipe, against the dot separator used sitewide.
+  title: "HYROX results, rankings and race analytics",
   description:
     "Every HYROX result, ranking and split, searchable in one place. Compare athletes, "
     + "simulate your race, and see exactly where your time goes. Built by Suth Performance.",

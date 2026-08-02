@@ -9,7 +9,10 @@ import { GeoInternational } from "@/components/landing/geo-international";
 import { siteUrl } from "@/lib/blog/urls";
 
 export const metadata: Metadata = {
-  title: "Online personal training across the UK · Suth Performance",
+  // app/layout.tsx appends " · Suth Performance". Naming it here too
+  // rendered "… · Suth Performance · Suth Performance" and ate 20
+  // characters of a title that has to fit in about 65.
+  title: "Online personal training across the UK",
   description:
     "Online personal training from a HYROX Elite 15 athlete. Personalised weekly programming that adapts to you, wherever you are in the UK. Starts with a free consultation.",
   alternates: { canonical: `${siteUrl()}/personal-trainer` },
