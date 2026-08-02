@@ -75,3 +75,27 @@ existing post. Re-run the script after any edit to the CSVs.
    commercial value. The waves are the sequence.
 2. **Buyer-type filter** (hard rule 2). Zero posts target PT-jobs,
    PT-courses or facility intent, however easy those keywords look.
+
+## Deliberate non-coverage: the Misspellings cluster
+
+`docs/strategy/data/keywords.csv` carries 12 keywords in a `Misspellings`
+cluster totalling 3,100/mo: `hydrox training` (720), `hydrox competition`,
+`hydrox sport`, `hirox sports`, `hirox sport`, `hydrox uk`, `hydrox gym`,
+`hydrox events`, `hyrdox`, `what is hyroc`, `hryox`, `hyrox.`
+
+**No posts are planned for these, and that is the decision, not an omission.**
+
+They are almost all navigational: someone mistyped the brand name and wants
+HYROX. Building a dedicated page per misspelling produces twelve near-identical
+thin pages whose only differentiator is a typo, which is the shape of content
+Google's scaled-content and doorway-page guidance exists to catch. The upside
+is small and the downside is a sitewide quality signal.
+
+Handled instead on-page, in `content/blog/hyrox-meaning-what-the-word-actually-refers-to.mdx`,
+which carries a short section naming the common misspellings in prose and
+stating plainly that they all refer to the same event. That is genuinely useful
+to a reader who mistyped, and it gives the engine something to match without
+spawning a page per variant.
+
+Revisit only if the misspellings show real impressions in Search Console with
+no matching page, which is evidence rather than speculation.

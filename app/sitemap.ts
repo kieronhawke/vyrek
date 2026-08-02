@@ -42,20 +42,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
    */
   const notInFuture = (d: Date) => (d.getTime() > now.getTime() ? now : d);
 
+  /**
+   * ONLY INDEXABLE URLS BELONG IN HERE.
+   *
+   * app/layout.tsx sets `robots: { index: false, follow: false }` as the
+   * sitewide default, and individual routes opt back in with
+   * `robots: { index: true, follow: true }` in their own generateMetadata.
+   * The marketing pages have not opted in yet, so on 2026-08-02 this file was
+   * submitting nine URLs that serve `noindex`: /, /quiz, /programmes,
+   * /how-it-works, /pricing, /about, /contact, /press and /account/refer
+   * (that last one is also Disallow'd in robots.txt), plus the four /legal
+   * pages.
+   *
+   * Submitting a noindex URL is a contradiction: the sitemap says "index
+   * this", the page says "do not". Search Console reports it as an error
+   * ("Submitted URL marked noindex") and it spends crawl budget on pages that
+   * can never rank.
+   *
+   * When the noindex switch is flipped for the marketing pages, add them back
+   * here in the same move. The two have to change together.
+   */
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${SITE_URL}/`, lastModified: now, priority: 1.0, changeFrequency: "weekly" },
-    { url: `${SITE_URL}/quiz`, lastModified: now, priority: 0.9, changeFrequency: "monthly" },
-    { url: `${SITE_URL}/programmes`, lastModified: now, priority: 0.9, changeFrequency: "monthly" },
-    { url: `${SITE_URL}/how-it-works`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
-    { url: `${SITE_URL}/pricing`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
     { url: `${SITE_URL}/blog`, lastModified: now, priority: 0.9, changeFrequency: "weekly" },
-    { url: `${SITE_URL}/about`, lastModified: now, priority: 0.6, changeFrequency: "monthly" },
-    { url: `${SITE_URL}/contact`, lastModified: now, priority: 0.5, changeFrequency: "yearly" },
-    { url: `${SITE_URL}/press`, lastModified: now, priority: 0.4, changeFrequency: "monthly" },
     { url: `${SITE_URL}/press/brand-guidelines`, lastModified: now, priority: 0.3, changeFrequency: "yearly" },
-    { url: `${SITE_URL}/account/refer`, lastModified: now, priority: 0.4, changeFrequency: "monthly" },
     // Programmatic hubs
     { url: `${SITE_URL}/hyrox`, lastModified: now, priority: 0.9, changeFrequency: "weekly" },
+    { url: `${SITE_URL}/hyrox/guide`, lastModified: now, priority: 0.9, changeFrequency: "weekly" },
     { url: `${SITE_URL}/hyrox/stations`, lastModified: now, priority: 0.9, changeFrequency: "monthly" },
     { url: `${SITE_URL}/hyrox/events`, lastModified: now, priority: 0.9, changeFrequency: "weekly" },
     { url: `${SITE_URL}/hyrox/gear`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
@@ -63,11 +75,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/compare`, lastModified: now, priority: 0.7, changeFrequency: "monthly" },
     { url: `${SITE_URL}/tools`, lastModified: now, priority: 0.7, changeFrequency: "monthly" },
     { url: `${SITE_URL}/topics`, lastModified: now, priority: 0.8, changeFrequency: "weekly" },
-    // Legal
-    { url: `${SITE_URL}/legal/privacy`, lastModified: now, priority: 0.3, changeFrequency: "yearly" },
-    { url: `${SITE_URL}/legal/terms`, lastModified: now, priority: 0.3, changeFrequency: "yearly" },
-    { url: `${SITE_URL}/legal/cookies`, lastModified: now, priority: 0.3, changeFrequency: "yearly" },
-    { url: `${SITE_URL}/legal/refunds`, lastModified: now, priority: 0.3, changeFrequency: "yearly" },
+    // The four /legal pages are omitted deliberately: they serve noindex, and
+    // legal boilerplate is not content anyone searches for. See the note above.
   ];
 
   // Query-string and anchor variants of canonical pages were removed from
