@@ -38,9 +38,9 @@ export default function ResultsLayout({ children }: { children: React.ReactNode 
   return (
     <>
       <MarketingNav />
-      {/* Spacer for the fixed marketing nav. Without it the sub-nav renders
-          underneath the wordmark — see the first self-critique pass. */}
-      <div className="pt-[var(--results-nav-offset)]">
+      {/* Spacer for the fixed marketing nav and cookie strip. Fixed height,
+          not the sticky offset variable — see results-tokens.css. */}
+      <div className="pt-[var(--results-content-offset)]">
         <ResultsShell>
           <main id="main" className="min-h-screen pb-20 md:pb-0">
             {children}

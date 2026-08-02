@@ -75,11 +75,8 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
   const result = await source.getResult(id);
   if (!result) notFound();
 
-  // The full division field, for percentile and what-if projections.
-  const ranking = await source.getRanking(result.eventSlug, result.division, {
-    limit: Number.MAX_SAFE_INTEGER,
-  });
-  const fieldTimes = (ranking?.rows ?? []).map((r) => r.finishSeconds).sort((a, b) => a - b);
+  // Just the times — the field is only needed to place this athlete in it.
+  const fieldTimes = await source.getDivisionFinishTimes(result.eventSlug, result.division);
   const distribution = buildDistribution(fieldTimes);
   const percentile = percentileOf(distribution, result.finishSeconds);
 

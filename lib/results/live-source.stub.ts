@@ -72,6 +72,11 @@ export const liveDataSource: ResultsDataSource = {
   // correction waiting to happen.
   getRecords: NOT_IMPLEMENTED("getRecords"),
 
+  // TODO(live): ascending finish times for a division, nothing else.
+  // Serve this from a precomputed, indexed column. Result pages call it on
+  // every render, and building it by materialising result rows costs seconds.
+  getDivisionFinishTimes: NOT_IMPLEMENTED("getDivisionFinishTimes"),
+
   // TODO(live): station time distribution for a division.
   // Needs enough samples to be meaningful. Precompute per season and cache;
   // this must never scan every result on request.

@@ -28,7 +28,12 @@ export type DivisionReference = {
   sampleSize: number;
 };
 
-const FILE = join(process.cwd(), "data", "results-demo", "references.json");
+const FILE = join(
+  process.cwd(),
+  "data",
+  process.env.NEXT_PUBLIC_DATA_MODE === "live" ? "results-live" : "results-demo",
+  "references.json",
+);
 
 let cache: DivisionReference[] | null = null;
 

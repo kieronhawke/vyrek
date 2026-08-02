@@ -14,7 +14,8 @@
     "test": "node scripts/generate-demo-data.ts && vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "generate:results": "node scripts/generate-demo-data.ts"
+    "generate:results": "node scripts/generate-demo-data.ts",
+    "import:results": "node scripts/import-results.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
