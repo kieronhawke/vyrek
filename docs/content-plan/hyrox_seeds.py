@@ -259,8 +259,8 @@ add(W, 4, "HYROX circuit training: build race rhythm in a group class", "hyrox c
 
 # ── CLUSTER H6: Gear (hub /gear) ─────────────────────────────────────
 G = "Gear"
-add(G, 1, "Best HYROX shoes 2026: tested by racing feet", "hyrox trainers",
-    "2,900/KD22 head commercial term; honest testing criteria, updated seasonally", "gen:worn racing shoes beside sled track chalk marks, top-down")
+add(G, 1, "HYROX trainers: how to choose, and what the race actually demands", "hyrox trainers",
+    "2,900/KD22 head commercial term. RETITLED 2026-08-02: was 'Best HYROX shoes 2026: tested by racing feet', which claims testing we have not done (hard rule 1). Write as selection criteria grounded in the eight stations, not a ranked verdict, until a real test exists", "gen:worn racing shoes beside sled track chalk marks, top-down")
 add(G, 1, "Best trainers for HYROX: the shortlist by foot type and budget", "best trainers for hyrox",
     "1,000/KD25 sibling intent; chooser-format by need", "chart:shoe chooser decision tree")
 add(G, 1, "HYROX bag checklist: everything in a racer's kit bag", "hyrox bag",
