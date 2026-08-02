@@ -98,3 +98,54 @@ athletes depicted. Swap for real station photography when available.
 | station-farmers.jpg | Farmers carry with kettlebells |
 | station-sandbag.jpg | Sandbag walking lunge |
 | station-wall-balls.jpg | Wall ball throw at target |
+
+**Superseded for seven of the eight stations** by the Elite 15 set below, which
+is real race photography of Ben. Sled push has no Elite 15 frame, so it keeps
+its generated illustration rather than borrowing a photo of another station.
+
+## Elite 15 race photography (39 photos)
+
+Added 2026-08-02. **These are the photos this document previously recorded as
+missing** ("Elite 15 Race Pics zip (218 bytes) contained an empty folder;
+re-download needed"). Supplied by Kieron as
+`~/Downloads/sutherlandse15-photo-download-1of1/Highlights/`.
+
+Ben Sutherland racing the Elite 15 at HYROX Warsaw (National Stadium), plus two
+frames outside the arena on the Road to Stockholm. Originals are 4000x6000 and
+stay outside the repo per the existing convention.
+
+Web encodes: `public/media/images/elite15/`
+- `<slug>.jpg` — 1200x1800, 2:3, the native shape
+- `<slug>-wide.jpg` — 1800x1013, 16:9 banner crop, generated for 23 of the 39
+  where the recrop keeps the athlete in frame
+
+**Do not hand-type these paths.** They are catalogued in `lib/photo-library.ts`
+with alt text, subject, station mapping, quality and a mono/colour
+recommendation, and `lib/photo-library.test.ts` fails if a file it names stops
+existing. Black and white is applied in CSS, so there is no second set of files.
+
+These are the strongest images on the site: real race photography, of the
+founder, at the top division of the sport we sell coaching for. They take
+precedence over the track and camp sets wherever both would work.
+
+| Station | Frames | Best (quality 5) |
+|---|---|---|
+| Ski erg | 1 | ski-erg-pull — Ben on the handles, athletes either side |
+| Sled pull | 4 | sled-pull-effort — hand over hand, body low over the line |
+| Burpee broad jump | 4 | burpee-broad-jump-solo — chest to the floor between lane markings |
+| Row | 4 | row-drive — Ben at the catch, crowd behind the barrier |
+| Farmers carry | 2 | farmers-carry-front — Ben straight at camera with two kettlebells |
+| Sandbag lunge | 1 | sandbag-lunge-front — Ben driving out of a lunge, 30kg across the shoulders |
+| Wall balls | 5 | wall-balls-throw — arms fully extended overhead |
+| Sled push | 0 | none in this set |
+
+| Group | Frames | Notes |
+|---|---|---|
+| Running | 9 | Stadium loop and perimeter boards. `run-pack-stadium` and `run-group-front` are the widest and carry a hero on their own |
+| Portraits | 4 | Three are Ben. `portrait-front-scoreboard` and `portrait-scoreboard` are the press-grade frames |
+| Recovery | 3 | Between-station frames — bent over, hands on hips. Honest rather than heroic; good for the harder editorial |
+| Team | 2 | Two of the team on the arena steps, Road to Stockholm banners. **Kept in colour** — the kit and banners are doing the work |
+
+**Caption rule applied:** every alt text describes only what is visible in the
+frame. No result, time or placing is claimed from a photograph, and Ben is
+named only in the frames where he is identifiably the subject.
