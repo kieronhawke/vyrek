@@ -2,7 +2,16 @@ import Link from "next/link";
 import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { Monogram } from "@/components/shared/logo";
+import { FooterLocations } from "./footer-locations";
 
+/**
+ * Whole sections of the site were missing from here.
+ *
+ * The footer carried Product, Journal, Company and Legal. It did not carry
+ * /hyrox, /hyrox/events, /hyrox/stations, /results, /plans, /tools, /compare
+ * or /topics — several thousand pages with no route in from anywhere except
+ * the nav's four links. Locations are handled separately, in FooterLocations.
+ */
 const COLUMNS = [
   {
     heading: "Product",
@@ -10,7 +19,18 @@ const COLUMNS = [
       { label: "Programmes", href: "/programmes" },
       { label: "Suth Club", href: "/club" },
       { label: "How it works", href: "/how-it-works" },
+      { label: "Training plans", href: "/plans" },
       { label: "Partner programme", href: "/partners" },
+    ],
+  },
+  {
+    heading: "Hyrox",
+    links: [
+      { label: "Race calendar", href: "/hyrox/events" },
+      { label: "The eight stations", href: "/hyrox/stations" },
+      { label: "Results and rankings", href: "/results" },
+      { label: "Gear guides", href: "/hyrox/gear" },
+      { label: "Hyrox compared", href: "/compare" },
     ],
   },
   {
@@ -19,8 +39,8 @@ const COLUMNS = [
       { label: "All guides", href: "/blog" },
       { label: "First race", href: "/blog/category/first-race" },
       { label: "Training", href: "/blog/category/training" },
-      { label: "Technique", href: "/blog/category/technique" },
-      { label: "RSS feed", href: "/blog/rss.xml" },
+      { label: "Topic hubs", href: "/topics" },
+      { label: "Free tools", href: "/tools" },
     ],
   },
   {
@@ -29,15 +49,9 @@ const COLUMNS = [
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
       { label: "Press", href: "/press" },
-    ],
-  },
-  {
-    heading: "Legal",
-    links: [
       { label: "Privacy", href: "/legal/privacy" },
       { label: "Terms", href: "/legal/terms" },
       { label: "Cookies", href: "/legal/cookies" },
-      { label: "Refunds", href: "/legal/refunds" },
     ],
   },
 ];
@@ -65,6 +79,8 @@ export function MarketingFooter() {
             </div>
           ))}
         </div>
+
+        <FooterLocations />
 
         <div className="mt-16 flex flex-col items-start justify-between gap-6 border-t border-suth-border-subtle pt-8 md:flex-row md:items-center">
           <div className="flex items-center gap-3 text-suth-text">
