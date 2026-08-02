@@ -164,8 +164,11 @@ test.describe("member shell", () => {
   }) => {
     await page.goto("/control-preview/app/plan");
     await expect(page.getByRole("heading", { name: "Your plan" })).toBeVisible();
-    // The whole twelve-week arc, not just this week.
-    await expect(page.getByText("Week 4 of 12")).toBeVisible();
+    // The whole twelve-week arc, not just this week. Scoped to the page,
+    // because the same string is now in the chrome on every screen.
+    await expect(
+      page.locator("main").getByText("Week 4 of 12").first(),
+    ).toBeVisible();
     // Attributed to a person, because that is what is being paid for.
     await expect(page.getByText("Ben Sutherland")).toBeVisible();
     await expect(page.getByText(/Set this block/)).toBeVisible();
@@ -409,5 +412,50 @@ test.describe("coach thread", () => {
     await expect(
       page.getByRole("heading", { name: /Where the race is won/ }),
     ).toBeVisible();
+  });
+});
+
+/**
+ * SESSION STRUCTURE AND BLOCK PROGRESS
+ *
+ * Two things the second reference teardown produced: RPE and numbered
+ * intervals (RoxFit is closer to our sport than MarchOn and structures a
+ * session better), and block progress in the chrome rather than buried on one
+ * screen (Runna keeps it in the top bar of the whole app).
+ */
+test.describe("session structure", () => {
+  test("a session is numbered intervals, not a paragraph", async ({ page }) => {
+    await page.goto("/control-preview/app/today");
+    // The quantity leads, the movement follows.
+    await expect(page.getByText("Sled push", { exact: true })).toBeVisible();
+    await expect(page.getByText("60% race weight")).toBeVisible();
+    // Repeat count is a chip, not prose.
+    await expect(page.getByText("Repeat 6x")).toBeVisible();
+  });
+
+  test("RPE is on the prescription and is not colour-only", async ({ page }) => {
+    await page.goto("/control-preview/app/today");
+    await expect(page.getByText("8/10").first()).toBeVisible();
+    // The bars are decorative; the number and a spoken label carry it.
+    await expect(
+      page.getByText(/Hard effort, 8 out of 10 perceived exertion/).first(),
+    ).toBeAttached();
+  });
+
+  test("block progress is in the chrome of every screen", async ({ page }) => {
+    for (const path of [
+      "/control-preview/app/today",
+      "/control-preview/app/plan",
+      "/control-preview/app/nutrition",
+      "/control-preview/app/coach",
+      "/control-preview/app/account",
+    ]) {
+      await page.goto(path);
+      // Rendered in both chromes with one hidden per width, so this has to
+      // pick the visible copy rather than the first in DOM order.
+      await expect(
+        page.locator('[title*="of your training block"]:visible').first(),
+      ).toBeVisible();
+    }
   });
 });

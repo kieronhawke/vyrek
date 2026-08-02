@@ -202,6 +202,29 @@
   }
 }
 
+/* ── Rail block progress ──────────────────────────────────────────────── */
+
+.member-railprogress {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .member-railprogress {
+    position: fixed;
+    inset-inline-start: 0;
+    top: calc(var(--space-6) + var(--space-1));
+    z-index: 31;
+    display: flex;
+    width: var(--rail-w);
+    padding: 0 var(--space-3);
+  }
+
+  /* The rail's own items start below the wordmark and the progress ring. */
+  .member-rail {
+    padding-top: var(--space-10);
+  }
+}
+
 /* ── Mobile top bar ───────────────────────────────────────────────────── */
 
 .member-topbar {

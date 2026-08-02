@@ -8,10 +8,10 @@ import {
   ChipRow,
   Eyebrow,
   PhotoHeader,
-  Prescription,
   PrimaryAction,
-  RestBand,
 } from "@/components/member/ui";
+import { SessionBlocks } from "@/components/member/session-blocks";
+import { DEMO_BLOCKS, countIntervals } from "@/lib/member/session-structure";
 import { HEROES, photoForStation, pickPhoto, type StationSlug } from "@/lib/photo-library";
 
 /**
@@ -49,7 +49,7 @@ export function SessionScreen({
   const hero = pickPhoto(HEROES, day.slug);
 
   // Today's session is the only one the fixtures describe block by block.
-  const blocks = day.isToday ? DEMO_TODAY.blocks : [];
+  const blocks = day.isToday ? DEMO_BLOCKS : [];
 
   const stations = rest
     ? []
@@ -109,33 +109,10 @@ export function SessionScreen({
 
       {blocks.length > 0 ? (
         <section style={{ marginBottom: "var(--space-4)" }}>
-          <Eyebrow right={`${day.durationMin ?? 0} min`}>The session</Eyebrow>
-          <Card padded={false}>
-            {blocks.map((block, i) => (
-              <div
-                key={block.label}
-                style={{
-                  padding: "var(--space-2)",
-                  borderTop: i === 0 ? "none" : "1px solid var(--border)",
-                }}
-              >
-                <ChipRow>
-                  <Chip tone={i === 0 ? "neutral" : "accent"}>
-                    {i === 0 ? "W" : String.fromCharCode(64 + i)}
-                  </Chip>
-                  {block.duration ? <Chip>{block.duration}</Chip> : null}
-                </ChipRow>
-                <Prescription
-                  quantity={block.duration ?? ""}
-                  movement={block.label}
-                  detail={block.detail}
-                />
-                {i < blocks.length - 1 ? (
-                  <RestBand>Rest as needed before the next block</RestBand>
-                ) : null}
-              </div>
-            ))}
-          </Card>
+          <Eyebrow right={`${countIntervals(blocks)} intervals · ${day.durationMin ?? 0} min`}>
+            The session
+          </Eyebrow>
+          <SessionBlocks blocks={blocks} />
         </section>
       ) : !rest ? (
         <section style={{ marginBottom: "var(--space-4)" }}>

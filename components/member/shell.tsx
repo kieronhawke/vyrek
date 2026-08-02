@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { MemberNav } from "@/components/member/nav";
 import { Wordmark } from "@/components/shared/logo";
+import { BlockProgress } from "@/components/member/block-progress";
 
 /**
  * The member area frame. One shell for every member page.
@@ -32,12 +33,18 @@ export function MemberShell({
         </Link>
       </div>
 
+      {/* Desktop: block progress sits under the wordmark, above the rail. */}
+      <div className="member-railprogress">
+        <BlockProgress />
+      </div>
+
       {/* Mobile: wordmark left, account right. The rail replaces this above
           768px, so the avatar is not duplicated. */}
       <header className="member-topbar">
         <Link href={base} aria-label="Suth Performance">
           <Wordmark size="sm" accent="var(--accent)" className="text-[color:var(--text)]" />
         </Link>
+        <BlockProgress compact />
         {initials ? (
           <Link
             href={`${base}/account`}

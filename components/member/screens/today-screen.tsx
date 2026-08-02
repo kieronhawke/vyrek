@@ -15,10 +15,10 @@ import {
   ChipRow,
   Eyebrow,
   PhotoHeader,
-  Prescription,
   PrimaryAction,
-  RestBand,
 } from "@/components/member/ui";
+import { SessionBlocks } from "@/components/member/session-blocks";
+import { DEMO_BLOCKS, countIntervals, peakEffort } from "@/lib/member/session-structure";
 import { HEROES, pickPhoto } from "@/lib/photo-library";
 import { weekFor } from "@/lib/member/week";
 
@@ -48,6 +48,7 @@ export function TodayScreen({
   const hero = pickPhoto(HEROES, `week-${DEMO_TODAY.weekNumber}`);
   const week = weekFor();
   const done = week.filter((d) => d.done).length;
+  const peak = peakEffort(DEMO_BLOCKS);
 
   return (
     <>
@@ -70,11 +71,12 @@ export function TodayScreen({
       {/* The session, as one unmissable object. */}
       <section style={{ marginBottom: "var(--space-4)" }}>
         <Eyebrow right={`${DEMO_TODAY.durationMin} min`}>Today</Eyebrow>
-        <Card padded={false}>
+        <Card padded={false} style={{ marginBottom: "var(--space-2)" }}>
           <div style={{ padding: "var(--space-2)" }}>
             <ChipRow>
               <Chip tone="accent">{DEMO_TODAY.type}</Chip>
-              <Chip>{DEMO_TODAY.intensity}</Chip>
+              <Chip>{countIntervals(DEMO_BLOCKS)} intervals</Chip>
+              {peak ? <Chip tone="warn">Peak {peak}/10</Chip> : null}
             </ChipRow>
             <h3
               style={{
@@ -88,34 +90,6 @@ export function TodayScreen({
               {DEMO_TODAY.title}
             </h3>
           </div>
-
-          {DEMO_TODAY.blocks.map((block, i) => (
-            <div
-              key={block.label}
-              style={{
-                padding: "var(--space-2)",
-                borderTop: "1px solid var(--border)",
-              }}
-            >
-              <ChipRow>
-                {/* Warm-up gets W, working blocks a letter — the lettered
-                    stops from the teardown, so position in the session is
-                    legible without counting. */}
-                <Chip tone={i === 0 ? "neutral" : "accent"}>
-                  {i === 0 ? "W" : String.fromCharCode(64 + i)}
-                </Chip>
-                {block.duration ? <Chip>{block.duration}</Chip> : null}
-              </ChipRow>
-              <Prescription
-                quantity={block.duration ?? ""}
-                movement={block.label}
-                detail={block.detail}
-              />
-              {i < DEMO_TODAY.blocks.length - 1 ? (
-                <RestBand>Rest as needed before the next block</RestBand>
-              ) : null}
-            </div>
-          ))}
 
           {DEMO_TODAY.notes ? (
             <div
@@ -134,6 +108,8 @@ export function TodayScreen({
             </div>
           ) : null}
         </Card>
+
+        <SessionBlocks blocks={DEMO_BLOCKS} />
 
         <div style={{ marginTop: "var(--space-2)" }}>
           <PrimaryAction href="/train">Start session</PrimaryAction>
