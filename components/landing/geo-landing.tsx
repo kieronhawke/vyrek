@@ -99,14 +99,7 @@ export function variantCopy(
         href: `/personal-trainer/${loc.slug}`,
         label: `Looking for general coaching instead? Personal training in ${name}`,
       },
-      // Only the five race cities keep a /hyrox/{city} page; the rest now
-      // redirect here, so linking to them would bounce the reader straight back.
-      guideLink: isRaceCity(loc.slug)
-        ? {
-            href: `/hyrox/${loc.slug}`,
-            label: `Hyrox ${name}: venue, dates and how to prepare`,
-          }
-        : null,
+      guideLink: raceGuideLink(loc, seo, name),
     };
   }
   return {
@@ -154,7 +147,45 @@ export function variantCopy(
       href: `/hyrox-training/${loc.slug}`,
       label: `Training for a Hyrox race? Hyrox training in ${name}`,
     },
-    guideLink: null,
+    guideLink: raceGuideLink(loc, seo, name),
+  };
+}
+
+/**
+ * The link from a location page into the race calendar.
+ *
+ * Three cases, in order:
+ *
+ *   1. One of the five UK race cities, which keep a /hyrox/{city} guide.
+ *   2. Anywhere else with a race on the calendar — the race's own page. For an
+ *      international city that is the race it hosts; for a UK town it is the
+ *      nearest one, which is the question the section it sits in is answering.
+ *   3. No race we can name, so no link rather than a dead end.
+ *
+ * The 113 race pages and the 3,946 location pages were two halves of the same
+ * subject with nothing joining them. Only the five UK race cities linked out at
+ * all, and nothing linked back. Note the other 89 UK towns must NOT be sent to
+ * /hyrox/{town}: those 308 to their own coaching page, so the link would bounce
+ * the reader straight back to where they started.
+ */
+function raceGuideLink(
+  loc: UkLocation,
+  seo: GeoSeo,
+  name: string,
+): { href: string; label: string } | null {
+  if (isRaceCity(loc.slug)) {
+    return {
+      href: `/hyrox/${loc.slug}`,
+      label: `Hyrox ${name}: venue, dates and how to prepare`,
+    };
+  }
+  const race = seo.nearestRace;
+  if (!race) return null;
+  return {
+    href: `/hyrox/events/${race.eventSlug}`,
+    label: seo.hostsRace
+      ? `${race.eventName}: dates, venue and when to start`
+      : `Your nearest race: ${race.eventName}`,
   };
 }
 

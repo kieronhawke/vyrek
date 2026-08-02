@@ -256,6 +256,51 @@ export function getCountryBySlug(
   };
 }
 
+/**
+ * The countries, grouped by continent, for the hub pages.
+ *
+ * The two hubs listed 12 UK regions and nothing else, so every country
+ * directory and all 91 race cities were reachable only from the sitemap —
+ * exactly the orphan problem `nearbyTowns` was written to fix for the UK
+ * towns, reintroduced for the international set. Two hops from the hub
+ * (continent → country → city) keeps the hub small while making the whole
+ * set reachable by a crawler and by a reader.
+ *
+ * Continents are ordered by how much of the calendar sits in them, so Europe
+ * and North America come first rather than alphabetically.
+ */
+export function countriesByContinent(): {
+  continent: string;
+  countries: { slug: string; name: string; cities: number; races: number }[];
+}[] {
+  const byContinent = new Map<string, Map<string, RaceCity[]>>();
+  for (const c of RACE_CITIES) {
+    const cont = c.continent ?? "Elsewhere";
+    if (!byContinent.has(cont)) byContinent.set(cont, new Map());
+    const countries = byContinent.get(cont)!;
+    if (!countries.has(c.countrySlug)) countries.set(c.countrySlug, []);
+    countries.get(c.countrySlug)!.push(c);
+  }
+
+  return [...byContinent.entries()]
+    .map(([continent, countries]) => ({
+      continent,
+      countries: [...countries.entries()]
+        .map(([slug, cities]) => ({
+          slug,
+          name: cities[0].country,
+          cities: cities.length,
+          races: cities.reduce((n, c) => n + c.races.length, 0),
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name)),
+    }))
+    .sort(
+      (a, b) =>
+        b.countries.reduce((n, c) => n + c.cities, 0) -
+        a.countries.reduce((n, c) => n + c.cities, 0),
+    );
+}
+
 /** Total races on the calendar for a country, for the directory copy. */
 export function countryRaceCount(slug: string): number {
   return RACE_CITIES.filter((c) => c.countrySlug === slug).reduce(

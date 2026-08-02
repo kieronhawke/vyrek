@@ -5,6 +5,7 @@ import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
 import { CtaButton } from "@/components/shared/cta-button";
 import { groupLocationsByRegion, regionSlug } from "@/lib/uk-locations";
+import { GeoInternational } from "@/components/landing/geo-international";
 import { siteUrl } from "@/lib/blog/urls";
 
 export const metadata: Metadata = {
@@ -80,6 +81,7 @@ export default function PersonalTrainerHub() {
               </section>
             ))}
           </div>
+          <GeoInternational base="/personal-trainer" />
         </Container>
       </main>
       <MarketingFooter />

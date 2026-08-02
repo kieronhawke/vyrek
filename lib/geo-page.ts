@@ -3,6 +3,7 @@ import { getLocationBySlug, listLocationSlugs } from "@/lib/uk-locations";
 import type { GeoSeo } from "@/lib/locations/seo";
 import { getGeoSeo, geoRobots } from "@/lib/locations/seo";
 import {
+  RACE_CITIES,
   getRaceCityBySlug,
   getRaceCityGeo,
   listRaceCitySlugs,
@@ -85,4 +86,36 @@ export function resolveGeo(slug: string): ResolvedGeo | undefined {
 /** Local copy so this module does not pull the whole UK catalogue in. */
 function regionSlugOf(region: string): string {
   return region.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+}
+
+/**
+ * The coaching page for a race's host city, if we have one.
+ *
+ * The 113 race pages carried no link into the geo programme and the city pages
+ * carried none back, which left the two halves of the site that are most
+ * obviously about the same thing — this race, and the twelve weeks before it —
+ * completely disconnected. It is the highest-intent link available: somebody
+ * reading the HYROX Cologne page has already told us what they want.
+ *
+ * Matched on name *and* country rather than a slugified name, because four
+ * cities exist twice in the slug space. Slugifying "Boston" alone would send a
+ * reader of the Massachusetts race to a page about Lincolnshire.
+ */
+export function coachingSlugForRace(race: {
+  city: string;
+  country: string | null;
+}): string | undefined {
+  const intl = RACE_CITIES.find(
+    (c) => c.name === race.city && c.country === race.country,
+  );
+  if (intl) return intl.slug;
+
+  // UK host cities live in the UK registry rather than the race-city set.
+  const slug = race.city
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return getLocationBySlug(slug) ? slug : undefined;
 }

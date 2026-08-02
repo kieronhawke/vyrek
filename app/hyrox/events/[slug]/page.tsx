@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { coachingSlugForRace } from "@/lib/geo-page";
 import { notFound } from "next/navigation";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
@@ -72,6 +73,7 @@ export default async function RacePage({
   const flag = flagFor(race.country);
   const days = daysUntil(race);
   const build = buildStarts(race);
+  const coachingSlug = coachingSlugForRace(race);
   const nearby = race.country
     ? racesInCountry(race.country)
         .filter((r) => r.slug !== race.slug)
@@ -184,6 +186,23 @@ export default async function RacePage({
                   </CtaButton>
                 </div>
               </div>
+            ) : null}
+
+            {/* The city's own coaching page: the gyms actually near this venue
+                and what training here involves. Deliberately outside the block
+                above, which only renders for a race still ahead of us — a race
+                that has been run keeps its page forever, and it would otherwise
+                have no route into the rest of the site at all. */}
+            {coachingSlug ? (
+              <p className="mt-8 text-base text-suth-text-secondary">
+                <Link
+                  href={`/hyrox-training/${coachingSlug}`}
+                  className="font-medium text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
+                >
+                  Training for Hyrox in {race.city} →
+                </Link>{" "}
+                the gyms near the venue, and what the eight stations ask of you.
+              </p>
             ) : null}
 
             <p className="mt-8 text-sm text-suth-text-secondary">
