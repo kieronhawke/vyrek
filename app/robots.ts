@@ -69,7 +69,9 @@ export default function robots(): MetadataRoute.Robots {
         disallow: PRIVATE_PATHS,
       },
     ],
-    sitemap: [`${siteUrl}/sitemap.xml`],
+    // Results has its own sitemap: it adds thousands of URLs on a different
+    // cadence and app/sitemap.ts is shared across lanes.
+    sitemap: [`${siteUrl}/sitemap.xml`, `${siteUrl}/sitemap-results.xml`],
     host: siteUrl,
   };
 }
