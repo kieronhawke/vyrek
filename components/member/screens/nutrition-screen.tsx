@@ -1,4 +1,5 @@
-import { DEMO_FOOD_LOG, DEMO_TARGETS, DEMO_TODAY, DEMO_WEEK } from "@/lib/member/demo";
+import { DEMO_FOOD_LOG, DEMO_TARGETS, DEMO_TODAY } from "@/lib/member/demo";
+import { weekFor } from "@/lib/member/week";
 import { WeekStrip } from "@/components/member/week-strip";
 import { Card, Chip, ChipRow, Eyebrow } from "@/components/member/ui";
 
@@ -41,7 +42,8 @@ function Bar({ value, target, colour }: { value: number; target: number; colour:
   );
 }
 
-export function NutritionScreen() {
+export function NutritionScreen({ base = "/app" }: { base?: string } = {}) {
+  const week = weekFor();
   const totals = DEMO_FOOD_LOG.reduce(
     (a, f) => ({
       kcal: a.kcal + f.kcal,
@@ -79,7 +81,7 @@ export function NutritionScreen() {
       </h1>
 
       <section style={{ marginBottom: "var(--space-4)" }}>
-        <WeekStrip days={DEMO_WEEK} />
+        <WeekStrip days={week} base={base} />
       </section>
 
       {/* ── The day, in one card ─────────────────────────────────────── */}

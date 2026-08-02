@@ -227,3 +227,71 @@ test.describe("member shell", () => {
     expect(location).toMatch(/\/login|\/app\/today/);
   });
 });
+
+/**
+ * SESSION DETAIL + THE COACH LOOP
+ *
+ * The plan listed seven days and expanded only today, so an athlete could not
+ * look at Thursday on Tuesday. And nothing anywhere could write a plan — the
+ * member area could display one and answer back to it, with no other end.
+ */
+test.describe("sessions and the coach loop", () => {
+  test("every day of the week is its own page", async ({ page }) => {
+    await page.goto("/control-preview/app/plan");
+    const links = page.locator('a[href*="/plan/20"]');
+    // Seven session cards plus seven week-strip days.
+    expect(await links.count()).toBeGreaterThanOrEqual(7);
+
+    const href = await links.first().getAttribute("href");
+    const res = await page.goto(href!);
+    expect(res?.status()).toBe(200);
+    await expect(page.getByRole("link", { name: /Back to your plan/ })).toBeVisible();
+  });
+
+  test("a day outside the programmed week 404s rather than inventing one", async ({
+    request,
+  }) => {
+    const res = await request.get("/control-preview/app/plan/1999-01-01");
+    expect(res.status()).toBe(404);
+  });
+
+  test("the week is dated to now, not to the fixtures", async ({ page }) => {
+    await page.goto("/control-preview/app/plan");
+    const year = String(new Date().getFullYear());
+    const hrefs = await page.locator('a[href*="/plan/20"]').first().getAttribute("href");
+    expect(hrefs).toContain(year);
+  });
+
+  test("coach can write a week, and cannot send it without a note", async ({
+    page,
+  }) => {
+    await page.goto("/control-preview/admin/plans/sample-a");
+
+    const send = page.getByRole("button", { name: /^Send to/ });
+    await expect(send).toBeDisabled();
+
+    // The athlete's verdict on last week is on the same screen as the week
+    // being written — that is the whole point of the layout.
+    await expect(page.getByText(/flagged \d+ session/)).toBeVisible();
+    await expect(page.getByText(/Sled turned into a grind/)).toBeVisible();
+
+    await page
+      .getByLabel(/Coach's note/)
+      .fill("Build week. Runs faster not longer, sled is technique under fatigue.");
+    await expect(send).toBeEnabled();
+
+    await send.click();
+    // It must not claim to have sent anything.
+    await expect(page.getByRole("status")).toContainText(/Not sent/);
+  });
+
+  test("the plans table routes through to the builder", async ({ page }) => {
+    await page.goto("/control-preview/admin/plans");
+    // The data table renders a table and a card list, one hidden at any
+    // width, so this has to pick the visible copy rather than the first.
+    const first = page.locator('a[href*="/admin/plans/"]:visible').first();
+    await expect(first).toBeVisible();
+    await first.click();
+    await expect(page.getByRole("button", { name: /^Send to/ })).toBeVisible();
+  });
+});

@@ -4,7 +4,6 @@ import {
   DEMO_RECENT_SESSIONS,
   DEMO_COMMUNITY,
   DEMO_VOLUME,
-  DEMO_WEEK,
 } from "@/lib/member/demo";
 import { RecentSessionList } from "@/components/member/recent-session-list";
 import { CommunityFeed } from "@/components/member/community-feed";
@@ -21,6 +20,7 @@ import {
   RestBand,
 } from "@/components/member/ui";
 import { HEROES, pickPhoto } from "@/lib/photo-library";
+import { weekFor } from "@/lib/member/week";
 
 /**
  * TODAY, as markup.
@@ -46,7 +46,8 @@ export function TodayScreen({
   // Stable per training week: the hero does not reshuffle on every build, but
   // it does change as the block progresses.
   const hero = pickPhoto(HEROES, `week-${DEMO_TODAY.weekNumber}`);
-  const done = DEMO_WEEK.filter((d) => d.done).length;
+  const week = weekFor();
+  const done = week.filter((d) => d.done).length;
 
   return (
     <>
@@ -63,7 +64,7 @@ export function TodayScreen({
 
       <section style={{ marginBottom: "var(--space-4)" }}>
         <Eyebrow right={`${done} of 7 done`}>This week</Eyebrow>
-        <WeekStrip days={DEMO_WEEK} />
+        <WeekStrip days={week} base={base} />
       </section>
 
       {/* The session, as one unmissable object. */}

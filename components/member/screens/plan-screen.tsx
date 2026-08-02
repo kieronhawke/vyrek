@@ -1,5 +1,7 @@
 import Image from "next/image";
-import { DEMO_WEEK, DEMO_WEEKS, DEMO_TODAY } from "@/lib/member/demo";
+import Link from "next/link";
+import { DEMO_WEEKS, DEMO_TODAY } from "@/lib/member/demo";
+import { weekFor } from "@/lib/member/week";
 import { PhaseBar } from "@/components/member/phase-bar";
 import { SessionFeedback } from "@/components/member/session-feedback";
 import {
@@ -48,8 +50,9 @@ export function PlanScreen({
   const currentWeek = DEMO_TODAY.weekNumber;
   const week = DEMO_WEEKS.find((w) => w.number === currentWeek) ?? DEMO_WEEKS[0];
   const coach = pickPhoto(BEN_PHOTOS, "plan-coach");
-  const totalMin = DEMO_WEEK.reduce((a, d) => a + (d.durationMin ?? 0), 0);
-  const sessions = DEMO_WEEK.filter((d) => d.type !== "rest").length;
+  const week7 = weekFor();
+  const totalMin = week7.reduce((a, d) => a + (d.durationMin ?? 0), 0);
+  const sessions = week7.filter((d) => d.type !== "rest").length;
 
   return (
     <>
@@ -147,19 +150,27 @@ export function PlanScreen({
       <section style={{ marginBottom: "var(--space-4)" }}>
         <Eyebrow right="Tap a day">Sessions</Eyebrow>
         <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-          {DEMO_WEEK.map((day) => {
-            const isToday = day.date === DEMO_TODAY.date.replace(/^\w+ /, "");
+          {week7.map((day) => {
+            const isToday = day.isToday;
             const rest = day.type === "rest";
             return (
               <Card
-                key={day.date}
+                key={day.slug}
                 padded={false}
                 style={{
                   borderColor: isToday ? "var(--accent)" : "var(--border)",
                   background: rest ? "var(--surface-raised)" : "var(--surface)",
                 }}
               >
-                <div style={{ padding: "var(--space-2)" }}>
+                <Link
+                  href={`${base}/plan/${day.slug}`}
+                  style={{
+                    display: "block",
+                    padding: "var(--space-2)",
+                    textDecoration: "none",
+                    color: "inherit",
+                  }}
+                >
                   <div
                     style={{
                       display: "flex",
@@ -203,7 +214,7 @@ export function PlanScreen({
                     <Chip tone={TYPE_TONE[day.type] ?? "neutral"}>{day.type}</Chip>
                     {day.done ? <Chip tone="ok">Done</Chip> : null}
                   </ChipRow>
-                </div>
+                </Link>
 
                 {isToday ? (
                   <div

@@ -1,4 +1,4 @@
-import type { WeekDay } from "@/lib/member/demo";
+import type { DatedDay } from "@/lib/member/week";
 
 /**
  * Seven columns, weekday initial over date, a state mark underneath, today
@@ -7,12 +7,15 @@ import type { WeekDay } from "@/lib/member/demo";
  *
  * The mark is a shape as well as a colour — an outline for rest, a fill for
  * done — so it does not rely on colour alone to carry state.
+ *
+ * It takes dated days rather than raw fixtures: "today" used to be a hardcoded
+ * string in this file, which meant the strip highlighted 28 May forever.
  */
 
-type DayState = "done" | "today" | "rest" | "upcoming" | "missed";
+type DayState = "done" | "today" | "rest" | "upcoming";
 
-function stateOf(day: WeekDay, todayDate: string): DayState {
-  if (day.date === todayDate) return "today";
+function stateOf(day: DatedDay): DayState {
+  if (day.isToday) return "today";
   if (day.type === "rest") return "rest";
   if (day.done) return "done";
   return "upcoming";
@@ -23,28 +26,25 @@ const LABEL: Record<DayState, string> = {
   today: "today",
   rest: "rest day",
   upcoming: "scheduled",
-  missed: "missed",
 };
 
 export function WeekStrip({
   days,
-  todayDate,
+  base = "/app",
 }: {
-  days: WeekDay[];
-  /** Defaults to the demo's current day. */
-  todayDate?: string;
+  days: DatedDay[];
+  base?: string;
 }) {
-  const today = todayDate ?? "28 May";
-
   return (
     <ol className="member-weekstrip" role="list">
       {days.map((day) => {
-        const state = stateOf(day, today);
+        const state = stateOf(day);
         return (
-          <li key={day.date}>
-            <div
+          <li key={day.slug}>
+            <a
+              href={`${base}/plan/${day.slug}`}
               className="member-weekstrip__day"
-              data-today={state === "today" || undefined}
+              data-today={day.isToday || undefined}
             >
               <span className="member-weekstrip__dow">{day.day.slice(0, 1)}</span>
               <span
@@ -59,9 +59,9 @@ export function WeekStrip({
                 aria-hidden
               />
               <span className="sr-only">
-                {day.day}, {day.title}, {LABEL[state]}
+                {day.day} {day.date}, {day.title}, {LABEL[state]}
               </span>
-            </div>
+            </a>
           </li>
         );
       })}

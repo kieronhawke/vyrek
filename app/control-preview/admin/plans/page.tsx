@@ -12,7 +12,26 @@ const BASE = "/control-preview/admin";
  * rather than discovered at the send button.
  */
 const COLUMNS: Column<PlanRow>[] = [
-  { key: "client", label: "Client", render: (r) => r.client, csv: (r) => r.client },
+  {
+    key: "client",
+    label: "Client",
+    // The table said who was due a plan and gave you nowhere to write it.
+    render: (r) => (
+      <a
+        href={`${BASE}/plans/${r.client.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          minHeight: 44,
+          color: "var(--accent)",
+          fontWeight: 600,
+        }}
+      >
+        {r.client}
+      </a>
+    ),
+    csv: (r) => r.client,
+  },
   { key: "block", label: "Block", render: (r) => r.block, csv: (r) => r.block },
   {
     key: "status", label: "Status",
