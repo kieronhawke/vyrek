@@ -40,6 +40,25 @@ function trackErrors(page: Page): string[] {
   return errors;
 }
 
+/**
+ * The site runs a presence heartbeat, so the network never goes idle and
+ * `waitUntil: "networkidle"` times out in production. Wait for the page's own
+ * h1 instead — deterministic, and it is what "rendered" actually means here.
+ */
+async function open(page: Page, path: string) {
+  const response = await page.goto(path, { waitUntil: "domcontentloaded" });
+  await page.locator("h1").first().waitFor({ state: "visible", timeout: 15_000 });
+  return response;
+}
+
+/** Reads a Playwright download into a string. */
+async function readDownload(download: import("@playwright/test").Download): Promise<string> {
+  const stream = await download.createReadStream();
+  const chunks: Buffer[] = [];
+  for await (const chunk of stream) chunks.push(chunk as Buffer);
+  return Buffer.concat(chunks).toString("utf8");
+}
+
 /** The only overflow check that means anything: can the user actually scroll sideways. */
 async function canScrollHorizontally(page: Page): Promise<boolean> {
   return page.evaluate(() => {
@@ -58,7 +77,7 @@ async function canScrollHorizontally(page: Page): Promise<boolean> {
 for (const route of ROUTES) {
   test(`${route.name} renders cleanly`, async ({ page }) => {
     const errors = trackErrors(page);
-    const response = await page.goto(route.path, { waitUntil: "networkidle" });
+    const response = await open(page, route.path);
 
     expect(response?.status(), `${route.path} status`).toBe(200);
     expect(await canScrollHorizontally(page), `${route.path} scrolls sideways`).toBe(false);
@@ -70,7 +89,7 @@ for (const route of ROUTES) {
 
 test.describe("ranking table", () => {
   test("windows a 3,000-row field instead of rendering it", async ({ page }) => {
-    await page.goto("/ranking/s9-2026-london-hyrox-men", { waitUntil: "networkidle" });
+    await open(page, "/ranking/s9-2026-london-hyrox-men");
     await page.waitForTimeout(1500);
 
     const counter = await page.locator('p[aria-live="polite"]').innerText();
@@ -81,7 +100,7 @@ test.describe("ranking table", () => {
   });
 
   test("filters locally without a page load", async ({ page }) => {
-    await page.goto("/ranking/s9-2026-london-hyrox-men", { waitUntil: "networkidle" });
+    await open(page, "/ranking/s9-2026-london-hyrox-men");
     await page.waitForTimeout(1500);
 
     await page.getByPlaceholder("Find an athlete").fill("patel");
@@ -91,7 +110,7 @@ test.describe("ranking table", () => {
   });
 
   test("expands splits in place", async ({ page }) => {
-    await page.goto("/ranking/s9-2026-london-hyrox-men", { waitUntil: "networkidle" });
+    await open(page, "/ranking/s9-2026-london-hyrox-men");
     await page.waitForTimeout(1500);
 
     // Desktop uses a chevron button per table row (aria-label "Show splits…");
@@ -114,7 +133,7 @@ test.describe("ranking table", () => {
 
 test.describe("share", () => {
   test("generates a real 1200x630 card before sharing", async ({ page }) => {
-    await page.goto("/result/s9-2026-london-hyrox-men-1600", { waitUntil: "networkidle" });
+    await open(page, "/result/s9-2026-london-hyrox-men-1600");
     await page.getByRole("button", { name: "Share", exact: true }).first().click();
 
     const card = page.locator('img[alt^="Share card"]');
@@ -132,9 +151,84 @@ test.describe("share", () => {
   });
 });
 
+test.describe("export", () => {
+  test("downloads the whole division as CSV, and honours the active filter", async ({ page }) => {
+    await open(page, "/ranking/s9-2026-london-hyrox-men");
+    await page.waitForTimeout(1800);
+
+    const full = page.waitForEvent("download");
+    await page.getByRole("button", { name: /Export CSV/ }).click();
+    const fullFile = await full;
+    const fullText = await readDownload(fullFile);
+    // Header plus every finisher in the division.
+    expect(fullText.trimEnd().split("\r\n").length).toBeGreaterThan(3000);
+    expect(fullText.charCodeAt(0)).toBe(0xfeff); // BOM, so Excel reads it correctly
+
+    await page.getByPlaceholder("Find an athlete").fill("patel");
+    await page.waitForTimeout(500);
+    const filtered = page.waitForEvent("download");
+    await page.getByRole("button", { name: /Export \d+/ }).click();
+    const filteredText = await readDownload(await filtered);
+    const lines = filteredText.trimEnd().split("\r\n").length;
+    expect(lines).toBeGreaterThan(1);
+    expect(lines).toBeLessThan(200);
+  });
+
+  test("downloads a race split by split", async ({ page }) => {
+    await open(page, "/result/s9-2026-london-hyrox-men-1600");
+    const download = page.waitForEvent("download");
+    await page.getByRole("button", { name: /Export splits/ }).click();
+    const text = await readDownload(await download);
+    // 8 runs + 8 stations + Roxzone + finish + header
+    expect(text.trimEnd().split("\r\n")).toHaveLength(19);
+    expect(text).toContain("Division average (seconds)");
+  });
+
+  test("downloads an athlete's full history", async ({ page }) => {
+    await open(page, "/athlete/charlie-johansson");
+    const download = page.waitForEvent("download");
+    await page.getByRole("button", { name: /Export history/ }).click();
+    const text = await readDownload(await download);
+    expect(text).toContain("Finish (seconds)");
+    expect(text.trimEnd().split("\r\n").length).toBeGreaterThan(2);
+  });
+});
+
+test.describe("print / PDF", () => {
+  test("inverts to ink on paper and drops screen-only furniture", async ({ page }) => {
+    await open(page, "/result/s9-2026-london-hyrox-men-1600");
+    await page.emulateMedia({ media: "print" });
+    await page.waitForTimeout(400);
+
+    const printed = await page.evaluate(() => {
+      const body = getComputedStyle(document.body);
+      const nav = document.querySelector('nav[aria-label="Results sections"]');
+      const hidden = document.querySelector("[data-print-hide]");
+      const footer = document.querySelector(".results-print-footer");
+      return {
+        background: body.backgroundColor,
+        colour: body.color,
+        nav: nav ? getComputedStyle(nav).display : "absent",
+        screenOnly: hidden ? getComputedStyle(hidden).display : "absent",
+        footer: footer ? getComputedStyle(footer).display : "absent",
+      };
+    });
+
+    expect(printed.background).toBe("rgb(255, 255, 255)");
+    expect(printed.colour).toBe("rgb(16, 16, 16)");
+    expect(printed.nav).toBe("none");
+    expect(printed.screenOnly).toBe("none");
+    expect(printed.footer).toBe("block");
+
+    // A printed PDF of synthetic data must still say so.
+    const footerText = await page.locator(".results-print-footer").innerText();
+    expect(footerText).toContain("DEMO DATA");
+  });
+});
+
 test.describe("automated reports honour the authenticity rules", () => {
   test("carry the label and never simulate a human voice", async ({ page }) => {
-    await page.goto("/reports/s9-2026-london", { waitUntil: "networkidle" });
+    await open(page, "/reports/s9-2026-london");
     const text = await page.locator("article").innerText();
 
     expect(text).toMatch(/automated race report, generated from race data/i);

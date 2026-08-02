@@ -1,4 +1,5 @@
 import "@/app/results-tokens.css";
+import "@/app/results-print.css";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { ResultsShell } from "@/components/results/shell/results-shell";

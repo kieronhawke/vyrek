@@ -125,6 +125,8 @@ export default async function RankingPage({ params }: { params: Promise<{ slug: 
           initialRows={initialRows}
           leaderTimeSeconds={page.leaderTimeSeconds}
           fieldSize={page.fieldSize}
+          eventName={event.name}
+          divisionLabel={page.divisionLabel}
         />
       </div>
 

@@ -1,20 +1,10 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { formatSplit, formatPercent } from "@/lib/results/format";
+import { stationGuideHref } from "@/lib/results/model";
 import { MicroLabel, Delta } from "../ui/primitives";
+import { GrowBar } from "../ui/reveal";
 import type { StationStanding } from "@/lib/results/analysis";
-
-/** Station slugs on this site live under /hyrox/stations/{slug} — see DECISIONS D9. */
-const STATION_HREF: Record<string, string> = {
-  "ski-erg": "/hyrox/stations/ski-erg",
-  "sled-push": "/hyrox/stations/sled-push",
-  "sled-pull": "/hyrox/stations/sled-pull",
-  "burpee-broad-jump": "/hyrox/stations/burpee-broad-jump",
-  "row": "/hyrox/stations/row",
-  "farmers-carry": "/hyrox/stations/farmers-carry",
-  "sandbag-lunges": "/hyrox/stations/sandbag-lunges",
-  "wall-balls": "/hyrox/stations/wall-balls",
-};
 
 /**
  * Every station against the division average, sorted worst-first.
@@ -43,7 +33,7 @@ export function StationBars({ standings }: { standings: StationStanding[] }) {
             <li key={standing.station}>
               <div className="flex items-baseline justify-between gap-3 text-xs">
                 <Link
-                  href={STATION_HREF[standing.station] ?? "/hyrox/stations"}
+                  href={stationGuideHref(standing.station)}
                   data-inline-tap
                   className="truncate text-suth-text hover:text-suth-accent
                              focus-visible:outline-2 focus-visible:outline-suth-accent"
@@ -59,12 +49,12 @@ export function StationBars({ standings }: { standings: StationStanding[] }) {
                 </span>
               </div>
               <div className="relative mt-1 h-2 overflow-hidden rounded-sm bg-suth-overlay">
-                <div
+                <GrowBar
+                  width={width}
                   className={cn(
                     "absolute inset-y-0 left-0 rounded-sm",
                     faster ? "bg-[var(--results-faster-bar)]" : "bg-[var(--results-slower-bar)]",
                   )}
-                  style={{ width: `${width}%` }}
                 />
                 <div
                   className="absolute inset-y-0 w-px bg-suth-text-secondary"

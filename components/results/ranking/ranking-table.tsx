@@ -8,6 +8,8 @@ import { Time, Delta, Nationality, MicroLabel, Skeleton } from "../ui/primitives
 import { rankBand } from "@/lib/results/percentiles";
 import { AGE_GROUPS, STATION_IDS, STATION_LABEL } from "@/lib/results/model";
 import { formatSplit, formatCount } from "@/lib/results/format";
+import { rankingToCsv, exportFilename } from "@/lib/results/export";
+import { DownloadButton } from "../export/download-button";
 import type { CompactRow } from "@/app/api/results/ranking/[slug]/route";
 
 /**
@@ -43,12 +45,14 @@ type Splits = {
 };
 
 export function RankingTable({
-  slug, initialRows, leaderTimeSeconds, fieldSize,
+  slug, initialRows, leaderTimeSeconds, fieldSize, eventName, divisionLabel,
 }: {
   slug: string;
   initialRows: CompactRow[];
   leaderTimeSeconds: number;
   fieldSize: number;
+  eventName: string;
+  divisionLabel: string;
 }) {
   const [rows, setRows] = useState<CompactRow[]>(initialRows);
   const [complete, setComplete] = useState(initialRows.length >= fieldSize);
@@ -162,6 +166,15 @@ export function RankingTable({
         complete={complete}
         failed={failed}
         onJump={jumpToRank}
+        exportCsv={() => rankingToCsv(
+          { eventName, divisionLabel },
+          visible.map((r) => ({
+            rank: r[1], ageGroupRank: r[2], athleteName: r[3],
+            countryIso: r[4], ageGroup: r[5], finishSeconds: r[6],
+            gapToLeaderSeconds: r[6] - leaderTimeSeconds,
+          })),
+        )}
+        exportFilename={`${exportFilename(eventName, divisionLabel)}.csv`}
       />
 
       {/* Desktop: semantic table, windowed. */}
@@ -245,7 +258,10 @@ export function RankingTable({
 
 function Controls({
   query, onQuery, ageGroup, onAgeGroup, shown, total, fieldSize, complete, failed, onJump,
+  exportCsv, exportFilename: csvName,
 }: {
+  exportCsv: () => string;
+  exportFilename: string;
   query: string;
   onQuery: (v: string) => void;
   ageGroup: string;
@@ -331,6 +347,14 @@ function Controls({
           Jump
         </button>
       </form>
+
+      {/* Exports what is on screen: filter to an age group or search a club
+          name, and the download matches. */}
+      <DownloadButton
+        filename={csvName}
+        label={shown < total ? `Export ${formatCount(shown)}` : "Export CSV"}
+        build={exportCsv}
+      />
 
       <p className="results-num ml-auto text-xs text-suth-text-tertiary" aria-live="polite">
         {failed
