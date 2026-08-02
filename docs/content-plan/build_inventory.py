@@ -9,7 +9,12 @@ sys.path.insert(0, str(Path(__file__).parent))
 from hyrox_seeds import HYROX
 from pt_seeds import PT
 
-ROOT = Path("/Users/kieronhawke/code/vyrek")
+# Derive the repo root from this file's own location rather than hardcoding it.
+# The hardcoded path was /Users/kieronhawke/code/vyrek, which is the `main`
+# worktree. Running this script from any other worktree therefore read that
+# worktree's seeds but wrote the CSVs into `main` — a silent cross-lane write
+# into a tree another terminal is working in. See ~/code/VYREK-LANES.md §2.
+ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "docs" / "content-plan"
 OUT.mkdir(exist_ok=True)
 
