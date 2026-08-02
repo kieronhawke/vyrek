@@ -16,6 +16,35 @@ The layered location DB behind the Phase D geo rollout. Spec:
   edit.** Future location page types read their publishable slug list
   from this file.
 
+## The international half
+
+The files above are the UK. Every city that has hosted a HYROX *outside*
+the UK lives in a parallel pair, because a Tokyo row has no region and no
+county and folding it into `registry.json` would mean every UK consumer
+learning to skip foreign rows:
+
+- `race-cities.json` — identity plus race calendar for 91 cities across 36
+  countries. **Generated** by `scripts/build-race-cities.mjs` from
+  `data/hyrox/races.normalised.json` (scraped from hyrox.com) and
+  `data/hyrox/races.geocoded.json` (Nominatim). Do not edit by hand.
+- `enrichment-intl/<slug>.json` — the gym layer for one race city, from
+  OpenStreetMap via `scripts/seed-gyms-intl.mjs`. Same contract as
+  `enrichment/`: every record carries `source` and `verifiedOn`.
+
+Accessors are in `lib/race-cities.ts`; `lib/geo-page.ts` resolves a slug
+against both catalogues for the two page families.
+
+**The two catalogues share one slug space.** Four names exist in both —
+Boston, Houston, Perth and Portland. The UK town keeps the bare slug
+because it is already indexed and linked; the race city is qualified with
+its country (`boston-usa`, `perth-australia`) at build time. Both the
+title and the H1 carry the country on the qualified side, or two live
+pages end up identical. `lib/race-cities.test.ts` pins this down.
+
+The publish gate does **not** govern these pages. It mandates a results
+data point, which is still open question 1, and every race city already
+carries the thing the gate is a proxy for: a race, a venue and a date.
+
 ## Sourcing rules (hard rules 1 and 3 apply)
 
 1. **Every enrichment record carries `source` and `verifiedOn`.** A fact

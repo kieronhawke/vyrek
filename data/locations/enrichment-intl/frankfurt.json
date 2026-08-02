@@ -1,0 +1,165 @@
+{
+  "slug": "frankfurt",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Woodcutter",
+        "type": "sports-centre",
+        "website": "https://woodcutter.world/de/axethrowing-frankfurt",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fitness First",
+        "type": "gym",
+        "chain": "Fitness First",
+        "website": "https://www.fitnessfirst.de/gyms/gyms-in-frankfurt/club-platinum-swim-club-frankfurt-innenstadt-myzeil/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Pure Training",
+        "type": "gym",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "McFit",
+        "type": "gym",
+        "chain": "McFit",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Xtrafit",
+        "type": "gym",
+        "website": "https://xtrafit.de/studios/frankfurt-zeil",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Inside Yoga Frankfurt",
+        "type": "gym",
+        "website": "https://insideyoga.de",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "FITSEVENELEVEN",
+        "type": "gym",
+        "chain": "FITSEVENELEVEN",
+        "website": "https://fitseveneleven.de/clubs/white_label_taunusturm/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Elements",
+        "type": "gym",
+        "website": "https://www.elements.com/studios/eschenheimer-turm",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "cycletic",
+        "type": "gym",
+        "website": "https://www.cycleticstudio.de/",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Turn & Sportvereinigung Sachsenhausen 1857",
+        "type": "sports-centre",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Patanjali Yoga Studio",
+        "type": "gym",
+        "website": "https://pankajyoga.de/",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Kieser Training",
+        "type": "gym",
+        "chain": "Kieser Training",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Yoga Lift",
+        "type": "gym",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Textorbad",
+        "type": "sports-centre",
+        "chain": "BäderBetriebe Frankfurt GmbH",
+        "website": "https://frankfurter-baeder.de/baeder/hallenbad-textorbad/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Prime Time Fitness",
+        "type": "gym",
+        "website": "https://primetime-fitness.de/fitnessstudios/frankfurt/frankfurt-schweizer-platz/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "lona Pilates club",
+        "type": "gym",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fitness First Frankfurt - Westend",
+        "type": "gym",
+        "website": "https://www.fitnessfirst.de",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Sporthalle Süd",
+        "type": "sports-centre",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "EMS Lounge",
+        "type": "gym",
+        "website": "https://www.ems-lounge.de/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Bodystreet",
+        "type": "gym",
+        "chain": "Bodystreet",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

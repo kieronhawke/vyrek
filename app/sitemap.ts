@@ -4,6 +4,7 @@ import { listPostMeta, CATEGORIES } from "@/lib/blog/posts";
 import { AUTHORS } from "@/lib/blog/authors";
 import { UK_LOCATIONS, listRegionSlugs, listCountySlugs } from "@/lib/uk-locations";
 import { getGeoSeo, geoPriority, isRaceCity } from "@/lib/locations/seo";
+import { RACE_CITIES, listCountrySlugs } from "@/lib/race-cities";
 import { STATIONS } from "@/lib/hyrox-stations";
 import { PLAN_TEMPLATES } from "@/lib/plan-templates";
 import { COMPARISONS } from "@/lib/hyrox-comparisons";
@@ -153,6 +154,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${SITE_URL}/personal-trainer/${loc.slug}`,
         lastModified: GEO_CONTENT_UPDATED,
         priority: geoPriority(loc.slug),
+        changeFrequency: "weekly" as const,
+      },
+    ]),
+    // Country directories for the international race cities: the same middle
+    // layer regions give the UK set.
+    ...listCountrySlugs().flatMap((c) => [
+      { url: `${SITE_URL}/hyrox-training/country/${c}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
+      { url: `${SITE_URL}/personal-trainer/country/${c}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
+    ]),
+    /* Every city that has hosted a HYROX outside the UK. Priority sits above
+       an unevidenced UK town: these carry a race, a venue and a date, which is
+       more than a 5,000-person town with a parkrun and nothing else. */
+    ...RACE_CITIES.flatMap((c) => [
+      {
+        url: `${SITE_URL}/hyrox-training/${c.slug}`,
+        lastModified: GEO_CONTENT_UPDATED,
+        priority: 0.8,
+        changeFrequency: "weekly" as const,
+      },
+      {
+        url: `${SITE_URL}/personal-trainer/${c.slug}`,
+        lastModified: GEO_CONTENT_UPDATED,
+        priority: 0.8,
         changeFrequency: "weekly" as const,
       },
     ]),

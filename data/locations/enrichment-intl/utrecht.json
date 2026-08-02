@@ -1,0 +1,163 @@
+{
+  "slug": "utrecht",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Newstyle",
+        "type": "sports-centre",
+        "website": "https://www.newstylehealthcenters.com/newstyle-oudegracht/",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "TrainMore",
+        "type": "sports-centre",
+        "website": "https://trainmore.nl/clubs/janskerkhof/",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Hrnstr33",
+        "type": "sports-centre",
+        "website": "https://hrnstr33.nl/",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Kinderyoga Utrecht",
+        "type": "gym",
+        "website": "https://www.kinderyoga-utrecht.nl/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Gymzaal",
+        "type": "sports-centre",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fitness Factory",
+        "type": "gym",
+        "website": "https://www.fitnessfactory.nl/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "De workout",
+        "type": "gym",
+        "website": "https://www.deworkout.nl",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Dutch Gym XL Vredenburg",
+        "type": "gym",
+        "website": "https://dutchgym.nl/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Studio Natuurlijk",
+        "type": "gym",
+        "website": "https://studionatuurlijk.nl",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Yoga Moves One",
+        "type": "gym",
+        "website": "https://www.yogamoves.nl/one",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "O.Z.E.B.I.",
+        "type": "sports-centre",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Balanz",
+        "type": "sports-centre",
+        "website": "https://balanzs.nl/",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "House of the Fittest",
+        "type": "gym",
+        "website": "https://houseofthefittest.nl/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Gymzaal (Nicolaasdwarsstraat)",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Gymzaal Weerdsingel",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Newstyle Healthcenters",
+        "type": "gym",
+        "website": "https://www.newstylehealthcenters.com",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Equal Yoga",
+        "type": "sports-centre",
+        "website": "https://www.equalyoga.com/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Rocycle",
+        "type": "gym",
+        "website": "https://rocyclestudios.com/studios/utrecht/utrecht-city",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "bbb health boutique",
+        "type": "gym",
+        "website": "https://bbbhealthboutique.nl/bbb-utrecht/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "CK Health Center",
+        "type": "gym",
+        "website": "https://ckhealthcenter.nl/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

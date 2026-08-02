@@ -1,0 +1,163 @@
+{
+  "slug": "maastricht",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "City Gym Maastricht",
+        "type": "gym",
+        "website": "https://www.citygymmaastricht.nl",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Yogaplace Maastricht",
+        "type": "sports-centre",
+        "website": "https://www.yogaplace.nl/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "SportCity",
+        "type": "gym",
+        "chain": "SportCity",
+        "website": "https://www.sportcity.nl/maastricht",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Radium Boulders",
+        "type": "sports-centre",
+        "website": "https://www.radiumboulders.nl/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Reuvers",
+        "type": "gym",
+        "website": "https://www.reuvers.nu/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Jekerdal",
+        "type": "sports-centre",
+        "website": "https://jekerdal.nl/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Basic-Fit",
+        "type": "gym",
+        "website": "https://www.basic-fit.com/nl-nl/sportschool/basic-fit-maastricht-bosscherweg-24-7-a469164bc2f64c05a7174663a9e1da65.html",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Il Fiore",
+        "type": "gym",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "fit20",
+        "type": "gym",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Plaza Padel",
+        "type": "sports-centre",
+        "website": "https://www.plazapadel.com/nl/maastricht",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Sporthal De Geusselt",
+        "type": "sports-centre",
+        "website": "https://www.maastrichtsport.nl/accommodaties-en-voorzieningen/locaties/gemeentelijke-locaties/sporthallen-sportzalen-en-gymzalen/sporthallen#sporthal-de-geusselt",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "UM Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Geusseltbad Maastricht",
+        "type": "sports-centre",
+        "website": "https://www.geusseltbad.nl/",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "M.S.T.V. Stennis",
+        "type": "sports-centre",
+        "website": "https://www.mstvstennis.nl/",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Anytime Fitness",
+        "type": "gym",
+        "chain": "Anytime Fitness",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Club Pellikaan",
+        "type": "sports-centre",
+        "website": "https://clubpellikaan.nl/club-maastricht",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "T.C. Borgharen",
+        "type": "sports-centre",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "LTC Maasvogels",
+        "type": "sports-centre",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "T.C. Hazendans",
+        "type": "sports-centre",
+        "website": "https://www.tchazendans.nl/",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Padel Power Club",
+        "type": "sports-centre",
+        "website": "https://padelpowerclub.nl/",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "slug": "cologne",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Holmes Place",
+        "type": "gym",
+        "chain": "Holmes Place",
+        "website": "https://www.holmesplace.de/clubs/koln-am-gurzenich",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "McFit",
+        "type": "gym",
+        "chain": "McFit",
+        "website": "https://www.mcfit.com/studio/koeln-altstadt",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Hyvibes",
+        "type": "gym",
+        "website": "https://hyvibes.de/city/",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Xtrafit",
+        "type": "gym",
+        "website": "https://xtrafit.de/studios/k%C3%B6ln-zentrum",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Element Boulders",
+        "type": "sports-centre",
+        "website": "https://koeln.element-boulders.de/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fitness First",
+        "type": "gym",
+        "chain": "Fitness First",
+        "website": "https://www.fitnessfirst.de/clubs/koeln-innenstadt-schildergasse",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Kanusportfreunde Köln",
+        "type": "sports-centre",
+        "website": "https://www.ksk-team.de/",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Cologne Pole Fitness",
+        "type": "gym",
+        "website": "https://www.cologne-polefitness.com/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Next Door 03",
+        "type": "gym",
+        "website": "https://www.nextdoorgyms.de/gyms/koln-deutz",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Lord Vishnus Couch",
+        "type": "gym",
+        "website": "https://www.vishnuscouch.de/yoga-venue/yoga-studio-koeln-deutz/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Bushido",
+        "type": "sports-centre",
+        "website": "https://www.bushido-fitness.de/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Hema / Wuway Zentrum",
+        "type": "sports-centre",
+        "website": "https://wuway.de/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Flow F!t",
+        "type": "gym",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fitnessloft",
+        "type": "gym",
+        "website": "https://fitnessloft.de/fitnessstudios/koeln/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Institut für Yoga und Gesundheit",
+        "type": "gym",
+        "website": "https://www.yoga-koeln.de/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "PhysioSport Köln Deutz",
+        "type": "sports-centre",
+        "website": "https://physiosportkoeln.de/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Ginger Up",
+        "type": "gym",
+        "website": "https://gingerup.de",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Kieser Training",
+        "type": "gym",
+        "chain": "Kieser Training",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Next Door",
+        "type": "gym",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Terra Sports",
+        "type": "gym",
+        "website": "https://www.terra-sports.de/ems-training-koeln-zentrum",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}
