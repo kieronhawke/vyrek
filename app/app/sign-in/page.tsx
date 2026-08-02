@@ -82,7 +82,7 @@ export default function SignInPage() {
           minHeight: 56,
           marginTop: "var(--space-2)",
           background: "var(--accent)",
-          color: "#0A0A0A",
+          color: "var(--accent-ink)",
           border: "none",
           borderRadius: "var(--radius-button)",
           fontSize: "var(--text-lg)",

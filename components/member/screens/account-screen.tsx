@@ -1,0 +1,249 @@
+import Link from "next/link";
+import Image from "next/image";
+import { MemberSignOut } from "@/components/member/sign-out";
+import {
+  Card,
+  Chip,
+  ChipRow,
+  Eyebrow,
+  Row,
+  RowGroup,
+  StatTile,
+  StatTiles,
+} from "@/components/member/ui";
+import { BEN_PHOTOS, pickPhoto } from "@/lib/photo-library";
+
+export type AccountSubscription = {
+  status: string;
+  current_period_end: string | null;
+} | null;
+
+/**
+ * ACCOUNT, as markup. Split from the auth boundary for the same reason as
+ * TodayScreen: the ungated preview mount renders it without a bypass in
+ * shipped auth code.
+ */
+export function AccountScreen({
+  firstName,
+  email,
+  programme,
+  subscription: sub,
+  base = "/app",
+}: {
+  firstName: string;
+  email: string;
+  programme: string;
+  subscription: AccountSubscription;
+  base?: string;
+}) {
+  const portrait = pickPhoto(BEN_PHOTOS, "coach-card");
+
+  return (
+    <>
+      <p className="eyebrow">Your account</p>
+      <h1
+        style={{
+          fontSize: "var(--text-2xl)",
+          lineHeight: 1.1,
+          fontWeight: 800,
+          letterSpacing: "-0.025em",
+          margin: "var(--space-1) 0",
+        }}
+      >
+        {firstName}
+      </h1>
+      <p
+        style={{
+          margin: "0 0 var(--space-3)",
+          fontSize: "var(--text-sm)",
+          color: "var(--text-muted)",
+          overflowWrap: "anywhere",
+        }}
+      >
+        {email}
+      </p>
+
+      {/* The member is paying for access to a person, so the person appears on
+          the screen where they manage that. */}
+      <Card
+        padded={false}
+        style={{ marginBottom: "var(--space-4)", overflow: "hidden" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            gap: "var(--space-2)",
+            padding: "var(--space-2)",
+          }}
+        >
+          <div
+            style={{
+              position: "relative",
+              flex: "0 0 auto",
+              width: 64,
+              height: 64,
+              borderRadius: "var(--radius-card)",
+              overflow: "hidden",
+            }}
+          >
+            <Image
+              src={portrait.src}
+              alt={portrait.alt}
+              fill
+              sizes="64px"
+              style={{ objectFit: "cover", filter: "grayscale(1)" }}
+            />
+          </div>
+          <div style={{ minWidth: 0 }}>
+            <p className="eyebrow" style={{ margin: 0 }}>
+              Your coach
+            </p>
+            <p
+              style={{
+                margin: "2px 0 0",
+                fontSize: "var(--text-base)",
+                fontWeight: 700,
+              }}
+            >
+              Ben Sutherland
+            </p>
+            <div style={{ marginTop: 6 }}>
+              <ChipRow>
+                <Chip tone="accent">{programme}</Chip>
+              </ChipRow>
+            </div>
+          </div>
+        </div>
+        <Row
+          label="Message Ben"
+          value="Open →"
+          tone="var(--accent)"
+          href={`${base}/today`}
+        />
+      </Card>
+
+      <section style={{ marginBottom: "var(--space-4)" }}>
+        <Eyebrow>Your training</Eyebrow>
+        <StatTiles>
+          <StatTile label="Sessions" value="47" sub="all time" />
+          <StatTile label="This block" value="4" sub="of 12 weeks" />
+          <StatTile label="Member since" value="Apr" sub="2026" />
+        </StatTiles>
+      </section>
+
+      <section style={{ marginBottom: "var(--space-4)" }}>
+        <Eyebrow>Subscription</Eyebrow>
+        <RowGroup>
+          <Row label="Plan" value="Personal Programming" />
+          <Row
+            label="Status"
+            value={sub?.status ?? "Not connected"}
+            tone={sub ? "var(--ok)" : "var(--text-muted)"}
+          />
+          <Row
+            label="Renews"
+            value={formatDate(sub?.current_period_end) ?? "—"}
+            tone={sub ? undefined : "var(--text-muted)"}
+          />
+          <Row
+            label="Manage billing"
+            value="Open →"
+            tone="var(--accent)"
+            href="/account"
+          />
+        </RowGroup>
+        {!sub ? (
+          <p
+            style={{
+              margin: "var(--space-1) 0 0",
+              fontSize: "var(--text-xs)",
+              color: "var(--text-muted)",
+            }}
+          >
+            Billing detail appears once Stripe is connected. Nothing here is
+            invented in the meantime.
+          </p>
+        ) : null}
+      </section>
+
+      <section style={{ marginBottom: "var(--space-4)" }}>
+        <Eyebrow>Health information</Eyebrow>
+        <Card>
+          <p style={{ margin: 0, fontSize: "var(--text-sm)", lineHeight: 1.55 }}>
+            <strong>Ben can see this.</strong> Nobody else can, it is encrypted
+            on our side, and you can change or remove it at any time.
+          </p>
+          <div style={{ marginTop: "var(--space-1)" }}>
+            <ChipRow>
+              <Chip tone="warn">Special category data</Chip>
+            </ChipRow>
+          </div>
+        </Card>
+      </section>
+
+      <section style={{ marginBottom: "var(--space-4)" }}>
+        <Eyebrow>Notifications</Eyebrow>
+        <RowGroup>
+          <Row label="Session reminders" value="On" tone="var(--ok)" />
+          <Row label="Plan ready each Sunday" value="On" tone="var(--ok)" />
+          <Row label="Ben's weekly email" value="On" tone="var(--ok)" />
+          <Row label="Offers and news" value="Off" tone="var(--text-muted)" />
+        </RowGroup>
+        <p
+          style={{
+            margin: "var(--space-1) 0 0",
+            fontSize: "var(--text-xs)",
+            color: "var(--text-muted)",
+          }}
+        >
+          Reminders start sending once email and SMS are connected.
+        </p>
+      </section>
+
+      <section style={{ marginBottom: "var(--space-4)" }}>
+        <Eyebrow>Your data</Eyebrow>
+        <RowGroup>
+          <Row label="Personal records" value="View →" href={`${base}/account/pr`} />
+          <Row label="Download everything" value="Request →" tone="var(--accent)" />
+          <Row label="Privacy policy" value="Read →" href="/legal/privacy" />
+        </RowGroup>
+      </section>
+
+      <MemberSignOut />
+
+      <p
+        style={{
+          margin: "var(--space-3) 0 0",
+          fontSize: "var(--text-xs)",
+          color: "var(--text-muted)",
+        }}
+      >
+        Training figures on this screen are sample data until the database is
+        connected; your account details above are real.{" "}
+        {/* Underlined, not just coloured: inside a muted paragraph the accent
+            is only 1.06:1 against the surrounding text, so colour alone would
+            not tell a reader this is a link. */}
+        <Link
+          href="/contact"
+          style={{
+            color: "var(--accent)",
+            textDecoration: "underline",
+            textUnderlineOffset: 2,
+          }}
+        >
+          Something wrong?
+        </Link>
+      </p>
+    </>
+  );
+}
+
+function formatDate(iso: string | null | undefined): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+  }).format(d);
+}

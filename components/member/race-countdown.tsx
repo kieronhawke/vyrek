@@ -30,17 +30,17 @@ export function RaceCountdown() {
     return (
       <Link
         href="/app/analysis"
-        className="flex items-center justify-between gap-3 rounded-2xl border border-dashed border-suth-border bg-transparent px-4 py-4 transition-colors hover:border-suth-accent"
+        className="flex items-center justify-between gap-3 rounded-2xl border border-dashed border-[color:var(--border)] bg-transparent px-4 py-4 transition-colors hover:border-[color:var(--accent)]"
       >
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+          <p className="font-mono text-[12px] uppercase tracking-[0.22em] text-[color:var(--text-muted)]">
             No race set
           </p>
-          <p className="mt-1 text-sm font-medium text-suth-text">
+          <p className="mt-1 text-sm font-medium text-[color:var(--text)]">
             Add your race in Analysis to start the countdown.
           </p>
         </div>
-        <span className="font-mono text-sm text-suth-accent">→</span>
+        <span className="font-mono text-sm text-[color:var(--accent)]">→</span>
       </Link>
     );
   }
@@ -49,22 +49,22 @@ export function RaceCountdown() {
   const phase = phaseFor(weeks);
 
   return (
-    <article className="rounded-2xl border border-suth-accent/40 bg-suth-accent/5 px-5 py-4">
+    <article className="rounded-2xl border border-[color:var(--accent)]/40 bg-[var(--accent)]/5 px-5 py-4">
       <div className="flex items-baseline justify-between gap-3">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
+        <p className="font-mono text-[12px] uppercase tracking-[0.22em] text-[color:var(--accent)]">
           [ Race countdown ]
         </p>
-        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+        <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
           {phase}
         </span>
       </div>
       <div className="mt-2 flex items-baseline gap-3">
-        <p className="text-4xl font-black tabular-nums text-suth-text">
+        <p className="text-4xl font-black tabular-nums text-[color:var(--text)]">
           {days}
         </p>
-        <p className="text-sm text-suth-text-secondary">days to {race.name}</p>
+        <p className="text-sm text-[color:var(--text-muted)]">days to {race.name}</p>
       </div>
-      <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+      <p className="mt-1 font-mono text-[12px] uppercase tracking-[0.22em] text-[color:var(--text-muted)]">
         {prettyDate(race.date)} · {weeks}w {days % 7}d
       </p>
     </article>

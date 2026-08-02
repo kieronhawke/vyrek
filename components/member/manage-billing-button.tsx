@@ -43,12 +43,12 @@ export function ManageBillingButton() {
         type="button"
         onClick={onClick}
         disabled={loading}
-        className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-base px-4 text-sm text-suth-text transition-colors hover:border-suth-border-strong disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex h-10 items-center rounded-pill border border-[color:var(--border)] bg-[var(--bg)] px-4 text-sm text-[color:var(--text)] transition-colors hover:border-[color:var(--border-strong)] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading ? "Opening Stripe…" : "Manage billing ↗"}
       </button>
       {error ? (
-        <span role="alert" className="text-xs text-suth-danger">
+        <span role="alert" className="text-xs text-[color:var(--danger)]">
           {error}
         </span>
       ) : null}

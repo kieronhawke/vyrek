@@ -491,7 +491,7 @@ export function WorkoutPlayer() {
             width: "100%",
             minHeight: 60,
             background: "var(--accent)",
-            color: "#0A0A0A",
+            color: "var(--accent-ink)",
             border: "none",
             borderRadius: "var(--radius-button)",
             fontSize: "var(--text-lg)",

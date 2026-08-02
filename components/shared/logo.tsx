@@ -67,9 +67,17 @@ export function Monogram({
 export function Wordmark({
   className,
   size = "md",
+  accent = ACCENT,
 }: {
   className?: string;
   size?: "sm" | "md" | "lg" | "xl";
+  /**
+   * Colour of the square full stop. Defaults to the brand chartreuse, which
+   * is right on the marketing site's dark ground. The member area and admin
+   * pass their own accent: chartreuse on a light surface is both off-palette
+   * and barely visible.
+   */
+  accent?: string;
 }) {
   const sizeMap = {
     sm: "h-7",
@@ -99,7 +107,7 @@ export function Wordmark({
         y="134.20"
         width="30"
         height="30"
-        fill={ACCENT}
+        fill={accent}
       />
     </svg>
   );

@@ -31,33 +31,75 @@
  */
 
 [data-surface="control"] {
-  /* ── Colour — spec/14 §2, all fifteen ───────────────────────────── */
-  --bg: #0a0a0a;
-  --surface: #141414;
-  --surface-raised: #1c1c1c;
-  --border: #262626;
-  --border-strong: #383838;
-  --accent: #a3e635;
-  --accent-hover: #84cc16;
-  --accent-glow: #bef264;
-  --accent-faint: #1a3d08;
-  --text: #fafafa;
-  --text-muted: #a3a3a3;
-  --text-faint: #6b6b6b;
-  --warn: #fbbf24;
-  --danger: #f87171;
-  --info: #60a5fa;
+  /**
+   * ── Colour ────────────────────────────────────────────────────────
+   *
+   * SPEC OVERRIDE, on Kieron's instruction, 2 August 2026.
+   *
+   * spec/14 §2 is headed "LOCKED, DO NOT REINTERPRET" and specifies near-black
+   * (#0A0A0A) with an acid-lime accent (#A3E635). That is what shipped, and it
+   * is what Kieron rejected: "It's really hard to view the text in the black
+   * format so I think we should keep it as white."
+   *
+   * The client's instruction outranks the build pack. Two further reasons it
+   * is the right call rather than merely the instructed one:
+   *
+   *   1. MarchOn — the reference Kieron gave us — goes light itself in exactly
+   *      the places that involve reading and typing: the sign-up panel and the
+   *      FAQ are both white sections on an otherwise black site. Light for a
+   *      console follows their logic rather than departing from it.
+   *   2. Near-black plus acid-lime is the single most over-used pairing in
+   *      software design right now. Dropping it costs nothing.
+   *
+   * The accent is drawn from the Elite 15 photography — the deep oxblood of
+   * the arena seating that sits behind every race frame — so the interface and
+   * the imagery come from the same place. It is used structurally. Status
+   * colour (ok / warn / danger) is deliberately separate from it, so "this is
+   * a link" can never read as "this is fine".
+   *
+   * Dark is not deleted, it is demoted: it follows the OS below, and
+   * [data-theme] overrides both. Every pair here is checked against WCAG AA
+   * for its role, and tests/visual asserts it rather than trusting this note.
+   */
+  --bg: #f4f2f0;
+  --surface: #ffffff;
+  --surface-raised: #faf8f7;
+  --border: #e2dcd8;
+  --border-strong: #cfc7c2;
+  --accent: #a32c22;
+  --accent-hover: #8a241b;
+  --accent-glow: #c4443a;
+  --accent-faint: #f7e7e4;
+  /* Text placed ON the accent. Never hardcode a colour against --accent:
+     it inverts between themes and the old code assumed it never would. */
+  --accent-ink: #ffffff;
+  --text: #16110f;
+  --text-muted: #5c524d;
+  --text-faint: #877b75;
+  --ok: #1f6b43;
+  --warn: #8a5a00;
+  --danger: #b3261e;
+  --info: #1f4fa8;
 
-  /* ── Type scale — spec/14 §3 ────────────────────────────────────── */
-  /* Admin body is 13px, not 16px. It is a control panel; density is the
-     point. The client app overrides to 15px, read one-handed in a gym. */
-  --text-2xs: 11px;
-  --text-2xs-lh: 1.3;
-  --text-xs: 12px;
-  --text-xs-lh: 1.4;
-  --text-sm: 13px;
-  --text-sm-lh: 1.5;
-  --text-base: 15px;
+  /**
+   * ── Type scale ────────────────────────────────────────────────────
+   *
+   * SPEC OVERRIDE, same instruction. spec/14 §3 sets admin body at 13px on
+   * the argument that "it is a control panel; density is the point".
+   *
+   * 13px was the other half of the legibility complaint. Density is a real
+   * goal, but it is bought with spacing and row rhythm, not by shrinking the
+   * text — a console read at the end of a working day is not a data grid.
+   * Admin now starts at 14px and the client app at 16px, and a visual gate
+   * asserts that nothing anywhere renders below 12px.
+   */
+  --text-2xs: 12px;
+  --text-2xs-lh: 1.35;
+  --text-xs: 13px;
+  --text-xs-lh: 1.45;
+  --text-sm: 14px;
+  --text-sm-lh: 1.55;
+  --text-base: 16px;
   --text-base-lh: 1.6;
   --text-lg: 18px;
   --text-lg-lh: 1.5;
@@ -116,11 +158,81 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* The client app reads at arm's length one-handed, so it steps up to 15px.
-   spec/14 §3. */
+/**
+ * ── Dark ───────────────────────────────────────────────────────────────
+ *
+ * Kept, but as a preference rather than the only option. A gym floor is often
+ * dark and a phone at 5am is brighter than anyone wants; the athlete should
+ * get whichever their device already asked for.
+ *
+ * Only tokens are redefined. Nothing below styles a component inside this
+ * block — if it did, [data-theme="light"] could not win it back.
+ *
+ * This is not the old palette inverted. The accent lifts to a warm coral so
+ * it clears AA on a dark ground (the oxblood does not), and --accent-ink
+ * flips to near-black so text on an accent fill stays readable both ways.
+ */
+@media (prefers-color-scheme: dark) {
+  [data-surface="control"]:not([data-theme="light"]) {
+    --bg: #0f0d0c;
+    --surface: #1a1716;
+    --surface-raised: #232020;
+    --border: #322c29;
+    --border-strong: #453d39;
+    --accent: #f08379;
+    --accent-hover: #f59a91;
+    --accent-glow: #f08379;
+    --accent-faint: #2e1a17;
+    --accent-ink: #2a0f0c;
+    --text: #f2edea;
+    --text-muted: #a99e98;
+    --text-faint: #7a6e68;
+    --ok: #4fbe84;
+    --warn: #e0a54a;
+    --danger: #f0776b;
+    --info: #7fa0ff;
+  }
+}
+
+/* Explicit choice beats the OS, in both directions. */
+[data-surface="control"][data-theme="dark"] {
+  --bg: #0f0d0c;
+  --surface: #1a1716;
+  --surface-raised: #232020;
+  --border: #322c29;
+  --border-strong: #453d39;
+  --accent: #f08379;
+  --accent-hover: #f59a91;
+  --accent-glow: #f08379;
+  --accent-faint: #2e1a17;
+  --accent-ink: #2a0f0c;
+  --text: #f2edea;
+  --text-muted: #a99e98;
+  --text-faint: #7a6e68;
+  --ok: #4fbe84;
+  --warn: #e0a54a;
+  --danger: #f0776b;
+  --info: #7fa0ff;
+}
+
+/* The client app reads at arm's length one-handed, so it steps up. */
 [data-surface="control"][data-density="comfortable"] {
   font-size: var(--text-base);
   line-height: var(--text-base-lh);
+}
+
+/**
+ * ── Member shell layout ────────────────────────────────────────────────
+ *
+ * One place decides how wide the member area is and where its navigation
+ * lives, because four of the seven member pages had forgotten to set a width
+ * at all — which is why Account rendered a label hard-left and its value
+ * hard-right with two thousand pixels of nothing between them on a desktop
+ * monitor.
+ */
+[data-surface="control"] {
+  --member-max: 760px;
+  --rail-w: 232px;
 }
 
 /**

@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
-import { ClientTabs } from "@/components/client-app/tabs";
-import { RegisterTrainSW } from "@/components/client-app/register-sw";
 import "@/app/control-tokens.css";
+import "@/app/member.css";
 
 /**
- * The member area. Five bottom tabs, app-like, thumb-reachable
- * (spec/11 §4, spec/14 §7).
+ * The member area's outermost layer: surface, font, nothing else.
  *
- * The header is sticky and translucent so content passes under it on scroll
- * — the small piece of motion the spec allows, and what makes a web app read
- * as native rather than as a page.
+ * The navigation deliberately does NOT live here. It used to, which meant
+ * /app/sign-in rendered the tab bar too — its own layout carries the comment
+ * "No tab bar on sign-in: there is nowhere to navigate to yet", and that had
+ * quietly stopped being true, because a nested layout composes with its parent
+ * rather than replacing it. The tabbed pages now sit in the (member) route
+ * group, which owns the shell; sign-in sits outside it.
  */
 const archivo = Archivo({
   variable: "--font-archivo",
@@ -24,13 +25,10 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function MemberLayout({
+export default function MemberRootLayout({
   children,
-  base = "/app",
 }: {
   children: React.ReactNode;
-  /** Route prefix, so the preview mount reuses this shell verbatim. */
-  base?: string;
 }) {
   return (
     <div
@@ -39,18 +37,7 @@ export default function MemberLayout({
       className={archivo.variable}
       style={{ minHeight: "100svh" }}
     >
-      <RegisterTrainSW />
-      <main
-        style={{
-          padding: "var(--space-3) var(--space-2)",
-          paddingTop: "calc(env(safe-area-inset-top) + var(--space-3))",
-          paddingBottom:
-            "calc(var(--tabbar-h) + env(safe-area-inset-bottom) + var(--space-4))",
-        }}
-      >
-        {children}
-      </main>
-      <ClientTabs base={base} />
+      {children}
     </div>
   );
 }

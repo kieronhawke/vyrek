@@ -33,8 +33,8 @@ export function PaceCalculatorCard() {
   }, [paceMin, paceSec, stationsMin, stationsSec]);
 
   return (
-    <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
-      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+    <div className="rounded-lg border border-[color:var(--border)] bg-[var(--surface)] p-5">
+      <p className="font-mono text-[12px] uppercase tracking-[0.22em] text-[color:var(--text-muted)]">
         Project your finish time
       </p>
 
@@ -53,19 +53,19 @@ export function PaceCalculatorCard() {
         </Row>
       </div>
 
-      <div className="mt-5 rounded-md border border-suth-accent/30 bg-suth-accent/5 p-4 text-center">
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+      <div className="mt-5 rounded-md border border-[color:var(--accent)]/30 bg-[var(--accent)]/5 p-4 text-center">
+        <p className="font-mono text-[12px] uppercase tracking-[0.22em] text-[color:var(--text-muted)]">
           Projected finish
         </p>
-        <p className="mt-2 text-4xl font-black tabular-nums text-suth-text">
+        <p className="mt-2 text-4xl font-black tabular-nums text-[color:var(--text)]">
           {fmtClock(result.total)}
         </p>
-        <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+        <p className="mt-2 font-mono text-[12px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
           Runs {fmtClock(result.runSec)} · Stations {fmtClock(result.stationSec)} · Transitions {fmtClock(result.transitionSec)}
         </p>
       </div>
 
-      <p className="mt-4 text-xs text-suth-text-tertiary">
+      <p className="mt-4 text-xs text-[color:var(--text-muted)]">
         Realistic accuracy ±3 minutes. The biggest predictor of accuracy is
         whether you held the run pace honestly in your last race-simulation
         session.
@@ -98,7 +98,7 @@ function Row({
 }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <span className="text-sm text-suth-text-secondary">{label}</span>
+      <span className="text-sm text-[color:var(--text-muted)]">{label}</span>
       {children}
     </div>
   );
@@ -126,9 +126,9 @@ function TimeInput({
         max={maxMin}
         value={minutes}
         onChange={(e) => onMin(e.target.value)}
-        className="h-10 w-14 rounded-md border border-suth-border bg-suth-base text-center text-base font-bold tabular-nums text-suth-text"
+        className="h-10 w-14 rounded-md border border-[color:var(--border)] bg-[var(--bg)] text-center text-base font-bold tabular-nums text-[color:var(--text)]"
       />
-      <span className="font-mono text-suth-text-tertiary">:</span>
+      <span className="font-mono text-[color:var(--text-muted)]">:</span>
       <input
         type="number"
         inputMode="numeric"
@@ -136,7 +136,7 @@ function TimeInput({
         max={59}
         value={seconds}
         onChange={(e) => onSec(e.target.value)}
-        className="h-10 w-14 rounded-md border border-suth-border bg-suth-base text-center text-base font-bold tabular-nums text-suth-text"
+        className="h-10 w-14 rounded-md border border-[color:var(--border)] bg-[var(--bg)] text-center text-base font-bold tabular-nums text-[color:var(--text)]"
       />
     </div>
   );

@@ -12,7 +12,7 @@ export function MemberTopBar({ email }: { email: string }) {
 
   return (
     <header
-      className="sticky top-[var(--suth-consent-h,0px)] z-30 border-b border-suth-border-subtle bg-suth-base/95 backdrop-blur-md"
+      className="sticky top-[var(--suth-consent-h,0px)] z-30 border-b border-[color:var(--border)] bg-[var(--bg)]/95 backdrop-blur-md"
       style={{ paddingTop: "var(--safe-top)" }}
     >
       <div className="mx-auto flex h-14 max-w-3xl items-center justify-between gap-3 px-4">
@@ -22,7 +22,7 @@ export function MemberTopBar({ email }: { email: string }) {
         <Link
           href="/app/account"
           aria-label="Account"
-          className="inline-flex size-9 items-center justify-center rounded-full border border-suth-border bg-suth-elevated text-sm font-semibold uppercase tracking-wide text-suth-text"
+          className="inline-flex size-9 items-center justify-center rounded-full border border-[color:var(--border)] bg-[var(--surface)] text-sm font-semibold uppercase tracking-wide text-[color:var(--text)]"
         >
           {initials}
         </Link>

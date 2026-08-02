@@ -133,7 +133,7 @@ export function MemberBottomNav() {
   return (
     <nav
       aria-label="Member sections"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-suth-border-subtle bg-suth-base/95 backdrop-blur-md md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-[color:var(--border)] bg-[var(--bg)]/95 backdrop-blur-md md:hidden"
       style={{ paddingBottom: "var(--safe-bottom)" }}
     >
       <ul role="list" className="grid grid-cols-5">
@@ -147,12 +147,12 @@ export function MemberBottomNav() {
                 className={cn(
                   "flex h-16 flex-col items-center justify-center gap-1 transition-colors active:scale-[0.96]",
                   active
-                    ? "text-suth-accent"
-                    : "text-suth-text-tertiary hover:text-suth-text",
+                    ? "text-[color:var(--accent)]"
+                    : "text-[color:var(--text-muted)] hover:text-[color:var(--text)]",
                 )}
               >
                 {t.icon(active)}
-                <span className="text-[10px] font-medium uppercase tracking-[0.12em]">
+                <span className="text-[12px] font-medium uppercase tracking-[0.12em]">
                   {t.label}
                 </span>
               </Link>

@@ -7,11 +7,11 @@ export function SectionEyebrow({
 }) {
   return (
     <header className="mb-3 flex items-baseline justify-between gap-3">
-      <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+      <h2 className="font-mono text-[12px] uppercase tracking-[0.22em] text-[color:var(--text-muted)]">
         {title}
       </h2>
       {right ? (
-        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
+        <span className="font-mono text-[12px] uppercase tracking-[0.22em] text-[color:var(--accent)]">
           {right}
         </span>
       ) : null}

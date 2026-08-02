@@ -1,25 +1,71 @@
 import type { ReactNode } from "react";
-import { MemberBottomNav } from "@/components/member/bottom-nav";
-import { MemberTopBar } from "@/components/member/top-bar";
-import type { MemberContext } from "@/lib/member/auth";
+import Link from "next/link";
+import { MemberNav } from "@/components/member/nav";
+import { Wordmark } from "@/components/shared/logo";
 
+/**
+ * The member area frame. One shell for every member page.
+ *
+ * It exists because the width was previously each page's own problem, and four
+ * of the seven pages forgot: Today, Nutrition and Analysis capped themselves at
+ * 768px while Home, Plan, Progress and Account did not, so Account rendered
+ * label-left / value-right across a whole monitor. A page can no longer get
+ * this wrong, because it no longer decides.
+ */
 export function MemberShell({
-  ctx,
+  base = "/app",
+  initials,
   children,
 }: {
-  ctx: MemberContext;
+  /** Route prefix, so the ungated preview mount reuses this verbatim. */
+  base?: string;
+  /** Shown in the avatar. Omitted on the preview mount, which has no user. */
+  initials?: string;
   children: ReactNode;
 }) {
   return (
-    <div className="flex min-h-svh flex-col bg-suth-base text-suth-text">
-      <MemberTopBar email={ctx.user.email} />
-      <main
-        className="flex-1 pb-[calc(5.5rem+var(--safe-bottom))] md:pb-12"
-        // pb to keep content above the fixed bottom-tab on mobile.
-      >
-        {children}
-      </main>
-      <MemberBottomNav />
+    <div className="member-frame">
+      {/* Desktop: the wordmark sits above the rail. */}
+      <div className="member-railhead">
+        <Link href={base} aria-label="Suth Performance">
+          <Wordmark size="sm" accent="var(--accent)" className="text-[color:var(--text)]" />
+        </Link>
+      </div>
+
+      {/* Mobile: wordmark left, account right. The rail replaces this above
+          768px, so the avatar is not duplicated. */}
+      <header className="member-topbar">
+        <Link href={base} aria-label="Suth Performance">
+          <Wordmark size="sm" accent="var(--accent)" className="text-[color:var(--text)]" />
+        </Link>
+        {initials ? (
+          <Link
+            href={`${base}/account`}
+            aria-label="Account"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 34,
+              height: 34,
+              borderRadius: 999,
+              border: "1px solid var(--border)",
+              background: "var(--surface-raised)",
+              color: "var(--text)",
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: "0.02em",
+              textDecoration: "none",
+            }}
+          >
+            {initials}
+          </Link>
+        ) : null}
+      </header>
+
+      <MemberNav base={base} />
+
+      <main className="member-main">{children}</main>
     </div>
   );
 }

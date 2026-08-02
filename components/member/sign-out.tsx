@@ -24,7 +24,10 @@ export function MemberSignOut() {
       type="button"
       onClick={onClick}
       disabled={busy}
-      className="inline-flex h-11 w-full items-center justify-center rounded-pill border border-red-500/40 bg-red-500/10 px-5 text-sm font-medium text-red-300 transition-colors hover:bg-red-500/20 disabled:opacity-60"
+      /* text-red-300 was chosen for a near-black ground and is 1.49:1 on a
+         light one. Danger comes from the surface token now, so it follows
+         whichever theme is in play. */
+      className="inline-flex h-12 w-full items-center justify-center rounded-full border border-[color:var(--border)] bg-[var(--surface)] px-5 text-sm font-semibold text-[color:var(--danger)] transition-colors hover:bg-[var(--surface-raised)] disabled:opacity-60"
     >
       {busy ? "Signing out…" : "Sign out"}
     </button>

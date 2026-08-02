@@ -1,21 +1,43 @@
-import MemberLayout from "@/app/app/layout";
+import { MemberShell } from "@/components/member/shell";
+import { Archivo } from "next/font/google";
+import "@/app/control-tokens.css";
+import "@/app/member.css";
 
 /**
  * Ungated preview of the member area.
  *
- * The real mount is /app, which middleware.ts gates — and that gate cannot
- * be satisfied yet, because sign-in needs Supabase and the project is
- * paused. Rather than add a bypass to shipped middleware so the screens can
- * be looked at, this mounts the same layout and the same pages on a path
- * the matcher does not cover. Nothing here is a copy: it re-exports.
+ * The real mount is /app, gated by middleware.ts, and that gate cannot be
+ * satisfied until Supabase is connected. Rather than add a bypass to shipped
+ * auth so the screens can be looked at, this mounts the same shell and the
+ * same screen components on a path the matcher does not cover.
  *
- * It is also what lets the device matrix cover these screens now instead of
- * after auth lands, which is the same reason /control-preview/admin exists.
+ * It used to re-export the pages themselves, which call assertMember and
+ * therefore redirected straight to /login — so the preview could not preview
+ * the thing it exists to preview. It now renders the screens, which is the
+ * same markup without the auth boundary.
  */
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
+
 export default function MemberPreviewLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <MemberLayout base="/control-preview/app">{children}</MemberLayout>;
+  return (
+    <div
+      data-surface="control"
+      data-density="comfortable"
+      className={archivo.variable}
+      style={{ minHeight: "100svh" }}
+    >
+      <MemberShell base="/control-preview/app" initials="SP">
+        {children}
+      </MemberShell>
+    </div>
+  );
 }
