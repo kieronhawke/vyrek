@@ -99,3 +99,43 @@ spawning a page per variant.
 
 Revisit only if the misspellings show real impressions in Search Console with
 no matching page, which is evidence rather than speculation.
+
+## Hub routes: 384 planned posts still point at 404s
+
+Audited 3 August 2026 against production. `post-template-spec.md` makes "1 link
+to the cluster hub" a publish requirement for every post, so a cluster whose
+hub does not exist cannot ship a compliant post.
+
+**Fixed by remapping** (the route existed under a different path, no new build
+required): `/gear` → `/hyrox/gear`, `/races` → `/hyrox/events`, `/hyrox/plans`
+→ `/plans`. That moved 151 posts from a dead hub to a live one.
+
+**Built**: `/hyrox/guide`, which 108 posts depend on.
+
+**Still 404, and each needs a route before its cluster can ship:**
+
+| Posts | Hub | Section |
+|---|---|---|
+| 140 | `/get-fit` | PT |
+| 76 | `/coaching` | PT |
+| 28 | `/recovery` | PT |
+| 22 | `/strength` | PT |
+| 19 | `/how-much-is-a-personal-trainer` | PT |
+| 14 | `/hyrox-vs` | HYROX |
+| 13 | `/hyrox/workouts` | HYROX |
+| 13 | `/hybrid-training` | PT |
+| 12 | `/fat-loss` | PT |
+| 11 | `/hyrox/doubles` | HYROX |
+| 10 | `/hyrox/times` | HYROX |
+| 10 | `/hyrox/nutrition` | HYROX |
+| 8 | `/hyrox-coach` | PT |
+| 8 | `/running` | PT |
+
+Twelve of the fourteen are PT-side, which is the larger finding: the personal
+training section of the site is essentially unbuilt, and 338 planned PT posts
+have nowhere to hang. The five HYROX hubs are small builds and could follow the
+`/hyrox/guide` pattern directly.
+
+Sequencing consequence: **do not write into a cluster whose hub is dead.** The
+post will either ship without its hub link, breaking the spec, or ship with a
+404 in it. Build the hub first, then the cluster.
