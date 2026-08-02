@@ -7,7 +7,8 @@
  * results/performance data point. bensTake must be ≥40 words and not
  * templated across locations.
  *
- * Runs as `prebuild` before every `next build`. Writes:
+ * Runs as `prebuild` before every `next build`. Writes, but only when the
+ * content actually changed (see writeIfChanged below):
  *   data/locations/publish-status.json   (consumed by lib/locations)
  *   docs/location-validator-report.md    (human report)
  *
@@ -230,9 +231,40 @@ const status = {
   },
   locations: results,
 };
-writeFileSync(
-  path.join(DATA_DIR, "publish-status.json"),
+/**
+ * Write only when the content actually changed, ignoring the datestamp.
+ *
+ * This script runs as prebuild before EVERY `next build`, in every worktree.
+ * Both of its outputs carry a `generatedAt` date, so a build in any lane
+ * rewrote them with today's date even when nothing about the locations had
+ * changed — leaving two Phase D files dirty in someone else's tree. That has
+ * already caused one real collision: a datestamp-only bump was swept into a
+ * content commit while the Phase D worktree had 136 lines of genuine
+ * regeneration to the same files in flight (VYREK-LANES.md §4).
+ *
+ * Comparing on everything-but-the-date means a build still self-heals the
+ * file the moment location data genuinely changes, and is a no-op otherwise.
+ * This is NOT a gate bypass: the validation above runs identically and the
+ * exit code is untouched. Hard rule 3 forbids a skip flag, so there isn't
+ * one — the decision is made from the content, not from an argument.
+ */
+function writeIfChanged(file, next, stripDate) {
+  if (existsSync(file)) {
+    const current = readFileSync(file, "utf8");
+    if (stripDate(current) === stripDate(next)) return false;
+  }
+  writeFileSync(file, next);
+  return true;
+}
+
+const DATE_RE = /\d{4}-\d{2}-\d{2}/g;
+const withoutDates = (t) => t.replace(DATE_RE, "<date>");
+
+const statusPath = path.join(DATA_DIR, "publish-status.json");
+const statusWritten = writeIfChanged(
+  statusPath,
   JSON.stringify(status, null, 2) + "\n",
+  withoutDates,
 );
 
 const legacy = registry.filter((l) => l.legacy);
@@ -306,7 +338,14 @@ lines.push(
   "3. **bens_take** — human-written paragraph per location, min 40 words.",
   "",
 );
-writeFileSync(path.join(ROOT, "docs", "location-validator-report.md"), lines.join("\n"));
+const reportWritten = writeIfChanged(
+  path.join(ROOT, "docs", "location-validator-report.md"),
+  lines.join("\n"),
+  withoutDates,
+);
+if (!statusWritten && !reportWritten) {
+  console.log("Locations: outputs unchanged, nothing rewritten.");
+}
 
 console.log(
   `Locations: ${indexedCount}/${registry.length} indexed · ` +
