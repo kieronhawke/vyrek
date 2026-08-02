@@ -4,6 +4,8 @@ import raceCitiesJson from "@/data/locations/race-cities.json";
 import type { UkLocation } from "@/lib/uk-locations";
 import type { GeoSeo } from "@/lib/locations/seo";
 import { nextOccurrence } from "@/lib/locations/seo";
+import { haversineKm } from "@/lib/hyrox/race-geo";
+import { venueLabel } from "@/lib/hyrox/races";
 
 /**
  * The international race cities: every city that has hosted a HYROX outside
@@ -79,22 +81,6 @@ export function listRaceCitySlugs(): string[] {
 
 export function isRaceCitySlug(slug: string): boolean {
   return RACE_CITIES.some((c) => c.slug === slug);
-}
-
-/** Straight-line distance, kilometres. Never present this as a journey. */
-function haversineKm(
-  a: { lat: number; lng: number },
-  b: { lat: number; lng: number },
-): number {
-  const R = 6371;
-  const dLat = ((b.lat - a.lat) * Math.PI) / 180;
-  const dLng = ((b.lng - a.lng) * Math.PI) / 180;
-  const la1 = (a.lat * Math.PI) / 180;
-  const la2 = (b.lat * Math.PI) / 180;
-  const h =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(la1) * Math.cos(la2) * Math.sin(dLng / 2) ** 2;
-  return 2 * R * Math.asin(Math.sqrt(h));
 }
 
 type IntlEnrichment = {
@@ -197,7 +183,7 @@ export function getRaceCityGeo(slug: string): GeoSeo {
           eventSlug: next.slug,
           eventName: next.name,
           venue: next.venueAnnounced
-            ? (next.venueName ?? next.venue)
+            ? venueLabel({ ...next, city: city.name })
             : "a venue still to be announced",
           city: city.name,
           startDate: next.nextDate,

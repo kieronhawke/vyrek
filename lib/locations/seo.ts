@@ -1,6 +1,7 @@
 import { getAllLocations, getLocation, getEnrichment } from "./index";
 import type { KeywordEvidence, LocationIdentity } from "./types";
-import { HYROX_EVENTS } from "@/lib/hyrox-events";
+import { homeRaces, venueLabel } from "@/lib/hyrox/races";
+import { raceCoords, haversineKm } from "@/lib/hyrox/race-geo";
 
 /**
  * The indexing and uniqueness layer for the three geo page families
@@ -37,34 +38,6 @@ import { HYROX_EVENTS } from "@/lib/hyrox-events";
  * coordinates (and labelled as straight-line) or read from a sourced record.
  */
 
-/** Straight-line distance, kilometres. Never present this as a journey. */
-function haversineKm(
-  a: { lat: number; lng: number },
-  b: { lat: number; lng: number },
-): number {
-  const R = 6371;
-  const dLat = ((b.lat - a.lat) * Math.PI) / 180;
-  const dLng = ((b.lng - a.lng) * Math.PI) / 180;
-  const la1 = (a.lat * Math.PI) / 180;
-  const la2 = (b.lat * Math.PI) / 180;
-  const h =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(la1) * Math.cos(la2) * Math.sin(dLng / 2) ** 2;
-  return 2 * R * Math.asin(Math.sqrt(h));
-}
-
-/**
- * Race venue coordinates. Public, fixed locations, verifiable on any map, so
- * stating them is reporting rather than inventing. Keyed by the venue city as
- * it appears in lib/hyrox-events.ts.
- */
-const VENUE_COORDS: Record<string, { lat: number; lng: number }> = {
-  London: { lat: 51.508, lng: 0.029 }, // ExCeL, Royal Victoria Dock
-  Manchester: { lat: 53.476, lng: -2.246 }, // Manchester Central
-  Birmingham: { lat: 52.45, lng: -1.72 }, // NEC, Marston Green
-  Glasgow: { lat: 55.861, lng: -4.286 }, // OVO Hydro, Finnieston
-};
-
 export type NearestRace = {
   eventSlug: string;
   eventName: string;
@@ -80,16 +53,16 @@ export type NearestRace = {
 };
 
 /**
- * lib/hyrox-events.ts stores one date per venue and says in its own header
- * that these follow the annual calendar cadence rather than a confirmed
- * schedule. Two of the four are already in the past, and none carries the
- * `past` flag, so a page reading the raw value advertises a race weekend that
- * has been and gone.
+ * Kept for the international race cities, which read a per-city calendar that
+ * can legitimately contain a date that has passed.
  *
- * Rolling a stale date forward by whole years keeps the annual cadence the
- * data is claiming, and `rolledForward` tells the caller to say "expected"
- * rather than state it. The real fix is refreshing the calendar; this stops
- * the site being wrong in the meantime.
+ * It used to be load-bearing here: `nearestRace` was computed from the four
+ * placeholder-dated events in lib/hyrox-events.ts, two of which were already
+ * in the past, so rolling forward was the only thing standing between a
+ * reader and a race weekend that had been and gone. That is no longer the
+ * shape of the problem — the calendar is real now, and `homeRaces()` only
+ * returns races that have not finished — so nothing in the UK path rolls
+ * anything forward any more.
  */
 export function nextOccurrence(iso: string, now = new Date()): {
   date: string;
@@ -157,23 +130,42 @@ export function getGeoSeo(slug: string): GeoSeo {
     source: p.source,
   }));
 
+  /**
+   * The nearest race, from the real calendar.
+   *
+   * This used to score the four placeholder-dated events in
+   * lib/hyrox-events.ts against four hard-coded venue coordinates, so every
+   * one of these pages told a reader their nearest race weekend was a date
+   * nobody had published. `63c7611` replaced that file's authority for
+   * /hyrox/events and /hyrox/{city} but not here, which left the invented
+   * dates rendering on 3,764 geo pages — the largest surface of the three.
+   *
+   * Now: the soonest race that has not finished, in the UK or Ireland,
+   * measured to the venue where it geocoded and the host city where it did
+   * not. `homeRaces()` is the same UK-plus-Ireland calendar the events page
+   * leads with, and it exists because UK athletes routinely travel to Dublin.
+   * Scoring the whole world instead would make Paris the honest answer for
+   * parts of Kent, which is true, useless, and not what the page is asking.
+   */
   let nearestRace: NearestRace | undefined;
   if (identity?.lat != null && identity?.lng != null) {
     const here = { lat: identity.lat, lng: identity.lng };
-    const scored = HYROX_EVENTS.map((e) => {
-      const coords = VENUE_COORDS[e.venue.city];
-      if (!coords) return null;
-      const next = nextOccurrence(e.startDate);
-      return {
-        eventSlug: e.slug,
-        eventName: e.name,
-        venue: e.venue.name,
-        city: e.venue.city,
-        startDate: next.date,
-        rolledForward: next.rolledForward,
-        straightLineKm: Math.round(haversineKm(here, coords)),
-      };
-    }).filter((x): x is NearestRace => x !== null);
+    const scored = homeRaces()
+      .map((r) => {
+        const coords = raceCoords(r);
+        if (!coords) return null;
+        return {
+          eventSlug: r.slug,
+          eventName: r.name,
+          venue: venueLabel(r),
+          city: r.city,
+          startDate: r.startDate,
+          // Every candidate is already in the future, so nothing is rolled.
+          rolledForward: false,
+          straightLineKm: Math.round(haversineKm(here, coords)),
+        };
+      })
+      .filter((x): x is NearestRace => x !== null);
     scored.sort((a, b) => a.straightLineKm - b.straightLineKm);
     nearestRace = scored[0];
   }
@@ -269,7 +261,24 @@ export function isRaceCity(slug: string): boolean {
   return (RACE_CITY_SLUGS as readonly string[]).includes(slug);
 }
 
-/** The cities that actually host a UK race, from the event calendar. */
+/**
+ * The cities that actually host a UK or Irish race, from the real calendar.
+ *
+ * Was derived from the four placeholder events, so it claimed exactly the four
+ * cities that file happened to list. Now it answers from what HYROX has
+ * actually scheduled, which is the only version of this that stays true as the
+ * calendar moves.
+ */
 export function hostCitySlugs(): string[] {
-  return [...new Set(HYROX_EVENTS.map((e) => e.venue.city.toLowerCase()))];
+  return [
+    ...new Set(
+      homeRaces().map((r) =>
+        r.city
+          .normalize("NFD")
+          .replace(/[̀-ͯ]/g, "")
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-"),
+      ),
+    ),
+  ];
 }
