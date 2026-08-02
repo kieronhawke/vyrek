@@ -29,10 +29,18 @@
   /* LIVE pulse. */
   --results-live: #FF4D4D;
 
-  /* Vertical offset of the fixed marketing nav (h-16), plus the cookie strip
-     when it is showing and the iOS safe area. The Results sub-nav sticks to
-     this rather than to 0, otherwise the two navs stack on top of each other. */
+  /* Where the Results sub-nav sticks: below the fixed marketing nav (h-16),
+     the cookie strip when showing, and the iOS safe area. Safe on a *sticky*
+     element — changing `top` on an out-of-flow element reflows nothing. */
   --results-nav-offset: calc(4rem + var(--suth-consent-h, 0px) + var(--safe-top, 0px));
+
+  /* Space reserved at the top of the content for that same furniture.
+     Deliberately a FIXED value and NOT the variable above: the cookie banner
+     sets --suth-consent-h from an effect after first paint, so a padding that
+     reads it grows by 48px post-paint and shifts the whole page. That was
+     0.108 CLS on every Results page, against a 0.05 budget. The rest of the
+     site reserves a generous fixed pad for the same reason. */
+  --results-content-offset: calc(7rem + var(--safe-top, 0px));
 }
 
 /* NOTE: no `@theme` block here.

@@ -18,7 +18,18 @@ import type {
   AthleteProfile, StartListWave, RecordEntry, ResultDetail,
 } from "./source";
 
-const DATA_DIR = join(process.cwd(), "data", "results-demo");
+/**
+ * Which dataset this source reads.
+ *
+ * `demo` → generated fixtures. `live` → whatever `scripts/import-results.ts`
+ * wrote from real CSVs. Same shape either way, which is the point: swapping to
+ * real data is a data-loading job, not a rewrite.
+ */
+const DATA_DIR = join(
+  process.cwd(),
+  "data",
+  process.env.NEXT_PUBLIC_DATA_MODE === "live" ? "results-live" : "results-demo",
+);
 const PAGE_SIZE = 100;
 
 type RawResult = {
@@ -244,6 +255,13 @@ export const demoDataSource: ResultsDataSource = {
       scope: "all-time",
       entries: [...best.values()].sort((a, b) => a.finishSeconds - b.finishSeconds),
     };
+  },
+
+  async getDivisionFinishTimes(eventSlug, division) {
+    // Straight off the shard, no object allocation.
+    return finishersOf(eventSlug, division)
+      .map((r) => r.finishSeconds)
+      .sort((a, b) => a - b);
   },
 
   async getStationDistribution(station, division) {

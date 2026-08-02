@@ -175,6 +175,16 @@ export interface ResultsDataSource {
   getRecords(): Promise<RecordsBoard>;
 
   getStationDistribution(station: StationId, division: string): Promise<Distribution>;
+
+  /**
+   * Ascending finish times for a division, and nothing else.
+   *
+   * Result pages need the field only to place one athlete in it. Going through
+   * `getRanking` built 3,221 row objects per request to read one number off
+   * each — 5.5s LCP on the result page. A live feed should serve this from a
+   * precomputed column, never by materialising rows.
+   */
+  getDivisionFinishTimes(eventSlug: string, division: string): Promise<number[]>;
 }
 
 /** `demo` shows the Demo data pill; `live` hides it. */

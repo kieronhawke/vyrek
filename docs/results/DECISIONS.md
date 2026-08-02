@@ -215,3 +215,37 @@ test that reads the real slugs out of `lib/hyrox-stations.ts`.
 ### D27 — Tests wait on content, never on `networkidle`
 The site runs a presence heartbeat, so the network never goes idle and `networkidle` times out
 against a production server. Every navigation now waits for the page's own `h1`.
+
+### D28 — CLS came from my own nav offset token
+Mobile CLS was 0.108 on every Results page against a 0.05 budget. Cause: the content
+spacer read `--results-nav-offset`, which includes `--suth-consent-h` — and the cookie banner
+sets that from an effect *after* first paint, growing the padding by 48px and shifting the
+whole page. Split into two tokens: `--results-nav-offset` (sticky sub-nav `top`, safe because
+changing `top` on an out-of-flow element reflows nothing) and a fixed
+`--results-content-offset` for the spacer. The rest of the site reserves a generous fixed pad
+for exactly this reason.
+
+### D29 — Result pages no longer materialise the whole division
+The result page called `getRanking(..., MAX_SAFE_INTEGER)` to place one athlete in the field,
+building 3,221 row objects per request — 5.5s LCP. Added
+`getDivisionFinishTimes(eventSlug, division)` to the source contract: ascending numbers, no
+object allocation. A live feed should serve it from an indexed column.
+
+### D30 — Real data goes in by CSV import, not by writing a data source
+`scripts/import-results.ts` reads flat results CSVs and writes `data/results-live/` in exactly
+the shape the app already reads, so going live is a data-loading job. Rules that matter:
+all-or-nothing (a half-imported event looks fine and is wrong), ranking is *derived* rather
+than trusted from the file, bad times are rejected rather than coerced to zero, and partial
+splits are kept with a warning.
+
+### D31 — DNFs are results, not errors
+The importer initially aborted the whole file on a `DNF` in the finish column. Real timing
+exports are full of DNFs; that made it unusable on any actual event. Caught by feeding it a
+realistic CSV rather than a tidy one. `DNF`/`DNS`/`DQ`/`withdrawn`/`-` are recognised
+non-finishes, kept with `status: "dnf"` and excluded from ranking. Genuine garbage in the
+finish column is still an error.
+
+### D32 — `NEXT_PUBLIC_DATA_MODE` must be set at build time
+It is inlined during `next build`, not read at runtime. Passing it to `pnpm start` does
+nothing — verified. It has to be set in the Vercel project environment and the deploy rebuilt.
+Documented in `docs/results/DATA-IMPORT.md`.
