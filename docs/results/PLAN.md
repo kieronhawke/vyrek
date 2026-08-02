@@ -96,3 +96,47 @@ This plan describes the full Definition of Done. It is a large build — 20 rout
 matrix. Phases land in order and each one leaves the app working, so progress is inspectable
 at any point rather than only at the end. `REPORT.md` will state exactly what is green and
 what is not, without rounding up.
+
+---
+
+# PART 2 — THE DATA ENGINE
+
+Added 3 August 2026, against `docs/suv-results-data-engine-prompt.md`.
+Read `SOURCE.md` first: the source disallows automated access, which changes
+what "live" means and is the reason for the gate in E2.
+
+## Constraints that shaped the design
+
+1. **The source says `Disallow: /`** and 403s honest bot User-Agents. So the
+   HYROX adapter is complete but gated off by default (`HYROX_SOURCE_ACCESS`).
+2. **Supabase is paused** — `iiezxhzbissemvsfytwl.supabase.co` does not resolve.
+   So nothing may depend on a live database to be built or proven. Every store
+   access goes through a `ResultsRepository` interface with two implementations:
+   Supabase (production) and in-memory (tests, CI, local). This is not a test
+   convenience, it is what makes the whole engine provable today.
+3. **No ETag on the source.** Change detection is a content hash, per `SOURCE.md` §6.
+
+## Phases
+
+| # | Phase | Lands |
+|---|---|---|
+| E1 | Schema | `0101_results_engine.sql`: events, divisions, athletes, results, station_distributions, ingestion_runs, sync_state, quarantine, alerts, athlete_merge_reviews. RLS on. |
+| E2 | Fetch layer | Honest UA, robots policy gate, `HYROX_SOURCE_ACCESS` authorisation gate, backoff + jitter, `Retry-After`, global outbound budget, circuit breaker |
+| E3 | Adapter + fallback chain | `SourceAdapter` interface; `ajax2` primary → HTML parse fallback; `ReplayAdapter` over fixtures; `Normaliser`; validation → quarantine; parser-shape sentinel |
+| E4 | Workers | Catalog sync, backfill (resumable, UK first), live poller (timezone-aware self-arming), post-race reconciliation, distribution recompute, `ingestion_runs`, heartbeat |
+| E5 | Serving API + LiveDataSource | `/api/results/*` reading only our store; real `LiveDataSource`; `NEXT_PUBLIC_DATA_MODE=live` |
+| E6 | Live fan-out | One poll per event per interval, realtime publish, subscriber hook, saturation fallback to cached-API polling, `updates_paused` |
+| E7 | Correctness | Completeness reconciliation, athlete identity resolution with review queue |
+| E8 | Operator Mode | Health board, per-job status, live panel, error + quarantine log, manual controls, copy-for-fix, interval floor 15s, access control |
+| E9 | Rights | Anonymising removal path, claim-to-ingested-athlete linking |
+| E10 | Frontend gaps | Station guide §5.8 additions, athlete + report OG cards, regional calendars |
+| E11 | Tests, runbook, report | Every test in brief §14, deterministic against fixtures |
+
+## The one architectural decision worth stating
+
+**`ResultsRepository` is the seam, not Supabase.** Workers, the serving API and
+the admin console all talk to that interface. The Supabase implementation is one
+file. This is what lets the entire engine — including live fan-out, quarantine,
+circuit breaking and completeness checks — be tested deterministically with no
+database, no network and no source, in milliseconds, and it is why the test
+suite proves behaviour rather than mocking it away.
