@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     "The full HYROX race calendar — every event by season, region and country, "
     + "with results, start lists and entrant counts.",
   alternates: { canonical: "/events" },
-  openGraph: { url: `${siteUrl}/events`, type: "website" },
+  openGraph: { url: `${siteUrl()}/events`, type: "website" },
 };
 
 const SEASONS = [

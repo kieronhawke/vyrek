@@ -50,8 +50,19 @@ export async function generateMetadata({
     openGraph: {
       title: `HYROX ${event.city} ${event.year}`,
       description,
-      url: `${siteUrl}/event/${event.slug}`,
+      url: `${siteUrl()}/event/${event.slug}`,
       type: "website",
+      images: [{
+        url: `${siteUrl()}/api/og/event/${event.slug}`,
+        width: 1200,
+        height: 630,
+        alt: `HYROX ${event.city} ${event.year} podium`,
+      }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `HYROX ${event.city} ${event.year}`,
+      images: [`${siteUrl()}/api/og/event/${event.slug}`],
     },
   };
 }
@@ -96,7 +107,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
       name: event.venue,
       address: { "@type": "PostalAddress", addressLocality: event.city, addressCountry: event.country },
     },
-    url: `${siteUrl}/event/${event.slug}`,
+    url: `${siteUrl()}/event/${event.slug}`,
     sport: "HYROX",
   };
 

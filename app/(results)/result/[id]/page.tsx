@@ -5,7 +5,7 @@ import { getResultsSource } from "@/lib/results";
 import { siteUrl } from "@/lib/blog/urls";
 import { buildRankingSlug } from "@/lib/results/slugs";
 import { STATION_IDS } from "@/lib/results/model";
-import { formatCount, formatOrdinal, formatPercent, formatSplit } from "@/lib/results/format";
+import { formatCount, formatOrdinal, formatPercent, formatSplit, formatTime } from "@/lib/results/format";
 import { buildDistribution, percentileOf } from "@/lib/results/percentiles";
 import {
   analyseStations, analysePacing, analyseRoxzone, analyseBalance,
@@ -49,8 +49,19 @@ export async function generateMetadata({
     openGraph: {
       title: `${result.athleteName} — ${result.eventName}`,
       description: `${formatOrdinal(result.rank)} of ${formatCount(result.fieldSize)} in ${division}.`,
-      url: `${siteUrl}/result/${id}`,
+      url: `${siteUrl()}/result/${id}`,
       type: "website",
+      images: [{
+        url: `${siteUrl()}/api/og/result/${id}`,
+        width: 1200,
+        height: 630,
+        alt: `${result.athleteName} — ${formatTime(result.finishSeconds)} at ${result.eventName}`,
+      }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${result.athleteName} — ${result.eventName}`,
+      images: [`${siteUrl()}/api/og/result/${id}`],
     },
   };
 }
@@ -136,6 +147,10 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
           athleteName={result.athleteName}
           eventName={result.eventName}
           finishSeconds={result.finishSeconds}
+          cardUrl={`/api/og/result/${id}`}
+          rank={result.rank}
+          fieldSize={result.fieldSize}
+          division={division}
         />
       </header>
 

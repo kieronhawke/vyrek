@@ -44,7 +44,7 @@ export async function generateMetadata({
       `Every ${division} result from HYROX ${event.city} ${event.year} — `
       + `${formatCount(page.fieldSize)} finishers with full splits, gaps and age-group ranks.`,
     alternates: { canonical: `/ranking/${slug}` },
-    openGraph: { url: `${siteUrl}/ranking/${slug}`, type: "website" },
+    openGraph: { url: `${siteUrl()}/ranking/${slug}`, type: "website" },
   };
 }
 

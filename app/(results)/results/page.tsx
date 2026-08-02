@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "HYROX Results, Rankings & Race Analytics",
     description: "Every HYROX result, ranking and split, searchable in one place.",
-    url: `${siteUrl}/results`,
+    url: `${siteUrl()}/results`,
     type: "website",
   },
 };
