@@ -11,6 +11,10 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    // Node's native type stripping requires explicit .ts extensions on imports,
+    // which is how scripts/generate-demo-data.ts runs without a build step.
+    // Safe alongside noEmit: true.
+    "allowImportingTsExtensions": true,
     "jsx": "react-jsx",
     "incremental": true,
     "plugins": [

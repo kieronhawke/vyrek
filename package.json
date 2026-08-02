@@ -4,16 +4,17 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/validate-locations.mjs && next build",
+    "build": "node scripts/validate-locations.mjs && node scripts/generate-demo-data.ts && next build",
     "validate:locations": "node scripts/validate-locations.mjs",
     "start": "next start",
     "lint": "eslint",
     "test:visual": "playwright test",
     "test:visual:report": "playwright show-report tests/visual/report",
     "test:visual:install": "playwright install chromium webkit",
-    "test": "vitest run",
+    "test": "node scripts/generate-demo-data.ts && vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "generate:results": "node scripts/generate-demo-data.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",

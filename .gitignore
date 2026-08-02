@@ -80,6 +80,10 @@ next-env.d.ts
 # 154MB of retina PNGs, and they are third-party UI we must never ship.
 /refs/screenshots/
 
+# Generated demo race data — 52MB, rebuilt by scripts/generate-demo-data.ts
+# from a fixed seed, so it is reproducible and never belongs in git.
+/data/results-demo/
+
 # Internal brief documents (keep locally, not in public repo)
 /docs/suth-*.md
 /docs/NIGHT-OF-*.md
