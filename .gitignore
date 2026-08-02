@@ -76,6 +76,10 @@ next-env.d.ts
 /photos/
 /screenshots/
 
+# Competitor reference screenshots for the Results build. Local-only:
+# 154MB of retina PNGs, and they are third-party UI we must never ship.
+/refs/screenshots/
+
 # Internal brief documents (keep locally, not in public repo)
 /docs/suth-*.md
 /docs/NIGHT-OF-*.md
