@@ -16,13 +16,17 @@ const SITE_URL = canonicalSiteUrl();
 
 /**
  * The geo templates carry no per-location content date, so stamping them with
- * `new Date()` made the sitemap claim all 284 geo URLs had changed on every
+ * `new Date()` made the sitemap claim every geo URL had changed on every
  * build. A sitemap that cries wolf gets its `lastmod` ignored, which is the
  * opposite of what it is for. Until locations carry their own `verifiedOn`
  * dates (phase D), this is a hand-maintained stamp: bump it when the geo
  * templates or their copy change materially, not when the build runs.
+ *
+ * Bumped 2026-08-02: the geo programme went from 94 hand-typed locations to
+ * 1,882 sourced ones, with new region and county directory layers and rewritten
+ * town copy. Every geo URL in this file genuinely did change on that date.
  */
-const GEO_CONTENT_UPDATED = new Date("2026-07-29T00:00:00Z");
+const GEO_CONTENT_UPDATED = new Date("2026-08-02T00:00:00Z");
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
@@ -135,8 +139,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // County directories: "personal trainer kent" and friends are evidenced
     // queries that no single town page answers.
     ...listCountySlugs().flatMap((c) => [
-      { url: `${SITE_URL}/hyrox-training/county/${c}`, lastModified: now, priority: 0.7, changeFrequency: "weekly" as const },
-      { url: `${SITE_URL}/personal-trainer/county/${c}`, lastModified: now, priority: 0.7, changeFrequency: "weekly" as const },
+      { url: `${SITE_URL}/hyrox-training/county/${c}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
+      { url: `${SITE_URL}/personal-trainer/county/${c}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
     ]),
     ...UK_LOCATIONS.filter((loc) => getGeoSeo(loc.slug).indexable).flatMap((loc) => [
       {
