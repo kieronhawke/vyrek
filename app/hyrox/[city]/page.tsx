@@ -22,7 +22,8 @@ import { RelatedGrid } from "@/components/shared/related-grid";
 import { siteUrl } from "@/lib/blog/urls";
 import { RACE_CITY_SLUGS } from "@/lib/locations/seo";
 import { HYROX_EVENTS } from "@/lib/hyrox-events";
-import { nextOccurrence, getGeoSeo } from "@/lib/locations/seo";
+import { upcoming as upcomingRaces, formatDates } from "@/lib/hyrox/races";
+import { getGeoSeo } from "@/lib/locations/seo";
 
 export const revalidate = 86400;
 // Only the slugs we know are valid render; everything else 404s cleanly.
@@ -130,9 +131,22 @@ export default async function CityPage({
   const cityEvent = HYROX_EVENTS.find(
     (e) => e.venue.city.toLowerCase() === loc.slug,
   );
-  // Two of the four stored dates have already passed and none carries the
-  // `past` flag, so read the next occurrence rather than the raw value.
-  const cityRaceDate = cityEvent ? nextOccurrence(cityEvent.startDate) : null;
+  /**
+   * The DATE comes from the real calendar; everything else about the venue
+   * still comes from HYROX_EVENTS.
+   *
+   * Only the dates in that file were invented — its header says so. The venue
+   * name, address, divisions, logistics and prep-window copy are hand-written
+   * facts about real places and are worth keeping. So this reads the confirmed
+   * date from hyrox.com and falls back to no date at all rather than to the
+   * cadence guess, because "we do not know yet" beats a made-up Saturday.
+   */
+  const confirmedRace = upcomingRaces().find(
+    (r) => r.city.toLowerCase() === loc.slug && !r.isYoungstars,
+  );
+  const cityRaceDate = confirmedRace
+    ? { date: formatDates(confirmedRace), rolledForward: false }
+    : null;
   const nearestRace = getGeoSeo(loc.slug).nearestRace;
   const url = `${siteUrl()}/hyrox/${loc.slug}`;
   const breadcrumbItems = [

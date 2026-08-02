@@ -1,36 +1,54 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { format } from "date-fns";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { SplitHeading } from "@/components/shared/split-heading";
 import { CtaButton } from "@/components/shared/cta-button";
-import { HYROX_EVENTS } from "@/lib/hyrox-events";
+import { RaceCard } from "@/components/hyrox/race-card";
+import { homeRaces, upcoming } from "@/lib/hyrox/races";
 import { siteUrl } from "@/lib/blog/urls";
 
+/**
+ * The HYROX race calendar — every upcoming race, from HYROX's own pages.
+ *
+ * This page listed four races with invented dates. It now lists the real
+ * calendar, grouped so a UK athlete finds their race first: home races, then
+ * everything else by continent.
+ */
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "Hyrox UK events, race calendar, venues, prep windows",
+  title: "HYROX race calendar — every upcoming race, dates and venues",
   description:
-    "Hyrox UK race calendar: ExCeL London, Manchester Central, NEC Birmingham, OVO Hydro Glasgow. Venue logistics, divisions, and when to start your 12-week build.",
+    "Every upcoming HYROX race with a confirmed date and venue. UK races at ExCeL London, Manchester Central, NEC Birmingham, the SEC Glasgow and Principality Stadium Cardiff, plus the full international calendar.",
   alternates: { canonical: `${siteUrl()}/hyrox/events` },
   robots: { index: true, follow: true },
 };
 
 export default function EventsIndex() {
+  const races = upcoming();
+  const home = homeRaces();
+  const homeSlugs = new Set(home.map((r) => r.slug));
+  const abroad = races.filter((r) => !homeSlugs.has(r.slug));
+
+  const byContinent = abroad.reduce<Record<string, typeof abroad>>((acc, r) => {
+    const key = r.continent ?? "Elsewhere";
+    (acc[key] ??= []).push(r);
+    return acc;
+  }, {});
+
   const itemListLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Hyrox UK race events",
-    numberOfItems: HYROX_EVENTS.length,
-    itemListElement: HYROX_EVENTS.map((e, i) => ({
+    name: "HYROX race calendar",
+    numberOfItems: races.length,
+    itemListElement: races.slice(0, 50).map((r, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: `${siteUrl()}/hyrox/events/${e.slug}`,
-      name: e.name,
+      url: `${siteUrl()}/hyrox/events/${r.slug}`,
+      name: r.name,
     })),
   };
 
@@ -44,50 +62,71 @@ export default function EventsIndex() {
       <main className="pb-24 pt-28 md:pt-36">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <Eyebrow>Events</Eyebrow>
+            <Eyebrow>Race calendar</Eyebrow>
             <SplitHeading
               as="h1"
               className="mt-4 text-balance text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[46px]"
             >
-              Hyrox UK race calendar.
+              Find your race.
             </SplitHeading>
             <p className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
-              Every UK Hyrox race weekend with venue logistics, divisions, and
-              the date your 12-week build should start.
+              Every upcoming HYROX race with a confirmed date and venue, read
+              from HYROX&apos;s own event pages. {races.length} races,{" "}
+              {home.length} of them in the UK and Ireland. Pick one and we will
+              tell you when a twelve-week build has to start.
             </p>
             <div className="mt-8">
               <CtaButton href="/quiz" size="md">
-                Find your plan →
+                Build a plan for your race →
               </CtaButton>
             </div>
           </div>
 
-          <ul role="list" className="mx-auto mt-14 grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-2">
-            {HYROX_EVENTS.map((e) => (
-              <li key={e.slug}>
-                <Link
-                  href={`/hyrox/events/${e.slug}`}
-                  className="lift-on-hover shimmer block h-full rounded-lg border border-suth-border bg-suth-elevated p-6"
-                >
-                  <div className="flex items-baseline justify-between gap-3">
-                    <Eyebrow>{e.eyebrow}</Eyebrow>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-                      {format(new Date(e.startDate), "MMM yyyy")}
-                    </span>
-                  </div>
-                  <h2 className="mt-3 text-xl font-black tracking-[-0.04em] text-suth-text">
-                    {e.name}
-                  </h2>
-                  <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
-                    {e.about}
-                  </p>
-                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-suth-accent">
-                    Venue + logistics →
+          <section className="mx-auto mt-14 max-w-5xl">
+            <h2 className="mb-3 text-xl font-black tracking-[-0.03em] text-suth-text">
+              UK &amp; Ireland{" "}
+              <span className="text-suth-text-tertiary">({home.length})</span>
+            </h2>
+            <ul role="list" className="race-grid">
+              {home.map((race) => (
+                <li key={race.slug}>
+                  <RaceCard race={race} />
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {Object.entries(byContinent)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([continent, list]) => (
+              <section key={continent} className="mx-auto mt-12 max-w-5xl">
+                <h2 className="mb-3 text-xl font-black tracking-[-0.03em] text-suth-text">
+                  {continent}{" "}
+                  <span className="text-suth-text-tertiary">
+                    ({list.length})
                   </span>
-                </Link>
-              </li>
+                </h2>
+                <ul role="list" className="race-grid">
+                  {list.map((race) => (
+                    <li key={race.slug}>
+                      <RaceCard race={race} />
+                    </li>
+                  ))}
+                </ul>
+              </section>
             ))}
-          </ul>
+
+          <p className="mx-auto mt-12 max-w-3xl text-sm text-suth-text-secondary">
+            Dates and venues are read from{" "}
+            <Link
+              href="https://hyrox.com/find-my-race/"
+              rel="nofollow"
+              className="text-suth-accent"
+            >
+              hyrox.com
+            </Link>
+            . Always check the official page before booking travel.
+          </p>
         </Container>
       </main>
       <MarketingFooter />

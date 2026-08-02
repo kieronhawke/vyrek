@@ -7,7 +7,7 @@ import { getGeoSeo, geoPriority, isRaceCity } from "@/lib/locations/seo";
 import { STATIONS } from "@/lib/hyrox-stations";
 import { PLAN_TEMPLATES } from "@/lib/plan-templates";
 import { COMPARISONS } from "@/lib/hyrox-comparisons";
-import { HYROX_EVENTS } from "@/lib/hyrox-events";
+import { upcoming as upcomingRaces } from "@/lib/hyrox/races";
 import { GEAR_GUIDES } from "@/lib/hyrox-gear";
 import { TOPIC_HUBS } from "@/lib/topic-hubs";
 
@@ -188,10 +188,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const eventRoutes: MetadataRoute.Sitemap = HYROX_EVENTS.map((e) => ({
-    url: `${SITE_URL}/hyrox/events/${e.slug}`,
+  /**
+   * The real race calendar, not the four placeholder events. Only upcoming
+   * races: a page for a race that has already happened is not something we
+   * want crawled, and the source data is not re-fetched often enough to keep
+   * historic pages honest.
+   */
+  const eventRoutes: MetadataRoute.Sitemap = upcomingRaces().map((race) => ({
+    url: `${SITE_URL}/hyrox/events/${race.slug}`,
     lastModified: now,
-    priority: 0.75,
+    // UK and Ireland races are the ones we can actually rank for.
+    priority:
+      race.country === "United Kingdom" || race.country === "Ireland" ? 0.8 : 0.5,
     changeFrequency: "weekly",
   }));
 

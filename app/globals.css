@@ -394,3 +394,107 @@ a.inline, [data-inline-tap], .prose a, nav[aria-label="Breadcrumb"] a {
     transition: none;
   }
 }
+
+/* ── Race cards ─────────────────────────────────────────────────────────
+   The marketing site's race calendar. Photo behind, date in the accent,
+   flag beside the location — see docs/design/app-references.md §1.7.
+   Scoped here rather than in the control surface: these are public pages. */
+
+.race-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.race-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 168px;
+  padding: 16px;
+  border: 1px solid var(--suth-border-default);
+  border-radius: 8px;
+  overflow: hidden;
+  isolation: isolate;
+  text-decoration: none;
+  color: var(--suth-text-primary);
+  /* A dark ground under the photograph so the text has something measurable
+     behind it even before the image loads. */
+  background: var(--suth-bg-base);
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+
+.race-card:hover {
+  border-color: var(--suth-border-strong);
+  transform: translateY(-2px);
+}
+
+.race-card__img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.race-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+  opacity: 0.55;
+}
+
+.race-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgb(10 10 10 / 30%) 0%,
+    rgb(10 10 10 / 70%) 55%,
+    rgb(10 10 10 / 92%) 100%
+  );
+}
+
+.race-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.race-card__date {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--suth-accent);
+}
+
+.race-card__name {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.race-card__meta {
+  font-size: 14px;
+  color: var(--suth-text-secondary);
+}
+
+.race-card__away {
+  font-size: 13px;
+  color: var(--suth-text-tertiary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .race-card,
+  .race-card:hover {
+    transition: none;
+    transform: none;
+  }
+}
