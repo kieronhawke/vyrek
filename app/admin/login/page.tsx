@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { supabaseServer } from "@/lib/supabase/server";
 import { isAdminEmail } from "@/lib/admin/auth";
 import { AdminLoginForm } from "@/components/admin/login-form";
+import { DemoEntry } from "@/components/shared/demo-entry";
 
 export const metadata: Metadata = {
   title: "Sign in. Suth Performance admin",
@@ -23,7 +24,7 @@ export default async function AdminLoginPage() {
 
   return (
     <main className="flex min-h-svh items-center justify-center bg-suth-base px-6 py-16">
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-md">
         <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
           [ MISSION CONTROL ]
         </p>
@@ -34,6 +35,7 @@ export default async function AdminLoginPage() {
           Suth Performance admin only. Sign in with the email on the allowlist.
         </p>
         <AdminLoginForm />
+        <DemoEntry variant="admin" />
       </div>
     </main>
   );
