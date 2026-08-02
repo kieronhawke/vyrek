@@ -30,7 +30,7 @@ export default async function PlanBuilderPage({
             display: "inline-flex",
             alignItems: "center",
             minHeight: 44,
-            color: "var(--accent)",
+            color: "var(--accent-text)",
             textDecoration: "none",
             fontSize: "var(--text-sm)",
             fontWeight: 600,

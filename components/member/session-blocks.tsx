@@ -95,7 +95,7 @@ function IntervalRow({
           }}
         >
           <p style={{ margin: 0, fontSize: "var(--text-base)", lineHeight: 1.3 }}>
-            <span className="num" style={{ color: "var(--accent)", fontWeight: 700 }}>
+            <span className="num" style={{ color: "var(--accent-text)", fontWeight: 700 }}>
               {interval.quantity}
             </span>{" "}
             <span style={{ fontWeight: 650 }}>{interval.movement}</span>

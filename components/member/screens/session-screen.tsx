@@ -81,7 +81,7 @@ export function SessionScreen({
             display: "inline-flex",
             alignItems: "center",
             minHeight: 44,
-            color: "var(--accent)",
+            color: "var(--accent-text)",
             textDecoration: "none",
             fontWeight: 600,
             fontSize: "var(--text-sm)",
@@ -150,7 +150,7 @@ export function SessionScreen({
                 }}
               >
                 {s.photo ? (
-                  <div style={{ position: "relative", aspectRatio: "16 / 9", background: "#14100f" }}>
+                  <div style={{ position: "relative", aspectRatio: "16 / 9", background: "var(--bg)" }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={s.photo.wide ?? s.photo.src}

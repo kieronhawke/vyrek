@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Archivo } from "next/font/google";
 import "@/app/control-tokens.css";
 import { weekFor, todayFor } from "@/lib/member/week";
 import { RACES, homeRaces } from "@/lib/hyrox/races";
@@ -18,13 +17,6 @@ import { ALL_PHOTOS } from "@/lib/photo-library";
  * finished" are different things and this is the page where that distinction
  * matters most.
  */
-const archivo = Archivo({
-  variable: "--font-archivo",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
 export const metadata: Metadata = {
   title: "Review — every screen",
   robots: { index: false, follow: false },
@@ -200,7 +192,6 @@ export default function ReviewIndex() {
     <div
       data-surface="control"
       data-density="comfortable"
-      className={archivo.variable}
       style={{ minHeight: "100svh", background: "var(--bg)", color: "var(--text)" }}
     >
       <main

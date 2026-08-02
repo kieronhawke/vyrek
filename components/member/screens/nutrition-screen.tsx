@@ -181,7 +181,7 @@ export function NutritionScreen({ base = "/app" }: { base?: string } = {}) {
                     padding: "0 var(--space-2)",
                     borderRadius: "var(--radius-card)",
                     border: "1px solid var(--accent)",
-                    color: "var(--accent)",
+                    color: "var(--accent-text)",
                     fontSize: "var(--text-sm)",
                     fontWeight: 650,
                     backgroundImage:

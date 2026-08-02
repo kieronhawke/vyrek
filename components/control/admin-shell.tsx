@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { CommandPalette } from "@/components/control/command-palette";
+import { Wordmark } from "@/components/shared/logo";
 
 /**
  * OPERATOR MODE SHELL — docs/build-pack/spec/14 §5.
@@ -82,13 +83,19 @@ export function AdminShell({
       >
         <span
           style={{
-            fontWeight: 800,
-            letterSpacing: "-0.02em",
-            fontSize: "var(--text-base)",
+            display: "inline-flex",
+            alignItems: "center",
             whiteSpace: "nowrap",
           }}
         >
-          Suth Performance
+          {/* The admin rendered the company name as bold text. It has a
+              wordmark; not using it is why the console did not read as the
+              same product as the site. */}
+          <Wordmark
+            size="sm"
+            accent="var(--accent)"
+            className="text-[color:var(--text)]"
+          />
         </span>
         <CommandPalette />
       </header>
@@ -162,7 +169,7 @@ export function AdminShell({
                         {m.count && !collapsed ? (
                           <sup
                             className="num"
-                            style={{ color: "var(--accent)", fontSize: "var(--text-xs)" }}
+                            style={{ color: "var(--accent-text)", fontSize: "var(--text-xs)" }}
                           >
                             {m.count}
                           </sup>

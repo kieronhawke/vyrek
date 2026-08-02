@@ -371,6 +371,21 @@ export function GeoLanding({
           aria-labelledby="geo-hero-heading"
           className="relative isolate overflow-hidden bg-suth-base"
         >
+          {/**
+           * The hero photograph was invisible on all 3,946 of these pages.
+           *
+           * It loaded, it was in the DOM, and it was painted — under
+           * `opacity-60` and a top-to-bottom scrim running from 70% to fully
+           * opaque over a dark grayscale image on a near-black base. The net
+           * result was flat #0a0a0a: every geo page shipped a 245 KB image at
+           * `priority` / `fetchPriority="high"`, blocking LCP, for a hero that
+           * rendered as an empty black rectangle.
+           *
+           * The scrim runs left-to-right now instead. The text occupies the
+           * left half, so that is where it needs to be near-opaque; the right
+           * half is where the photograph actually is, and it can breathe. The
+           * second, vertical layer only seats the section into the one below.
+           */}
           <div aria-hidden className="absolute inset-0 -z-10">
             <Image
               src={c.heroImage}
@@ -379,9 +394,10 @@ export function GeoLanding({
               priority
               fetchPriority="high"
               sizes="100vw"
-              className="object-cover opacity-60 grayscale"
+              className="object-cover opacity-55 grayscale"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-suth-base/70 via-suth-base/45 to-suth-base" />
+            <div className="absolute inset-0 bg-gradient-to-r from-suth-base from-0% via-suth-base/90 via-35% to-suth-base/30 to-100%" />
+            <div className="absolute inset-0 bg-gradient-to-b from-suth-base/50 via-transparent via-35% to-suth-base" />
           </div>
           <Container>
             <div className="flex min-h-[88svh] max-w-2xl flex-col justify-end pb-14 pt-32 md:min-h-[70vh] md:justify-center md:pb-20 md:pt-36 lg:max-w-3xl">

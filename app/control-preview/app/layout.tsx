@@ -1,5 +1,4 @@
 import { MemberShell } from "@/components/member/shell";
-import { Archivo } from "next/font/google";
 import "@/app/control-tokens.css";
 import "@/app/member.css";
 
@@ -16,13 +15,6 @@ import "@/app/member.css";
  * the thing it exists to preview. It now renders the screens, which is the
  * same markup without the auth boundary.
  */
-const archivo = Archivo({
-  variable: "--font-archivo",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
 export default function MemberPreviewLayout({
   children,
 }: {
@@ -32,7 +24,6 @@ export default function MemberPreviewLayout({
     <div
       data-surface="control"
       data-density="comfortable"
-      className={archivo.variable}
       style={{ minHeight: "100svh" }}
     >
       <MemberShell base="/control-preview/app" initials="SP">

@@ -80,8 +80,8 @@
   border: 1px solid var(--border);
   border-radius: 999px;
   box-shadow:
-    0 1px 2px rgb(0 0 0 / 6%),
-    0 12px 28px rgb(0 0 0 / 12%);
+    0 1px 2px rgb(0 0 0 / 40%),
+    0 12px 28px rgb(0 0 0 / 55%);
 }
 
 .member-tabbar__link {
@@ -113,7 +113,7 @@
 }
 
 .member-tabbar__link[data-active] {
-  color: var(--accent);
+  color: var(--accent-text);
   background: var(--accent-faint);
 }
 
@@ -176,7 +176,7 @@
   }
 
   .member-rail__link[data-active] {
-    color: var(--accent);
+    color: var(--accent-text);
     background: var(--accent-faint);
   }
 }

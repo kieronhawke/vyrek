@@ -24,7 +24,7 @@ const COLUMNS: Column<CoachClient>[] = [
           display: "inline-flex",
           alignItems: "center",
           minHeight: 44,
-          color: "var(--accent)",
+          color: "var(--accent-text)",
           fontWeight: 600,
         }}
       >
