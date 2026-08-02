@@ -1,0 +1,161 @@
+{
+  "slug": "lyon",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "La bulle yoga",
+        "type": "gym",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "L'Appart Fitness",
+        "type": "gym",
+        "chain": "L'Appart Fitness",
+        "website": "https://www.lappartfitness.com",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fit by So",
+        "type": "gym",
+        "website": "http://www.fitbyso.fr",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "The New Me",
+        "type": "gym",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "On Air",
+        "type": "gym",
+        "website": "https://onair-fitness.fr/club/lyon-cordeliers",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Latitude yoga",
+        "type": "gym",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Club Victor Hugo",
+        "type": "gym",
+        "website": "https://www.clubvictorhugo.com/lyon-2/accueil",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "BodyHit",
+        "type": "gym",
+        "website": "https://bodyhit.fr/bodyhit-club-lyon-bellecour",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "IKC",
+        "type": "sports-centre",
+        "website": "https://www.ikcsport.com/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Track & Fit",
+        "type": "gym",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Centre Nautique Tony Bertrand",
+        "type": "sports-centre",
+        "chain": "Ville de Lyon",
+        "website": "https://www.lyon.fr/lieu/piscines-ete/centre-nautique-tony-bertrand-ex-piscine-du-rhone",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Small yoga",
+        "type": "gym",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Elixir Studio",
+        "type": "gym",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "École de Yoga Mysore",
+        "type": "gym",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Rituel Sport Club",
+        "type": "gym",
+        "website": "https://rituel-sportclub.fr/salle-de-sport/lyon2-cordeliers",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Basic-Fit",
+        "type": "gym",
+        "chain": "Basic-Fit",
+        "website": "https://www.basic-fit.com/fr-fr/clubs/basic-fit-lyon-rue-de-la-republique-9082cc354cd24ad7898a2478c18cd6f0.html",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Club du Rhône",
+        "type": "gym",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Lancer de Hache Lyon",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Yoga Korner",
+        "type": "gym",
+        "website": "https://yogakorner.fr/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Tiny Yoga Club",
+        "type": "gym",
+        "website": "https://www.tiny-studio.co/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

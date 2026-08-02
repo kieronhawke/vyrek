@@ -153,10 +153,16 @@ export function GeoLocalContext({
                   : `${travelShape(race.straightLineKm, name)} Whichever race you enter, the programme is built backwards from that date.`}
               </p>
               <p className="mt-5 text-[11px] leading-relaxed text-suth-text-tertiary">
-                Straight-line distance from the centre of {name} to the venue.
+                {/* Sources the distance figure above — so it only belongs here
+                    when there is one. A city that hosts its own race renders no
+                    distance, and the note was left dangling under it, citing a
+                    number that was not on the page. */}
+                {seo.hostsRace
+                  ? ""
+                  : `Straight-line distance from the centre of ${name} to the venue. `}
                 {race.rolledForward
-                  ? " The date follows the venue's annual cadence rather than a confirmed listing, so check the official Hyrox calendar before booking."
-                  : " Check the official Hyrox calendar for final dates."}
+                  ? "The date follows the venue's annual cadence rather than a confirmed listing, so check the official Hyrox calendar before booking."
+                  : "Check the official Hyrox calendar for final dates."}
               </p>
             </div>
           ) : null}

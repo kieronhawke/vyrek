@@ -1,0 +1,160 @@
+{
+  "slug": "anaheim",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Zumba Finess",
+        "type": "gym",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Anaheim Family YMCA Community Complex",
+        "type": "sports-centre",
+        "chain": "YMCA",
+        "website": "https://www.anaheimymca.org/",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "24 Hour Fitness",
+        "type": "gym",
+        "chain": "24 Hour Fitness",
+        "website": "https://www.24hourfitness.com/Website/Club/00064",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Gold's Gym",
+        "type": "gym",
+        "chain": "Gold's Gym",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Club Pilates",
+        "type": "gym",
+        "chain": "Club Pilates",
+        "distanceKm": 2.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Eureka Fitness Center",
+        "type": "gym",
+        "website": "https://disneyland.disney.go.com/recreation/disneyland-fitness-centers/",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Pixar Place Hotel Fitness Center",
+        "type": "gym",
+        "website": "https://disneyland.disney.go.com/recreation/disneyland-fitness-centers/",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Strength Actual",
+        "type": "sports-centre",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fight'n Friars Wrestling Room",
+        "type": "sports-centre",
+        "distanceKm": 3.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fight'n Friars Wrestling Weight Room",
+        "type": "sports-centre",
+        "distanceKm": 3.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Servite Friars Gym",
+        "type": "sports-centre",
+        "distanceKm": 3.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "P3 Elite Women's Gym",
+        "type": "gym",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Purple Yoga",
+        "type": "gym",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Planet Fitness",
+        "type": "gym",
+        "chain": "Planet Fitness",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Purple Pedal",
+        "type": "gym",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "EōS Fitness (Gym)",
+        "type": "gym",
+        "chain": "Gold's Gym",
+        "website": "https://www.eosfitness.com/gym/garden-grove-euclid-st-katella-ave",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "EōS Fitness",
+        "type": "gym",
+        "website": "https://www.eosfitness.com/",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Rep Max Performance",
+        "type": "sports-centre",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "South Gym",
+        "type": "gym",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "9Round Fitness",
+        "type": "gym",
+        "website": "https://www.9round.com/fitness/Orange-CA-x9222",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

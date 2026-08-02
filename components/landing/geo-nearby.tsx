@@ -20,6 +20,9 @@ export function GeoNearby({
   region,
   county,
   base,
+  items,
+  heading,
+  parentPath,
 }: {
   slug: string;
   name: string;
@@ -27,12 +30,22 @@ export function GeoNearby({
   county?: string;
   /** "/hyrox-training" or "/personal-trainer" */
   base: string;
+  /**
+   * Supplied by the international race cities, whose neighbours come from a
+   * different catalogue and are hundreds of kilometres apart rather than one
+   * town over. Defaults to the UK list, so existing callers are unchanged.
+   */
+  items?: { slug: string; name: string; km: number }[];
+  heading?: string;
+  /** Directory this place sits under. Defaults to its UK region. */
+  parentPath?: string;
 }) {
-  const nearby = nearbyTowns(slug, 6);
+  const nearby = items ?? nearbyTowns(slug, 6);
   if (!nearby.length) return null;
   // Only counties big enough to have earned a directory page.
   const cSlug = county ? countySlug(county) : null;
-  const hasCounty = cSlug ? listCountySlugs().includes(cSlug) : false;
+  const hasCounty = !items && cSlug ? listCountySlugs().includes(cSlug) : false;
+  const regionHref = parentPath ?? `${base}/in/${regionSlug(region)}`;
 
   return (
     <section
@@ -48,8 +61,8 @@ export function GeoNearby({
             [ Near {name} ]
           </h2>
           <p className="mt-4 text-base leading-relaxed text-suth-text-secondary">
-            Plenty of people train one town over, whether that is a better gym,
-            a flatter route, or simply the one on the way home from work.
+            {heading ??
+              "Plenty of people train one town over, whether that is a better gym, a flatter route, or simply the one on the way home from work."}
           </p>
           <ul className="mt-5 flex flex-wrap gap-2.5">
             {nearby.map((t) => (
@@ -76,7 +89,7 @@ export function GeoNearby({
               </Link>
             ) : null}
             <Link
-              href={`${base}/in/${regionSlug(region)}`}
+              href={regionHref}
               className="text-sm font-medium text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
             >
               Everywhere we cover in {region} →

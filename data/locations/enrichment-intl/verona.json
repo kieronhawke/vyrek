@@ -1,0 +1,152 @@
+{
+  "slug": "verona",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "McFit",
+        "type": "gym",
+        "chain": "McFit",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Yogastudio Verona",
+        "type": "gym",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Circolo Tennis Scaligero",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "New One Club",
+        "type": "gym",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Sciofit",
+        "type": "gym",
+        "website": "https://sciofitclubverona.com/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Il Tempio degli Elfi",
+        "type": "gym",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Tiro a segno nazionale di Verona",
+        "type": "sports-centre",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Canoa Club Verona",
+        "type": "sports-centre",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Tennis Pineta",
+        "type": "sports-centre",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Energym",
+        "type": "gym",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Tribù PT Studio",
+        "type": "gym",
+        "website": "https://www.tribuptstudio.it/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Centro Forma Evolution",
+        "type": "gym",
+        "website": "https://www.centroformaevolution.it/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "La Palestra",
+        "type": "gym",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Body street",
+        "type": "gym",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "CUS Verona Pesistica",
+        "type": "gym",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "U. S. San Marco Borgo Milano",
+        "type": "sports-centre",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Centro polisportivo \"Consolini\"",
+        "type": "sports-centre",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "AGSM Forum",
+        "type": "sports-centre",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "self studio pilates",
+        "type": "gym",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Centro Bernstein",
+        "type": "gym",
+        "website": "http://it.centrobernstein.it/",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "slug": "tampa",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Punch Boxing",
+        "type": "gym",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Benson Alex Riceman Fitness and Recreation Center",
+        "type": "gym",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Harbour Island Athletic Club",
+        "type": "sports-centre",
+        "website": "http://www.harbourislamdathleticclub.com",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Schoomaker ROTC and Athletics Building",
+        "type": "gym",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Epic Boxing & Fitness",
+        "type": "gym",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Gold's Gym",
+        "type": "gym",
+        "chain": "Gold's Gym",
+        "website": "https://goldsgymgasworx.com/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "F45 Training",
+        "type": "gym",
+        "chain": "F45 Training",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Davis Islands Playground",
+        "type": "sports-centre",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Roy Jenkins Pool",
+        "type": "sports-centre",
+        "website": "https://www.tampagov.net/parks-and-recreation/activities-recreation/aquatics/pool-facilities",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "FITmethod 413",
+        "type": "gym",
+        "website": "https://fitmethod413.com/",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "SOHO Cycling Studio",
+        "type": "gym",
+        "website": "https://www.sohocycling.com/",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Centro Ybor Fitness Center",
+        "type": "gym",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Shanna and Bryan Glazer JCC",
+        "type": "sports-centre",
+        "website": "https://www.shannaandbryanglazerjcc.com/",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Anytime Fitness",
+        "type": "gym",
+        "chain": "Anytime Fitness",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Aesthetic Supremacy",
+        "type": "gym",
+        "website": "https://theaestheticsupremacy.com/",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Better Fit Gym",
+        "type": "gym",
+        "distanceKm": 4.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Movement Upgraded",
+        "type": "gym",
+        "website": "https://movementupgraded.com/",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Lagree Fitness",
+        "type": "gym",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Mayweather Boxing + Fitness",
+        "type": "gym",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "LA Fitness",
+        "type": "gym",
+        "chain": "LA Fitness",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

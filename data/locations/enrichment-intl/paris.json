@@ -1,0 +1,160 @@
+{
+  "slug": "paris",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Rasa Yoga Rive Gauche",
+        "type": "gym",
+        "website": "https://www.rasa-yogarivegauche.com/",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Ritm - St Germain",
+        "type": "gym",
+        "website": "https://ritm-sport.fr/",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "KeepCool",
+        "type": "gym",
+        "chain": "KeepCool",
+        "website": "https://www.keepcool.fr/s/salle-de-sport-paris-5-saint-germain",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Les cercles de la forme",
+        "type": "gym",
+        "website": "https://www.cerclesdelaforme.com/salle-de-sport/chatelet-4eme/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Piscine Pontoise",
+        "type": "sports-centre",
+        "website": "https://www.espace-sportif-pontoise-paris.fr/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "L'Usine Beaubourg",
+        "type": "gym",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Centre sportif Saint-Merri",
+        "type": "sports-centre",
+        "website": "http://equipement.paris.fr/Piscine%20Saint-Merri",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Sense Club",
+        "type": "gym",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Storm cycling club",
+        "type": "gym",
+        "website": "https://www.stormcyclingclub.com",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Heartspot",
+        "type": "gym",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Elite Stimulation",
+        "type": "gym",
+        "website": "https://www.elite-stimulation.com",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Yoga Bikram",
+        "type": "gym",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Centre sportif Saint-Germain",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Kitten & Puppi",
+        "type": "gym",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Cercles de la forme",
+        "type": "gym",
+        "website": "https://www.cerclesdelaforme.com/salle-de-sport/beaubourg/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "centre sportif Jean Talbot",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Le Centre Elément",
+        "type": "gym",
+        "website": "https://www.lecentre-element.com/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "10h10 Sport Club",
+        "type": "gym",
+        "website": "https://prudentfitness.com/studio-marais",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Gymnase",
+        "type": "sports-centre",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Terrain de sport des jardins Saint-Paul",
+        "type": "sports-centre",
+        "website": "https://www.paris.fr/equipements/terrain-de-sport-des-jardins-saint-paul-6370",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

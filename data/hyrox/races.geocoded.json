@@ -1,0 +1,1840 @@
+{
+  "generatedAt": "2026-08-02",
+  "source": "https://nominatim.openstreetmap.org/",
+  "note": "Geocoded from data/hyrox/races.normalised.json. Generated — do not edit by hand.",
+  "cities": {
+    "istanbul": {
+      "slug": "istanbul",
+      "name": "Istanbul",
+      "country": "Türkiye",
+      "continent": "Europe",
+      "lat": 41.0064,
+      "lng": 28.9759,
+      "matched": "İstanbul, Fatih, İstanbul, Marmara Bölgesi, 34122, Türkiye",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "chengdu": {
+      "slug": "chengdu",
+      "name": "Chengdu",
+      "country": "China",
+      "continent": "Asia",
+      "lat": 30.6599,
+      "lng": 104.0633,
+      "matched": "成都市, 四川省, 中国",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "chiba": {
+      "slug": "chiba",
+      "name": "Chiba",
+      "country": "Japan",
+      "continent": "Asia",
+      "lat": 35.6071,
+      "lng": 140.1063,
+      "matched": "千葉市, 千葉県, 日本",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "bangkok": {
+      "slug": "bangkok",
+      "name": "Bangkok",
+      "country": "Thailand",
+      "continent": "Asia",
+      "lat": 13.7525,
+      "lng": 100.4935,
+      "matched": "กรุงเทพมหานคร, ประเทศไทย",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "cape-town": {
+      "slug": "cape-town",
+      "name": "Cape Town",
+      "country": "South Africa",
+      "continent": "Africa",
+      "lat": -33.9288,
+      "lng": 18.4172,
+      "matched": "Cape Town, City of Cape Town, Western Cape, 8001, South Africa",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "shenzhen": {
+      "slug": "shenzhen",
+      "name": "Shenzhen",
+      "country": "China",
+      "continent": "Asia",
+      "lat": 22.5446,
+      "lng": 114.0545,
+      "matched": "深圳市, 广东省, 中国",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "perth": {
+      "slug": "perth",
+      "name": "Perth",
+      "country": "Australia",
+      "continent": "Oceania",
+      "lat": -31.9559,
+      "lng": 115.8606,
+      "matched": "Perth, Western Australia, 6000, Australia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "washington-d-c": {
+      "slug": "washington-d-c",
+      "name": "Washington D.C.",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 38.8951,
+      "lng": -77.0364,
+      "matched": "Washington, District of Columbia, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "tenerife": {
+      "slug": "tenerife",
+      "name": "Tenerife",
+      "country": "Spain",
+      "continent": "Europe",
+      "lat": 28.4672,
+      "lng": -16.2508,
+      "matched": "Santa Cruz de Tenerife, Canarias, España",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "acapulco": {
+      "slug": "acapulco",
+      "name": "Acapulco",
+      "country": "Mexico",
+      "continent": "North America",
+      "lat": 16.868,
+      "lng": -99.894,
+      "matched": "Acapulco, Acapulco de Juárez, Guerrero, 39300, México",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "athens": {
+      "slug": "athens",
+      "name": "Athens",
+      "country": "Greece",
+      "continent": "Europe",
+      "lat": 37.9756,
+      "lng": 23.7348,
+      "matched": "Αθήνα, Δήμος Αθηναίων, Περιφερειακή Ενότητα Κεντρικού Τομέα Αθηνών, Περιφέρεια Αττικής, Αποκεντρωμένη Διοίκηση Αττικής, 105 57, Ελλάς",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "beijing": {
+      "slug": "beijing",
+      "name": "Beijing",
+      "country": "China",
+      "continent": "Asia",
+      "lat": 39.9057,
+      "lng": 116.3913,
+      "matched": "北京市, 中国",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "mumbai": {
+      "slug": "mumbai",
+      "name": "Mumbai",
+      "country": "India",
+      "continent": "Asia",
+      "lat": 19.055,
+      "lng": 72.8692,
+      "matched": "Mumbai, Mumbai Suburban District, Maharashtra, 400051, India",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "maastricht": {
+      "slug": "maastricht",
+      "name": "Maastricht",
+      "country": "Netherlands",
+      "continent": "Europe",
+      "lat": 50.8512,
+      "lng": 5.691,
+      "matched": "Maastricht, Limburg, Nederland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "salt-lake-city": {
+      "slug": "salt-lake-city",
+      "name": "Salt Lake City",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 40.7596,
+      "lng": -111.8868,
+      "matched": "Salt Lake City, Salt Lake County, Utah, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "izmir": {
+      "slug": "izmir",
+      "name": "Izmir",
+      "country": "Türkiye",
+      "continent": "Europe",
+      "lat": 38.4193,
+      "lng": 27.1285,
+      "matched": "İzmir, Konak, İzmir, Ege Bölgesi, 35250, Türkiye",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "rome": {
+      "slug": "rome",
+      "name": "Rome",
+      "country": "Italy",
+      "continent": "Europe",
+      "lat": 41.8933,
+      "lng": 12.4829,
+      "matched": "Roma, Roma Capitale, Lazio, Italia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "oslo": {
+      "slug": "oslo",
+      "name": "Oslo",
+      "country": "Norway",
+      "continent": "Europe",
+      "lat": 59.9133,
+      "lng": 10.739,
+      "matched": "Oslo, Norge",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "bordeaux": {
+      "slug": "bordeaux",
+      "name": "Bordeaux",
+      "country": "France",
+      "continent": "Europe",
+      "lat": 44.8412,
+      "lng": -0.58,
+      "matched": "Bordeaux, Gironde, Nouvelle-Aquitaine, France métropolitaine, France",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "toronto": {
+      "slug": "toronto",
+      "name": "Toronto",
+      "country": "Canada",
+      "continent": "North America",
+      "lat": 43.6535,
+      "lng": -79.3839,
+      "matched": "Toronto, Golden Horseshoe, Ontario, Canada",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "karlsruhe": {
+      "slug": "karlsruhe",
+      "name": "Karlsruhe",
+      "country": "Germany",
+      "continent": "Europe",
+      "lat": 49.0069,
+      "lng": 8.4034,
+      "matched": "Karlsruhe, Baden-Württemberg, Deutschland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "boston": {
+      "slug": "boston",
+      "name": "Boston",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 42.3588,
+      "lng": -71.0578,
+      "matched": "Boston, Suffolk County, Massachusetts, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "geneva": {
+      "slug": "geneva",
+      "name": "Geneva",
+      "country": "Switzerland",
+      "continent": "Europe",
+      "lat": 46.2018,
+      "lng": 6.1466,
+      "matched": "Genève, Schweiz/Suisse/Svizzera/Svizra",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "gdansk": {
+      "slug": "gdansk",
+      "name": "Gdańsk",
+      "country": "Poland",
+      "continent": "Europe",
+      "lat": 54.3483,
+      "lng": 18.654,
+      "matched": "Gdańsk, województwo pomorskie, Polska",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "valencia": {
+      "slug": "valencia",
+      "name": "Valencia",
+      "country": "Spain",
+      "continent": "Europe",
+      "lat": 39.4697,
+      "lng": -0.3763,
+      "matched": "València, Comarca de València, València / Valencia, Comunitat Valenciana, España",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "budapest": {
+      "slug": "budapest",
+      "name": "Budapest",
+      "country": "Hungary",
+      "continent": "Europe",
+      "lat": 47.4979,
+      "lng": 19.0402,
+      "matched": "Budapest, Közép-Magyarország, Magyarország",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "sao-paulo": {
+      "slug": "sao-paulo",
+      "name": "São Paulo",
+      "country": "Brazil",
+      "continent": "South America",
+      "lat": -23.5507,
+      "lng": -46.6334,
+      "matched": "São Paulo, Região Sudeste, Brasil",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "tampa": {
+      "slug": "tampa",
+      "name": "Tampa",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 27.945,
+      "lng": -82.4583,
+      "matched": "Tampa, Hillsborough County, Florida, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "birmingham": {
+      "slug": "birmingham",
+      "name": "Birmingham",
+      "country": "United Kingdom",
+      "continent": "Europe",
+      "lat": 52.4949,
+      "lng": -1.8518,
+      "matched": "Birmingham, West Midlands, England, United Kingdom",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hamburg": {
+      "slug": "hamburg",
+      "name": "Hamburg",
+      "country": "Germany",
+      "continent": "Europe",
+      "lat": 53.5502,
+      "lng": 10.0013,
+      "matched": "Hamburg, Deutschland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "nice": {
+      "slug": "nice",
+      "name": "Nice",
+      "country": "France",
+      "continent": "Europe",
+      "lat": 43.7009,
+      "lng": 7.2684,
+      "matched": "Nice, Alpes-Maritimes, Provence-Alpes-Côte d'Azur, France métropolitaine, France",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "mexico-city": {
+      "slug": "mexico-city",
+      "name": "Mexico City",
+      "country": "Mexico",
+      "continent": "North America",
+      "lat": 19.3208,
+      "lng": -99.1515,
+      "matched": "Ciudad de México, México",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "shanghai": {
+      "slug": "shanghai",
+      "name": "Shanghai",
+      "country": "China",
+      "continent": "Asia",
+      "lat": 31.2313,
+      "lng": 121.47,
+      "matched": "上海市, 中国",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "dusseldorf": {
+      "slug": "dusseldorf",
+      "name": "Düsseldorf",
+      "country": "Germany",
+      "continent": "Europe",
+      "lat": 51.2254,
+      "lng": 6.7763,
+      "matched": "Düsseldorf, Nordrhein-Westfalen, Deutschland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "dublin": {
+      "slug": "dublin",
+      "name": "Dublin",
+      "country": "Ireland",
+      "continent": "Europe",
+      "lat": 53.3494,
+      "lng": -6.2606,
+      "matched": "Dublin, County Dublin, Leinster, Éire / Ireland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "barcelona": {
+      "slug": "barcelona",
+      "name": "Barcelona",
+      "country": "Spain",
+      "continent": "Europe",
+      "lat": 41.3826,
+      "lng": 2.1771,
+      "matched": "Barcelona, Barcelonès, Barcelona, Catalunya, España",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "denver": {
+      "slug": "denver",
+      "name": "Denver",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 39.7392,
+      "lng": -104.9849,
+      "matched": "Denver, Colorado, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "seoul": {
+      "slug": "seoul",
+      "name": "Seoul",
+      "country": "South Korea",
+      "continent": "Asia",
+      "lat": 37.5667,
+      "lng": 126.9783,
+      "matched": "서울특별시, 대한민국",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "cairo": {
+      "slug": "cairo",
+      "name": "Cairo",
+      "country": "Egypt",
+      "continent": "Africa",
+      "lat": 30.0444,
+      "lng": 31.2357,
+      "matched": "القاهرة, مصر",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "dallas": {
+      "slug": "dallas",
+      "name": "Dallas",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 32.7763,
+      "lng": -96.7969,
+      "matched": "Dallas, Dallas County, Texas, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "poznan": {
+      "slug": "poznan",
+      "name": "Poznań",
+      "country": "Poland",
+      "continent": "Europe",
+      "lat": 52.4083,
+      "lng": 16.9335,
+      "matched": "Poznań, województwo wielkopolskie, Polska",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "rio-de-janeiro": {
+      "slug": "rio-de-janeiro",
+      "name": "Rio de Janeiro",
+      "country": "Brazil",
+      "continent": "South America",
+      "lat": -22.911,
+      "lng": -43.2094,
+      "matched": "Rio de Janeiro, Região Sudeste, Brasil",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "guangzhou": {
+      "slug": "guangzhou",
+      "name": "Guangzhou",
+      "country": "China",
+      "continent": "Asia",
+      "lat": 23.1288,
+      "lng": 113.259,
+      "matched": "广州市, 广东省, 中国",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "singapore": {
+      "slug": "singapore",
+      "name": "Singapore",
+      "country": "Singapore",
+      "continent": "Asia",
+      "lat": 1.2899,
+      "lng": 103.8519,
+      "matched": "Singapore",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "utrecht": {
+      "slug": "utrecht",
+      "name": "Utrecht",
+      "country": "Netherlands",
+      "continent": "Europe",
+      "lat": 52.0907,
+      "lng": 5.1216,
+      "matched": "Utrecht, Nederland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "johannesburg": {
+      "slug": "johannesburg",
+      "name": "Johannesburg",
+      "country": "South Africa",
+      "continent": "Africa",
+      "lat": -26.205,
+      "lng": 28.0497,
+      "matched": "Johannesburg, City of Johannesburg Metropolitan Municipality, Gauteng, 2001, South Africa",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "london": {
+      "slug": "london",
+      "name": "London",
+      "country": "United Kingdom",
+      "continent": "Europe",
+      "lat": 51.5074,
+      "lng": -0.1278,
+      "matched": "Greater London, England, United Kingdom",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "anaheim": {
+      "slug": "anaheim",
+      "name": "Anaheim",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 33.8348,
+      "lng": -117.9117,
+      "matched": "Anaheim, Orange County, California, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "sanya": {
+      "slug": "sanya",
+      "name": "Sanya",
+      "country": "China",
+      "continent": "Asia",
+      "lat": 18.2535,
+      "lng": 109.5034,
+      "matched": "三亚市, 海南省, 中国",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "milan": {
+      "slug": "milan",
+      "name": "Milan",
+      "country": "Italy",
+      "continent": "Europe",
+      "lat": 45.4642,
+      "lng": 9.1896,
+      "matched": "Milano, Rodano, Milano, Lombardia, Italia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "nashville": {
+      "slug": "nashville",
+      "name": "Nashville",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 36.1623,
+      "lng": -86.7743,
+      "matched": "Nashville, Davidson County, Middle Tennessee, Tennessee, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "melbourne": {
+      "slug": "melbourne",
+      "name": "Melbourne",
+      "country": "Australia",
+      "continent": "Oceania",
+      "lat": -37.8142,
+      "lng": 144.9632,
+      "matched": "Melbourne, Victoria, Australia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "frankfurt": {
+      "slug": "frankfurt",
+      "name": "Frankfurt",
+      "country": "Germany",
+      "continent": "Europe",
+      "lat": 50.1106,
+      "lng": 8.6821,
+      "matched": "Frankfurt am Main, Hessen, Deutschland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "stockholm": {
+      "slug": "stockholm",
+      "name": "Stockholm",
+      "country": "Sweden",
+      "continent": "Europe",
+      "lat": 59.3251,
+      "lng": 18.0711,
+      "matched": "Stockholm, Stockholms kommun, Stockholms län, 111 29, Sverige",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "kuala-lumpur": {
+      "slug": "kuala-lumpur",
+      "name": "Kuala Lumpur",
+      "country": "Malaysia",
+      "continent": "Asia",
+      "lat": 3.1517,
+      "lng": 101.6942,
+      "matched": "Kuala Lumpur, Malaysia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "paris": {
+      "slug": "paris",
+      "name": "Paris",
+      "country": "France",
+      "continent": "Europe",
+      "lat": 48.8535,
+      "lng": 2.3484,
+      "matched": "Paris, Île-de-France, France métropolitaine, France",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "gent": {
+      "slug": "gent",
+      "name": "Gent",
+      "country": "Belgium",
+      "continent": "Europe",
+      "lat": 51.0538,
+      "lng": 3.725,
+      "matched": "Gent, Oost-Vlaanderen, Vlaanderen, België / Belgique / Belgien",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "vancouver": {
+      "slug": "vancouver",
+      "name": "Vancouver",
+      "country": "Canada",
+      "continent": "North America",
+      "lat": 49.2609,
+      "lng": -123.114,
+      "matched": "Vancouver, Metro Vancouver Regional District, British Columbia, Canada",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "helsinki": {
+      "slug": "helsinki",
+      "name": "Helsinki",
+      "country": "Finland",
+      "continent": "Europe",
+      "lat": 60.1666,
+      "lng": 24.9435,
+      "matched": "Helsinki, Helsingin seutukunta, Uusimaa, Manner-Suomi, Suomi / Finland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hong-kong": {
+      "slug": "hong-kong",
+      "name": "Hong Kong",
+      "country": "Hong Kong",
+      "continent": "Asia",
+      "lat": 22.2818,
+      "lng": 114.1583,
+      "matched": "香港 Hong Kong, 中国",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "manchester": {
+      "slug": "manchester",
+      "name": "Manchester",
+      "country": "United Kingdom",
+      "continent": "Europe",
+      "lat": 53.4425,
+      "lng": -2.2325,
+      "matched": "Manchester, Greater Manchester, England, United Kingdom",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "osaka": {
+      "slug": "osaka",
+      "name": "Osaka",
+      "country": "Japan",
+      "continent": "Asia",
+      "lat": 34.6938,
+      "lng": 135.5015,
+      "matched": "大阪市, 大阪府, 日本",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "amsterdam": {
+      "slug": "amsterdam",
+      "name": "Amsterdam",
+      "country": "Netherlands",
+      "continent": "Europe",
+      "lat": 52.3731,
+      "lng": 4.8925,
+      "matched": "Amsterdam, Noord-Holland, Nederland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "verona": {
+      "slug": "verona",
+      "name": "Verona",
+      "country": "Italy",
+      "continent": "Europe",
+      "lat": 45.4425,
+      "lng": 10.9857,
+      "matched": "Verona, Veneto, Italia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "toulouse": {
+      "slug": "toulouse",
+      "name": "Toulouse",
+      "country": "France",
+      "continent": "Europe",
+      "lat": 43.6045,
+      "lng": 1.4442,
+      "matched": "Toulouse, Haute-Garonne, Occitanie, France métropolitaine, France",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "auckland": {
+      "slug": "auckland",
+      "name": "Auckland",
+      "country": "New Zealand",
+      "continent": "Oceania",
+      "lat": -36.8521,
+      "lng": 174.7632,
+      "matched": "Auckland, Waitematā, Auckland, 1010, New Zealand / Aotearoa",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "bilbao": {
+      "slug": "bilbao",
+      "name": "Bilbao",
+      "country": "Spain",
+      "continent": "Europe",
+      "lat": 43.263,
+      "lng": -2.935,
+      "matched": "Bilbao, Bizkaia, Euskadi, España",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "chicago": {
+      "slug": "chicago",
+      "name": "Chicago",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 41.8756,
+      "lng": -87.6244,
+      "matched": "Chicago, South Chicago Township, Cook County, Illinois, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "basel": {
+      "slug": "basel",
+      "name": "Basel",
+      "country": "Switzerland",
+      "continent": "Europe",
+      "lat": 47.5581,
+      "lng": 7.5878,
+      "matched": "Basel, Basel-Stadt, Schweiz/Suisse/Svizzera/Svizra",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "vienna": {
+      "slug": "vienna",
+      "name": "Vienna",
+      "country": "Austria",
+      "continent": "Europe",
+      "lat": 48.2084,
+      "lng": 16.3725,
+      "matched": "Wien, Österreich",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "katowice": {
+      "slug": "katowice",
+      "name": "Katowice",
+      "country": "Poland",
+      "continent": "Europe",
+      "lat": 50.2137,
+      "lng": 19.0059,
+      "matched": "Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, Polska",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "phoenix": {
+      "slug": "phoenix",
+      "name": "Phoenix",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 33.4484,
+      "lng": -112.0741,
+      "matched": "Phoenix, Maricopa County, Arizona, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "glasgow": {
+      "slug": "glasgow",
+      "name": "Glasgow",
+      "country": "United Kingdom",
+      "continent": "Europe",
+      "lat": 55.8612,
+      "lng": -4.2502,
+      "matched": "Glasgow, Glasgow City, Alba / Scotland, G2 1AL, United Kingdom",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "las-vegas": {
+      "slug": "las-vegas",
+      "name": "Las Vegas",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 36.1674,
+      "lng": -115.1484,
+      "matched": "Las Vegas, Clark County, Nevada, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "taipei": {
+      "slug": "taipei",
+      "name": "Taipei",
+      "country": "Taiwan",
+      "continent": "Asia",
+      "lat": 25.0375,
+      "lng": 121.5637,
+      "matched": "臺北市, 臺灣",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "madrid": {
+      "slug": "madrid",
+      "name": "Madrid",
+      "country": "Spain",
+      "continent": "Europe",
+      "lat": 40.4168,
+      "lng": -3.7035,
+      "matched": "Madrid, Comunidad de Madrid, España",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "buenos-aires": {
+      "slug": "buenos-aires",
+      "name": "Buenos Aires",
+      "country": "Argentina",
+      "continent": "South America",
+      "lat": -34.6096,
+      "lng": -58.3888,
+      "matched": "Buenos Aires, Comuna 1, Ciudad Autónoma de Buenos Aires, Argentina",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "copenhagen": {
+      "slug": "copenhagen",
+      "name": "Copenhagen",
+      "country": "Denmark",
+      "continent": "Europe",
+      "lat": 55.6867,
+      "lng": 12.5701,
+      "matched": "København, Københavns Kommune, Region Hovedstaden, 1357, Danmark",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "miami-beach": {
+      "slug": "miami-beach",
+      "name": "Miami Beach",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 25.7929,
+      "lng": -80.1353,
+      "matched": "Miami Beach, Miami-Dade County, Florida, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "brisbane": {
+      "slug": "brisbane",
+      "name": "Brisbane",
+      "country": "Australia",
+      "continent": "Oceania",
+      "lat": -27.469,
+      "lng": 153.0235,
+      "matched": "Brisbane, Queensland, Australia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "houston": {
+      "slug": "houston",
+      "name": "Houston",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 29.7589,
+      "lng": -95.3677,
+      "matched": "Houston, Harris County, Texas, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "bari": {
+      "slug": "bari",
+      "name": "Bari",
+      "country": "Italy",
+      "continent": "Europe",
+      "lat": 41.1258,
+      "lng": 16.862,
+      "matched": "Bari, Puglia, Italia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "warsaw": {
+      "slug": "warsaw",
+      "name": "Warsaw",
+      "country": "Poland",
+      "continent": "Europe",
+      "lat": 52.2334,
+      "lng": 21.0711,
+      "matched": "Warszawa, województwo mazowieckie, Polska",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "cologne": {
+      "slug": "cologne",
+      "name": "Cologne",
+      "country": "Germany",
+      "continent": "Europe",
+      "lat": 50.9384,
+      "lng": 6.96,
+      "matched": "Köln, Nordrhein-Westfalen, Deutschland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "malaga": {
+      "slug": "malaga",
+      "name": "Málaga",
+      "country": "Spain",
+      "continent": "Europe",
+      "lat": 36.7648,
+      "lng": -4.4422,
+      "matched": "Málaga, Málaga-Costa del Sol, Málaga, Andalucía, España",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "nagoya": {
+      "slug": "nagoya",
+      "name": "Nagoya",
+      "country": "Japan",
+      "continent": "Asia",
+      "lat": 35.1851,
+      "lng": 136.8998,
+      "matched": "名古屋市, 愛知県, 日本",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "ottawa": {
+      "slug": "ottawa",
+      "name": "Ottawa",
+      "country": "Canada",
+      "continent": "North America",
+      "lat": 45.4209,
+      "lng": -75.6901,
+      "matched": "Ottawa, Eastern Ontario, Ontario, Canada",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "atlanta": {
+      "slug": "atlanta",
+      "name": "Atlanta",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 33.7545,
+      "lng": -84.3898,
+      "matched": "Atlanta, Fulton County, Georgia, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "krakow": {
+      "slug": "krakow",
+      "name": "Kraków",
+      "country": "Poland",
+      "continent": "Europe",
+      "lat": 50.0619,
+      "lng": 19.9369,
+      "matched": "Kraków, województwo małopolskie, Polska",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "lyon": {
+      "slug": "lyon",
+      "name": "Lyon",
+      "country": "France",
+      "continent": "Europe",
+      "lat": 45.7578,
+      "lng": 4.832,
+      "matched": "Lyon, Métropole de Lyon, Rhône, Auvergne-Rhône-Alpes, France métropolitaine, France",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "san-diego": {
+      "slug": "san-diego",
+      "name": "San Diego",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 32.7174,
+      "lng": -117.1628,
+      "matched": "San Diego, San Diego County, California, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "incheon": {
+      "slug": "incheon",
+      "name": "Incheon",
+      "country": "South Korea",
+      "continent": "Asia",
+      "lat": 37.456,
+      "lng": 126.7052,
+      "matched": "인천광역시, 대한민국",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "cardiff": {
+      "slug": "cardiff",
+      "name": "Cardiff",
+      "country": "United Kingdom",
+      "continent": "Europe",
+      "lat": 51.4817,
+      "lng": -3.1792,
+      "matched": "Cardiff, Cymru / Wales, CF10 2AF, United Kingdom",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "portland": {
+      "slug": "portland",
+      "name": "Portland",
+      "country": "United States",
+      "continent": "North America",
+      "lat": 45.5202,
+      "lng": -122.6742,
+      "matched": "Portland, Multnomah County, Oregon, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "rimini": {
+      "slug": "rimini",
+      "name": "Rimini",
+      "country": "Italy",
+      "continent": "Europe",
+      "lat": 43.9465,
+      "lng": 12.6307,
+      "matched": "Rimini, Emilia-Romagna, Italia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "riga": {
+      "slug": "riga",
+      "name": "Riga",
+      "country": "Latvia",
+      "continent": "Europe",
+      "lat": 56.9494,
+      "lng": 24.1052,
+      "matched": "Rīga, Latvija",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    }
+  },
+  "venues": {
+    "30454": {
+      "lat": 18.2958,
+      "lng": 109.7019,
+      "matched": "江林路, 海棠区, 三亚市, 海南省, 中国",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-istanbul": {
+      "lat": 40.9866,
+      "lng": 28.8285,
+      "matched": "DTM-İstanbul Fuar Merkezi, Atatürk Caddesi, Yeşilköy Mahallesi, Bakırköy, İstanbul, Marmara Bölgesi, 34149, Türkiye",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-chengdu": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-chiba": {
+      "lat": 35.6473,
+      "lng": 140.0347,
+      "matched": "幕張メッセ, 中瀬二丁目, 美浜区, 千葉市, 千葉県, 261-0023, 日本",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-bangkok-2": {
+      "lat": 13.7242,
+      "lng": 100.5587,
+      "matched": "ศูนย์การประชุมแห่งชาติสิริกิติ์, 60, ถนนรัชดาภิเษก, ชุมชนเจริญสุข, แขวงคลองเตย, เขตคลองเตย, กรุงเทพมหานคร, 10110, ประเทศไทย",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "virgin-active-hyrox-cape-town-26-27": {
+      "lat": -33.916,
+      "lng": 18.4274,
+      "matched": "Cape Town International Convention Centre (CTICC), Lower Loop Street, Cape Town Ward 115, Cape Town, City of Cape Town, Western Cape, 8001, South Africa",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-shenzhen": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-perth": {
+      "lat": -31.9566,
+      "lng": 115.8524,
+      "matched": "Perth Convention & Exhibition Centre, 21, Mounts Bay Road, Perth, Western Australia, 6000, Australia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-washington-d-c-26-27": {
+      "lat": 38.903,
+      "lng": -77.023,
+      "matched": "801, Allen Y Lew Place Northwest, Ward 2, Washington, District of Columbia, 20001, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-tenerife": {
+      "lat": 28.4546,
+      "lng": -16.2578,
+      "matched": "12, Avenida de la Constitución, Los Llanos, Salud-La Salle, Santa Cruz de Tenerife, Canarias, 38005, España",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-acapulco": {
+      "lat": 16.7484,
+      "lng": -99.7621,
+      "matched": "Boulevard Barra Vieja, Acapulco, Acapulco de Juárez, Guerrero, 39300, México",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-athens": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-beijing-0912": {
+      "lat": 39.9838,
+      "lng": 116.4122,
+      "matched": "蓝珏苑, 小关街道, 朝阳区, 北京市, 中国",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-mumbai": {
+      "lat": 19.1489,
+      "lng": 72.8535,
+      "matched": "Hall 6, Service Road, Aarey Milk Colony, P/S Ward, Mumbai Zone 4, Mumbai, Mumbai Suburban District, Maharashtra, 400060, India",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-maastricht": {
+      "lat": 50.8392,
+      "lng": 5.7118,
+      "matched": "MECC, Robert Schumandomein, Randwyck, Maastricht-Zuidoost, Maastricht, Limburg, Nederland, 6229 EN, Nederland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-salt-lake-city-26-27": {
+      "lat": 40.7663,
+      "lng": -111.8941,
+      "matched": "90, West Temple, Downtown, Salt Lake City, Salt Lake County, Utah, 84101, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-izmir": {
+      "lat": 38.3472,
+      "lng": 27.1197,
+      "matched": "Fuar İzmir, Fuar Yolu, İzmir Fuarı Gaziemir, Zafer Mahallesi, Gaziemir, İzmir, Ege Bölgesi, 35410, Türkiye",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-youngstars-salt-lake-city": {
+      "lat": 40.7663,
+      "lng": -111.8941,
+      "matched": "90, West Temple, Downtown, Salt Lake City, Salt Lake County, Utah, 84101, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-youngstars-maastricht": {
+      "lat": 50.8392,
+      "lng": 5.7118,
+      "matched": "MECC, Robert Schumandomein, Randwyck, Maastricht-Zuidoost, Maastricht, Limburg, Nederland, 6229 EN, Nederland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-rome": {
+      "lat": 41.8511,
+      "lng": 12.4291,
+      "matched": "Via Portuense, Casetta Mattei, Municipio Roma XI, Roma, Roma Capitale, Lazio, 00148, Italia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-oslo": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-youngstars-oslo": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-bordeaux-s26-27": {
+      "lat": 44.898,
+      "lng": -0.567,
+      "matched": "Cours Jules Ladoumègue, Le Lac, Bordeaux Maritime, Bordeaux, Gironde, Nouvelle-Aquitaine, France métropolitaine, 33300, France",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "goodlife-hyrox-toronto-26-27": {
+      "lat": 43.6354,
+      "lng": -79.4132,
+      "matched": "Enercare Centre, 100, Princes' Boulevard, Exhibition Place, Spadina—Fort York, Toronto, Golden Horseshoe, Ontario, M6K 3C3, Canada",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-karlsruhe": {
+      "lat": 48.9794,
+      "lng": 8.3352,
+      "matched": "Gewerbegebiet Neue Messe, Forchheim, Rheinstetten, Landkreis Karlsruhe, Baden-Württemberg, Deutschland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hwpo-hyrox-boston-26-27": {
+      "lat": 42.3456,
+      "lng": -71.0463,
+      "matched": "Thomas M Menino Convention & Exhibition Center, 415, Summer Street, Seaport, Boston, Suffolk County, Massachusetts, 02210, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-geneva": {
+      "lat": 46.2353,
+      "lng": 6.118,
+      "matched": "PALEXPO, 30, Route François-Peyrot, Octagon, Le Grand-Saconnex, Genève, 1218, Schweiz/Suisse/Svizzera/Svizra",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-gdansk": {
+      "lat": 54.3868,
+      "lng": 18.6344,
+      "matched": "Międzynarodowe Targi Gdańskie \"AmberExpo\", 11, Żaglowa, Narwik, Letnica, Gdańsk, województwo pomorskie, 80-560, Polska",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-valencia": {
+      "lat": 39.5032,
+      "lng": -0.4266,
+      "matched": "Avinguda de les Fires, Benimàmet, Pobles de l'Oest, València, Comarca de València, València / Valencia, Comunitat Valenciana, 46035, España",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-youngstars-valencia": {
+      "lat": 39.5032,
+      "lng": -0.4269,
+      "matched": "Avinguda de les Fires, Benimàmet, Pobles de l'Oest, València, Comarca de València, València / Valencia, Comunitat Valenciana, 46035, España",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-budapest": {
+      "lat": 47.4937,
+      "lng": 19.1266,
+      "matched": "Hungexpo, 10, Albertirsai út, Ligettelek, X. kerület, Budapest, Közép-Magyarország, 1101, Magyarország",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-sao-paulo-2": {
+      "lat": -23.5165,
+      "lng": -46.6452,
+      "matched": "Passarela Cultural, 1209, Avenida Olavo Fontoura, Santana, São Paulo, Região Sudeste, 02012-021, Brasil",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-tampa": {
+      "lat": 27.942,
+      "lng": -82.4566,
+      "matched": "Tampa Convention Center, 333, South Franklin Street, Wilhelmina, Harbour Island, Tampa, Hillsborough County, Florida, 33602, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-birmingham": {
+      "lat": 52.4479,
+      "lng": -1.7172,
+      "matched": "Cineworld, Pendigo Way, Middle Bickenhill, Bickenhill and Marston Green, Bickenhill, Birmingham, West Midlands, England, B40 1PU, United Kingdom",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "intersport-hyrox-hamburg": {
+      "lat": 53.5602,
+      "lng": 9.9784,
+      "matched": "Hamburg Messe, St. Petersburger Straße, Karolinenviertel, St. Pauli, Hamburg-Mitte, Hamburg, 20357, Deutschland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-nice-s26-27": {
+      "lat": 43.7022,
+      "lng": 7.2648,
+      "matched": "06000, Quartier Jean-Médecin, Nice, Alpes-Maritimes, Provence-Alpes-Côte d'Azur, France métropolitaine, France",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-mexico-city": {
+      "lat": 19.4406,
+      "lng": -99.225,
+      "matched": "Avenida del Conscripto, Colonia Lomas de Sotelo, Lomas de Chapultepec, Ciudad de México, Miguel Hidalgo, Naucalpan de Juárez, Ciudad de México, 11200, México",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-youngstars-birmingham": {
+      "lat": 52.4479,
+      "lng": -1.7172,
+      "matched": "Cineworld, Pendigo Way, Middle Bickenhill, Bickenhill and Marston Green, Bickenhill, Birmingham, West Midlands, England, B40 1PU, United Kingdom",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-shanghai-1031": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-dusseldorf": {
+      "lat": 51.2616,
+      "lng": 6.7332,
+      "matched": "Merkur Spiel-Arena, 1, Arena-Straße, Stockum, Stadtbezirk 5, Düsseldorf, Nordrhein-Westfalen, 40474, Deutschland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-dublin": {
+      "lat": 53.3267,
+      "lng": -6.2289,
+      "matched": "Royal Dublin Society (RDS), Merrion Road, Ballsbridge, Pembroke East E Ward 1986, Dublin, County Dublin, Leinster, D04 AK83, Éire / Ireland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-barcelona-2": {
+      "lat": 41.3507,
+      "lng": 2.1316,
+      "matched": "Avinguda de Joan Carles I, Granvia Sud, Districte III, l'Hospitalet de Llobregat, Barcelonès, Barcelona, Catalunya, 08908, España",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-denver": {
+      "lat": 39.7882,
+      "lng": -104.965,
+      "matched": "5115, North Race Court, Elyria Swansea, Denver, Colorado, 80216, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-seoul": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-cairo": {
+      "lat": 53.559,
+      "lng": 9.9303,
+      "matched": "TBA // To be announced, 136, Gaußstraße, Ottensen, Altona, Hamburg, 22765, Deutschland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-dallas": {
+      "lat": 32.774,
+      "lng": -96.8018,
+      "matched": "Kay Bailey Hutchinson Convention Center, 650, South Griffin Street, West End Historic District, Downtown PID, Dallas, Dallas County, Texas, 75202, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-poznan": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-rio-de-janeiro": {
+      "lat": -22.9778,
+      "lng": -43.4116,
+      "matched": "Riocentro, 6555, Avenida Salvador Allende, Barra Olímpica, Rio de Janeiro, Região Sudeste, 22783-127, Brasil",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-guangzhou": {
+      "lat": 23.086,
+      "lng": 113.312,
+      "matched": "海珠区, 广州市, 广东省, 中国",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "aia-hyrox-singapore": {
+      "lat": 1.3334,
+      "lng": 103.9569,
+      "matched": "Bliss Garden Restaurant, 1, Expo Drive, Xilin, Changi Business Park, Tampines, East Region, Singapore, 486150, Singapore",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-utrecht": {
+      "lat": 52.0929,
+      "lng": 5.1085,
+      "matched": "Sogelink, 2, Leidseveer, Hoog Catharijne, Ns, Jaarbeurs, Binnenstad City- En Winkelgebied, Binnenstad, Utrecht, Nederland, 3511 SB, Nederland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "virgin-active-hyrox-johannesburg-26-27": {
+      "lat": -26.2432,
+      "lng": 27.9826,
+      "matched": "Johannesburg Expo Centre, Recreation Road, Aeroton, Johannesburg Ward 125, Johannesburg, City of Johannesburg Metropolitan Municipality, Gauteng, 2001, South Africa",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-youngstars-utrecht": {
+      "lat": 52.0929,
+      "lng": 5.1085,
+      "matched": "Sogelink, 2, Leidseveer, Hoog Catharijne, Ns, Jaarbeurs, Binnenstad City- En Winkelgebied, Binnenstad, Utrecht, Nederland, 3511 SB, Nederland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-london-excel": {
+      "lat": 51.5081,
+      "lng": 0.0297,
+      "matched": "ExCeL, 1, Western Gateway, Custom House, Silvertown, London Borough of Newham, Greater London, England, E16 1XL, United Kingdom",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-anaheim-26-27": {
+      "lat": 33.8006,
+      "lng": -117.9208,
+      "matched": "Anaheim Convention Center, 800, West Katella Avenue, Neff, Anaheim, Orange County, California, 92802, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-milan": {
+      "lat": 45.5234,
+      "lng": 9.0719,
+      "matched": "Viale Porta Ovest, Pantanedo, Mazzo, Rho, Milano, Lombardia, 20017, Italia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-youngstars-anaheim": {
+      "lat": 33.8006,
+      "lng": -117.9208,
+      "matched": "Anaheim Convention Center, 800, West Katella Avenue, Neff, Anaheim, Orange County, California, 92802, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-youngstars-london-excel": {
+      "lat": 51.5081,
+      "lng": 0.0297,
+      "matched": "ExCeL, 1, Western Gateway, Custom House, Silvertown, London Borough of Newham, Greater London, England, E16 1XL, United Kingdom",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-nashville": {
+      "lat": 36.1583,
+      "lng": -86.7771,
+      "matched": "201, Rep. John Lewis Way South, Downtown Nashville, East Nashville, Nashville, Davidson County, Middle Tennessee, Tennessee, 37203, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-melbourne": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "fitness-first-hyrox-frankfurt": {
+      "lat": 50.1116,
+      "lng": 8.6445,
+      "matched": "Messe Frankfurt, Senckenberganlage, Westend Süd, Innenstadt 2, Frankfurt am Main, Hessen, 60325, Deutschland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "intersport-hyrox-stockholm-arena": {
+      "lat": 59.3721,
+      "lng": 18.003,
+      "matched": "Quality Hotel Strawberry Arena, 1, Råsta strandväg, Norra Ritorp, Järva, Solna, Solna kommun, Stockholms län, 169 56, Sverige",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-kuala-lumpur": {
+      "lat": 3.179,
+      "lng": 101.6678,
+      "matched": "Malaysia International Trade and Exhibition Centre, Jalan Boulevard, KL Metropolis, Segambut, Kepong, Kuala Lumpur, 50480, Malaysia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-paris-s26-27": {
+      "lat": 48.8325,
+      "lng": 2.2879,
+      "matched": "Paris Expo Porte de Versailles, 1, Place de la Porte de Versailles, Quartier Saint-Lambert, Paris 15e Arrondissement, Paris, Île-de-France, France métropolitaine, 75015, France",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-gent": {
+      "lat": 51.0268,
+      "lng": 3.692,
+      "matched": "Flanders Expo, 1, Maaltekouter, Sint-Denijs-Westrem, Gent, Oost-Vlaanderen, Vlaanderen, 9051, België / Belgique / Belgien",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-vancouver": {
+      "lat": 49.2897,
+      "lng": -123.1162,
+      "matched": "She's Fit, 1055, Canada Place, Financial District, Downtown, Vancouver, Metro Vancouver Regional District, British Columbia, V6C 0C3, Canada",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-helsinki-2": {
+      "lat": 60.203,
+      "lng": 24.9364,
+      "matched": "Helsingin Messukeskus, 1, Messuaukio, Itä-Pasila, Pasila, Keskinen suurpiiri, Helsinki, Helsingin seutukunta, Uusimaa, Manner-Suomi, 00520, Suomi / Finland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-youngstars-paris": {
+      "lat": 48.8325,
+      "lng": 2.2879,
+      "matched": "Paris Expo Porte de Versailles, 1, Place de la Porte de Versailles, Quartier Saint-Lambert, Paris 15e Arrondissement, Paris, Île-de-France, France métropolitaine, 75015, France",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-hong-kong": {
+      "lat": 22.3213,
+      "lng": 113.943,
+      "matched": "亞洲國際博覽館 AsiaWorld-Expo, 航展道 Airport Expo Boulevard, 赤鱲角 Chek Lap Kok, 大嶼山 Lantau, 離島區 Islands District, 新界 New Territories, 香港 Hong Kong, 中国",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-manchester": {
+      "lat": 53.4764,
+      "lng": -2.2471,
+      "matched": "Manchester Central Convention Complex, Windmill Street, Petersfield, City Centre, Manchester, Greater Manchester, England, M2 3GX, United Kingdom",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "byd-hyrox-osaka": {
+      "lat": 34.6373,
+      "lng": 135.42,
+      "matched": "インテックス大阪, スカイプラザ, 南港北一丁目, 住之江区, 大阪市, 大阪府, 559-0034, 日本",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-youngstars-amsterdam": {
+      "lat": 52.3412,
+      "lng": 4.8899,
+      "matched": "RAI Amsterdam, 24, Europaplein, Zuidas, Zuid, Amsterdam, Noord-Holland, Nederland, 1078 GZ, Nederland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-verona": {
+      "lat": 45.4172,
+      "lng": 10.9801,
+      "matched": "Poste Italiane Verona fiera, 8, Viale del Lavoro, Borgo Roma, Sud, Verona, Veneto, 37135, Italia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-toulouse-s26-27": {
+      "lat": 43.6857,
+      "lng": 1.3372,
+      "matched": "31840, Aussonne, Toulouse, Haute-Garonne, Occitanie, France métropolitaine, France",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-auckland": {
+      "lat": -36.8914,
+      "lng": 174.7823,
+      "matched": "Auckland Showgrounds, 217, Epsom, Albert-Eden, Auckland, 1051, New Zealand / Aotearoa",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-bilbao": {
+      "lat": 43.2906,
+      "lng": -2.992,
+      "matched": "Azkue kalea, Arteagabeitia, Errekaortu, San Vicente de Barakaldo, Gurutzeta, Barakaldo, Bizkaia, Euskadi, 48902, España",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-youngstars-toulouse": {
+      "lat": 43.6635,
+      "lng": 1.3513,
+      "matched": "Avenue Concorde, Secteur Sud, Aussonne, Toulouse, Haute-Garonne, Occitanie, France métropolitaine, 31840, France",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-chicago-26-27": {
+      "lat": 41.8918,
+      "lng": -87.6041,
+      "matched": "Navy Pier, 600, East Grand Avenue, Near North Side, Chicago, North Chicago Township, Cook County, Illinois, 60611, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-bangkok": {
+      "lat": 13.6698,
+      "lng": 100.6085,
+      "matched": "BITEC, ถนนสุขุมวิท, แขวงบางนาใต้, เขตบางนา, กรุงเทพมหานคร, 10260, ประเทศไทย",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-basel": {
+      "lat": 47.5631,
+      "lng": 7.6004,
+      "matched": "Messe Basel, Riehenstrasse, Rosental, Kleinbasel, Basel, Basel-Stadt, 4058, Schweiz/Suisse/Svizzera/Svizra",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-vienna": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-katowice": {
+      "lat": 50.2662,
+      "lng": 19.0276,
+      "matched": "Międzynarodowe Centrum Kongresowe, 1, Plac Sławika i Antalla, Koszutka, Katowice, Górnośląsko-Zagłębiowska Metropolia, województwo śląskie, 40-163, Polska",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "inbody-hyrox-phoenix-26-27": {
+      "lat": null,
+      "lng": null,
+      "announced": false,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-glasgow-2": {
+      "lat": 55.8607,
+      "lng": -4.288,
+      "matched": "Scottish Event Campus, Kelvingrove, Finnieston, Glasgow, Glasgow City, Alba / Scotland, G3 8YW, United Kingdom",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-las-vegas-26-27": {
+      "lat": 36.131,
+      "lng": -115.1502,
+      "matched": "Las Vegas Convention Center, 3150, Paradise Road, Las Vegas Convention Center, Filipino Town, Las Vegas, Clark County, Nevada, 89109, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-taipei": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-madrid": {
+      "lat": 40.4675,
+      "lng": -3.6194,
+      "matched": "Espacio 5.1, 5, Avenida del Partenón, Corralejos, Barajas, Madrid, Comunidad de Madrid, 28042, España",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-buenos-aires": {
+      "lat": -36.8853,
+      "lng": -60.3131,
+      "matched": "2704, Avenida Sarmiento, Roca Merlo, Olavarría, Partido de Olavarría, Buenos Aires, 7400, Argentina",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-copenhagen": {
+      "lat": 55.6381,
+      "lng": 12.5829,
+      "matched": "Bella Center, Ørestads Boulevard, Elmegården, Ørestad, København, Københavns Kommune, Region Hovedstaden, 2300, Danmark",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "sweat-pals-hyrox-miami-beach-26-27": {
+      "lat": null,
+      "lng": null,
+      "announced": false,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-brisbane": {
+      "lat": -27.4768,
+      "lng": 153.0195,
+      "matched": "Brisbane Convention and Exhibition Centre, Russell Walk, South Bank, South Brisbane, Brisbane, Queensland, 4101, Australia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-houston-26-27": {
+      "lat": null,
+      "lng": null,
+      "announced": false,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-bari": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-youngstars-houston": {
+      "lat": null,
+      "lng": null,
+      "announced": false,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-warsaw-26-27": {
+      "lat": 52.2398,
+      "lng": 21.0454,
+      "matched": "Stadion Narodowy, Wybrzeże Szczecińskie, Kamionek, Praga-Południe, Warszawa, województwo mazowieckie, 03-724, Polska",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-paris-grand-palais-s26-27": {
+      "lat": 48.8667,
+      "lng": 2.3139,
+      "matched": "Avenue Winston Churchill, Quartier des Champs-Élysées, Paris 8e Arrondissement, Paris, Île-de-France, France métropolitaine, 75008, France",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "all-inclusive-fitness-hyrox-cologne": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-malaga": {
+      "lat": 36.7061,
+      "lng": -4.4598,
+      "matched": "Palacio de Ferias y Congresos de Málaga, 201, Avenida José Ortega y Gasset, Cruz de Humilladero, Málaga, Málaga-Costa del Sol, Málaga, Andalucía, 29006, España",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-nagoya": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-helsinki": {
+      "lat": 60.203,
+      "lng": 24.9364,
+      "matched": "Helsingin Messukeskus, 1, Messuaukio, Itä-Pasila, Pasila, Keskinen suurpiiri, Helsinki, Helsingin seutukunta, Uusimaa, Manner-Suomi, 00520, Suomi / Finland",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-ottawa-26-27": {
+      "lat": null,
+      "lng": null,
+      "announced": false,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "factor_-hyrox-atlanta": {
+      "lat": 33.7545,
+      "lng": -84.3898,
+      "matched": "Atlanta, Fulton County, Georgia, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-youngstars-atlanta": {
+      "lat": null,
+      "lng": null,
+      "announced": false,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-krakow-26-27": {
+      "lat": 50.0645,
+      "lng": 20.009,
+      "matched": "31-586, Czyżyny, Kraków, województwo małopolskie, Polska",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-sao-paulo": {
+      "lat": 33.8119,
+      "lng": -117.9228,
+      "matched": "Tiana's Bayou Adventure, The Haunted Mansion Standby Queues, Neff, Anaheim, Orange County, California, 92802, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-lyon-s26-27": {
+      "lat": 45.7384,
+      "lng": 4.9425,
+      "matched": "Boulevard de l'Europe, Chassieu, Lyon, Métropole de Lyon, Rhône, Auvergne-Rhône-Alpes, France métropolitaine, 69680, France",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-san-diego-26-27": {
+      "lat": null,
+      "lng": null,
+      "announced": false,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-incheon": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-cardiff-2": {
+      "lat": 51.4782,
+      "lng": -3.1826,
+      "matched": "Principality Stadium, Scott Road, Castle Quarter, Castle, Cardiff, Cymru / Wales, CF10 1XR, United Kingdom",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-portland-26-27": {
+      "lat": 45.5283,
+      "lng": -122.6631,
+      "matched": "Oregon Convention Center, 777, Northeast Martin Luther King Junior Boulevard, Lloyd District, Portland, Multnomah County, Oregon, 97204, United States",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "cisalfa-hyrox-rimini": {
+      "lat": 44.0724,
+      "lng": 12.5264,
+      "matched": "Fiera di Rimini, Via Costantino il Grande, Viserba, Rimini, Emilia-Romagna, 47922, Italia",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    },
+    "hyrox-riga": {
+      "lat": null,
+      "lng": null,
+      "source": null,
+      "verifiedOn": "2026-08-02"
+    },
+    "puma-hyrox-world-championships-hong-kong": {
+      "lat": 22.3213,
+      "lng": 113.943,
+      "matched": "亞洲國際博覽館 AsiaWorld-Expo, 航展道 Airport Expo Boulevard, 赤鱲角 Chek Lap Kok, 大嶼山 Lantau, 離島區 Islands District, 新界 New Territories, 香港 Hong Kong, 中国",
+      "source": "https://nominatim.openstreetmap.org/",
+      "verifiedOn": "2026-08-02"
+    }
+  }
+}

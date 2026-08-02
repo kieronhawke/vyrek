@@ -1,0 +1,36 @@
+{
+  "slug": "sanya",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "易动健身",
+        "type": "gym",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "梦洲健身",
+        "type": "gym",
+        "website": "https://www.thatsmags.com/sanya/directory/1798485/mojo-international-fitness-club",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "三亚市体育中心",
+        "type": "sports-centre",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "享健身瑜伽运动中心",
+        "type": "gym",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

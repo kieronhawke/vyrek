@@ -1,0 +1,164 @@
+{
+  "slug": "bordeaux",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Basic-Fit",
+        "type": "gym",
+        "chain": "Basic-Fit",
+        "website": "https://www.basic-fit.com/fr-fr/clubs/basic-fit-bordeaux-centre-commercial-saint-christoly-b2b534b9dbf84f8b98ae8555b460d391.html",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "O-zone",
+        "type": "gym",
+        "website": "https://www.o-zone.fr/",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Aquabike",
+        "type": "gym",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Black Milk",
+        "type": "gym",
+        "website": "https://blackmilk-pilates.com",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "L’Atrium",
+        "type": "gym",
+        "website": "https://latriumcoaching.com",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fitness Park Bordeaux - Mériadeck",
+        "type": "gym",
+        "chain": "Fitness Park",
+        "website": "https://www.fitnesspark.fr/club/bordeaux-meriadeck",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "My Big Bang",
+        "type": "gym",
+        "website": "https://my-big-bang.fr",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "KeepCool",
+        "type": "gym",
+        "chain": "KeepCool",
+        "website": "https://www.keepcool.fr/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Tennis Badminton Meriadeck",
+        "type": "sports-centre",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Sculpt",
+        "type": "gym",
+        "website": "https://sculptpilates.fr",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Magic Form Bordeaux",
+        "type": "gym",
+        "website": "https://magicform-bordeaux.fr/",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Ultimate Physical",
+        "type": "gym",
+        "website": "https://ultimate-physical.com",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Palais des Sports",
+        "type": "sports-centre",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Espace Sportif Chauffour",
+        "type": "sports-centre",
+        "website": "https://www.bordeaux.fr/espace-sportif-chauffour",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "I-Fitness",
+        "type": "gym",
+        "website": "http://i-fitnessbordeaux.com",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Piscine Judaïque",
+        "type": "sports-centre",
+        "website": "https://www.bordeaux.fr/piscine-judaique-jean-boiteux",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Echiquier bordelais",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Arts martiaux",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Piscine du Mirail",
+        "type": "sports-centre",
+        "website": "https://piscinedumirail.fr",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Gymnase Malleret",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

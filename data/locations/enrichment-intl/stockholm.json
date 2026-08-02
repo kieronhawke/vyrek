@@ -1,0 +1,166 @@
+{
+  "slug": "stockholm",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Samadhi yoga",
+        "type": "gym",
+        "website": "https://www.samadhiyoga.se",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Stockholm Salt Spa",
+        "type": "gym",
+        "website": "https://stockholmsaltspa.se",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "World Class",
+        "type": "gym",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fightbox",
+        "type": "gym",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Nordic Wellness",
+        "type": "gym",
+        "chain": "Nordic Wellness",
+        "website": "https://nordicwellness.se/vara-klubbar/stockholm/stockholm-drottninggatan/",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "SATS NK (fd. Regeringsgatan)",
+        "type": "gym",
+        "chain": "Sats",
+        "website": "https://www.sats.se/gym/stockholm/sats-nk/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Saga",
+        "type": "gym",
+        "website": "http://www.saga-motion.se",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Ester Adele",
+        "type": "gym",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Becore",
+        "type": "gym",
+        "website": "https://www.becore.se/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fountain House Stockholm",
+        "type": "gym",
+        "website": "https://www.fountainhouse.se",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Yoga Shakti",
+        "type": "gym",
+        "website": "https://www.yogashakti.se/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Grand Fitness",
+        "type": "gym",
+        "website": "https://grandfitness.se/stockholm-klarabergsgatan/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fitness24Seven",
+        "type": "gym",
+        "chain": "Fitness24Seven",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Bujinkan To Nan Dojo",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Friskis & Svettis",
+        "type": "gym",
+        "chain": "Friskis & Svettis",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "SATS Zenit (Mäster Samuelsgatan)",
+        "type": "gym",
+        "chain": "Sats",
+        "website": "https://www.sats.se/gym/stockholm-city",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Pilates Söder",
+        "type": "sports-centre",
+        "website": "http://pilatessoder.se",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "SATS Vasagatan",
+        "type": "gym",
+        "chain": "Sats",
+        "website": "https://www.sats.se/gym/stockholm/sats-vasagatan/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Inbalance Yoga",
+        "type": "gym",
+        "website": "https://inbalance.se/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Puls & träning",
+        "type": "sports-centre",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

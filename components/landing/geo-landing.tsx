@@ -37,14 +37,26 @@ export type GeoVariant = "hyrox" | "pt";
 type Benefit = { title: string; body: string; image: string; alt: string };
 type Faq = { q: string; a: string };
 
-export function variantCopy(variant: GeoVariant, loc: UkLocation, seo: GeoSeo) {
+export function variantCopy(
+  variant: GeoVariant,
+  loc: UkLocation,
+  seo: GeoSeo,
+  /**
+   * The name for the H1 only, where it differs from the name used in prose.
+   * Four international race cities share a name with a UK town, and two pages
+   * carrying the same H1 is the duplicate-content signal this set is built to
+   * avoid. The heading gets "Boston, United States"; the body keeps "Boston",
+   * because "the centre of Boston, United States" reads like a mail-merge.
+   */
+  headingName: string = loc.name,
+) {
   const name = loc.name;
   if (variant === "hyrox") {
     return {
       eyebrow: `${name} · ${loc.region}`,
       h1: (
         <>
-          Hyrox training in {name},
+          Hyrox training in {headingName},
           <br className="hidden md:block" /> built around your race.
         </>
       ),
@@ -101,7 +113,7 @@ export function variantCopy(variant: GeoVariant, loc: UkLocation, seo: GeoSeo) {
     eyebrow: `${name} · ${loc.region}`,
     h1: (
       <>
-        A personal trainer in {name},
+        A personal trainer in {headingName},
         <br className="hidden md:block" /> without the hourly rate.
       </>
     ),
@@ -299,12 +311,25 @@ const VERIFIED_PROOF = [
 export function GeoLanding({
   variant,
   loc,
+  seo: seoOverride,
+  nearby,
+  headingName,
 }: {
   variant: GeoVariant;
   loc: UkLocation;
+  /** Overrides the H1 name where it must disambiguate. See `variantCopy`. */
+  headingName?: string;
+  /**
+   * Supplied by the international race cities, which build the same shape from
+   * a different set of layers (lib/race-cities.ts). Defaults to the UK
+   * registry, so every existing caller is unchanged.
+   */
+  seo?: GeoSeo;
+  /** Cross-links to render instead of the UK "towns next door" list. */
+  nearby?: { items: { slug: string; name: string; km: number }[]; heading: string };
 }) {
-  const seo = getGeoSeo(loc.slug);
-  const c = variantCopy(variant, loc, seo);
+  const seo = seoOverride ?? getGeoSeo(loc.slug);
+  const c = variantCopy(variant, loc, seo, headingName);
 
   return (
     <>
@@ -442,6 +467,8 @@ export function GeoLanding({
           name={loc.name}
           region={loc.region}
           county={loc.county}
+          items={nearby?.items}
+          heading={nearby?.heading}
           base={variant === "hyrox" ? "/hyrox-training" : "/personal-trainer"}
         />
 
@@ -645,9 +672,23 @@ export function geoServiceJsonLd(variant: GeoVariant, loc: UkLocation) {
   };
 }
 
-export function geoBreadcrumbJsonLd(variant: GeoVariant, loc: UkLocation) {
+export function geoBreadcrumbJsonLd(
+  variant: GeoVariant,
+  loc: UkLocation,
+  /**
+   * The third crumb. UK towns sit under their region directory; international
+   * race cities sit under their country directory, which is a different URL
+   * shape. Passing it in beats deriving it, because a wrong guess here points
+   * a crawler at a 404 in structured data, where nobody sees it fail.
+   */
+  parent?: { name: string; path: string },
+) {
   const base = variant === "hyrox" ? "/hyrox-training" : "/personal-trainer";
   const label = variant === "hyrox" ? "Hyrox training" : "Personal training";
+  const third = parent ?? {
+    name: loc.region,
+    path: `${base}/in/${regionSlug(loc.region)}`,
+  };
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -657,8 +698,8 @@ export function geoBreadcrumbJsonLd(variant: GeoVariant, loc: UkLocation) {
       {
         "@type": "ListItem",
         position: 3,
-        name: loc.region,
-        item: `${siteUrl()}${base}/in/${regionSlug(loc.region)}`,
+        name: third.name,
+        item: `${siteUrl()}${third.path}`,
       },
       {
         "@type": "ListItem",
@@ -670,8 +711,12 @@ export function geoBreadcrumbJsonLd(variant: GeoVariant, loc: UkLocation) {
   };
 }
 
-export function geoFaqJsonLd(variant: GeoVariant, loc: UkLocation) {
-  const seo = getGeoSeo(loc.slug);
+export function geoFaqJsonLd(
+  variant: GeoVariant,
+  loc: UkLocation,
+  seoOverride?: GeoSeo,
+) {
+  const seo = seoOverride ?? getGeoSeo(loc.slug);
   const c = variantCopy(variant, loc, seo);
   return {
     "@context": "https://schema.org",

@@ -7,15 +7,14 @@ import {
   geoBreadcrumbJsonLd,
 } from "@/components/landing/geo-landing";
 import { JsonLd } from "@/lib/blog/jsonld";
-import { getLocationBySlug, listLocationSlugs } from "@/lib/uk-locations";
 import { siteUrl } from "@/lib/blog/urls";
-import { geoRobots, getGeoSeo } from "@/lib/locations/seo";
+import { listAllGeoSlugs, resolveGeo } from "@/lib/geo-page";
 
 export const revalidate = 86400;
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  return listLocationSlugs().map((location) => ({ location }));
+  return listAllGeoSlugs().map((location) => ({ location }));
 }
 
 export async function generateMetadata({
@@ -24,8 +23,9 @@ export async function generateMetadata({
   params: Promise<{ location: string }>;
 }): Promise<Metadata> {
   const { location } = await params;
-  const loc = getLocationBySlug(location);
-  if (!loc) return { title: "Not found" };
+  const r = resolveGeo(location);
+  if (!r) return { title: "Not found" };
+  const { loc, seo, city } = r;
   const url = `${siteUrl()}/personal-trainer/${loc.slug}`;
   // app/layout.tsx appends " · Suth Performance" (20 chars), so the title
   // Google renders is this plus 20. The old one ran to 88 and truncated
@@ -34,19 +34,28 @@ export async function generateMetadata({
   // end, so drop the qualifier for those rather than let them truncate.
   // Two escape hatches, in order: drop the ", online" qualifier, then drop
   // the preposition. "Knightsbridge and Belgravia" needs both.
-  const bare = `Personal trainer in ${loc.name}`;
+  /* Four international cities share a name with a UK town that already owns
+     the bare slug: Boston, Houston, Perth and Portland. Distinct URLs are not
+     enough — without the country these render two identical titles, which is
+     the duplicate-title problem this whole scheme exists to avoid. Only the
+     qualified side carries it; the UK page keeps the plain name. */
+  const displayName = city?.bareSlug ? `${loc.name}, ${city.country}` : loc.name;
+  const bare = `Personal trainer in ${displayName}`;
   const title =
     bare.length + 8 + 20 <= 65
       ? `${bare}, online`
       : bare.length + 20 <= 65
         ? bare
-        : `Personal trainer, ${loc.name}`;
+        : `Personal trainer, ${displayName}`;
   // Per-town, because this is the snippet in the results page. A description
-  // identical across 879 towns gives a searcher no reason to click ours.
-  const g = getGeoSeo(loc.slug);
-  const description = g.gyms.length
-    ? `Personal training in ${loc.name}, online, from a HYROX Elite 15 athlete. Built around any of the ${g.gyms.length} gyms and sports centres near you, or your kit at home. Free consultation, no commitment.`
-    : `Looking for a personal trainer in ${loc.name}? Get online personal training from a HYROX Elite 15 athlete, at a fraction of local PT rates. Free consultation, no commitment.`;
+  // identical across 1,973 places gives a searcher no reason to click ours.
+  // The international cities lead on the race instead of the gym count: it is
+  // the more specific fact, and the reason the page exists.
+  const description = city
+    ? `Online personal training for ${loc.name}, from a HYROX Elite 15 athlete. ${loc.name} is on the HYROX calendar${seo.gyms.length ? `, and the programme is built around any of the ${seo.gyms.length} gyms near the centre` : ""}. Free consultation, no commitment.`
+    : seo.gyms.length
+      ? `Personal training in ${loc.name}, online, from a HYROX Elite 15 athlete. Built around any of the ${seo.gyms.length} gyms and sports centres near you, or your kit at home. Free consultation, no commitment.`
+      : `Looking for a personal trainer in ${loc.name}? Get online personal training from a HYROX Elite 15 athlete, at a fraction of local PT rates. Free consultation, no commitment.`;
   return {
     title,
     description,
@@ -61,10 +70,9 @@ export async function generateMetadata({
       images: [{ url: "/media/images/track/og-default.jpg", width: 1200, height: 630 }],
     },
     twitter: { card: "summary_large_image", title, description },
-    // Indexed only where the keyword database evidences demand. The rest
-    // stay live and followable but out of the index, so 67 near-duplicate
-    // pages cannot drag the domain down. See lib/locations/seo.ts.
-    robots: geoRobots(loc.slug),
+    // Indexed where the page has something local to say. See lib/locations/seo.ts
+    // for the UK rule; every race city qualifies on the race itself.
+    robots: r.robots,
   };
 }
 
@@ -74,14 +82,29 @@ export default async function PersonalTrainerLocationPage({
   params: Promise<{ location: string }>;
 }) {
   const { location } = await params;
-  const loc = getLocationBySlug(location);
-  if (!loc) notFound();
+  const r = resolveGeo(location);
+  if (!r) notFound();
+  const { loc, seo, parent, nearby, city } = r;
+  // See the metadata above: the four names both catalogues claim need the
+  // country in the heading, or two live pages carry the same H1.
+  const headingName = city?.bareSlug ? `${loc.name}, ${city.country}` : undefined;
   return (
     <>
-      <JsonLd data={geoFaqJsonLd("pt", loc)} />
+      <JsonLd data={geoFaqJsonLd("pt", loc, seo)} />
       <JsonLd data={geoServiceJsonLd("pt", loc)} />
-      <JsonLd data={geoBreadcrumbJsonLd("pt", loc)} />
-      <GeoLanding variant="pt" loc={loc} />
+      <JsonLd
+        data={geoBreadcrumbJsonLd("pt", loc, {
+          name: parent.name,
+          path: parent.path("/personal-trainer"),
+        })}
+      />
+      <GeoLanding
+        variant="pt"
+        loc={loc}
+        seo={seo}
+        nearby={nearby}
+        headingName={headingName}
+      />
     </>
   );
 }

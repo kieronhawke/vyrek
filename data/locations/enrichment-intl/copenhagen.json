@@ -1,0 +1,175 @@
+{
+  "slug": "copenhagen",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "SHC Ørstedsparken",
+        "type": "gym",
+        "chain": "SHC",
+        "website": "https://sportinghealthclub.dk/orstedsparken/",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "PureGym",
+        "type": "gym",
+        "chain": "PureGym",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Barry's",
+        "type": "gym",
+        "chain": "Barry's",
+        "website": "https://www.barrys.com/studio/copenhagen/",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Prudence Davis",
+        "type": "gym",
+        "website": "https://www.prudencedavis.com/",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "SATS KBH - Adelgade",
+        "type": "gym",
+        "chain": "Sats",
+        "website": "https://www.sats.dk/traeningscenter/kobenhavn/kbh-adelgade",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "SHC",
+        "type": "gym",
+        "website": "https://sportinghealthclub.dk/shc-soerne/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Arca Garagen",
+        "type": "gym",
+        "chain": "Arca",
+        "website": "https://arca.dk/garagen/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Korsgadehallen",
+        "type": "sports-centre",
+        "website": "https://kulturogfritidn.kk.dk/korsgadehallen#sec-menu-id",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "SHC Gothersgade",
+        "type": "gym",
+        "chain": "SHC",
+        "website": "https://sportinghealthclub.dk/shc-gothersgade/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Arca Kirken",
+        "type": "gym",
+        "chain": "Arca",
+        "website": "https://arca.dk/kirken/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Kailo yoga",
+        "type": "gym",
+        "website": "https://kailoyoga.dk/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Power House København",
+        "type": "gym",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fitness Institute",
+        "type": "gym",
+        "website": "https://fitness-institute.dk",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "SHC Åboulevarden",
+        "type": "gym",
+        "chain": "SHC",
+        "website": "https://sportinghealthclub.dk/shc-aaboulevarden/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "SATS KBH - Vesterport",
+        "type": "gym",
+        "chain": "Sats",
+        "website": "https://www.sats.com/fitnesscenter/sjaelland/sats-kbh-vesterport/",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Indendørs legeplads i Blegdamsremisen",
+        "type": "sports-centre",
+        "website": "https://legeplads.kk.dk/vaelg-en-bydel/oesterbro/blegdamsremisen-b",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Copenhagen Pilates Studio",
+        "type": "gym",
+        "website": "https://copenhagenpilatesstudio.dk/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Arca Krydsfeltet",
+        "type": "gym",
+        "chain": "Arca",
+        "website": "https://arca.dk/krydsfeltet/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Bülowsvejhallen",
+        "type": "sports-centre",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "SATS KBH - Parken",
+        "type": "gym",
+        "chain": "Sats",
+        "website": "https://www.sats.com/fitnesscenter/sjaelland/sats-kbh-parken/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}

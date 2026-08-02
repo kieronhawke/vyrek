@@ -1,0 +1,163 @@
+{
+  "slug": "karlsruhe",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Bogenraum",
+        "type": "sports-centre",
+        "website": "https://www.bogenraum.de/",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "TeamXtreme",
+        "type": "sports-centre",
+        "website": "https://bjj-karlsruhe.de/",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Kieser Training",
+        "type": "gym",
+        "chain": "Kieser Training",
+        "website": "https://www.kieser-training.de/studios/alle-studios?c=karlsruhe",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Fit-in",
+        "type": "gym",
+        "website": "http://www.fit-in.de/?page_id=51#address2",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "KampfKunstCenter Karlsruhe",
+        "type": "sports-centre",
+        "website": "http://wt-karlsruhe.info",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Qi Gong Tai Chi Schule Karlsruhe Bruchsal",
+        "type": "gym",
+        "website": "http://www.tcqg.de",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Pilates for me",
+        "type": "gym",
+        "website": "https://www.pilates-for-me.de/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "YOGAetage",
+        "type": "gym",
+        "website": "https://www.iyengar-yoga-karlsruhe.de/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "VeniceBeach Fitness",
+        "type": "gym",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Körperformen",
+        "type": "gym",
+        "website": "https://www.körperformen.com/studios/ems-training-karlsruhe/",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Gym10",
+        "type": "gym",
+        "website": "https://gym10.de/de/karlsruhe",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Jonny M.",
+        "type": "gym",
+        "website": "https://jonny-m.de/club-europaplatz",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "VeniceBeach",
+        "type": "gym",
+        "website": "https://www.venicebeach-fitness.de/clubs/premium-fitness/karlsruhe-postgalerie/",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Boulderwelt Karlsruhe",
+        "type": "sports-centre",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "MY GYM PRIME",
+        "type": "gym",
+        "website": "https://www.mygym-prime.de/mygym-prime-karlsruhe",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Friedrich-List-Schule",
+        "type": "sports-centre",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Snap-Fit",
+        "type": "sports-centre",
+        "website": "https://snap-fit.de/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "mae Studio",
+        "type": "gym",
+        "website": "https://www.mae-studio.de/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Sporthalle der PH Karlsruhe",
+        "type": "sports-centre",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      },
+      {
+        "name": "Hebel-Halle",
+        "type": "sports-centre",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-02"
+      }
+    ]
+  }
+}
