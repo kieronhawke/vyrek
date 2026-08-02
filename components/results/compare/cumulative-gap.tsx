@@ -18,12 +18,14 @@ export function CumulativeGap({
   leftName: string;
   rightName: string;
 }) {
-  let running = 0;
-  const points = segments.map((segment) => {
-    // b − a, so a positive value means the first athlete is ahead.
-    running += segment.b - segment.a;
-    return { label: segment.label, gap: running };
-  });
+  // Running total of (b − a): positive means the first athlete is ahead.
+  // Built with a scan rather than a mutable closure so nothing is reassigned
+  // across render — the React Compiler rejects the latter.
+  const points = segments.reduce<{ label: string; gap: number }[]>((acc, segment) => {
+    const previous = acc.length > 0 ? acc[acc.length - 1].gap : 0;
+    acc.push({ label: segment.label, gap: previous + (segment.b - segment.a) });
+    return acc;
+  }, []);
 
   const gaps = points.map((p) => p.gap);
   const extent = Math.max(Math.abs(Math.min(...gaps, 0)), Math.abs(Math.max(...gaps, 0)), 30);

@@ -71,6 +71,17 @@
 .results-band-top-50 { background-color: var(--results-band-50); }
 .results-band-field  { background-color: transparent; }
 
+/* Tertiary text (#8A8A88) clears AA on the base surface at ~5.7:1, but the
+ * band tints lift the background enough to drop it to ~4.39:1 — just under.
+ * Rather than hunt every span on a shaded row, lift tertiary to secondary
+ * inside a band. Caught by the axe pass, not by eye. */
+.results-band-top-1  .text-suth-text-tertiary,
+.results-band-top-5  .text-suth-text-tertiary,
+.results-band-top-10 .text-suth-text-tertiary,
+.results-band-top-25 .text-suth-text-tertiary {
+  color: var(--suth-text-secondary);
+}
+
 @keyframes results-live-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%      { opacity: 0.45; transform: scale(0.82); }

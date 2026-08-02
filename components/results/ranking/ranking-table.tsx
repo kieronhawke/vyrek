@@ -166,10 +166,11 @@ export function RankingTable({
 
       {/* Desktop: semantic table, windowed. */}
       <div className="mt-3 hidden overflow-hidden rounded-md border border-suth-border-subtle md:block">
-        <div
-          role="row"
-          className="flex items-center gap-3 border-b border-suth-border bg-suth-overlay px-4 py-2"
-        >
+        {/* No role="row"/"columnheader" here: the virtualised body rows are
+            absolutely positioned divs and cannot form a valid table, so a
+            partial ARIA table is worse than none — axe flags the orphaned row.
+            The sort controls carry their state in aria-label instead. */}
+        <div className="flex items-center gap-3 border-b border-suth-border bg-suth-overlay px-4 py-2">
           <SortHeader className="w-12" label="#" active={sort} sortKey="rank" onSort={toggleSort} />
           <SortHeader className="flex-1" label="Athlete" active={sort} sortKey="name" onSort={toggleSort} />
           <SortHeader className="w-20" label="Age" active={sort} sortKey="ageGroup" onSort={toggleSort} />
@@ -183,6 +184,7 @@ export function RankingTable({
         <div
           ref={scrollerRef}
           onScroll={(e) => setScrollTop(e.currentTarget.scrollTop)}
+          aria-label="Division results"
           className="max-h-[70vh] overflow-y-auto"
         >
           {visible.length === 0 ? (
@@ -352,15 +354,16 @@ function SortHeader({
 }) {
   const isActive = active.key === sortKey;
   return (
+    <span className={cn("flex", className)}>
     <button
       type="button"
       onClick={() => onSort(sortKey)}
-      aria-sort={isActive ? (active.dir === "asc" ? "ascending" : "descending") : "none"}
+      aria-label={`Sort by ${label}${isActive ? (active.dir === "asc" ? ", currently ascending" : ", currently descending") : ""}`}
       className={cn(
         "flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.16em] transition-colors",
         "focus-visible:outline-2 focus-visible:outline-suth-accent",
         isActive ? "text-suth-accent" : "text-suth-text-tertiary hover:text-suth-text-secondary",
-        className,
+        "w-full",
       )}
     >
       {label}
@@ -368,6 +371,7 @@ function SortHeader({
         {active.dir === "asc" ? "▲" : "▼"}
       </span>
     </button>
+    </span>
   );
 }
 
@@ -463,7 +467,9 @@ function MobileCard({
         <Nationality iso={iso} />
         <span className="min-w-0 flex-1">
           <span className="block truncate text-sm text-suth-text">{name}</span>
-          <span className="results-num text-[11px] text-suth-text-tertiary">{ageGroup}</span>
+          {/* Secondary, not tertiary: the percentile band tint behind the top
+              rows lifts the background enough that tertiary drops under 4.5:1. */}
+          <span className="results-num text-[11px] text-suth-text-secondary">{ageGroup}</span>
         </span>
         <span className="shrink-0 text-right">
           <Time seconds={finishSeconds} className="block text-sm" />

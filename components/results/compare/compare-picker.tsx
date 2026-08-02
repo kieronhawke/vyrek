@@ -61,7 +61,9 @@ function AthleteField({
 
   useEffect(() => {
     const trimmed = query.trim();
-    if (trimmed.length < 2) { setResults([]); return; }
+    // Clearing on a short query happens in the change handler, not here — a
+    // synchronous setState inside an effect cascades renders.
+    if (trimmed.length < 2) return;
     const controller = new AbortController();
     let cancelled = false;
     const timer = setTimeout(async () => {
@@ -103,7 +105,11 @@ function AthleteField({
           <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-suth-text-tertiary" aria-hidden />
           <input
             value={query}
-            onChange={(e) => { setQuery(e.target.value); setOpen(true); }}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setOpen(true);
+              if (e.target.value.trim().length < 2) setResults([]);
+            }}
             onFocus={() => setOpen(true)}
             placeholder="Search an athlete"
             aria-label={label}

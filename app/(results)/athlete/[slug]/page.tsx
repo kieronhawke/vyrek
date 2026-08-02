@@ -8,7 +8,7 @@ import { formatTime, formatOrdinal, formatCount, formatRelativeDate } from "@/li
 import { ProgressionChart } from "@/components/results/athlete/progression-chart";
 import { CareerStations, type CareerSplit } from "@/components/results/athlete/career-stations";
 import { ClaimProfile } from "@/components/results/athlete/claim-profile";
-import { StatTile, MicroLabel, Nationality, Time, Delta } from "@/components/results/ui/primitives";
+import { StatTile, Nationality, Time, Delta } from "@/components/results/ui/primitives";
 import { CoachingCta } from "@/components/results/coaching-cta";
 
 /**

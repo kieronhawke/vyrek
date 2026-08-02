@@ -107,7 +107,9 @@ export function PercentileTool({ references }: { references: SimulatorReference[
                       isYou ? "bg-suth-accent/10" : "",
                     )}
                   >
-                    <span className="results-num w-14 text-suth-text-tertiary">Top {100 - p}%</span>
+                    <span className={cn("results-num w-14", isYou ? "text-suth-text-secondary" : "text-suth-text-tertiary")}>
+                      Top {100 - p}%
+                    </span>
                     <span className="h-1.5 flex-1 overflow-hidden rounded-sm bg-suth-overlay">
                       <span
                         className={isYou ? "block h-full bg-suth-accent" : "block h-full bg-suth-border-strong"}

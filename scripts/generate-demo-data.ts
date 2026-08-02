@@ -93,11 +93,35 @@ type PoolAthlete = {
 
 const SEASON_INDEX: Record<string, number> = { s7: 0, s8: 1, s9: 2 };
 
-function ageGroupFor(rng: Rng): AgeGroup {
+/**
+ * Age groups, weighted by division. Open fields span every bracket; elite and
+ * pro fields skew young, because they are. Without this an Elite Men winner
+ * came out of the 60-64 bracket and went straight into a generated race
+ * report, which no Hyrox reader would believe.
+ */
+function ageGroupFor(rng: Rng, tier: "open" | "pro" | "elite" = "open"): AgeGroup {
+  if (tier === "elite") {
+    return weightedPick(rng, [
+      ["16-24", 10], ["25-29", 34], ["30-34", 34], ["35-39", 17], ["40-44", 5],
+    ] as const) as AgeGroup;
+  }
+  if (tier === "pro") {
+    return weightedPick(rng, [
+      ["16-24", 8], ["25-29", 26], ["30-34", 30], ["35-39", 20], ["40-44", 11],
+      ["45-49", 5],
+    ] as const) as AgeGroup;
+  }
   return weightedPick(rng, [
     ["16-24", 9], ["25-29", 18], ["30-34", 22], ["35-39", 18], ["40-44", 13],
     ["45-49", 9], ["50-54", 6], ["55-59", 3], ["60-64", 1.5], ["65-69", 0.5],
   ] as const) as AgeGroup;
+}
+
+/** Which age-group profile a division draws from. */
+function tierFor(code: string): "open" | "pro" | "elite" {
+  if (code.includes("elite")) return "elite";
+  if (code.includes("pro")) return "pro";
+  return "open";
 }
 
 function buildPool(rng: Rng): PoolAthlete[] {
@@ -228,7 +252,8 @@ function main() {
 
       const seen = new Set<string>();
       const rows: {
-        athlete: PoolAthlete; finish: number; split: ReturnType<typeof splitRace>; dnf: boolean;
+        athlete: PoolAthlete; ageGroup: AgeGroup; finish: number;
+        split: ReturnType<typeof splitRace>; dnf: boolean;
       }[] = [];
 
       for (let i = 0; i < entrants; i++) {
@@ -251,13 +276,18 @@ function main() {
             name,
             countryIso: nation,
             gender,
-            ageGroup: ageGroupFor(rng),
+            ageGroup: ageGroupFor(rng, tierFor(profile.code)),
             ability: normal(rng, 0, 1),
             trendPerSeason: 0,
             raceCount: 0,
           };
         }
         seen.add(athlete.slug);
+
+        // Pool athletes carry an open-weighted age group; elite and pro fields
+        // need their own distribution or a 60-64 athlete can win Elite Men.
+        const tier = tierFor(profile.code);
+        const ageGroup = tier === "open" ? athlete.ageGroup : ageGroupFor(rng, tier);
 
         const trend = athlete.trendPerSeason * seasonIdx;
         const target = profile.meanSeconds
@@ -269,7 +299,7 @@ function main() {
         const raw = skewedNormal(rng, target, profile.sdSeconds * 0.12, profile.skew);
         const finish = Math.max(profile.floorSeconds * uniform(rng, 1.0, 1.035), raw);
         const dnf = hasTimes && rng() < profile.dnfRate;
-        rows.push({ athlete, finish: Math.round(finish), split: splitRace(rng, profile, Math.round(finish)), dnf });
+        rows.push({ athlete, ageGroup, finish: Math.round(finish), split: splitRace(rng, profile, Math.round(finish)), dnf });
       }
 
       if (!hasTimes) {
@@ -285,7 +315,7 @@ function main() {
           id: `${slug}-${profile.code}-${i}`,
           eventSlug: slug, division: profile.code,
           athleteSlug: r.athlete.slug, athleteName: r.athlete.name,
-          countryIso: r.athlete.countryIso, ageGroup: r.athlete.ageGroup,
+          countryIso: r.athlete.countryIso, ageGroup: r.ageGroup,
           status: "entered",
         }));
         eventAthletes += rows.length;
@@ -295,8 +325,8 @@ function main() {
       const finishers = rows.filter((r) => !r.dnf).sort((a, b) => a.split.finishSeconds - b.split.finishSeconds);
       const agCounters = new Map<string, number>();
       const divisionResults = finishers.map((r, i) => {
-        const agRank = (agCounters.get(r.athlete.ageGroup) ?? 0) + 1;
-        agCounters.set(r.athlete.ageGroup, agRank);
+        const agRank = (agCounters.get(r.ageGroup) ?? 0) + 1;
+        agCounters.set(r.ageGroup, agRank);
         r.athlete.raceCount++;
         const row = {
           id: `${slug}-${profile.code}-${i + 1}`,
@@ -305,7 +335,7 @@ function main() {
           athleteSlug: r.athlete.slug,
           athleteName: r.athlete.name,
           countryIso: r.athlete.countryIso,
-          ageGroup: r.athlete.ageGroup,
+          ageGroup: r.ageGroup,
           rank: i + 1,
           ageGroupRank: agRank,
           finishSeconds: r.split.finishSeconds,
@@ -346,7 +376,7 @@ function main() {
           id: `${slug}-${profile.code}-dnf-${r.athlete.slug}`,
           eventSlug: slug, division: profile.code,
           athleteSlug: r.athlete.slug, athleteName: r.athlete.name,
-          countryIso: r.athlete.countryIso, ageGroup: r.athlete.ageGroup,
+          countryIso: r.athlete.countryIso, ageGroup: r.ageGroup,
           rank: 0, ageGroupRank: 0, finishSeconds: 0,
           runs: [], stations: {}, roxzoneSeconds: 0,
           status: "dnf",
