@@ -7,28 +7,28 @@
         "area": "Manor Park",
         "distanceKm": 0.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Marple parkrun",
         "area": "Brabyns Park, Stockport",
         "distanceKm": 8.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Hyde parkrun",
         "area": "Hyde Park",
         "distanceKm": 8.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Stamford Park parkrun",
         "area": "Stamford Park",
         "distanceKm": 9.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -39,14 +39,14 @@
         "type": "gym",
         "distanceKm": 0,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Glossop Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 0.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PureGym",
@@ -55,14 +55,14 @@
         "website": "https://www.puregym.com/gyms/glossop/",
         "distanceKm": 0.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Pilates Studio",
         "type": "gym",
         "distanceKm": 0.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fit Factory",
@@ -70,7 +70,7 @@
         "website": "https://fitfactoryglossop.co.uk/",
         "distanceKm": 0.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Old Glossop Cricket Club",
@@ -78,21 +78,21 @@
         "website": "https://www.oldglossopcc.com/",
         "distanceKm": 0.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Glossop Pyegrove Tennis Club",
         "type": "sports-centre",
         "distanceKm": 1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Glossop Padel",
         "type": "sports-centre",
         "distanceKm": 3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Tintwistle Cricket Club",
@@ -100,14 +100,14 @@
         "website": "http://www.tintwistlecc.org/",
         "distanceKm": 3.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Etherow Centre",
         "type": "sports-centre",
         "distanceKm": 4.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Mottram Cricket Club",
@@ -115,14 +115,14 @@
         "website": "https://www.mottramcricketclub.co.uk/",
         "distanceKm": 4.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Longdendale Recreation Centre",
         "type": "sports-centre",
         "distanceKm": 4.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Active Ken Ward",
@@ -130,14 +130,14 @@
         "website": "https://www.activetameside.com/centre/active-ken-ward/",
         "distanceKm": 5.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bank Vale Field",
         "type": "sports-centre",
         "distanceKm": 6.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Hayfield Cricket Ground",
@@ -145,7 +145,7 @@
         "website": "http://www.hayfieldcricketclub.co.uk/",
         "distanceKm": 7.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Farmer Johns MTB Park",
@@ -153,7 +153,7 @@
         "website": "https://fjmtb.com/",
         "distanceKm": 7.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Newton Cricket Club",
@@ -161,7 +161,7 @@
         "website": "https://newtoncc.co.uk/",
         "distanceKm": 7.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Hyde Cricket & Squash Club",
@@ -169,21 +169,21 @@
         "website": "https://www.hydecsc.co.uk/",
         "distanceKm": 7.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Copley Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 7.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Compstall Cricket Club",
         "type": "sports-centre",
         "distanceKm": 7.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

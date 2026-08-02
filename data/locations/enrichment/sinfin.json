@@ -7,14 +7,14 @@
         "area": "Alvaston Park",
         "distanceKm": 4.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Markeaton parkrun",
         "area": "Markeaton",
         "distanceKm": 6.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -25,14 +25,14 @@
         "type": "gym",
         "distanceKm": 0.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Rolls-Royce Fitness Centre",
         "type": "sports-centre",
         "distanceKm": 1.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Moorways Sports Village and Water Park",
@@ -40,42 +40,42 @@
         "website": "https://www.everyoneactive.com/centre/moorways-sports-village-and-water-park/",
         "distanceKm": 2.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Derby Co-op Bowls Club",
         "type": "sports-centre",
         "distanceKm": 2.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Rosehill Methodists Memorial Sports Ground",
         "type": "sports-centre",
         "distanceKm": 2.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "C.U.R.C. Tennis Club",
         "type": "sports-centre",
         "distanceKm": 2.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Rosehill Methodists Sports Club",
         "type": "sports-centre",
         "distanceKm": 2.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "C.U.R.C. Sports Field",
         "type": "sports-centre",
         "distanceKm": 2.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lowes Lane Clay Shooting Ground",
@@ -83,21 +83,21 @@
         "website": "http://www.loweslane.co.uk/",
         "distanceKm": 2.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Derbyshire Tennis Centre",
         "type": "sports-centre",
         "distanceKm": 2.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Allenton Boxing Academy",
         "type": "gym",
         "distanceKm": 2.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "JD Gyms",
@@ -105,28 +105,28 @@
         "chain": "JD Gyms",
         "distanceKm": 2.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fight Club",
         "type": "gym",
         "distanceKm": 2.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Derby Rifle and Pistol Club Range",
         "type": "sports-centre",
         "distanceKm": 3.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Littleover Tennis Club",
         "type": "sports-centre",
         "distanceKm": 3.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "360 Health Club",
@@ -134,7 +134,7 @@
         "website": "http://www.360healthclub.co.uk/",
         "distanceKm": 3.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ultra Fit Ladies Gym",
@@ -142,7 +142,7 @@
         "website": "https://www.ultrafitladiesgym.co.uk/",
         "distanceKm": 3.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Chellaston Crown Green Bowls Club",
@@ -150,7 +150,7 @@
         "website": "https://www.chellastonbowlsclub.co.uk/",
         "distanceKm": 3.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "City Balance Body & Mind",
@@ -158,7 +158,7 @@
         "website": "http://www.citybalance.co.uk/",
         "distanceKm": 3.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Gym Group",
@@ -167,7 +167,7 @@
         "website": "https://www.thegymgroup.com/find-a-gym/derby-gyms/derby/",
         "distanceKm": 3.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

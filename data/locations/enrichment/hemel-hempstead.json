@@ -7,35 +7,35 @@
         "area": "Gadebridge Park",
         "distanceKm": 1.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Leavesden Country parkrun",
         "area": "Leavesden Country Park",
         "distanceKm": 6.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "St Albans parkrun",
         "area": "Verulam Park, St Albans",
         "distanceKm": 6.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Rothamsted Park parkrun",
         "area": "Rothamsted Park",
         "distanceKm": 9.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Jersey Farm parkrun",
         "area": "Jersey Farm Woodland Park",
         "distanceKm": 10,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -46,7 +46,7 @@
         "type": "sports-centre",
         "distanceKm": 0.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Gym",
@@ -55,7 +55,7 @@
         "website": "https://www.thegymgroup.com/find-a-gym/hemel-hempstead-gyms/hemel-hempstead/",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "XC",
@@ -63,7 +63,7 @@
         "website": "https://thexc.co.uk/",
         "distanceKm": 0.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Nuffield Health Fitness & Wellbeing",
@@ -72,7 +72,7 @@
         "website": "https://www.nuffieldhealth.com/gyms/hemel-hempstead",
         "distanceKm": 1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Snow Centre",
@@ -80,7 +80,7 @@
         "website": "https://www.thesnowcentre.com",
         "distanceKm": 1.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Mamba Boxing Gym",
@@ -88,7 +88,7 @@
         "website": "http://www.mambagym.com/",
         "distanceKm": 1.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PureGym",
@@ -97,7 +97,7 @@
         "website": "https://www.puregym.com/gyms/hemel-hempstead/",
         "distanceKm": 1.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Physique Gym",
@@ -105,7 +105,7 @@
         "website": "https://physiquegyms.co.uk/",
         "distanceKm": 1.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Anytime Fitness",
@@ -114,7 +114,7 @@
         "website": "https://www.anytimefitness.co.uk/gyms/uk-0002/hemel-hempstead-east-of-england-hp1-1bt/",
         "distanceKm": 1.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Hemel Hempstead Sports Centre (Everyone active)",
@@ -122,56 +122,56 @@
         "website": "everyoneactive.com",
         "distanceKm": 2.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Hemel Indoor Tennis Centre",
         "type": "sports-centre",
         "distanceKm": 2.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Tornado Junior Sports Club",
         "type": "sports-centre",
         "distanceKm": 2.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Nash Mills Recreation Centre",
         "type": "sports-centre",
         "distanceKm": 3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Inspired Fitness Centre",
         "type": "sports-centre",
         "distanceKm": 3.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Kings Langley FC",
         "type": "sports-centre",
         "distanceKm": 3.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Abseil Tower",
         "type": "sports-centre",
         "distanceKm": 3.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Climbing Wall",
         "type": "sports-centre",
         "distanceKm": 3.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Batchwood Golf Course & Sports Centre",
@@ -179,7 +179,7 @@
         "website": "https://www.1life.co.uk/Batchwood-Golf-Course-and-Sports-Centre/",
         "distanceKm": 6.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Westminster Lodge Leisure Centre",
@@ -188,14 +188,14 @@
         "website": "https://www.everyoneactive.com/",
         "distanceKm": 7.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Waverley Sports and Social Club",
         "type": "sports-centre",
         "distanceKm": 7.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

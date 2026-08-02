@@ -8,14 +8,14 @@
         "website": "https://www.rctcbc.gov.uk/EN/Resident/SportsandLeisure/LeisureCentres/ChooseaCentre/AbercynonSportsCentre/AbercynonSportsCentre.aspx",
         "distanceKm": 2.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Rock UK Summit Centre Indoor Rock Climbing",
         "type": "sports-centre",
         "distanceKm": 2.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Aberfan Leisure Centre",
@@ -23,7 +23,7 @@
         "website": "https://www.merthyrleisure.co.uk/",
         "distanceKm": 4.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sue Noake Leisure Centre",
@@ -31,7 +31,7 @@
         "website": "https://www.caerphillyleisurelifestyle.co.uk/en/centre/sue-noake-leisure-centre/",
         "distanceKm": 5.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Centre for Sporting Excellence",
@@ -39,21 +39,21 @@
         "website": "https://www.facebook.com/pages/category/Stadium--Arena---Sports-Venue/CCB-Centre-for-Sporting-Excellence-769985439756346/",
         "distanceKm": 5.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Deri RFC",
         "type": "sports-centre",
         "distanceKm": 6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Indoor Bowls Centre",
         "type": "sports-centre",
         "distanceKm": 7.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PureGym",
@@ -61,7 +61,7 @@
         "website": "https://www.puregym.com/gyms/pontypridd/",
         "distanceKm": 7.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "énergie Fitness",
@@ -69,7 +69,7 @@
         "chain": "énergie Fitness",
         "distanceKm": 7.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lido Ponty",
@@ -77,14 +77,14 @@
         "website": "https://www.rctcbc.gov.uk/EN/Resident/SportsandLeisure/Lido/",
         "distanceKm": 7.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pontypridd Lido Complex",
         "type": "sports-centre",
         "distanceKm": 7.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "New Tredegar Leisure Centre",
@@ -92,14 +92,14 @@
         "website": "https://www.caerphillyleisurelifestyle.co.uk/en/centre/new-tredegar-leisure-centre/",
         "distanceKm": 7.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Islwyn Indoor Bowls club",
         "type": "sports-centre",
         "distanceKm": 8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -110,21 +110,21 @@
         "area": "Penallta House",
         "distanceKm": 4.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pontypridd parkrun",
         "area": "Ynysangharad War Memorial Park",
         "distanceKm": 7.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Merthyr parkrun",
         "area": "Merthyr Leisure Village",
         "distanceKm": 9.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

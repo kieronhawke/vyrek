@@ -7,70 +7,70 @@
         "type": "sports-centre",
         "distanceKm": 1.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Tree Trek",
         "type": "sports-centre",
         "distanceKm": 1.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Junior Tree Trek",
         "type": "sports-centre",
         "distanceKm": 1.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "High Ropes",
         "type": "sports-centre",
         "distanceKm": 1.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "David Lloyd",
         "type": "sports-centre",
         "distanceKm": 3.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lye Meadow",
         "type": "sports-centre",
         "distanceKm": 3.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Victoria Ground",
         "type": "sports-centre",
         "distanceKm": 4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Five Ways Old Edwardian Sports Club",
         "type": "sports-centre",
         "distanceKm": 4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Dolphin Centre",
         "type": "sports-centre",
         "distanceKm": 4.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Kings Norton Rugby Club",
         "type": "sports-centre",
         "distanceKm": 4.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Nuffield Health Fitness & Wellbeing",
@@ -79,14 +79,14 @@
         "website": "https://www.nuffieldhealth.com/gyms/birmingham-rubery",
         "distanceKm": 4.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ryland Centre",
         "type": "sports-centre",
         "distanceKm": 4.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "HL Therapy",
@@ -94,56 +94,56 @@
         "website": "https://www.hltherapy.com/",
         "distanceKm": 4.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Altered Images",
         "type": "gym",
         "distanceKm": 5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Arena",
         "type": "sports-centre",
         "distanceKm": 5.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Old Sports Hall",
         "type": "sports-centre",
         "distanceKm": 5.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Birmingham City Academy",
         "type": "sports-centre",
         "distanceKm": 5.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lowcost Gyms",
         "type": "gym",
         "distanceKm": 5.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Golfbug Wast Hills",
         "type": "sports-centre",
         "distanceKm": 5.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lifeline Fitness",
         "type": "gym",
         "distanceKm": 5.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -154,7 +154,7 @@
         "area": "Arrow Valley Park",
         "distanceKm": 8.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

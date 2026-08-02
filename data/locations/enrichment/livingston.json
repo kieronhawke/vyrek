@@ -7,21 +7,21 @@
         "area": "Almondvale Park",
         "distanceKm": 1.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Beecraigs Country Park parkrun",
         "area": "Beecraigs Country Park",
         "distanceKm": 6.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Auldcathie District parkrun",
         "area": "Auldcathie District Park",
         "distanceKm": 7.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -32,84 +32,84 @@
         "type": "sports-centre",
         "distanceKm": 1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Craigswood Sports Centre",
         "type": "sports-centre",
         "distanceKm": 1.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Choose You",
         "type": "gym",
         "distanceKm": 1.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Prime 8",
         "type": "gym",
         "distanceKm": 1.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Livingston Indoor Bowling Club",
         "type": "sports-centre",
         "distanceKm": 1.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Craigwillow Centre",
         "type": "sports-centre",
         "distanceKm": 1.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Uphall Station Bowling Pavilion",
         "type": "sports-centre",
         "distanceKm": 2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Livingston Boxing Club",
         "type": "gym",
         "distanceKm": 2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Recreation Park",
         "type": "sports-centre",
         "distanceKm": 2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Revolution Spin",
         "type": "gym",
         "distanceKm": 2.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Livingston Letham Bowling Club",
         "type": "sports-centre",
         "distanceKm": 2.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Station Park",
         "type": "sports-centre",
         "distanceKm": 2.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "JD Gyms",
@@ -118,7 +118,7 @@
         "website": "https://www.jdgyms.co.uk/gym/livingston/",
         "distanceKm": 2.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PureGym",
@@ -127,49 +127,49 @@
         "website": "https://www.puregym.com/gyms/livingston/",
         "distanceKm": 2.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bannatyne's Health Club",
         "type": "gym",
         "distanceKm": 3.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "East Calder Bowling Club",
         "type": "sports-centre",
         "distanceKm": 3.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sunshine Hollistic",
         "type": "gym",
         "distanceKm": 3.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "East Calder Sports Centre",
         "type": "sports-centre",
         "distanceKm": 4.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Scottish National Equestrian Centre",
         "type": "sports-centre",
         "distanceKm": 4.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sports Hall",
         "type": "sports-centre",
         "distanceKm": 5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

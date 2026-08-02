@@ -7,14 +7,14 @@
         "area": "Denbies Wine Estate",
         "distanceKm": 5.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Nonsuch parkrun",
         "area": "Nonsuch Park, Cheam",
         "distanceKm": 9.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -27,14 +27,14 @@
         "website": "https://www.nuffieldhealth.com/gyms/leatherhead",
         "distanceKm": 0.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Mole Valley Indoor Bowls Club",
         "type": "sports-centre",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Leatherhead Leisure Centre",
@@ -42,7 +42,7 @@
         "website": "https://www.better.org.uk/leisure-centre/mole-valley/leatherhead-leisure-centre",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Leatherhead Tennis Club",
@@ -50,21 +50,21 @@
         "website": "https://clubspark.lta.org.uk/LeatherheadTennisClub",
         "distanceKm": 0.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Leatherhead FC Youth Football Centre",
         "type": "sports-centre",
         "distanceKm": 1.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ashtead Squash & Tennis Club",
         "type": "sports-centre",
         "distanceKm": 2.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ashtead Tennis Players Club",
@@ -72,7 +72,7 @@
         "website": "https://ashteadtennisplayersclub.org.uk/",
         "distanceKm": 2.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Star Gun Club",
@@ -80,28 +80,28 @@
         "website": "https://stargunclub.org/httpdocs/",
         "distanceKm": 3.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Oxshott Village Sports Club",
         "type": "sports-centre",
         "distanceKm": 4.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Chelsea Football Club Training Ground",
         "type": "sports-centre",
         "distanceKm": 4.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "High Ashurst Outdoor Education Centre",
         "type": "sports-centre",
         "distanceKm": 4.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Cedars Sports",
@@ -109,7 +109,7 @@
         "website": "https://www.royalautomobileclub.co.uk/woodcote-park/sports-and-wellbeing/",
         "distanceKm": 4.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Effingham Community Sports Centre",
@@ -117,14 +117,14 @@
         "website": "https://www.thehoward.org/Hiring-Our-Facilities/",
         "distanceKm": 5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Epsom Tennis Club",
         "type": "sports-centre",
         "distanceKm": 5.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PureGym",
@@ -133,7 +133,7 @@
         "website": "https://www.puregym.com/gyms/epsom/",
         "distanceKm": 6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ellie Yoki",
@@ -141,14 +141,14 @@
         "website": "https://ellieyoki.co.uk/",
         "distanceKm": 6.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "David Lloyd Fitness Centre",
         "type": "gym",
         "distanceKm": 6.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Cobham Pilates",
@@ -156,7 +156,7 @@
         "website": "https://www.cobhampilates.com",
         "distanceKm": 6.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Cobham Yoga",
@@ -164,7 +164,7 @@
         "website": "https://cobhamyoga.com",
         "distanceKm": 6.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "U Pilates",
@@ -172,7 +172,7 @@
         "website": "https://upilatesstudio.com",
         "distanceKm": 6.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

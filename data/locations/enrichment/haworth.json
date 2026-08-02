@@ -8,7 +8,7 @@
         "website": "https://www.nrgym.co.uk/",
         "distanceKm": 4.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Hi-Energy Health Club",
@@ -16,28 +16,28 @@
         "website": "https://hienergyhealthclub.co.uk/",
         "distanceKm": 4.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Duo Fitness Studio",
         "type": "gym",
         "distanceKm": 5.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Halifax Sailing Club",
         "type": "sports-centre",
         "distanceKm": 5.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 5.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PureGym",
@@ -46,21 +46,21 @@
         "website": "https://www.puregym.com/gyms/keighley/",
         "distanceKm": 6.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Marley Activities and Coaching Centre",
         "type": "sports-centre",
         "distanceKm": 6.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bingley Barbell club",
         "type": "gym",
         "distanceKm": 7.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -71,14 +71,14 @@
         "area": "Cliffe Castle Park",
         "distanceKm": 5.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Myrtle parkrun",
         "area": "Myrtle Park",
         "distanceKm": 7.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

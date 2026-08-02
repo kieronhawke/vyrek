@@ -7,28 +7,28 @@
         "area": "Woodgate Valley Country Park",
         "distanceKm": 1.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Edgbaston Reservoir parkrun",
         "area": "Edgbaston Reservoir",
         "distanceKm": 6.2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Cannon Hill parkrun, Birmingham",
         "area": "Cannon Hill, Birmingham",
         "distanceKm": 6.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sandwell Valley parkrun",
         "area": "Sandwell Park Farm",
         "distanceKm": 9.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -39,63 +39,63 @@
         "type": "sports-centre",
         "distanceKm": 0.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bartley Green Amateur Boxing Club",
         "type": "gym",
         "distanceKm": 1.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Narna's Gym",
         "type": "gym",
         "distanceKm": 1.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Shenley Lane Community Association and Sports Centre",
         "type": "sports-centre",
         "distanceKm": 2.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Steve’s",
         "type": "gym",
         "distanceKm": 3.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Leasowes Sports Centre",
         "type": "sports-centre",
         "distanceKm": 3.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Harborne Swimming Pool And Fitness Centre",
         "type": "sports-centre",
         "distanceKm": 3.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Halesowen Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 3.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Toneup Fitness",
         "type": "gym",
         "distanceKm": 3.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Nuffield Health Fitness & Wellbeing",
@@ -104,7 +104,7 @@
         "website": "https://www.nuffieldhealth.com/gyms/birmingham-rubery",
         "distanceKm": 4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Gym Group",
@@ -113,7 +113,7 @@
         "website": "https://www.thegymgroup.com/find-a-gym/birmingham-gyms/birmingham-selly-oak/",
         "distanceKm": 4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "HL Therapy",
@@ -121,7 +121,7 @@
         "website": "https://www.hltherapy.com/",
         "distanceKm": 4.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Linden Road Instruction Pool",
@@ -129,7 +129,7 @@
         "website": "https://www.birmingham.gov.uk/directory_record/7789/linden_road_instruction_pool",
         "distanceKm": 4.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Penny Mason Yoga and Fitness",
@@ -137,7 +137,7 @@
         "website": "https://artist7074.wixsite.com/website",
         "distanceKm": 4.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Tiverton Gym - University of Birmingham",
@@ -145,7 +145,7 @@
         "website": "https://sportandfitness.bham.ac.uk/join/visit-us/",
         "distanceKm": 4.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "24/7 Fitness",
@@ -153,14 +153,14 @@
         "website": "https://247fitness.co/gyms/birmingham",
         "distanceKm": 4.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sports Centre",
         "type": "sports-centre",
         "distanceKm": 4.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bearwood Yoga",
@@ -168,14 +168,14 @@
         "website": "https://www.bearwoodyoga.com/",
         "distanceKm": 4.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pro-Fitness",
         "type": "sports-centre",
         "distanceKm": 5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Second City Fitness",
@@ -183,7 +183,7 @@
         "website": "https://www.secondcityfitness.com/",
         "distanceKm": 5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

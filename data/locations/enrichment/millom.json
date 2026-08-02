@@ -7,7 +7,7 @@
         "type": "sports-centre",
         "distanceKm": 0.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Port Haverigg Wakepark",
@@ -15,21 +15,21 @@
         "website": "https://www.porthaveriggwakepark.co.uk/",
         "distanceKm": 1.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Askam Rugby League Club",
         "type": "sports-centre",
         "distanceKm": 4.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Longlands Site Swimming Pool",
         "type": "sports-centre",
         "distanceKm": 7.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -40,7 +40,7 @@
         "area": "Millom Network Centre",
         "distanceKm": 0.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

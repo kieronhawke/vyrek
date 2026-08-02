@@ -8,7 +8,7 @@
         "website": "https://theloftwales.org",
         "distanceKm": 0.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pwll Nofio Aberteifi / Cardigan Swimming Pool",
@@ -16,14 +16,14 @@
         "website": "https://www.cardiganswimmingpool.co.uk/",
         "distanceKm": 0.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sheila Williams Mi.Trainer",
         "type": "gym",
         "distanceKm": 0.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Teifi Leisure Centre",
@@ -31,14 +31,14 @@
         "website": "https://www.ceredigionactif.org.uk/",
         "distanceKm": 0.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Cardigan Amateur Boxing Club",
         "type": "sports-centre",
         "distanceKm": 0.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Indoor Bowls",
@@ -46,28 +46,28 @@
         "website": "http://www.cardiganbowling.club/",
         "distanceKm": 0.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "OxFitness",
         "type": "gym",
         "distanceKm": 0.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Cove",
         "type": "sports-centre",
         "distanceKm": 3.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Felinganol Woodland Retreat",
         "type": "gym",
         "distanceKm": 3.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Aqua Serena",
@@ -75,14 +75,14 @@
         "website": "http://www.aquaserena.co.uk/",
         "distanceKm": 4.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Yoga Hall",
         "type": "gym",
         "distanceKm": 5.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -93,7 +93,7 @@
         "area": "Teifi Marshes Nature Reserve",
         "distanceKm": 1.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

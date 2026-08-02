@@ -7,42 +7,42 @@
         "area": "Brunswick Park",
         "distanceKm": 1.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sandwell Valley parkrun",
         "area": "Sandwell Park Farm",
         "distanceKm": 4.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Walsall Arboretum parkrun",
         "area": "Walsall Arboretum",
         "distanceKm": 5.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "East Park parkrun",
         "area": "East Park",
         "distanceKm": 6.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Perry Hall parkrun",
         "area": "Perry Hall Park",
         "distanceKm": 8.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Wolverhampton parkrun",
         "area": "West Park",
         "distanceKm": 8.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -53,21 +53,21 @@
         "type": "gym",
         "distanceKm": 0.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Wednesbury Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 0.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Wednesbury Markmen",
         "type": "sports-centre",
         "distanceKm": 0.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Wednesbury Sports Union",
@@ -75,21 +75,21 @@
         "website": "http://www.wednesburysu.co.uk/",
         "distanceKm": 1.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "BC Tigers",
         "type": "sports-centre",
         "distanceKm": 1.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Rudis Fitness",
         "type": "gym",
         "distanceKm": 1.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Tipton Sports Academy",
@@ -97,7 +97,7 @@
         "website": "https://www.korewellness.co.uk/our-centres/tipton-sports-academy/",
         "distanceKm": 2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Boulder Central",
@@ -105,7 +105,7 @@
         "website": "https://www.bouldercentral.co.uk/",
         "distanceKm": 2.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pulse Soccer & Fitness",
@@ -113,35 +113,35 @@
         "website": "https://www.pulsewednesbury.co.uk/",
         "distanceKm": 2.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Muscles Health & Fitness Center",
         "type": "gym",
         "distanceKm": 2.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "B Money Promotions Boxing Gym",
         "type": "gym",
         "distanceKm": 2.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Nextgen Gym",
         "type": "gym",
         "distanceKm": 3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Goals Soccer Center Darlaston",
         "type": "sports-centre",
         "distanceKm": 3.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "YMCA YGym",
@@ -149,7 +149,7 @@
         "chain": "YMCA",
         "distanceKm": 3.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Jules' Pool",
@@ -157,42 +157,42 @@
         "website": "https://www.julespool.net",
         "distanceKm": 3.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Southpaw Boxing Gym",
         "type": "gym",
         "distanceKm": 3.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sandwell Flyers Gymnastics Academy",
         "type": "gym",
         "distanceKm": 3.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Achieve Results Training",
         "type": "gym",
         "distanceKm": 3.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bert Williams Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 3.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fearless Boxing Academy",
         "type": "gym",
         "distanceKm": 3.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

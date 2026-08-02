@@ -7,21 +7,21 @@
         "area": "Hastings High School",
         "distanceKm": 1.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bedworth parkrun",
         "area": "Miners Welfare Park",
         "distanceKm": 9.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Market Bosworth Country Park parkrun",
         "area": "Market Bosworth Country Park",
         "distanceKm": 9.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -33,14 +33,14 @@
         "chain": "Snap Fitness",
         "distanceKm": 0,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Simply Gym",
         "type": "sports-centre",
         "distanceKm": 0.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Hinckley Leisure Centre",
@@ -49,14 +49,14 @@
         "website": "https://www.placesleisure.org/centres/hinckley-leisure-centre/",
         "distanceKm": 0.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bodywize Gym",
         "type": "sports-centre",
         "distanceKm": 1.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fields Fitness",
@@ -64,63 +64,63 @@
         "website": "https://www.fieldsfitness.co.uk/index.html",
         "distanceKm": 1.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ambleside Sports Club",
         "type": "sports-centre",
         "distanceKm": 4.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lychgate Fisheries",
         "type": "sports-centre",
         "distanceKm": 5.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Etone Sports Centre",
         "type": "sports-centre",
         "distanceKm": 5.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Full Circle Yoga and Meditation",
         "type": "gym",
         "distanceKm": 6.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Empire Gym and Studio",
         "type": "gym",
         "distanceKm": 6.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sharnford Cricket Club (abandoned)",
         "type": "sports-centre",
         "distanceKm": 6.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sapcote Pavilion",
         "type": "sports-centre",
         "distanceKm": 6.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pingles Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 6.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Stoney Stanton Lawn Tennis Club",
@@ -128,14 +128,14 @@
         "website": "http://www.ssltc.org.uk/",
         "distanceKm": 6.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Pingles Stadium",
         "type": "sports-centre",
         "distanceKm": 6.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Fitness Centre",
@@ -143,21 +143,21 @@
         "website": "https://www.thefitnesscentrenuneaton.co.uk",
         "distanceKm": 6.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Mallory Park Racing Circuit",
         "type": "sports-centre",
         "distanceKm": 7.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Jubilee Sports Centre",
         "type": "sports-centre",
         "distanceKm": 7.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

@@ -7,14 +7,14 @@
         "area": "Battersea",
         "distanceKm": 3.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Burgess parkrun",
         "area": "Burgess Park",
         "distanceKm": 3.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -25,14 +25,14 @@
         "type": "gym",
         "distanceKm": 0.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Westminster School Sports Centre",
         "type": "sports-centre",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Gymbox Victoria",
@@ -40,7 +40,7 @@
         "website": "https://www.gymbox.com/gyms/victoria",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "House of Vans London",
@@ -48,28 +48,28 @@
         "website": "https://www.houseofvanslondon.com",
         "distanceKm": 0.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bootcamp Pilates",
         "type": "gym",
         "distanceKm": 1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "powerhousefitness.co.uk",
         "type": "gym",
         "distanceKm": 1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ten",
         "type": "sports-centre",
         "distanceKm": 1.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "iFit Personal Training",
@@ -77,7 +77,7 @@
         "website": "http://ifit-pt.co.uk/",
         "distanceKm": 1.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "VauxWall East Climbing Centre",
@@ -86,14 +86,14 @@
         "website": "https://londonclimbingcentres.co.uk/centre/vauxeast/",
         "distanceKm": 1.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Queen Mother Sports Centre",
         "type": "sports-centre",
         "distanceKm": 1.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Black Prince Community Hub",
@@ -101,21 +101,21 @@
         "website": "https://blackprincetrust.org.uk/",
         "distanceKm": 1.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Kinetic",
         "type": "sports-centre",
         "distanceKm": 1.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Akasha",
         "type": "gym",
         "distanceKm": 1.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "solo60",
@@ -123,49 +123,49 @@
         "website": "https://www.solo60.com/locations/spring-mews-vauxhall",
         "distanceKm": 1.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Jubilee Hall Sports Centre",
         "type": "sports-centre",
         "distanceKm": 1.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sleven",
         "type": "gym",
         "distanceKm": 1.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Third Space",
         "type": "sports-centre",
         "distanceKm": 1.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pineapple studios",
         "type": "gym",
         "distanceKm": 1.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "LA Fitness",
         "type": "gym",
         "distanceKm": 1.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "King's Sport Strand Gym",
         "type": "gym",
         "distanceKm": 1.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

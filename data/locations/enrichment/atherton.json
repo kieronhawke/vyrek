@@ -7,28 +7,28 @@
         "area": "Pennington Flash",
         "distanceKm": 4.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bolton parkrun",
         "area": "Leverhulme Park, Bolton",
         "distanceKm": 8.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Haigh Woodland parkrun",
         "area": "Haigh Country Park",
         "distanceKm": 9.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Worsley Woods parkrun",
         "area": "Worsley Woods, Salford",
         "distanceKm": 9.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -39,7 +39,7 @@
         "type": "sports-centre",
         "distanceKm": 1.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PureGym",
@@ -48,14 +48,14 @@
         "website": "https://www.puregym.com/gyms/tyldesley/",
         "distanceKm": 1.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Tyldesley Tennis Club",
         "type": "sports-centre",
         "distanceKm": 3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Westhoughton Leisure Centre",
@@ -63,14 +63,14 @@
         "website": "https://www.boltonleisure.com/westhoughton-community-leisure-centre",
         "distanceKm": 3.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fitbank",
         "type": "gym",
         "distanceKm": 3.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Kickabouts",
@@ -78,7 +78,7 @@
         "website": "https://www.facebook.com/kickaboutsleigh/",
         "distanceKm": 3.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Northmen Gym",
@@ -86,14 +86,14 @@
         "website": "https://northmangym.weebly.com/",
         "distanceKm": 3.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "DaSh Fitness",
         "type": "gym",
         "distanceKm": 3.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Everlast Gyms",
@@ -101,21 +101,21 @@
         "chain": "Everlast Gyms",
         "distanceKm": 3.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "FY Gym",
         "type": "gym",
         "distanceKm": 3.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Powerbeck Gym",
         "type": "gym",
         "distanceKm": 3.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Anytime Fitness",
@@ -124,14 +124,14 @@
         "website": "https://www.anytimefitness.co.uk/gyms/uk-0141/leigh-north-west-wn7-4pe/",
         "distanceKm": 3.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Yard Gym",
         "type": "gym",
         "distanceKm": 3.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Leigh Boxing",
@@ -139,28 +139,28 @@
         "website": "http://leighboxing.com/",
         "distanceKm": 3.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Boxing Gym",
         "type": "gym",
         "distanceKm": 4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Little Hulton Cricket & Bowling Club",
         "type": "sports-centre",
         "distanceKm": 4.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Astley MX",
         "type": "sports-centre",
         "distanceKm": 4.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Snap Fitness",
@@ -169,21 +169,21 @@
         "website": "https://www.snapfitness.com/uk/gyms/parr-bridge",
         "distanceKm": 4.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Leigh Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 4.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Gym 28",
         "type": "gym",
         "distanceKm": 4.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

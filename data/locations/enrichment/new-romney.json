@@ -7,7 +7,7 @@
         "type": "gym",
         "distanceKm": 0.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "New Romney Bowls Club",
@@ -15,7 +15,7 @@
         "website": "http://newromneybowlsclub.co.uk/",
         "distanceKm": 0.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Marsh Academy Leisure Centre",
@@ -23,28 +23,28 @@
         "website": "https://www.marshacademyleisure.org.uk/",
         "distanceKm": 0.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Taylor Made Gym",
         "type": "gym",
         "distanceKm": 0.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Swimming Pool",
         "type": "sports-centre",
         "distanceKm": 3.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Banks Sports and Social Club",
         "type": "sports-centre",
         "distanceKm": 4.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lydd Kart Circuit",
@@ -52,7 +52,7 @@
         "website": "https://lyddkartcircuit.com/",
         "distanceKm": 6.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

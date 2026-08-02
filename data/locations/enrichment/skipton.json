@@ -7,7 +7,7 @@
         "type": "gym",
         "distanceKm": 0.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ebru Evrim Skipton",
@@ -15,14 +15,14 @@
         "website": "http://www.o-millsofskipton.co.uk/",
         "distanceKm": 0.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Intershape Fitness",
         "type": "gym",
         "distanceKm": 0.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Spirit Of Pilates",
@@ -30,7 +30,7 @@
         "website": "https://spiritofpilates.co.uk/",
         "distanceKm": 0.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Escape Health Club",
@@ -38,21 +38,21 @@
         "website": "https://escapegym.uk/",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sandylands Sports Centre",
         "type": "sports-centre",
         "distanceKm": 1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Site Gym",
         "type": "gym",
         "distanceKm": 5.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Craven Lawn Tennis Club",
@@ -60,7 +60,7 @@
         "website": "https://www.craventennis.org.uk/",
         "distanceKm": 6.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -71,7 +71,7 @@
         "area": "Aireville Park",
         "distanceKm": 0.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

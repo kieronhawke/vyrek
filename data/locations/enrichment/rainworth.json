@@ -7,7 +7,7 @@
         "type": "sports-centre",
         "distanceKm": 2.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bannatyne Health Club",
@@ -16,14 +16,14 @@
         "website": "https://www.bannatyne.co.uk/health-club/mansfield",
         "distanceKm": 3.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lockwell Hill Activity Centre",
         "type": "sports-centre",
         "distanceKm": 4.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lockwell Hill Karting",
@@ -31,14 +31,14 @@
         "website": "https://facebook.com/lockwellhillcircuit",
         "distanceKm": 4.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ravenshead Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 5.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PureGym",
@@ -47,7 +47,7 @@
         "website": "https://www.puregym.com/gyms/mansfield/",
         "distanceKm": 5.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Anytime Fitness",
@@ -56,21 +56,21 @@
         "website": "https://www.anytimefitness.co.uk/gyms/uk-0191/mansfield-east-midlands-ng18-4af/",
         "distanceKm": 5.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Water Meadows",
         "type": "sports-centre",
         "distanceKm": 5.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Energie",
         "type": "gym",
         "distanceKm": 5.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Old Tyme Strength",
@@ -78,7 +78,7 @@
         "website": "https://www.oldtymestrength.com/",
         "distanceKm": 6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "JD Gyms",
@@ -86,21 +86,21 @@
         "chain": "JD Gyms",
         "distanceKm": 6.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "RS Fitness",
         "type": "gym",
         "distanceKm": 6.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Winning Culture",
         "type": "gym",
         "distanceKm": 6.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Rebecca Adlington Swimming Centre",
@@ -108,35 +108,35 @@
         "website": "https://www.mansfieldleisure.com/rebecca-adlington-swimming-centre",
         "distanceKm": 6.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Subtropical Swimming Paradise",
         "type": "sports-centre",
         "distanceKm": 6.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Fitness Box",
         "type": "gym",
         "distanceKm": 7.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Outdoor Activity Centre",
         "type": "sports-centre",
         "distanceKm": 7.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Darren Bettison Wellbeing Service",
         "type": "gym",
         "distanceKm": 7.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -147,21 +147,21 @@
         "area": "Vicar Water Country Park",
         "distanceKm": 4.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sherwood Pines parkrun",
         "area": "Sherwood Pines Forest Park",
         "distanceKm": 5.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Mansfield parkrun",
         "area": "Mansfield",
         "distanceKm": 7.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

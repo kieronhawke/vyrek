@@ -7,7 +7,7 @@
         "type": "sports-centre",
         "distanceKm": 1.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Polkyth Leisure Centre",
@@ -16,14 +16,14 @@
         "website": "https://www.better.org.uk/leisure-centre/cornwall/staustell-leisure-centre",
         "distanceKm": 5.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fitness Suite",
         "type": "gym",
         "distanceKm": 5.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PoleSquirrel Fitness",
@@ -31,7 +31,7 @@
         "website": "http://www.polesquirrelfitness.co.uk/",
         "distanceKm": 6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Snap Fitness",
@@ -39,14 +39,14 @@
         "chain": "Snap Fitness",
         "distanceKm": 6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fowey Sports Hub",
         "type": "sports-centre",
         "distanceKm": 6.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -57,14 +57,14 @@
         "area": "Eden Project",
         "distanceKm": 1.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lanhydrock parkrun",
         "area": "Lanhydrock House",
         "distanceKm": 8.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

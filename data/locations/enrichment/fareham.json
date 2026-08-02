@@ -7,35 +7,35 @@
         "area": "Cams Hall Estate",
         "distanceKm": 0.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lee-on-the-Solent parkrun",
         "area": "Lee-on-the-Solent",
         "distanceKm": 5.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Meon Valley Trail parkrun, Wickham",
         "area": "Meon Valley Trail, Wickham",
         "distanceKm": 5.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Whiteley parkrun",
         "area": "Whiteley Meadowside",
         "distanceKm": 6.2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Portsmouth Lakeside parkrun",
         "area": "Lakeside North Harbour",
         "distanceKm": 7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -47,7 +47,7 @@
         "website": "https://www.everyoneactive.com/",
         "distanceKm": 0.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PureGym",
@@ -56,7 +56,7 @@
         "website": "https://www.puregym.com/gyms/fareham/",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Red Spider Climbing",
@@ -64,7 +64,7 @@
         "website": "https://spiderclimbing.com/red-spider/",
         "distanceKm": 1.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "TeamSport Karting",
@@ -73,7 +73,7 @@
         "website": "https://www.team-sport.co.uk/go-kart-tracks/gosport",
         "distanceKm": 1.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "247 Fitness",
@@ -81,14 +81,14 @@
         "website": "http://247fitness.co/gym/fareham#",
         "distanceKm": 2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Wicor Recreation Ground",
         "type": "sports-centre",
         "distanceKm": 2.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Praetorian MMA",
@@ -96,42 +96,42 @@
         "website": "https://praetorianmma.co.uk/",
         "distanceKm": 2.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Gym",
         "type": "gym",
         "distanceKm": 4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Crofton Community Centre",
         "type": "sports-centre",
         "distanceKm": 4.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Gosport Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 4.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Gosport Budokan Centre",
         "type": "sports-centre",
         "distanceKm": 4.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Physical Training Centre",
         "type": "sports-centre",
         "distanceKm": 4.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "UCAP Bunker",
@@ -139,7 +139,7 @@
         "website": "https://www.ucap.co.uk/bunkerportsmouth.html",
         "distanceKm": 5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Birch Tree Yoga",
@@ -147,7 +147,7 @@
         "website": "https://www.birchtreeyoga.co.uk/contact/",
         "distanceKm": 5.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Atlas Gym",
@@ -155,14 +155,14 @@
         "website": "https://www.atlas-gyms.co.uk/",
         "distanceKm": 5.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Hill Head Sailing Club",
         "type": "sports-centre",
         "distanceKm": 5.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "David Lloyd Clubs",
@@ -170,7 +170,7 @@
         "chain": "David Lloyd Clubs",
         "distanceKm": 5.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "BeMoreAthlete",
@@ -178,14 +178,14 @@
         "website": "https://www.bemoreathlete.com/",
         "distanceKm": 5.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Forton Bowls Club",
         "type": "sports-centre",
         "distanceKm": 5.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Meadowside Leisure Centre",
@@ -193,7 +193,7 @@
         "chain": "Everyone Active",
         "distanceKm": 6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

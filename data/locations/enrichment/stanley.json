@@ -7,35 +7,35 @@
         "area": "Oakey Park",
         "distanceKm": 0.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Chopwell Wood parkrun",
         "area": "Chopwell Wood",
         "distanceKm": 8.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Riverside parkrun",
         "area": "Riverside Park, Chester-le-Street",
         "distanceKm": 8.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Blackhill parkrun",
         "area": "Blackhill and Consett Heritage Park",
         "distanceKm": 9.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ushaw Historic House parkrun",
         "area": "Ushaw Historic House",
         "distanceKm": 9.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -46,7 +46,7 @@
         "type": "gym",
         "distanceKm": 0.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Louisa Centre",
@@ -54,28 +54,28 @@
         "website": "https://www.durham.gov.uk/article/19324/The-Louisa-Centre-opening-hours-and-facilities",
         "distanceKm": 0.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Stanley Community Football Centre",
         "type": "sports-centre",
         "distanceKm": 0.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pea Farm Off Road Centre",
         "type": "sports-centre",
         "distanceKm": 1.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "MASAC Gym",
         "type": "gym",
         "distanceKm": 2.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Body Blitz Boot Camp",
@@ -83,7 +83,7 @@
         "website": "http://paulreaybodyblitz.co.uk/",
         "distanceKm": 4.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lintz Cricket Club",
@@ -91,7 +91,7 @@
         "website": "https://lintz.play-cricket.com/",
         "distanceKm": 4.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Evolve",
@@ -99,7 +99,7 @@
         "website": "http://gfitstudio.co.uk/",
         "distanceKm": 6.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Gym 24 Sacriston",
@@ -107,7 +107,7 @@
         "website": "https://durhamgym.co.uk/",
         "distanceKm": 7.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Leadgate Cricket Club",
@@ -115,7 +115,7 @@
         "website": "https://leadgate.play-cricket.com/home",
         "distanceKm": 7.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pelaw Grange Stadium",
@@ -123,28 +123,28 @@
         "website": "http://www.pelawgrange.co.uk/",
         "distanceKm": 7.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "FDF Academy",
         "type": "gym",
         "distanceKm": 7.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "One Gym",
         "type": "gym",
         "distanceKm": 7.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bodytone Gym",
         "type": "gym",
         "distanceKm": 7.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Moor Park",
@@ -152,7 +152,7 @@
         "website": "https://www.chesterlestreettownfc.com/",
         "distanceKm": 8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

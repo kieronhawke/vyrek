@@ -7,7 +7,7 @@
         "type": "sports-centre",
         "distanceKm": 5.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Kismet Yoga Studio",
@@ -15,14 +15,14 @@
         "website": "https://kismetyogastudio.com/",
         "distanceKm": 6.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Carlton Outdoor Education Centre",
         "type": "gym",
         "distanceKm": 7.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

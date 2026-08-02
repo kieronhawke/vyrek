@@ -7,7 +7,7 @@
         "area": "Langford Village",
         "distanceKm": 1.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -20,14 +20,14 @@
         "website": "https://www.anytimefitness.co.uk/gyms/uk-0085/bicester-south-east-ox26-6fa/",
         "distanceKm": 0.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bicester & Ploughley Sports Centre",
         "type": "gym",
         "distanceKm": 0.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Clip 'n Climb Bicester",
@@ -35,21 +35,21 @@
         "website": "https://bicester.clipnclimb.co.uk/",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Qualcare Medical Supplies Ltd",
         "type": "gym",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Evolve Health & Fitness",
         "type": "gym",
         "distanceKm": 0.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PureGym",
@@ -58,14 +58,14 @@
         "website": "https://www.puregym.com/gyms/bicester/",
         "distanceKm": 1.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Whitelands Farm Sports Ground",
         "type": "sports-centre",
         "distanceKm": 1.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bicester Performance Centre",
@@ -73,14 +73,14 @@
         "website": "https://www.bicesterhotelgolfandspa.com/bicester-performance-gym/",
         "distanceKm": 3.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Arncott Moto Parc",
         "type": "sports-centre",
         "distanceKm": 6.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

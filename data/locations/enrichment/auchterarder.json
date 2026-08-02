@@ -7,28 +7,28 @@
         "type": "sports-centre",
         "distanceKm": 13.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "uGym",
         "type": "gym",
         "distanceKm": 16.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Comrie Croft Trails",
         "type": "sports-centre",
         "distanceKm": 17.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Skills Park",
         "type": "sports-centre",
         "distanceKm": 17.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Dumyat Community Centre",
@@ -36,14 +36,14 @@
         "website": "https://www.ourdumyatcentre.co.uk/",
         "distanceKm": 18.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Beechwood Park",
         "type": "sports-centre",
         "distanceKm": 18.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Dunblane Hydro",
@@ -51,14 +51,14 @@
         "website": "https://www.livingwell.com/clubs/dunblane/",
         "distanceKm": 19.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Dunblane Sports Club",
         "type": "sports-centre",
         "distanceKm": 19.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

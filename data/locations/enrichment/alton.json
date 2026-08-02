@@ -7,14 +7,14 @@
         "area": "Hogmoor Inclosure",
         "distanceKm": 8.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Alice Holt parkrun",
         "area": "Alice Holt Forest",
         "distanceKm": 9.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -25,21 +25,21 @@
         "type": "sports-centre",
         "distanceKm": 0.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Energique Health Club and SPA",
         "type": "gym",
         "distanceKm": 1.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Medstead Bowls Club",
         "type": "sports-centre",
         "distanceKm": 6.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Medstead Lawn Tennis Club",
@@ -47,14 +47,14 @@
         "website": "https://www.medsteadtennisclub.org.uk/",
         "distanceKm": 6.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Herriard Sports Club clubhouse",
         "type": "sports-centre",
         "distanceKm": 7.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

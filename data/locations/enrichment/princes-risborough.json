@@ -8,7 +8,7 @@
         "website": "http://www.risboroughspringsswimandfitnesscentre.org/",
         "distanceKm": 0.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Princes Risborough School Community Sports Centre",
@@ -16,7 +16,7 @@
         "website": "https://princesrisborough.communitybookings.co.uk/",
         "distanceKm": 0.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Chinnor Gym",
@@ -24,7 +24,7 @@
         "website": "https://chinnorgym.co.uk/",
         "distanceKm": 5.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sprinters Sports Centre",
@@ -33,7 +33,7 @@
         "website": "https://www.better.org.uk/leisure-centre/chiltern/sprinters",
         "distanceKm": 5.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bledlow Ridge Tennis Club",
@@ -41,21 +41,21 @@
         "website": "https://clubspark.lta.org.uk/BledlowRidgeTennisClub",
         "distanceKm": 6.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Wendover Swimming Pool",
         "type": "sports-centre",
         "distanceKm": 7.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bucks CC Sports and Social Club",
         "type": "sports-centre",
         "distanceKm": 8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -66,7 +66,7 @@
         "area": "Wendover Woods",
         "distanceKm": 9.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

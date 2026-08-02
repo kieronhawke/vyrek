@@ -7,21 +7,21 @@
         "type": "sports-centre",
         "distanceKm": 1.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Northfields Tennis Club",
         "type": "sports-centre",
         "distanceKm": 2.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Syston Rugby Club",
         "type": "sports-centre",
         "distanceKm": 2.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "TeamSport Leicester",
@@ -30,21 +30,21 @@
         "website": "https://www.team-sport.co.uk/go-kart-tracks/leicester",
         "distanceKm": 2.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Netball",
         "type": "sports-centre",
         "distanceKm": 3.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Leicester Outdoor Pursuits Centre",
         "type": "sports-centre",
         "distanceKm": 4.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bridge4Studio",
@@ -52,14 +52,14 @@
         "website": "https://www.bridge4studio.co.uk/",
         "distanceKm": 4.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Stoneygate Football Club",
         "type": "sports-centre",
         "distanceKm": 4.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Nuffield Health Fitness & Wellbeing",
@@ -68,7 +68,7 @@
         "website": "https://www.nuffieldhealth.com/gyms/leicester",
         "distanceKm": 6.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Mattioli Arena",
@@ -76,42 +76,42 @@
         "website": "https://www.leicesterarena.co.uk/",
         "distanceKm": 6.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "hiitness",
         "type": "gym",
         "distanceKm": 6.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "St Margarets Pastures Sports Centre",
         "type": "sports-centre",
         "distanceKm": 6.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Evington Leisure Centre",
         "type": "gym",
         "distanceKm": 6.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "1855 Fitness",
         "type": "gym",
         "distanceKm": 6.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Abbey Sports & Leisure Club",
         "type": "gym",
         "distanceKm": 6.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PureGym",
@@ -120,14 +120,14 @@
         "website": "https://www.puregym.com/gyms/leicester-st-georges-way/",
         "distanceKm": 6.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "DW Fitness",
         "type": "gym",
         "distanceKm": 6.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Soar Valley Leisure Centre",
@@ -135,7 +135,7 @@
         "website": "http://www.fusion-lifestyle.com/centres/soar-valley-leisure-centre",
         "distanceKm": 6.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Gym",
@@ -144,14 +144,14 @@
         "website": "https://www.thegymgroup.com/find-a-gym/leicester-gyms/leicester/",
         "distanceKm": 6.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Social Climbing",
         "type": "sports-centre",
         "distanceKm": 6.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -162,28 +162,28 @@
         "area": "Watermead Country Park",
         "distanceKm": 2.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Abbey Park parkrun",
         "area": "Abbey Park",
         "distanceKm": 6.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Leicester Victoria parkrun",
         "area": "Victoria Park",
         "distanceKm": 7.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Braunstone parkrun",
         "area": "Braunstone, Leicester",
         "distanceKm": 9.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

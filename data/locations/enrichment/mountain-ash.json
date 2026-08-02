@@ -8,14 +8,14 @@
         "website": "https://www.merthyrleisure.co.uk/",
         "distanceKm": 2.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ron Jones Stadium",
         "type": "sports-centre",
         "distanceKm": 5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Abercynon Sports Centre",
@@ -23,35 +23,35 @@
         "website": "https://www.rctcbc.gov.uk/EN/Resident/SportsandLeisure/LeisureCentres/ChooseaCentre/AbercynonSportsCentre/AbercynonSportsCentre.aspx",
         "distanceKm": 5.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sobell Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 5.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Rock UK Summit Centre Indoor Rock Climbing",
         "type": "sports-centre",
         "distanceKm": 5.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Dare Fitness",
         "type": "gym",
         "distanceKm": 5.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Merthyr Tydfil Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 6.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Merthyr Tydfil Indoor Bowls Club",
@@ -59,14 +59,14 @@
         "website": "http://www.merthyrtydfilindoorbowlsclub.co.uk/",
         "distanceKm": 6.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Dare Community Sports Hall",
         "type": "sports-centre",
         "distanceKm": 7.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ystrad Rhondda Leisure Centre",
@@ -74,14 +74,14 @@
         "website": "https://www.rctcbc.gov.uk/EN/Resident/SportsandLeisure/LeisureCentres/ChooseaCentre/RhonddaSportsCentre/RhonddaSportsCentre.aspx",
         "distanceKm": 7.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Maerdy Boxing Club",
         "type": "gym",
         "distanceKm": 7.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Monster mountain Motocross Track",
@@ -89,7 +89,7 @@
         "website": "https://monstermountainmx.co.uk/",
         "distanceKm": 7.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -100,21 +100,21 @@
         "area": "Merthyr Leisure Village",
         "distanceKm": 6.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Aberdare parkrun",
         "area": "Aberdare Park",
         "distanceKm": 6.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pontypridd parkrun",
         "area": "Ynysangharad War Memorial Park",
         "distanceKm": 9.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

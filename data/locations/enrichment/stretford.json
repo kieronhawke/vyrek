@@ -7,56 +7,56 @@
         "area": "Longford Park",
         "distanceKm": 1.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Kingsway Park parkrun, Urmston",
         "area": "Kingsway Park, Urmston",
         "distanceKm": 2.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sale Water parkrun",
         "area": "Sale Water Park",
         "distanceKm": 2.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Alexandra parkrun, Moss Side",
         "area": "Alexandra Park",
         "distanceKm": 4.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Peel parkrun",
         "area": "Peel Park",
         "distanceKm": 5.2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Wythenshawe parkrun",
         "area": "Wythenshawe Park, Wythenshawe",
         "distanceKm": 5.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Worsley Woods parkrun",
         "area": "Worsley Woods, Salford",
         "distanceKm": 5.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "South Manchester parkrun",
         "area": "Platt Fields Park",
         "distanceKm": 6.1,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -67,7 +67,7 @@
         "type": "sports-centre",
         "distanceKm": 1.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Depot Climbing Centre",
@@ -75,14 +75,14 @@
         "website": "https://www.depotclimbing.co.uk/manchester/",
         "distanceKm": 1.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "George H Carnall Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 1.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sale Harriers - Crossford Bridge",
@@ -90,7 +90,7 @@
         "website": "https://www.saleharriersmanchester.com/",
         "distanceKm": 1.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Stretford Chester Centre",
@@ -98,7 +98,7 @@
         "website": "https://traffordleisure.co.uk/centres/stretford-sports-village/",
         "distanceKm": 1.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ashton on Mersey Cricket Club",
@@ -106,7 +106,7 @@
         "website": "https://www.aomclub.co.uk/",
         "distanceKm": 2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "TeamSport Karting Manchester Trafford",
@@ -115,7 +115,7 @@
         "website": "https://www.team-sport.co.uk/go-kart-tracks/manchester-trafford-park",
         "distanceKm": 2.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Anytime Fitness",
@@ -124,14 +124,14 @@
         "website": "https://www.anytimefitness.co.uk/gyms/uk-0079/urmston-north-west-m41-5as/",
         "distanceKm": 2.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ashton Hall Equestrian Centre",
         "type": "sports-centre",
         "distanceKm": 2.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sale Sports Club",
@@ -139,7 +139,7 @@
         "website": "https://salesportsclub.com/",
         "distanceKm": 2.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Virgin Active",
@@ -147,7 +147,7 @@
         "chain": "Virgin Active",
         "distanceKm": 2.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Old Trafford Bowling Club",
@@ -155,7 +155,7 @@
         "website": "http://www.oldtraffordbowlingclub.co.uk/",
         "distanceKm": 2.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sale Leisure Centre",
@@ -163,7 +163,7 @@
         "website": "https://traffordleisure.co.uk/centres/sale/",
         "distanceKm": 2.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Everlast Gym",
@@ -171,21 +171,21 @@
         "website": "https://www.everlastgyms.com/gyms/sale/",
         "distanceKm": 2.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "One Yoga Studio",
         "type": "gym",
         "distanceKm": 2.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Gym21 Chorlton",
         "type": "gym",
         "distanceKm": 2.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Urmston Sports Club",
@@ -193,7 +193,7 @@
         "website": "https://www.urmstonsportsclub.com/",
         "distanceKm": 2.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Chorlton Health Hub",
@@ -201,7 +201,7 @@
         "website": "https://www.chorltonhealthhub.co.uk/",
         "distanceKm": 2.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Brookburn Road",
@@ -209,7 +209,7 @@
         "website": "https://wdcfc.co.uk/",
         "distanceKm": 2.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Red Sky Yoga",
@@ -217,7 +217,7 @@
         "website": "https://www.redskyyoga.co.uk/",
         "distanceKm": 3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

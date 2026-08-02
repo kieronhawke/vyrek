@@ -7,14 +7,14 @@
         "area": "Conwy Cob, Llandudno Junction, Conwy",
         "distanceKm": 4.8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Y Promenâd parkrun, Llandrillo-yn-Rhos",
         "area": "Y Promenâd, Llandrillo-yn-Rhos",
         "distanceKm": 6.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -25,7 +25,7 @@
         "type": "sports-centre",
         "distanceKm": 0.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "LVL5",
@@ -33,14 +33,14 @@
         "website": "https://www.lvl5gyms.com",
         "distanceKm": 0.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Llandudno Ski Slope",
         "type": "sports-centre",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Llandudno Snowsports Centre",
@@ -48,7 +48,7 @@
         "website": "https://www.jnlllandudno.co.uk/",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Llandudno Swimming Centre",
@@ -56,28 +56,28 @@
         "website": "https://ffit.secure.conwy.gov.uk/en/Home/Explore-Our-Facilities/Leisure-Centres/Llandudno-Swimming-Centre.aspx",
         "distanceKm": 0.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Llandudno Rugby Club",
         "type": "sports-centre",
         "distanceKm": 1.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bryn Estyn Badminton Centre",
         "type": "sports-centre",
         "distanceKm": 3.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Conwy (Caernarvonshire) Golf Club",
         "type": "sports-centre",
         "distanceKm": 3.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Llandudno Junction Leisure Centre",
@@ -85,49 +85,49 @@
         "website": "https://ffit.secure.conwy.gov.uk/en/Home/Leisure-Centres/Llandudno-Junction-Leisure-Centre.aspx",
         "distanceKm": 4.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Colwyn Bay RFC",
         "type": "sports-centre",
         "distanceKm": 5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Le Sport Health & Fitness",
         "type": "gym",
         "distanceKm": 6.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Penmaenmawr Golf Club",
         "type": "sports-centre",
         "distanceKm": 7.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bay Gym",
         "type": "gym",
         "distanceKm": 7.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Body Management",
         "type": "gym",
         "distanceKm": 7.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Paradox Health & Fitness",
         "type": "gym",
         "distanceKm": 7.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

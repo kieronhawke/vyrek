@@ -7,7 +7,7 @@
         "type": "gym",
         "distanceKm": 0.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Wanstead Leisure Centre",
@@ -15,7 +15,7 @@
         "website": "http://www.vision-rcl.org.uk/wanstead_home.html",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Wanstead and Snaresbrook Cricket Club",
@@ -23,7 +23,7 @@
         "website": "https://wanstead.hitscricket.com/Default.aspx",
         "distanceKm": 0.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Linkside Lawn Tennis Club",
@@ -31,7 +31,7 @@
         "website": "https://www.linksidetennis.co.uk/",
         "distanceKm": 0.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The 1 on 1 Fitness Studio",
@@ -39,14 +39,14 @@
         "website": "https://www.the1on1fitnessstudio.co.uk/",
         "distanceKm": 1.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Salisbury Club",
         "type": "sports-centre",
         "distanceKm": 1.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Aldersbrook Lawn Tennis Club",
@@ -54,14 +54,14 @@
         "website": "https://clubspark.lta.org.uk/AldersbrookLawnTennisClub",
         "distanceKm": 1.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sylvestrian Leisure Centre",
         "type": "gym",
         "distanceKm": 1.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fitness Hub East London",
@@ -69,7 +69,7 @@
         "website": "https://www.fitnesshubeastlondon.com/",
         "distanceKm": 1.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Aldersbrook Bowls Club",
@@ -77,14 +77,14 @@
         "website": "https://www.aldersbrookbowlsclub.co.uk/",
         "distanceKm": 1.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Blueprint Fitness",
         "type": "gym",
         "distanceKm": 1.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Studio M",
@@ -92,7 +92,7 @@
         "website": "https://www.studiom.london/",
         "distanceKm": 1.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Walthamstow Cricket Tennis and Squash Club",
@@ -100,7 +100,7 @@
         "website": "https://www.wctsc.org.uk/",
         "distanceKm": 1.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Leytonstone Leisure Centre",
@@ -109,7 +109,7 @@
         "website": "https://www.better.org.uk/leisure-centre/london/waltham-forest/leytonstone-leisure-centre",
         "distanceKm": 2.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Muscle Hut Leytonstone",
@@ -117,7 +117,7 @@
         "website": "https://www.musclehut.uk/",
         "distanceKm": 2.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fit As Leyton",
@@ -125,7 +125,7 @@
         "website": "https://www.fitasf-ck.com/",
         "distanceKm": 2.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Leyton Leisure Centre",
@@ -134,21 +134,21 @@
         "website": "https://www.better.org.uk/leisure-centre/london/waltham-forest/leyton-leisure-centre",
         "distanceKm": 2.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fernford Clubs",
         "type": "sports-centre",
         "distanceKm": 2.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Leyton Gym",
         "type": "gym",
         "distanceKm": 2.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Cranbrook Castle Lawn Tennis & Social Club",
@@ -156,7 +156,7 @@
         "website": "http://www.cranbrookcastle.co.uk/",
         "distanceKm": 2.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -167,56 +167,56 @@
         "area": "Wanstead Flats, Epping Forest",
         "distanceKm": 1.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Valentines parkrun",
         "area": "Valentines Park, Redbridge",
         "distanceKm": 3.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Walthamstow parkrun",
         "area": "Highams Park",
         "distanceKm": 3.6,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Hackney Marshes parkrun",
         "area": "Hackney Marshes",
         "distanceKm": 4.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Barking parkrun",
         "area": "Barking Park",
         "distanceKm": 5.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Roding Valley parkrun",
         "area": "Roding Valley Recreation Ground",
         "distanceKm": 7.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Beckton parkrun",
         "area": "Beckton District Park South",
         "distanceKm": 7.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Mile End parkrun",
         "area": "Mile End Park, London",
         "distanceKm": 7.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

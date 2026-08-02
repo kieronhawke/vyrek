@@ -8,7 +8,7 @@
         "website": "https://www.snapfitness.com/uk/gyms/radstock",
         "distanceKm": 0.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Dragonfly Leisure",
@@ -16,7 +16,7 @@
         "website": "https://www.dragonflyleisure.co.uk/",
         "distanceKm": 1.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Midsomer Norton Sports Centre",
@@ -24,7 +24,7 @@
         "website": "https://www.writhlingtonleisure.co.uk/",
         "distanceKm": 2.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Gym Group",
@@ -33,21 +33,21 @@
         "website": "https://www.thegymgroup.com/find-a-gym/midsomer-norton-gyms/midsomer-norton",
         "distanceKm": 2.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Indigo Archery",
         "type": "sports-centre",
         "distanceKm": 3.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Joe Tucker Fitness",
         "type": "gym",
         "distanceKm": 4.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -58,7 +58,7 @@
         "area": "Norton-Radstock Greenway",
         "distanceKm": 0.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

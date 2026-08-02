@@ -8,7 +8,7 @@
         "website": "https://www.fusion-lifestyle.com/centres/totnes-leisure-centre/",
         "distanceKm": 0.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Stoke Gabriel Boating Association",
@@ -16,14 +16,14 @@
         "website": "https://sgba.org.uk/",
         "distanceKm": 5.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "South Devon College Sports Centre",
         "type": "sports-centre",
         "distanceKm": 7.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Gym",
@@ -32,7 +32,7 @@
         "website": "https://www.thegymgroup.com/find-a-gym/paignton-gyms/paignton/",
         "distanceKm": 7.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -43,14 +43,14 @@
         "area": "Sharpham Estate",
         "distanceKm": 0.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Torbay Velopark parkrun",
         "area": "Torbay Velopark",
         "distanceKm": 8.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

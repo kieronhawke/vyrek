@@ -7,14 +7,14 @@
         "area": "Parc Bryn Bach, Tredegar",
         "distanceKm": 4.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Aberbeeg parkrun",
         "area": "Ebbw Valley Cycle Track",
         "distanceKm": 8.5,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -27,7 +27,7 @@
         "website": "https://www.puregym.com/gyms/ebbw-vale/",
         "distanceKm": 0.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ebbw Vale Sports Centre",
@@ -35,7 +35,7 @@
         "website": "https://www.bglife.co.uk/ebbw-vale-sports-centre",
         "distanceKm": 0.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fresh Active",
@@ -43,7 +43,7 @@
         "website": "https://freshactive.co.uk",
         "distanceKm": 2.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Tredegar Sports Centre",
@@ -51,7 +51,7 @@
         "website": "https://www.bglife.co.uk/tredegar-sports-centre",
         "distanceKm": 2.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bedwellty Park Bowling Club",
@@ -59,14 +59,14 @@
         "website": "https://bedwelltyparkbc.weebly.com/",
         "distanceKm": 2.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Rhymney Bowling Association",
         "type": "sports-centre",
         "distanceKm": 5.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "New Tredegar Leisure Centre",
@@ -74,7 +74,7 @@
         "website": "https://www.caerphillyleisurelifestyle.co.uk/en/centre/new-tredegar-leisure-centre/",
         "distanceKm": 6.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

@@ -7,7 +7,7 @@
         "type": "gym",
         "distanceKm": 0.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ringwood Health and Leisure",
@@ -16,7 +16,7 @@
         "website": "https://www.freedom-leisure.co.uk/centres/ringwood-health-and-leisure/",
         "distanceKm": 0.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lean 4 Fitness",
@@ -24,7 +24,7 @@
         "website": "https://tonefitness.co.uk/ringwood/",
         "distanceKm": 0.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Anytime Fitness",
@@ -33,7 +33,7 @@
         "website": "https://www.anytimefitness.co.uk/gyms/uk-0406/ringwood-south-west-bh24-3fh/",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Go Ape - Treetop Adventure",
@@ -41,7 +41,7 @@
         "website": "https://goape.co.uk/locations/moors-valley",
         "distanceKm": 4.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Snowtrax",
@@ -49,14 +49,14 @@
         "website": "https://www.snowtrax.eu/",
         "distanceKm": 6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Avon Tyrrell",
         "type": "sports-centre",
         "distanceKm": 6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -67,14 +67,14 @@
         "area": "Moors Valley Country Park and Forest",
         "distanceKm": 4.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fordingbridge Recreation Ground parkrun",
         "area": "Fordingbridge Recreation Ground",
         "distanceKm": 8.9,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

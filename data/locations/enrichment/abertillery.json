@@ -8,21 +8,21 @@
         "website": "https://www.fitness-factory.co.uk",
         "distanceKm": 4.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Markham Community House and Leisure Centre",
         "type": "gym",
         "distanceKm": 5.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pontypool Amateur Boxing Club",
         "type": "sports-centre",
         "distanceKm": 6.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ebbw Vale Sports Centre",
@@ -30,7 +30,7 @@
         "website": "https://www.bglife.co.uk/ebbw-vale-sports-centre",
         "distanceKm": 6.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bowden Active Living Centre",
@@ -38,7 +38,7 @@
         "website": "https://torfaenleisuretrust.co.uk/",
         "distanceKm": 6.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PureGym",
@@ -47,7 +47,7 @@
         "website": "https://www.puregym.com/gyms/ebbw-vale/",
         "distanceKm": 7.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Newbridge Leisure Centre",
@@ -55,7 +55,7 @@
         "website": "https://www.caerphilly.gov.uk/Things-To-Do/Sports-and-Leisure/Leisure-centres",
         "distanceKm": 7.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Canolfan Byw'n Egnïol Pont-y-pŵl",
@@ -63,7 +63,7 @@
         "website": "https://www.torfaenleisuretrust.co.uk/en/",
         "distanceKm": 7.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "New Tredegar Leisure Centre",
@@ -71,14 +71,14 @@
         "website": "https://www.caerphillyleisurelifestyle.co.uk/en/centre/new-tredegar-leisure-centre/",
         "distanceKm": 7.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pontypool Ski Centre",
         "type": "sports-centre",
         "distanceKm": 7.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -89,14 +89,14 @@
         "area": "Ebbw Valley Cycle Track",
         "distanceKm": 2.2,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pontypool parkrun",
         "area": "Pontypool Park",
         "distanceKm": 8,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

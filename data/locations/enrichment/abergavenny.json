@@ -7,7 +7,7 @@
         "area": "Llanfoist Crossing",
         "distanceKm": 1.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -19,7 +19,7 @@
         "website": "https://torfaenleisuretrust.co.uk/",
         "distanceKm": 11.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "G-Force Karting",
@@ -27,21 +27,21 @@
         "website": "http://www.g-forcekarting.co.uk/",
         "distanceKm": 12,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pontypool Amateur Boxing Club",
         "type": "sports-centre",
         "distanceKm": 12.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Pontypool Ski Centre",
         "type": "sports-centre",
         "distanceKm": 13.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Canolfan Byw'n Egnïol Pont-y-pŵl",
@@ -49,7 +49,7 @@
         "website": "https://www.torfaenleisuretrust.co.uk/en/",
         "distanceKm": 13.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ebbw Vale Sports Centre",
@@ -57,7 +57,7 @@
         "website": "https://www.bglife.co.uk/ebbw-vale-sports-centre",
         "distanceKm": 13.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "PureGym",
@@ -66,7 +66,7 @@
         "website": "https://www.puregym.com/gyms/ebbw-vale/",
         "distanceKm": 14,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fresh Active",
@@ -74,7 +74,7 @@
         "website": "https://freshactive.co.uk",
         "distanceKm": 16.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Tredegar Sports Centre",
@@ -82,7 +82,7 @@
         "website": "https://www.bglife.co.uk/tredegar-sports-centre",
         "distanceKm": 16.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bedwellty Park Bowling Club",
@@ -90,7 +90,7 @@
         "website": "https://bedwelltyparkbc.weebly.com/",
         "distanceKm": 16.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fitness Factory Blackwood",
@@ -98,7 +98,7 @@
         "website": "https://www.fitness-factory.co.uk",
         "distanceKm": 17.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Nuffield Health Fitness & Wellbeing",
@@ -107,7 +107,7 @@
         "website": "https://www.nuffieldhealth.com/gyms/cwmbran",
         "distanceKm": 17.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "SimplyGym",
@@ -115,14 +115,14 @@
         "website": "https://www.simplygym.net/our-gyms/cwmbran/",
         "distanceKm": 18.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Markham Community House and Leisure Centre",
         "type": "gym",
         "distanceKm": 18.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "New Tredegar Leisure Centre",
@@ -130,7 +130,7 @@
         "website": "https://www.caerphillyleisurelifestyle.co.uk/en/centre/new-tredegar-leisure-centre/",
         "distanceKm": 19.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Newbridge Leisure Centre",
@@ -138,35 +138,35 @@
         "website": "https://www.caerphilly.gov.uk/Things-To-Do/Sports-and-Leisure/Leisure-centres",
         "distanceKm": 19.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fairwater Leisure Centre",
         "type": "sports-centre",
         "distanceKm": 19.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "LIFT Fitness Studio",
         "type": "gym",
         "distanceKm": 19.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Rhymney Bowling Association",
         "type": "sports-centre",
         "distanceKm": 19.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Llangorse Multi Activity Centre",
         "type": "sports-centre",
         "distanceKm": 19.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

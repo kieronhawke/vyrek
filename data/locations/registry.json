@@ -453,11 +453,11 @@
       "name": "Newcastle",
       "kind": "city",
       "country": "England",
-      "region": "North East",
-      "populationK": 300,
+      "region": "Northern Ireland",
+      "populationK": 8,
       "legacy": true,
-      "lat": 54.9738,
-      "lng": -1.6132,
+      "lat": 54.216,
+      "lng": -5.89,
       "county": "Newry Mourne and Down"
     },
     {
@@ -10305,7 +10305,7 @@
     },
     {
       "slug": "boness",
-      "name": "Bo’ness",
+      "name": "Bo\u2019ness",
       "kind": "town",
       "country": "Scotland",
       "region": "Scotland",
@@ -21249,5 +21249,5 @@
       "lng": -0.1471
     }
   ],
-  "coordinateSource": "Nominatim (OpenStreetMap), https://nominatim.openstreetmap.org/ — town/city centroids, 4dp. Counties deliberately have none."
+  "coordinateSource": "Nominatim (OpenStreetMap), https://nominatim.openstreetmap.org/ \u2014 town/city centroids, 4dp. Counties deliberately have none."
 }

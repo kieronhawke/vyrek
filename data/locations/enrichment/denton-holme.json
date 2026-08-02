@@ -8,7 +8,7 @@
         "chain": "Everlast Gyms",
         "distanceKm": 0.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Snap Fitness",
@@ -17,14 +17,14 @@
         "website": "https://www.snapfitness.com/uk/gyms/carlisle",
         "distanceKm": 1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Cumbria Indoor Bowls Club",
         "type": "sports-centre",
         "distanceKm": 1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Gym",
@@ -33,7 +33,7 @@
         "website": "https://www.thegymgroup.com/find-a-gym/carlisle-gyms/carlisle/",
         "distanceKm": 1.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Sands Leisure Centre",
@@ -42,7 +42,7 @@
         "website": "https://www.better.org.uk/leisure-centre/cumberland/the-sands-leisure-centre",
         "distanceKm": 1.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fusion Trampoline Park",
@@ -50,7 +50,7 @@
         "website": "https://www.fusionparks.co.uk/",
         "distanceKm": 1.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Strength Shack",
@@ -58,7 +58,7 @@
         "website": "https://strengthshackgym.co.uk/",
         "distanceKm": 1.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Chatsworth Tennis Club",
@@ -66,7 +66,7 @@
         "website": "http://www.chatsworthtennis.co.uk/",
         "distanceKm": 1.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Sheepmount Athletics Stadium",
@@ -75,7 +75,7 @@
         "website": "https://www.better.org.uk/leisure-centre/cumberland/sheepmount-athletics-stadium",
         "distanceKm": 1.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Carlisle Racecourse",
@@ -83,7 +83,7 @@
         "website": "http://carlisle-races.co.uk/",
         "distanceKm": 2.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Harraby Campus Sports",
@@ -91,7 +91,7 @@
         "website": "https://www.better.org.uk/leisure-centre/carlisle/carlisle-campus-sports",
         "distanceKm": 3.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Carlisle Driving Range",
@@ -99,7 +99,7 @@
         "website": "www.carlisledrivingrange.co.uk",
         "distanceKm": 4.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Carlisle Golf Club",
@@ -107,7 +107,7 @@
         "website": "https://www.carlislegolfclub.org/",
         "distanceKm": 5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Wetheral Bowling Club",
@@ -115,7 +115,7 @@
         "website": "http://wetheralbowlingclub.webplus.net/",
         "distanceKm": 6.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Eden Golf Club",
@@ -123,7 +123,7 @@
         "website": "https://www.edengolf.co.uk/",
         "distanceKm": 7.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -134,7 +134,7 @@
         "area": "Chances Park",
         "distanceKm": 1.4,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

@@ -189,6 +189,27 @@ const GB_BOUNDS = { minLat: 49.5, maxLat: 61.2, minLng: -9, maxLng: 2.1 };
  */
 const CORRECTIONS = {
   loughton: { lat: 51.646, lng: 0.054, county: "Essex", region: "East" },
+  /**
+   * Same failure as Loughton, and it looked fine for the same reason.
+   *
+   * GeoNames puts Newcastle upon Tyne's 300,000 population and its
+   * coordinates (54.9738, -1.6131) on the *County Down* Newcastle, a seaside
+   * town of about 7,700 under the Mournes. The result was two rows 80 metres
+   * apart, both claiming 300k, generating two pages for one city — and the
+   * footer listed "Newcastle" and "Newcastle upon Tyne" side by side, which is
+   * how it was spotted.
+   *
+   * `newcastle-upon-tyne` is the correct row and keeps the real figures. This
+   * one is put back where it belongs, with its own population, which drops it
+   * out of the top-cities row it never belonged in.
+   */
+  newcastle: {
+    lat: 54.216,
+    lng: -5.89,
+    populationK: 8,
+    county: "Newry Mourne and Down",
+    region: "Northern Ireland",
+  },
 };
 
 /** Names that are administrative areas rather than towns anyone searches. */

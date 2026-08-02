@@ -9,7 +9,7 @@
         "website": "http://www.portlandymca.org.uk/",
         "distanceKm": 1.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Osprey Leisure Centre",
@@ -17,7 +17,7 @@
         "website": "https://ospreyleisure.co.uk/",
         "distanceKm": 3.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Weymouth and Portland National Sailing Academy",
@@ -25,7 +25,7 @@
         "website": "https://www.wpnsa.org.uk/",
         "distanceKm": 4.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

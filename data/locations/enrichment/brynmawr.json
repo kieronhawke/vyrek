@@ -9,7 +9,7 @@
         "website": "https://www.puregym.com/gyms/ebbw-vale/",
         "distanceKm": 3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ebbw Vale Sports Centre",
@@ -17,7 +17,7 @@
         "website": "https://www.bglife.co.uk/ebbw-vale-sports-centre",
         "distanceKm": 3.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fresh Active",
@@ -25,7 +25,7 @@
         "website": "https://freshactive.co.uk",
         "distanceKm": 5.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bedwellty Park Bowling Club",
@@ -33,7 +33,7 @@
         "website": "https://bedwelltyparkbc.weebly.com/",
         "distanceKm": 5.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Tredegar Sports Centre",
@@ -41,7 +41,7 @@
         "website": "https://www.bglife.co.uk/tredegar-sports-centre",
         "distanceKm": 5.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -52,14 +52,14 @@
         "area": "Parc Bryn Bach, Tredegar",
         "distanceKm": 6.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Llanfoist Crossing parkrun",
         "area": "Llanfoist Crossing",
         "distanceKm": 10,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

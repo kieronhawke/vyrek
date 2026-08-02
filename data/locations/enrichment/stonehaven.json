@@ -8,7 +8,7 @@
         "website": "https://www.livelifeaberdeenshire.org.uk/sport-and-physical-activity/venues/stonehaven-leisure-centre/",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Stonehaven Open Air Pool",
@@ -16,7 +16,7 @@
         "website": "https://www.stonehavenopenairpool.co.uk/",
         "distanceKm": 0.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -27,7 +27,7 @@
         "area": "Mineralwell Park",
         "distanceKm": 0.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

@@ -7,7 +7,7 @@
         "area": "Porthcawl Seafront",
         "distanceKm": 0.3,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -18,14 +18,14 @@
         "type": "gym",
         "distanceKm": 10.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Ynysawdre Swimming Pool and Fitness Centre",
         "type": "sports-centre",
         "distanceKm": 10.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Nuffield Health Fitness & Wellbeing",
@@ -34,7 +34,7 @@
         "website": "https://www.nuffieldhealth.com/gyms/bridgend",
         "distanceKm": 11.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "YMCA Watersports Centre",
@@ -42,7 +42,7 @@
         "chain": "YMCA",
         "distanceKm": 13.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Llangynwyd Rangers BGFC",
@@ -50,35 +50,35 @@
         "website": "https://www.llanrangersfc.org/",
         "distanceKm": 13.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Celtic Leisure",
         "type": "sports-centre",
         "distanceKm": 14.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Maesteg Swimming Pool",
         "type": "sports-centre",
         "distanceKm": 14.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Maesteg Sports Centre",
         "type": "sports-centre",
         "distanceKm": 14.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Maesteg Squash Sports and Social Club",
         "type": "sports-centre",
         "distanceKm": 14.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Garw Valley Life Centre",
@@ -86,28 +86,28 @@
         "website": "https://www.haloleisure.org.uk/centres/bridgend/garw-valley-life-centre",
         "distanceKm": 16.7,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Llynfi BMX",
         "type": "sports-centre",
         "distanceKm": 16.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Evans Bevan Playing Field",
         "type": "sports-centre",
         "distanceKm": 17.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Winstone's Fitness Centre",
         "type": "sports-centre",
         "distanceKm": 18.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Afan Valley Swimming Pool",
@@ -115,14 +115,14 @@
         "website": "https://www.swimafan.co.uk/",
         "distanceKm": 19.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Uni Gym",
         "type": "gym",
         "distanceKm": 19.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }

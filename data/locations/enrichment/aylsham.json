@@ -7,14 +7,14 @@
         "area": "Blickling Park",
         "distanceKm": 2.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "North Walsham parkrun",
         "area": "North Walsham High School and Sports Centre",
         "distanceKm": 9.7,
         "source": "https://images.parkrun.com/events.json",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   },
@@ -25,14 +25,14 @@
         "type": "sports-centre",
         "distanceKm": 8.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Horsford Range",
         "type": "sports-centre",
         "distanceKm": 9.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Victory Swim and Fitness Centre",
@@ -40,14 +40,14 @@
         "website": "https://www.everyoneactive.com/centre/victory-swim-and-fitness-centre/",
         "distanceKm": 9.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "North Walsham Rugby Club",
         "type": "sports-centre",
         "distanceKm": 9.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Yendell's Health and Wellness Hub",
@@ -55,7 +55,7 @@
         "website": "https://www.yendellshub.com/",
         "distanceKm": 9.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Combat Action Games",
@@ -63,14 +63,14 @@
         "website": "https://www.combat-action-games.uk/",
         "distanceKm": 10.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "St Faiths Centre Horsham & Newton",
         "type": "sports-centre",
         "distanceKm": 11,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "L.A. Personal Training",
@@ -78,7 +78,7 @@
         "website": "http://www.leeashford.co.uk/",
         "distanceKm": 13.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Nest",
@@ -86,7 +86,7 @@
         "website": "https://www.thenest.org.uk/",
         "distanceKm": 13.3,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Bob Carter Centre",
@@ -94,14 +94,14 @@
         "website": "https://bobcartercentre.org/",
         "distanceKm": 13.4,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "NR12 Fitness",
         "type": "gym",
         "distanceKm": 13.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Karttrak Cromer",
@@ -109,7 +109,7 @@
         "website": "https://www.karttrak.co.uk/",
         "distanceKm": 13.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "FireFly Poles Studio",
@@ -117,14 +117,14 @@
         "website": "https://fireflypoles.co.uk/",
         "distanceKm": 14.1,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Lakeside Country Club",
         "type": "sports-centre",
         "distanceKm": 15.5,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "Fully Pumped Gym",
@@ -132,7 +132,7 @@
         "website": "https://www.fullypumpedgym.co.uk/",
         "distanceKm": 15.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "West End Cue Club",
@@ -140,7 +140,7 @@
         "website": "http://www.westendcueclub.co.uk/",
         "distanceKm": 15.6,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "David Lloyd Leisure",
@@ -148,7 +148,7 @@
         "chain": "David Lloyd Clubs",
         "distanceKm": 15.8,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "David Lloyd Club Norwich",
@@ -157,7 +157,7 @@
         "website": "https://www.davidlloyd.co.uk/clubs/norwich",
         "distanceKm": 15.9,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "High Altitude",
@@ -165,7 +165,7 @@
         "website": "https://highaltitudepk.co.uk/",
         "distanceKm": 16.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       },
       {
         "name": "The Gym Group",
@@ -173,7 +173,7 @@
         "chain": "The Gym Group",
         "distanceKm": 16.2,
         "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
-        "verifiedOn": "2026-08-01"
+        "verifiedOn": "2026-08-02"
       }
     ]
   }
