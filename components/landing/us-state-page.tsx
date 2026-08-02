@@ -12,6 +12,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { getRaceCityBySlug } from "@/lib/race-cities";
+import { venueLabel, venueStreet } from "@/lib/hyrox/races";
 import {
   metroGyms,
   nearbyStates,
@@ -65,7 +66,7 @@ export function stateCopy(variant: StateVariant, s: UsState) {
   if (race) {
     bits.push(
       `${s.name} hosts ${s.races.length === 1 ? "a HYROX" : `${s.races.length} HYROX races`}` +
-        ` — ${race.venueAnnounced && race.venueName ? cleanVenue(race.venueName) : race.city}` +
+        ` — ${venueLabel(race)}` +
         `, ${fmtDate(race.startDate)} — so every session is dated backwards from that weekend.`,
     );
   } else if (s.nearestRace) {
@@ -103,11 +104,6 @@ export function stateCopy(variant: StateVariant, s: UsState) {
 function listOf(items: string[]): string {
   if (items.length <= 1) return items[0] ?? "";
   return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
-}
-
-/** HYROX joins the venue name to its street with a dash; the street is noise here. */
-function cleanVenue(name: string): string {
-  return name.split(/\s+[-–]\s+/)[0].trim();
 }
 
 function buildFaqs(variant: StateVariant, s: UsState, gymTotal: number) {
@@ -224,13 +220,19 @@ export function UsStatePage({
                         className="rounded-lg border border-suth-border bg-suth-elevated p-5"
                       >
                         <p className="text-lg font-black tracking-[-0.02em] text-suth-text">
-                          {r.venueAnnounced && r.venueName
-                            ? cleanVenue(r.venueName)
-                            : "Venue to be announced"}
+                          {r.venueAnnounced ? venueLabel(r) : "Venue to be announced"}
                         </p>
                         <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                           {r.city} · {fmtDate(r.startDate)}
                         </p>
+                        {/* The street, where HYROX gave one. Shown under the
+                            city rather than as the heading, because on most US
+                            races the "venue name" IS the street. */}
+                        {venueStreet(r) ? (
+                          <p className="mt-2 text-sm text-suth-text-secondary">
+                            {venueStreet(r)}
+                          </p>
+                        ) : null}
                         <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
                           <Link
                             href={`/hyrox/events/${r.slug}`}

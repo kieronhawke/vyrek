@@ -91,7 +91,39 @@ export function venueLabel(race: {
 }): string {
   const raw = race.venueName ?? race.venue;
   if (!raw) return race.city;
-  return raw.split(/\s+[-–]\s+/)[0].trim() || race.city;
+  const name = raw.split(/\s+[-–]\s+/)[0].trim();
+  if (!name) return race.city;
+
+  /* Most US races carry a bare street address where a venue name should be:
+     "650 S Griffin St", "415 Summer St", "90 South West Temple Salt Lake City".
+     Rendered as a name, a Texas page announced that the state hosts a race at
+     "650 S Griffin St", which tells a reader nothing and reads like a database
+     leak. A leading digit is the reliable signal — no venue in the calendar
+     starts with one — so an address falls back to the city, which is the thing
+     the reader actually recognises. The street still renders separately where
+     the page has room for it. */
+  if (/^\d/.test(name)) return race.city;
+
+  // Placeholders HYROX uses before a venue is picked.
+  if (/coming soon|to be announced|^tba$|^tbc$/i.test(name)) return race.city;
+
+  return name;
+}
+
+/**
+ * The street line, where it adds something the venue name does not.
+ *
+ * Returns null when the "venue" is only an address (the label already became
+ * the city, so repeating it is noise) or when nothing is announced yet.
+ */
+export function venueStreet(race: {
+  venueName?: string | null;
+  venue?: string | null;
+}): string | null {
+  const raw = race.venue ?? race.venueName;
+  if (!raw) return null;
+  if (/coming soon|to be announced|^tba$|^tbc$/i.test(raw)) return null;
+  return raw.trim() || null;
 }
 
 /** Races that have not finished yet, relative to `now`. */
