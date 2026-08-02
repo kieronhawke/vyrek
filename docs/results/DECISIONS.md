@@ -149,3 +149,19 @@ the sticky sub-nav, so the two stay in step if the cookie strip appears.
 The first version showed one name and a time, which left two-thirds of each card empty and
 told the reader less than the division row further down the page. Now top three with
 gap-to-leader, which fills the card and answers what people arrive asking.
+
+### D18 — Results colour utilities use arbitrary values, not a `@theme` block
+`app/results-tokens.css` originally declared `@theme inline { --color-results-* }`. Tailwind
+only processes `@theme` from its own CSS entry point and the files that entry `@import`s — a
+stylesheet imported from a route layout is bundled by Next but never seen by Tailwind. The
+block was silently ignored, so `fill-results-run` and `bg-results-faster` generated **nothing**:
+the race strip rendered as black blocks and every station bar as an empty track. Caught by
+looking at the page, not by any test — typecheck and lint were both clean.
+**Applied:** components reference the variables directly (`fill-[var(--results-run)]`), which
+Tailwind picks up from the class strings in TSX. Keeps the shared `globals.css` untouched per
+VYREK-LANES.md §3. Bar fills carry their own alpha so no opacity modifier is needed.
+
+### D19 — SVG `<title>` children must be a single string
+`<title>{a}: {b}</title>` inside the race strip and pacing chart produced multiple text nodes,
+which React serialises differently on server and client — a hydration mismatch that regenerated
+the whole result page tree on load. Now built as one template string.

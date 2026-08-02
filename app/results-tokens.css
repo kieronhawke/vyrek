@@ -35,14 +35,24 @@
   --results-nav-offset: calc(4rem + var(--suth-consent-h, 0px) + var(--safe-top, 0px));
 }
 
-@theme inline {
-  --color-results-faster:  var(--results-faster);
-  --color-results-slower:  var(--results-slower);
-  --color-results-neutral: var(--results-neutral);
-  --color-results-run:     var(--results-run);
-  --color-results-station: var(--results-station);
-  --color-results-roxzone: var(--results-roxzone);
-  --color-results-live:    var(--results-live);
+/* NOTE: no `@theme` block here.
+ *
+ * Tailwind only processes `@theme` from its own CSS entry point and the files
+ * that entry `@import`s. This file is imported from the route layout, so a
+ * `@theme` block in it is silently ignored — `fill-results-run` and
+ * `bg-results-faster` generated nothing at all, which rendered the race strip
+ * as black blocks and the station bars as empty tracks.
+ *
+ * Rather than edit the shared globals.css (VYREK-LANES.md §3), components
+ * reference these variables directly as arbitrary values —
+ * `fill-[var(--results-run)]`. Those are picked up from the class strings in
+ * TSX, which Tailwind does scan.
+ *
+ * Bar fills carry their own alpha so no opacity modifier is needed. */
+:root {
+  --results-faster-bar: rgba(163, 230, 53, 0.72);
+  --results-slower-bar: rgba(232, 163, 61, 0.72);
+  --results-segment-fast: rgba(163, 230, 53, 0.70);
 }
 
 /* Every numeral in this section is tabular. The brief allows no exceptions:

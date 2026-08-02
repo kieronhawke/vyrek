@@ -609,7 +609,7 @@ function SplitBar({
         <span
           className={cn(
             "absolute inset-y-0 left-0 rounded-sm",
-            delta <= 0 ? "bg-results-faster/70" : "bg-results-slower/70",
+            delta <= 0 ? "bg-[var(--results-faster-bar)]" : "bg-[var(--results-slower-bar)]",
           )}
           style={{ width: `${width}%` }}
         />

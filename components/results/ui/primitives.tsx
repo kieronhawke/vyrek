@@ -37,8 +37,8 @@ export function Delta({
   if (!showZero && Math.round(seconds) === 0) return null;
   const rounded = Math.round(seconds);
   const tone =
-    rounded < 0 ? "text-results-faster"
-    : rounded > 0 ? "text-results-slower"
+    rounded < 0 ? "text-[var(--results-faster)]"
+    : rounded > 0 ? "text-[var(--results-slower)]"
     : "text-suth-text-tertiary";
   return (
     <span className={cn("results-num", tone, className)}>
@@ -110,12 +110,12 @@ export function StatusBadge({ status, className }: { status: EventStatus; classN
     return (
       <span
         className={cn(
-          "inline-flex items-center gap-1.5 rounded-pill bg-results-live/15 px-2.5 py-1",
-          "font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-results-live",
+          "inline-flex items-center gap-1.5 rounded-pill bg-[color-mix(in_srgb,var(--results-live)_15%,transparent)] px-2.5 py-1",
+          "font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--results-live)]",
           className,
         )}
       >
-        <span className="results-live-dot size-1.5 rounded-full bg-results-live" aria-hidden />
+        <span className="results-live-dot size-1.5 rounded-full bg-[var(--results-live)]" aria-hidden />
         LIVE
       </span>
     );
