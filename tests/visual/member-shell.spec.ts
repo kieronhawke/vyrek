@@ -295,3 +295,69 @@ test.describe("sessions and the coach loop", () => {
     await expect(page.getByRole("button", { name: /^Send to/ })).toBeVisible();
   });
 });
+
+/**
+ * THE CLIENT RECORD
+ *
+ * The admin listed clients and opened a row that showed the same fields again.
+ * Ben opens a client to decide one of four things: do they need a plan, have
+ * they paid, are they in trouble, what did they last say.
+ */
+test.describe("client record", () => {
+  test("the clients table routes through to a record", async ({ page }) => {
+    await page.goto("/control-preview/admin/clients");
+    const first = page.locator('a[href*="/admin/clients/c_"]:visible').first();
+    await expect(first).toBeVisible();
+    await first.click();
+    await expect(page.getByRole("link", { name: /All clients/ })).toBeVisible();
+  });
+
+  test("leads with the four things, and the flags in plain English", async ({
+    page,
+  }) => {
+    await page.goto("/control-preview/admin/clients/c_01");
+    await expect(page.getByText("Needs attention")).toBeVisible();
+    // spec/14 §9: a flag is a sentence, never a flag name.
+    await expect(page.getByText(/Hasn't opened her plan in 8 days/)).toBeVisible();
+    for (const label of ["Programmed", "Payment", "Next race", "Tier"]) {
+      await expect(page.getByText(label, { exact: true })).toBeVisible();
+    }
+  });
+
+  test("writing a plan is one click from the person it is for", async ({
+    page,
+  }) => {
+    await page.goto("/control-preview/admin/clients/c_01");
+    const write = page.getByRole("link", { name: "Write next plan" });
+    await expect(write).toBeVisible();
+    await write.click();
+    await expect(page.getByRole("button", { name: /^Send to/ })).toBeVisible();
+  });
+
+  test("coach notes accept a new note and keep the old ones", async ({ page }) => {
+    await page.goto("/control-preview/admin/clients/c_01");
+    const before = await page.getByText(/calf niggle/).count();
+    expect(before).toBe(1);
+
+    await page.getByLabel(/Add a note about/).fill("Chase the unopened plan.");
+    await page.getByRole("button", { name: "Add note" }).click();
+
+    await expect(page.getByText("Chase the unopened plan.")).toBeVisible();
+    // The new note must not replace the history.
+    await expect(page.getByText(/calf niggle/)).toBeVisible();
+  });
+
+  test("actions say what they would do rather than pretending", async ({
+    page,
+  }) => {
+    await page.goto("/control-preview/admin/clients/c_01");
+    await page.getByRole("button", { name: "Pause" }).click();
+    await expect(page.getByRole("status")).toContainText(/Not connected/);
+    await expect(page.getByRole("status")).toContainText(/stop billing and programming/);
+  });
+
+  test("an unknown client 404s", async ({ request }) => {
+    const res = await request.get("/control-preview/admin/clients/c_nope");
+    expect(res.status()).toBe(404);
+  });
+});

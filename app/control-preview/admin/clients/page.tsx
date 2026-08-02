@@ -16,7 +16,21 @@ const COLUMNS: Column<CoachClient>[] = [
   {
     key: "name",
     label: "Client",
-    render: (c) => c.name,
+    // The list told you who needed attention and gave you nowhere to act.
+    render: (c) => (
+      <a
+        href={`${BASE}/clients/${c.id}`}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          minHeight: 44,
+          color: "var(--accent)",
+          fontWeight: 600,
+        }}
+      >
+        {c.name}
+      </a>
+    ),
     csv: (c) => c.name,
   },
   {
