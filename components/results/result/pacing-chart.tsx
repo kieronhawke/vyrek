@@ -56,10 +56,13 @@ export function PacingChart({
         </span>
       </figcaption>
 
+      {/* Markers are HTML over a stretched SVG — circles in a
+          preserveAspectRatio="none" viewBox render as ovals. */}
+      <div className="relative mt-3 h-28 w-full">
       <svg
         viewBox={`0 0 ${W} ${H}`}
         preserveAspectRatio="none"
-        className="mt-3 h-28 w-full"
+        className="absolute inset-0 size-full"
         role="img"
         aria-label={
           `Run splits: ${valid.map((s, i) => `run ${i + 1} ${formatSplit(s)}`).join(", ")}. `
@@ -84,12 +87,16 @@ export function PacingChart({
           vectorEffect="non-scaling-stroke"
           strokeLinejoin="round"
         />
-        {valid.map((seconds, i) => (
-          <circle key={i} cx={x(i)} cy={y(seconds)} r={0.9} className="fill-suth-accent">
-            <title>{`Run ${i + 1}: ${formatSplit(seconds)}`}</title>
-          </circle>
-        ))}
       </svg>
+        {valid.map((seconds, i) => (
+          <span
+            key={i}
+            className="absolute size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-suth-accent"
+            style={{ left: `${(x(i) / W) * 100}%`, top: `${(y(seconds) / H) * 100}%` }}
+            title={`Run ${i + 1}: ${formatSplit(seconds)}`}
+          />
+        ))}
+      </div>
 
       <div className="mt-1 flex justify-between font-mono text-[10px] text-suth-text-tertiary">
         {valid.map((_, i) => <span key={i}>{i + 1}</span>)}
