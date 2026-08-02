@@ -75,7 +75,7 @@ type ChipTone = "neutral" | "accent" | "ok" | "warn" | "danger";
 
 const CHIP_TONE: Record<ChipTone, { bg: string; fg: string }> = {
   neutral: { bg: "var(--surface-raised)", fg: "var(--text-muted)" },
-  accent: { bg: "var(--accent-faint)", fg: "var(--accent)" },
+  accent: { bg: "var(--accent-faint)", fg: "var(--accent-text)" },
   ok: { bg: "var(--surface-raised)", fg: "var(--ok)" },
   warn: { bg: "var(--surface-raised)", fg: "var(--warn)" },
   danger: { bg: "var(--surface-raised)", fg: "var(--danger)" },
@@ -144,7 +144,7 @@ export function Prescription({
       <p style={{ margin: 0, fontSize: "var(--text-base)", lineHeight: 1.35 }}>
         <span
           className="num"
-          style={{ color: "var(--accent)", fontWeight: 700 }}
+          style={{ color: "var(--accent-text)", fontWeight: 700 }}
         >
           {quantity}
         </span>{" "}
@@ -317,7 +317,7 @@ export function PhotoHeader({
          * reports white-on-white. Giving it a real dark ancestor makes the
          * check measure what a human actually sees.
          */
-        background: "#14100f",
+        background: "var(--bg)",
       }}
     >
       <Image

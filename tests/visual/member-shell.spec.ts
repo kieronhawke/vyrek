@@ -459,3 +459,48 @@ test.describe("session structure", () => {
     }
   });
 });
+
+/**
+ * THE REVIEW INDEX
+ *
+ * Built so the whole product can be walked without an account. A review index
+ * with a dead row is worse than none, so every link it prints is checked.
+ */
+test.describe("review index", () => {
+  test("every link on /review resolves", async ({ request, page }) => {
+    await page.goto("/review");
+    const hrefs = await page.evaluate(() =>
+      [
+        ...new Set(
+          Array.from(document.querySelectorAll<HTMLAnchorElement>("a[href^='/']")).map(
+            (a) => a.getAttribute("href")!,
+          ),
+        ),
+      ].filter((h) => !h.startsWith("/_next")),
+    );
+    expect(hrefs.length).toBeGreaterThan(20);
+
+    for (const href of hrefs) {
+      const res = await request.get(href, { maxRedirects: 0 });
+      expect(res.status(), href).toBe(200);
+    }
+  });
+
+  test("says plainly which screens are on sample data", async ({ page }) => {
+    await page.goto("/review");
+    await expect(page.getByText(/The screens are finished; the plumbing is not/)).toBeVisible();
+    // The race calendar is the one thing running on real data.
+    await expect(page.getByText("Real data").first()).toBeVisible();
+  });
+
+  test("both login pages offer one-click entry without claiming to sign you in", async ({
+    page,
+  }) => {
+    await page.goto("/login");
+    await expect(page.getByRole("link", { name: "Open the member area" })).toBeVisible();
+    await expect(page.getByText(/Real sign-in needs Supabase keys/)).toBeVisible();
+
+    await page.goto("/admin/login");
+    await expect(page.getByRole("link", { name: "Open the admin" })).toBeVisible();
+  });
+});

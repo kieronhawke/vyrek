@@ -4,6 +4,8 @@ import raceCitiesJson from "@/data/locations/race-cities.json";
 import type { UkLocation } from "@/lib/uk-locations";
 import type { GeoSeo } from "@/lib/locations/seo";
 import { nextOccurrence } from "@/lib/locations/seo";
+import { haversineKm } from "@/lib/hyrox/race-geo";
+import { venueLabel } from "@/lib/hyrox/races";
 
 /**
  * The international race cities: every city that has hosted a HYROX outside
@@ -79,22 +81,6 @@ export function listRaceCitySlugs(): string[] {
 
 export function isRaceCitySlug(slug: string): boolean {
   return RACE_CITIES.some((c) => c.slug === slug);
-}
-
-/** Straight-line distance, kilometres. Never present this as a journey. */
-function haversineKm(
-  a: { lat: number; lng: number },
-  b: { lat: number; lng: number },
-): number {
-  const R = 6371;
-  const dLat = ((b.lat - a.lat) * Math.PI) / 180;
-  const dLng = ((b.lng - a.lng) * Math.PI) / 180;
-  const la1 = (a.lat * Math.PI) / 180;
-  const la2 = (b.lat * Math.PI) / 180;
-  const h =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(la1) * Math.cos(la2) * Math.sin(dLng / 2) ** 2;
-  return 2 * R * Math.asin(Math.sqrt(h));
 }
 
 type IntlEnrichment = {
@@ -197,7 +183,7 @@ export function getRaceCityGeo(slug: string): GeoSeo {
           eventSlug: next.slug,
           eventName: next.name,
           venue: next.venueAnnounced
-            ? (next.venueName ?? next.venue)
+            ? venueLabel({ ...next, city: city.name })
             : "a venue still to be announced",
           city: city.name,
           startDate: next.nextDate,
@@ -268,6 +254,51 @@ export function getCountryBySlug(
     country: cities[0].country,
     cities: [...cities].sort((a, b) => a.name.localeCompare(b.name)),
   };
+}
+
+/**
+ * The countries, grouped by continent, for the hub pages.
+ *
+ * The two hubs listed 12 UK regions and nothing else, so every country
+ * directory and all 91 race cities were reachable only from the sitemap —
+ * exactly the orphan problem `nearbyTowns` was written to fix for the UK
+ * towns, reintroduced for the international set. Two hops from the hub
+ * (continent → country → city) keeps the hub small while making the whole
+ * set reachable by a crawler and by a reader.
+ *
+ * Continents are ordered by how much of the calendar sits in them, so Europe
+ * and North America come first rather than alphabetically.
+ */
+export function countriesByContinent(): {
+  continent: string;
+  countries: { slug: string; name: string; cities: number; races: number }[];
+}[] {
+  const byContinent = new Map<string, Map<string, RaceCity[]>>();
+  for (const c of RACE_CITIES) {
+    const cont = c.continent ?? "Elsewhere";
+    if (!byContinent.has(cont)) byContinent.set(cont, new Map());
+    const countries = byContinent.get(cont)!;
+    if (!countries.has(c.countrySlug)) countries.set(c.countrySlug, []);
+    countries.get(c.countrySlug)!.push(c);
+  }
+
+  return [...byContinent.entries()]
+    .map(([continent, countries]) => ({
+      continent,
+      countries: [...countries.entries()]
+        .map(([slug, cities]) => ({
+          slug,
+          name: cities[0].country,
+          cities: cities.length,
+          races: cities.reduce((n, c) => n + c.races.length, 0),
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name)),
+    }))
+    .sort(
+      (a, b) =>
+        b.countries.reduce((n, c) => n + c.cities, 0) -
+        a.countries.reduce((n, c) => n + c.cities, 0),
+    );
 }
 
 /** Total races on the calendar for a country, for the directory copy. */

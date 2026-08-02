@@ -83,7 +83,6 @@ const OUR_PRICE = [
   [/\b\d+[- ]day (?:free )?trial\b/i, "a trial offer — check it is a competitor's, not ours"],
 ];
 
-const RICH = /<(BarChart|StatTile|Meter|Breakdown|Checklist|RaceCostCalculator|PaceCalculator|PtCostCalculator|ComparisonTable|RaceAnalytics|KeyTakeaways|Callout|StatGrid|SledCalculator|Leaderboard)/;
 
 const files = readdirSync(DIR)
   .filter((f) => f.endsWith(".mdx"))
@@ -118,6 +117,15 @@ for (const file of files) {
     issues.push(`seoDescription ${seoD.length} chars (aim 120–160)`);
   const alt = fm.match(/^heroAlt:\s*"(.*)"/m)?.[1];
   if (alt !== undefined && alt.trim().length < 15) issues.push("heroAlt too short to be useful");
+  // lib/blog/posts.ts sorts by publishedAt but never filters on it, so a
+  // future date does not hold a post back — it ships now, dated ahead, and
+  // puts a future datePublished into the Article schema.
+  const pub = fm.match(/^publishedAt:\s*"(\d{4}-\d{2}-\d{2})"/m)?.[1];
+  const today = new Date().toISOString().slice(0, 10);
+  if (pub && pub > today)
+    issues.push(`publishedAt ${pub} is in the future — the post is live now, there is no scheduling gate`);
+  const upd = fm.match(/^updatedAt:\s*"(\d{4}-\d{2}-\d{2})"/m)?.[1];
+  if (pub && upd && upd < pub) issues.push(`updatedAt ${upd} is before publishedAt ${pub}`);
   if (!/^faqs:/m.test(fm)) issues.push("no FAQs — loses the FAQPage schema and the AI-citation surface");
 
   // ── Voice ──
@@ -125,8 +133,16 @@ for (const file of files) {
     const m = body.match(re);
     if (m) issues.push(`voice: ${msg} (“${m[0].trim()}”)`);
   }
+  // Spelling runs on prose only. URLs are not prose: the quiz reads
+  // `?program=` (quiz-flow.tsx), so a British-English rule flagging
+  // "program → programme" would demand we break the link. Strip link
+  // targets and bare paths, keep the visible link text.
+  const prose = body
+    .replace(/\]\([^)]*\)/g, "]")
+    .replace(/\bhref\s*=\s*["'][^"']*["']/g, "")
+    .replace(/https?:\/\/\S+/g, "");
   for (const [re, msg] of SPELLING) {
-    const m = body.match(re);
+    const m = prose.match(re);
     if (m) issues.push(`spelling: ${msg} (“${m[0].trim()}”)`);
   }
 
@@ -151,7 +167,38 @@ for (const file of files) {
   if (h2s < 3) issues.push(`only ${h2s} H2 sections — thin structure`);
   const words = body.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
   if (words < 700) issues.push(`${words} words — short for a guide`);
-  if (!RICH.test(body)) issues.push("no chart, callout or calculator — this is a wall of text");
+  // "Wall of text" means what it says: a long run of prose with nothing to
+  // break it. Measure that directly. The previous version tested whether the
+  // post used one of our JSX components, which is a different question — it
+  // called well-tabled posts walls of text and passed thin ones that happened
+  // to carry a single Callout. Headings, lists, tables and components all
+  // count as breaks. Corpus median run is ~130 words.
+  const broken = body
+    .replace(/<[A-Z]\w+[^>]*?\/>/gs, "\nBREAK\n")
+    .replace(/<\/?[A-Z]\w+[^>]*?>/gs, "\nBREAK\n");
+  let run = 0;
+  let longest = 0;
+  for (const line of broken.split("\n")) {
+    const s = line.trim();
+    if (!s) continue;
+    // A paragraph opening with a bold lead-in ("**Sled push.** ...") scans
+    // like a list item and breaks the page the same way, so it counts.
+    if (/^(#{1,6} |\||[-*] |\d+\. |BREAK|>|\*\*[^*]{2,60}\*\*)/.test(s)) {
+      longest = Math.max(longest, run);
+      run = 0;
+    } else run += s.split(/\s+/).length;
+  }
+  longest = Math.max(longest, run);
+  if (longest > 200)
+    issues.push(`${longest} words of unbroken prose — break it with a subheading, a list or a table`);
+
+  // Separate, and softer: whether the post carries anything a reader can use
+  // rather than only read. Not a defect, an opportunity, so it is worded as
+  // one. Callout is excluded deliberately: it is decoration, not data.
+  const DATA =
+    /<(BarChart|StatTile|Meter|Breakdown|Checklist|ComparisonTable|RaceAnalytics|StatGrid|Leaderboard|RaceCostCalculator|PaceCalculator|PtCostCalculator|SledCalculator)/;
+  if (!DATA.test(body) && !/^\|/m.test(body))
+    issues.push("no data element (chart, table, checklist or calculator) — consider what a reader could use here");
   // Every post gets the global <PostFinalCta> from the template, so this is
   // never "no CTA at all" — it means no contextual CTA inside the body,
   // which converts better than a footer block alone.

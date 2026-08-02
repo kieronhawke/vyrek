@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Archivo } from "next/font/google";
 import "@/app/control-tokens.css";
 import "@/app/member.css";
 
@@ -13,13 +12,6 @@ import "@/app/member.css";
  * rather than replacing it. The tabbed pages now sit in the (member) route
  * group, which owns the shell; sign-in sits outside it.
  */
-const archivo = Archivo({
-  variable: "--font-archivo",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
 export const metadata: Metadata = {
   title: "Your training",
   robots: { index: false, follow: false },
@@ -34,7 +26,6 @@ export default function MemberRootLayout({
     <div
       data-surface="control"
       data-density="comfortable"
-      className={archivo.variable}
       style={{ minHeight: "100svh" }}
     >
       {children}

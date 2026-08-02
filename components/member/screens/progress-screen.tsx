@@ -141,7 +141,7 @@ export function ProgressScreen() {
                         height: 52,
                         borderRadius: "var(--radius-card)",
                         overflow: "hidden",
-                        background: "#14100f",
+                        background: "var(--bg)",
                       }}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}

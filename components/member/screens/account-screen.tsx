@@ -117,7 +117,7 @@ export function AccountScreen({
         <Row
           label="Message Ben"
           value="Open →"
-          tone="var(--accent)"
+          tone="var(--accent-text)"
           href={`${base}/today`}
         />
       </Card>
@@ -148,7 +148,7 @@ export function AccountScreen({
           <Row
             label="Manage billing"
             value="Open →"
-            tone="var(--accent)"
+            tone="var(--accent-text)"
             href="/account"
           />
         </RowGroup>
@@ -204,7 +204,7 @@ export function AccountScreen({
         <Eyebrow>Your data</Eyebrow>
         <RowGroup>
           <Row label="Personal records" value="View →" href={`${base}/account/pr`} />
-          <Row label="Download everything" value="Request →" tone="var(--accent)" />
+          <Row label="Download everything" value="Request →" tone="var(--accent-text)" />
           <Row label="Privacy policy" value="Read →" href="/legal/privacy" />
         </RowGroup>
       </section>
@@ -226,7 +226,7 @@ export function AccountScreen({
         <Link
           href="/contact"
           style={{
-            color: "var(--accent)",
+            color: "var(--accent-text)",
             textDecoration: "underline",
             textUnderlineOffset: 2,
           }}

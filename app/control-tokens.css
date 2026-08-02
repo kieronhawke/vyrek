@@ -1,85 +1,50 @@
-/**
- * CONTROL CENTRE DESIGN TOKENS
- *
- * The design system from docs/build-pack/spec/14, implemented exactly.
- *
- * WHY THIS IS A SEPARATE, SCOPED TOKEN SET
- *
- * spec/14 §2 says the palette is "already tokenised in the codebase". It is
- * close, but seven of the fifteen values differ from the marketing site's
- * existing `--suth-*` tokens:
- *
- *   token            spec/14    site      differs
- *   --border         #262626    #2A2A2A   yes
- *   --border-strong  #383838    #3D3D3D   yes
- *   --text           #FAFAFA    #F5F5F3   yes
- *   --text-muted     #A3A3A3    #A8A8A6   yes
- *   --text-faint     #6B6B6B    #8A8A88   yes
- *   --warn           #FBBF24    #F59E0B   yes
- *   --danger         #F87171    #EF4444   yes
- *   --info           #60A5FA    (absent)  yes
- *
- * spec/14 §2 is headed "LOCKED, DO NOT REINTERPRET", so the spec values win
- * here. But retokenising the marketing site would restyle 58 blog posts and
- * 130 location pages that are live, and would collide with another terminal
- * currently working in those files.
- *
- * So: the spec palette is scoped to `[data-surface="control"]`, which the
- * admin, Coach Mode and the client app opt into. The marketing site is
- * untouched. Recorded in QUESTIONS.md so the divergence is deliberate and
- * visible rather than discovered later.
- */
-
 [data-surface="control"] {
   /**
-   * ── Colour ────────────────────────────────────────────────────────
+   * ── Colour: THE SITE'S OWN PALETTE ────────────────────────────────
    *
-   * SPEC OVERRIDE, on Kieron's instruction, 2 August 2026.
+   * This file previously defined a parallel palette — first spec/14's
+   * near-black with #6B6B6B labels at 13px, then a light warm-white with an
+   * oxblood accent. Both were wrong, and the second was worse: the admin and
+   * the member app ended up a different colour AND a different typeface from
+   * the site they belong to.
    *
-   * spec/14 §2 is headed "LOCKED, DO NOT REINTERPRET" and specifies near-black
-   * (#0A0A0A) with an acid-lime accent (#A3E635). That is what shipped, and it
-   * is what Kieron rejected: "It's really hard to view the text in the black
-   * format so I think we should keep it as white."
+   * The original complaint was that the admin was hard to read. The cause was
+   * never that it was dark — suthperformance.com is dark and it works. The
+   * cause was spec/14's own palette: #6B6B6B on #0A0A0A is 3.67:1, below AA,
+   * set at 13px. app/globals.css had already solved exactly that problem for
+   * the marketing site, and says so in its own comment: "tertiary lifted from
+   * #5C5C5A (2.95:1) to #8A8A88 (~5.7:1) so eyebrow/mono labels pass WCAG AA".
    *
-   * The client's instruction outranks the build pack. Two further reasons it
-   * is the right call rather than merely the instructed one:
-   *
-   *   1. MarchOn — the reference Kieron gave us — goes light itself in exactly
-   *      the places that involve reading and typing: the sign-up panel and the
-   *      FAQ are both white sections on an otherwise black site. Light for a
-   *      console follows their logic rather than departing from it.
-   *   2. Near-black plus acid-lime is the single most over-used pairing in
-   *      software design right now. Dropping it costs nothing.
-   *
-   * The accent is drawn from the Elite 15 photography — the deep oxblood of
-   * the arena seating that sits behind every race frame — so the interface and
-   * the imagery come from the same place. It is used structurally. Status
-   * colour (ok / warn / danger) is deliberately separate from it, so "this is
-   * a link" can never read as "this is fine".
-   *
-   * Dark is not deleted, it is demoted: it follows the OS below, and
-   * [data-theme] overrides both. Every pair here is checked against WCAG AA
-   * for its role, and tests/visual asserts it rather than trusting this note.
+   * So there is no second palette any more. These are the marketing site's
+   * values, so the console, the app and the site are one product. The
+   * legibility fix stays where it belongs — in the type scale below.
    */
-  --bg: #f4f2f0;
-  --surface: #ffffff;
-  --surface-raised: #faf8f7;
-  --border: #e2dcd8;
-  --border-strong: #cfc7c2;
-  --accent: #a32c22;
-  --accent-hover: #8a241b;
-  --accent-glow: #c4443a;
-  --accent-faint: #f7e7e4;
-  /* Text placed ON the accent. Never hardcode a colour against --accent:
-     it inverts between themes and the old code assumed it never would. */
-  --accent-ink: #ffffff;
-  --text: #16110f;
-  --text-muted: #5c524d;
-  --text-faint: #877b75;
-  --ok: #1f6b43;
-  --warn: #8a5a00;
-  --danger: #b3261e;
-  --info: #1f4fa8;
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --surface-raised: #1c1c1c;
+  --border: #1f1f1f;
+  --border-strong: #3d3d3d;
+
+  --text: #f5f5f3;
+  --text-muted: #a8a8a6;
+  --text-faint: #8a8a88;
+
+  /* Chartreuse, used sparingly, exactly as the site uses it. */
+  --accent: #a3e635;
+  --accent-hover: #84cc16;
+  --accent-glow: #bef264;
+  --accent-faint: #1a3d08;
+  /* Text on an accent fill. */
+  --accent-ink: #0a0a0a;
+  /* Accent-coloured text on the page ground — chartreuse clears AA here. */
+  --accent-text: #a3e635;
+
+  /* Semantic. The site uses white for success rather than a second green,
+     because chartreuse already owns green in this palette. */
+  --ok: #ffffff;
+  --warn: #f59e0b;
+  --danger: #ef4444;
+  --info: #60a5fa;
 
   /**
    * ── Type scale ────────────────────────────────────────────────────
@@ -147,7 +112,10 @@
   /* ── Type families ──────────────────────────────────────────────── */
   /* Archivo for display and UI: a grotesque with a genuine condensed cut.
      Geist Mono for every number, everywhere, with tabular figures. */
-  --font-ui: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  /* The brand faces, set on <html> by the root layout. The admin and member
+     area used Archivo, which is not one of them. */
+  --font-ui: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), var(--font-sans), sans-serif;
   --font-num: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
   background: var(--bg);
@@ -156,63 +124,6 @@
   font-size: var(--text-sm);
   line-height: var(--text-sm-lh);
   -webkit-font-smoothing: antialiased;
-}
-
-/**
- * ── Dark ───────────────────────────────────────────────────────────────
- *
- * Kept, but as a preference rather than the only option. A gym floor is often
- * dark and a phone at 5am is brighter than anyone wants; the athlete should
- * get whichever their device already asked for.
- *
- * Only tokens are redefined. Nothing below styles a component inside this
- * block — if it did, [data-theme="light"] could not win it back.
- *
- * This is not the old palette inverted. The accent lifts to a warm coral so
- * it clears AA on a dark ground (the oxblood does not), and --accent-ink
- * flips to near-black so text on an accent fill stays readable both ways.
- */
-@media (prefers-color-scheme: dark) {
-  [data-surface="control"]:not([data-theme="light"]) {
-    --bg: #0f0d0c;
-    --surface: #1a1716;
-    --surface-raised: #232020;
-    --border: #322c29;
-    --border-strong: #453d39;
-    --accent: #f08379;
-    --accent-hover: #f59a91;
-    --accent-glow: #f08379;
-    --accent-faint: #2e1a17;
-    --accent-ink: #2a0f0c;
-    --text: #f2edea;
-    --text-muted: #a99e98;
-    --text-faint: #7a6e68;
-    --ok: #4fbe84;
-    --warn: #e0a54a;
-    --danger: #f0776b;
-    --info: #7fa0ff;
-  }
-}
-
-/* Explicit choice beats the OS, in both directions. */
-[data-surface="control"][data-theme="dark"] {
-  --bg: #0f0d0c;
-  --surface: #1a1716;
-  --surface-raised: #232020;
-  --border: #322c29;
-  --border-strong: #453d39;
-  --accent: #f08379;
-  --accent-hover: #f59a91;
-  --accent-glow: #f08379;
-  --accent-faint: #2e1a17;
-  --accent-ink: #2a0f0c;
-  --text: #f2edea;
-  --text-muted: #a99e98;
-  --text-faint: #7a6e68;
-  --ok: #4fbe84;
-  --warn: #e0a54a;
-  --danger: #f0776b;
-  --info: #7fa0ff;
 }
 
 /* The client app reads at arm's length one-handed, so it steps up. */
@@ -271,6 +182,15 @@
  * Those all moved to --text-muted. Treat --text-faint as reserved for
  * controls a user genuinely cannot operate, and nothing else.
  */
+[data-surface="control"] h1,
+[data-surface="control"] h2,
+[data-surface="control"] h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
 [data-surface="control"] .eyebrow {
   font-size: var(--text-2xs);
   line-height: var(--text-2xs-lh);

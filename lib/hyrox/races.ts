@@ -70,6 +70,30 @@ export function flagFor(country: string | null): string | null {
   );
 }
 
+/**
+ * The venue name as a reader would say it.
+ *
+ * HYROX writes the venue field as a name and a street joined by a dash —
+ * "ExCel - 1 Western Gateway", "NEC - Pendigo Way", "Port Messe Nagoya
+ * Exhibition Hall - 3 Chome-2-1 Kinjofuto". Rendered raw, a location page
+ * says "your nearest race is ExCel - 1 Western Gateway", which reads like a
+ * database field because it is one.
+ *
+ * Everything before the first " - " is the name; what follows is always the
+ * address. Parentheses are kept, because "(SEC)" and "(RDS)" are how people
+ * refer to those two.
+ */
+export function venueLabel(race: {
+  venueName?: string | null;
+  venue?: string | null;
+  /** Fallback when the calendar carries no venue at all. */
+  city: string;
+}): string {
+  const raw = race.venueName ?? race.venue;
+  if (!raw) return race.city;
+  return raw.split(/\s+[-–]\s+/)[0].trim() || race.city;
+}
+
 /** Races that have not finished yet, relative to `now`. */
 export function upcoming(now: Date = new Date()): Race[] {
   const today = now.toISOString().slice(0, 10);

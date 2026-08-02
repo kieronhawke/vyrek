@@ -64,7 +64,10 @@ export async function POST(req: Request) {
   // NOT require auth here — the response is intentionally lossy if the
   // user is unauthenticated, because the feedback is still useful in
   // aggregate.
-  let customerId: string | null = null;
+  // Deliberately never reassigned: the block below decides, on purpose, not
+  // to resolve an identity here. Kept as a named value so the two `logEvent`
+  // fields still read as "the customer, if we had one".
+  const customerId: string | null = null;
   try {
     const sb = supabaseAdmin();
     // No session lookup possible from the admin client; instead the

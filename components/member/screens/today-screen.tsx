@@ -132,7 +132,7 @@ export function TodayScreen({
                 minHeight: 44,
                 padding: "0 4px",
                 margin: "0 -4px",
-                color: "var(--accent)",
+                color: "var(--accent-text)",
                 textDecoration: "none",
               }}
             >

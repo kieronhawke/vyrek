@@ -5,10 +5,12 @@ import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
 import { CtaButton } from "@/components/shared/cta-button";
 import { groupLocationsByRegion, regionSlug } from "@/lib/uk-locations";
+import { GeoInternational } from "@/components/landing/geo-international";
 import { siteUrl } from "@/lib/blog/urls";
 
 export const metadata: Metadata = {
-  title: "Hyrox training across the UK · Suth Performance",
+  // See the personal-trainer hub: layout.tsx already appends the brand.
+  title: "Hyrox training across the UK",
   description:
     "Personalised Hyrox training programmes across the UK, built by a HYROX Elite 15 athlete. Find your city and see your Week 1 for free.",
   alternates: { canonical: `${siteUrl()}/hyrox-training` },
@@ -73,6 +75,7 @@ export default function HyroxTrainingHub() {
               </section>
             ))}
           </div>
+          <GeoInternational base="/hyrox-training" />
         </Container>
       </main>
       <MarketingFooter />

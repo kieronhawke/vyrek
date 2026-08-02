@@ -59,7 +59,7 @@ const COLUMNS: Column<Session>[] = [
     label: "Outcome",
     render: (s) =>
       s.converted ? (
-        <span style={{ color: "var(--accent)" }}>Quiz completed</span>
+        <span style={{ color: "var(--accent-text)" }}>Quiz completed</span>
       ) : (
         <span style={{ color: "var(--text-muted)" }}>—</span>
       ),

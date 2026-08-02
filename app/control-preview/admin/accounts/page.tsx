@@ -17,7 +17,7 @@ const COLUMNS: Column<UserRow>[] = [
     key: "tfa", label: "2FA",
     render: (r) => {
       const required = r.role !== "Coach";
-      if (r.twoFactor) return <span style={{ color: "var(--accent)" }}>On</span>;
+      if (r.twoFactor) return <span style={{ color: "var(--accent-text)" }}>On</span>;
       return (
         <span style={{ color: required ? "var(--danger)" : "var(--text-muted)" }}>
           {required ? "Required, not set" : "Off, optional for coaches"}

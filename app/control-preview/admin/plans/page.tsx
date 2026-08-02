@@ -23,7 +23,7 @@ const COLUMNS: Column<PlanRow>[] = [
           display: "inline-flex",
           alignItems: "center",
           minHeight: 44,
-          color: "var(--accent)",
+          color: "var(--accent-text)",
           fontWeight: 600,
         }}
       >
@@ -46,7 +46,7 @@ const COLUMNS: Column<PlanRow>[] = [
     key: "note", label: "Coach's note",
     render: (r) =>
       r.coachNote ? (
-        <span style={{ color: "var(--accent)" }}>Written</span>
+        <span style={{ color: "var(--accent-text)" }}>Written</span>
       ) : (
         <span style={{ color: "var(--danger)" }}>Missing, blocks send</span>
       ),
