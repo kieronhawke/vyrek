@@ -8,7 +8,7 @@ export default async function StationsLibraryPage() {
   await assertMember("/app/plan/stations");
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
+    <div>
       <Link
         href="/app/plan"
         className="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary hover:text-suth-text"

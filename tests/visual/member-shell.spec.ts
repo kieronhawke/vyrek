@@ -22,9 +22,10 @@ import AxeBuilder from "@axe-core/playwright";
 
 const SCREENS = [
   { path: "/control-preview/app/today", name: "today" },
-  { path: "/control-preview/app/account", name: "account" },
   { path: "/control-preview/app/plan", name: "plan" },
+  { path: "/control-preview/app/nutrition", name: "nutrition" },
   { path: "/control-preview/app/progress", name: "progress" },
+  { path: "/control-preview/app/account", name: "account" },
 ];
 
 /** Every destination the member navigation must offer. */
@@ -99,6 +100,113 @@ test.describe("member shell", () => {
       expect(results.violations).toEqual([]);
     });
   }
+
+  /**
+   * Tab labels must fit their column.
+   *
+   * "PROGRESS" and "ACCOUNT" at 12px on a 375px screen overflowed their grid
+   * cells and rendered as "PROGRESSACCOUNT" — one run-together word. Nothing
+   * else caught it: the page did not scroll sideways, because the overflow was
+   * inside a fixed-width pill, and the type was above the size floor.
+   */
+  test("tab labels fit their column and do not run together", async ({
+    page,
+    viewport,
+  }) => {
+    test.skip((viewport?.width ?? 0) >= 768, "mobile pill only");
+    await page.goto("/control-preview/app/today");
+    const overflowing = await page.evaluate(() => {
+      const out: string[] = [];
+      for (const span of Array.from(
+        document.querySelectorAll<HTMLElement>(".member-tabbar__link span"),
+      )) {
+        if (span.scrollWidth > span.clientWidth + 1) {
+          out.push(`${span.textContent} (${span.scrollWidth} > ${span.clientWidth})`);
+        }
+      }
+      return out;
+    });
+    expect(overflowing).toEqual([]);
+  });
+
+  /**
+   * Touch targets. The app is used one-handed between sets, and 44x44 is the
+   * floor below which a sweaty thumb starts missing.
+   */
+  for (const screen of SCREENS) {
+    test(`${screen.name}: every control is at least 44px tall`, async ({ page }) => {
+      await page.goto(screen.path);
+      const small = await page.evaluate(() => {
+        const out: string[] = [];
+        const controls = document.querySelectorAll(
+          "a, button, input, select, textarea, [role=radio]",
+        );
+        for (const el of Array.from(controls)) {
+          const r = el.getBoundingClientRect();
+          // Skip anything not rendered, and links inside running prose, which
+          // inherit the line height of the paragraph by design.
+          if (r.width === 0 || r.height === 0) continue;
+          if (el.closest("p")) continue;
+          if (r.height < 44) {
+            out.push(`${Math.round(r.height)}px ${el.tagName} "${(el.textContent ?? "").trim().slice(0, 24)}"`);
+          }
+        }
+        return [...new Set(out)];
+      });
+      expect(small).toEqual([]);
+    });
+  }
+
+  /** The plan is the screen the product hangs off; assert its substance. */
+  test("plan shows the block, the coach's note and a way to answer back", async ({
+    page,
+  }) => {
+    await page.goto("/control-preview/app/plan");
+    await expect(page.getByRole("heading", { name: "Your plan" })).toBeVisible();
+    // The whole twelve-week arc, not just this week.
+    await expect(page.getByText("Week 4 of 12")).toBeVisible();
+    // Attributed to a person, because that is what is being paid for.
+    await expect(page.getByText("Ben Sutherland")).toBeVisible();
+    await expect(page.getByText(/Set this block/)).toBeVisible();
+    // And a route back to them.
+    await expect(
+      page.getByRole("radio", { name: /About right/ }),
+    ).toBeVisible();
+  });
+
+  test("plan feedback collects a verdict, a note, and confirms honestly", async ({
+    page,
+  }) => {
+    await page.goto("/control-preview/app/plan");
+    await page.getByRole("radio", { name: /Too hard/ }).click();
+
+    const note = page.getByLabel(/Anything Ben should know/);
+    await expect(note).toBeVisible();
+    await note.fill("Knee grumbled on the lunges.");
+    await page.getByRole("button", { name: "Send to Ben" }).click();
+
+    // It must not claim to have sent anything: there is no messaging backend.
+    await expect(page.getByRole("status")).toContainText(/Saved on this device/);
+    await expect(page.getByRole("status")).toContainText(/once messaging is connected/);
+  });
+
+  test("progress explains the numbers rather than only listing them", async ({
+    page,
+  }) => {
+    await page.goto("/control-preview/app/progress");
+    await expect(page.getByText(/stations are faster/)).toBeVisible();
+    // Every station carries a percentile the athlete can act on.
+    const bars = page.getByRole("img", { name: /percentile/ });
+    expect(await bars.count()).toBe(8);
+  });
+
+  test("nutrition places the workout inside the day", async ({ page }) => {
+    await page.goto("/control-preview/app/nutrition");
+    await expect(
+      page.getByRole("heading", { name: "Today's fuel" }),
+    ).toBeVisible();
+    await expect(page.getByText(/Hyrox hybrid: run \+ sled ·/)).toBeVisible();
+  });
 
   test("the preview mount renders rather than redirecting to login", async ({
     page,

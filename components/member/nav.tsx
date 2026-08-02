@@ -29,7 +29,15 @@ import { usePathname } from "next/navigation";
 
 type Tab = {
   href: string;
+  /** Used in the desktop rail, where there is room for the real word. */
   label: string;
+  /**
+   * Used in the mobile pill. Five columns on a 375px screen is ~67px each, and
+   * "PROGRESS" at 12px does not fit — it ran into "ACCOUNT" and the two labels
+   * read as one word. Shorter beats smaller: the type floor exists for a
+   * reason, so the label gives way instead.
+   */
+  short: string;
   /** 24px grid, stroked. Filled when active. */
   path: React.ReactNode;
 };
@@ -38,6 +46,7 @@ const TABS: Tab[] = [
   {
     href: "/app/today",
     label: "Today",
+    short: "Today",
     path: (
       <>
         <rect x="3" y="4.5" width="18" height="17" rx="3" />
@@ -48,6 +57,7 @@ const TABS: Tab[] = [
   {
     href: "/app/plan",
     label: "Plan",
+    short: "Plan",
     path: (
       <>
         <path d="M4 19.5V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14.5" />
@@ -58,6 +68,7 @@ const TABS: Tab[] = [
   {
     href: "/app/nutrition",
     label: "Fuel",
+    short: "Fuel",
     path: (
       <>
         <path d="M6 2.5a3.5 3.5 0 0 0-3.5 3.5v3A3.5 3.5 0 0 0 6 12.5h1.5v9" />
@@ -68,6 +79,7 @@ const TABS: Tab[] = [
   {
     href: "/app/progress",
     label: "Progress",
+    short: "Stats",
     path: (
       <>
         <path d="M3 3v18h18" />
@@ -78,6 +90,7 @@ const TABS: Tab[] = [
   {
     href: "/app/account",
     label: "Account",
+    short: "You",
     path: (
       <>
         <circle cx="12" cy="8" r="4" />
@@ -137,11 +150,14 @@ export function MemberNav({ base = "/app" }: { base?: string }) {
                 <Link
                   href={hrefFor(tab.href)}
                   aria-current={active ? "page" : undefined}
+                  /* Screen readers get the real word even though the pill
+                     shows the abbreviation. */
+                  aria-label={tab.label}
                   className="member-tabbar__link"
                   data-active={active || undefined}
                 >
                   <Icon active={active}>{tab.path}</Icon>
-                  <span>{tab.label}</span>
+                  <span>{tab.short}</span>
                 </Link>
               </li>
             );

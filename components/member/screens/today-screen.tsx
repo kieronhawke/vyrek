@@ -149,7 +149,15 @@ export function TodayScreen({
           right={
             <Link
               href={`${base}/progress`}
-              style={{ color: "var(--accent)", textDecoration: "none" }}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                minHeight: 44,
+                padding: "0 4px",
+                margin: "0 -4px",
+                color: "var(--accent)",
+                textDecoration: "none",
+              }}
             >
               All sessions →
             </Link>

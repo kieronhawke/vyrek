@@ -32,7 +32,7 @@ export default async function RaceDetailPage({
   }).format(new Date(race.date));
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-6 md:py-10">
+    <div>
       <Link
         href="/app/analysis"
         className="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary hover:text-suth-text"

@@ -101,9 +101,12 @@
 }
 
 .member-tabbar__link span {
-  /* 12px is the floor the visual gate enforces; at five columns on a
-     390px screen the longest label (PROGRESS) still fits. */
+  /* 12px is the floor the visual gate enforces, so labels shorten rather
+     than shrink. Clipping is belt and braces for a narrow device. */
   font-size: 12px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-weight: 650;
   letter-spacing: 0.04em;
   text-transform: uppercase;
