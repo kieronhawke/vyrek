@@ -160,7 +160,7 @@ export function TodayScreen({
                 textDecoration: "none",
               }}
             >
-              All sessions →
+              Progress →
             </Link>
           }
         >

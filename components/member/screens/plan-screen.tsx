@@ -241,6 +241,7 @@ export function PlanScreen({
           <Row label="Print or save as PDF" value="Download →" tone="var(--accent)" />
           <Row label="Spreadsheet" value="Download .xlsx →" tone="var(--accent)" />
           <Row label="Station technique guides" value="Open →" href={`${base}/plan/stations`} />
+          <Row label="Your splits and benchmarks" value="Open →" href={`${base}/progress`} />
         </RowGroup>
         <p
           style={{

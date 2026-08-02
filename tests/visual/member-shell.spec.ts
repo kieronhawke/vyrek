@@ -24,12 +24,13 @@ const SCREENS = [
   { path: "/control-preview/app/today", name: "today" },
   { path: "/control-preview/app/plan", name: "plan" },
   { path: "/control-preview/app/nutrition", name: "nutrition" },
+  { path: "/control-preview/app/coach", name: "coach" },
   { path: "/control-preview/app/progress", name: "progress" },
   { path: "/control-preview/app/account", name: "account" },
 ];
 
 /** Every destination the member navigation must offer. */
-const REQUIRED_TABS = ["Today", "Plan", "Fuel", "Progress", "Account"];
+const REQUIRED_TABS = ["Today", "Plan", "Fuel", "Coach", "Account"];
 
 test.describe("member shell", () => {
   for (const screen of SCREENS) {
@@ -359,5 +360,54 @@ test.describe("client record", () => {
   test("an unknown client 404s", async ({ request }) => {
     const res = await request.get("/control-preview/admin/clients/c_nope");
     expect(res.status()).toBe(404);
+  });
+});
+
+/**
+ * ASK BEN
+ *
+ * The athlete could answer back to a session but could not ask a question,
+ * which is what people actually pay a coach for — and the thing they cancel
+ * over when it is missing.
+ */
+test.describe("coach thread", () => {
+  test("shows a two-way conversation with Ben", async ({ page }) => {
+    await page.goto("/control-preview/app/coach");
+    await expect(page.getByRole("heading", { name: "Ask Ben" })).toBeVisible();
+    // Both sides of the thread are present and attributed.
+    await expect(page.getByText(/Sled turned into a grind/)).toBeVisible();
+    await expect(page.getByText(/drop the sled to 50%/)).toBeVisible();
+  });
+
+  test("offers prompts when the composer is empty, and hides them once typing", async ({
+    page,
+  }) => {
+    await page.goto("/control-preview/app/coach");
+    const prompt = page.getByRole("button", { name: "I've picked up a niggle" });
+    await expect(prompt).toBeVisible();
+    await prompt.click();
+    // Tapping a prompt seeds the composer and the prompts get out of the way.
+    await expect(page.getByLabel("Message Ben")).toHaveValue(/niggle/);
+    await expect(prompt).toBeHidden();
+  });
+
+  test("sending appends to the thread and does not claim to have sent", async ({
+    page,
+  }) => {
+    await page.goto("/control-preview/app/coach");
+    await page.getByLabel("Message Ben").fill("Is Saturday full distance?");
+    await page.getByRole("button", { name: "Send to Ben" }).click();
+    await expect(page.getByText("Is Saturday full distance?")).toBeVisible();
+    await expect(page.getByRole("status")).toContainText(/not sent/i);
+  });
+
+  test("Progress is still reachable after leaving the tab bar", async ({
+    page,
+  }) => {
+    await page.goto("/control-preview/app/today");
+    await page.getByRole("link", { name: /Progress →/ }).click();
+    await expect(
+      page.getByRole("heading", { name: /Where the race is won/ }),
+    ).toBeVisible();
   });
 });
