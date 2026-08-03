@@ -154,15 +154,27 @@ export async function runBackfill(
     const all = await repo.listEvents();
     const ordered = orderForBackfill(all);
 
-    // Every checkpoint in one read.
+    // An event is finished when every one of its divisions is, because the
+    // division is the real unit of work — that is where the content hash lives.
     //
-    // This used to be a `getSyncState` per event inside the loop — 223
-    // sequential round trips on every round, just to discover which event to
-    // work on next. The work itself is rate-limited to 40 requests a minute, so
-    // spending several hundred database calls to decide what to do is the
-    // difference between a backfill that finishes overnight and one that does
-    // not.
-    const checkpointed = new Set(
+    // ⚠️ This used to read the *event's* sync state, and that quietly stopped
+    // working when the hash moved to the division: once every division skipped
+    // as unchanged, nothing wrote the event-level checkpoint, so the event was
+    // chosen again on every round. One event repeated for three rounds
+    // straight, re-fetching fourteen divisions each time to learn nothing.
+    //
+    // Both reads are one round trip rather than one per event: the work is
+    // capped at 40 requests a minute, so spending hundreds of database calls to
+    // decide what to do next is the difference between finishing overnight and
+    // not finishing.
+    const allDivisions = await repo.listAllDivisions();
+    const pendingByEvent = new Map<string, number>();
+    for (const d of allDivisions) {
+      if (d.lastSeenHash) continue;
+      pendingByEvent.set(d.eventId, (pendingByEvent.get(d.eventId) ?? 0) + 1);
+    }
+    const withDivisions = new Set(allDivisions.map((d) => d.eventId));
+    const explicitlyDone = new Set(
       (await repo.listSyncStates())
         .filter((state) => state.lastSeenHash)
         .map((state) => state.sourceEventId),
@@ -182,9 +194,10 @@ export async function runBackfill(
 
       const sourceEventId = event.sourceEventId ?? event.slug;
 
-      // The checkpoint: an event with a hash has been pulled. Re-running the
-      // backfill is therefore free and safe, which is the recovery story.
-      if (checkpointed.has(sourceEventId)) {
+      // Done when nothing is left to sync. Re-running the backfill is
+      // therefore free and safe, which is the recovery story.
+      const pending = pendingByEvent.get(event.id) ?? 0;
+      if (withDivisions.has(event.id) ? pending === 0 : explicitlyDone.has(sourceEventId)) {
         result.eventsSkipped.push(event.slug);
         continue;
       }

@@ -61,6 +61,14 @@ export interface ResultsRepository {
 
   upsertDivision(division: UpsertDivision): Promise<EngineDivision>;
   listDivisions(eventId: string): Promise<EngineDivision[]>;
+  /**
+   * Every division, for callers that need to reason across events.
+   *
+   * The backfill needs to know which events are finished, and the real unit of
+   * work is the division — so asking per event is 223 round trips to answer one
+   * question.
+   */
+  listAllDivisions(): Promise<EngineDivision[]>;
 
   /* ── Athletes ─────────────────────────────────────────────────────── */
   upsertAthlete(athlete: UpsertAthlete): Promise<EngineAthlete>;

@@ -333,6 +333,18 @@ export class SupabaseResultsRepository implements ResultsRepository {
     ).map(toDivision);
   }
 
+  async listAllDivisions() {
+    const out: DivisionRow[] = [];
+    for (let from = 0; ; from += 1000) {
+      const page = await this.many<DivisionRow>(
+        this.db.from("results_divisions").select().range(from, from + 999),
+      );
+      out.push(...page);
+      if (page.length < 1000) break;
+    }
+    return out.map(toDivision);
+  }
+
   /* ── Athletes ─────────────────────────────────────────────────────── */
 
   async upsertAthlete(athlete: UpsertAthlete): Promise<EngineAthlete> {
