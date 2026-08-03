@@ -116,9 +116,20 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } },
     },
   ],
-  webServer: process.env.PLAYWRIGHT_NO_SERVER
-    ? undefined
-    : {
+  /**
+   * Do not boot a server when one has been pointed at.
+   *
+   * PLAYWRIGHT_NO_SERVER existed, but PLAYWRIGHT_BASE_URL did not imply it —
+   * so aiming the suite at an already-running instance still tried to start a
+   * second one on 3100, which then failed with EADDRINUSE and took the whole
+   * run down. That is the cause of several rounds of "mass failures with no
+   * error in the log" in this repo, including on a different port entirely.
+   * Naming a base URL is a statement that a server already exists.
+   */
+  webServer:
+    process.env.PLAYWRIGHT_NO_SERVER || process.env.PLAYWRIGHT_BASE_URL
+      ? undefined
+      : {
         // Build then serve, not `pnpm dev` — see the note on baseURL above.
         command: "pnpm build && pnpm exec next start -p 3100",
         url: baseURL,

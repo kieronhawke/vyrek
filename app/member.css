@@ -497,3 +497,96 @@
   .week__grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
   .week__day { padding: 10px; }
 }
+
+/* ── First-run walkthrough ────────────────────────────────────────────────
+   A sheet, not a positional spotlight: highlights anchored to coordinates
+   break on any layout change and are unusable on a phone, which is where this
+   runs. Without these rules the dialog renders in normal flow 3,400px down
+   the page, which is exactly how it was found. */
+
+.walkthrough {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: var(--space-2);
+  padding-bottom: calc(env(safe-area-inset-bottom) + var(--space-2));
+  background: rgb(0 0 0 / 62%);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.walkthrough__card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  padding: var(--space-3);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 55%);
+}
+
+.walkthrough__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin: 4px 0 var(--space-1);
+}
+
+.walkthrough__body {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.walkthrough__dots {
+  display: flex;
+  gap: 5px;
+  list-style: none;
+  margin: var(--space-2) 0;
+  padding: 0;
+}
+
+.walkthrough__dots li {
+  height: 3px;
+  flex: 1;
+  border-radius: 2px;
+  background: var(--border-strong);
+}
+
+.walkthrough__dots li[data-on] { background: var(--accent); }
+
+.walkthrough__actions { display: flex; gap: var(--space-1); }
+
+.walkthrough__skip,
+.walkthrough__next {
+  min-height: 48px;
+  border-radius: 999px;
+  font-size: var(--text-base);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.walkthrough__skip {
+  flex: 0 0 auto;
+  padding: 0 18px;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.walkthrough__next {
+  flex: 1;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+@media (min-width: 768px) {
+  .walkthrough { align-items: center; }
+}
