@@ -339,7 +339,7 @@ body {
 
 .p2-line {
   display: grid;
-  grid-template-columns: 5mm minmax(0, 1fr) auto;
+  grid-template-columns: 5.6mm minmax(0, 1fr) auto;
   align-items: start;
   gap: 1.5mm;
   font-size: 11px;
@@ -377,7 +377,7 @@ body {
 /* Ben's "into", "x3", "then" — the joins between blocks of work. */
 .p2-line--connector {
   grid-template-columns: 1fr;
-  padding-left: 6.5mm;
+  padding-left: 7.1mm;
   font-style: italic;
   font-size: 10px;
   color: var(--p2-muted);

@@ -63,7 +63,7 @@ function Session({ text, slot }: { text: string; slot: Slot }) {
       <header className="p2-session__head">
         <span className="p2-session__slot">{slot === "am" ? "Morning" : "Afternoon"}</span>
         <span className="p2-session__station">
-          <StationIcon station={station} size={13} />
+          <StationIcon station={station} size={14} />
           {meta.label}
         </span>
         <span className="p2-pips" aria-label={`Intensity ${intensity} of 3`}>
@@ -89,7 +89,7 @@ function Session({ text, slot }: { text: string; slot: Slot }) {
           return (
             <li key={i} className="p2-line" data-tone={STATION_META[kind].tone}>
               <span className="p2-line__icon">
-                <StationIcon station={kind} size={14} />
+                <StationIcon station={kind} size={15} />
               </span>
               <span className="p2-line__text">
                 {l.quantity ? <b className="num p2-qty">{l.quantity}</b> : null}
@@ -190,7 +190,7 @@ export function PrintablePlanV2({ athlete }: { athlete: string }) {
 
                 {rest ? (
                   <p className="p2-rest">
-                    <StationIcon station="rest" size={15} /> Rest day
+                    <StationIcon station="rest" size={16} /> Rest day
                   </p>
                 ) : (
                   DAY_ORDER.map((slot) => (

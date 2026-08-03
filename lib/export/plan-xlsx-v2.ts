@@ -38,6 +38,13 @@ import { classifyLine, STATION_META } from "@/lib/plan/stations";
  *
  * An xlsx is a zip of XML. Styling lives in styles.xml as indexed fonts,
  * fills, borders and cellXfs; a cell references a style by index.
+ *
+ * ELEMENT ORDER IS NOT COSMETIC. CT_Worksheet is an xsd:sequence, so its
+ * children have to appear in schema order — autoFilter before mergeCells,
+ * both before pageMargins. Getting that wrong produced a file that unzipped
+ * cleanly, opened in openpyxl, and made Excel offer to repair it. The order
+ * is asserted in the tests for exactly that reason: no lenient reader will
+ * ever catch it.
  */
 
 const BLACK = "FF0A0A0A";
@@ -288,8 +295,8 @@ function sheet(week: PlanWeek, athleteName: string): string {
 <sheetFormatPr defaultRowHeight="15"/>
 <cols>${cols.join("")}</cols>
 <sheetData>${rows.join("")}</sheetData>
-<mergeCells count="${merges.length}">${merges.join("")}</mergeCells>
 <autoFilter ref="A${headRow}:G${lastRow}"/>
+<mergeCells count="${merges.length}">${merges.join("")}</mergeCells>
 <pageMargins left="0.3" right="0.3" top="0.4" bottom="0.4" header="0" footer="0"/>
 <pageSetup orientation="portrait" fitToWidth="1" fitToHeight="0" paperSize="9"/>
 </worksheet>`;
