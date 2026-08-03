@@ -73,7 +73,14 @@ export async function POST(request: Request) {
       ? sendOnboardingInvite({ to: email, firstName, link, kind, planName: plan?.name })
       : Promise.resolve({ ok: false as const, reason: "NO_EMAIL_GIVEN" }),
     phone && smsText
-      ? sendSms({ to: phone, body: smsText })
+      ? sendSms({
+          to: phone,
+          body: smsText,
+          // From "SUTH": this carries a link and asks nothing, so a sender
+          // nobody can reply to costs nothing and looks like a company
+          // rather than an unknown mobile number.
+          sender: "brand",
+        })
       : Promise.resolve({ ok: false as const, reason: "NO_PHONE_GIVEN" }),
   ]);
 
@@ -93,6 +100,7 @@ export async function POST(request: Request) {
       ok: smsResult.ok,
       reason: smsResult.ok ? null : smsResult.reason,
       configured: smsConfigured(),
+      sentAs: smsResult.ok ? smsResult.sentAs : null,
       /** Returned either way, so a failure never leaves Ben without a route. */
       text: smsText,
     },
