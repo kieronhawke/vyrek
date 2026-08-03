@@ -197,6 +197,17 @@ export default async function RaceReportPage({
 
   const isDemo = getDataMode() === "demo";
 
+  /**
+   * Section numbers are counted as sections render, not hardcoded.
+   *
+   * Several sections are conditional — the benchmark disappears for the winner
+   * of the division, the comparison for a first race — and with fixed numbers
+   * the winner's own report read 06, then 08. To a reader that is a missing
+   * page, not a skipped section.
+   */
+  let sectionNo = 0;
+  const nextNumber = () => String(++sectionNo).padStart(2, "0");
+
   return (
     <div className="results-report mx-auto max-w-[1000px] px-5 py-8 md:py-12">
       {/* ── Cover ─────────────────────────────────────────────────── */}
@@ -295,7 +306,7 @@ export default async function RaceReportPage({
 
       {/* ── Overview ──────────────────────────────────────────────── */}
       <ReportSection
-        number="01"
+        number={nextNumber()}
         title="Overview"
         lede={`Where this race sits in ${division}, station by station.`}
       >
@@ -364,7 +375,7 @@ export default async function RaceReportPage({
 
       {/* ── The story of the race ─────────────────────────────────── */}
       <ReportSection
-        number="02"
+        number={nextNumber()}
         title="The story of your race"
         lede="Where the finish time was won and lost, checkpoint by checkpoint."
       >
@@ -389,7 +400,7 @@ export default async function RaceReportPage({
       {/* ── Performance against your own standard ─────────────────── */}
       {bands.length > 0 ? (
         <ReportSection
-          number="03"
+          number={nextNumber()}
           title="Every station against your own standard"
           lede={
             `You raced at the ${formatPercent(overallPercentile)} percentile overall. `
@@ -416,7 +427,7 @@ export default async function RaceReportPage({
       {/* ── Potential ─────────────────────────────────────────────── */}
       {potential && potential.secondsAvailable > 0 ? (
         <ReportSection
-          number="04"
+          number={nextNumber()}
           title="What this race was worth on the same legs"
           lede={
             `Your best station on the day was ${potential.ceilingStation}, at the `
@@ -449,7 +460,7 @@ export default async function RaceReportPage({
       {/* ── Running ───────────────────────────────────────────────── */}
       {running ? (
         <ReportSection
-          number="05"
+          number={nextNumber()}
           title="Running assessment"
           lede="How evenly you ran, and what the back half cost you."
         >
@@ -486,7 +497,7 @@ export default async function RaceReportPage({
 
       {/* ── Roxzone ───────────────────────────────────────────────── */}
       <ReportSection
-        number="06"
+        number={nextNumber()}
         title="The roxzone"
         lede="The part of the race nobody trains, and the cheapest time on this sheet."
       >
@@ -502,7 +513,7 @@ export default async function RaceReportPage({
       {/* ── Benchmark ─────────────────────────────────────────────── */}
       {winner ? (
         <ReportSection
-          number="07"
+          number={nextNumber()}
           title={`Against the winner of ${division}`}
           lede={
             `${winner.athleteName} won this division in ${formatTime(winner.finishSeconds)}. `
@@ -531,7 +542,7 @@ export default async function RaceReportPage({
       {/* ── Against your last race ────────────────────────────────── */}
       {comparison && previousRace ? (
         <ReportSection
-          number="08"
+          number={nextNumber()}
           title="Against your last race"
           lede={
             `Compared with ${previousRace.eventCity} ${previousRace.year} `
@@ -552,7 +563,7 @@ export default async function RaceReportPage({
         </ReportSection>
       ) : (
         <ReportSection
-          number="08"
+          number={nextNumber()}
           title="Against your last race"
           lede="Nothing to compare yet — this is the first race we hold for you in this division."
         >
@@ -563,7 +574,7 @@ export default async function RaceReportPage({
       {/* ── Next race ─────────────────────────────────────────────── */}
       {nextRace ? (
         <ReportSection
-          number="09"
+          number={nextNumber()}
           title="What your next race looks like"
           lede={nextRace.note}
         >
@@ -598,7 +609,7 @@ export default async function RaceReportPage({
       {/* ── Race plan ─────────────────────────────────────────────── */}
       {potential && potential.secondsAvailable > 0 && goalSeconds < result.finishSeconds ? (
         <ReportSection
-          number="10"
+          number={nextNumber()}
           title="Split targets for your next race"
           lede={
             `Built to ${formatTime(goalSeconds)}. Time is taken off each segment in proportion to `
@@ -646,7 +657,7 @@ export default async function RaceReportPage({
       {/* ── History ───────────────────────────────────────────────── */}
       {history.length > 1 ? (
         <ReportSection
-          number="11"
+          number={nextNumber()}
           title="Your race history"
           lede={`Every ${division} race we hold for you. Darker means faster within that column.`}
         >
@@ -679,7 +690,7 @@ export default async function RaceReportPage({
 
       {/* ── Method ────────────────────────────────────────────────── */}
       <ReportSection
-        number="12"
+        number={nextNumber()}
         title="How every figure here was worked out"
         lede="No black box. If you cannot check a number, you cannot train against it."
       >

@@ -251,6 +251,29 @@ describe("parser-shape sentinel (§13, §14)", () => {
   });
 });
 
+describe("completeness counts people, not rows", () => {
+  /**
+   * The published count counts people; we store one row per entry, and a
+   * doubles entry is two people. Comparing rows against it reported every team
+   * division as exactly half-missing — 1,147 false warnings, which is more than
+   * enough to make the whole check ignorable.
+   */
+  it("does not report a doubles board as half-missing", async () => {
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-doubles.html")] },
+      }),
+    });
+    // The fixture publishes 2 and serves 2 team rows — 4 people either way once
+    // both sides are counted the same.
+    const outcome = await syncOnce(h);
+    expect(outcome.inserted).toBe(2);
+
+    const complaints = (await h.repo.listAlerts()).filter((a) => a.kind === "completeness");
+    expect(complaints).toEqual([]);
+  });
+});
+
 describe("completeness reconciliation (§13, §14)", () => {
   it("flags a division short of its published entrant count", async () => {
     const h = await makeHarness({
@@ -563,6 +586,46 @@ describe("a batch that repeats a key", () => {
       { ...base, slug: "repeated-person", sourceAthleteId: "B" },
     ]);
     expect(created).toHaveLength(1);
+  });
+});
+
+describe("rows the source gives no id for", () => {
+  /**
+   * Not every row carries an `idp`. On one real board only 41% did, and in the
+   * batched rewrite a person with no id was created but never findable again —
+   * so the row that owned them was dropped as "owner unresolved". 405 of 686
+   * results vanished from one division, and the completeness check reported it
+   * as a missing page rather than as rows we had thrown away.
+   */
+  it("keeps rows whose athletes have no source id", async () => {
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-no-idp.html")] },
+      }),
+    });
+
+    const outcome = await syncOnce(h);
+    expect(outcome.inserted).toBe(4);
+    expect(h.repo.results.size).toBe(4);
+    expect(h.repo.athletes.size).toBe(4);
+
+    // And every one of them is attached to its row.
+    const results = [...h.repo.results.values()];
+    for (const athlete of h.repo.athletes.values()) {
+      expect(results.some((r) => r.athleteId === athlete.id)).toBe(true);
+    }
+  });
+
+  it("quarantines a count when it does drop rows, rather than losing them silently", async () => {
+    // The invariant that matters: dropping is allowed, dropping quietly is not.
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-no-idp.html")] },
+      }),
+    });
+    const outcome = await syncOnce(h);
+    expect(outcome.quarantined).toBe(0);
+    expect(outcome.inserted).toBe(4);
   });
 });
 

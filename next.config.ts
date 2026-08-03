@@ -83,30 +83,28 @@ const RESULTS_DATA = ["./data/results-demo/**"];
 
 const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
-    "/result/[id]": RESULTS_DATA,
-    "/report/[id]": RESULTS_DATA,
-    "/ranking/[slug]": RESULTS_DATA,
-    "/athlete/[slug]": RESULTS_DATA,
-    "/event/[slug]": RESULTS_DATA,
-    "/events": RESULTS_DATA,
+    // Globs, not an enumeration.
+    //
+    // The first version listed every route by hand and I immediately proved
+    // why that is wrong: adding /rankings/records shipped it without the data,
+    // and the failure is a 404 rather than an error, so nothing catches it.
+    // These cover the whole Results section by URL family.
+    "/results/**": RESULTS_DATA,
     "/results": RESULTS_DATA,
-    "/results/city": RESULTS_DATA,
-    "/results/city/[slug]": RESULTS_DATA,
-    "/results/course-index": RESULTS_DATA,
-    "/results/compare": RESULTS_DATA,
+    "/events": RESULTS_DATA,
+    "/event/**": RESULTS_DATA,
+    "/ranking/**": RESULTS_DATA,
+    "/rankings/**": RESULTS_DATA,
     "/rankings": RESULTS_DATA,
-    "/rankings/world-records": RESULTS_DATA,
-    "/rankings/season-bests": RESULTS_DATA,
-    "/starters/[event]": RESULTS_DATA,
+    "/result/**": RESULTS_DATA,
+    "/report/**": RESULTS_DATA,
+    "/athlete/**": RESULTS_DATA,
+    "/starters/**": RESULTS_DATA,
+    "/reports/**": RESULTS_DATA,
     "/reports": RESULTS_DATA,
-    "/reports/[event]": RESULTS_DATA,
     "/simulator": RESULTS_DATA,
-    "/tools/good-hyrox-time": RESULTS_DATA,
+    "/tools/**": RESULTS_DATA,
     "/sitemap-results.xml": RESULTS_DATA,
-    // Globs rather than an enumeration: the API surface has fifteen routes
-    // across /api/results and five OG card routes, and a list would go stale
-    // the first time one is added — silently, since the failure is an empty
-    // response rather than an error.
     "/api/results/**": RESULTS_DATA,
     "/api/og/**": RESULTS_DATA,
   },
@@ -133,6 +131,14 @@ const nextConfig: NextConfig = {
       {
         source: "/blog/hyrox-race-day-kit-checklist-2026",
         destination: "/blog/what-to-wear-for-hyrox",
+        permanent: true,
+      },
+      /* "24/7 FITNESS HYROX Sanya" is at hyrox.com/event/30454/, so our
+         mirrored slug was /hyrox/events/30454. See readableSlug in
+         lib/hyrox/races.ts. */
+      {
+        source: "/hyrox/events/30454",
+        destination: "/hyrox/events/hyrox-sanya",
         permanent: true,
       },
     ];

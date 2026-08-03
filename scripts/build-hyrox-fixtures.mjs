@@ -137,6 +137,13 @@ writeFileSync(
   page(build([1, 0, 2, 3, 4, 5, 6, 7]), 8).replaceAll("01:11:44", "01:11:38"),
 );
 
+// Rows with no detail link at all. On one real board only 41% of rows carried
+// an `idp`, and a person with no id must still get a profile and keep their row.
+writeFileSync(
+  join(OUT, "list-rows-no-idp.html"),
+  page(build([0, 1, 2, 3]), 4).replace(/<a href="\?content=detail[^"]*">([^<]*)<\/a>/g, "$1"),
+);
+
 // The board says 8, serves 3: the completeness checksum must flag it.
 writeFileSync(join(OUT, "list-rows-short.html"), page(build([0, 1, 2]), 8));
 

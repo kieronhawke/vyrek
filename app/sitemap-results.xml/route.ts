@@ -58,6 +58,7 @@ export async function GET() {
   entries.push(urlEntry(`${base}/events`, "weekly", "0.8"));
   entries.push(urlEntry(`${base}/rankings`, "weekly", "0.7"));
   entries.push(urlEntry(`${base}/rankings/world-records`, "weekly", "0.7"));
+  entries.push(urlEntry(`${base}/rankings/records`, "daily", "0.8"));
   entries.push(urlEntry(`${base}/rankings/season-bests`, "weekly", "0.7"));
   entries.push(urlEntry(`${base}/simulator`, "monthly", "0.8"));
   entries.push(urlEntry(`${base}/results/compare`, "monthly", "0.6"));

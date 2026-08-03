@@ -479,13 +479,29 @@ export function SplitDeltaBars({
               x={x} y={y + 2} width={Math.max(w, d.deltaSeconds === 0 ? 0 : 1.5)} height={rowH - 8}
               rx="1.5" fill={faster ? ACCENT : WARN}
             />
-            <text
-              x={faster ? x - 5 : x + w + 5} y={y + 11}
-              textAnchor={faster ? "end" : "start"}
-              fontSize="8.5" fill={faster ? ACCENT : WARN}
-            >
-              {d.deltaSeconds === 0 ? "—" : formatDelta(d.deltaSeconds)}
-            </text>
+            {/* The value sits outside the bar where there is room and inside
+                it where there is not.
+                On a long bar the outside position runs back past the plot and
+                collides with the row label — "Wall Balls" and "−2:02" printed
+                on top of each other on the biggest improvement in the race,
+                which is exactly the row a reader looks at first. */}
+            {(() => {
+              const outsideX = faster ? x - 5 : x + w + 5;
+              const collides = faster ? outsideX < labelW + 4 : outsideX > width - 34;
+              const insideX = faster ? x + 5 : x + w - 5;
+              return (
+                <text
+                  x={collides ? insideX : outsideX}
+                  y={y + 11}
+                  textAnchor={collides ? (faster ? "start" : "end") : (faster ? "end" : "start")}
+                  fontSize="8.5"
+                  fill={collides ? "var(--report-base, #0A0A0A)" : faster ? ACCENT : WARN}
+                  fontWeight={collides ? 700 : 400}
+                >
+                  {d.deltaSeconds === 0 ? "—" : formatDelta(d.deltaSeconds)}
+                </text>
+              );
+            })()}
           </g>
         );
       })}

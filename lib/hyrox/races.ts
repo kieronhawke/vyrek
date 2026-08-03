@@ -36,9 +36,32 @@ export type Race = {
   description: string | null;
 };
 
-export const RACES: Race[] = (raw.races as Race[]).slice().sort((a, b) =>
-  a.startDate.localeCompare(b.startDate),
-);
+/**
+ * A readable slug for races whose upstream one is not.
+ *
+ * HYROX's own event URLs are usually descriptive, and we mirror them so the
+ * two sites agree. Occasionally they are not: "24/7 FITNESS HYROX Sanya"
+ * lives at hyrox.com/event/30454/, because a sponsor name starting with
+ * digits slugifies to nothing useful. Mirroring that gave us
+ * /hyrox/events/30454, which tells a reader and a crawler nothing.
+ *
+ * Only purely numeric slugs are rewritten. Anything else, however odd it
+ * looks, stays as the source has it.
+ */
+function readableSlug(race: Race): string {
+  if (!/^\d+$/.test(race.slug)) return race.slug;
+  const i = race.name.toUpperCase().indexOf("HYROX");
+  const base = i > 0 ? race.name.slice(i) : race.name;
+  const slug = base
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return slug || race.slug;
+}
+
+export const RACES: Race[] = (raw.races as Race[])
+  .map((r) => ({ ...r, slug: readableSlug(r) }))
+  .sort((a, b) => a.startDate.localeCompare(b.startDate));
 
 /** ISO-3166 alpha-2 for the countries the calendar actually contains. */
 const ISO: Record<string, string> = {

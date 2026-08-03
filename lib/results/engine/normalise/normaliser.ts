@@ -293,6 +293,20 @@ export class Normaliser {
 
     const toCreate: UpsertAthlete[] = [];
     const pendingBySlug = new Map<string, string>(); // stableId -> slug
+    /**
+     * Slug chosen for a person the source gave no id for.
+     *
+     * ⚠️ Not every row carries an `idp`. On one real board only 41% did, and a
+     * person with no id was created but then never findable again — so the row
+     * that owned them was dropped as "owner unresolved". 405 of 686 results
+     * silently vanished from a single division, and the completeness check
+     * reported it as a missing page.
+     *
+     * Keyed by name and position, because two people on the same team row can
+     * share neither.
+     */
+    const pendingByPerson = new Map<string, string>();
+    const personKey = (rowId: string, position: number) => `${rowId}#${position}`;
     let identityReviews = 0;
 
     // Every slug this division might need, checked in one go.
@@ -324,7 +338,7 @@ export class Normaliser {
     };
 
     for (const p of prepared) {
-      for (const person of p.people) {
+      for (const [position, person] of p.people.entries()) {
         if (person.stableId && known.has(person.stableId)) continue;
         if (person.stableId && pendingBySlug.has(person.stableId)) continue;
 
@@ -342,7 +356,8 @@ export class Normaliser {
             candidates,
           );
           if (decision.action === "match") {
-            known.set(`name:${person.name}`, candidates.find((c) => c.id === decision.athleteId)!);
+            const matched = candidates.find((c) => c.id === decision.athleteId)!;
+            known.set(`person:${personKey(p.raw.sourceResultId, position)}`, matched);
             continue;
           }
           confidence = decision.confidence;
@@ -353,6 +368,7 @@ export class Normaliser {
         const slug = allocate(person.name);
         claimedSlugs.add(slug);
         if (person.stableId) pendingBySlug.set(person.stableId, slug);
+        else pendingByPerson.set(personKey(p.raw.sourceResultId, position), slug);
 
         toCreate.push({
           slug,
@@ -379,17 +395,28 @@ export class Normaliser {
 
     const rows: UpsertResult[] = [];
 
+    let unresolved = 0;
+
     for (const p of prepared) {
-      const ids = p.people.map((person) => {
+      const ids = p.people.map((person, position) => {
         if (person.stableId && known.has(person.stableId)) return known.get(person.stableId)!.id;
-        const slug = person.stableId ? pendingBySlug.get(person.stableId) : undefined;
+
+        const slug = person.stableId
+          ? pendingBySlug.get(person.stableId)
+          : pendingByPerson.get(personKey(p.raw.sourceResultId, position));
         if (slug && known.has(`slug:${slug}`)) return known.get(`slug:${slug}`)!.id;
-        return known.get(`name:${person.name}`)?.id;
+
+        return known.get(`person:${personKey(p.raw.sourceResultId, position)}`)?.id;
       });
 
-      // A row whose owner could not be resolved is not written. Storing a
-      // result pointing at nobody is worse than not storing it.
-      if (!ids[0]) continue;
+      // A row whose owner could not be resolved is not written — storing a
+      // result pointing at nobody is worse than not storing it — but it is
+      // counted, because silently dropping rows is how a division loses 59% of
+      // itself and still reports success.
+      if (!ids[0]) {
+        unresolved += 1;
+        continue;
+      }
 
       rows.push({
         eventId: ctx.event.id,
@@ -417,6 +444,19 @@ export class Normaliser {
           via: page.via,
         })
       : { ok: true as const };
+
+    if (unresolved > 0) {
+      quarantined.push({
+        sourceEventId: page.sourceEventId,
+        sourceDivisionId: page.sourceDivisionId,
+        sourceResultId: null,
+        reason: "athlete_unresolved",
+        detail: { rows: unresolved, of: prepared.length, stage: "resolve" },
+        rawPayload: null,
+        ingestionRunId: ctx.ingestionRunId ?? null,
+        reprocessedAt: null,
+      });
+    }
 
     return { rows, quarantined, shape, athletesCreated: created.length, identityReviews };
   }

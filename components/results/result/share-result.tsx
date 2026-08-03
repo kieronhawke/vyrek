@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { Share2, Check, Link2, Download, X, Loader2 } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { formatTime, formatOrdinal } from "@/lib/results/format";
@@ -83,6 +83,7 @@ function ShareSheet({
 }) {
   const [status, setStatus] = useState<Status>("idle");
   const [cardLoaded, setCardLoaded] = useState(false);
+  const [cardFile, setCardFile] = useState<File | null>(null);
   const reduceMotion = useReducedMotion();
 
   const pageUrl = typeof window !== "undefined" ? window.location.href : "";
@@ -96,6 +97,30 @@ function ShareSheet({
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
+  const fetchCard = async (): Promise<File | null> => {
+    try {
+      const res = await fetch(cardUrl);
+      if (!res.ok) return null;
+      const blob = await res.blob();
+      return new File([blob], `${fileStem(athleteName, eventName)}.png`, { type: "image/png" });
+    } catch {
+      return null;
+    }
+  };
+
+  // Warmed while the sheet is open rather than on tap. Safari drops the
+  // transient user activation across an await, so fetching the card inside the
+  // tap handler can make the share sheet refuse to open at all.
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const file = await fetchCard();
+      if (!cancelled) setCardFile(file);
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- cardUrl is the only real input
+  }, [cardUrl]);
+
   const flash = (next: Status) => {
     setStatus(next);
     setTimeout(() => setStatus("idle"), 2000);
@@ -104,9 +129,49 @@ function ShareSheet({
   const nativeShare = async () => {
     if (typeof navigator === "undefined" || !navigator.share) return;
     try {
-      await navigator.share({ title: `${athleteName} — ${eventName}`, text: caption, url: pageUrl });
+      await navigator.share({
+        title: `${athleteName} — ${eventName}`,
+        // The link is repeated inside `text` deliberately. Several iOS share
+        // targets — Notes, Instagram, and any app that reads only the plain
+        // string — take `text` and silently drop `url`, so a share that was
+        // meant to bring someone back here arrives as a bare sentence with no
+        // way to follow it. Apps that handle `url` properly still get it as a
+        // real link and show the card preview.
+        text: `${caption} ${pageUrl}`,
+        url: pageUrl,
+      });
     } catch {
       // Cancelled by the user, or blocked. Nothing to report.
+    }
+  };
+
+  /**
+   * Share the card image itself through the native sheet.
+   *
+   * This is the share that actually happens after a race: the picture, into a
+   * story or a group chat, from a phone. Downloading was the only route before,
+   * and on iOS Safari the `download` attribute on a blob is unreliable — it
+   * opens the image in a tab and leaves you to long-press it.
+   *
+   * The fetch happens before `navigator.share`, which costs the transient user
+   * activation on some browsers, so the file is fetched on open rather than on
+   * tap where possible. Where it is not, the catch below keeps it silent.
+   */
+  const shareImage = async () => {
+    if (typeof navigator === "undefined" || !navigator.share) return;
+    setStatus("downloading");
+    try {
+      const file = cardFile ?? (await fetchCard());
+      if (!file) { flash("failed"); return; }
+      await navigator.share({
+        files: [file],
+        title: `${athleteName} — ${eventName}`,
+        text: `${caption} ${pageUrl}`,
+      });
+      setStatus("idle");
+    } catch {
+      // AbortError is a cancelled sheet, which is not a failure.
+      setStatus("idle");
     }
   };
 
@@ -122,13 +187,12 @@ function ShareSheet({
   const download = async () => {
     setStatus("downloading");
     try {
-      const res = await fetch(cardUrl);
-      if (!res.ok) throw new Error(String(res.status));
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
+      const file = cardFile ?? (await fetchCard());
+      if (!file) throw new Error("card unavailable");
+      const url = URL.createObjectURL(file);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${athleteName.toLowerCase().replace(/\s+/g, "-")}-${eventName.toLowerCase().replace(/\s+/g, "-")}.png`;
+      a.download = `${fileStem(athleteName, eventName)}.png`;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -139,7 +203,13 @@ function ShareSheet({
     }
   };
 
-  const canNativeShare = typeof navigator !== "undefined" && "share" in navigator;
+  // Capability is read through `useSyncExternalStore`, which is exactly what it
+  // is for: a value that lives outside React, never changes, and must have an
+  // SSR snapshot. Reading `navigator` during render would make the server HTML
+  // and the first client render disagree, and setting it from an effect trips
+  // the cascading-render rule — this does neither.
+  const canShareLink = useSyncExternalStore(subscribeNever, canShareLinkNow, () => false);
+  const canShareImage = useSyncExternalStore(subscribeNever, canShareImageNow, () => false);
 
   return (
     <div
@@ -213,13 +283,19 @@ function ShareSheet({
           </p>
 
           <div className="mt-3 grid gap-2 sm:grid-cols-2">
-            {canNativeShare ? (
-              <ActionButton onClick={nativeShare} primary>
-                <Share2 className="size-4" aria-hidden /> Share
+            {canShareImage ? (
+              <ActionButton onClick={shareImage} primary>
+                <Share2 className="size-4" aria-hidden /> Share the card
               </ActionButton>
             ) : null}
 
-            <ActionButton onClick={download} primary={!canNativeShare}>
+            {canShareLink ? (
+              <ActionButton onClick={nativeShare} primary={!canShareImage}>
+                <Link2 className="size-4" aria-hidden /> Share the link
+              </ActionButton>
+            ) : null}
+
+            <ActionButton onClick={download} primary={!canShareLink}>
               {status === "downloading"
                 ? <><Loader2 className="size-4 animate-spin" aria-hidden /> Saving…</>
                 : <><Download className="size-4" aria-hidden /> Save image</>}
@@ -272,4 +348,50 @@ function ActionButton({
       {children}
     </button>
   );
+}
+
+/** One filename rule, used by both the download and the shared file. */
+function fileStem(athleteName: string, eventName: string): string {
+  const slug = (value: string) =>
+    value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  return `${slug(athleteName)}-${slug(eventName)}`;
+}
+
+/* ── Browser capability probes ──────────────────────────────────────── */
+
+/** These never change during a session, so the store never notifies. */
+function subscribeNever(): () => void {
+  return () => {};
+}
+
+function canShareLinkNow(): boolean {
+  return typeof navigator !== "undefined" && typeof navigator.share === "function";
+}
+
+/**
+ * Whether the browser will actually accept a *file* in the share sheet.
+ *
+ * `canShare` has to be probed with a real `File`. Passing a plain object
+ * returns true on browsers that cannot take one, and the share then fails
+ * silently at the moment the user taps it — the worst possible place to find
+ * out. Memoised because constructing a probe file on every render is waste.
+ */
+let fileShareSupport: boolean | null = null;
+
+function canShareImageNow(): boolean {
+  if (fileShareSupport !== null) return fileShareSupport;
+  if (!canShareLinkNow() || typeof File === "undefined") {
+    fileShareSupport = false;
+    return false;
+  }
+  try {
+    const probe = new File([new Blob([""], { type: "image/png" })], "probe.png", {
+      type: "image/png",
+    });
+    fileShareSupport = Boolean(navigator.canShare?.({ files: [probe] }));
+  } catch {
+    fileShareSupport = false;
+  }
+  return fileShareSupport;
 }
