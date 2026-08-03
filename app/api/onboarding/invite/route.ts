@@ -1,5 +1,10 @@
 import { NextResponse } from "next/server";
-import { createInvite, inviteUrl, signingConfigured } from "@/lib/onboarding/token";
+import {
+  createInvite,
+  inviteUrl,
+  inviteUrlForSms,
+  signingConfigured,
+} from "@/lib/onboarding/token";
 import { planByKey } from "@/lib/onboarding/model";
 import { sendOnboardingInvite } from "@/lib/email/send";
 import { onboardingInviteSms } from "@/lib/email/templates/onboarding-invite";
@@ -64,7 +69,11 @@ export async function POST(request: Request) {
   const link = inviteUrl(token, siteUrl());
   const firstName = name.split(/\s+/)[0];
 
-  const smsText = phone ? onboardingInviteSms(firstName, link, kind) : null;
+  // The text gets the bare-domain link; the email keeps the full one so it
+  // renders as a proper anchor.
+  const smsText = phone
+    ? onboardingInviteSms(firstName, inviteUrlForSms(token, siteUrl()), kind)
+    : null;
 
   // Both at once. Sequentially, a slow email delays the text for no reason,
   // and neither is allowed to fail the other.

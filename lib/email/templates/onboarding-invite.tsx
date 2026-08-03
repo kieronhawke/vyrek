@@ -218,12 +218,28 @@ export function onboardingInviteSubject(firstName: string, kind: "full" | "payme
 }
 
 /**
- * The SMS that goes with it.
+ * THE TEXT.
  *
- * Written short because it is billed by the character. The first live invite
- * ran to three segments and 12.7p; the wording below and a shorter path bring
- * it to two. Plain GSM throughout — one curly apostrophe would halve the
- * segment size and undo all of it, which is why these are typewriter quotes.
+ * The first thing a new client ever gets from Suth Performance, and it lands
+ * on a lock screen. It has about eight words before they decide whether it
+ * came from a person or a system.
+ *
+ * SHORT BECAUSE THE SENDER ALREADY SAYS WHO IT IS. The text arrives from
+ * "SuthPerform", so repeating "Suth Performance" in the body spends twenty
+ * characters saying what is already on the screen. That is what bought the
+ * room for it to fit in ONE segment — 4.2p rather than 12.7p, and more
+ * importantly a message that looks like a note rather than a wall.
+ *
+ * Warm, and specific about the cost in minutes: "set up your account" with no
+ * sense of how long it takes is what gets left until later and forgotten.
+ *
+ * NO EMOJI, and not for taste — one emoji forces the whole message to UCS-2,
+ * cuts every segment from 160 characters to 70 and doubles the bill. Same for
+ * curly quotes, which is why the apostrophes here are typewriter ones.
+ *
+ * IT MUST STAY UNDER 160 FOR A LONG FIRST NAME, not just for "Sam" — the name
+ * is paid for twice, once in the greeting and once inside the link.
+ * lib/onboarding/invite-cost.test.ts holds that line.
  */
 export function onboardingInviteSms(
   firstName: string,
@@ -231,8 +247,8 @@ export function onboardingInviteSms(
   kind: "full" | "payment",
 ): string {
   return kind === "payment"
-    ? `${firstName}, Ben here. Pick your plan: ${link}`
-    : `${firstName}, Ben at Suth Performance. Your setup link, 5 mins: ${link}`;
+    ? `${firstName}, it's Ben. Ready when you are - pick your plan: ${link}`
+    : `${firstName}, it's Ben. Welcome aboard! 5 mins to set up: ${link}`;
 }
 
 export { BG };
