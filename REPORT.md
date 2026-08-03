@@ -101,8 +101,8 @@ field sizes stay correct.
 ## 4. Test results
 
 ```
-483 tests, 30 files, all passing
-+ 3 live tests, labelled and skipped unless HYROX_LIVE_SMOKE=1
+529 tests, 32 files, all passing
++ 4 live tests, labelled and skipped unless HYROX_LIVE_SMOKE=1
 ```
 
 Baseline before this work was 343. The deterministic tests need no database, no
@@ -137,11 +137,12 @@ Typecheck clean. Production build compiles 6,551 static pages.
 
 ---
 
-## 5. Seven bugs, and where each was caught
+## 5. Eleven bugs, and where each was caught
 
-Three were caught by the fixture tests, three by pointing the engine at the real
-source, and one by deploying and curling the endpoint. The spread is the point:
-none of the three groups would have found the others.
+Three by the fixture tests, seven by pointing the engine at the real source, one
+by deploying and curling the endpoint. The spread is the point: none of the
+three groups would have found the others, and the largest one was invisible to
+every green test in the suite.
 
 **Caught by tests**
 
@@ -168,9 +169,24 @@ none of the three groups would have found the others.
    changes when a rank changes, so a live board would have inserted duplicates
    on every position change instead of updating rows.
 
+7. **The catalogue filed 22 race weekends under one city.** The season page
+   lists every weekend's codes flat, with no optgroup and no marker, and neither
+   a query parameter nor a deep link narrows it — only a POST does. Labelling
+   them all after the selected weekend meant Delhi's results were headed for a
+   Chiba event. Caught by running the catalogue live and counting what came out:
+   28 events in, 7 out.
+8. **Doubles boards parsed to nothing.** They use `type-relay_member`, not
+   `type-fullname`, and drop nationality entirely — so every doubles and relay
+   division returned zero rows and would have alarmed the shape sentinel.
+9. **The comma means two different things.** Surname-first in `fullname`,
+   partner-separator in `relay_member`. Normalising a team row merged a pair
+   into one athlete with their names swapped.
+10. **The content hash was stored per event**, so each division overwrote the
+    last. The unchanged check could never match and every poll rewrote every row.
+
 **Caught by deploying**
 
-7. **`{"error":"[object Object]"}` with a 500.** Supabase rejects with a
+11. **`{"error":"[object Object]"}` with a 500.** Supabase rejects with a
    PostgrestError-shaped object, not an `Error`, so it failed `instanceof Error`
    and the outage detection that would have made it a clean 503 never matched.
 
@@ -235,10 +251,10 @@ Stated plainly rather than rounded up.
   intervals, diffing and fan-out are proven against fixtures and against a
   finished event; the live-versus-final signals in `SOURCE.md` §7 still need a
   real race to confirm.
-- **Event dates are not yet ingested.** The season index gives weekend labels
-  ("2026 Chiba") and division day names, not dates. Live self-arming needs
-  `start_datetime`, so until dates are sourced, arming must be done from the
-  console. This is the one functional gap I would fix next.
+- **Four season-9 weekends have no dates** — Delhi, Sydney, Hangzhou and
+  Jakarta are not in HYROX's published calendar under those names. They are
+  flagged by an alert rather than given guessed dates, and they cannot
+  self-arm until they match. Worth a look before those races run.
 - **Lighthouse budgets remain unverified**, carried over from the frontend build.
 - **Station guide additions from frontend brief §5.8** (weights-by-division
   table, histogram, human-content slots, ninth "run" guide) are still not built.
