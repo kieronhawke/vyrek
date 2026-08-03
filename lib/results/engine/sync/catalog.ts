@@ -62,6 +62,7 @@ export async function runCatalogSync(
     };
     const shapes: SentinelVerdict[] = [];
     const unnamed: string[] = [];
+    const failedEvents: { sourceEventId: string; label: string; error: string }[] = [];
 
     for (const seasonPath of seasonPaths) {
       const groups = await engine.adapter.listEventGroups(seasonPath);
@@ -79,30 +80,42 @@ export async function runCatalogSync(
         if (!normalised) continue;
 
         const existing = await repo.getEventBySourceId(group.sourceEventId);
-        const event = await repo.upsertEvent({
-          slug: normalised.slug,
-          name: `HYROX ${normalised.city} ${normalised.year}`,
-          city: normalised.city,
-          country: existing?.country ?? "",
-          countryIso: existing?.countryIso ?? "",
-          region: existing?.region ?? "",
-          season: normalised.season,
-          year: normalised.year,
-          venue: existing?.venue ?? null,
-          // Status is owned by the live poller and the reconciler, not here:
-          // the catalogue must never demote a live event back to upcoming.
-          status: existing?.status ?? "upcoming",
-          startDatetime: existing?.startDatetime ?? null,
-          endDatetime: existing?.endDatetime ?? null,
-          tzOffsetMinutes: existing?.tzOffsetMinutes ?? 0,
-          startDate: existing?.startDate ?? null,
-          endDate: existing?.endDate ?? null,
-          athleteCount: existing?.athleteCount ?? 0,
-          sourceEventId: group.sourceEventId,
-          sourceSeasonPath: seasonPath,
-          isDemo: false,
-          lastSyncedAt: now.toISOString(),
-        });
+        let event;
+        try {
+          event = await repo.upsertEvent({
+            slug: normalised.slug,
+            name: `HYROX ${normalised.city} ${normalised.year}`,
+            city: normalised.city,
+            country: existing?.country ?? "",
+            countryIso: existing?.countryIso ?? "",
+            region: existing?.region ?? "",
+            season: normalised.season,
+            year: normalised.year,
+            venue: existing?.venue ?? null,
+            // Status is owned by the live poller and the reconciler, not here:
+            // the catalogue must never demote a live event back to upcoming.
+            status: existing?.status ?? "upcoming",
+            startDatetime: existing?.startDatetime ?? null,
+            endDatetime: existing?.endDatetime ?? null,
+            tzOffsetMinutes: existing?.tzOffsetMinutes ?? 0,
+            startDate: existing?.startDate ?? null,
+            endDate: existing?.endDate ?? null,
+            athleteCount: existing?.athleteCount ?? 0,
+            sourceEventId: group.sourceEventId,
+            sourceSeasonPath: seasonPath,
+            isDemo: false,
+            lastSyncedAt: now.toISOString(),
+          });
+        } catch (error) {
+          // One event that will not store must not cost the whole season's
+          // catalogue. Recorded and skipped; the next run retries it.
+          failedEvents.push({
+            sourceEventId: group.sourceEventId,
+            label: group.label,
+            error: error instanceof Error ? error.message : String(error),
+          });
+          continue;
+        }
         result.eventsUpserted += 1;
 
         for (const ref of group.divisions) {
@@ -182,6 +195,19 @@ export async function runCatalogSync(
       });
     }
 
+    if (failedEvents.length > 0) {
+      await repo.raiseAlert({
+        kind: "completeness",
+        severity: "warning",
+        message:
+          `${failedEvents.length} event(s) could not be stored and were skipped. ` +
+          `The rest of the season catalogued normally; the next run retries them.`,
+        detail: { failedEvents: failedEvents.slice(0, 10) },
+        sourceEventId: null,
+        acknowledgedAt: null,
+      });
+    }
+
     // Only a *successful* run pings. A failed run must leave the monitor
     // silent, or the dead-man's switch is decorative.
     await pingHeartbeat("catalog");
@@ -197,6 +223,7 @@ export async function runCatalogSync(
         datesEnriched: enriched.enriched.length,
         datesUnmatched: enriched.unmatched.length,
         unnamedWeekends: unnamed.length,
+        failedEvents: failedEvents.length,
       },
     } as CatalogResult & Record<string, unknown>;
   });
