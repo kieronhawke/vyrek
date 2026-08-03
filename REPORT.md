@@ -4,8 +4,8 @@ Built 3 August 2026 against `docs/suv-results-build-prompt.md` (frontend) and
 `docs/suv-results-data-engine-prompt.md` (data engine). Both are committed in
 `docs/`.
 
-**Read section 1 first.** It is the one finding that changes what "live" means,
-and it is not a build problem.
+Verified against the live source, deployed to production. One item outstanding
+and it is `ACTION-REQUIRED.md` item 1.
 
 ---
 
@@ -38,21 +38,21 @@ re-processed.
 
 ## 2. What the source actually is
 
-Investigated with seven spaced, read-only requests. Findings in
-`docs/results/SOURCE.md`; the two that changed the design:
+mika:Timing's platform. Full detail in `docs/results/SOURCE.md`, corrected
+against reality once ingestion was switched on. The four findings that shaped
+the design:
 
-- **A plain `?pid=list` request server-renders zero rows.** Row data arrives via
-  mika's own `content=ajax2` XHR. A parser aimed at the page would parse a
-  valid, permanently empty document forever and never error. ajax2 is the
-  primary access method; the page is the fallback.
-- **No `ETag`, no `Last-Modified`.** The brief assumes conditional requests.
-  Change detection is a content hash instead — which the schema already
-  specified, but it means every poll transfers a full body, and the rate budget
-  is sized for that.
+- **The board only renders with a `search[sex]` filter.** Unfiltered it returns
+  `> 200 Results` and no rows. The filter is not an optimisation, it is how you
+  get data at all — and it maps cleanly onto our men's and women's divisions,
+  which are the same source code.
+- **Data rows carry `type-*` classes; only the header carries `field-*`.**
+- **The stable id is `idp`**, on each row's detail link, HTML-escaped.
+- **No `ETag`, no `Last-Modified`**, so change detection is a content hash. Every
+  poll transfers a full body and the rate budget is sized for that.
 
-Also documented: the event-code grammar (`{DIVISION}_{WEEKEND_ID}`, eight
-division prefixes), the `field-*` class-name row schema, and how one race
-weekend maps to many source codes.
+Splits — the eight runs, eight stations and Roxzone — are on a per-athlete
+detail view at one request each, which is why they have their own paced worker.
 
 ---
 
@@ -68,16 +68,18 @@ erasure function anonymises rather than deletes.
 | Piece | Where |
 |---|---|
 | Fetch layer: honest UA, authorisation gate, backoff + jitter, `Retry-After`, global outbound budget, circuit breaker | `lib/results/engine/fetch/` |
-| Source adapters: ajax2 → HTML fallback chain, replay adapter over fixtures | `lib/results/engine/source/` |
+| Source adapters: filtered board → unfiltered fallback, replay adapter over fixtures | `lib/results/engine/source/` |
 | Parser (pure, no DOM library), normaliser, identity resolution | `lib/results/engine/source/mika-parse.ts`, `normalise/` |
 | Validation and quarantine, parser-shape sentinel | `lib/results/engine/validate/` |
-| Catalog sync, backfill, live poller, reconciliation, distributions | `lib/results/engine/sync/` |
+| Catalog sync, backfill, splits worker, live poller, reconciliation, distributions | `lib/results/engine/sync/` |
 | Heartbeat, console model, access control | `lib/results/engine/ops/` |
 
 ### Serving
-Ten endpoints under `/api/results/v1` covering the full `ResultsDataSource`
-contract, edge-cached with stale-while-revalidate, every response carrying the
-mika:Timing attribution structurally.
+Eleven endpoints under `/api/results/v1` — the full `ResultsDataSource`
+contract plus `/health` —
+edge-cached with stale-while-revalidate, every response carrying the
+mika:Timing attribution structurally. An unreachable store returns 503 with a
+`Retry-After`, not a 500 with a stack trace.
 
 `LiveDataSource` is real now in two implementations — direct in-process on the
 server, HTTP in the browser — and `NEXT_PUBLIC_DATA_MODE=live` selects it.
@@ -99,11 +101,13 @@ field sizes stay correct.
 ## 4. Test results
 
 ```
-469 tests, 29 files, all passing — 2.23s
+483 tests, 30 files, all passing
++ 3 live tests, labelled and skipped unless HYROX_LIVE_SMOKE=1
 ```
 
-Baseline before this work was 343. The 126 new tests are deterministic: no
-database, no network, no source, no permission from anyone.
+Baseline before this work was 343. The deterministic tests need no database, no
+network and no source. The live ones really do contact results.hyrox.com and
+never block a build.
 
 Every line of the data engine brief's §14 list, and where it is proven:
 
@@ -125,7 +129,9 @@ Every line of the data engine brief's §14 list, and where it is proven:
 | Identity: same athlete unified; two same-name people not merged | `normalise.test.ts` |
 | Timezone arming: Sydney arms at local start, not UTC date | `normalise.test.ts` |
 | Realtime saturation: overflow falls back to cached-API polling | `engine.test.ts` |
-| Access control: unauthenticated triggers rejected | `service.test.ts` |
+| Access control: unauthenticated triggers rejected | `service.test.ts`, and verified against production (401) |
+| Splits fetched, validated and prioritised | `engine.test.ts` |
+| **Live end-to-end ingestion** | `live-ingest.test.ts` — real division, real splits |
 
 Typecheck clean. Production build compiles 6,551 static pages.
 
