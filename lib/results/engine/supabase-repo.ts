@@ -161,6 +161,13 @@ export function toRepositoryError(error: unknown, context: string): Error {
   return wrapped;
 }
 
+/** Split a list into fixed-size batches. PostgREST rejects an over-long URL. */
+function chunk<T>(items: T[], size: number): T[][] {
+  const out: T[][] = [];
+  for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size));
+  return out;
+}
+
 export class SupabaseResultsRepository implements ResultsRepository {
   constructor(private db: SupabaseClient = resultsSupabase()) {}
 
@@ -811,42 +818,72 @@ export class SupabaseResultsRepository implements ResultsRepository {
   }
 
   async getDivisionRecords() {
-    // The distinct division keys, from the divisions table rather than a
+    // Every division, grouped by key. Read from the table rather than a
     // hardcoded list, so a new format appears on the board by itself.
-    const keyRows = await this.many<{ division_key: string; display_name: string }>(
-      this.db.from("results_divisions").select("division_key,display_name"),
+    //
+    // `manyAll`, because there are 2,692 of them and a single request returns
+    // 1,000 — which would have silently dropped whole formats off the board.
+    const keyRows = await this.manyAll<{
+      id: string; division_key: string; display_name: string; event_id: string;
+    }>((from, to) =>
+      this.db
+        .from("results_divisions")
+        .select("id,division_key,display_name,event_id")
+        .range(from, to),
     );
+
     const labels = new Map<string, string>();
+    const idsByKey = new Map<string, string[]>();
+    const eventIdByDivisionId = new Map<string, string>();
     for (const row of keyRows) {
       if (!labels.has(row.division_key)) labels.set(row.division_key, row.display_name);
+      idsByKey.set(row.division_key, [...(idsByKey.get(row.division_key) ?? []), row.id]);
+      eventIdByDivisionId.set(row.id, row.event_id);
     }
 
     const found = await Promise.all(
-      [...labels.keys()].map(async (divisionKey) => {
-        // Sorted and limited in the database. The index on
-        // (division_id, finish_time_ms) makes this a top-1 read, not a scan.
-        const rows = await this.many<{
-          finish_time_ms: number;
-          athlete_id: string;
-          division: { division_key: string; event_id: string } | null;
-        }>(
-          this.db
-            .from("results_results")
-            .select("finish_time_ms,athlete_id,division:results_divisions!inner(division_key,event_id)")
-            .eq("division.division_key", divisionKey)
-            .eq("status", "finished")
-            .not("finish_time_ms", "is", null)
-            .order("finish_time_ms", { ascending: true })
-            .limit(1),
+      [...idsByKey.entries()].map(async ([divisionKey, divisionIds]) => {
+        // ⚠️ Filtered on `division_id`, not on the joined `division_key`.
+        //
+        // Filtering the embedded resource cannot use the partial index on
+        // (division_id, finish_time_ms), so the planner sorted the division out
+        // by hand and the query hit the statement timeout under write load.
+        // Division ids are already in hand from the row above, so the filter can
+        // be expressed against the indexed column instead.
+        //
+        // Chunked: an `in` list of every division id in a popular key is long
+        // enough for PostgREST to reject the URL outright.
+        const winners = await Promise.all(
+          chunk(divisionIds, 150).map(async (ids) => {
+            const rows = await this.many<{
+              finish_time_ms: number;
+              athlete_id: string;
+              division_id: string;
+            }>(
+              this.db
+                .from("results_results")
+                .select("finish_time_ms,athlete_id,division_id")
+                .in("division_id", ids)
+                .eq("status", "finished")
+                .not("finish_time_ms", "is", null)
+                .order("finish_time_ms", { ascending: true })
+                .limit(1),
+            );
+            return rows[0] ?? null;
+          }),
         );
-        const row = rows[0];
-        if (!row?.division) return null;
+
+        const best = winners
+          .filter((w): w is NonNullable<typeof w> => w !== null)
+          .sort((a, b) => a.finish_time_ms - b.finish_time_ms)[0];
+        if (!best) return null;
+
         return {
           divisionKey,
           divisionLabel: labels.get(divisionKey) ?? divisionKey,
-          athleteId: row.athlete_id,
-          finishTimeMs: row.finish_time_ms,
-          eventId: row.division.event_id,
+          athleteId: best.athlete_id,
+          finishTimeMs: best.finish_time_ms,
+          eventId: eventIdByDivisionId.get(best.division_id) ?? "",
         };
       }),
     );

@@ -180,6 +180,24 @@ describe("row validation (§9)", () => {
     expect(validateRow(ok).ok).toBe(true);
   });
 
+  it("rejects a placeholder that is punctuation rather than a name", () => {
+    // ⚠️ "- -" passed a length check and reached the world-record board as the
+    // fastest women's HYROX ever recorded. The source uses these where an entry
+    // has no name attached.
+    for (const name of ["- -", "--", ". .", "···"]) {
+      const verdict = validateRow({ ...ok, name });
+      expect(verdict.ok, name).toBe(false);
+      expect(verdict.ok === false && verdict.failures[0].reason).toBe("missing_name");
+    }
+  });
+
+  it("accepts names in any script", () => {
+    // The field is full of non-Latin names and every one is a real person.
+    for (const name of ["瀞儀 曾", "Ольга Иванова", "Γιώργος Παπάς", "田中 太郎"]) {
+      expect(validateRow({ ...ok, name }).ok, name).toBe(true);
+    }
+  });
+
   it("rejects a race nobody could have run", () => {
     const twelveSeconds = validateRow({ ...ok, finishTimeMs: 12_000 });
     expect(twelveSeconds.ok).toBe(false);

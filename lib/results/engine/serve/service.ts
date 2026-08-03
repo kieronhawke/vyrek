@@ -393,7 +393,14 @@ export class ResultsService implements ResultsDataSource {
         const event = eventById.get(record.eventId);
         // An anonymised athlete is a removal request: their name comes off the
         // record board rather than the board keeping a stale copy of it.
-        if (!athlete || athlete.isAnonymised || !event) return null;
+        //
+        // An athlete flagged for identity review is held back too. This board
+        // claims to name the fastest human being ever to do this, so it is the
+        // one page where a doubtful row must not appear — a placeholder entry
+        // called "- -" reached it as the fastest women's HYROX on record.
+        if (!athlete || athlete.isAnonymised || athlete.needsIdentityReview || !event) {
+          return null;
+        }
 
         return {
           divisionCode: code,
