@@ -10,7 +10,7 @@ import { Trophy, CalendarRange } from "lucide-react";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "HYROX Rankings: Records, Season Bests & Division Boards | Suth Performance",
+  title: "HYROX Rankings: Records, Season Bests & Division Boards",
   description:
     "Global HYROX rankings — all-time records and current season bests by division, "
     + "with every result linked to its full splits.",

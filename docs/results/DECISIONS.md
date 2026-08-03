@@ -666,3 +666,155 @@ depending on a matching client version a backup that fails on the day it is
 needed. JSON works from anywhere the key works, restores by upsert so it tops
 up rather than replaces, and covers what re-ingestion cannot rebuild: claimed
 profiles, anonymisation decisions, quarantine state, merge resolutions.
+
+### D75 — City imagery: keep the typographic marks, do not generate photos
+Kieron asked whether the coloured city cards are placeholder or the aesthetic, and offered to
+generate images with Gemini. **Keeping the marks**, for three reasons:
+
+1. **A generated "London" is not London.** An image model produces a plausible-looking skyline
+   that is not any real place, on a page whose entire value is that its numbers are true.
+   Publishing invented photography of a real city, on a results site, next to real athletes'
+   names, undermines the thing the section is for.
+2. **Weight.** 223 events at ~200KB each is ~45MB of imagery on the calendar's critical path,
+   against a page that currently scores 96–100 on mobile. The reference site's photo cards are
+   the slowest thing they ship.
+3. **The marks already work.** Each city has a stable, unique identity from its IATA code, and
+   the codes are how the sport already talks about its calendar.
+
+`CityMark` takes a `photo` prop that swaps the wash for a real image *in the same layout*. So
+if licensed or self-shot photography arrives later, it is a prop on one component — not a
+redesign. That is the right place to leave it.
+
+### D76 — Athlete page: clean at the top, deep below the fold
+Kieron asked for "pretty standard to start with, really clean and simple" plus depth for people
+who want to analyse. Structured accordingly: name, four figures, a one-sentence form verdict and
+the progression chart above the fold; power score, sortable station profile and per-division
+bests below it. Someone checking a friend's time never scrolls past the first screen; someone
+planning a season gets the rest.
+
+### D77 — The power score publishes its formula
+Their "Elite Points" is a closed number. Ours shows peak, consistency, recency and field depth
+as four bars, with the weighting explained in one sentence on the card. That is better product
+(an athlete can act on a component score) and better SEO (a page that explains its own maths is
+the kind of page that earns links).
+
+### D78 — The share card is a poster, not a summary
+Rebuilt around one job: someone pastes the link into a group chat the evening after a race. The
+time is the hero at 168px, three supporting figures only, the race strip runs edge to edge, and
+the brand sits small at the bottom. A card that shouts the brand over the athlete's result does
+not get shared, which defeats the point of having one.
+
+The standout figure names the full station ("Wall Balls"), not the strip's short code — "WALL"
+is legible inside a labelled chart and meaningless as a standalone number in a feed.
+
+### D79 — Structured data is built in one module, not per template
+`lib/results/structured-data.ts` builds BreadcrumbList, SportsEvent, Person, Dataset and
+FAQPage. Google is strict about these and a malformed block is worse than none — it earns a
+Search Console error instead of a rich result. Two rules the builders enforce that hand-rolled
+JSON kept getting wrong: **omit a field rather than emit it empty** (the ingested catalogue
+often has no `startDate`, and `""` is a validation error), and **the last breadcrumb carries no
+`item`**, because linking the current page to itself is an invalid-item warning.
+
+Ranking pages emit `Dataset`. They genuinely are datasets — thousands of rows, a documented
+schema, a CSV download — and dataset rich results are a supported route to visibility that
+nobody in this space uses.
+
+`jsonLd()` escapes `<`. Nothing is attacker-controlled today, but athlete names come from an
+external feed and one day will be.
+
+### D80 — The print sheet must not carry an `<h1>`
+It lives in the DOM on screen (hidden by CSS) so Save-as-PDF needs no round trip, which meant
+every result page shipped **two `<h1>`s** — an SEO defect and an accessibility one, since a
+screen reader announces both. Caught by the suite, not by eye. The sheet's masthead is a `<p>`;
+a printed page has no document outline to serve, so heading semantics buy nothing there.
+
+### D81 — Race-strip labels take their ink from their own segment
+Black-on-chartreuse reads; black on the muted station fill was **1.54:1**, flagged serious by
+axe on six nodes. Each segment now picks the ink that contrasts with it rather than one colour
+being applied to all of them.
+
+### D82 — The search palette's accent goes on the element that owns the radius
+Reported twice, and the first two fixes were both wrong in the same way. The
+ring started on the `<input>` and was clipped on three sides by the sheet's
+`overflow-hidden`. Moving it to the input's row fixed the sides but not the
+corners: a square-cornered child sitting flush inside a rounded, clipping parent
+gets its top corners sliced off, which is exactly what the user described — a
+straight green line with black notches bitten out of each end.
+
+A ring can only follow a curve if it is drawn on the element that has the curve.
+The accent is now a border plus box-shadow on the sheet itself; both inherit
+`border-radius` by definition, and an element's own shadow is not clipped by its
+own `overflow-hidden`, which clips children. It reads as a glow rather than a
+hard rule because the input is autofocused on open — this is the palette's
+resting state, not a transient highlight, so it should look deliberate.
+
+The regression test asserts the *structure*, not a screenshot: the sheet has a
+radius, an accent border and a shadow, **and no descendant carries its own
+box-shadow**. That last clause is the one that would have caught both earlier
+attempts.
+
+### D83 — City hubs, because "hyrox london results" is the query
+Editions rank for "hyrox london 2025". Nobody searches a season slug, and
+without a hub the twelve London editions compete with each other for the phrase
+with the actual volume and split their link equity twelve ways.
+
+The competitor ships `/location/london` at **226 words** — an h1, a list, no h2,
+no numbers, and a title that opens "HYROX location LON". Ours is 566 on a
+single-edition city because every clause is computed from what happened at those
+races: editions, total finishers, median finish, fastest ever, venue history.
+That is also what stops two hundred sibling pages reading as near-duplicates,
+which is how thin location pages get filtered out of an index.
+
+`generateStaticParams` prebuilds only hubs with two or more editions, capped at
+60. The tail renders on demand and caches; prebuilding two hundred thin cities
+would lengthen every deploy to serve pages nobody has asked for.
+
+### D84 — The course speed index, and why it has two columns
+Every HYROX race is nominally identical. Athletes know perfectly well they are
+not, and nobody publishes the difference because it requires joining every
+venue's results to every other. We already have the corpus.
+
+The honest problem is that a field median is a fact about **who entered** as
+much as about the course — a championship draws a deeper field and posts a
+faster median on an identical layout. Publishing that as "difficulty" would be
+dishonest, so it is a *speed* index, and the winner's time is shown beside the
+median. The front of the field is the part least sensitive to who else turned
+up: when both move together the venue is the likelier explanation, and when only
+the median moves the entry list is. One number would hide that distinction.
+
+The baseline is a median of per-edition medians, not a median of all finishers
+pooled — pooling would let the biggest race define "normal" and then measure it
+against itself. Fields under 100 are excluded; a league table that ranks noise
+at the top is worse than a shorter table.
+
+The honest upgrade is a paired comparison — the same athletes at two venues in
+one season, controlling for field quality outright. That needs athlete-level
+cross-event data and is noted as next rather than pretended at.
+
+### D85 — FAQ copy and FAQ schema come from one array
+The commonest way `FAQPage` goes wrong is the JSON and the visible copy drifting
+apart; Google requires the answer to be present on the page, and a block
+promising answers a reader cannot see is a manual-action risk rather than a rich
+result. `FaqSection` takes one array and produces both, so that failure is
+impossible by construction. `<details>` rather than a JS accordion, so the
+answers are in the HTML whether or not anything hydrates.
+
+Questions the data cannot answer are not asked. An invented answer inside schema
+markup is worse than no schema.
+
+### D86 — Seventeen pages had the brand in the title twice
+`app/layout.tsx` sets `title.template = "%s · Suth Performance"`. Seventeen
+Results pages also hard-coded `| Suth Performance`, so every tab and every SERP
+entry read "… | Suth Performance · Suth Performance" — roughly 20 wasted
+characters of the ~60 Google displays.
+
+Typecheck cannot see it and neither can a screenshot, because the title tag is
+not on the page. It survived because nothing asserted on it. Guarded now in
+`metadata-urls.test.ts`, alongside the `${siteUrl}` guard that exists for the
+same reason.
+
+### D87 — The flag comes out of the `<h1>`
+`Nationality` renders the ISO code as text, so nesting it in the city heading
+made the accessible name "HYROX London ResultsGBR" — which is what a screen
+reader announces and what Google reads as the page's primary heading. It sits
+beside the `<h1>` now, in a flex wrapper.

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getResultsSource } from "@/lib/results";
 import { siteUrl } from "@/lib/blog/urls";
+import { breadcrumbList, jsonLd } from "@/lib/results/structured-data";
 import { buildRankingSlug } from "@/lib/results/slugs";
 import { STATION_IDS, stationGuideHref } from "@/lib/results/model";
 import { formatCount, formatOrdinal, formatPercent, formatSplit, formatTime } from "@/lib/results/format";
@@ -40,7 +41,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const result = await getResultsSource().getResult(id);
-  if (!result) return { title: "Result not found | Suth Performance" };
+  if (!result) return { title: "Result not found" };
 
   const division = result.divisionLabel.replace("HYROX ", "");
   return {
@@ -111,6 +112,16 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
   return (
     <>
     <div className="results-print-hide-on-paper mx-auto max-w-[1100px] px-5 py-6 md:py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbList(siteUrl(), [
+          { name: "Results", path: "/results" },
+          { name: `${result.eventCity} ${result.eventName.match(/\d{4}/)?.[0] ?? ""}`.trim(), path: `/event/${result.eventSlug}` },
+          { name: division, path: `/ranking/${rankingSlug}` },
+          { name: result.athleteName, path: `/result/${id}` },
+        ])) }}
+      />
+
       <nav aria-label="Breadcrumb" className="mb-3">
         <ol className="flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
           <li><Link href="/results" className="hover:text-suth-accent">Results</Link></li>

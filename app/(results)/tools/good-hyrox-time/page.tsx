@@ -19,7 +19,7 @@ import { CoachingCta } from "@/components/results/coaching-cta";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "What Is a Good HYROX Time? Percentiles by Division | Suth Performance",
+  title: "What Is a Good HYROX Time? Percentiles by Division",
   description:
     "A good HYROX time depends entirely on your division. Enter yours and see the exact "
     + "percentile it places you in, against real finish distributions.",

@@ -16,7 +16,7 @@ import { CoachingCta } from "@/components/results/coaching-cta";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "HYROX Time Calculator & Race Simulator | Suth Performance",
+  title: "HYROX Time Calculator & Race Simulator",
   description:
     "Model your HYROX finish station by station, or set a goal time and get the splits "
     + "you need to hit it. Built on real division distributions.",

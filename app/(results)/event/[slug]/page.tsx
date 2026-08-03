@@ -3,11 +3,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getResultsSource } from "@/lib/results";
 import { siteUrl } from "@/lib/blog/urls";
-import { formatCount, formatRelativeDate } from "@/lib/results/format";
+import { breadcrumbList, sportsEvent, jsonLd } from "@/lib/results/structured-data";
+import { formatCount, formatRelativeDate, formatTime } from "@/lib/results/format";
+import { eventFaqs } from "@/lib/results/event-faq";
+import { citySlug } from "@/lib/results/city";
 import {
   Time, StatusBadge, MicroLabel, Nationality, StatTile, EmptyState,
 } from "@/components/results/ui/primitives";
 import { CityMark } from "@/components/results/ui/city-mark";
+import { FaqSection } from "@/components/results/ui/faq-section";
 import { LiveStrip } from "@/components/results/live/live-strip";
 import { PodiumCard } from "@/components/results/event/podium";
 import { EventCountdown } from "@/components/results/event/countdown";
@@ -35,9 +39,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const event = await getResultsSource().getEvent(slug);
-  if (!event) return { title: "Event not found | Suth Performance" };
+  if (!event) return { title: "Event not found" };
 
-  const title = `HYROX ${event.city} ${event.year}: Results, Rankings & Start Lists | Suth Performance`;
+  const title = `HYROX ${event.city} ${event.year}: Results, Rankings & Start Lists`;
   const description = event.status === "finished"
     ? `Full HYROX ${event.city} ${event.year} results — ${formatCount(event.totalAthletes)} athletes `
       + `across ${event.divisions.length} divisions, with splits, rankings and an automated race report.`
@@ -94,30 +98,22 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
       )).filter((p) => p.rows.length > 0)
     : [];
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SportsEvent",
-    name: event.name,
-    startDate: event.startDate,
-    endDate: event.endDate,
-    eventStatus: isUpcoming
-      ? "https://schema.org/EventScheduled"
-      : "https://schema.org/EventScheduled",
-    location: {
-      "@type": "Place",
-      name: event.venue,
-      address: { "@type": "PostalAddress", addressLocality: event.city, addressCountry: event.country },
-    },
-    url: `${siteUrl()}/event/${event.slug}`,
-    sport: "HYROX",
-  };
+  const eventLd = sportsEvent(siteUrl(), {
+    slug: event.slug, name: event.name, city: event.city,
+    country: event.country, venue: event.venue,
+    startDate: event.startDate, endDate: event.endDate,
+    status: event.status, totalAthletes: event.totalAthletes,
+  });
+  const crumbsLd = breadcrumbList(siteUrl(), [
+    { name: "Results", path: "/results" },
+    { name: "Events", path: "/events" },
+    { name: `${event.city} ${event.year}`, path: `/event/${event.slug}` },
+  ]);
 
   return (
     <div className="mx-auto max-w-[1400px] px-5 py-8 md:py-12">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(eventLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(crumbsLd) }} />
 
       <nav aria-label="Breadcrumb" className="mb-4">
         <ol className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
@@ -293,6 +289,35 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           </Link>
         </section>
       ) : null}
+
+      <FaqSection faqs={eventFaqs(event, formatTime)} title={`${event.name}: common questions`} />
+
+      {/* A link back to the city hub, and it earns its place twice over: it is
+          the internal link that stops this edition competing with its own
+          siblings for "hyrox {city} results", and it is the navigation a reader
+          who landed on the wrong year actually needs. */}
+      <nav className="mt-10 border-t border-suth-border-subtle pt-5" aria-label="Related">
+        <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+          More from {event.city}
+        </h2>
+        <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+          <li>
+            <Link href={`/results/city/${citySlug(event.city)}`} className="text-suth-accent hover:underline">
+              Every HYROX {event.city} result
+            </Link>
+          </li>
+          <li>
+            <Link href="/results/course-index" className="text-suth-accent hover:underline">
+              Does this course run slow?
+            </Link>
+          </li>
+          <li>
+            <Link href="/events" className="text-suth-accent hover:underline">
+              Full race calendar
+            </Link>
+          </li>
+        </ul>
+      </nav>
 
       <CoachingCta
         className="mt-10"

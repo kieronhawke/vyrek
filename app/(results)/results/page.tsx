@@ -6,7 +6,7 @@ import { HeroSearch } from "@/components/results/search/hero-search";
 import { EventTile, EventRail, RailItem } from "@/components/results/event-tiles";
 import { LiveStrip } from "@/components/results/live/live-strip";
 import { StatusBadge, MicroLabel, EmptyState } from "@/components/results/ui/primitives";
-import { SlidersHorizontal, GitCompareArrows, Percent, Trophy } from "lucide-react";
+import { SlidersHorizontal, GitCompareArrows, Percent, Trophy, Gauge, MapPin } from "lucide-react";
 
 /**
  * `/results` — the landing page.
@@ -39,6 +39,8 @@ const TOOLS = [
   { href: "/results/compare", label: "Compare", detail: "Two athletes, or two of your own races", icon: GitCompareArrows },
   { href: "/tools/good-hyrox-time", label: "Percentile check", detail: "Where your time actually places you", icon: Percent },
   { href: "/rankings/world-records", label: "Records", detail: "Fastest times by division", icon: Trophy },
+  { href: "/results/course-index", label: "Course speed index", detail: "Which venues actually run slow", icon: Gauge },
+  { href: "/results/city", label: "Browse by city", detail: "Every host city, every edition", icon: MapPin },
 ];
 
 export default async function ResultsLandingPage() {
@@ -142,7 +144,7 @@ export default async function ResultsLandingPage() {
         <h2 id="tools-heading" className="mb-3 text-lg font-semibold text-suth-text">
           Work out what your time means
         </h2>
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
           {TOOLS.map(({ href, label, detail, icon: Icon }) => (
             <Link
               key={href}

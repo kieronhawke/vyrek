@@ -10,7 +10,7 @@ import { AUTOMATED_LABEL } from "@/lib/results/report-generator";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "HYROX Race Reports: Winners, Records & Recaps | Suth Performance",
+  title: "HYROX Race Reports: Winners, Records & Recaps",
   description:
     "A report for every finished HYROX event — winners, podiums, the fastest station splits "
     + "of the weekend and standout age-group results.",

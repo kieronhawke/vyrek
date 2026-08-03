@@ -139,10 +139,18 @@ export function RaceStrip({
                   className="pointer-events-none absolute inset-0 flex items-center justify-center"
                   aria-hidden
                 >
+                  {/* Label colour follows its own segment.
+                   *
+                   * Black reads on the chartreuse blocks and fails badly on the
+                   * muted ones — 1.54:1 against the station fill, flagged by
+                   * axe. Each segment picks the ink that actually contrasts
+                   * with it rather than one colour for all of them. */}
                   <span
-                    className="max-h-full truncate font-mono text-[8px] uppercase leading-none
-                               tracking-[0.08em] text-black/65
-                               [writing-mode:vertical-rl] [text-orientation:mixed]"
+                    className={cn(
+                      "max-h-full truncate font-mono text-[8px] uppercase leading-none",
+                      "tracking-[0.08em] [writing-mode:vertical-rl] [text-orientation:mixed]",
+                      faster ? "text-black/70" : "text-white/75",
+                    )}
                   >
                     {segment.short}
                   </span>

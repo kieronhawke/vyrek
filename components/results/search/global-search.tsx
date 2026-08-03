@@ -159,24 +159,37 @@ function SearchPanel({ onClose }: { onClose: () => void }) {
         onClick={onClose}
       />
 
+      {/* The focus treatment lives on *this* element, and that is the whole
+       * point: it is the one that owns the border radius.
+       *
+       * Two earlier attempts put it further in and both failed the same way.
+       * An outline on the input was clipped on three sides by this sheet's
+       * `overflow-hidden`. Moving it to the input's row fixed the sides but
+       * not the corners — the row is a square-cornered box sitting flush in a
+       * rounded, clipping parent, so its top two corners were sliced off and
+       * the sheet's dark corner showed through. A straight green line with
+       * black notches bitten out of each end.
+       *
+       * A ring can only follow a curve if it is drawn on the element that has
+       * the curve. Border and box-shadow on the sheet both inherit its radius
+       * exactly, and an element's own shadow is not clipped by its own
+       * `overflow-hidden` — that clips children. So the edge is continuous the
+       * whole way round.
+       *
+       * It reads as a glow rather than a hard rule because the input is
+       * autofocused on open: this is the palette's resting state, not a
+       * transient highlight, and it should look deliberate. */}
       <div
         className="relative z-10 flex w-full max-w-2xl flex-col overflow-hidden
-                   rounded-t-lg border border-suth-border bg-suth-elevated
-                   shadow-2xl md:rounded-lg"
+                   rounded-t-2xl border border-suth-border bg-suth-elevated
+                   shadow-[0_24px_60px_-12px_rgba(0,0,0,0.75)]
+                   transition-[border-color,box-shadow] duration-200
+                   focus-within:border-suth-accent/60
+                   focus-within:shadow-[0_0_0_3px_rgba(163,230,53,0.16),0_24px_60px_-12px_rgba(0,0,0,0.75)]
+                   md:rounded-xl"
         onKeyDown={onKeyDown}
       >
-        {/* Focus lives on the row, not the input.
-         *
-         * An outline on the input was being clipped by this sheet's
-         * `overflow-hidden` — the top and both sides were cut off, and with no
-         * offset it sat directly against the text. A ring on the row, drawn
-         * inset, cannot be clipped by an ancestor and keeps clear of the
-         * caret. */}
-        <div
-          className="flex items-center gap-3 border-b border-suth-border-subtle px-4
-                     transition-shadow focus-within:ring-2 focus-within:ring-inset
-                     focus-within:ring-suth-accent/70"
-        >
+        <div className="flex items-center gap-3 border-b border-suth-border-subtle px-4">
           <Search className="size-4 shrink-0 text-suth-text-tertiary" aria-hidden />
           <input
             ref={inputRef}

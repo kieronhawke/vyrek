@@ -45,3 +45,34 @@ describe("metadata URLs", () => {
     expect(offenders, `siteUrl used without () in:\n${offenders.join("\n")}`).toEqual([]);
   });
 });
+
+/**
+ * Guard against the brand appearing twice in one title.
+ *
+ * `app/layout.tsx` sets `title.template = "%s · Suth Performance"`, so every
+ * page-level title gets the brand appended for free. Seventeen Results pages
+ * also hard-coded "| Suth Performance" into their own title, which rendered as
+ * "…| Suth Performance · Suth Performance" in every tab and every SERP entry.
+ *
+ * Typecheck cannot see this and neither can a screenshot — the title tag is not
+ * on the page. It survived because nothing ever asserted on it.
+ */
+describe("page titles", () => {
+  it("never hard-codes the brand that the layout template already appends", () => {
+    const offenders: string[] = [];
+
+    for (const file of walk(join(process.cwd(), "app/(results)"))) {
+      const source = readFileSync(file, "utf8");
+      // The template joins with "·", so a page adding its own "| Suth
+      // Performance" is always a duplicate rather than a deliberate variant.
+      if (/\|\s*Suth Performance/.test(source)) {
+        offenders.push(file.replace(process.cwd() + "/", ""));
+      }
+    }
+
+    expect(
+      offenders,
+      `title already gets "· Suth Performance" from the layout template; drop the suffix in:\n${offenders.join("\n")}`,
+    ).toEqual([]);
+  });
+});

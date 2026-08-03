@@ -773,6 +773,22 @@ describe("historical seasons (§5)", () => {
     expect(second.seasonCatalogued).toBe("season-9");
   });
 
+  it("checkpoints an event that has no divisions instead of retrying it for ever", async () => {
+    // Nothing syncs it, so nothing writes its checkpoint, so it is chosen
+    // again every round — occupying one of the run's three slots permanently.
+    // One event did exactly this in every round for an hour.
+    const h = await makeHarness();
+    for (const d of [...h.repo.divisions.values()]) h.repo.divisions.delete(d.id);
+
+    const first = await runBackfill(h.engine, { maxEvents: 3, catalogueSeasons: false });
+    expect(first.eventsWithoutDivisions).toContain(h.event.slug);
+
+    // Second round: skipped, not picked again.
+    const second = await runBackfill(h.engine, { maxEvents: 3, catalogueSeasons: false });
+    expect(second.eventsWithoutDivisions).toEqual([]);
+    expect(second.eventsSkipped).toContain(h.event.slug);
+  });
+
   it("can be told to pull results without deepening the catalogue", async () => {
     const h = await makeHarness();
     const outcome = await runBackfill(h.engine, { maxEvents: 0, catalogueSeasons: false });

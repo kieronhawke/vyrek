@@ -39,7 +39,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { event: slug } = await params;
   const event = await getResultsSource().getEvent(slug);
-  if (!event) return { title: "Report not found | Suth Performance" };
+  if (!event) return { title: "Report not found" };
 
   return {
     title: `HYROX ${event.city} ${event.year} Race Report: Winners, Records & Standout Times`,
