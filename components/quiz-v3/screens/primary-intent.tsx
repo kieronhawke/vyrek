@@ -114,7 +114,12 @@ export function PrimaryIntentScreen({
         helper="Pick one. It decides what we ask you next."
       />
 
-      <div className="space-y-6 lg:space-y-5">
+      {/* Side by side from lg. Two reasons, and the second is the better
+          one: it halves the height, which is what keeps the button above
+          the fold on a short laptop — and it makes the choice read as two
+          routes rather than one list of five with the racing answers at
+          the top, which is the impression that sent beginners away. */}
+      <div className="space-y-6 lg:grid lg:grid-cols-2 lg:gap-x-5 lg:gap-y-0 lg:space-y-0">
         <Group
           title="I'm here to race"
           doors={RACING}

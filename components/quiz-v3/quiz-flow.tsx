@@ -937,6 +937,7 @@ function QuizV3Inner() {
         }
       >
         <FrequencyScreen
+          beginner={isBeginnerRail(state.answers)}
           value={value}
           onChange={(v) => {
             haptic("light");
@@ -964,6 +965,7 @@ function QuizV3Inner() {
         }
       >
         <SessionLengthScreen
+          beginner={isBeginnerRail(state.answers)}
           value={value}
           onChange={(v) => {
             haptic("light");
@@ -991,6 +993,7 @@ function QuizV3Inner() {
         }
       >
         <LocationScreen
+          beginner={isBeginnerRail(state.answers)}
           value={value}
           onChange={(v) => {
             haptic("light");

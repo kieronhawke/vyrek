@@ -146,13 +146,13 @@ export function QuizShell({
           below `lg` clears the sticky footer; from `lg` the button is inline
           so there is nothing to clear. */}
       <div className="flex flex-1 flex-col overflow-y-auto px-5 pb-32 md:px-8 lg:px-10 lg:pb-10">
-        <div className="mx-auto w-full max-w-md py-4 md:max-w-lg lg:my-auto lg:max-w-[34rem] lg:py-8">
+        <div className="mx-auto w-full max-w-md py-4 md:max-w-lg lg:my-auto lg:max-w-[34rem] lg:py-6 xl:py-8">
           {children}
 
           {/* Desktop: the button belongs with the options it confirms, not
               in a bar at the foot of the window. */}
           {footer && (
-            <div className="mt-7 hidden items-center gap-3 lg:flex [&>button]:h-12 [&>button]:w-auto [&>button]:min-w-[13rem]">
+            <div className="mt-6 hidden items-center gap-3 lg:flex xl:mt-7 [&>button]:h-12 [&>button]:w-auto [&>button]:min-w-[13rem]">
               {footer}
             </div>
           )}

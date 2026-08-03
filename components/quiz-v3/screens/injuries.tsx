@@ -26,7 +26,7 @@ export function InjuriesScreen({
         question="Any injuries we should plan around?"
         helper="We'll adjust the plan to protect what needs protecting."
       />
-      <ul role="list" className="space-y-3">
+      <ul role="list" className="space-y-3 lg:space-y-2.5">
         {OPTIONS.map((opt) => (
           <li key={opt.value}>
             <OptionCard

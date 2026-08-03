@@ -86,7 +86,7 @@ export function SupportPreferenceScreen({
         }
         helper="There's no wrong answer. It only changes what happens next."
       />
-      <ul role="list" className="space-y-3">
+      <ul role="list" className="space-y-3 lg:space-y-2.5">
         {options.map((opt) => (
           <li key={opt.value}>
             <OptionCard
