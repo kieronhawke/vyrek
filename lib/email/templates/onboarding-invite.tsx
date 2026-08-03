@@ -1,51 +1,41 @@
+import { Section, Text } from "@react-email/components";
 import {
-  Body,
-  Button,
-  Container,
-  Head,
-  Heading,
-  Hr,
-  Html,
-  Preview,
-  Section,
-  Text,
-} from "@react-email/components";
+  Btn,
+  EmailLayout,
+  Eyebrow,
+  H1,
+  P,
+  Panel,
+  SignOff,
+} from "@/lib/email/templates/_layout";
 import {
-  BG,
-  TEXT,
   TEXT_DIM,
-  ACCENT,
+  TEXT_FAINT,
   fontStack,
-  bodyStyle,
-  containerStyle,
-  monoEyebrow,
-  ctaPrimary,
-  hrRule,
+  monoStack,
 } from "@/lib/email/templates/_styles";
 
 /**
  * THE INVITE EMAIL.
  *
- * This is the first thing a paying client ever receives from Suth
- * Performance, and it has exactly one job: get them to press the button.
- * Everything else in it is in service of that.
+ * The first thing a paying client ever receives from Suth Performance. One
+ * job: get them to press the button. Everything in it serves that.
+ *
+ * NOW ON THE SHARED LAYOUT. It was standalone, so it carried no logo, no
+ * footer, and none of the Outlook handling every other email here already
+ * had — in particular the wrapper table with a bgcolor attribute, because
+ * Outlook's Word engine ignores CSS backgrounds on <body> and would have
+ * rendered this design as near-white text on a white page.
  *
  * WRITTEN AS BEN, NOT AS A COMPANY. He has already spoken to this person —
- * that is why they are getting a link — so an email that opens "Dear
- * Customer, welcome to our platform" reads as though it came from somewhere
- * else entirely. It is signed by him, it says what happens next, and it says
- * how long it takes.
+ * that is why they are getting a link — so "Dear Customer, welcome to our
+ * platform" reads as though it came from somewhere else entirely.
  *
- * ONE BUTTON. No navigation, no social icons, no footer of links to a blog.
- * A second call to action halves the first one.
+ * ONE BUTTON. A second call to action halves the first.
  *
- * THE LINK IS ALSO PRINTED AS TEXT. Buttons are stripped by some corporate
- * mail clients and by most plain-text views, and somebody who cannot see the
- * button has no way through at all. It costs one line.
- *
- * Two variants from one template: `full` for a new client with the questions
- * to answer, `payment` for somebody Ben has already talked through everything
- * with and just needs a card from.
+ * THE LINK IS PRINTED AS TEXT TOO. Some corporate clients strip the button,
+ * and the plain-text alternative has no button at all; without the URL in
+ * words those recipients have no way through. It costs one line.
  */
 
 export function OnboardingInviteEmail({
@@ -65,180 +55,107 @@ export function OnboardingInviteEmail({
   const payment = kind === "payment";
 
   return (
-    <Html>
-      <Head />
-      <Preview>
+    <EmailLayout
+      preview={
+        payment
+          ? "Pick your plan and you're set — takes two minutes."
+          : "Five minutes, and Ben can write your first week."
+      }
+      campaign="onboarding-invite"
+    >
+      <Eyebrow>{payment ? "One step left" : "Welcome aboard"}</Eyebrow>
+      <H1>{payment ? "Let's get you started." : `Good to have you, ${firstName}.`}</H1>
+
+      <P>
         {payment
-          ? `Set up your Suth Performance plan — two minutes`
-          : `Your Suth Performance setup link — five minutes and you're training`}
-      </Preview>
-      <Body style={bodyStyle}>
-        <Container style={containerStyle}>
-          <Text style={monoEyebrow}>[ SUTH PERFORMANCE ]</Text>
+          ? "Everything is ready at my end. Pick the plan that suits you, add a card, and I'll get your first week written."
+          : "Before I write your first week I need a few things from you — what you're training for, how you're training now, and anything I should know about injuries."}
+      </P>
 
-          <Heading
-            style={{
-              color: TEXT,
-              fontFamily: fontStack,
-              fontSize: 30,
-              fontWeight: 900,
-              lineHeight: 1.15,
-              letterSpacing: "-0.02em",
-              margin: "0 0 18px",
-            }}
-          >
-            {payment ? "Let's get you started." : `Welcome aboard, ${firstName}.`}
-          </Heading>
+      <P>
+        {payment
+          ? planName
+            ? `We agreed ${planName}, so it's already selected. Confirm and you're done.`
+            : "It takes about two minutes."
+          : "It takes about five minutes, and it's all on your phone."}
+      </P>
 
+      <Btn href={link}>{payment ? "Choose your plan" : "Set up my account"}</Btn>
+
+      <Text
+        style={{
+          color: TEXT_FAINT,
+          fontFamily: monoStack,
+          fontSize: 13,
+          lineHeight: "1.6",
+          margin: "18px 0 0",
+          wordBreak: "break-all",
+        }}
+      >
+        {/* Deliberately muted, not accent. This is a fallback for clients
+            that strip the button — set in the same chartreuse it competes
+            with the button it exists to back up, and the eye goes to the
+            longest thing on the screen rather than the thing to press. */}
+        Or paste this into your browser:
+        <br />
+        <span style={{ color: TEXT_DIM }}>{link}</span>
+      </Text>
+
+      {!payment ? (
+        <Panel title="What I'll ask you">
           <Text
             style={{
               color: TEXT_DIM,
-              fontFamily: fontStack,
-              fontSize: 16,
-              lineHeight: 1.6,
-              margin: "0 0 14px",
-            }}
-          >
-            {payment ? (
-              <>
-                {firstName}, everything is ready your end — pick your plan and add a
-                card and I&apos;ll have your first week with you.
-              </>
-            ) : (
-              <>
-                Good to have you on board. Before I write your first week I need a
-                few things from you: what you&apos;re training for, how you&apos;re
-                training now, and anything I should know about injuries.
-              </>
-            )}
-          </Text>
-
-          <Text
-            style={{
-              color: TEXT_DIM,
-              fontFamily: fontStack,
-              fontSize: 16,
-              lineHeight: 1.6,
-              margin: "0 0 26px",
-            }}
-          >
-            {payment
-              ? planName
-                ? `We agreed ${planName}. It's already selected — just confirm and pay.`
-                : "It takes about two minutes."
-              : "It takes about five minutes, and it's all on your phone."}
-          </Text>
-
-          {/* One button. A second call to action halves the first. */}
-          <Section style={{ margin: "0 0 22px" }}>
-            <Button href={link} style={ctaPrimary}>
-              {payment ? "Choose your plan →" : "Set up my account →"}
-            </Button>
-          </Section>
-
-          {/* Printed as text as well: corporate mail clients strip buttons, and
-              somebody who cannot see it has no way through at all. */}
-          <Text
-            style={{
-              color: TEXT_DIM,
-              fontFamily: fontStack,
-              fontSize: 13,
-              lineHeight: 1.6,
-              margin: "0 0 26px",
-              wordBreak: "break-all",
-            }}
-          >
-            Button not working? Paste this into your browser:
-            <br />
-            <span style={{ color: ACCENT }}>{link}</span>
-          </Text>
-
-          <Hr style={hrRule} />
-
-          <Text
-            style={{
-              color: TEXT_DIM,
-              fontFamily: fontStack,
-              fontSize: 14,
-              lineHeight: 1.6,
-              margin: "18px 0 0",
-            }}
-          >
-            Any questions at all, just reply to this — it comes straight to me.
-          </Text>
-
-          <Text
-            style={{
-              color: TEXT,
               fontFamily: fontStack,
               fontSize: 15,
-              fontWeight: 700,
-              margin: "14px 0 0",
+              lineHeight: "1.8",
+              margin: 0,
             }}
           >
-            {coach}
+            What you&apos;re training for
+            <br />
+            How your week looks at the moment
+            <br />
+            Anything I should train around
+            <br />
+            Which days you can train
           </Text>
-          <Text
-            style={{
-              color: TEXT_DIM,
-              fontFamily: fontStack,
-              fontSize: 13,
-              margin: "2px 0 0",
-            }}
-          >
-            Suth Performance
-          </Text>
+        </Panel>
+      ) : null}
 
-          <Text
-            style={{
-              color: TEXT_DIM,
-              fontFamily: fontStack,
-              fontSize: 11,
-              lineHeight: 1.6,
-              margin: "26px 0 0",
-              opacity: 0.75,
-            }}
-          >
-            {/* No unsubscribe: this is a transactional message to somebody who
-                asked Ben to set them up. HARD-RULES §11 — putting an opt-out on
-                it invites somebody to opt out of their own account. */}
-            You&apos;re getting this because {coach} is setting up your coaching.
-            The link expires in 30 days.
-          </Text>
-        </Container>
-      </Body>
-    </Html>
+      <Section>
+        <P>Any questions at all, just reply to this — it comes straight to me.</P>
+      </Section>
+
+      <SignOff />
+    </EmailLayout>
   );
 }
 
 export function onboardingInviteSubject(firstName: string, kind: "full" | "payment"): string {
   return kind === "payment"
-    ? `${firstName}, choose your plan — two minutes`
+    ? `${firstName}, choose your plan`
     : `${firstName}, let's get you set up`;
 }
 
 /**
- * THE TEXT.
+ * THE TEXT MESSAGE.
  *
- * The first thing a new client ever gets from Suth Performance, and it lands
- * on a lock screen. It has about eight words before they decide whether it
- * came from a person or a system.
+ * The first thing a new client gets, on a lock screen. It has about eight
+ * words before they decide whether it came from a person or a system.
  *
- * SHORT BECAUSE THE SENDER ALREADY SAYS WHO IT IS. The text arrives from
+ * SHORT BECAUSE THE SENDER ALREADY SAYS WHO IT IS. It arrives from
  * "SuthPerform", so repeating "Suth Performance" in the body spends twenty
- * characters saying what is already on the screen. That is what bought the
- * room for it to fit in ONE segment — 4.2p rather than 12.7p, and more
- * importantly a message that looks like a note rather than a wall.
- *
- * Warm, and specific about the cost in minutes: "set up your account" with no
- * sense of how long it takes is what gets left until later and forgotten.
+ * characters saying what is already on the screen — and that is exactly what
+ * bought the room to fit in ONE segment: 4.2p rather than 12.7p, and a
+ * message that reads like a note rather than a wall.
  *
  * NO EMOJI, and not for taste — one emoji forces the whole message to UCS-2,
  * cuts every segment from 160 characters to 70 and doubles the bill. Same for
- * curly quotes, which is why the apostrophes here are typewriter ones.
+ * curly quotes, hence the typewriter apostrophes.
  *
- * IT MUST STAY UNDER 160 FOR A LONG FIRST NAME, not just for "Sam" — the name
- * is paid for twice, once in the greeting and once inside the link.
+ * It must stay under 160 for a LONG first name, not just for "Sam": the name
+ * is billed twice, once in the greeting and once inside the link.
  * lib/onboarding/invite-cost.test.ts holds that line.
  */
 export function onboardingInviteSms(
@@ -250,5 +167,3 @@ export function onboardingInviteSms(
     ? `${firstName}, it's Ben. Ready when you are - pick your plan: ${link}`
     : `${firstName}, it's Ben. Welcome aboard! 5 mins to set up: ${link}`;
 }
-
-export { BG };

@@ -1,11 +1,6 @@
 import {
-  Body,
   Button,
-  Container,
-  Head,
   Heading,
-  Html,
-  Preview,
   Section,
   Text,
 } from "@react-email/components";
@@ -23,6 +18,7 @@ import {
   ctaPrimary,
   hrRule,
 } from "@/lib/email/templates/_styles";
+import { EmailLayout } from "@/lib/email/templates/_layout";
 
 export function WelcomeEmail({
   trialEndsAt,
@@ -36,12 +32,7 @@ export function WelcomeEmail({
   const tEnd = trialEndsAt ? formatDate(trialEndsAt) : "in 7 days";
   const tFirst = formatDate(firstWorkoutDate);
   return (
-    <Html>
-      <Head />
-      <Preview>You&apos;re in. Day 1 starts {tFirst}.</Preview>
-      <Body style={bodyStyle}>
-        <Container style={containerStyle}>
-          <Text style={monoEyebrow}>[ SUTH PERFORMANCE ]</Text>
+    <EmailLayout preview={`You&apos;re in. Day 1 starts {tFirst}.`} campaign="welcome">
           <Heading
             style={{
               color: TEXT,
@@ -113,9 +104,7 @@ export function WelcomeEmail({
           <hr style={hrRule} />
 
           <Text style={techMarkStyle}>{TECH_MARK}</Text>
-        </Container>
-      </Body>
-    </Html>
+        </EmailLayout>
   );
 }
 

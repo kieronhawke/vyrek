@@ -1,11 +1,6 @@
 import {
-  Body,
   Button,
-  Container,
-  Head,
   Heading,
-  Html,
-  Preview,
   Text,
 } from "@react-email/components";
 import {
@@ -20,6 +15,7 @@ import {
   TEXT_DIM,
   TECH_MARK,
 } from "@/lib/email/templates/_styles";
+import { EmailLayout } from "@/lib/email/templates/_layout";
 
 export function PaymentFailedEmail({
   updatePaymentUrl = "https://suthperformance.com/account/billing",
@@ -27,11 +23,7 @@ export function PaymentFailedEmail({
   updatePaymentUrl?: string;
 } = {}) {
   return (
-    <Html>
-      <Head />
-      <Preview>Payment couldn&apos;t go through. Quick fix.</Preview>
-      <Body style={bodyStyle}>
-        <Container style={containerStyle}>
+    <EmailLayout preview={`Payment couldn&apos;t go through. Quick fix.`} campaign="payment-failed">
           <Text style={monoEyebrow}>[ PAYMENT NOT TAKEN ]</Text>
           <Heading
             style={{
@@ -65,8 +57,6 @@ export function PaymentFailedEmail({
 
           <hr style={hrRule} />
           <Text style={techMarkStyle}>{TECH_MARK}</Text>
-        </Container>
-      </Body>
-    </Html>
+        </EmailLayout>
   );
 }
