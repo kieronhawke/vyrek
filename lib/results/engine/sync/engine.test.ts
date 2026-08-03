@@ -364,6 +364,48 @@ describe("splits backfill (§4)", () => {
     expect(filled?.rankOverall).toBe(1);
   });
 
+  it("does not retry a row it has already quarantined", async () => {
+    // The detail fixture's splits cannot reconcile with this board's finish
+    // times, so every row quarantines — which is the case that matters.
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-implausible.html")] },
+        details: { LRAA0000101: fixture("detail-splits.html") },
+      }),
+    });
+    await syncOnce(h);
+
+    // Both rows quarantine at the list stage, so nothing is left to fetch.
+    const first = await runSplitsBackfill(h.engine, { limit: 5 });
+    expect(first.attempted).toBe(0);
+
+    // And a row quarantined at the splits stage is not offered again: without
+    // this it is re-fetched and re-quarantined on every run, for ever.
+    const h2 = await makeHarness({
+      fixtures: defaultFixtures({
+        details: { LRAA0000001: fixture("detail-splits.html") },
+      }),
+    });
+    await syncOnce(h2);
+    await h2.repo.quarantine({
+      sourceEventId: null,
+      sourceDivisionId: null,
+      sourceResultId: `${DIVISION_CODE}:LRAA0000001`,
+      reason: "segment_out_of_range",
+      detail: { stage: "splits" },
+      rawPayload: null,
+      ingestionRunId: null,
+      reprocessedAt: null,
+    });
+
+    const after = await runSplitsBackfill(h2.engine, { limit: 5 });
+    const attemptedIds = [...h2.repo.results.values()].filter(hasSplits);
+    expect(attemptedIds.every((r) => r.sourceResultId !== `${DIVISION_CODE}:LRAA0000001`)).toBe(
+      true,
+    );
+    expect(after.filled).toBeLessThanOrEqual(5);
+  });
+
   it("recovers the source id from the stored result id", () => {
     expect(idpFromSourceResultId("H_LR3MS4JI163A#men:LRAA0000001")).toBe("LRAA0000001");
   });

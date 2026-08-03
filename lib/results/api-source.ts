@@ -7,16 +7,28 @@ import type {
 } from "./source";
 
 /**
- * HTTP-backed data source, ready for the API being built.
+ * HTTP-backed data source.
+ *
+ * Paths match the v1 API that lives in this repo at `app/api/results/v1/*`.
+ * They were originally invented against a guessed contract and are now aligned
+ * to the routes that actually exist — a doc describing endpoints nobody serves
+ * is worse than no doc.
  *
  * Switch on with:
  *   RESULTS_SOURCE=api
- *   RESULTS_API_URL=https://api.example.com/v1
+ *   RESULTS_API_URL=https://www.suthperformance.com/api/results/v1
  *   RESULTS_API_KEY=…            (optional; sent as a Bearer token)
  *
- * The full endpoint contract is in `docs/results/API-CONTRACT.md`. Every method
- * maps to exactly one GET, and the JSON shapes are the types in `./source.ts` —
- * so if the API returns those, nothing else in the app changes.
+ * Pointing it at our own origin is legitimate and is how a separately deployed
+ * frontend would consume it. Server-rendering against the same deployment is
+ * an extra hop, so prefer the direct source in that case — this exists for when
+ * the API is consumed from elsewhere, or from a different deployment.
+ *
+ * The v1 API wraps every payload in an envelope —
+ * `{ data, attribution, mode }` — so responses are unwrapped here. The
+ * attribution block exists because the underlying results are timed and
+ * published by mika:Timing for HYROX and must be credited wherever they are
+ * shown; `lastAttribution()` exposes the most recent one for the UI to render.
  *
  * Three deliberate behaviours, because a results page must not fall over when
  * a feed hiccups mid-race:
@@ -36,6 +48,26 @@ function baseUrl(): string {
   const url = process.env.RESULTS_API_URL;
   if (!url) throw new Error("RESULTS_API_URL is not set but RESULTS_SOURCE=api");
   return url.replace(/\/$/, "");
+}
+
+/** The v1 envelope. */
+type Envelope<T> = {
+  data: T;
+  attribution?: { timing: string; organiser: string; note: string; url: string };
+  mode?: "demo" | "live";
+};
+
+let latestAttribution: Envelope<unknown>["attribution"] | null = null;
+
+/**
+ * Attribution from the most recent API response.
+ *
+ * Not decorative: the results are mika:Timing's work published for HYROX, and
+ * a page showing them has to say so. Reading it from the response rather than
+ * hard-coding it means the credit follows whatever the API actually served.
+ */
+export function lastAttribution() {
+  return latestAttribution;
 }
 
 type FetchOptions = {
@@ -71,7 +103,15 @@ async function get<T>(path: string, options: FetchOptions = {}): Promise<T | nul
       console.error(`[results-api] ${response.status} ${url.pathname}`);
       return null;
     }
-    return (await response.json()) as T;
+    const body = (await response.json()) as Envelope<T> | T;
+    // Unwrap the v1 envelope. Tolerates a bare payload too, so a future
+    // endpoint that does not wrap does not silently return undefined.
+    if (body && typeof body === "object" && "data" in body) {
+      const envelope = body as Envelope<T>;
+      if (envelope.attribution) latestAttribution = envelope.attribution;
+      return envelope.data;
+    }
+    return body as T;
   } catch (error) {
     const reason = (error as Error).name === "AbortError"
       ? `timed out after ${TIMEOUT_MS}ms`
@@ -94,34 +134,38 @@ export const apiDataSource: ResultsDataSource = {
   async getEvent(slug) {
     // Live events move; finished ones do not. The caller cannot know which
     // before fetching, so this uses the shorter window for all of them.
-    return get<RaceEventDetail>(`/events/${encodeURIComponent(slug)}`, { revalidate: 60 });
+    return get<RaceEventDetail>(`/event/${encodeURIComponent(slug)}`, { revalidate: 60 });
   },
 
   async getRanking(eventSlug, division, opts) {
+    // The API takes a combined `{event}-{division}` slug, the same shape the
+    // ranking page URL uses, and caps `limit` at 500 server-side. Asking for
+    // MAX_SAFE_INTEGER would silently get 500 rows back, so the caller's
+    // "give me everything" is expressed as the cap rather than as a lie.
     return get<RankingPage>(
-      `/events/${encodeURIComponent(eventSlug)}/rankings/${encodeURIComponent(division)}`,
+      `/ranking/${encodeURIComponent(`${eventSlug}-${division}`)}`,
       {
         revalidate: 60,
         query: {
           cursor: opts?.cursor,
           ageGroup: opts?.ageGroup,
           q: opts?.q,
-          limit: opts?.limit === Number.MAX_SAFE_INTEGER ? "all" : opts?.limit,
+          limit: opts?.limit === Number.MAX_SAFE_INTEGER ? 500 : opts?.limit,
         },
       },
     );
   },
 
   async getResult(id) {
-    return get<ResultDetail>(`/results/${encodeURIComponent(id)}`, { revalidate: 3600 });
+    return get<ResultDetail>(`/result/${encodeURIComponent(id)}`, { revalidate: 3600 });
   },
 
   async getAthlete(slug) {
-    return get<AthleteProfile>(`/athletes/${encodeURIComponent(slug)}`, { revalidate: 3600 });
+    return get<AthleteProfile>(`/athlete/${encodeURIComponent(slug)}`, { revalidate: 3600 });
   },
 
   async getStarters(eventSlug) {
-    return get<StartList>(`/events/${encodeURIComponent(eventSlug)}/starters`, { revalidate: 300 });
+    return get<StartList>(`/starters/${encodeURIComponent(eventSlug)}`, { revalidate: 300 });
   },
 
   async searchAll(q) {
@@ -141,19 +185,19 @@ export const apiDataSource: ResultsDataSource = {
   async getDivisionFinishTimes(eventSlug, division) {
     // Must be an indexed column upstream, not a scan: result pages call this on
     // every render, and building it from result rows cost 5.5s LCP locally.
-    return (await get<number[]>(
-      `/events/${encodeURIComponent(eventSlug)}/divisions/${encodeURIComponent(division)}/finish-times`,
-      { revalidate: 300 },
-    )) ?? [];
+    return (await get<number[]>("/finish-times", {
+      revalidate: 300,
+      query: { event: eventSlug, division },
+    })) ?? [];
   },
 
   async getStationDistribution(station: StationId, division: string): Promise<Distribution> {
     // Accepts either a precomputed distribution or a raw sample array, because
     // whichever the API finds cheaper to serve is fine here.
-    const payload = await get<Distribution | number[]>(
-      `/distributions/${encodeURIComponent(division)}/${encodeURIComponent(station)}`,
-      { revalidate: 3600 },
-    );
+    const payload = await get<Distribution | number[]>("/distribution", {
+      revalidate: 3600,
+      query: { station, division },
+    });
     if (!payload) return buildDistribution([]);
     return Array.isArray(payload) ? buildDistribution(payload) : payload;
   },
