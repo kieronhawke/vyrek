@@ -66,20 +66,42 @@ export class MemoryResultsRepository implements ResultsRepository {
 
   /* ── Events and divisions ───────────────────────────────────────────── */
 
+  /**
+   * Slug is the identity; weekend ids accumulate.
+   *
+   * Season, year and city are what an athlete means by "the event". A weekend
+   * id identifies one race *day* within it, so several belong to one event and
+   * none of them can be the key.
+   */
   async upsertEvent(event: UpsertEvent): Promise<EngineEvent> {
     const existing =
       [...this.events.values()].find((e) => e.slug === event.slug) ??
       (event.sourceEventId
-        ? [...this.events.values()].find((e) => e.sourceEventId === event.sourceEventId)
+        ? [...this.events.values()].find((e) =>
+            (e.sourceEventIds ?? []).includes(event.sourceEventId as string),
+          )
         : undefined);
 
+    const incoming = new Set([
+      ...(existing?.sourceEventIds ?? []),
+      ...(event.sourceEventIds ?? []),
+      ...(event.sourceEventId ? [event.sourceEventId] : []),
+    ]);
+
     if (existing) {
-      const merged: EngineEvent = { ...existing, ...event, id: existing.id };
+      const merged: EngineEvent = {
+        ...existing,
+        ...event,
+        id: existing.id,
+        // Never narrowed by a later sync that only knew about one day.
+        sourceEventIds: [...incoming],
+        sourceEventId: existing.sourceEventId ?? event.sourceEventId ?? null,
+      };
       this.events.set(existing.id, merged);
       return merged;
     }
     const id = event.id ?? this.id("evt");
-    const created: EngineEvent = { ...event, id };
+    const created: EngineEvent = { ...event, id, sourceEventIds: [...incoming] };
     this.events.set(id, created);
     return created;
   }
@@ -89,7 +111,11 @@ export class MemoryResultsRepository implements ResultsRepository {
   }
 
   async getEventBySourceId(sourceEventId: string) {
-    return [...this.events.values()].find((e) => e.sourceEventId === sourceEventId) ?? null;
+    return (
+      [...this.events.values()].find((e) =>
+        (e.sourceEventIds ?? []).includes(sourceEventId),
+      ) ?? null
+    );
   }
 
   async listEvents(filter: { season?: string; region?: string; status?: EngineEventStatus } = {}) {

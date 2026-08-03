@@ -44,6 +44,7 @@ type EventRow = {
   venue: string | null; status: EngineEventStatus; start_datetime: string | null;
   end_datetime: string | null; tz_offset_minutes: number; start_date: string | null;
   end_date: string | null; athlete_count: number; source_event_id: string | null;
+  source_event_ids: string[] | null;
   source_season_path: string | null; is_demo: boolean; last_synced_at: string | null;
 };
 
@@ -53,7 +54,8 @@ const toEvent = (r: EventRow): EngineEvent => ({
   venue: r.venue, status: r.status, startDatetime: r.start_datetime,
   endDatetime: r.end_datetime, tzOffsetMinutes: r.tz_offset_minutes,
   startDate: r.start_date, endDate: r.end_date, athleteCount: r.athlete_count,
-  sourceEventId: r.source_event_id, sourceSeasonPath: r.source_season_path,
+  sourceEventId: r.source_event_id, sourceEventIds: r.source_event_ids ?? [],
+  sourceSeasonPath: r.source_season_path,
   isDemo: r.is_demo, lastSyncedAt: r.last_synced_at,
 });
 
@@ -64,6 +66,7 @@ const fromEvent = (e: UpsertEvent) => ({
   end_datetime: e.endDatetime ?? null, tz_offset_minutes: e.tzOffsetMinutes,
   start_date: e.startDate ?? null, end_date: e.endDate ?? null,
   athlete_count: e.athleteCount, source_event_id: e.sourceEventId ?? null,
+  source_event_ids: e.sourceEventIds ?? (e.sourceEventId ? [e.sourceEventId] : []),
   source_season_path: e.sourceSeasonPath ?? null, is_demo: e.isDemo,
   last_synced_at: e.lastSyncedAt ?? null,
 });
@@ -191,23 +194,37 @@ export class SupabaseResultsRepository implements ResultsRepository {
    * be corrected; an identity cannot be guessed.
    */
   async upsertEvent(event: UpsertEvent): Promise<EngineEvent> {
-    if (event.sourceEventId) {
-      const existing = await this.getEventBySourceId(event.sourceEventId);
-      if (existing) {
-        const row = await this.one<EventRow>(
-          this.db
-            .from("results_events")
-            .update(fromEvent(event))
-            .eq("id", existing.id)
-            .select()
-            .single(),
-        );
-        if (!row) throw new Error(`Failed to update event ${event.slug}`);
-        return toEvent(row);
-      }
+    // Slug first: season, year and city are what an athlete means by "the
+    // event". A weekend id identifies one race *day* within it, so several
+    // belong to one event and none can be the key.
+    const existing =
+      (await this.getEventBySlug(event.slug)) ??
+      (event.sourceEventId ? await this.getEventBySourceId(event.sourceEventId) : null);
+
+    if (existing) {
+      const ids = new Set([
+        ...(existing.sourceEventIds ?? []),
+        ...(event.sourceEventIds ?? []),
+        ...(event.sourceEventId ? [event.sourceEventId] : []),
+      ]);
+      const row = await this.one<EventRow>(
+        this.db
+          .from("results_events")
+          .update({
+            ...fromEvent(event),
+            // Widened, never narrowed: a later sync that saw only Sunday must
+            // not erase Saturday.
+            source_event_ids: [...ids],
+            source_event_id: existing.sourceEventId ?? event.sourceEventId ?? null,
+          })
+          .eq("id", existing.id)
+          .select()
+          .single(),
+      );
+      if (!row) throw new Error(`Failed to update event ${event.slug}`);
+      return toEvent(row);
     }
 
-    // No source id, or one we have never seen: the slug is the identity.
     const row = await this.one<EventRow>(
       this.db
         .from("results_events")
@@ -227,10 +244,10 @@ export class SupabaseResultsRepository implements ResultsRepository {
   }
 
   async getEventBySourceId(sourceEventId: string) {
-    const row = await this.one<EventRow>(
-      this.db.from("results_events").select().eq("source_event_id", sourceEventId).maybeSingle(),
+    const rows = await this.many<EventRow>(
+      this.db.from("results_events").select().contains("source_event_ids", [sourceEventId]).limit(1),
     );
-    return row ? toEvent(row) : null;
+    return rows[0] ? toEvent(rows[0]) : null;
   }
 
   async listEvents(filter: { season?: string; region?: string; status?: EngineEventStatus } = {}) {

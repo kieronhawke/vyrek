@@ -455,6 +455,45 @@ describe("identity keys that can disagree", () => {
     expect((await h.repo.listEvents()).filter((e) => e.sourceEventId === "WEEKEND-1")).toHaveLength(1);
   });
 
+  /**
+   * A HYROX weekend carries a separate source id per race day, so "Cardiff
+   * 2026" is one event with several. Storing a single id meant whichever day
+   * was written last won, and 76 real events thrashed theirs on every catalogue
+   * run — while the schema's unique constraint made a shared slug fatal.
+   */
+  it("collects every race day of a weekend into one event", async () => {
+    const h = await makeHarness();
+    const base = {
+      slug: "s8-2026-cardiff", name: "HYROX Cardiff 2026", city: "Cardiff",
+      country: "", countryIso: "", region: "UK", season: "s8", year: 2026,
+      status: "final" as const, tzOffsetMinutes: 0, athleteCount: 0, isDemo: false,
+    };
+
+    const saturday = await h.repo.upsertEvent({ ...base, sourceEventId: "WEEKEND-SAT" });
+    const sunday = await h.repo.upsertEvent({ ...base, sourceEventId: "WEEKEND-SUN" });
+
+    expect(sunday.id).toBe(saturday.id);
+    expect([...(sunday.sourceEventIds ?? [])].sort()).toEqual(["WEEKEND-SAT", "WEEKEND-SUN"]);
+
+    // Either day finds the event.
+    expect((await h.repo.getEventBySourceId("WEEKEND-SAT"))?.id).toBe(saturday.id);
+    expect((await h.repo.getEventBySourceId("WEEKEND-SUN"))?.id).toBe(saturday.id);
+  });
+
+  it("never narrows the set of race days it knows about", async () => {
+    const h = await makeHarness();
+    const base = {
+      slug: "s8-2026-stockholm", name: "x", city: "Stockholm",
+      country: "", countryIso: "", region: "Europe", season: "s8", year: 2026,
+      status: "final" as const, tzOffsetMinutes: 0, athleteCount: 0, isDemo: false,
+    };
+    await h.repo.upsertEvent({ ...base, sourceEventId: "D1" });
+    await h.repo.upsertEvent({ ...base, sourceEventId: "D2" });
+    // A later sync that only saw one day must not erase the other.
+    const after = await h.repo.upsertEvent({ ...base, sourceEventId: "D1" });
+    expect([...(after.sourceEventIds ?? [])].sort()).toEqual(["D1", "D2"]);
+  });
+
   it("keys a division on its source id before its event and key", async () => {
     const h = await makeHarness();
     const a = await h.repo.upsertDivision({
