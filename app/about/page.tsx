@@ -62,7 +62,7 @@ export default function AboutPage() {
           >
             {/* Own shoot footage (see docs/assets/asset-database.md). */}
             <Image
-              src="/media/images/track/sunflare-stride-bw.jpg"
+              src="/media/images/race/race-start-smoke-wide.jpg"
               alt=""
               fill
               priority
@@ -113,8 +113,8 @@ export default function AboutPage() {
                 <figure className="-mx-4 my-8 overflow-hidden rounded-2xl md:mx-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/media/images/track/pair-frontal-colour.jpg"
-                    alt="Ben and Harry Sutherland running side by side on the track"
+                    src="/media/images/camp/camp-trail-run-pair-close-wide.jpg"
+                    alt="Two athletes running together at dawn"
                     className="aspect-[16/10] w-full object-cover"
                     loading="lazy"
                     decoding="async"
@@ -195,8 +195,8 @@ export default function AboutPage() {
                 <figure className="-mx-4 mt-10 overflow-hidden rounded-2xl md:mx-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/media/images/track/gym-coach-row-colour.jpg"
-                    alt="Coaching an athlete through a rowing interval in the gym"
+                    src="/media/images/camp/camp-portrait-gym-marquee-wide.jpg"
+                    alt="Ben Sutherland hands on hips inside the training marquee"
                     className="aspect-[21/9] w-full object-cover"
                     loading="lazy"
                     decoding="async"
