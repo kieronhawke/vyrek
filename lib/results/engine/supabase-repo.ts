@@ -170,10 +170,46 @@ export class SupabaseResultsRepository implements ResultsRepository {
     return (data as T) ?? null;
   }
 
+  /**
+   * Every matching row, not the first page of them.
+   *
+   * ⚠️ PostgREST caps an unbounded response at `max-rows` — 1,000 on Supabase —
+   * and says nothing about having done so. A truncated read is indistinguishable
+   * from a small table, which is the worst possible failure for a store whose
+   * entire job is to be complete.
+   *
+   * It was silently wrong in both directions. `listAllDivisions` saw 1,000 of
+   * 2,692, so the backfill could not see a third of its own work. Division reads
+   * stopped at 1,000 rows, so `entrantCount` for every large board was written
+   * as exactly 1,000 — which is what the completeness alerts were reporting
+   * ("stored 1000 against a published 1620"), correctly, about our own read
+   * rather than the source.
+   *
+   * So this pages until a short page arrives. A caller that has already applied
+   * its own `.limit()` gets that limit back on the first page and stops, because
+   * a limited response is a short one.
+   */
   private async many<T>(query: PromiseLike<{ data: unknown; error: unknown }>): Promise<T[]> {
-    const { data, error } = await query;
-    if (error) throw toRepositoryError(error, "results query failed");
-    return (data as T[]) ?? [];
+    const PAGE = 1000;
+    const ranged = query as PromiseLike<{ data: unknown; error: unknown }> & {
+      range?: (from: number, to: number) => PromiseLike<{ data: unknown; error: unknown }>;
+    };
+
+    // Not every caller passes something rangeable; those stay single-shot.
+    if (typeof ranged.range !== "function") {
+      const { data, error } = await query;
+      if (error) throw toRepositoryError(error, "results query failed");
+      return (data as T[]) ?? [];
+    }
+
+    const out: T[] = [];
+    for (let from = 0; ; from += PAGE) {
+      const { data, error } = await ranged.range(from, from + PAGE - 1);
+      if (error) throw toRepositoryError(error, "results query failed");
+      const rows = (data as T[]) ?? [];
+      out.push(...rows);
+      if (rows.length < PAGE) return out;
+    }
   }
 
   /* ── Events ───────────────────────────────────────────────────────── */

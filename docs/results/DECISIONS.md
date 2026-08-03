@@ -1209,3 +1209,44 @@ exactly on all four divisions spanning every observed ratio.
 
 Age-class partitioning is off the hot path. `parseAgeClasses` stays, because it
 is the tool that settled the question and is the honest way to audit a division.
+
+### D104 — Six nav links, a dozen things worth using
+The section navigation read Results / Events / Cities / Rankings / Simulator /
+Stations, and by then the race report, the record book, the course speed index,
+the percentile check and head-to-head compare each existed only one page deep
+inside the section, or in a grid below the fold on the hub. A feature nobody can
+find is a feature nobody uses, however good it is.
+
+`/results/tools` is the directory, and the nav slot that pointed at the
+simulator now points at it — the simulator is one tool among a dozen and did
+not deserve a whole slot.
+
+Grouped by what someone is trying to do, not by page type: "understand a race
+you have run", "plan the next one", "explore the data". People arrive with a
+question, not with a request for a directory.
+
+The race report card leads and says what the same thing costs elsewhere, which
+is the single most useful sentence on the page. It links to the hub rather than
+to a sample report: a report only exists for a result, and a hardcoded sample id
+breaks the moment the corpus changes or the site moves to live data. The copy
+carries the route instead.
+
+### D105 — A scroll-reveal that could hide content for good
+`Reveal` rests at `opacity: 0` and settles when its IntersectionObserver fires.
+Its own docstring claimed content was "readable from the first frame", and that
+was simply not true — if the observer never fires, the content is invisible
+permanently.
+
+Not theoretical. A full-page capture of the new tools directory came back with
+an entire section blank: six cards, present in the DOM, at zero opacity, because
+nothing below the fold had been scrolled past. The same happens when printing,
+when a page renders off-screen, and on any browser without the observer.
+
+It is a progressive enhancement with a deadline now: two seconds, after which
+it settles visible and un-animated whether or not it was ever seen. Long enough
+that a reader scrolling normally still gets the effect; short enough that nobody
+stares at a blank block. `results-print.css` also forces every reveal visible on
+paper, where the animation means nothing anyway.
+
+The guard is a test that loads the page, deliberately does **not** scroll, waits
+past the deadline, and asserts no card is still transparent.

@@ -1,21 +1,18 @@
 import { describe, it } from "vitest";
-const t = async (label: string, fn: () => Promise<unknown>) => {
-  const s = Date.now();
-  try { await fn(); console.log(`[p] ${label.padEnd(26)} ${String(Date.now() - s).padStart(6)}ms`); }
-  catch (e) { console.log(`[p] ${label.padEnd(26)} THREW ${(e as Error).message.slice(0,80)}`); }
-};
-describe("timing", () => {
-  it("final numbers", async () => {
-    const { getResultsService } = await import("@/lib/results/engine");
-    const src = getResultsService();
-    await t("listEvents", () => src.listEvents());
-    await t("getEvent rotterdam", () => src.getEvent("s8-2026-rotterdam"));
-    await t("getRanking hyrox-men", () => src.getRanking("s8-2026-rotterdam", "hyrox-men"));
-    const r = await src.getRanking("s8-2026-rotterdam", "hyrox-men");
-    await t("getResult", () => src.getResult(r!.rows[0].id));
-    await t("searchAll('smith')", () => src.searchAll("smith"));
-    await t("getRecords", () => src.getRecords());
-    await t("getStarters", () => src.getStarters("s8-2026-rotterdam"));
-    await t("getStationDistribution", () => src.getStationDistribution("wall-balls", "hyrox-men"));
+describe("pagination", () => {
+  it("reads past 1000", async () => {
+    const { SupabaseResultsRepository } = await import("@/lib/results/engine/supabase-repo");
+    const repo = new SupabaseResultsRepository();
+    const divs = await repo.listAllDivisions();
+    console.log(`[g] listAllDivisions=${divs.length} (expect ~2692)`);
+    const ev = await repo.getEventBySlug("s8-2026-rotterdam");
+    const rd = await repo.listDivisions(ev!.id);
+    const big = rd.find((d) => d.divisionKey === "open-men")!;
+    const rows = await repo.listResultsForDivision(big.id);
+    const count = await repo.countResultsForDivision(big.id);
+    const times = await repo.listFinishTimesForDivision(big.id);
+    console.log(`[g] rotterdam open-men rows=${rows.length} count=${count} finishTimes=${times.length}`);
+    const evs = await repo.listEvents();
+    console.log(`[g] listEvents=${evs.length}`);
   }, 900000);
 });
