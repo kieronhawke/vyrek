@@ -65,6 +65,19 @@ const HEDGE =
 const CTA_HINTS = [
   /plan maker/i, /free assessment/i, /book a call/i, /coaching/i,
   /free consultation/i, /assessment/i, /get in touch/i, /work with/i,
+  /training plans/i,
+];
+
+/**
+ * A CTA can also be a link rather than a phrase, and the wording drifts:
+ * "plan maker" became "training plans" when the /plan CTAs were repointed at
+ * the public /plans listing (2026-08-03), which silently turned real CTAs
+ * into flags. Matching the destination as well as the phrasing means the
+ * check tracks intent rather than a particular sentence.
+ */
+const CTA_LINKS = [
+  /\]\(\/quiz\)/, /\]\(\/plans\)/, /\]\(\/contact\)/,
+  /\]\(\/coaching\)/, /\]\(\/get-fit\)/,
 ];
 
 /**
@@ -202,7 +215,7 @@ for (const file of files) {
   // Every post gets the global <PostFinalCta> from the template, so this is
   // never "no CTA at all" — it means no contextual CTA inside the body,
   // which converts better than a footer block alone.
-  if (!CTA_HINTS.some((re) => re.test(body)))
+  if (!CTA_HINTS.some((re) => re.test(body)) && !CTA_LINKS.some((re) => re.test(body)))
     issues.push("no in-body CTA (global footer CTA still renders)");
 
   // First 60 words should answer, not preamble.

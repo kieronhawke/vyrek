@@ -200,8 +200,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       })),
     ),
     /* The expanded English-language markets. Same priority as a UK town:
-       they are the same kind of page, built from the same kind of data. */
-    ...INTL_CITIES.flatMap((c) => [
+       they are the same kind of page, built from the same kind of data.
+
+       Filtered on `indexable` exactly as UK_LOCATIONS are above. Without it
+       this block submitted 146 URLs that serve noindex: the page gate is
+       `gyms.length > 0 || parkruns.length > 0 || evidence.length > 0`
+       (lib/locations/seo.ts), and 73 of the 780 international cities have
+       none of the three. Audited 2026-08-03. */
+    ...INTL_CITIES.filter((c) => getGeoSeo(c.slug).indexable).flatMap((c) => [
       { url: `${SITE_URL}/hyrox-training/${c.slug}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
       { url: `${SITE_URL}/personal-trainer/${c.slug}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
     ]),
