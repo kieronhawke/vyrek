@@ -48,13 +48,13 @@ export async function generateMetadata({
       ? `${bare}, online`
       : bare.length + 20 <= 65
         ? bare
-        : `Personal trainer, ${displayName}`.length + 20 <= 65
-          ? `Personal trainer, ${displayName}`
-          : /* Montreal's boroughs run to 40 characters —
-               "Rivière-des-Prairies–Pointe-aux-Trembles" — and overflow even
-               the comma form. The place name alone fits and reads; a title
-               truncated mid-word does neither. */
-            displayName;
+        : /* Montreal's boroughs run to 40 characters —
+             "Rivière-des-Prairies–Pointe-aux-Trembles" — and overflow even
+             this form. Dropping the prefix to fit made the two families'
+             titles identical for those places, which is worse than a
+             truncated one: eight titles Google shortens beats four pairs
+             competing with each other. */
+          `Personal trainer, ${displayName}`;
   // Per-town, because this is the snippet in the results page. A description
   // identical across 1,973 places gives a searcher no reason to click ours.
   // The international cities lead on the race instead of the gym count: it is

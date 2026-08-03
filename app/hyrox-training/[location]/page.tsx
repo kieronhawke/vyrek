@@ -40,10 +40,9 @@ export async function generateMetadata({
   /* Any catalogue that qualifies a slug supplies the qualified name too; see
      resolveGeo. Boston, Perth, Newcastle NSW and 60 others need it. */
   const displayName = disambiguatedName ?? loc.name;
-  const long = `Hyrox training in ${displayName}`;
-  // As the personal-trainer sibling: the longest place names do not fit even
-  // the bare prefix, and the name alone beats a truncation.
-  const title = long.length + 20 <= 65 ? long : displayName;
+  // A handful of Montreal boroughs overflow 65 even here. Left prefixed: see
+  // the personal-trainer sibling — dropping it collided the two families.
+  const title = `Hyrox training in ${displayName}`;
   // A race city can say something no UK town page can: the race is here. That
   // belongs in the snippet, because it is the reason someone in Osaka clicks.
   const description = city
