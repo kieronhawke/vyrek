@@ -14,12 +14,18 @@
 
 import { createClient } from "@supabase/supabase-js";
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const key = process.env.SUPABASE_SECRET_KEY;
+// The results engine has its own project (see lib/results/engine/supabase-client.ts),
+// falling back to the shared one only when it has no pair of its own.
+const url = process.env.RESULTS_SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
+const key = process.env.RESULTS_SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SECRET_KEY;
 if (!url || !key) {
-  console.error("Missing NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SECRET_KEY.");
+  console.error(
+    "Missing RESULTS_SUPABASE_URL / RESULTS_SUPABASE_SECRET_KEY " +
+      "(or the shared NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SECRET_KEY).",
+  );
   process.exit(1);
 }
+console.log(`Project: ${/https:\/\/([^.]+)\./.exec(url)?.[1] ?? url}\n`);
 
 const db = createClient(url, key, { auth: { persistSession: false } });
 const SLUG = "s0-2000-verification-throwaway";
@@ -113,6 +119,25 @@ await check("settings round-trip", async () => {
   const { error } = await db.from("results_engine_settings")
     .upsert({ key: "live_interval_seconds", value: 20 }, { onConflict: "key" });
   must(!error, error?.message);
+});
+
+await check("PostgREST resolves the athlete embed used by getRanking", async () => {
+  // supabase-js embeds the athlete via the foreign key. If PostgREST cannot see
+  // the relationship, the ranking endpoint fails at runtime with a schema-cache
+  // error that no amount of SQL testing would have caught.
+  const { error } = await db
+    .from("results_results")
+    .select("id, athlete:results_athletes!inner(slug,name)")
+    .limit(1);
+  must(!error, error?.message);
+});
+
+await check("real ingested data is readable", async () => {
+  const { count, error } = await db
+    .from("results_results")
+    .select("id", { count: "exact", head: true });
+  must(!error, error?.message);
+  console.log(`      ${count} results stored`);
 });
 
 await check("cleanup", async () => {
