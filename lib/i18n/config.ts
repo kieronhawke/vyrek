@@ -56,6 +56,19 @@ export const LOCALE_CONFIG: Record<Locale, LocaleConfig> = {
   },
 };
 
+/** Country names as the locale writes them. */
+const COUNTRY_ENDONYM: Record<Locale, Record<string, string>> = {
+  de: {
+    Germany: "Deutschland",
+    Austria: "Österreich",
+    Switzerland: "Schweiz",
+  },
+};
+
+export function localCountry(locale: Locale, country: string): string {
+  return COUNTRY_ENDONYM[locale]?.[country] ?? country;
+}
+
 export function isLocale(value: string): value is Locale {
   return (LOCALES as string[]).includes(value);
 }

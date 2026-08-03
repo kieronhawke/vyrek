@@ -22,7 +22,34 @@ const WRONG_LANGUAGE: Record<Locale, string[]> = {
   de: ["geneva"],
 };
 
+/**
+ * Endonyms: what the city is called in the language of the page.
+ *
+ * The first German build shipped "Hyrox Training in Cologne", which defeats
+ * the entire purpose — a German reader searches Köln, and a page in German
+ * calling the city by its English exonym reads as translated-by-machine to
+ * exactly the audience it is meant to convince.
+ *
+ * Only the cities where the name actually differs are listed. Hamburg,
+ * Frankfurt, Karlsruhe, Düsseldorf and Basel are already German.
+ */
+const ENDONYM: Record<Locale, Record<string, string>> = {
+  de: {
+    cologne: "Köln",
+    vienna: "Wien",
+    munich: "München",
+    geneva: "Genf",
+    zurich: "Zürich",
+    nuremberg: "Nürnberg",
+  },
+};
+
 export type LocalisedCity = { slug: string; name: string; country: string };
+
+/** The city's name in this locale, falling back to the catalogue name. */
+export function localName(locale: Locale, slug: string, fallback: string): string {
+  return ENDONYM[locale]?.[slug] ?? fallback;
+}
 
 export function localisedCities(locale: Locale): LocalisedCity[] {
   const { countries } = LOCALE_CONFIG[locale];
@@ -30,11 +57,11 @@ export function localisedCities(locale: Locale): LocalisedCity[] {
   const out: LocalisedCity[] = [];
   for (const c of RACE_CITIES) {
     if (!countries.includes(c.country) || excluded.has(c.slug)) continue;
-    out.push({ slug: c.slug, name: c.name, country: c.country });
+    out.push({ slug: c.slug, name: localName(locale, c.slug, c.name), country: c.country });
   }
   for (const c of INTL_CITIES) {
     if (!countries.includes(c.country) || excluded.has(c.slug)) continue;
-    out.push({ slug: c.slug, name: c.name, country: c.country });
+    out.push({ slug: c.slug, name: localName(locale, c.slug, c.name), country: c.country });
   }
   return out;
 }

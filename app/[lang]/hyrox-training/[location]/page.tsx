@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/lib/blog/jsonld";
 import { LocalisedGeoPage } from "@/components/landing/localised-geo";
-import { LOCALE_CONFIG, LOCALES, isLocale, type Locale } from "@/lib/i18n/config";
+import { LOCALE_CONFIG, LOCALES, isLocale, localCountry, type Locale } from "@/lib/i18n/config";
 import { de } from "@/lib/i18n/de";
 import { localisedCities, localisedNearby } from "@/lib/i18n/cities";
 import { resolveGeo } from "@/lib/geo-page";
@@ -104,7 +104,7 @@ export default async function LocalisedHyroxTrainingPage({
         copy={copy}
         locale={locale}
         city={city.name}
-        country={city.country}
+        country={localCountry(lang as Locale, city.country)}
         seo={geo.seo}
         englishHref={`/hyrox-training/${location}`}
         nearby={localisedNearby(lang as Locale, location, 6)}

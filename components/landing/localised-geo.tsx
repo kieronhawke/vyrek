@@ -54,7 +54,13 @@ export function LocalisedGeoPage({
   return (
     <>
       <MarketingNav />
-      <main>
+      {/* The root layout owns <html lang="en-GB"> and a nested route cannot
+          change it without making the whole site's layout dynamic. Marking the
+          subtree is valid HTML and search engines honour the nearest ancestor,
+          so the German content is correctly declared German. Fixing it at the
+          <html> level needs a middleware-set header and is worth doing before
+          a second locale ships. */}
+      <main lang={locale.hreflang}>
         <section
           aria-labelledby="geo-hero-heading"
           className="border-b border-suth-border-subtle"
