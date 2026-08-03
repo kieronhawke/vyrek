@@ -60,6 +60,15 @@ const nextConfig: NextConfig = {
       // both to the canonical /login route so a typo never 404s.
       { source: "/signin", destination: "/login", permanent: true },
       { source: "/sign-in", destination: "/login", permanent: true },
+      /* The kit post's slug was "hyrox-race-day-kit-checklist-2026": it did
+         not match its own title, and the year would have read as stale from
+         January. Renamed while nothing is indexed, which is the only cheap
+         moment to do it. This keeps any existing link working. */
+      {
+        source: "/blog/hyrox-race-day-kit-checklist-2026",
+        destination: "/blog/what-to-wear-for-hyrox",
+        permanent: true,
+      },
     ];
   },
 };

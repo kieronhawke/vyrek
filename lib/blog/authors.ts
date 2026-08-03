@@ -28,7 +28,7 @@ export const AUTHORS: Record<string, Author> = {
     slug: "suth-team",
     name: "The Suth Performance team",
     role: "Coaches and editors",
-    bio: "The Suth Performance programming team, led by HYROX Elite 15 athlete Ben Sutherland.",
+    bio: "The Suth Performance programming team, led by HYROX Elite 15 athlete Ben Sutherland. They write the training, technique and race-day guides on this site, and Ben reviews every one before it is published.",
     photo: "/media/images/track/trio-stride-colour.jpg",
     sameAs: [],
   },
