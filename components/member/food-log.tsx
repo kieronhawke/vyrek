@@ -1,167 +1,196 @@
 "use client";
 
 import { useState } from "react";
-import type { FoodEntry } from "@/lib/member/demo";
+import { useFoodLog } from "@/hooks/use-food-log";
+import { useCelebration } from "@/components/member/celebrate";
+import { AddFood } from "@/components/member/add-food";
+import {
+  MEALS,
+  totals,
+  totalsForMeal,
+  remaining,
+  factFor,
+  goalCrossing,
+  clockTime,
+  mealForHour,
+  DEFAULT_TARGETS,
+  type LoggedFood,
+  type MealKey,
+} from "@/lib/member/food";
 
-export function FoodLog({ initial }: { initial: FoodEntry[] }) {
-  const [entries, setEntries] = useState<FoodEntry[]>(initial);
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [kcal, setKcal] = useState("");
-  const [protein, setProtein] = useState("");
-  const [carbs, setCarbs] = useState("");
-  const [fat, setFat] = useState("");
+/**
+ * THE FOOD LOG.
+ *
+ * What this replaces: five number boxes over `useState`, rendering demo data,
+ * losing everything on navigation. The screen said as much in its own footer —
+ * "nothing here is stored yet".
+ *
+ * The shape here is the one the reference screenshots use, and it is the right
+ * one: totals at the top so the answer to "how am I doing" needs no scrolling,
+ * then the day broken into meals, then one persistent add button. The macro
+ * bars are the existing ones — this is a rewrite of the plumbing, not a
+ * redesign of a card that already worked.
+ *
+ * Logging fires the celebration hook, the same one used for finishing a
+ * session. Adding a chicken breast is not a session, so it fires on the
+ * *moments* — a fact worth knowing, or crossing a goal — rather than on every
+ * tap. Confetti forty times a day is noise, and the fifth burst is already
+ * annoying.
+ */
 
-  function add(e: React.FormEvent) {
-    e.preventDefault();
-    if (!name.trim() || !kcal) return;
-    const now = new Date();
-    setEntries((es) => [
-      ...es,
-      {
-        id: `local-${Date.now()}`,
-        time: `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`,
-        name: name.trim(),
-        kcal: Number(kcal) || 0,
-        protein: Number(protein) || 0,
-        carbs: Number(carbs) || 0,
-        fat: Number(fat) || 0,
-      },
-    ]);
-    setName("");
-    setKcal("");
-    setProtein("");
-    setCarbs("");
-    setFat("");
-    setOpen(false);
-  }
+const MACRO = {
+  protein: { label: "Protein", colour: "#B3261E" },
+  carbs: { label: "Carbs", colour: "#1F4FA8" },
+  fat: { label: "Fat", colour: "#8A5A00" },
+} as const;
 
-  function remove(id: string) {
-    setEntries((es) => es.filter((e) => e.id !== id));
-  }
-
+function Bar({ value, target, colour }: { value: number; target: number; colour: string }) {
+  const pct = target > 0 ? Math.min(100, Math.round((value / target) * 100)) : 0;
   return (
-    <div className="space-y-2">
-      <ol role="list" className="space-y-2">
-        {entries.map((f) => (
-          <li
-            key={f.id}
-            className="flex items-center gap-3 rounded-lg border border-[color:var(--border)] bg-[var(--surface)]/60 px-3 py-2.5"
-          >
-            <span className="shrink-0 font-mono text-[12px] uppercase tracking-[0.18em] text-[color:var(--text-muted)] w-12">
-              {f.time}
-            </span>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-[color:var(--text)]">
-                {f.name}
-              </p>
-              {f.amount ? (
-                <p className="truncate text-xs text-[color:var(--text-muted)]">
-                  {f.amount}
-                </p>
-              ) : null}
-            </div>
-            <div className="shrink-0 text-right">
-              <p className="font-mono text-xs tabular-nums text-[color:var(--text)]">
-                {f.kcal}
-              </p>
-              <p className="font-mono text-[12px] tabular-nums text-[color:var(--text-muted)]">
-                P{f.protein} C{f.carbs} F{f.fat}
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => remove(f.id)}
-              aria-label={`Remove ${f.name}`}
-              className="ml-1 inline-flex size-7 shrink-0 items-center justify-center rounded-full text-[color:var(--text-muted)] hover:bg-[var(--bg)] hover:text-[color:var(--text)]"
-            >
-              ×
-            </button>
-          </li>
-        ))}
-      </ol>
-
-      {open ? (
-        <form
-          onSubmit={add}
-          className="rounded-lg border border-[color:var(--accent)]/40 bg-[var(--surface)] p-4"
-        >
-          <p className="mb-3 font-mono text-[12px] uppercase tracking-[0.22em] text-[color:var(--accent)]">
-            [ ADD FOOD ]
-          </p>
-          <label className="block">
-            <span className="block text-xs font-medium text-[color:var(--text-muted)]">
-              Name
-            </span>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Chicken rice bowl"
-              required
-              className="mt-1 block h-10 w-full rounded-md border border-[color:var(--border)] bg-[var(--bg)] px-3 text-sm text-[color:var(--text)]"
-            />
-          </label>
-          <div className="mt-3 grid grid-cols-4 gap-2">
-            <NumField label="kcal" value={kcal} onChange={setKcal} required />
-            <NumField label="Protein" value={protein} onChange={setProtein} />
-            <NumField label="Carbs" value={carbs} onChange={setCarbs} />
-            <NumField label="Fat" value={fat} onChange={setFat} />
-          </div>
-          <div className="mt-4 flex gap-2">
-            <button
-              type="submit"
-              className="inline-flex h-10 flex-1 items-center justify-center rounded-pill bg-[var(--accent)] px-4 text-sm font-semibold text-[#0A0A0A]"
-            >
-              Add
-            </button>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="inline-flex h-10 items-center justify-center rounded-pill border border-[color:var(--border)] bg-[var(--bg)] px-4 text-sm text-[color:var(--text)]"
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      ) : (
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-dashed border-[color:var(--border)] bg-transparent px-4 text-sm font-medium text-[color:var(--text-muted)] hover:border-[color:var(--accent)] hover:text-[color:var(--accent)]"
-        >
-          + Add food
-        </button>
-      )}
+    <div className="fuel__bar">
+      <span aria-hidden style={{ width: `${pct}%`, background: colour }} />
     </div>
   );
 }
 
-function NumField({
-  label,
-  value,
-  onChange,
-  required,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  required?: boolean;
-}) {
+export function FoodLog() {
+  const { entries, all, add, remove } = useFoodLog();
+  const { fire, node } = useCelebration();
+  const [open, setOpen] = useState(false);
+  const [meal, setMeal] = useState<MealKey>(() => mealForHour(new Date().getHours()));
+  const [toast, setToast] = useState<string | null>(null);
+
+  const eaten = totals(entries);
+  const left = remaining(eaten, DEFAULT_TARGETS);
+
+  function handleAdd(entry: LoggedFood) {
+    const before = eaten;
+    add(entry);
+
+    // Two candidate messages, most significant first. A goal crossing beats a
+    // fact about the food — hitting your protein for the day is the bigger news.
+    const after = {
+      kcal: before.kcal + entry.macros.kcal,
+      protein: before.protein + entry.macros.protein,
+      carbs: before.carbs + entry.macros.carbs,
+      fat: before.fat + entry.macros.fat,
+      fibre: before.fibre + entry.macros.fibre,
+    };
+    const crossing = goalCrossing(before, after, DEFAULT_TARGETS);
+    const fact = factFor(entry);
+
+    if (crossing) {
+      fire(crossing);
+      setToast(crossing);
+    } else if (fact) {
+      setToast(fact);
+    } else {
+      setToast(`${entry.name} logged.`);
+    }
+    window.setTimeout(() => setToast(null), 3200);
+  }
+
   return (
-    <label className="block">
-      <span className="block text-[12px] font-medium uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
-        {label}
-      </span>
-      <input
-        type="number"
-        inputMode="numeric"
-        min="0"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        required={required}
-        className="mt-1 block h-10 w-full rounded-md border border-[color:var(--border)] bg-[var(--bg)] px-2 text-sm tabular-nums text-[color:var(--text)]"
-      />
-    </label>
+    <div className="fuel">
+      {node}
+
+      {/* ── Totals ───────────────────────────────────────────────────── */}
+      <section className="fuel__card">
+        <div className="fuel__headline">
+          <p>
+            <span className="num fuel__kcal">{eaten.kcal}</span>
+            <span className="fuel__target"> / {DEFAULT_TARGETS.kcal} kcal</span>
+          </p>
+          <span className="eyebrow">
+            {left.kcal >= 0 ? `${left.kcal} left` : `${Math.abs(left.kcal)} over`}
+          </span>
+        </div>
+
+        <Bar value={eaten.kcal} target={DEFAULT_TARGETS.kcal} colour="var(--text)" />
+
+        <div className="fuel__macros">
+          {(["protein", "carbs", "fat"] as const).map((k) => (
+            <div key={k}>
+              <div className="fuel__macro-head">
+                <span className="eyebrow">{MACRO[k].label}</span>
+                <span className="num">{Math.round(eaten[k])}/{DEFAULT_TARGETS[k]}</span>
+              </div>
+              <Bar value={eaten[k]} target={DEFAULT_TARGETS[k]} colour={MACRO[k].colour} />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── The day, by meal ─────────────────────────────────────────── */}
+      {MEALS.map((m) => {
+        const rows = entries.filter((e) => e.meal === m.key);
+        const mealTotal = totalsForMeal(entries, m.key);
+        return (
+          <section key={m.key} className="fuel__meal">
+            <div className="fuel__meal-head">
+              <h2>{m.label}</h2>
+              <span className="num">{mealTotal.kcal ? `${mealTotal.kcal} kcal` : "—"}</span>
+            </div>
+
+            {rows.length === 0 ? (
+              <button
+                type="button"
+                className="fuel__empty"
+                onClick={() => { setMeal(m.key); setOpen(true); }}
+              >
+                Add {m.label.toLowerCase()}
+              </button>
+            ) : (
+              <ul className="fuel__rows" role="list">
+                {rows.map((e) => (
+                  <li key={e.id} className="fuel__row">
+                    <span className="num fuel__time">{clockTime(e.at)}</span>
+                    <span className="fuel__row-body">
+                      <span className="fuel__row-name">{e.name}</span>
+                      <span className="fuel__row-detail">
+                        {e.quantity} × {e.portionLabel}
+                      </span>
+                    </span>
+                    <span className="fuel__row-macros num">
+                      <span className="fuel__row-kcal">{e.macros.kcal}</span>
+                      <span>P{Math.round(e.macros.protein)} C{Math.round(e.macros.carbs)} F{Math.round(e.macros.fat)}</span>
+                    </span>
+                    <button
+                      type="button"
+                      className="fuel__remove"
+                      onClick={() => remove(e.id)}
+                      aria-label={`Remove ${e.name}`}
+                    >
+                      ×
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        );
+      })}
+
+      {open ? (
+        <AddFood
+          meal={meal}
+          onMeal={setMeal}
+          history={all}
+          onAdd={handleAdd}
+          onClose={() => setOpen(false)}
+        />
+      ) : (
+        <button type="button" className="fuel__add" onClick={() => setOpen(true)}>
+          + Log food
+        </button>
+      )}
+
+      {/*
+        The toast. `role="status"` rather than `alert`: this is confirmation,
+        not something needing immediate attention, and `alert` interrupts a
+        screen reader mid-sentence.
+      */}
+      {toast ? <p className="fuel__toast" role="status">{toast}</p> : null}
+    </div>
   );
 }

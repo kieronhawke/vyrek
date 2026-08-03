@@ -28,6 +28,17 @@
   --report-band-5: #262624;
 }
 
+
+/* ─── Paper-only furniture ─────────────────────────────────────────────────
+   The cover, the running header and the colophon exist only in the PDF. Hidden
+   here rather than inside the print block so they are hidden by default: a
+   print-only element that forgets its screen rule is a very visible bug, and
+   this way the failure mode is a missing cover on paper rather than a stray
+   cover on the web page. */
+.report-print-cover,
+.report-print-runner,
+.report-print-colophon { display: none; }
+
 @media print {
   /* Chart ink.
      The charts read these rather than hardcoding hex precisely so that this
@@ -56,6 +67,14 @@
     break-inside: auto;
     margin-top: 0;
   }
+
+  /*
+   * …except the first one. The cover already carries `break-after: page`, so a
+   * break-before here is a second break against the same boundary: anything
+   * sitting between the two — the demo-data notice — was stranded alone on a
+   * page of its own with three-quarters of the sheet blank.
+   */
+  .results-report .report-section:first-of-type { break-before: auto; }
 
   /* Nothing that must be read as a unit may be split across a page break. */
   .results-report .report-figure-block,
@@ -130,5 +149,213 @@
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-}
 
+  /* ═══ COVER PAGE ══════════════════════════════════════════════════════
+     Fills the sheet. The previous opening was the screen header card — a
+     rounded panel about a third of a page tall, floating in white space, with
+     the rest of page one blank. It read as a web page that had been printed,
+     which is exactly what it was.
+
+     Deliberately monochrome apart from one accent rule. A full-bleed dark
+     cover would look closer to the screen design and would be the wrong call
+     on paper: it is most of a toner cartridge, it comes out muddy on any
+     office laser, and half the people printing this are doing it to write on
+     it. The rule survives greyscale as a solid bar; a tint would not. */
+  /* The report container carries screen padding that is dead space on paper —
+     the @page margin already provides the gutter. Left in, it pushed the cover
+     down far enough that its foot overflowed onto a second sheet. */
+  .results-report {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  /*
+   * The results layout reserves space for the fixed site header with
+   * `padding-top: var(--results-content-offset)`. On paper there is no fixed
+   * header, so that reservation is roughly 50mm of blank page pushed in front
+   * of the cover — which is what was tipping the cover onto a second sheet.
+   */
+  .results-section { padding-top: 0 !important; }
+
+  .results-report .report-print-cover {
+    display: flex;
+    flex-direction: column;
+    /*
+     * Measured, not guessed, and the margin of error here is a whole wasted
+     * sheet. A4 is 297mm; the @page margin takes 14mm top and bottom, leaving
+     * 269mm of page box. The running header is `position: fixed` so it does
+     * not consume flow, but it does overprint the top of the page, so the
+     * cover starts below it.
+     *
+     * 232mm leaves comfortable slack. At 245mm the result block at the foot
+     * of the cover pushed onto page two and left an otherwise blank sheet
+     * behind it — which is precisely the "printed web page" look this cover
+     * exists to fix.
+     */
+    height: 234mm;
+    break-after: page;
+    padding: 0;
+  }
+
+  .results-report .report-print-cover__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 6mm;
+    border-bottom: 1px solid #D8D8D2;
+  }
+
+  .results-report .report-print-cover__logo { width: 38mm; height: auto; color: #101010; }
+
+  .results-report .report-print-cover__kicker {
+    font-family: var(--font-geist-mono, ui-monospace), monospace;
+    font-size: 8pt;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #55554F;
+  }
+
+  .results-report .report-print-cover__title { margin-top: 26mm; }
+
+  .results-report .report-print-cover__title h1 {
+    margin: 0;
+    font-size: 54pt;
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: -0.035em;
+    color: #101010;
+  }
+
+  /* Pushes the identity block to the foot of the sheet, the way a title page
+     is normally set — and makes the cover height-independent of how long the
+     athlete's name happens to be. */
+  .results-report .report-print-cover__meta {
+    margin-top: auto;
+    padding-left: 8mm;
+    border-left: 3pt solid #4D7C0F;
+  }
+
+  .results-report .report-print-cover__meta p {
+    margin: 0 0 2mm;
+    font-size: 11pt;
+    line-height: 1.45;
+    color: #33332F;
+  }
+
+  .results-report .report-print-cover__name {
+    font-size: 19pt !important;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #101010 !important;
+  }
+
+  .results-report .report-print-cover__result {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8mm;
+    margin-top: 10mm;
+    padding-top: 5mm;
+    border-top: 1px solid #D8D8D2;
+  }
+
+  .results-report .report-print-cover__time {
+    font-family: var(--font-geist-mono, ui-monospace), monospace;
+    font-size: 34pt;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #101010;
+  }
+
+  .results-report .report-print-cover__standing { font-size: 10pt; color: #55554F; text-align: right; }
+
+  /* ═══ RUNNING HEADER ══════════════════════════════════════════════════
+     `position: fixed` is the only way to repeat something on every printed
+     page in Chrome — `@page { @top-center { content: … } }` has never been
+     supported, which is also why there is no page number anywhere in this
+     document. Faking one with a counter would be worse than having none. */
+  /*
+   * The header lives in the page MARGIN, not at the top of the content box.
+   *
+   * With `top: 0` it sat at the start of the content area, and any section
+   * long enough to run onto a second page had its continuation printed
+   * straight through the header — two lines of text overlapping in the same
+   * space, which looked like a rendering fault. Padding the section start does
+   * not help, because a continuation page has no section start to pad.
+   *
+   * So `@page` is given a deeper top margin below and the header is pulled up
+   * into it with a negative offset. Nothing in normal flow can reach it.
+   */
+  @page {
+    margin: 14mm 14mm 22mm;
+  }
+
+  .results-report .report-print-runner {
+    display: flex;
+    position: fixed;
+    bottom: -13mm;
+    left: 0;
+    right: 0;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6mm;
+    padding-top: 2mm;
+    border-top: 0.5pt solid #E2E2DC;
+    font-size: 7.5pt;
+    color: #6A6A63;
+  }
+
+  .results-report .report-print-runner strong { font-weight: 700; color: #101010; }
+  .results-report .report-print-runner__right { text-align: right; white-space: nowrap; }
+
+  /* No clearance needed any more — the header sits in the page margin, above
+     the content box entirely. */
+
+  /* ═══ COLOPHON ════════════════════════════════════════════════════════ */
+  .results-report .report-print-colophon {
+    display: block;
+    break-before: page;
+    margin-top: 0;
+    padding-top: 60mm;
+    text-align: center;
+  }
+
+  .results-report .report-print-colophon__logo {
+    width: 44mm;
+    height: auto;
+    margin: 0 auto 8mm;
+    color: #101010;
+  }
+
+  .results-report .report-print-colophon__line {
+    margin: 0 0 3mm;
+    font-size: 11pt;
+    color: #33332F;
+  }
+
+  .results-report .report-print-colophon__line strong { font-weight: 700; color: #101010; }
+
+  .results-report .report-print-colophon__sub {
+    max-width: 110mm;
+    margin: 0 auto;
+    font-size: 9pt;
+    line-height: 1.55;
+    color: #6A6A63;
+  }
+
+  /* ═══ SECTION TYPOGRAPHY ══════════════════════════════════════════════
+     Section headings printed at roughly body size, so a reader flicking
+     through eight pages had nothing to navigate by. On paper the heading is
+     the only wayfinding there is — there is no scroll position and no nav. */
+  .results-report .report-section > header h2,
+  .results-report .report-section h2 {
+    font-size: 22pt;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  /* The web cover is redundant once there is a real cover page, and it was
+     the thing making page one look like a printed web page. */
+  .results-report .report-cover,
+  .results-report nav[aria-label="Breadcrumb"] { display: none !important; }
+}

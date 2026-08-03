@@ -114,16 +114,18 @@ export function MarketingFooter() {
           </div>
         </div>
 
-        {/* PLACEHOLDER — COMPANY DETAILS: replace bracketed values with the
-            real registered company name, number, and office address. */}
-        <div className="mt-8 space-y-2">
+        {/*
+          The bracketed "[REGISTERED COMPANY NAME TO BE CONFIRMED]" line that
+          used to sit here is gone at the owner's request.
+
+          Worth knowing if it ever comes back: UK company law only requires
+          those details in the footer once the business actually trades as a
+          limited company, and then they belong on every page. As a sole trader
+          there is nothing to disclose, so this is correct as it stands.
+        */}
+        <div className="mt-8">
           <p className="text-xs text-suth-text-tertiary">
             © 2026 Suth Performance. All rights reserved.
-          </p>
-          <p className="text-xs text-suth-text-tertiary">
-            [REGISTERED COMPANY NAME TO BE CONFIRMED], registered in England
-            and Wales, company number [TO BE CONFIRMED], registered office
-            [TO BE CONFIRMED].
           </p>
         </div>
       </Container>

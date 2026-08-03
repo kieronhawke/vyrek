@@ -47,7 +47,33 @@
     --results-segment-fast: #84CC16;
   }
 
-  html, body {
+  /*
+   * THE PAGE HAS TO BE WHITE, AND THAT TAKES THREE DECLARATIONS, NOT ONE.
+   *
+   * `background: #FFFFFF` alone was not enough, and the way it failed was
+   * invisible until an actual PDF was generated and a corner pixel sampled:
+   * every page came out with a near-black frame around a white block —
+   * rgb(18,18,18) at the margins. On paper that is a full ink cartridge and a
+   * document that looks broken.
+   *
+   * Two separate causes, both in `globals.css`, both harmless on screen:
+   *
+   *   • `html { color-scheme: dark }` — the canvas outside the html box is
+   *     painted by the UA using the colour scheme, not by our background.
+   *   • `html { height: 100svh }` — in paged media the viewport is one page,
+   *     so the html box stopped at the bottom of page one and every page after
+   *     it had no background to propagate at all.
+   *
+   * Hence all three. Removing any one brings the black frame back.
+   */
+  html {
+    color-scheme: light !important;
+    height: auto !important;
+    background: #FFFFFF !important;
+    color: #101010 !important;
+  }
+
+  body {
     background: #FFFFFF !important;
     color: #101010 !important;
   }

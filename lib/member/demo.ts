@@ -180,68 +180,17 @@ export const DEMO_RECENT_SESSIONS: LoggedSession[] = [
   },
 ];
 
-// ─── Nutrition ──────────────────────────────────────────
-
-export type FoodEntry = {
-  id: string;
-  time: string; // "07:30"
-  name: string;
-  amount?: string;
-  kcal: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-};
-
-export const DEMO_FOOD_LOG: FoodEntry[] = [
-  {
-    id: "f1",
-    time: "07:30",
-    name: "Porridge with banana + whey",
-    amount: "80g oats, 1 banana, 30g whey",
-    kcal: 540,
-    protein: 35,
-    carbs: 75,
-    fat: 9,
-  },
-  {
-    id: "f2",
-    time: "12:30",
-    name: "Chicken rice bowl",
-    amount: "200g chicken, 150g rice, veg",
-    kcal: 620,
-    protein: 52,
-    carbs: 78,
-    fat: 8,
-  },
-  {
-    id: "f3",
-    time: "15:30",
-    name: "Greek yoghurt + berries",
-    amount: "200g yoghurt, 80g blueberries",
-    kcal: 240,
-    protein: 22,
-    carbs: 18,
-    fat: 8,
-  },
-  {
-    id: "f4",
-    time: "19:00",
-    name: "Salmon + sweet potato",
-    amount: "180g salmon, 300g sweet potato",
-    kcal: 720,
-    protein: 42,
-    carbs: 64,
-    fat: 28,
-  },
-];
-
-export const DEMO_TARGETS = {
-  kcal: 2800,
-  protein: 165, // 1.8 g/kg for a ~92kg athlete
-  carbs: 350,
-  fat: 80,
-};
+/*
+ * ─── Nutrition ──────────────────────────────────────────
+ *
+ * Deleted. `FoodEntry`, `DEMO_FOOD_LOG` and `DEMO_TARGETS` used to be rendered
+ * directly by the nutrition screen, which is why the Fuel tab showed a full
+ * day of food nobody had eaten. The screen now reads the athlete's own log via
+ * `useFoodLog`, and the real food table lives in `lib/member/food.ts`.
+ *
+ * Left as a note rather than a silent removal: anyone looking for the sample
+ * day should know it was replaced by real data, not lost.
+ */
 
 // ─── Community ──────────────────────────────────────────
 

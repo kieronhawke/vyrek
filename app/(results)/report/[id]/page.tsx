@@ -27,6 +27,10 @@ import {
 } from "@/components/results/report/charts";
 import { CoachNoteBlock, ReportSection, ReportFigure, PhotoBreak } from "@/components/results/report/furniture";
 import { PrintButton } from "@/components/results/report/print-button";
+import { ShareReport } from "@/components/results/report/share-report";
+import {
+  PrintCover, PrintRunningFooter, PrintColophon,
+} from "@/components/results/report/print-furniture";
 import { MicroLabel } from "@/components/results/ui/primitives";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
@@ -211,6 +215,28 @@ export default async function RaceReportPage({
 
   return (
     <div className="results-report mx-auto max-w-[1000px] px-5 py-8 md:py-12">
+      {/* ── Paper-only furniture ──────────────────────────────────────
+        * None of this renders on screen. It exists because a document and a
+        * web page want different openings: the screen wants to get to the
+        * numbers immediately, paper wants a cover it can be recognised by
+        * once it is printed, forwarded and sitting in a pile.
+        */}
+      <PrintCover
+        athleteName={result.athleteName}
+        eventName={result.eventName}
+        division={division}
+        ageGroup={result.ageGroup}
+        nation={nationCode(result.countryIso)}
+        venue={event?.venue}
+        date={event?.startDate}
+        finishTime={formatTime(result.finishSeconds)}
+        standing={`${formatOrdinal(result.rank)} of ${formatCount(result.fieldSize)} in ${division}`}
+      />
+      <PrintRunningFooter
+        athleteName={result.athleteName}
+        eventName={result.eventName}
+      />
+
       {/* ── Cover ─────────────────────────────────────────────────── */}
       <Breadcrumbs trail={[{ name: "Results", path: "/results" }, { name: result.eventName, path: `/event/${result.eventSlug}` }, { name: `${result.athleteName} report`, path: `/report/${result.id}` }]} className="mb-4" />
 
@@ -297,6 +323,12 @@ export default async function RaceReportPage({
           >
             Back to the result
           </Link>
+          <ShareReport
+            athleteName={result.athleteName}
+            eventName={result.eventName}
+            finishTime={formatTime(result.finishSeconds)}
+            standing={`${formatOrdinal(result.rank)} of ${formatCount(result.fieldSize)} in ${division}`}
+          />
           <PrintButton />
         </div>
       </div>
@@ -742,6 +774,10 @@ export default async function RaceReportPage({
           { href: "/tools/good-hyrox-time", label: "Is my time good?" },
         ]}
       />
+
+      {/* Paper only. The last page of a forwarded PDF should say where it
+          came from — otherwise every person it reaches is a dead end. */}
+      <PrintColophon reportUrl={`suthperformance.com/report/${result.id}`} />
     </div>
   );
 }

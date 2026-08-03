@@ -70,7 +70,7 @@ const GROUPS: { title: string; lede: string; tools: Tool[] }[] = [
           + "were worth, and split targets for next time. Prints as an A4 "
           + "document. Search your name, open your result, press “Full race report”.",
         icon: FileText,
-        badge: "Free · elsewhere $24.99",
+        badge: "Free",
         featured: true,
       },
       {
@@ -139,9 +139,8 @@ const GROUPS: { title: string; lede: string; tools: Tool[] }[] = [
 const FAQS = [
   {
     q: "Do I need an account for any of this?",
-    a: "No. Every tool on this page is free and open — no sign-up, no email, no "
-      + "paywall. That includes the full race report, which comparable services "
-      + "charge around $24.99 for.",
+    a: "No. Every tool on this page is free and open — no sign-up, no email, "
+      + "no paywall, including the full race report.",
   },
   {
     q: "Where do the numbers come from?",
