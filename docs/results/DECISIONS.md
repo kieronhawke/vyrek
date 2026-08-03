@@ -371,3 +371,44 @@ Percentile lookups run on every result page and read the precomputed table. The
 frontend's `Distribution` needs samples and buckets, which percentile
 breakpoints cannot reconstruct, so `getStationDistribution` builds from stored
 splits and is edge-cached instead. Two paths because there are two questions.
+
+### D51 — D35 and D36 were wrong, and the corrections are the interesting part
+
+D35 said ajax2 was the primary access method. It is not a data endpoint at all;
+it returns their JavaScript bundle. D36's fixtures were keyed on `field-*`
+classes, which only the header row carries. Both produced a parser that returned
+200s, threw no errors, and collected nothing.
+
+Corrected against the live source, and the fixtures rebuilt from a real capture:
+rows are keyed on `type-*`, the name is an `<h4>` in `Surname, Firstname` form,
+the stable id is `idp` behind an HTML-escaped `&amp;`, and a division only
+renders with a `search[sex]` filter. See `SOURCE.md` §4–§5.
+
+The general lesson, recorded because it will recur: a parser that cannot
+distinguish "no data" from "I cannot read this" will always report the first.
+
+### D52 — The identified-bot User-Agent format
+The edge filters on User-Agent *format*, not identity: anything not beginning
+with a `Mozilla/5.0` token gets a 403. We send
+`Mozilla/5.0 (compatible; SuthPerformanceResultsBot/1.0; +https://…/about)`,
+the same shape Googlebot uses — named, versioned, contactable. Measured: 403 for
+the bare form, 200 for this one.
+
+### D53 — Splits are a separate paced worker, not part of the division sync
+The list carries finish times only; the eight runs, eight stations and Roxzone
+are on a per-athlete detail view at one request each. A 3,000-entrant weekend is
+3,000 requests. Fetching them during the sync would blow the budget; fetching
+them on page render would put ingestion in the request path. So a worker fills
+them a slice at a time, claimed profiles first, then rank order. A podium is
+broken down in minutes; the long tail converges over days.
+
+### D54 — The detail parser matches labels explicitly
+The splits table also contains `Run Total`, `Best Run Lap` and per-station
+`In`/`Out` timing-mat rows. A loose `/run/` match invents a ninth and tenth run,
+the splits stop summing to the finish, and the validator quarantines a good race
+for the wrong reason. Explicit labels, distance prefixes stripped.
+
+### D55 — Live tests are labelled, skipped by default, and small
+`HYROX_LIVE_SMOKE=1` opts in. They never run in CI, never block a build, and
+touch one season index and one division. The deterministic suite proves we
+handle the markup we recorded; only these prove the recording is still true.

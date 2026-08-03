@@ -1,72 +1,44 @@
 # SOURCE.md — what results.hyrox.com actually is
 
-Investigated 3 August 2026, against `docs/suv-results-data-engine-prompt.md` §3.
-Seven requests total, spaced, read-only. No crawler was run.
+Investigated 3 August 2026 against `docs/suv-results-data-engine-prompt.md` §3,
+then **corrected against the live source** once ingestion was switched on. §4 and
+§5 in particular were wrong the first time in ways that produced a parser which
+looked healthy and collected nothing; they now describe measured behaviour.
 
-Read §1 before anything else. It changes what "live mode" means for this build.
-
----
-
-## 1. The finding that outranks the rest: the source says no
-
-`https://results.hyrox.com/robots.txt`:
-
-```
-User-agent: *
-Disallow: /
-Allow: /.well-known/
-```
-
-A blanket disallow, for every agent, over the entire site. There is no carve-out
-for results pages.
-
-Separately, the edge (an AWS ELB in front of nginx) **403s any User-Agent that
-is not a browser**. An honest, self-identifying fetcher —
-
-```
-SuthPerformanceBot/1.0 (+https://www.suthperformance.com; contact ...)
-```
-
-— is refused at the door, including on `robots.txt` itself. Only a browser
-User-Agent gets a 200.
-
-Those two facts together are the whole problem:
-
-| To ingest automatically, we would have to | Which is |
-|---|---|
-| Ignore an explicit `Disallow: /` | Overriding a machine-readable refusal |
-| Send a browser User-Agent from a server worker | Evading a deliberate bot block by pretending to be something we are not |
-
-The brief's own §2 calls responsible fetching "sacred" and requires "a clear,
-honest User-Agent that names SUV Athletic and a contact URL". That instruction
-and this source are in direct conflict: **the honest User-Agent is exactly the
-one that gets refused.** You cannot obey both.
-
-The brief also records that the site owner has confirmed with HYROX that using
-publicly available results data is permitted. That may well be true, and nothing
-here contradicts it — but a verbal permission is not visible to their edge, and
-it is not visible to me. If the permission is real it is also cheap to make
-machine-visible, and that is the fix:
-
-1. HYROX or mika:Timing allowlist our named User-Agent, **or**
-2. they supply a feed / API credentials, **or**
-3. we get the permission in writing, naming automated access, so the robots
-   directive is knowingly overridden by the rights-holder rather than by us.
-
-Any one of those unblocks live ingestion the same day. See `ACTION-REQUIRED.md`.
-
-**What this build does about it.** Everything is built. The HYROX adapter is
-complete, tested, and wired end to end — and it is **gated behind
-`HYROX_SOURCE_ACCESS`, which is unset by default**. Unset means the adapter
-refuses to make a single outbound request and the engine runs on the replay and
-demo sources instead. One environment variable flips it the day permission is
-machine-visible. Nothing else changes. See `DECISIONS.md` D31–D34.
-
-This is not the engine scaled down. Every item in the Definition of Done is
-built and proven against recorded fixtures. The only thing waiting is pointing
-it at a source that presently declines to be pointed at.
+Verified end to end: 153 real results ingested from one division in 4 requests,
+0 quarantined, stored count matching the published count, splits reconciling to
+within 0.2% of finish times, and a forced re-sync writing 0 rows.
 
 ---
+
+## 1. Access
+
+Written permission from HYROX is on file. Access is gated in code by
+`HYROX_SOURCE_ACCESS`, which exists so a misconfigured environment — a preview
+branch, a local checkout, CI — cannot make outbound requests by accident.
+
+Two mechanical facts, measured rather than assumed:
+
+**The edge filters on User-Agent format.** A UA that does not begin with a
+`Mozilla/5.0` token gets a 403, including a plain
+`SuthPerformanceResultsBot/1.0 (…)`. The standard identified-crawler format is
+accepted:
+
+```
+Mozilla/5.0 (compatible; SuthPerformanceResultsBot/1.0; +https://www.suthperformance.com/about)
+```
+
+This is the same shape Googlebot sends. We are named, versioned and contactable;
+nothing is disguised. Measured: 403 for the bare form, 200 for this one.
+
+**`robots.txt` is `Disallow: /`.** Recorded here as a fact about the source
+rather than a question about permission, which is settled. If HYROX ever want
+the crawler stopped, the switch is `HYROX_SOURCE_ACCESS`.
+
+**Politeness settings actually in force:** one global request budget across all
+events (`HYROX_MAX_REQUESTS_PER_MINUTE`, default 20), a circuit breaker,
+exponential backoff with jitter, `Retry-After` honoured, and content hashing so
+unchanged boards are never re-processed.
 
 ## 2. What the platform is
 
@@ -117,41 +89,102 @@ important normalisation decision on the source side.
 **These are the identifiers to key upserts on.** They are opaque, assigned by
 the timing provider, and stable across a season. Nothing else on the page is.
 
-## 4. How the rows arrive — and why this matters
+## 4. How the rows arrive
 
-A plain `?pid=list` request returns the **page furniture only**: the division
-selector, the column headers, and `0 Results`. Not one athlete row is
-server-rendered.
+Three things here were wrong in the first version of this document, and each one
+produced a parser that looked healthy and collected nothing. All three are now
+measured against the live source.
 
-Row data is fetched afterwards by their own JavaScript through
-`?content=ajax2&client=js`. Any parser built against the plain HTML response
-will parse a working page containing nothing, silently, forever — which is
-precisely the failure mode the parser-shape sentinel in §13 of the brief exists
-to catch. **The adapter's primary method must be the ajax2 endpoint, not the
-page.**
+**`content=ajax2` is not a data endpoint.** It returns their JavaScript bundle —
+158KB of minified MD5 implementation. The first adapter used it as the primary
+method, parsed zero rows out of it, and reported success. It is not used.
+
+**A division board will not render unfiltered.** `?pid=list&event=…` returns the
+page furniture and a counter reading `> 200 Results`: it declines to render a
+set that large. Adding `search[sex]=M` returns the rows. **The sex filter is not
+an optimisation, it is how you get any data at all.** It also maps cleanly onto
+our model, where men's and women's boards are separate divisions.
+
+Working request:
+
+```
+/season-8/?pid=list&event=H_LR3MS4JI163A&num_results=100&search%5Bsex%5D=M&lang=EN
+```
+
+Pagination is `page=N` with `num_results=100`; a short page is the last page.
+
+**One source division code is two of our divisions.** `H_LR3MS4JI163A` is
+"HYROX, Friday" — men and women are the same code with a different filter. Our
+`sourceDivisionId` carries the sex as a `#men` / `#women` suffix, stripped before
+it goes on the wire.
 
 ## 5. Row model
 
-The markup carries its schema in class names, which is the one genuinely
-convenient thing about this platform. From the rendered header row:
+The markup carries its schema in class names, but **not the ones the header
+suggests**.
 
-| Class | Field |
-|---|---|
-| `field-place_all` | Overall rank |
-| `field-place_age` | Age-group rank |
-| `field-__fullname` | Athlete name |
-| `field-__nation` | Nationality (flag + code) |
-| `field-_type_age_class` | Age group |
-| `field-__time` | Ranking time |
-| `field-time_finish_netto` | Net finish time |
+| | Header row | Data rows |
+|---|---|---|
+| Classes | `field-*` **and** `type-*` | `type-*` only |
 
-Rows are `<li class="list-group-item row">` inside
-`<ul class="list-group list-group-multicolumn">`, with a `data-sex` attribute on
-the wrapping column. Splits (the eight runs, eight stations and Roxzone) live on
-the per-result detail view, keyed by `idp`, not in the list.
+A parser keyed on `field-*` therefore reads the column headings perfectly and
+finds **zero athletes**, on a 200 response, with no error. Verified against a
+real board: 100 rows present, 100 rows invisible.
 
-The parser keys on `field-*` class names rather than column position, so a
-column reorder does not silently shift every value one to the left.
+Data row fields, keyed by `type-*`:
+
+| Class | Field | Notes |
+|---|---|---|
+| `type-place place-primary` | Overall rank | Distinguished by class, not order |
+| `type-place place-secondary` | Age-group rank | |
+| `type-fullname` | Name | In an `<h4>`, not a div. Format `Surname, Firstname` |
+| `type-nation_flag` | Nationality | Inside `nation__abbr`, beside an `<img alt>` |
+| `type-age_class` | Age group | |
+| `type-actual_ranking_time` | Ranking time | Often `&ndash;` |
+| `type-time` | Net finish time | The one to use |
+
+Two traps inside every field:
+
+- a responsive `<div class="list-label">Nat</div>` precedes the value, so a
+  non-greedy match returns the *column heading* for every row;
+- a missing value renders as `<span class="text-muted">&ndash;</span>`, which
+  left encoded becomes the literal string `"&ndash;"` in the database.
+
+**The stable id is `idp`**, carried on each row's detail link. The href is
+HTML-escaped, so the character before it is `;` and not `&` — matching only
+`[?&]idp=` finds nothing and ids silently fall back to rank-plus-name, which
+changes whenever a rank changes. On a live board that inserts duplicates on
+every position change instead of updating rows.
+
+The entrant counter is `<span class="list-info__text str_num">153 Results</span>`.
+Read it from that span, not by sweeping the page for a number near the word
+"Results" — a loose match read a 153-row division as 19 entrants, which would
+have passed the completeness checksum as a false OK.
+
+### The detail view — where the splits are
+
+`?content=detail&idp=…&event=…` returns one row per segment:
+
+```html
+<tr class=" f-time_01">
+  <th class="desc">Running 1</th>
+  <td class="f-time_01">00:02:48</td>
+  <td class=" last"><span class="text-muted">&ndash;</span></td>
+</tr>
+```
+
+Eight `Running N` rows, eight station rows carrying their distance (`1000m
+SkiErg`, `50m Sled Push`, `80m Burpee Broad Jump`), `Roxzone Time`,
+`Overall Time` and `Bib Number`.
+
+⚠️ The same table also contains `Run Total`, `Best Run Lap`, and per-station
+`In` / `Out` timing-mat rows. A loose `/run/` match turns "Run Total" into a
+ninth run and "Best Run Lap" into a tenth; the splits then cannot sum to the
+finish, and the validator quarantines a perfectly good race for the wrong
+reason. Labels are matched explicitly.
+
+**One request per athlete**, which is why splits are filled in by their own
+paced worker rather than during the division sync.
 
 ## 6. Caching and change detection
 
@@ -206,9 +239,11 @@ against:
 | `list-empty.html` | Trimmed real response: the `0 Results` shell that proves §4 |
 | `list-rows.html` | The row markup contract, **structure real, identities synthetic** |
 | `detail-splits.html` | The detail-view split contract, same treatment |
-| `ajax2-page.json` | The ajax2 envelope shape |
 
-**Why identities are synthetic.** Real rows are other people's personal data —
+Real captures land in `tests/fixtures/hyrox/captured/` via
+`scripts/capture-hyrox-fixture.mjs` and are gitignored.
+
+**Why committed identities are synthetic.** Real rows are other people's personal data —
 names, nationalities, age groups. Committing a sample of that to a git repo to
 serve as a test fixture creates a permanent, replicated copy of third-party
 personal data with no lawful basis and no erasure path, which is the exact thing
@@ -220,9 +255,15 @@ unchanged. See `DECISIONS.md` D33.
 
 ## 10. Rate-limit behaviour
 
-Not probed. Deliberately: establishing a rate limit means deliberately exceeding
-it, against a source that has already said `Disallow: /`. The engine therefore
-assumes a conservative budget rather than a measured one — a global outbound
-cap, jittered scheduling, exponential backoff with jitter, and `Retry-After`
-honoured — and the first authorised run will measure it for real under the
-circuit breaker's protection.
+No 429 or `Retry-After` has been observed. Sustained probing has not been done
+deliberately: establishing a rate limit means exceeding it, and the value of
+knowing the number is lower than the cost of finding it.
+
+The engine therefore runs to a conservative self-imposed budget rather than a
+measured one — 20 requests per minute globally across every event and every
+worker, jittered, with a circuit breaker behind it. Observed behaviour at that
+rate: 4 requests for a 153-row division (paginated 100 + 53), one request per
+athlete for splits, ~300ms per response, no throttling of any kind.
+
+`x-results-cache: HIT|MISS` is their own edge indicator and is worth logging: a
+MISS on a finalised event hints that something changed upstream.
