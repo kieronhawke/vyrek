@@ -1,6 +1,7 @@
 import { MemberShell } from "@/components/member/shell";
 import { RegisterTrainSW } from "@/components/client-app/register-sw";
 import { assertMember } from "@/lib/member/auth";
+import { factsFromContext, resolveFirstRun } from "@/lib/member/first-run";
 
 /**
  * The tabbed member area. Everything under here is signed in and framed.
@@ -24,11 +25,20 @@ export default async function MemberTabsLayout({
   children: React.ReactNode;
 }) {
   const ctx = await assertMember("/app/today");
+  /* The chrome asserted "Week 4 of 12" from demo constants on every screen,
+     including for members with nothing published, which contradicted the
+     screen underneath. Pass the real position; 0 hides it. */
+  const state = resolveFirstRun(factsFromContext(ctx));
 
   return (
     <>
       <RegisterTrainSW />
-      <MemberShell initials={initialsFor(ctx.user.email)}>{children}</MemberShell>
+      <MemberShell
+        initials={initialsFor(ctx.user.email)}
+        blockWeek={state.facts.publishedWeeks}
+      >
+        {children}
+      </MemberShell>
     </>
   );
 }
