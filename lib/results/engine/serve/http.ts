@@ -71,13 +71,33 @@ export function apiNotFound(what: string): NextResponse {
 /**
  * A failure here must not take the page down.
  *
- * Routes call this in a catch and return an empty-but-valid payload where the
- * shape allows, so a component renders its empty state rather than throwing.
+ * A store that is unreachable is reported as 503 with a plain explanation
+ * rather than a 500 carrying a Postgres error string. The two are different
+ * situations — "the database is not there" is operational and temporary,
+ * "the code threw" is a bug — and a caller that cannot tell them apart will
+ * retry the wrong one.
  */
 export function apiError(error: unknown, status = 500): NextResponse {
   const message = error instanceof Error ? error.message : String(error);
+
+  if (isStoreUnreachable(message)) {
+    return NextResponse.json(
+      {
+        error: "The results store is unavailable. Serving nothing rather than something wrong.",
+        code: "STORE_UNAVAILABLE",
+        attribution: ATTRIBUTION,
+      },
+      { status: 503, headers: { "Cache-Control": "no-store", "Retry-After": "60" } },
+    );
+  }
+
   return NextResponse.json(
-    { error: message, attribution: ATTRIBUTION },
+    { error: message, code: "INTERNAL", attribution: ATTRIBUTION },
     { status, headers: { "Cache-Control": "no-store" } },
   );
+}
+
+/** DNS failure, refused connection, or a paused Supabase project. */
+function isStoreUnreachable(message: string): boolean {
+  return /ENOTFOUND|EAI_AGAIN|ECONNREFUSED|ETIMEDOUT|fetch failed|getaddrinfo/i.test(message);
 }
