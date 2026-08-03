@@ -1,6 +1,8 @@
 import { AdminShell } from "@/components/control/admin-shell";
 import { DataTable, type Column } from "@/components/control/data-table";
-import { MESSAGE_ROWS, TEMPLATE_ROWS, type MessageRow, type TemplateRow } from "@/lib/control/admin-fixtures";
+import { MESSAGE_ROWS, type MessageRow } from "@/lib/control/admin-fixtures";
+import { Messaging } from "@/components/control/messaging";
+import { SEED_TEMPLATES } from "@/lib/control/messaging";
 import { ModuleNote, StatStrip } from "@/components/control/stat-strip";
 
 const BASE = "/control-preview/admin";
@@ -31,21 +33,6 @@ const INBOX: Column<MessageRow>[] = [
   { key: "preview", label: "Message", render: (r) => r.preview, csv: (r) => r.preview },
 ];
 
-const TEMPLATES: Column<TemplateRow>[] = [
-  { key: "name", label: "Template", render: (r) => r.name, csv: (r) => r.name },
-  { key: "cat", label: "Category", render: (r) => r.category, csv: (r) => r.category },
-  { key: "channel", label: "Channel", render: (r) => r.channel, csv: (r) => r.channel },
-  {
-    key: "class", label: "Class",
-    render: (r) => (
-      <span style={{ color: r.classification === "marketing" ? "var(--warn)" : "var(--text-muted)" }}>
-        {r.classification}
-      </span>
-    ),
-    csv: (r) => r.classification,
-  },
-];
-
 export default function AdminMessages() {
   return (
     <AdminShell base={BASE} title="Messages">
@@ -57,10 +44,12 @@ export default function AdminMessages() {
             tone: "accent",
           },
           { label: "Threads today", value: String(MESSAGE_ROWS.length) },
-          { label: "Templates", value: String(TEMPLATE_ROWS.length) },
+          { label: "Templates", value: String(SEED_TEMPLATES.length) },
           {
             label: "Marketing class",
-            value: String(TEMPLATE_ROWS.filter((t) => t.classification === "marketing").length),
+            value: String(
+              SEED_TEMPLATES.filter((t) => t.classification === "marketing").length,
+            ),
             tone: "warn",
             note: "Blocked after opt-out",
           },
@@ -69,14 +58,14 @@ export default function AdminMessages() {
       <DataTable rows={MESSAGE_ROWS} columns={INBOX} caption="messages" />
 
       <h2 className="eyebrow" style={{ margin: "var(--space-4) 0 var(--space-1)" }}>
-        Template library
+        Everything the app sends
       </h2>
-      <DataTable rows={TEMPLATE_ROWS} columns={TEMPLATES} caption="templates" />
+      <Messaging />
 
       <ModuleNote>
-        Sending needs Twilio and a verified Resend domain. 33 branded email
-        templates and 15 SMS messages are already written and tested; the
-        library above is where they become editable without a deploy.
+        Sending needs Twilio and a verified Resend domain. The wording, the
+        switches and the per-client rules are real and saved; nothing leaves
+        the building until those credentials exist.
       </ModuleNote>
     </AdminShell>
   );

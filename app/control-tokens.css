@@ -2369,3 +2369,330 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* ── Messaging ────────────────────────────────────────────────────────── */
+
+[data-surface="control"] .mg { display: grid; gap: var(--space-2); }
+
+[data-surface="control"] .mg-banner,
+[data-surface="control"] .mg-broken {
+  margin: 0;
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+[data-surface="control"] .mg-banner { border: 1px solid var(--border-strong); }
+[data-surface="control"] .mg-broken { border: 1px solid var(--danger); }
+
+[data-surface="control"] .mg-filters { display: flex; gap: 4px; flex-wrap: wrap; }
+
+[data-surface="control"] .mg-chip {
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+[data-surface="control"] .mg-chip[data-on] {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: transparent;
+}
+
+[data-surface="control"] .mg-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+[data-surface="control"] .mg-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  padding-right: var(--space-2);
+}
+
+/* An off template is still legible — it is a thing Ben chose, not a disabled
+   control. Dimming it to 40% would make the list look broken. */
+[data-surface="control"] .mg-row[data-off] { background: var(--bg); }
+[data-surface="control"] .mg-row[data-off] .mg-row__name { color: var(--text-muted); }
+
+[data-surface="control"] .mg-row__open {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+  padding: var(--space-2);
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+[data-surface="control"] .mg-row__top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+[data-surface="control"] .mg-row__name { font-size: var(--text-base); font-weight: 700; }
+
+[data-surface="control"] .mg-tag {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--surface-raised);
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+}
+
+[data-surface="control"] .mg-tag[data-channel="sms"] { color: var(--text); }
+[data-surface="control"] .mg-tag[data-class="marketing"] { color: var(--warn); }
+[data-surface="control"] .mg-tag[data-bad] { background: var(--danger); color: #fff; }
+
+[data-surface="control"] .mg-row__trigger,
+[data-surface="control"] .mg-row__peek {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+[data-surface="control"] .mg-row__peek { color: var(--text-faint); }
+
+[data-surface="control"] .mg-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-size: var(--text-sm);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+[data-surface="control"] .mg-switch input { width: 20px; height: 20px; }
+
+/* ── Editor ───────────────────────────────────────────────────────────── */
+
+[data-surface="control"] .mg-editor {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+[data-surface="control"] .mg-editor__scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+}
+
+[data-surface="control"] .mg-editor__panel {
+  position: relative;
+  display: grid;
+  gap: var(--space-1);
+  max-height: 90svh;
+  overflow-y: auto;
+  padding: 10px var(--space-2) calc(env(safe-area-inset-bottom) + var(--space-3));
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-radius: 14px 14px 0 0;
+}
+
+[data-surface="control"] .mg-editor__grip {
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border-strong);
+  margin: 0 auto 6px;
+}
+
+[data-surface="control"] .mg-editor__title { margin: 0; font-size: var(--text-lg); }
+
+[data-surface="control"] .mg-editor__trigger {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .mg-field { display: grid; gap: 3px; }
+
+[data-surface="control"] .mg-input {
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--text-base);
+  width: 100%;
+}
+
+[data-surface="control"] .mg-body {
+  font-family: var(--font-num, monospace);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  resize: vertical;
+}
+
+[data-surface="control"] .mg-cost {
+  margin: 0;
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .mg-cost[data-over] { color: var(--warn); }
+
+[data-surface="control"] .mg-problems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+[data-surface="control"] .mg-problems li {
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  border: 1px solid var(--border);
+}
+
+[data-surface="control"] .mg-problems li[data-level="error"] {
+  border-color: var(--danger);
+  color: var(--text);
+}
+
+[data-surface="control"] .mg-problems li[data-level="warning"] {
+  border-color: var(--warn);
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .mg-vars__row { display: flex; flex-wrap: wrap; gap: 4px; }
+
+[data-surface="control"] .mg-var {
+  min-height: 36px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px dashed var(--border-strong);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-num, monospace);
+  font-size: var(--text-2xs);
+  cursor: pointer;
+}
+
+[data-surface="control"] .mg-preview {
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-card);
+  background: var(--surface-raised);
+}
+
+[data-surface="control"] .mg-preview__subject {
+  margin: 4px 0 6px;
+  font-size: var(--text-base);
+  font-weight: 700;
+}
+
+[data-surface="control"] .mg-preview__body {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+[data-surface="control"] .mg-clients {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 2px;
+}
+
+[data-surface="control"] .mg-client {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  font-size: var(--text-sm);
+}
+
+[data-surface="control"] .mg-client input { width: 18px; height: 18px; }
+
+[data-surface="control"] .mg-hint {
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .mg-editor__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+  padding-top: var(--space-1);
+  border-top: 1px solid var(--border);
+}
+
+[data-surface="control"] .mg-status {
+  margin-inline-end: auto;
+  font-size: var(--text-sm);
+  font-weight: 650;
+  color: var(--danger);
+}
+
+[data-surface="control"] .mg-status[data-ok] { color: var(--ok); }
+
+[data-surface="control"] .mg-done {
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: inherit;
+  font-size: var(--text-base);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (min-width: 900px) {
+  [data-surface="control"] .mg-editor { justify-content: center; align-items: center; }
+  [data-surface="control"] .mg-editor__panel {
+    width: min(680px, 94vw);
+    max-height: 88svh;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: var(--space-2) var(--space-3) var(--space-3);
+  }
+  [data-surface="control"] .mg-editor__grip { display: none; }
+}
