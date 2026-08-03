@@ -280,6 +280,50 @@ test.describe("search", () => {
  * the visible pill and asserts the tap still lands, which is the only thing a
  * thumb cares about.
  */
+/**
+ * No Results page may drag heavy imagery it never renders.
+ *
+ * This bug has now shipped twice. Both times the mechanism was identical: a
+ * marketing page marks a hero `eager` (or `priority`), a Results page links to
+ * it in the footer, Next prefetches the route, and the image comes along —
+ * 403 KB of a 1.1 MB page on pages that render no photography at all. Nothing
+ * in the suite looked at transferred bytes, so both times it was found by
+ * hand, long after release.
+ *
+ * The budget is deliberately generous. This is a tripwire for a page pulling
+ * a whole hero it does not use, not a byte-level performance target.
+ */
+test.describe("page weight", () => {
+  const IMAGE_BUDGET_KB = 150;
+
+  for (const path of ["/results", "/results/city/london", "/results/course-index", "/events"]) {
+    test(`${path} pulls no unrendered imagery`, async ({ page }) => {
+      await open(page, path);
+      // Give prefetch and any post-hydration preloads time to fire.
+      await page.waitForTimeout(2500);
+
+      const images = await page.evaluate(() => {
+        const res = performance.getEntriesByType("resource") as PerformanceResourceTiming[];
+        return res
+          .filter((r) => r.initiatorType === "img" || /\.(png|jpe?g|webp|avif|gif)/.test(r.name))
+          .map((r) => ({
+            kb: Math.round((r.encodedBodySize || r.transferSize || 0) / 1024),
+            name: r.name.replace(location.origin, ""),
+          }))
+          .filter((r) => r.kb > 0)
+          .sort((a, b) => b.kb - a.kb);
+      });
+
+      const totalKb = images.reduce((t, i) => t + i.kb, 0);
+      expect(
+        totalKb,
+        `${totalKb}kB of images on a page that renders none:\n`
+          + images.slice(0, 5).map((i) => `  ${i.kb}kB ${i.name}`).join("\n"),
+      ).toBeLessThan(IMAGE_BUDGET_KB);
+    });
+  }
+});
+
 test.describe("consent bar tap targets", () => {
   test("a tap below the visible button still hits it", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });

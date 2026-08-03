@@ -401,12 +401,26 @@ export function GeoLanding({
            * second, vertical layer only seats the section into the one below.
            */}
           <div aria-hidden className="absolute inset-0 -z-10">
+            {/* `loading="eager"` rather than `priority`.
+              *
+              * `priority` emits `<link rel="preload" as="image">` pointing at
+              * the *raw* file. Every Results page links to geo pages in its
+              * footer, Next prefetches those routes, and React then executes
+              * that preload — so a 403 KB hero for a page nobody had opened was
+              * landing on every page in the section. Measured: 403 KB of a
+              * 1.1 MB page, on a page with no images of its own.
+              *
+              * It should never have been `priority` in the first place. This is
+              * decorative — `alt=""`, `aria-hidden`, 55% opacity behind two
+              * scrims — so it is not the LCP element, and marking it high
+              * priority made it compete with the text that is. `eager` keeps it
+              * loading immediately on the geo page itself, which is all the
+              * original change wanted, without the preload link. */}
             <Image
               src={c.heroImage}
               alt=""
               fill
-              priority
-              fetchPriority="high"
+              loading="eager"
               sizes="100vw"
               className="object-cover opacity-55 grayscale"
             />

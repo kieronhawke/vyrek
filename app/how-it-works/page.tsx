@@ -125,11 +125,27 @@ export default function HowItWorksPage() {
                   ) : null}
                 </div>
                 <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-suth-border bg-suth-elevated md:aspect-[4/3]">
+                  {/* All four lazy — the first one is not special.
+                    *
+                    * `loading="eager"` on step 01 put a 403 KB raw JPEG into
+                    * the RSC payload for this route. Every page in the Results
+                    * section links here from its footer, Next prefetches the
+                    * route, and the eager image came with it: 403 KB of a
+                    * 1.1 MB page, on pages that render no images at all.
+                    *
+                    * This is the second time this exact bug has shipped — the
+                    * station-guide heroes did the same thing and were fixed the
+                    * same way. There is now a page-weight guard in the suite so
+                    * there is not a third.
+                    *
+                    * Nothing is lost by lazy-loading it: this sits beside a
+                    * block of body copy well down the page, so it is not the
+                    * LCP element on any viewport. */}
                   <img
                     src={step.image}
                     alt=""
                     className="absolute inset-0 h-full w-full object-cover grayscale"
-                    loading={i === 0 ? "eager" : "lazy"}
+                    loading="lazy"
                     decoding="async"
                   />
                   <div

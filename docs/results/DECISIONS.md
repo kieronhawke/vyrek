@@ -954,3 +954,39 @@ They are now one `RelatedLinks` component rendering chips: `inline-flex` gives
 the rule something to apply to, and a bordered target is easier to aim at than
 underlined text in a wrap-flow list. It reads better too — a row of related
 destinations should look like navigation, not like a sentence containing links.
+
+### D92 — 403 KB of imagery on every page, for a page nobody had opened
+Measured page weight across the section: every route pulled the same 403 KB
+JPEG, on pages that render no photography at all. It was 37% of a 1.1 MB page.
+
+`/how-it-works` renders its first step image with `loading="eager"` on a plain
+`<img>` pointing at the raw file. Every Results page links there from the
+footer, Next prefetches the route, and the eager image comes with the payload.
+All four step images are lazy now; nothing is lost, because that image sits
+beside body copy well down the page and is not the LCP element on any viewport.
+
+**This is the second time this exact bug has shipped.** The station-guide heroes
+did the same thing and were fixed the same way. Twice it was found by hand,
+long after release, because nothing in the suite ever looked at transferred
+bytes. There is a page-weight guard now — a generous 150 KB image budget on
+four routes, which is a tripwire for pulling a whole unused hero rather than a
+byte-level target.
+
+Result: 1,093 KB → 690 KB on every page in the section.
+
+My first hypothesis was wrong and worth recording. I blamed the geo-landing
+hero, changed it, rebuilt, and the number did not move. The culprit was a
+different page entirely. The lesson is the one this repo keeps relearning:
+trace the initiator, do not reason about which component "looks likely".
+
+### D93 — A decorative background should never be `priority`
+Separately, and *not* the fix for D92: the geo-landing hero carried `priority`
+and `fetchPriority="high"` on an image that is `aria-hidden`, `alt=""`, at 55%
+opacity behind two scrims. The file's own comment already documents that they
+had found it rendering almost invisible. Marking it high priority made a
+decorative layer compete with the text that actually is the LCP element, and
+`priority` emits a preload for the raw path rather than the optimised one.
+
+Now `loading="eager"`: it still loads immediately on the geo page, verified
+still painting, and now served through the optimiser at `w=640&q=75` instead of
+as a 400 KB original.
