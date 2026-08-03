@@ -536,6 +536,32 @@ test.describe("review index", () => {
 
 /** Shown once, after onboarding, then never again. */
 test.describe("walkthrough", () => {
+  /**
+   * Every card names a tab — "Today", "Plan", "Fuel" — and the card was
+   * rendering on top of the tab bar it was describing, with a sliver of the
+   * tabs showing underneath. Somebody reading "start here every day" could not
+   * see the thing being pointed at, which is the one job a walkthrough has.
+   */
+  test("clears the tab bar it is pointing at", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/control-preview/app/plan", { waitUntil: "load" });
+    await page.waitForTimeout(1200);
+
+    const geometry = await page.evaluate(() => {
+      const card = document.querySelector(".walkthrough__card");
+      const tabs = document.querySelector(".member-tabbar");
+      if (!card || !tabs) return null;
+      return {
+        cardBottom: card.getBoundingClientRect().bottom,
+        tabsTop: tabs.getBoundingClientRect().top,
+      };
+    });
+
+    // An assertion that cannot run should say so rather than pass quietly.
+    expect(geometry, "walkthrough or tab bar not rendered in the preview").not.toBeNull();
+    expect(geometry!.cardBottom).toBeLessThanOrEqual(geometry!.tabsTop + 1);
+  });
+
   test("greets a new athlete on the first visit", async ({ page }) => {
     await page.goto("/control-preview/app/today");
     const sheet = page.getByRole("dialog");
@@ -581,5 +607,38 @@ test.describe("form video", () => {
   test("is not offered on a rest day", async ({ page }) => {
     await page.goto("/control-preview/app/plan/2026-08-07");
     await expect(page.getByText("Film or upload a clip")).toHaveCount(0);
+  });
+});
+
+/**
+ * Ticking a session off was a silent state change. It is the one moment in the
+ * week the app has earned a reaction, and the moment that brings somebody back
+ * tomorrow.
+ */
+test.describe("marking a session done", () => {
+  test("celebrates, announces, and cleans up after itself", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/control-preview/app/plan", { waitUntil: "load" });
+    await page.waitForTimeout(1200);
+
+    // The walkthrough is modal and intercepts the tick underneath it.
+    const skip = page.getByRole("button", { name: "Skip" });
+    if (await skip.count()) await skip.click();
+    await page.waitForTimeout(400);
+
+    const tick = page.getByRole("button", { name: /Mark .* done/i }).first();
+    await tick.scrollIntoViewIfNeeded();
+    await tick.click();
+    await page.waitForTimeout(250);
+
+    expect(await page.locator(".celebrate__piece").count()).toBeGreaterThan(0);
+
+    // The visual celebration conveys nothing to somebody who cannot see it.
+    const announced = await page.locator("[aria-live=polite]").first().innerText();
+    expect(announced).toMatch(/logged|week/i);
+
+    // And it must not leave elements on the page for ever.
+    await page.waitForTimeout(1300);
+    expect(await page.locator(".celebrate__piece").count()).toBe(0);
   });
 });
