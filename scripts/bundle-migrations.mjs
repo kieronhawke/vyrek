@@ -57,7 +57,29 @@ function makeRerunnable(sql) {
     "create table if not exists ",
   );
 
-  // create [unique] index X on → ... if not exists ...
+  /* Unnamed indexes first: `create index on accounts (hub_status)` is legal
+     and 0100 uses eight of them, but `if not exists` REQUIRES a name — the
+     first version of this produced `create index if not exists on accounts`
+     and the whole transaction failed on it.
+
+     Postgres would otherwise auto-name them, and a second run would happily
+     build a duplicate index under a `_1` suffix rather than skip it. Naming
+     them from the table and columns makes them both guardable and legible
+     in a query plan. */
+  out = out.replace(
+    /\bcreate\s+(unique\s+)?index\s+on\s+([\w.]+)\s*\(([^)]*)\)/gi,
+    (_m, unique, table, cols) => {
+      const slug = cols
+        .split(",")
+        .map((c) => c.trim().split(/\s+/)[0].replace(/\W/g, ""))
+        .filter(Boolean)
+        .join("_");
+      const name = `${table.replace(/\W/g, "_")}_${slug}_idx`;
+      return `create ${unique ?? ""}index if not exists ${name} on ${table} (${cols})`;
+    },
+  );
+
+  // Named ones: create [unique] index X on → ... if not exists X on
   out = out.replace(
     /\bcreate\s+(unique\s+)?index\s+(?!if\s+not\s+exists)/gi,
     (_m, unique) => `create ${unique ?? ""}index if not exists `,
@@ -70,11 +92,39 @@ function makeRerunnable(sql) {
       `do $$ begin\n  create type ${name} as enum (${body});\nexception when duplicate_object then null;\nend $$;`,
   );
 
+  /* alter table X add column Y → add column if not exists Y.
+     One of these in 0100, and it was the only statement left that failed a
+     second run — proven by running the bundle twice against the real
+     database rather than assuming. */
+  out = out.replace(
+    /\balter\s+table\s+([\w.]+)\s+add\s+column\s+(?!if\s+not\s+exists)/gi,
+    (_m, table) => `alter table ${table} add column if not exists `,
+  );
+
   // `create trigger if not exists` needs PG14+. Dropping first always works.
   out = out.replace(
     /^\s*create\s+trigger\s+(\w+)([\s\S]*?)\bon\s+([\w.]+)/gim,
     (m, name, mid, table) =>
       `drop trigger if exists ${name} on ${table};\ncreate trigger ${name}${mid}on ${table}`,
+  );
+
+  /* And the ones built with `execute format(...)` inside a DO loop, which
+     the rule above cannot see because at parse time they are just a string.
+     0100 attaches the shared updated_at trigger to eight tables this way,
+     and it was the last statement failing a second run.
+
+     Found by running the bundle three times against the real database and
+     reading what broke, rather than by reasoning about what ought to. */
+  out = out.replace(
+    /'create trigger %I_(\w+) before update on %I/gi,
+    (_m, suffix) =>
+      `'drop trigger if exists %I_${suffix} on %I; create trigger %I_${suffix} before update on %I`,
+  );
+  // That doubles the format placeholders, so the argument list has to grow
+  // to match: format() is strict about arity.
+  out = out.replace(
+    /for each row execute function set_updated_at\(\)',\s*t,\s*t\)/gi,
+    "for each row execute function set_updated_at()', t, t, t, t)",
   );
 
   return out;

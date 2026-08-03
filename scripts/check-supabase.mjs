@@ -111,6 +111,30 @@ try {
   process.exit(1);
 }
 
+/* 2b — is the secret key the right one for THIS project?
+ *
+ * Worth its own step. Left to the table loop, a stale secret key reports
+ * every table as missing and tells you to re-run the migrations — which is
+ * both wrong and destructive advice. This tool exists to stop exactly that
+ * kind of misdiagnosis, and the first version of it made the mistake.
+ */
+const probe = await fetch(`${url}/rest/v1/${TABLES[0]}?select=*&limit=0`, {
+  headers: { apikey: secret, Authorization: `Bearer ${secret}` },
+  signal: AbortSignal.timeout(10000),
+});
+if (probe.status === 401) {
+  bad("SUPABASE_SECRET_KEY is not valid for this project");
+  console.log(
+    `\n  The URL points at ${host} but the secret key was issued by a`,
+  );
+  console.log("  different project — most likely the old, deleted one.");
+  console.log(
+    "\n  Dashboard → Project Settings → API → secret / service_role key.\n",
+  );
+  process.exit(1);
+}
+ok("Secret key matches the project");
+
 /* 3 — the tables */
 console.log("\n  Tables:\n");
 const missing = [];
@@ -146,7 +170,10 @@ console.log();
 if (missing.length) {
   bad(`${missing.length} table(s) missing — a migration did not run.`);
   console.log(`\n  Missing: ${missing.join(", ")}`);
-  console.log("  Re-run the files in supabase/migrations/ in order.\n");
+  console.log(
+    "\n  Fix: node scripts/bundle-migrations.mjs > /tmp/schema.sql, then run",
+  );
+  console.log("  it in the SQL editor. It is safe to run more than once.\n");
   process.exit(1);
 }
 
