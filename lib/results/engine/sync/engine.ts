@@ -32,6 +32,7 @@ import {
   type RealtimePublisher,
 } from "./publisher";
 import { reapStaleRuns, recordSharedRequests } from "../ops/run-hygiene";
+import { eventAthleteTotal } from "./event-totals";
 
 export type EngineDeps = {
   repo: ResultsRepository;
@@ -240,6 +241,15 @@ export class SyncEngine {
         lastSeenHash: hash,
         lastSyncedAt: this.now().toISOString(),
       });
+
+      // Roll the division counts up to the event.
+      //
+      // The catalogue writes `athleteCount: 0` — it runs before any results
+      // exist — and nothing ever revised it. Every event therefore served
+      // "0 athletes" however many results were stored behind it: on the event
+      // tiles, the city pages, the event FAQ, the race reports and the
+      // `SportsEvent` markup. 491,030 results sat behind a field of zero.
+      await this.recomputeEventTotal(event);
     } else {
       await this.deps.repo.upsertDivision({
         ...current,
@@ -341,6 +351,13 @@ export class SyncEngine {
       sourceEventId: event.sourceEventId ?? null,
       acknowledgedAt: null,
     });
+  }
+
+  /** Sum this event's divisions into its own athlete count. */
+  private async recomputeEventTotal(event: EngineEvent): Promise<void> {
+    const total = await eventAthleteTotal(this.deps.repo, event.id);
+    if (total === event.athleteCount) return;
+    await this.deps.repo.upsertEvent({ ...event, athleteCount: total });
   }
 
   private async snapshotRanks(divisionId: string): Promise<Map<string, number | null>> {

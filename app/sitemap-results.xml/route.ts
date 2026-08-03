@@ -64,6 +64,7 @@ export async function GET() {
   entries.push(urlEntry(`${base}/simulator`, "monthly", "0.8"));
   entries.push(urlEntry(`${base}/results/compare`, "monthly", "0.6"));
   entries.push(urlEntry(`${base}/tools/good-hyrox-time`, "monthly", "0.8"));
+  entries.push(urlEntry(`${base}/results/tools`, "weekly", "0.8"));
   entries.push(urlEntry(`${base}/results/city`, "weekly", "0.8"));
   entries.push(urlEntry(`${base}/results/course-index`, "weekly", "0.8"));
 

@@ -8,6 +8,16 @@
    keeps the accent only where it carries meaning. */
 
 @media print {
+  /* A scroll-reveal has no meaning on paper, and its resting state is
+     `opacity: 0` — so anything that had not been scrolled past would print as
+     a blank block. Forced visible before any other print rule runs. */
+  [class*="translate-y"],
+  .results-report [style*="transition-delay"] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
   /* Chrome/Safari honour this; it stops the browser stripping our backgrounds
      where we genuinely need them (delta bars, band shading). */
   * {

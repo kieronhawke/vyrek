@@ -159,9 +159,18 @@ export default async function ResultsLandingPage() {
       ) : null}
 
       <section className="mt-12" aria-labelledby="tools-heading">
-        <h2 id="tools-heading" className="mb-3 text-lg font-semibold text-suth-text">
-          Work out what your time means
-        </h2>
+        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+          <h2 id="tools-heading" className="text-lg font-semibold text-suth-text">
+            Work out what your time means
+          </h2>
+          <Link
+            href="/results/tools"
+            className="font-mono text-[11px] uppercase tracking-[0.14em] text-suth-text-tertiary
+                       hover:text-suth-accent focus-visible:outline-2 focus-visible:outline-suth-accent"
+          >
+            All tools →
+          </Link>
+        </div>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
           {TOOLS.map(({ href, label, detail, icon: Icon }) => (
             <Link

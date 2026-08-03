@@ -345,12 +345,79 @@ export class MemoryResultsRepository implements ResultsRepository {
     );
   }
 
+  async countResultsForAthlete(athleteId: string) {
+    return (await this.listResultsForAthlete(athleteId)).length;
+  }
+
   async listResultsForDivision(divisionId: string) {
     return [...this.results.values()].filter((r) => r.divisionId === divisionId);
   }
 
   async countResultsForDivision(divisionId: string) {
     return (await this.listResultsForDivision(divisionId)).length;
+  }
+
+  async getDivisionSummary(divisionId: string) {
+    const rows = await this.listResultsForDivision(divisionId);
+    const finishers = rows
+      .filter((r) => r.status === "finished" && r.finishTimeMs)
+      .sort((a, b) => (a.finishTimeMs ?? 0) - (b.finishTimeMs ?? 0));
+    const leader = finishers[0]
+      ? { athleteId: finishers[0].athleteId, finishTimeMs: finishers[0].finishTimeMs ?? null }
+      : null;
+    return {
+      total: rows.length,
+      finisherCount: finishers.length,
+      leader,
+      waves: rows.map((r) => r.wave ?? null),
+    };
+  }
+
+  async listStartersForDivision(divisionId: string) {
+    const rows = await this.listResultsForDivision(divisionId);
+    return rows.flatMap((row) => {
+      const athlete = this.athletes.get(row.athleteId);
+      if (!athlete) return [];
+      return [{
+        wave: row.wave ?? null,
+        ageGroup: row.ageGroup ?? null,
+        slug: athlete.slug,
+        name: athlete.name,
+        nationality: athlete.nationality ?? null,
+        isAnonymised: athlete.isAnonymised,
+      }];
+    });
+  }
+
+  async getDivisionRecords() {
+    const best = new Map<string, {
+      divisionKey: string; divisionLabel: string; athleteId: string;
+      finishTimeMs: number; eventId: string;
+    }>();
+
+    for (const division of this.divisions.values()) {
+      for (const row of this.results.values()) {
+        if (row.divisionId !== division.id) continue;
+        if (row.status !== "finished" || !row.finishTimeMs) continue;
+        const current = best.get(division.divisionKey);
+        if (current && current.finishTimeMs <= row.finishTimeMs) continue;
+        best.set(division.divisionKey, {
+          divisionKey: division.divisionKey,
+          divisionLabel: division.displayName,
+          athleteId: row.athleteId,
+          finishTimeMs: row.finishTimeMs,
+          eventId: division.eventId,
+        });
+      }
+    }
+
+    return [...best.values()];
+  }
+
+  async listResultsWithSplitsForDivision(divisionId: string) {
+    return (await this.listResultsForDivision(divisionId)).filter(
+      (r) => r.splits.runs.length > 0 || r.splits.stations.length > 0,
+    );
   }
 
   async listFinishTimesForDivision(divisionId: string) {

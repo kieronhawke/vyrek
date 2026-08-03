@@ -170,10 +170,46 @@ export class SupabaseResultsRepository implements ResultsRepository {
     return (data as T) ?? null;
   }
 
+  /**
+   * Every matching row, not the first page of them.
+   *
+   * ⚠️ PostgREST caps an unbounded response at `max-rows` — 1,000 on Supabase —
+   * and says nothing about having done so. A truncated read is indistinguishable
+   * from a small table, which is the worst possible failure for a store whose
+   * entire job is to be complete.
+   *
+   * It was silently wrong in both directions. `listAllDivisions` saw 1,000 of
+   * 2,692, so the backfill could not see a third of its own work. Division reads
+   * stopped at 1,000 rows, so `entrantCount` for every large board was written
+   * as exactly 1,000 — which is what the completeness alerts were reporting
+   * ("stored 1000 against a published 1620"), correctly, about our own read
+   * rather than the source.
+   *
+   * So this pages until a short page arrives. A caller that has already applied
+   * its own `.limit()` gets that limit back on the first page and stops, because
+   * a limited response is a short one.
+   */
   private async many<T>(query: PromiseLike<{ data: unknown; error: unknown }>): Promise<T[]> {
-    const { data, error } = await query;
-    if (error) throw toRepositoryError(error, "results query failed");
-    return (data as T[]) ?? [];
+    const PAGE = 1000;
+    const ranged = query as PromiseLike<{ data: unknown; error: unknown }> & {
+      range?: (from: number, to: number) => PromiseLike<{ data: unknown; error: unknown }>;
+    };
+
+    // Not every caller passes something rangeable; those stay single-shot.
+    if (typeof ranged.range !== "function") {
+      const { data, error } = await query;
+      if (error) throw toRepositoryError(error, "results query failed");
+      return (data as T[]) ?? [];
+    }
+
+    const out: T[] = [];
+    for (let from = 0; ; from += PAGE) {
+      const { data, error } = await ranged.range(from, from + PAGE - 1);
+      if (error) throw toRepositoryError(error, "results query failed");
+      const rows = (data as T[]) ?? [];
+      out.push(...rows);
+      if (rows.length < PAGE) return out;
+    }
   }
 
   /* ── Events ───────────────────────────────────────────────────────── */
@@ -667,10 +703,151 @@ export class SupabaseResultsRepository implements ResultsRepository {
     return [...byId.values()].map(toResult);
   }
 
+  async countResultsForAthlete(athleteId: string) {
+    // Ids only. The search box shows a race count next to each name, and
+    // building it from `listResultsForAthlete` pulled every column of every race
+    // — splits included — to call `.length` on the array.
+    const [own, partnered] = await Promise.all([
+      this.many<{ id: string }>(
+        this.db.from("results_results").select("id").eq("athlete_id", athleteId),
+      ),
+      this.many<{ id: string }>(
+        this.db
+          .from("results_results")
+          .select("id")
+          .contains("partner_athlete_ids", [athleteId]),
+      ),
+    ]);
+    // Deduped rather than summed: a doubles row can list the athlete in both
+    // places, and counting it twice would inflate the race count.
+    return new Set([...own, ...partnered].map((r) => r.id)).size;
+  }
+
   async listResultsForDivision(divisionId: string) {
     return (
       await this.many<ResultRow>(
         this.db.from("results_results").select().eq("division_id", divisionId),
+      )
+    ).map(toResult);
+  }
+
+  async getDivisionSummary(divisionId: string) {
+    // Four narrow reads in parallel, none of which touches `splits`.
+    const [total, finisherCount, leaderRows, waveRows] = await Promise.all([
+      this.countResultsForDivision(divisionId),
+      (async () => {
+        const { count, error } = await this.db
+          .from("results_results")
+          .select("id", { count: "exact", head: true })
+          .eq("division_id", divisionId)
+          .eq("status", "finished")
+          .not("finish_time_ms", "is", null);
+        if (error) throw toRepositoryError(error, "division summary failed");
+        return count ?? 0;
+      })(),
+      this.many<{ athlete_id: string; finish_time_ms: number | null }>(
+        this.db
+          .from("results_results")
+          .select("athlete_id,finish_time_ms")
+          .eq("division_id", divisionId)
+          .eq("status", "finished")
+          .not("finish_time_ms", "is", null)
+          .order("finish_time_ms", { ascending: true })
+          .limit(1),
+      ),
+      this.many<{ wave: string | null }>(
+        this.db.from("results_results").select("wave").eq("division_id", divisionId),
+      ),
+    ]);
+
+    const leader = leaderRows[0]
+      ? { athleteId: leaderRows[0].athlete_id, finishTimeMs: leaderRows[0].finish_time_ms }
+      : null;
+
+    return { total, finisherCount, leader, waves: waveRows.map((r) => r.wave) };
+  }
+
+  async listStartersForDivision(divisionId: string) {
+    // One join, four columns. The athlete arrives with the row rather than
+    // being fetched per row.
+    const rows = await this.many<{
+      wave: string | null;
+      age_group: string | null;
+      athlete: {
+        slug: string; name: string; nationality: string | null; is_anonymised: boolean;
+      } | null;
+    }>(
+      this.db
+        .from("results_results")
+        .select("wave,age_group,athlete:results_athletes!inner(slug,name,nationality,is_anonymised)")
+        .eq("division_id", divisionId),
+    );
+
+    return rows
+      .filter((r) => r.athlete)
+      .map((r) => ({
+        wave: r.wave,
+        ageGroup: r.age_group,
+        slug: r.athlete!.slug,
+        name: r.athlete!.name,
+        nationality: r.athlete!.nationality,
+        isAnonymised: r.athlete!.is_anonymised,
+      }));
+  }
+
+  async getDivisionRecords() {
+    // The distinct division keys, from the divisions table rather than a
+    // hardcoded list, so a new format appears on the board by itself.
+    const keyRows = await this.many<{ division_key: string; display_name: string }>(
+      this.db.from("results_divisions").select("division_key,display_name"),
+    );
+    const labels = new Map<string, string>();
+    for (const row of keyRows) {
+      if (!labels.has(row.division_key)) labels.set(row.division_key, row.display_name);
+    }
+
+    const found = await Promise.all(
+      [...labels.keys()].map(async (divisionKey) => {
+        // Sorted and limited in the database. The index on
+        // (division_id, finish_time_ms) makes this a top-1 read, not a scan.
+        const rows = await this.many<{
+          finish_time_ms: number;
+          athlete_id: string;
+          division: { division_key: string; event_id: string } | null;
+        }>(
+          this.db
+            .from("results_results")
+            .select("finish_time_ms,athlete_id,division:results_divisions!inner(division_key,event_id)")
+            .eq("division.division_key", divisionKey)
+            .eq("status", "finished")
+            .not("finish_time_ms", "is", null)
+            .order("finish_time_ms", { ascending: true })
+            .limit(1),
+        );
+        const row = rows[0];
+        if (!row?.division) return null;
+        return {
+          divisionKey,
+          divisionLabel: labels.get(divisionKey) ?? divisionKey,
+          athleteId: row.athlete_id,
+          finishTimeMs: row.finish_time_ms,
+          eventId: row.division.event_id,
+        };
+      }),
+    );
+
+    return found.filter((r): r is NonNullable<typeof r> => r !== null);
+  }
+
+  async listResultsWithSplitsForDivision(divisionId: string) {
+    // `splits` defaults to `{}`, so "has splits" is "is not the empty object".
+    return (
+      await this.many<ResultRow>(
+        this.db
+          .from("results_results")
+          .select()
+          .eq("division_id", divisionId)
+          .neq("splits", "{}"),
       )
     ).map(toResult);
   }
@@ -701,28 +878,31 @@ export class SupabaseResultsRepository implements ResultsRepository {
   }
 
   async searchAthletesAndEvents(q: string, limit = 10) {
-    const athletes = (
-      await this.many<AthleteRow>(
+    // Both halves at once: they are independent, and run in series they added
+    // their latencies together on the one call a user waits on.
+    //
+    // The contains-match is only viable because of the trigram indexes in
+    // migration 0103 — a leading wildcard cannot use a btree, so this was a
+    // sequential scan of 883,167 athletes per keystroke.
+    const [athleteRows, eventRows] = await Promise.all([
+      this.many<AthleteRow>(
         this.db
           .from("results_athletes")
           .select()
           .ilike("name", `%${q}%`)
           .eq("is_anonymised", false)
           .limit(limit),
-      )
-    ).map(toAthlete);
-
-    const events = (
-      await this.many<EventRow>(
+      ),
+      this.many<EventRow>(
         this.db
           .from("results_events")
           .select()
           .or(`name.ilike.%${q}%,city.ilike.%${q}%`)
           .limit(limit),
-      )
-    ).map(toEvent);
+      ),
+    ]);
 
-    return { athletes, events };
+    return { athletes: athleteRows.map(toAthlete), events: eventRows.map(toEvent) };
   }
 
   /* ── Distributions ────────────────────────────────────────────────── */

@@ -75,31 +75,41 @@ export class ResultsService implements ResultsDataSource {
     if (!event) return null;
 
     const divisions = await this.repo.listDivisions(event.id);
-    const summaries: EventDivisionSummary[] = [];
 
-    for (const division of divisions) {
-      const code = toDivisionCode(division.divisionKey);
-      if (!code) continue;
+    // ⚠️ Summaries, not rows, and all divisions at once.
+    //
+    // Two separate costs were stacked here. Each division read every column of
+    // every one of its rows — including the `splits` JSONB blob of eighteen
+    // segments per athlete — to print a field size and a leader. And the
+    // divisions were read one after another: a fifteen-division event was sixty
+    // sequential round trips. Rotterdam, at 12,366 results, took twelve seconds.
+    const summaries = (
+      await Promise.all(
+        divisions.map(async (division): Promise<EventDivisionSummary | null> => {
+          const code = toDivisionCode(division.divisionKey);
+          if (!code) return null;
 
-      const rows = await this.repo.listResultsForDivision(division.id);
-      const finishers = rows
-        .filter((r) => r.status === "finished" && r.finishTimeMs)
-        .sort((a, b) => (a.finishTimeMs ?? 0) - (b.finishTimeMs ?? 0));
-      const leader = finishers[0];
-      const leaderAthlete = leader ? await this.repo.getAthleteById(leader.athleteId) : null;
+          const summary = await this.repo.getDivisionSummary(division.id);
+          const leaderAthlete = summary.leader
+            ? await this.repo.getAthleteById(summary.leader.athleteId)
+            : null;
 
-      summaries.push({
-        divisionCode: code,
-        label: division.displayName,
-        headline: code === "hyrox-men" || code === "hyrox-women",
-        athleteCount: division.entrantCount || rows.length,
-        finisherCount: finishers.length,
-        leaderTimeSeconds: leader ? msToSeconds(leader.finishTimeMs) : undefined,
-        leaderAthleteSlug: leaderAthlete?.slug,
-        leaderAthleteName: leaderAthlete?.name,
-        waves: wavesOf(rows),
-      });
-    }
+          return {
+            divisionCode: code,
+            label: division.displayName,
+            headline: code === "hyrox-men" || code === "hyrox-women",
+            athleteCount: division.entrantCount || summary.total,
+            finisherCount: summary.finisherCount,
+            leaderTimeSeconds: summary.leader
+              ? msToSeconds(summary.leader.finishTimeMs)
+              : undefined,
+            leaderAthleteSlug: leaderAthlete?.slug,
+            leaderAthleteName: leaderAthlete?.name,
+            waves: wavesFromLabels(summary.waves),
+          };
+        }),
+      )
+    ).filter((s): s is EventDivisionSummary => s !== null);
 
     return { ...this.toEventSummary(event), divisions: summaries };
   }
@@ -130,13 +140,21 @@ export class ResultsService implements ResultsDataSource {
 
     // Gap to leader is derived here, never stored: it is a property of the
     // board at read time and goes stale the moment a faster finisher lands.
-    const allRows = await this.repo.listResultsForDivision(target.id);
-    const leaderMs = Math.min(
-      ...allRows
-        .filter((r) => r.status === "finished" && r.finishTimeMs)
-        .map((r) => r.finishTimeMs as number),
-    );
-    const leaderTimeSeconds = Number.isFinite(leaderMs) ? msToSeconds(leaderMs) : 0;
+    //
+    // ⚠️ Two narrow reads, not a full one. This used to call
+    // `listResultsForDivision`, which selects every column — including the
+    // `splits` JSONB blob carrying eighteen segments per athlete — for the whole
+    // division, to extract one minimum and one count. On a real board that is
+    // megabytes of JSON per request: a 695-athlete division took minutes rather
+    // than milliseconds, and the largest event here holds 12,366.
+    //
+    // `listFinishTimesForDivision` is one integer column, filtered to finishers
+    // and ordered ascending, so the leader is simply its first element.
+    const [finishTimes, fieldSize] = await Promise.all([
+      this.repo.listFinishTimesForDivision(target.id),
+      this.repo.countResultsForDivision(target.id),
+    ]);
+    const leaderTimeSeconds = finishTimes[0] ?? 0;
 
     const rows: RankingRow[] = page.rows.map((r) => ({
       id: r.id,
@@ -160,7 +178,7 @@ export class ResultsService implements ResultsDataSource {
       divisionLabel: target.displayName,
       rows,
       total: page.total,
-      fieldSize: allRows.length,
+      fieldSize,
       leaderTimeSeconds,
       nextCursor: page.nextCursor,
     };
@@ -182,8 +200,19 @@ export class ResultsService implements ResultsDataSource {
     const division = divisions.find((d) => d.id === result.divisionId);
     if (!division) return null;
 
-    const siblings = await this.repo.listResultsForDivision(division.id);
-    const finishers = siblings.filter((r) => r.status === "finished" && r.finishTimeMs);
+    // Three narrow reads rather than the whole division.
+    //
+    // The averages are taken over the rows that actually carry splits, not over
+    // every row. Splits arrive one athlete at a time long after the board does,
+    // so most rows have none — averaging eighteen segment times across a field
+    // that is 99% zeroes reported a division average far faster than anybody
+    // ran, and that number is what every "vs division average" bar on this page
+    // is drawn against.
+    const [fieldSize, finishSeconds, withSplits] = await Promise.all([
+      this.repo.countResultsForDivision(division.id),
+      this.repo.listFinishTimesForDivision(division.id),
+      this.repo.listResultsWithSplitsForDivision(division.id),
+    ]);
 
     return {
       id: result.id,
@@ -203,11 +232,13 @@ export class ResultsService implements ResultsDataSource {
       stations: stationsOf(result),
       roxzoneSeconds: msToSeconds(result.roxzoneTimeMs),
       status: result.status === "finished" ? "finished" : "dnf",
-      fieldSize: siblings.length,
-      leaderTimeSeconds: finishers.length
-        ? msToSeconds(Math.min(...finishers.map((r) => r.finishTimeMs as number)))
-        : 0,
-      divisionAverage: averageOf(finishers),
+      fieldSize,
+      // Already ascending and filtered to finishers.
+      leaderTimeSeconds: finishSeconds[0] ?? 0,
+      divisionAverage: averageOf(
+        withSplits.filter((r) => r.status === "finished" && r.finishTimeMs),
+        finishSeconds,
+      ),
     };
   }
 
@@ -269,56 +300,62 @@ export class ResultsService implements ResultsDataSource {
     const event = await this.repo.getEventBySlug(eventSlug);
     if (!event) return null;
 
-    const waves: StartList["waves"] = [];
-    for (const division of await this.repo.listDivisions(event.id)) {
-      const code = toDivisionCode(division.divisionKey);
-      if (!code) continue;
-      const rows = await this.repo.listResultsForDivision(division.id);
-      const byWave = new Map<string, typeof rows>();
-      for (const row of rows) {
-        const key = row.wave ?? "1";
-        byWave.set(key, [...(byWave.get(key) ?? []), row]);
-      }
+    // ⚠️ One joined read per division, all divisions at once.
+    //
+    // This walked every row of every division and issued a `getAthleteById` for
+    // each — 12,366 sequential lookups for Rotterdam, measured at nine and a
+    // half minutes. The athlete now arrives joined to the row.
+    const divisions = await this.repo.listDivisions(event.id);
+    const perDivision = await Promise.all(
+      divisions.map(async (division) => {
+        const code = toDivisionCode(division.divisionKey);
+        if (!code) return [];
 
-      for (const [wave, entries] of byWave) {
-        const athletes = [];
+        const entries = await this.repo.listStartersForDivision(division.id);
+        const byWave = new Map<string, typeof entries>();
         for (const entry of entries) {
-          const athlete = await this.repo.getAthleteById(entry.athleteId);
-          if (!athlete || athlete.isAnonymised) continue;
-          athletes.push({
-            slug: athlete.slug,
-            name: athlete.name,
-            countryIso: athlete.nationality ?? "",
-            ageGroup: (entry.ageGroup ?? "30-34") as AgeGroup,
-          });
+          // An anonymised athlete is a removal request: off the start list,
+          // while the row stays for ranking integrity.
+          if (entry.isAnonymised) continue;
+          const key = entry.wave ?? "1";
+          byWave.set(key, [...(byWave.get(key) ?? []), entry]);
         }
-        waves.push({
+
+        return [...byWave.entries()].map(([wave, group]) => ({
           divisionCode: code,
           divisionLabel: division.displayName,
           wave: Number(wave) || 1,
           time: "",
-          athletes,
-        });
-      }
-    }
+          athletes: group.map((entry) => ({
+            slug: entry.slug,
+            name: entry.name,
+            countryIso: entry.nationality ?? "",
+            ageGroup: (entry.ageGroup ?? "30-34") as AgeGroup,
+          })),
+        }));
+      }),
+    );
 
-    return { eventSlug, eventName: event.name, waves };
+    return { eventSlug, eventName: event.name, waves: perDivision.flat() };
   }
 
   /* ── Search, records, distributions ───────────────────────────────── */
 
   async searchAll(q: string): Promise<SearchResults> {
     const { athletes, events } = await this.repo.searchAthletesAndEvents(q, 8);
-    const withCounts = [];
-    for (const athlete of athletes) {
-      const races = await this.repo.listResultsForAthlete(athlete.id);
-      withCounts.push({
+
+    // ⚠️ Counted, and counted concurrently. This loaded every race of every
+    // matched athlete — all columns, splits included — one athlete after
+    // another, to call `.length` on each array. On the one call a user actually
+    // waits for, that was 7.7 seconds.
+    const withCounts = await Promise.all(
+      athletes.map(async (athlete) => ({
         slug: athlete.slug,
         name: athlete.name,
         countryIso: athlete.nationality ?? "",
-        raceCount: races.length,
-      });
-    }
+        raceCount: await this.repo.countResultsForAthlete(athlete.id),
+      })),
+    );
     return {
       athletes: withCounts,
       events: events.map((e) => ({
@@ -332,38 +369,50 @@ export class ResultsService implements ResultsDataSource {
   }
 
   async getRecords(): Promise<RecordsBoard> {
-    const events = await this.repo.listEvents();
-    const best = new Map<string, RecordEntry>();
+    // ⚠️ One top-1 query per division, not a walk of the whole database.
+    //
+    // This used to iterate every event, every division and every row — 2,692
+    // divisions, all columns, with an athlete lookup on each improvement — and
+    // took six minutes against the real store. That is past any serverless
+    // timeout, so `/rankings/world-records` could not have rendered in
+    // production; the resilient wrapper would have caught the timeout and
+    // quietly served demo records instead.
+    const [records, events] = await Promise.all([
+      this.repo.getDivisionRecords(),
+      // One read for the whole catalogue, rather than a lookup per record.
+      this.repo.listEvents(),
+    ]);
+    const eventById = new Map(events.map((e) => [e.id, e]));
 
-    for (const event of events) {
-      for (const division of await this.repo.listDivisions(event.id)) {
-        const code = toDivisionCode(division.divisionKey);
-        if (!code) continue;
-        const rows = (await this.repo.listResultsForDivision(division.id)).filter(
-          (r) => r.status === "finished" && r.finishTimeMs,
-        );
-        for (const row of rows) {
-          const current = best.get(code);
-          const seconds = msToSeconds(row.finishTimeMs);
-          if (current && current.finishSeconds <= seconds) continue;
-          const athlete = await this.repo.getAthleteById(row.athleteId);
-          if (!athlete || athlete.isAnonymised) continue;
-          best.set(code, {
-            divisionCode: code,
-            divisionLabel: division.displayName,
-            athleteSlug: athlete.slug,
-            athleteName: athlete.name,
-            countryIso: athlete.nationality ?? "",
-            finishSeconds: seconds,
-            eventSlug: event.slug,
-            eventName: event.name,
-            date: event.startDate ?? "",
-          });
-        }
-      }
-    }
+    const entries = await Promise.all(
+      records.map(async (record): Promise<RecordEntry | null> => {
+        const code = toDivisionCode(record.divisionKey);
+        if (!code) return null;
 
-    return { scope: "all-time", entries: [...best.values()] };
+        const athlete = await this.repo.getAthleteById(record.athleteId);
+        const event = eventById.get(record.eventId);
+        // An anonymised athlete is a removal request: their name comes off the
+        // record board rather than the board keeping a stale copy of it.
+        if (!athlete || athlete.isAnonymised || !event) return null;
+
+        return {
+          divisionCode: code,
+          divisionLabel: record.divisionLabel,
+          athleteSlug: athlete.slug,
+          athleteName: athlete.name,
+          countryIso: athlete.nationality ?? "",
+          finishSeconds: msToSeconds(record.finishTimeMs),
+          eventSlug: event.slug,
+          eventName: event.name,
+          date: event.startDate ?? "",
+        };
+      }),
+    );
+
+    return {
+      scope: "all-time",
+      entries: entries.filter((e): e is RecordEntry => e !== null),
+    };
   }
 
   /**
@@ -462,23 +511,42 @@ function stationsOf(result: EngineResult): Record<StationId, number> {
   return stations;
 }
 
-function averageOf(results: EngineResult[]): ResultDetail["divisionAverage"] {
+/**
+ * The division's average race.
+ *
+ * ⚠️ Two different denominators, deliberately.
+ *
+ * Segment averages are taken over `withSplits` — the rows that actually carry
+ * them. Splits are fetched one athlete at a time and arrive long after the
+ * board, so most rows have none; dividing real segment totals by the whole
+ * field made the average race look far faster than anyone ran, and that is the
+ * baseline every "vs division average" bar on the result page is drawn against.
+ *
+ * The finish average uses every finisher's time, because that column is
+ * populated for all of them and a narrower sample would be a worse answer.
+ */
+function averageOf(
+  withSplits: EngineResult[],
+  allFinishSeconds: number[],
+): ResultDetail["divisionAverage"] {
   const runs = new Array(8).fill(0);
   const stations = Object.fromEntries(STATION_IDS.map((s) => [s, 0])) as Record<
     StationId,
     number
   >;
   let roxzone = 0;
-  let finish = 0;
-  const n = results.length || 1;
+  const n = withSplits.length || 1;
 
-  for (const result of results) {
+  for (const result of withSplits) {
     runsOf(result).forEach((value, i) => (runs[i] += value));
     const rowStations = stationsOf(result);
     for (const station of STATION_IDS) stations[station] += rowStations[station];
     roxzone += msToSeconds(result.roxzoneTimeMs);
-    finish += msToSeconds(result.finishTimeMs);
   }
+
+  const finish = allFinishSeconds.length
+    ? Math.round(allFinishSeconds.reduce((a, b) => a + b, 0) / allFinishSeconds.length)
+    : 0;
 
   return {
     runs: runs.map((v) => Math.round(v / n)),
@@ -486,14 +554,21 @@ function averageOf(results: EngineResult[]): ResultDetail["divisionAverage"] {
       STATION_IDS.map((s) => [s, Math.round(stations[s] / n)]),
     ) as Record<StationId, number>,
     roxzone: Math.round(roxzone / n),
-    finish: Math.round(finish / n),
+    finish,
   };
 }
 
 function wavesOf(rows: EngineResult[]): { wave: number; time: string; athletes: number }[] {
+  return wavesFromLabels(rows.map((r) => r.wave ?? null));
+}
+
+/** The same tally, from the wave column alone. */
+function wavesFromLabels(
+  labels: (string | null)[],
+): { wave: number; time: string; athletes: number }[] {
   const counts = new Map<number, number>();
-  for (const row of rows) {
-    const wave = Number(row.wave ?? 1) || 1;
+  for (const label of labels) {
+    const wave = Number(label ?? 1) || 1;
     counts.set(wave, (counts.get(wave) ?? 0) + 1);
   }
   return [...counts.entries()]

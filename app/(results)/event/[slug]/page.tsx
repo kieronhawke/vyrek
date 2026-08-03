@@ -233,7 +233,11 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
                       {formatCount(division.athleteCount)} entered
                       {division.finisherCount !== undefined
                         ? ` · ${formatCount(division.finisherCount)} finished` : ""}
-                      {division.waves.length > 0 ? ` · first wave ${division.waves[0].time}` : ""}
+                      {/* Wave start times are not on the results source — only
+                          the wave numbers are — so this renders only when a
+                          time is actually known. It used to print a bare
+                          "· first wave " with nothing after it. */}
+                      {division.waves[0]?.time ? ` · first wave ${division.waves[0].time}` : ""}
                     </p>
                   </div>
 

@@ -40,47 +40,59 @@ import { ResilientDataSource } from "./engine/serve/resilient-source";
 /* ── Server: straight to the service ──────────────────────────────────── */
 
 export class DirectLiveDataSource implements ResultsDataSource {
-  private service() {
-    // Imported lazily so the browser bundle never pulls in the Supabase client
-    // or the engine. This import must stay inside the method.
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { getResultsService } = require("./engine") as typeof import("./engine");
-    return getResultsService();
+  /**
+   * The engine, loaded on first use.
+   *
+   * ⚠️ Lazy on purpose — a static import would pull the Supabase client and the
+   * whole engine into the browser bundle — but `await import()` rather than
+   * `require()`. `require` resolved under webpack and threw "Cannot find module
+   * './engine'" under ESM, and because `ResilientDataSource` wraps this and
+   * treats any throw as "the store is down", the failure did not surface as an
+   * error: every call quietly fell through to the demo tier. Live mode looked
+   * like it worked and served synthetic data.
+   *
+   * The promise is cached, so the module loads once rather than per call.
+   */
+  private enginePromise?: Promise<typeof import("./engine")>;
+
+  private async service() {
+    this.enginePromise ??= import("./engine");
+    return (await this.enginePromise).getResultsService();
   }
 
-  listEvents(filter?: { season?: string; region?: string; status?: EventStatus }) {
-    return this.service().listEvents(filter);
+  async listEvents(filter?: { season?: string; region?: string; status?: EventStatus }) {
+    return (await this.service()).listEvents(filter);
   }
-  getEvent(slug: string) {
-    return this.service().getEvent(slug);
+  async getEvent(slug: string) {
+    return (await this.service()).getEvent(slug);
   }
-  getRanking(
+  async getRanking(
     eventSlug: string,
     division: string,
     opts?: { cursor?: string; ageGroup?: string; q?: string; limit?: number },
   ) {
-    return this.service().getRanking(eventSlug, division, opts);
+    return (await this.service()).getRanking(eventSlug, division, opts);
   }
-  getResult(id: string) {
-    return this.service().getResult(id);
+  async getResult(id: string) {
+    return (await this.service()).getResult(id);
   }
-  getAthlete(slug: string) {
-    return this.service().getAthlete(slug);
+  async getAthlete(slug: string) {
+    return (await this.service()).getAthlete(slug);
   }
-  getStarters(eventSlug: string) {
-    return this.service().getStarters(eventSlug);
+  async getStarters(eventSlug: string) {
+    return (await this.service()).getStarters(eventSlug);
   }
-  searchAll(q: string) {
-    return this.service().searchAll(q);
+  async searchAll(q: string) {
+    return (await this.service()).searchAll(q);
   }
-  getRecords() {
-    return this.service().getRecords();
+  async getRecords() {
+    return (await this.service()).getRecords();
   }
-  getStationDistribution(station: StationId, division: string) {
-    return this.service().getStationDistribution(station, division);
+  async getStationDistribution(station: StationId, division: string) {
+    return (await this.service()).getStationDistribution(station, division);
   }
-  getDivisionFinishTimes(eventSlug: string, division: string) {
-    return this.service().getDivisionFinishTimes(eventSlug, division);
+  async getDivisionFinishTimes(eventSlug: string, division: string) {
+    return (await this.service()).getDivisionFinishTimes(eventSlug, division);
   }
 }
 
