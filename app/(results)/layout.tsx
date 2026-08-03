@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getDataMode } from "@/lib/results";
 import "@/app/results-tokens.css";
 import "@/app/results-print.css";
+import "@/app/results-report-print.css";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { ResultsShell } from "@/components/results/shell/results-shell";

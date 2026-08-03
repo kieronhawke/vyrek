@@ -173,6 +173,19 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
           fieldSize={result.fieldSize}
           division={division}
         />
+        {/* The full report is the headline action on this page, not a
+            footnote — it is the thing competitors charge $24.99 for. */}
+        <Link
+          href={`/report/${result.id}`}
+          data-inline-tap
+          className="inline-flex min-h-[40px] items-center gap-2 rounded-sm bg-suth-accent px-4
+                     text-xs font-semibold text-suth-base transition-colors
+                     hover:bg-suth-accent-hover
+                     focus-visible:outline-2 focus-visible:outline-offset-2
+                     focus-visible:outline-suth-accent"
+        >
+          Full race report
+        </Link>
         <ResultExport
           input={{
             athleteName: result.athleteName,
