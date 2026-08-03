@@ -813,6 +813,36 @@ export class SupabaseResultsRepository implements ResultsRepository {
   }
 
   async raiseAlert(alert: Omit<EngineAlert, "id" | "createdAt">) {
+    // Deduplicated against open alerts: the catalogue raises the same message
+    // every run, and a console of a hundred identical rows is a console nobody
+    // reads. The occurrence count carries how persistent it is.
+    const open = await this.one<Record<string, unknown>>(
+      this.db
+        .from("results_alerts")
+        .select()
+        .eq("kind", alert.kind)
+        .eq("message", alert.message)
+        .is("acknowledged_at", null)
+        .limit(1)
+        .maybeSingle(),
+    );
+
+    if (open) {
+      const previous = (open.detail as { occurrences?: number } | null)?.occurrences ?? 1;
+      const updated = await this.one<Record<string, unknown>>(
+        this.db
+          .from("results_alerts")
+          .update({
+            detail: { ...alert.detail, occurrences: previous + 1, lastSeenAt: new Date().toISOString() },
+            severity: alert.severity,
+          })
+          .eq("id", open.id as string)
+          .select()
+          .single(),
+      );
+      if (updated) return toAlert(updated);
+    }
+
     const row = await this.one<Record<string, unknown>>(
       this.db
         .from("results_alerts")
@@ -820,7 +850,7 @@ export class SupabaseResultsRepository implements ResultsRepository {
           kind: alert.kind,
           severity: alert.severity,
           message: alert.message,
-          detail: alert.detail,
+          detail: { ...alert.detail, occurrences: 1 },
           source_event_id: alert.sourceEventId ?? null,
         })
         .select()

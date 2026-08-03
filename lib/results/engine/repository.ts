@@ -125,6 +125,16 @@ export interface ResultsRepository {
   listQuarantine(opts?: { openOnly?: boolean; limit?: number }): Promise<QuarantineRow[]>;
   markQuarantineReprocessed(id: string): Promise<void>;
 
+  /**
+   * Raise an alert, or quietly refresh an identical open one.
+   *
+   * Implementations must **deduplicate**: an alert whose kind and message match
+   * an existing unacknowledged alert is not a second problem, it is the same
+   * problem still happening. The catalogue raises "155 events have no calendar
+   * match" on every run; without dedup an operator opens the console to a
+   * hundred identical rows and stops reading it, which costs more than the
+   * alert was ever worth.
+   */
   raiseAlert(alert: Omit<EngineAlert, "id" | "createdAt">): Promise<EngineAlert>;
   listAlerts(opts?: { openOnly?: boolean; limit?: number }): Promise<EngineAlert[]>;
   acknowledgeAlert(id: string): Promise<void>;

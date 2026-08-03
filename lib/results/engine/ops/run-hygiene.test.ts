@@ -51,6 +51,54 @@ describe("runs that were killed rather than thrown", () => {
   });
 });
 
+describe("alerts do not flood the console", () => {
+  it("counts a repeated problem instead of listing it again", async () => {
+    const repo = new MemoryResultsRepository();
+    const alert = {
+      kind: "completeness" as const,
+      severity: "info" as const,
+      message: "155 event(s) have no match in the HYROX calendar",
+      detail: {},
+      sourceEventId: null,
+      acknowledgedAt: null,
+    };
+
+    // The catalogue raises this on every run. Five runs is one problem.
+    for (let i = 0; i < 5; i += 1) await repo.raiseAlert(alert);
+
+    const open = await repo.listAlerts({ openOnly: true });
+    expect(open).toHaveLength(1);
+    expect(open[0].detail.occurrences).toBe(5);
+  });
+
+  it("treats a different message as a different problem", async () => {
+    const repo = new MemoryResultsRepository();
+    const base = {
+      kind: "completeness" as const, severity: "warning" as const,
+      detail: {}, sourceEventId: null, acknowledgedAt: null,
+    };
+    await repo.raiseAlert({ ...base, message: "open-men is short" });
+    await repo.raiseAlert({ ...base, message: "open-women is short" });
+    expect(await repo.listAlerts({ openOnly: true })).toHaveLength(2);
+  });
+
+  it("raises again once an operator has acknowledged it", async () => {
+    const repo = new MemoryResultsRepository();
+    const alert = {
+      kind: "parser_shape" as const, severity: "critical" as const,
+      message: "Parser may be broken", detail: {}, sourceEventId: null,
+      acknowledgedAt: null,
+    };
+    const first = await repo.raiseAlert(alert);
+    await repo.acknowledgeAlert(first.id);
+
+    // Acknowledged means "I have seen this". If it happens again afterwards
+    // that is news, and silence would be the wrong answer.
+    await repo.raiseAlert(alert);
+    expect(await repo.listAlerts({ openOnly: true })).toHaveLength(1);
+  });
+});
+
 describe("the budget every instance shares", () => {
   it("counts requests across separate workers, not per process", async () => {
     const repo = new MemoryResultsRepository();

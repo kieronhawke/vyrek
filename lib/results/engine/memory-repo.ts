@@ -439,7 +439,26 @@ export class MemoryResultsRepository implements ResultsRepository {
   }
 
   async raiseAlert(alert: Omit<EngineAlert, "id" | "createdAt">) {
-    const created: EngineAlert = { ...alert, id: this.id("alr"), createdAt: this.now() };
+    // The same problem, still happening, is not a new alert.
+    const existing = this.alerts.find(
+      (a) => !a.acknowledgedAt && a.kind === alert.kind && a.message === alert.message,
+    );
+    if (existing) {
+      const occurrences = Number(existing.detail.occurrences ?? 1) + 1;
+      const refreshed: EngineAlert = {
+        ...existing,
+        detail: { ...alert.detail, occurrences, lastSeenAt: this.now() },
+        severity: alert.severity,
+      };
+      this.alerts[this.alerts.indexOf(existing)] = refreshed;
+      return refreshed;
+    }
+    const created: EngineAlert = {
+      ...alert,
+      detail: { ...alert.detail, occurrences: 1 },
+      id: this.id("alr"),
+      createdAt: this.now(),
+    };
     this.alerts.push(created);
     return created;
   }
