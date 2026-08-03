@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
-import { createInvite, inviteUrl, signingConfigured, INVITE_DAYS } from "@/lib/onboarding/token";
-import type { InviteKind } from "@/lib/onboarding/token";
+import {
+  createInvite,
+  inviteUrl,
+  inviteUrlForSms,
+  signingConfigured,
+  INVITE_DAYS,
+  type InviteKind,
+} from "@/lib/onboarding/token";
 import { storeInvite } from "@/lib/onboarding/invite-store";
 import { planByKey } from "@/lib/onboarding/model";
 import { sendOnboardingInvite } from "@/lib/email/send";
@@ -84,12 +90,17 @@ export async function POST(request: Request) {
   });
 
   const short = stored.ok && stored.durable;
-  const link = short
-    ? inviteUrl(stored.id, siteUrl())
-    : inviteUrl(createInvite(fields), siteUrl());
+  // One value feeds both URL builders: the short id when we have somewhere to
+  // store it, otherwise the signed token.
+  const key = short && stored.ok ? stored.id : createInvite(fields);
+  const link = inviteUrl(key, siteUrl());
   const firstName = name.split(/\s+/)[0];
 
-  const smsText = phone ? onboardingInviteSms(firstName, link, kind) : null;
+  // The text gets the bare-domain link; the email keeps the full one so it
+  // renders as a proper anchor.
+  const smsText = phone
+    ? onboardingInviteSms(firstName, inviteUrlForSms(key, siteUrl()), kind)
+    : null;
 
   // Both at once. Sequentially, a slow email delays the text for no reason,
   // and neither is allowed to fail the other.

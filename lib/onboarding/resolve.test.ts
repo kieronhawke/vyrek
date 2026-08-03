@@ -33,7 +33,31 @@ describe("resolveInvite", () => {
     const token = createInvite(base);
     const result = await resolveInvite(token);
     expect(result.ok).toBe(true);
-    if (result.ok) expect(result.invite.name).toBe("Kieron Hawke");
+    // The token carries the first name only — the surname was dropped to save
+    // characters, and the screen only ever greets them by it.
+    if (result.ok) expect(result.invite.name).toBe("Kieron");
+  });
+
+  it("the short form keeps what the token had to drop", async () => {
+    /*
+     * A real difference between the two, worth pinning.
+     *
+     * The token dropped email and phone because together they were half the
+     * length of a text message. The stored form has no such pressure — only
+     * the id travels — so it keeps them, and the first screen can pre-fill
+     * both instead of asking somebody to retype an address Ben already has.
+     */
+    const now = Math.floor(Date.now() / 1000);
+    const stored = await storeInvite({ ...base, iat: now, exp: now + 86400 });
+    expect(stored.ok).toBe(true);
+    if (!stored.ok) return;
+
+    const viaId = await resolveInvite(stored.id);
+    const viaToken = await resolveInvite(createInvite(base));
+
+    expect(viaId.ok && viaId.invite.email).toBe("kieron@example.com");
+    expect(viaId.ok && viaId.invite.phone).toBe("+447700900123");
+    expect(viaToken.ok && viaToken.invite.email).toBe("");
   });
 
   it("calls an unknown short id expired, not tampered", async () => {

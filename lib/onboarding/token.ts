@@ -125,15 +125,26 @@ export function createInvite(
     iat,
     exp: iat + INVITE_DAYS * 86400,
   };
-  // Single letters on the wire. Nobody reads this; it rides in an SMS.
+  /**
+   * ONLY WHAT THE LINK ACTUALLY NEEDS.
+   *
+   * The email and phone were in here so the first screen could pre-fill them,
+   * and together they were 85 of the token's 170 characters — half the length
+   * of a text message, spent on two fields the athlete is perfectly capable of
+   * typing and arguably ought to confirm anyway. They come out.
+   *
+   * The name stays but only the first: "Kieron" is what the screen greets
+   * them with, and their surname adds nothing but characters.
+   *
+   * The expiry is in DAYS since epoch rather than seconds — five digits
+   * instead of ten, for a link that lives thirty days and has never needed
+   * second precision. `iat` goes entirely; nothing reads it.
+   */
   const compact = {
-    n: payload.name,
-    e: payload.email,
-    p: payload.phone,
-    k: payload.kind,
+    n: payload.name.trim().split(/\s+/)[0],
+    k: payload.kind === "payment" ? "p" : "f",
     ...(payload.plan ? { l: payload.plan } : {}),
-    i: payload.iat,
-    x: payload.exp,
+    x: Math.floor(payload.exp / 86400),
   };
   const body = b64url(JSON.stringify(compact));
   return `${body}.${sign(body)}`;
@@ -174,15 +185,27 @@ export function readInvite(token: string, now = Date.now()): InviteResult {
   let invite: InvitePayload;
   try {
     const raw = JSON.parse(unb64url(body).toString("utf8")) as Record<string, unknown>;
-    // Accepts both the compact keys and the original long ones.
+
+    // `k` is "f"/"p" now and was "full"/"payment" before; both are read so
+    // links already in somebody's messages keep working.
+    const k = String(raw.k ?? raw.kind ?? "");
+    const kind: InviteKind = k === "p" || k === "payment" ? "payment" : "full";
+
+    // The expiry is in days now and was in seconds. Anything below a million
+    // is a day count — seconds passed that mark in 1970.
+    const rawExp = Number(raw.x ?? raw.exp ?? 0);
+    const exp = rawExp > 0 && rawExp < 1_000_000 ? rawExp * 86400 : rawExp;
+
     invite = {
       name: String(raw.n ?? raw.name ?? ""),
+      // No longer carried in the link. Ben has them; the athlete confirms
+      // their own email on the account step.
       email: String(raw.e ?? raw.email ?? ""),
       phone: String(raw.p ?? raw.phone ?? ""),
-      kind: (raw.k ?? raw.kind) as InviteKind,
+      kind,
       ...(raw.l || raw.plan ? { plan: String(raw.l ?? raw.plan) } : {}),
       iat: Number(raw.i ?? raw.iat ?? 0),
-      exp: Number(raw.x ?? raw.exp ?? 0),
+      exp,
     };
   } catch {
     return { ok: false, reason: "malformed" };
@@ -212,4 +235,15 @@ export function readInvite(token: string, now = Date.now()): InviteResult {
  */
 export function inviteUrl(token: string, base: string): string {
   return `${base.replace(/\/$/, "")}/o/${token}`;
+}
+
+/**
+ * The same link, stripped for a text message.
+ *
+ * "https://www." is twelve characters that every phone adds back for free:
+ * messaging apps link a bare domain, and the apex redirects to www anyway. In
+ * an SMS those twelve characters are billed on every invite Ben ever sends.
+ */
+export function inviteUrlForSms(token: string, base: string): string {
+  return inviteUrl(token, base).replace(/^https?:\/\/(www\.)?/, "");
 }

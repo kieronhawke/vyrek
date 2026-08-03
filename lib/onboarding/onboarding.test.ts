@@ -26,15 +26,21 @@ function invite(over: Partial<Parameters<typeof createInvite>[0]> = {}) {
 }
 
 describe("the invite token", () => {
-  it("round-trips what Ben typed", () => {
+  it("carries the first name and the kind, and nothing it does not need", () => {
+    // Email and phone came out of the token: together they were half its
+    // length, spent on two fields the athlete types anyway. The surname went
+    // for the same reason — the screen greets them by first name.
     const result = readInvite(invite(), NOW);
     expect(result.ok).toBe(true);
     if (!result.ok) return;
-    expect(result.invite).toMatchObject({
-      name: "Sam Reeves",
-      email: "sam@example.com",
-      kind: "full",
-    });
+    expect(result.invite).toMatchObject({ name: "Sam", kind: "full" });
+    expect(result.invite.email).toBe("");
+  });
+
+  it("round-trips a payment invite and its plan", () => {
+    const result = readInvite(invite({ kind: "payment", plan: "club" }), NOW);
+    expect(result.ok && result.invite.kind).toBe("payment");
+    expect(result.ok && result.invite.plan).toBe("club");
   });
 
   it("cannot be edited by the person holding it", () => {
@@ -86,8 +92,14 @@ describe("the invite token", () => {
     const token = invite({ name: "Zoë O'Brien-Smith", email: "zoe+test@example.com" });
     expect(token).toMatch(/^[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+$/);
     expect(encodeURIComponent(token)).toBe(token);
-    const r = readInvite(token, NOW);
-    expect(r.ok && r.invite.name).toBe("Zoë O'Brien-Smith");
+    // Accented and punctuated first names survive; the surname is dropped.
+    expect(readInvite(token, NOW)).toMatchObject({ ok: true, invite: { name: "Zoë" } });
+  });
+
+  it("stays short enough for one line of a text message", () => {
+    // The whole point of trimming it. A long name must not blow it back out.
+    const long = invite({ name: "Christopher Worthington-Fairbairn", email: "x".repeat(60) + "@example.com" });
+    expect(long.length).toBeLessThan(100);
   });
 
   it("builds a link without a double slash, on the short path", () => {
