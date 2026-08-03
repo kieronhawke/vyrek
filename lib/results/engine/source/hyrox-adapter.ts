@@ -166,7 +166,7 @@ abstract class MikaAdapter implements SourceAdapter {
 export class MikaFilteredListAdapter extends MikaAdapter {
   readonly name = "mika-filtered-list";
 
-  protected listParams(sex: string | null) {
+  protected listParams(sex: string | null): Record<string, string> {
     return sex ? { "search[sex]": sex } : {};
   }
 }
@@ -181,7 +181,7 @@ export class MikaFilteredListAdapter extends MikaAdapter {
 export class MikaUnfilteredListAdapter extends MikaAdapter {
   readonly name = "mika-unfiltered-list";
 
-  protected listParams() {
+  protected listParams(): Record<string, string> {
     return {};
   }
 }
