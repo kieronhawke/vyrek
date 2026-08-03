@@ -909,3 +909,491 @@
     padding: 0;
   }
 }
+
+/* ── Diary calendar ───────────────────────────────────────────────────────
+   Month, week and day over the same entries. The week grid is absolutely
+   positioned inside a relative column, which is the only way overlapping
+   entries can sit beside each other; everything else is grid. */
+
+[data-surface="control"] .dc { display: grid; gap: var(--space-2); }
+
+[data-surface="control"] .dc-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+[data-surface="control"] .dc-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+[data-surface="control"] .dc-step,
+[data-surface="control"] .dc-today,
+[data-surface="control"] .dc-view,
+[data-surface="control"] .dc-add {
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+[data-surface="control"] .dc-step {
+  min-width: 44px;
+  padding: 0;
+  font-size: 20px;
+  line-height: 1;
+}
+
+[data-surface="control"] .dc-label {
+  flex: 1 1 180px;
+  margin: 0;
+  font-size: var(--text-lg);
+  text-transform: none;
+}
+
+[data-surface="control"] .dc-views {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: var(--surface-raised);
+}
+
+[data-surface="control"] .dc-view {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .dc-view[data-on] {
+  background: var(--surface);
+  color: var(--text);
+}
+
+[data-surface="control"] .dc-add {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* ── Month ────────────────────────────────────────────────────────────── */
+
+[data-surface="control"] .dc-month__head,
+[data-surface="control"] .dc-month__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+}
+
+[data-surface="control"] .dc-month__head {
+  margin-bottom: 2px;
+}
+
+[data-surface="control"] .dc-month__head span {
+  text-align: center;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  color: var(--text-faint);
+}
+
+[data-surface="control"] .dc-day {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-height: 64px;
+  padding: 6px 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+[data-surface="control"] .dc-day[data-outside] { opacity: 0.4; }
+
+[data-surface="control"] .dc-day[data-today] {
+  border-color: var(--accent);
+}
+
+[data-surface="control"] .dc-day[data-today] .dc-day__n { color: var(--accent-text); }
+
+[data-surface="control"] .dc-day__n {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-align: center;
+}
+
+[data-surface="control"] .dc-day__chips {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+[data-surface="control"] .dc-chip {
+  width: 100%;
+  max-width: 26px;
+  height: 4px;
+  border-radius: 999px;
+}
+
+[data-surface="control"] .dc-day__more {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+/* ── Week and day ─────────────────────────────────────────────────────── */
+
+[data-surface="control"] .dc-grid {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  /* Seven columns on a 393px screen is 45px a day, which truncates every
+     title to three letters. The grid keeps a legible column width and scrolls
+     sideways instead — one scroll container, so the headings, the all-day band
+     and the body move together. */
+  overflow-x: auto;
+  --dc-gutter: 46px;
+  --dc-colmin: 104px;
+}
+
+[data-surface="control"] .dc-grid[data-cols="1"] { --dc-colmin: 0px; }
+
+[data-surface="control"] .dc-grid__head,
+[data-surface="control"] .dc-allday {
+  display: grid;
+  grid-template-columns:
+    var(--dc-gutter)
+    repeat(var(--dc-cols, 7), minmax(var(--dc-colmin), 1fr));
+  border-bottom: 1px solid var(--border);
+}
+
+[data-surface="control"] .dc-grid[data-cols="1"] { --dc-cols: 1; }
+[data-surface="control"] .dc-grid[data-cols="7"] { --dc-cols: 7; }
+
+[data-surface="control"] .dc-col__head {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 1px;
+  padding: 6px 2px;
+  border-left: 1px solid var(--border);
+}
+
+[data-surface="control"] .dc-col__head[data-today] { background: var(--surface-raised); }
+[data-surface="control"] .dc-col__head[data-today] .dc-col__n { color: var(--accent-text); }
+
+[data-surface="control"] .dc-col__n { font-size: var(--text-sm); font-weight: 700; }
+
+[data-surface="control"] .dc-gutter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-surface="control"] .dc-allday__col {
+  display: grid;
+  gap: 2px;
+  padding: 3px;
+  border-left: 1px solid var(--border);
+  align-content: start;
+}
+
+[data-surface="control"] .dc-grid__body {
+  position: relative;
+  display: grid;
+  grid-template-columns:
+    var(--dc-gutter)
+    repeat(var(--dc-cols, 7), minmax(var(--dc-colmin), 1fr));
+  overflow-y: auto;
+  max-height: 62svh;
+}
+
+[data-surface="control"] .dc-hours {
+  display: grid;
+  align-content: start;
+}
+
+[data-surface="control"] .dc-hour {
+  display: block;
+  padding-right: 6px;
+  text-align: right;
+  font-size: 12px;
+  color: var(--text-faint);
+  /* Sits on the line rather than in the middle of the band it labels. */
+  transform: translateY(-6px);
+}
+
+/* Except the first, which has no line above it and would be cropped by the
+   top edge of the scroller. */
+[data-surface="control"] .dc-hour:first-child { transform: none; }
+
+[data-surface="control"] .dc-col {
+  position: relative;
+  border-left: 1px solid var(--border);
+}
+
+[data-surface="control"] .dc-col[data-today] { background: var(--surface-raised); }
+
+[data-surface="control"] .dc-slot {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+}
+
+[data-surface="control"] .dc-slot:hover { background: var(--surface-raised); }
+
+[data-surface="control"] .dc-event {
+  position: absolute;
+  display: grid;
+  align-content: start;
+  gap: 1px;
+  overflow: hidden;
+  padding: 3px 5px;
+  border: 0;
+  /* The category reads as a spine down the left edge: a fully tinted block at
+     five colours turns the week into a paint chart. */
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+[data-surface="control"] .dc-event--allday {
+  position: static;
+  min-height: 26px;
+  width: 100%;
+  font-size: 12px;
+}
+
+[data-surface="control"] .dc-event__time {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .dc-event__title {
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+[data-surface="control"] .dc-event__who {
+  font-size: 11px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Key ──────────────────────────────────────────────────────────────── */
+
+[data-surface="control"] .dc-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .dc-key li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+[data-surface="control"] .dc-cat__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* ── Editor ───────────────────────────────────────────────────────────── */
+
+[data-surface="control"] .dc-editor {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+[data-surface="control"] .dc-editor__scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+}
+
+[data-surface="control"] .dc-editor__panel {
+  position: relative;
+  display: grid;
+  gap: var(--space-1);
+  max-height: 88svh;
+  overflow-y: auto;
+  padding: 10px var(--space-2) calc(env(safe-area-inset-bottom) + var(--space-3));
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-radius: 14px 14px 0 0;
+}
+
+[data-surface="control"] .dc-editor__grip {
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border-strong);
+  margin: 0 auto 6px;
+}
+
+[data-surface="control"] .dc-editor__title { margin: 0 0 4px; font-size: var(--text-lg); }
+
+[data-surface="control"] .dc-field { display: grid; gap: 3px; }
+
+[data-surface="control"] .dc-input {
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--text-base);
+  width: 100%;
+}
+
+[data-surface="control"] textarea.dc-input { min-height: 72px; resize: vertical; }
+
+[data-surface="control"] .dc-times {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-1);
+}
+
+[data-surface="control"] .dc-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: var(--text-base);
+}
+
+[data-surface="control"] .dc-check input { width: 20px; height: 20px; }
+
+[data-surface="control"] .dc-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+[data-surface="control"] .dc-cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-raised);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+[data-surface="control"] .dc-cat[data-on] {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+[data-surface="control"] .dc-hint,
+[data-surface="control"] .dc-error {
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+[data-surface="control"] .dc-hint { color: var(--text-muted); }
+[data-surface="control"] .dc-error { color: var(--danger); }
+
+[data-surface="control"] .dc-editor__actions {
+  display: flex;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+[data-surface="control"] .dc-delete,
+[data-surface="control"] .dc-cancel,
+[data-surface="control"] .dc-save {
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--text-base);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+[data-surface="control"] .dc-delete { color: var(--danger); border-color: var(--danger); }
+[data-surface="control"] .dc-cancel { margin-left: auto; }
+
+[data-surface="control"] .dc-save {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+[data-surface="control"] .dc-save:disabled {
+  background: var(--surface-raised);
+  color: var(--text-faint);
+  cursor: not-allowed;
+}
+
+/* ── At a desk ────────────────────────────────────────────────────────── */
+
+@media (min-width: 900px) {
+  [data-surface="control"] .dc-day { min-height: 92px; }
+  [data-surface="control"] .dc-grid { --dc-gutter: 58px; --dc-colmin: 0px; }
+
+  /* Centred rather than a bottom sheet: on a wide screen a full-width sheet
+     is a 1400px form with 40 characters in it. */
+  [data-surface="control"] .dc-editor { justify-content: center; align-items: center; }
+
+  [data-surface="control"] .dc-editor__panel {
+    width: min(520px, 92vw);
+    max-height: 86svh;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: var(--space-2) var(--space-3) var(--space-3);
+  }
+
+  [data-surface="control"] .dc-editor__grip { display: none; }
+}

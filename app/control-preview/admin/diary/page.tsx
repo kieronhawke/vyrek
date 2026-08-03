@@ -1,52 +1,36 @@
 import { AdminShell } from "@/components/control/admin-shell";
-import { DataTable, type Column } from "@/components/control/data-table";
-import { APPT_ROWS, type ApptRow } from "@/lib/control/admin-fixtures";
-import { ModuleNote, StatStrip } from "@/components/control/stat-strip";
+import { DiaryCalendar } from "@/components/control/diary-calendar";
+import { ModuleNote } from "@/components/control/stat-strip";
+import { isoOf } from "@/lib/control/diary";
 
 const BASE = "/control-preview/admin";
 
-/** DIARY — spec/09 §7. Two-way Google Calendar sync arrives in Phase F. */
-const COLUMNS: Column<ApptRow>[] = [
-  { key: "when", label: "When", render: (r) => r.when, csv: (r) => r.when },
-  { key: "client", label: "Who", render: (r) => r.client, csv: (r) => r.client },
-  { key: "type", label: "Type", render: (r) => r.type, csv: (r) => r.type },
-  {
-    key: "status", label: "Status",
-    render: (r) => (
-      <span style={{ color: r.status === "No show" ? "var(--danger)" : "var(--text-muted)" }}>
-        {r.status}
-      </span>
-    ),
-    csv: (r) => r.status,
-  },
-];
+/**
+ * DIARY — spec/09 §7.
+ *
+ * Was a four-column table of appointments. A table answers "what is booked";
+ * it cannot answer "when am I free on Thursday", which is the only question
+ * anyone opens a calendar to ask.
+ *
+ * Rendered per request rather than at build so "Today" is today. The page is
+ * noindex and behind the console, so there is nothing to cache anyway.
+ */
+export const dynamic = "force-dynamic";
 
 export default function AdminDiary() {
+  // Resolved on the server and passed down, so the client cannot disagree with
+  // the markup it hydrates — a calendar whose today moves between the two
+  // renders is the same hydration failure that discarded the plan builder.
+  const now = new Date();
+  const today = isoOf(new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())));
+
   return (
     <AdminShell base={BASE} title="Diary">
-      <StatStrip
-        stats={[
-          { label: "Booked", value: String(APPT_ROWS.length) },
-          {
-            label: "Confirmed",
-            value: String(APPT_ROWS.filter((a) => a.status === "Confirmed").length),
-          },
-          {
-            label: "Awaiting confirmation",
-            value: String(APPT_ROWS.filter((a) => a.status === "Scheduled").length),
-            tone: "accent",
-          },
-          {
-            label: "No shows",
-            value: String(APPT_ROWS.filter((a) => a.status === "No show").length),
-            tone: "danger",
-          },
-        ]}
-      />
-      <DataTable rows={APPT_ROWS} columns={COLUMNS} caption="appointments" />
+      <DiaryCalendar today={today} />
       <ModuleNote>
-        Google Calendar sync, booking links and reminders arrive with Phase F.
-        Whether Ben actually uses Google Calendar is an open question
+        Entries are real and saved on this device. Two-way Google Calendar sync
+        and the reminders themselves need Phase F and a Resend/Twilio
+        credential — whether Ben uses Google Calendar at all is still open
         (QUESTIONS §14) and changes the integration route if not.
       </ModuleNote>
     </AdminShell>
