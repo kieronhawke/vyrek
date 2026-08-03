@@ -31,6 +31,8 @@ import {
 export function CookieBanner() {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
+  /** null until the stored decision has been read. */
+  const [decided, setDecided] = useState<boolean | null>(null);
   const [prefsOpen, setPrefsOpen] = useState(false);
   const [categories, setCategories] = useState<ConsentCategories>(
     DEFAULT_CONSENT.categories,
@@ -40,27 +42,39 @@ export function CookieBanner() {
     const state = readConsent();
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setDecided(state.decided);
     if (state.decided) {
       setCategories(state.categories);
       return;
     }
-    // Let the hero render first; show after 1.5s so it doesn't compete
-    // with first-paint LCP.
-    const timer = window.setTimeout(() => setVisible(true), 1500);
+    // The strip's space is already reserved before first paint (see the inline
+    // script in app/layout.tsx), so revealing it costs no layout shift. A short
+    // fade keeps it from competing with the hero for attention; the old 1.5s
+    // hold existed to protect LCP and is no longer needed now that nothing
+    // moves when it appears.
+    const timer = window.setTimeout(() => setVisible(true), 250);
     return () => window.clearTimeout(timer);
   }, []);
 
-  // Push page content down by the banner height while it's visible.
-  // 48px works for both mobile + desktop with the current padding.
+  /**
+   * Owns the reserved strip height.
+   *
+   * Critically it does NOT zero the variable while the decision is still
+   * unknown: the inline script in app/layout.tsx has already reserved 48px
+   * before first paint, and clearing it here would collapse the page and then
+   * push it back down — two layout shifts instead of none. That was ~0.108 CLS
+   * on every page of the site.
+   *
+   * Space is released only once a decision exists.
+   */
   useEffect(() => {
-    if (typeof document === "undefined") return;
-    const root = document.documentElement;
-    if (mounted && visible) {
-      root.style.setProperty("--suth-consent-h", "48px");
-    } else {
-      root.style.setProperty("--suth-consent-h", "0px");
-    }
-  }, [mounted, visible]);
+    if (typeof document === "undefined" || decided === null) return;
+    document.documentElement.style.setProperty(
+      "--suth-consent-h",
+      decided ? "0px" : "48px",
+    );
+  }, [decided]);
 
   const decide = (next: ConsentCategories) => {
     writeConsent({

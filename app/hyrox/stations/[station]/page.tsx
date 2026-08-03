@@ -220,7 +220,12 @@ export default async function StationPage({
                   src={STATION_IMAGES[s.slug].src}
                   alt={STATION_IMAGES[s.slug].alt}
                   className="aspect-[16/9] w-full object-cover"
-                  loading="eager"
+                  /* Below the fold: this sits under the spec list, so eager
+                     loading only delays what is above it. It also leaked —
+                     every page linking to a station guide preloaded this image
+                     via route prefetch, putting 436KB of never-rendered
+                     photography on the simulator and every result page. */
+                  loading="lazy"
                   decoding="async"
                 />
                 <figcaption className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">

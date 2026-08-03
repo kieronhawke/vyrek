@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Oswald, Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { CONSENT_STORAGE_KEY } from "@/lib/consent";
 import { CookieBanner } from "@/components/legal/cookie-banner";
 import { CommandPalette } from "@/components/marketing/command-palette";
 import { PresencePing } from "@/components/presence/presence-ping";
@@ -24,20 +25,29 @@ const oswald = Oswald({
   preload: true,
 });
 
-// Body / UI. Inter is the workhorse for everything not display.
+/* Body / UI. Inter is the workhorse for everything not display.
+ *
+ * preload matters here as much as it does for Oswald: Inter and Geist Mono are
+ * both above the fold on every page, and without preloading the browser only
+ * discovers them after parsing CSS. The swap that follows re-flows text and was
+ * measured as the residual ~0.05 CLS across the Results section once the
+ * layout-driven shift was removed. */
 const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
+  preload: true,
 });
 
-// Technical mono mark stays Geist Mono.
+/* Technical mono mark stays Geist Mono. Every number in the Results section is
+ * set in it, so it is above the fold on every one of those pages too. */
 const geistMono = Geist_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   weight: ["500"],
   display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -112,6 +122,27 @@ export default function RootLayout({
       lang="en-GB"
       className={`dark ${oswald.variable} ${inter.variable} ${geistMono.variable}`}
     >
+      <head>
+        {/* Set the consent-strip height BEFORE first paint.
+         *
+         * `body` has `padding-top: var(--suth-consent-h)` with a 320ms
+         * transition, and the banner sets that variable from an effect after
+         * mount. The result was the entire page sliding down 48px on every
+         * load — measured as ~0.054 CLS on every route, on every page of the
+         * site, not just Results.
+         *
+         * This is the same trick a no-flash theme switch uses: read the stored
+         * decision synchronously in the head so the first paint is already
+         * correct. The banner still owns showing and hiding itself; this only
+         * reserves the space it will occupy. Wrapped in try/catch because
+         * localStorage throws in some privacy modes, and a thrown error here
+         * would block rendering. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var r=localStorage.getItem(${JSON.stringify(CONSENT_STORAGE_KEY)});var d=r?JSON.parse(r).decided:false;if(!d){document.documentElement.style.setProperty('--suth-consent-h','48px');}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body>
         <MotionConfigProvider>
           {children}
