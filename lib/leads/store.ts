@@ -1,108 +1,185 @@
-import { Redis } from "@upstash/redis";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 import type { Lead } from "@/lib/leads/model";
 
 /**
  * WHERE A LEAD LIVES SO THE TEXT MESSAGE HAS SOMETHING TO OPEN.
  *
- * Same Redis-or-memory arrangement as the booking diary and the invite
- * store, for the same reason: one storage story in this codebase, and a
- * local dev experience that works without provisioning anything.
+ * Postgres, since 3 August 2026. It was Redis, which was the right call when
+ * the only database this app pointed at had been deleted — and the wrong one
+ * the moment that was fixed, because Redis was never actually provisioned.
+ * In practice every lead lived in a process-memory fallback, so the link in
+ * Ben's text 404'd as soon as the server recycled. One store beats two, and
+ * a store that exists beats one that does not.
  *
- * THEY EXPIRE. Ninety days, set as a Redis TTL rather than a cleanup job.
- * The record exists so Ben can open it from his phone in the hour after it
- * arrives; keeping somebody's injury history in a key-value store for ever
- * because nobody wrote the deletion code is how data-minimisation promises
- * quietly become untrue. After that the lead lives in the admin database
- * and the email, both of which are access-controlled.
+ * THE NINETY-DAY PROMISE NEEDS A CRON NOW. Redis expired records itself
+ * through a TTL. Postgres does not, so `expireOldLeads` exists for a
+ * scheduled job to call — and until one does, the retention line on the lead
+ * page says what the code actually does rather than what it intends to.
  */
 
-const TTL_SECONDS = 90 * 24 * 60 * 60;
-const key = (id: string) => `suth:lead:${id}`;
-/** The browsable list. Records are keyed individually; this orders them. */
-const INDEX_KEY = "suth:leads:index";
-const INDEX_MAX = 500;
+type Row = {
+  id: string;
+  created_at: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  rail: string | null;
+  wants: string | null;
+  readiness: string | null;
+  goal: string | null;
+  programme: string | null;
+  injury: string | null;
+  brief: string;
+  city: string | null;
+  region: string | null;
+  country: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  landing_path: string | null;
+  referrer: string | null;
+  seconds_on_site: number | null;
+  page_views: number | null;
+  source_path: string | null;
+  invited_at: string | null;
+};
 
-function redisOrNull(): Redis | null {
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !token) return null;
-  return new Redis({ url, token });
+function toRow(lead: Lead) {
+  return {
+    id: lead.id,
+    created_at: lead.createdISO,
+    name: lead.name,
+    email: lead.email,
+    phone: lead.phone,
+    rail: lead.rail,
+    wants: lead.wants,
+    readiness: lead.readiness,
+    goal: lead.goal,
+    programme: lead.programme,
+    injury: lead.injury,
+    brief: lead.brief,
+    city: lead.city,
+    region: lead.region,
+    country: lead.country,
+    latitude: lead.latitude,
+    longitude: lead.longitude,
+    landing_path: lead.landingPath,
+    referrer: lead.referrer,
+    seconds_on_site: lead.secondsOnSite,
+    page_views: lead.pageViews,
+    source_path: lead.sourcePath,
+  };
 }
 
+function fromRow(r: Row): Lead {
+  return {
+    id: r.id,
+    createdISO: r.created_at,
+    name: r.name,
+    email: r.email,
+    phone: r.phone,
+    rail: r.rail,
+    wants: r.wants,
+    readiness: r.readiness,
+    goal: r.goal,
+    programme: r.programme,
+    injury: r.injury,
+    brief: r.brief,
+    city: r.city,
+    region: r.region,
+    country: r.country,
+    latitude: r.latitude,
+    longitude: r.longitude,
+    landingPath: r.landing_path,
+    referrer: r.referrer,
+    secondsOnSite: r.seconds_on_site,
+    pageViews: r.page_views,
+    sourcePath: r.source_path,
+  };
+}
+
+/** True when the database is configured at all. Surfaced in the admin. */
 export function leadStoreReady(): boolean {
-  return redisOrNull() !== null;
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SECRET_KEY,
+  );
 }
-
-/**
- * Dev fallback. Lost on restart, and that is understood.
- *
- * ON globalThis, not module scope. Next.js compiles route handlers and page
- * components into separate module graphs, so a module-level Map is two
- * Maps: the enquiry endpoint wrote to one and the lead page read from the
- * other, and every link 404'd in development while looking correct in
- * production. Same pattern as the usual dev database singleton.
- */
-const memory: Map<string, Lead> = ((globalThis as unknown as {
-  __suthLeads?: Map<string, Lead>;
-}).__suthLeads ??= new Map<string, Lead>());
 
 export async function saveLead(lead: Lead): Promise<boolean> {
-  const redis = redisOrNull();
-  if (!redis) {
-    memory.set(lead.id, lead);
-    return true;
-  }
   try {
-    await redis.set(key(lead.id), lead, { ex: TTL_SECONDS });
-    // The index is a separate write and deliberately not transactional: if
-    // it fails the lead is still readable from the link in the text, which
-    // is the delivery that actually matters. A lead missing from a list is
-    // recoverable; a lead that cannot be opened at all is not.
-    try {
-      await redis.lpush(INDEX_KEY, lead.id);
-      await redis.ltrim(INDEX_KEY, 0, INDEX_MAX - 1);
-    } catch {
-      /* see above */
+    const { error } = await supabaseAdmin()
+      .from("consultation_leads")
+      .insert(toRow(lead));
+    if (error) {
+      // The email and the text still go out carrying everything, so a
+      // storage failure costs the link, not the lead.
+      console.error("[leads] insert failed", error.message);
+      return false;
     }
     return true;
-  } catch {
-    // The email and the text still go out with everything in them. A
-    // storage failure must not swallow the lead itself.
+  } catch (e) {
+    console.error("[leads] store unreachable", e);
     return false;
   }
 }
 
-/**
- * Recent leads, newest first, for the admin list.
- *
- * Reads the index then fetches each record, rather than keeping a second
- * copy of every lead inside one big list value. Records expire on their own
- * ninety-day TTL, so the index outlives some of them — the misses are
- * filtered out here rather than left as holes in the page.
- */
-export async function recentLeads(limit = 100): Promise<Lead[]> {
-  const redis = redisOrNull();
-  if (!redis) {
-    return [...memory.values()]
-      .sort((a, b) => b.createdISO.localeCompare(a.createdISO))
-      .slice(0, limit);
-  }
+export async function getLead(id: string): Promise<Lead | null> {
   try {
-    const ids = await redis.lrange<string>(INDEX_KEY, 0, limit - 1);
-    if (!ids.length) return [];
-    const records = await Promise.all(ids.map((id) => getLead(id)));
-    return records.filter((l): l is Lead => l !== null);
+    const { data, error } = await supabaseAdmin()
+      .from("consultation_leads")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+    if (error || !data) return null;
+    return fromRow(data as Row);
+  } catch {
+    return null;
+  }
+}
+
+/** Newest first, for the admin list. */
+export async function recentLeads(limit = 100): Promise<Lead[]> {
+  try {
+    const { data, error } = await supabaseAdmin()
+      .from("consultation_leads")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    if (error || !data) return [];
+    return (data as Row[]).map(fromRow);
   } catch {
     return [];
   }
 }
 
-export async function getLead(id: string): Promise<Lead | null> {
-  const redis = redisOrNull();
-  if (!redis) return memory.get(id) ?? null;
+/** Stamped when Ben sends the account setup link. Cosmetic; never fatal. */
+export async function markInvited(id: string): Promise<void> {
   try {
-    return (await redis.get<Lead>(key(id))) ?? null;
+    await supabaseAdmin()
+      .from("consultation_leads")
+      .update({ invited_at: new Date().toISOString() })
+      .eq("id", id);
   } catch {
-    return null;
+    /* Never worth failing the invite over. */
+  }
+}
+
+/**
+ * Delete leads older than `days`.
+ *
+ * Nothing calls this yet. It exists so the retention promise has an
+ * implementation to point at the day a cron is added, rather than being a
+ * sentence in a comment that quietly became untrue.
+ */
+export async function expireOldLeads(days = 90): Promise<number> {
+  const cutoff = new Date(Date.now() - days * 86400_000).toISOString();
+  try {
+    const { data, error } = await supabaseAdmin()
+      .from("consultation_leads")
+      .delete()
+      .lt("created_at", cutoff)
+      .select("id");
+    return error || !data ? 0 : data.length;
+  } catch {
+    return 0;
   }
 }

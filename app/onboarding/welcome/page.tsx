@@ -51,6 +51,7 @@ export default async function OnboardingWelcomePage({
 
   return (
     <OnboardingWelcome
+      sessionId={sessionId}
       name={name}
       planKey={planName}
       confirmed={confirmed}

@@ -56,6 +56,10 @@ import {
   clubWinbackSubject,
 } from "@/lib/email/templates/funnel-club";
 import {
+  AccountReadyEmail,
+  accountReadySubject,
+} from "@/lib/email/templates/account-ready";
+import {
   InternalLeadEmail,
   internalLeadSubject,
 } from "@/lib/email/templates/internal-lead";
@@ -302,6 +306,21 @@ export function sendInternalLeadBrief(args: {
       readiness: rest.readiness,
     }),
     react: InternalLeadEmail(rest),
+  });
+}
+
+/** The way in, sent the moment a checkout completes. */
+export function sendAccountReady(args: {
+  to: string;
+  firstName: string;
+  signInUrl: string;
+  planName?: string;
+}): Promise<Result> {
+  const { to, ...rest } = args;
+  return send({
+    to,
+    subject: accountReadySubject(rest.firstName),
+    react: AccountReadyEmail(rest),
   });
 }
 

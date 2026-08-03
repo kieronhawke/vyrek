@@ -1,4 +1,4 @@
-import { Redis } from "@upstash/redis";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 import {
   DEFAULT_AVAILABILITY,
   type Availability,
@@ -8,69 +8,86 @@ import type { Booking } from "@/lib/booking/model";
 /**
  * WHERE THE DIARY LIVES.
  *
- * Upstash Redis when it is configured, an in-process map when it is not —
- * the same arrangement as lib/rate-limit.ts and lib/onboarding/invite-store.ts,
- * so there is one storage story in this codebase rather than three.
+ * Postgres, since 3 August 2026 — moved off Redis for the reason in
+ * lib/leads/store.ts: Redis was never provisioned, so the "fallback" was
+ * the real implementation, and it lost every booking on restart.
  *
- * THE FALLBACK IS FOR LOCAL DEVELOPMENT ONLY, and unlike a rate limiter,
- * losing a booking matters. Without Redis a booking survives until the
- * server restarts and is invisible to any other instance, which on Vercel
- * means the next request may not see it at all. `bookingStoreReady()`
- * reports which mode is live so the admin calendar can say so out loud
- * rather than looking like it is working.
- *
- * Supabase would be the natural home, but the project this app points at
- * (iiezxhzbissemvsfytwl) currently returns NXDOMAIN — it has been deleted.
- * Flagged separately; this module deliberately does not depend on it.
+ * THE DOUBLE-BOOK GUARD IS NOW IN THE DATABASE. `addBooking` still checks
+ * first, because a refusal a person can read beats a constraint violation.
+ * But the check and the write were never atomic, and two requests landing
+ * in the same instant would both pass it. There is a partial unique index
+ * on (starts_at) where status = 'confirmed', so the second one loses —
+ * and losing looks the same to the caller as being told the slot has gone.
  */
 
-const AVAILABILITY_KEY = "suth:booking:availability";
-const BOOKINGS_KEY = "suth:booking:all";
+const AVAILABILITY_ROW = 1;
 
-function redisOrNull(): Redis | null {
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !token) return null;
-  return new Redis({ url, token });
+type Row = {
+  ref: string;
+  created_at: string;
+  name: string;
+  email: string;
+  phone: string;
+  starts_at: string;
+  minutes: number;
+  status: "confirmed" | "cancelled";
+  note: string | null;
+  rail: string | null;
+  rescheduled_from: string | null;
+  cancelled_reason: string | null;
+};
+
+function fromRow(r: Row): Booking {
+  return {
+    ref: r.ref,
+    name: r.name,
+    email: r.email,
+    phone: r.phone,
+    startISO: new Date(r.starts_at).toISOString(),
+    minutes: r.minutes,
+    status: r.status,
+    note: r.note ?? undefined,
+    rail: (r.rail as Booking["rail"]) ?? undefined,
+    createdISO: r.created_at,
+    rescheduledFromISO: r.rescheduled_from
+      ? new Date(r.rescheduled_from).toISOString()
+      : undefined,
+    cancelledReason: r.cancelled_reason ?? undefined,
+  };
 }
 
 export function bookingStoreReady(): boolean {
-  return redisOrNull() !== null;
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SECRET_KEY,
+  );
 }
-
-/* In-memory fallback, pinned to globalThis rather than module scope.
-   Next.js gives route handlers and page components separate module graphs,
-   so a module-level object is two objects — the booking endpoint would
-   write to one and the admin diary read from the other, and every booking
-   made in development would be invisible on the page meant to show it. */
-const memory: { availability: Availability | null; bookings: Booking[] } =
-  ((globalThis as unknown as {
-    __suthBookings?: { availability: Availability | null; bookings: Booking[] };
-  }).__suthBookings ??= { availability: null, bookings: [] });
 
 /* ── Availability ──────────────────────────────────────────────────────── */
 
 export async function loadAvailability(): Promise<Availability> {
-  const redis = redisOrNull();
-  if (!redis) return memory.availability ?? DEFAULT_AVAILABILITY;
   try {
-    const stored = await redis.get<Availability>(AVAILABILITY_KEY);
-    return stored ?? DEFAULT_AVAILABILITY;
+    const { data, error } = await supabaseAdmin()
+      .from("booking_availability")
+      .select("config")
+      .eq("id", AVAILABILITY_ROW)
+      .maybeSingle();
+    if (error || !data?.config) return DEFAULT_AVAILABILITY;
+    return data.config as Availability;
   } catch {
-    // A diary that shows the default hours beats a page that 500s.
+    // A diary showing the default hours beats a page that 500s.
     return DEFAULT_AVAILABILITY;
   }
 }
 
 export async function saveAvailability(a: Availability): Promise<boolean> {
-  const redis = redisOrNull();
-  if (!redis) {
-    memory.availability = a;
-    return true;
-  }
   try {
-    await redis.set(AVAILABILITY_KEY, a);
-    return true;
+    const { error } = await supabaseAdmin()
+      .from("booking_availability")
+      .upsert(
+        { id: AVAILABILITY_ROW, config: a, updated_at: new Date().toISOString() },
+        { onConflict: "id" },
+      );
+    return !error;
   } catch {
     return false;
   }
@@ -79,88 +96,124 @@ export async function saveAvailability(a: Availability): Promise<boolean> {
 /* ── Bookings ──────────────────────────────────────────────────────────── */
 
 export async function loadBookings(): Promise<Booking[]> {
-  const redis = redisOrNull();
-  if (!redis) return memory.bookings;
   try {
-    return (await redis.get<Booking[]>(BOOKINGS_KEY)) ?? [];
+    const { data, error } = await supabaseAdmin()
+      .from("consultation_bookings")
+      .select("*")
+      .order("starts_at", { ascending: true });
+    if (error || !data) return [];
+    return (data as Row[]).map(fromRow);
   } catch {
     return [];
   }
 }
 
-async function writeBookings(all: Booking[]): Promise<boolean> {
-  const redis = redisOrNull();
-  if (!redis) {
-    memory.bookings = all;
-    return true;
-  }
-  try {
-    await redis.set(BOOKINGS_KEY, all);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/** Confirmed bookings only, which is what "taken" means to the slot maths. */
+/** Confirmed starts only, which is what "taken" means to the slot maths. */
 export async function takenStarts(): Promise<Date[]> {
-  const all = await loadBookings();
-  return all
-    .filter((b) => b.status === "confirmed")
-    .map((b) => new Date(b.startISO));
+  try {
+    const { data, error } = await supabaseAdmin()
+      .from("consultation_bookings")
+      .select("starts_at")
+      .eq("status", "confirmed");
+    if (error || !data) return [];
+    return (data as { starts_at: string }[]).map((r) => new Date(r.starts_at));
+  } catch {
+    return [];
+  }
 }
 
 export type AddResult =
   | { ok: true; booking: Booking }
   | { ok: false; reason: "TAKEN" | "WRITE_FAILED" };
 
-/**
- * Take a slot, refusing if somebody got there first.
- *
- * The check and the write are not atomic, and on this traffic they do not
- * need to be: two people would have to choose the same thirty-minute slot
- * within the same few hundred milliseconds. What matters is that the check
- * happens on the server against stored state rather than against whatever
- * the browser was showing, which may be minutes old.
- */
 export async function addBooking(booking: Booking): Promise<AddResult> {
-  const all = await loadBookings();
-  const clash = all.some(
-    (b) => b.status === "confirmed" && b.startISO === booking.startISO,
-  );
-  if (clash) return { ok: false, reason: "TAKEN" };
-
-  const ok = await writeBookings([...all, booking]);
-  return ok ? { ok: true, booking } : { ok: false, reason: "WRITE_FAILED" };
+  try {
+    const { error } = await supabaseAdmin()
+      .from("consultation_bookings")
+      .insert({
+        ref: booking.ref,
+        created_at: booking.createdISO,
+        name: booking.name,
+        email: booking.email,
+        phone: booking.phone,
+        starts_at: booking.startISO,
+        minutes: booking.minutes,
+        status: booking.status,
+        note: booking.note ?? null,
+        rail: booking.rail ?? null,
+      });
+    if (error) {
+      // 23505 is a unique violation, and the only unique thing here besides
+      // the reference is the slot. Somebody got there first.
+      if (error.code === "23505") return { ok: false, reason: "TAKEN" };
+      console.error("[booking] insert failed", error.message);
+      return { ok: false, reason: "WRITE_FAILED" };
+    }
+    return { ok: true, booking };
+  } catch (e) {
+    console.error("[booking] store unreachable", e);
+    return { ok: false, reason: "WRITE_FAILED" };
+  }
 }
 
 export async function findBooking(ref: string): Promise<Booking | null> {
-  const all = await loadBookings();
-  const wanted = ref.trim().toUpperCase();
-  return all.find((b) => b.ref === wanted) ?? null;
+  try {
+    const { data, error } = await supabaseAdmin()
+      .from("consultation_bookings")
+      .select("*")
+      .eq("ref", ref.trim().toUpperCase())
+      .maybeSingle();
+    if (error || !data) return null;
+    return fromRow(data as Row);
+  } catch {
+    return null;
+  }
 }
 
 export async function updateBooking(
   ref: string,
   patch: Partial<Booking>,
 ): Promise<Booking | null> {
-  const all = await loadBookings();
-  const wanted = ref.trim().toUpperCase();
-  const i = all.findIndex((b) => b.ref === wanted);
-  if (i < 0) return null;
+  const row: Record<string, unknown> = {};
+  if (patch.startISO !== undefined) row.starts_at = patch.startISO;
+  if (patch.status !== undefined) row.status = patch.status;
+  if (patch.note !== undefined) row.note = patch.note ?? null;
+  if (patch.rescheduledFromISO !== undefined) {
+    row.rescheduled_from = patch.rescheduledFromISO ?? null;
+  }
+  if (patch.cancelledReason !== undefined) {
+    row.cancelled_reason = patch.cancelledReason ?? null;
+  }
+  if (Object.keys(row).length === 0) return findBooking(ref);
 
-  const next = { ...all[i], ...patch, ref: all[i].ref };
-  all[i] = next;
-  const ok = await writeBookings(all);
-  return ok ? next : null;
+  try {
+    const { data, error } = await supabaseAdmin()
+      .from("consultation_bookings")
+      .update(row)
+      .eq("ref", ref.trim().toUpperCase())
+      .select("*")
+      .maybeSingle();
+    if (error || !data) return null;
+    return fromRow(data as Row);
+  } catch {
+    return null;
+  }
 }
 
-/** Confirmed and still to come, soonest first. What the admin page opens on. */
+/** Confirmed and still to come, soonest first. What the admin opens on. */
 export async function upcomingBookings(
   now: Date = new Date(),
 ): Promise<Booking[]> {
-  const all = await loadBookings();
-  return all
-    .filter((b) => b.status === "confirmed" && new Date(b.startISO) >= now)
-    .sort((a, b) => a.startISO.localeCompare(b.startISO));
+  try {
+    const { data, error } = await supabaseAdmin()
+      .from("consultation_bookings")
+      .select("*")
+      .eq("status", "confirmed")
+      .gte("starts_at", now.toISOString())
+      .order("starts_at", { ascending: true });
+    if (error || !data) return [];
+    return (data as Row[]).map(fromRow);
+  } catch {
+    return [];
+  }
 }

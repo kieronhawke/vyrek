@@ -777,3 +777,18 @@
 .obw-receipt { text-align: center; }
 
 .ob-link { color: var(--ob-accent); }
+
+/* The "check your email" line on the welcome screen. Sits between the
+   headline and the actions, because it is the actual next step. */
+.obw-note {
+  margin: 20px 0 0;
+  max-width: 34rem;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--suth-text-secondary);
+}
+.obw-note strong {
+  color: var(--suth-text-primary);
+  font-weight: 600;
+  word-break: break-word;
+}

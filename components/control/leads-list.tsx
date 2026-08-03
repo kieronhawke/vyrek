@@ -46,9 +46,9 @@ export function LeadsList({ leads, durable }: Props) {
     return (
       <p className="rounded-lg border border-suth-warning/40 bg-suth-warning/10 px-4 py-3 text-sm text-suth-text">
         <strong className="font-semibold">Leads are not being stored.</strong>{" "}
-        UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN aren&apos;t set, so
-        this list is empty on every restart and the links in Ben&apos;s texts
-        will 404. The email still goes out with everything in it.
+        The database isn&apos;t configured, so this list stays empty and the
+        links in Ben&apos;s texts will 404. The email still goes out with
+        everything in it.
       </p>
     );
   }

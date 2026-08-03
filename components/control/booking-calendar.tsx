@@ -121,10 +121,8 @@ export function BookingCalendar() {
     <div className="space-y-12">
       {!data.durable ? (
         <p className="rounded-lg border border-suth-warning/40 bg-suth-warning/10 px-4 py-3 text-sm text-suth-text">
-          <strong className="font-semibold">Bookings are not being stored
-          permanently.</strong>{" "}
-          UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN aren&apos;t set,
-          so the diary lives in memory and is lost when the server restarts.
+          <strong className="font-semibold">Bookings are not being stored.</strong>{" "}
+          The database isn&apos;t configured, so nothing booked here survives.
           Fine for a look round; not fine for real bookings.
         </p>
       ) : null}
