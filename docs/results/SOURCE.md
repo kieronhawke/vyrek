@@ -86,8 +86,18 @@ per day. `events.source_event_id` therefore stores the weekend id, and
 `divisions.source_division_id` stores the full code. This is the single most
 important normalisation decision on the source side.
 
-**These are the identifiers to key upserts on.** They are opaque, assigned by
-the timing provider, and stable across a season. Nothing else on the page is.
+**These are the identifiers to key upserts on** — with one correction learned
+the hard way. A weekend id is stable and opaque, but **an event has several of
+them**, one per race day. Warsaw and St Gallen carry six each. So the weekend id
+is not the event's identity; the slug (season + year + city) is, and the weekend
+ids are a plural attribute. See `DECISIONS.md` D68.
+
+### Sex is a filter, and there are three of them
+
+Every board offers `search[sex]` = `M`, `W` **and `X` (Mixed)**. Mixed returns
+real results for team formats — 20 rows on one relay division I measured — and
+an empty board for individual ones. Fetching only M and W silently omits every
+mixed doubles and mixed relay division in HYROX history.
 
 ### ⚠️ The weekend name is NOT on the season page
 
