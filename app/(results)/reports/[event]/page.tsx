@@ -9,6 +9,7 @@ import { buildRankingSlug } from "@/lib/results/slugs";
 import { formatTime, formatCount } from "@/lib/results/format";
 import { MicroLabel, Nationality, StatTile } from "@/components/results/ui/primitives";
 import { CoachingCta } from "@/components/results/coaching-cta";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 
 /**
  * `/reports/{event}` — the automated race report.
@@ -42,7 +43,7 @@ export async function generateMetadata({
   if (!event) return { title: "Report not found" };
 
   return {
-    title: `HYROX ${event.city} ${event.year} Race Report: Winners, Records & Standout Times`,
+    title: `HYROX ${event.city} ${event.year} Race Report`,
     description:
       `Who won what at HYROX ${event.city} ${event.year}, the fastest station splits of the `
       + `weekend, and the standout age-group results — generated from the full results data.`,
@@ -76,7 +77,7 @@ export default async function ReportPage({ params }: { params: Promise<{ event: 
   };
 
   return (
-    <article className="mx-auto max-w-[820px] px-5 py-6 md:py-10">
+    <article className="mx-auto max-w-[1100px] px-5 py-6 md:py-10">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -136,7 +137,7 @@ export default async function ReportPage({ params }: { params: Promise<{ event: 
 
       <section className="mt-10">
         <h2 className="text-lg font-semibold text-suth-text">Podiums</h2>
-        <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="mt-3 grid grid-cols-2 gap-3">
           {report.podiums.filter((d) => d.headline).map((division) => (
             <div
               key={division.divisionCode}
@@ -193,6 +194,14 @@ export default async function ReportPage({ params }: { params: Promise<{ event: 
         headline={`Racing ${input.eventCity} next season?`}
         body="These are the times to beat. A plan built around this course starts with knowing where yours went."
       />
+      <RelatedLinks
+        links={[
+          { href: "/reports", label: "Every race report" },
+          { href: "/events", label: "Full race calendar" },
+          { href: "/rankings/records", label: "The record book" },
+        ]}
+      />
+
     </article>
   );
 }

@@ -5,6 +5,8 @@ import { siteUrl } from "@/lib/blog/urls";
 import { EventTile } from "@/components/results/event-tiles";
 import { MicroLabel, EmptyState } from "@/components/results/ui/primitives";
 import { cn } from "@/lib/utils";
+import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 
 /**
  * `/events` — the season calendar.
@@ -70,6 +72,8 @@ export default async function EventsPage({
 
   return (
     <div className="mx-auto max-w-[1400px] px-5 py-8 md:py-12">
+      <Breadcrumbs trail={[{ name: "Results", path: "/results" }, { name: "Events", path: "/events" }]} />
+
       <header>
         <MicroLabel>[ CALENDAR ]</MicroLabel>
         <h1 className="mt-2 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-4xl">
@@ -149,6 +153,15 @@ function FilterRow({
           {option.label}
         </Link>
       ))}
+      <RelatedLinks
+        links={[
+          { href: "/results/city", label: "Browse by city" },
+          { href: "/rankings/records", label: "The record book" },
+          { href: "/results/course-index", label: "Which courses run slowest" },
+          { href: "/simulator", label: "Model your next race" },
+        ]}
+      />
+
     </div>
   );
 }

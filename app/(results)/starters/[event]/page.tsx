@@ -6,6 +6,7 @@ import { siteUrl } from "@/lib/blog/urls";
 import { formatCount } from "@/lib/results/format";
 import { StartersList } from "@/components/results/starters/starters-list";
 import { MicroLabel, StatusBadge, EmptyState } from "@/components/results/ui/primitives";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 
 /**
  * `/starters/{event}` — start lists by division and wave.
@@ -102,6 +103,14 @@ export default async function StartersPage({
           />
         )}
       </div>
+      <RelatedLinks
+        links={[
+          { href: "/events", label: "Full race calendar" },
+          { href: "/simulator", label: "Model your race" },
+          { href: "/hyrox/stations", label: "Station guides" },
+        ]}
+      />
+
     </div>
   );
 }

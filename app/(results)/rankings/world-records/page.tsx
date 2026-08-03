@@ -3,6 +3,8 @@ import { getResultsSource } from "@/lib/results";
 import { siteUrl } from "@/lib/blog/urls";
 import { RecordsBoard } from "@/components/results/rankings/records-board";
 import { MicroLabel } from "@/components/results/ui/primitives";
+import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 
 export const revalidate = 3600;
 
@@ -19,7 +21,9 @@ export default async function WorldRecordsPage() {
   const board = await getResultsSource().getRecords();
 
   return (
-    <div className="mx-auto max-w-[900px] px-5 py-6 md:py-10">
+    <div className="mx-auto max-w-[1100px] px-5 py-6 md:py-10">
+      <Breadcrumbs trail={[{ name: "Results", path: "/results" }, { name: "Rankings", path: "/rankings" }, { name: "All-time records", path: "/rankings/world-records" }]} />
+
       <header>
         <MicroLabel>[ ALL-TIME ]</MicroLabel>
         <h1 className="mt-2 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-4xl">
@@ -38,6 +42,14 @@ export default async function WorldRecordsPage() {
           emptyBody="Records appear once events are marked final."
         />
       </div>
+      <RelatedLinks
+        links={[
+          { href: "/rankings/records", label: "National and age-group records" },
+          { href: "/rankings/season-bests", label: "This season's bests" },
+          { href: "/events", label: "Full race calendar" },
+        ]}
+      />
+
     </div>
   );
 }

@@ -11,6 +11,7 @@ import { DivisionTabs } from "@/components/results/ranking/division-tabs";
 import { StatusBadge, MicroLabel, StatTile } from "@/components/results/ui/primitives";
 import { CoachingCta } from "@/components/results/coaching-cta";
 import type { CompactRow } from "@/app/api/results/ranking/[slug]/route";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 
 /**
  * `/ranking/{event}-{division}` — the full division leaderboard.
@@ -40,7 +41,7 @@ export async function generateMetadata({
 
   const division = page.divisionLabel.replace("HYROX ", "");
   return {
-    title: `HYROX ${event.city} ${event.year} ${division}: Full Results & Rankings`,
+    title: `HYROX ${event.city} ${event.year} ${division} Results`,
     description:
       `Every ${division} result from HYROX ${event.city} ${event.year} — `
       + `${formatCount(page.fieldSize)} finishers with full splits, gaps and age-group ranks.`,
@@ -149,6 +150,15 @@ export default async function RankingPage({ params }: { params: Promise<{ slug: 
           divisionLabel={page.divisionLabel}
         />
       </div>
+
+      <RelatedLinks
+        links={[
+          { href: `/event/${event.slug}`, label: `Back to ${event.city} ${event.year}` },
+          { href: "/rankings/records", label: "The record book" },
+          { href: "/tools/good-hyrox-time", label: "Is my time good?" },
+          { href: "/events", label: "Full race calendar" },
+        ]}
+      />
 
       <CoachingCta
         className="mt-8"

@@ -84,6 +84,23 @@ export function parseSelectOptions(
   return options;
 }
 
+/**
+ * The age-group values a board offers, e.g. `U24`, `30`, `40`.
+ *
+ * These matter because the pager is capped: `?page=N` stops serving new rows
+ * after about 280 entries however many the board claims to hold. Narrowing by
+ * age group splits a large field into slices that each fit under that ceiling,
+ * which is the only way to reach the whole of it.
+ *
+ * `%` is the "all" option and is excluded — asking for it is the unnarrowed
+ * request we already made.
+ */
+export function parseAgeClasses(html: string): string[] {
+  return parseSelectOptions(html, "search[age_class]")
+    .map((o) => o.value)
+    .filter((v) => v && v !== "%");
+}
+
 /** The weekend names the season offers, e.g. "2026 Chiba", "2026 Delhi". */
 export function parseGroupNames(html: string): string[] {
   return parseSelectOptions(html, "event_main_group")
@@ -265,18 +282,33 @@ export function parseDivisionRows(
   // which sex it is showing, and the rows themselves never say.
   const sexAttr = /data-sex=['"]([MWFX])['"]/i.exec(html)?.[1];
 
-  const rowRe = /<li[^>]*class="[^"]*list-group-item[^"]*"[^>]*>([\s\S]*?)<\/li>/gi;
+  // ⚠️ Rows are split by where the next one *starts*, not by `</li>`.
+  //
+  // The source emits unbalanced list markup — one real page had 161 `<li>` and
+  // 156 `</li>` — so a non-greedy `<li …>…</li>` match runs past the end of a
+  // row and swallows the ones after it. The parser then reads only the first
+  // athlete out of each merged block: 100 rows became 37, and roughly 63% of
+  // every large board was silently lost. It looked like the source paginating
+  // badly, then like rows being dropped for unresolved athletes; it was neither.
+  //
+  // Splitting on the start marker is immune to that, because it never depends
+  // on a closing tag being where it ought to be.
   const rows: RawResultRow[] = [];
   let candidateRows = 0;
-  let match: RegExpExecArray | null;
 
-  while ((match = rowRe.exec(html)) !== null) {
-    const block = match[0];
+  const startRe = /<li[^>]*class="[^"]*list-group-item[^"]*"[^>]*>/gi;
+  const starts: number[] = [];
+  let startMatch: RegExpExecArray | null;
+  while ((startMatch = startRe.exec(html)) !== null) starts.push(startMatch.index);
+
+  for (const [index, from] of starts.entries()) {
+    const to = starts[index + 1] ?? html.length;
+    const block = html.slice(from, to);
     if (/list-group-header/i.test(block)) continue;
     if (!/type-(fullname|relay_member)/.test(block)) continue;
     candidateRows += 1;
 
-    const fields = parseRowFields(match[1]);
+    const fields = parseRowFields(block);
 
     // Doubles and relay boards name the column `relay_member`, not `fullname`,
     // and drop the nationality column entirely.

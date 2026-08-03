@@ -18,6 +18,7 @@ import { percentileOf, buildDistribution } from "@/lib/results/percentiles";
 import { AthleteExport } from "@/components/results/export/athlete-export";
 import { StatTile, MicroLabel, Nationality, Time, Delta } from "@/components/results/ui/primitives";
 import { CoachingCta } from "@/components/results/coaching-cta";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 
 /**
  * `/athlete/{slug}` — profile and full history.
@@ -40,7 +41,7 @@ export async function generateMetadata({
 
   const pb = athlete.pbSeconds ? formatTime(athlete.pbSeconds) : null;
   return {
-    title: `${athlete.name}: HYROX Results, PBs & Race History`,
+    title: `${athlete.name}: HYROX Results & PBs`,
     description:
       `Every HYROX race by ${athlete.name} — ${athlete.races.length} results across `
       + `${athlete.seasonsActive.length} season${athlete.seasonsActive.length === 1 ? "" : "s"}`
@@ -384,6 +385,15 @@ export default async function AthletePage({ params }: { params: Promise<{ slug: 
         headline={`${athlete.pbSeconds ? formatTime(athlete.pbSeconds) : "Your PB"} is a starting point`}
         body="A plan built on what these splits actually show, rather than a template that ignores them."
       />
+      <RelatedLinks
+        links={[
+          { href: "/results/city", label: "Results by city" },
+          { href: "/rankings/records", label: "The record book" },
+          { href: "/tools/good-hyrox-time", label: "Is my time good?" },
+          { href: "/simulator", label: "Model your next race" },
+        ]}
+      />
+
     </div>
   );
 }

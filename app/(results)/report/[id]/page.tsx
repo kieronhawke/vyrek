@@ -28,6 +28,7 @@ import {
 import { CoachNoteBlock, ReportSection, ReportFigure, PhotoBreak } from "@/components/results/report/furniture";
 import { PrintButton } from "@/components/results/report/print-button";
 import { MicroLabel } from "@/components/results/ui/primitives";
+import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
 
 /**
@@ -64,7 +65,7 @@ export async function generateMetadata({
     description:
       `A full HYROX race report for ${result.athleteName} at ${result.eventName}: `
       + `${formatTime(result.finishSeconds)} in ${division}, with station percentiles, `
-      + `pacing analysis, benchmarks against the winner and a plan for the next race. Free.`,
+      + `pacing analysis and a plan for the next race.`,
     alternates: { canonical: `/report/${id}` },
     openGraph: {
       title: `${result.athleteName} — ${result.eventName} race report`,
@@ -211,6 +212,8 @@ export default async function RaceReportPage({
   return (
     <div className="results-report mx-auto max-w-[1000px] px-5 py-8 md:py-12">
       {/* ── Cover ─────────────────────────────────────────────────── */}
+      <Breadcrumbs trail={[{ name: "Results", path: "/results" }, { name: result.eventName, path: `/event/${result.eventSlug}` }, { name: `${result.athleteName} report`, path: `/report/${result.id}` }]} className="mb-4" />
+
       <header className="report-cover relative overflow-hidden rounded-lg border border-suth-border-subtle">
         {/* The scrim runs left-to-right, not top-to-bottom.
           *

@@ -5,12 +5,14 @@ import { siteUrl } from "@/lib/blog/urls";
 import { formatCount, formatRelativeDate } from "@/lib/results/format";
 import { MicroLabel, EmptyState } from "@/components/results/ui/primitives";
 import { AUTOMATED_LABEL } from "@/lib/results/report-generator";
+import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 
 /** `/reports` — index of automated race reports. */
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "HYROX Race Reports: Winners, Records & Recaps",
+  title: "HYROX Race Reports",
   description:
     "A report for every finished HYROX event — winners, podiums, the fastest station splits "
     + "of the weekend and standout age-group results.",
@@ -23,7 +25,9 @@ export default async function ReportsIndex() {
   const now = new Date();
 
   return (
-    <div className="mx-auto max-w-[900px] px-5 py-6 md:py-10">
+    <div className="mx-auto max-w-[1100px] px-5 py-6 md:py-10">
+      <Breadcrumbs trail={[{ name: "Results", path: "/results" }, { name: "Race reports", path: "/reports" }]} />
+
       <header>
         <MicroLabel>[ REPORTS ]</MicroLabel>
         <h1 className="mt-2 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-4xl">
@@ -68,6 +72,14 @@ export default async function ReportsIndex() {
           </ul>
         )}
       </div>
+      <RelatedLinks
+        links={[
+          { href: "/events", label: "Full race calendar" },
+          { href: "/rankings/records", label: "The record book" },
+          { href: "/results/city", label: "Results by city" },
+        ]}
+      />
+
     </div>
   );
 }
