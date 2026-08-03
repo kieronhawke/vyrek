@@ -346,15 +346,21 @@ body {
   line-height: 1.4;
 }
 
-.p2-line__icon { color: var(--p2-muted); padding-top: 0.3mm; }
+.p2-line__icon { padding-top: 0.2mm; }
 
-/* The tones carry meaning: running, ergs, strength and the HYROX stations
-   each read differently at a glance. Kept as icon colour rather than a filled
-   block, because filled blocks are what turn a plan into a paint chart. */
-.p2-line[data-tone="run"] .p2-line__icon { color: #1f4fa8; }
-.p2-line[data-tone="erg"] .p2-line__icon { color: #0f6b5c; }
-.p2-line[data-tone="strength"] .p2-line__icon { color: #7a3fb0; }
-.p2-line[data-tone="accent"] .p2-line__icon { color: var(--p2-accent-ink); }
+/**
+ * One ink for every pictogram.
+ *
+ * They were tinted per category — blue runs, teal ergs, purple strength —
+ * which was my invention, not the language these marks come from. The report
+ * they are traced from sets every one of them in a single slate, and it is
+ * right: the glyph already says what the work is, so colouring it as well is
+ * saying it twice and turns a plan into a paint chart.
+ *
+ * Colour is spent where it earns its place: the masthead, the note rule, the
+ * station badge on a session header and the intensity pips.
+ */
+.p2-line__icon { color: #5b6672; }
 .p2-line[data-tone="rest"] .p2-line__icon { color: var(--p2-faint); }
 
 .p2-line__text { min-width: 0; }

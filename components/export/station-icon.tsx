@@ -1,29 +1,27 @@
 import type { StationKey } from "@/lib/plan/stations";
+import { STATION_PATHS } from "@/components/export/station-paths";
 
 /**
  * ONE GLYPH PER KIND OF WORK.
  *
  * A plan on paper is a wall of grey text at six in the morning. An icon in
  * front of each line makes the shape of a session visible before it is read —
- * you can see that Monday is two ergs and an EMOM without reading a word.
+ * you can see Monday is two ergs and an EMOM without reading a word.
  *
- * WHY THESE ARE DRAWN HERE
+ * WHY THE PREVIOUS TWO SETS WERE WRONG
+ * Both were thin line drawings, and the pictograms everyone in this sport
+ * recognises are solid silhouettes of a figure doing the movement. That is a
+ * different visual language, not a different level of detail, which is why no
+ * amount of redrawing outlines was ever going to look right.
  *
- * HYROX publish their own station pictograms, and they are the ones everybody
- * recognises. They are also HYROX's artwork: lifting the files out of a race
- * report and shipping them inside a commercial coaching product is a
- * trademark and copyright problem, not a technical one. So these are drawn to
- * the same visual language — the sled with its posts, the ski erg's straps,
- * the wall ball and its target — without being copies of their files.
+ * The eight stations and the run now come from the report Kieron supplied,
+ * traced to vector — see components/export/station-paths.ts for provenance and
+ * for the licensing position, which he decided.
  *
- * DRAWN FOR 14 PIXELS, NOT FOR A PREVIEW AT 200%. The first set failed here:
- * the ski erg read as a wine glass and the row as an arrow, because they had
- * detail that turns to mush at print size. Every glyph below is now built from
- * at most five strokes, with one unmistakable feature each — the sled's
- * posts, the erg's flywheel, the jump's arc, the target on the wall.
- *
- * Stroked on `currentColor`, no fills, nothing under 1pt, so they survive a
- * domestic inkjet as well as a retina screen.
+ * THE REST ARE DRAWN HERE, IN THE SAME LANGUAGE. Bike, strength, core,
+ * warm-up, cool-down and rest are not HYROX stations and are not in that set.
+ * They are solid silhouettes at the same weight, because one line icon among
+ * fifteen filled ones looks like a mistake.
  */
 
 type Props = { size?: number };
@@ -34,11 +32,8 @@ function Svg({ size = 16, children }: Props & { children: React.ReactNode }) {
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      fill="currentColor"
+      fillRule="evenodd"
       aria-hidden
       focusable="false"
       style={{ flexShrink: 0, display: "block" }}
@@ -48,145 +43,29 @@ function Svg({ size = 16, children }: Props & { children: React.ReactNode }) {
   );
 }
 
-/** RUN — a figure mid-stride. The one station everyone pictures as a person. */
-function Run(p: Props) {
+/** A traced pictogram. */
+function Traced({ name, size }: { name: string; size?: number }) {
+  const paths = STATION_PATHS[name];
+  if (!paths) return <Dot size={size} />;
   return (
-    <Svg {...p}>
-      <circle cx="14.5" cy="4" r="2" />
-      <path d="M16 21l-2-5.5-3.5-2.5.5-4" />
-      <path d="M11 9l4 1.5 2 4" />
-      <path d="M11 9 7.5 11 6 15" />
-      <path d="M4 21l3.5-4" />
+    <Svg size={size}>
+      {paths.d.map((d, i) => (
+        <path key={i} d={d} />
+      ))}
     </Svg>
   );
 }
 
-/**
- * SKI ERG — the top bar and the two straps pulled down.
- *
- * The feature that identifies it is the pair of straps hanging from a high
- * bar. The previous drawing put a bowl under the bar and read as a trophy.
- */
-function Ski(p: Props) {
-  return (
-    <Svg {...p}>
-      <path d="M5 4h14" />
-      <path d="M12 4v3" />
-      <path d="M9 5.5 7 15" />
-      <path d="M15 5.5 17 15" />
-      <path d="M5.5 15h3M15.5 15h3" />
-    </Svg>
-  );
-}
+/* ── Drawn here, to match ──────────────────────────────────────────────── */
 
-/**
- * ROW — the flywheel, the rail and the seat, from the side.
- *
- * The flywheel is what separates it from every other horizontal machine, so
- * it is the largest thing in the glyph.
- */
-function Row(p: Props) {
-  return (
-    <Svg {...p}>
-      <circle cx="5.5" cy="9.5" r="3.5" />
-      <path d="M3 19h18" />
-      <path d="M9 19v-2.5h5" />
-      <path d="M9 11.5h8" />
-      <path d="M17 9.5v4" />
-    </Svg>
-  );
-}
-
-/** BIKE — two wheels and a frame. */
+/** BIKE — two wheels and a frame, as a solid. */
 function Bike(p: Props) {
   return (
     <Svg {...p}>
-      <circle cx="5.5" cy="17" r="3.5" />
-      <circle cx="18.5" cy="17" r="3.5" />
-      <path d="M5.5 17 10 8h4l4.5 9" />
-      <path d="M9 8h6" />
-    </Svg>
-  );
-}
-
-/**
- * SLED PUSH — the sled, its two posts, and the direction of travel.
- *
- * The uprights are the thing that makes a sled a sled rather than a box, and
- * they sit behind, where your hands go.
- */
-function SledPush(p: Props) {
-  return (
-    <Svg {...p}>
-      <path d="M3 17.5h11" />
-      <path d="M4 17.5V13h9v4.5" />
-      <path d="M6 13V6M10.5 13V6" />
-      <path d="M17 15.5h4M19 13.5l2 2-2 2" />
-    </Svg>
-  );
-}
-
-/** SLED PULL — the same sled, with a rope coming towards you. */
-function SledPull(p: Props) {
-  return (
-    <Svg {...p}>
-      <path d="M10 17.5h11" />
-      <path d="M20 17.5V13h-9v4.5" />
-      <path d="M18 13V6M13.5 13V6" />
-      <path d="M9 11h-6M5 9l-2 2 2 2" />
-    </Svg>
-  );
-}
-
-/**
- * BURPEE BROAD JUMP — the arc, and the ground either side of it.
- *
- * A jump is a trajectory. Nothing else in the set is an arc, so it is
- * unmistakable even at 12px.
- */
-function Burpee(p: Props) {
-  return (
-    <Svg {...p}>
-      <path d="M3 19h18" />
-      <path d="M5 19c0-7 14-7 14 0" />
-      <path d="M5 15.5H3M21 15.5h-2" />
-      <circle cx="12" cy="7.5" r="1.6" />
-    </Svg>
-  );
-}
-
-/** FARMERS CARRY — two loads, one each side, hanging from the hands. */
-function Farmers(p: Props) {
-  return (
-    <Svg {...p}>
-      <path d="M12 3v7" />
-      <path d="M5 8h14" />
-      <path d="M5 8v3M19 8v3" />
-      <rect x="2.5" y="11" width="5" height="8" rx="1" />
-      <rect x="16.5" y="11" width="5" height="8" rx="1" />
-    </Svg>
-  );
-}
-
-/** SANDBAG LUNGES — the bag across the shoulders, and the step under it. */
-function Lunges(p: Props) {
-  return (
-    <Svg {...p}>
-      <rect x="5" y="3" width="14" height="5" rx="2.2" />
-      <path d="M12 8v5" />
-      <path d="M12 13 6.5 20M12 13l5 4v3" />
-      <path d="M4.5 20h4" />
-    </Svg>
-  );
-}
-
-/** WALL BALLS — the target on the wall, the ball, and the throw between. */
-function WallBalls(p: Props) {
-  return (
-    <Svg {...p}>
-      <rect x="13" y="3" width="8" height="6" rx="1" />
-      <circle cx="6.5" cy="17" r="3.5" />
-      <path d="M8.5 13.5c1.5-3 3-4 5-4.5" />
+      <path d="M5.5 12.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm0 2.4a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2z" />
+      <path d="M18.5 12.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zm0 2.4a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2z" />
+      <path d="M9.4 5.4h5.2v2.1h-1.9l3.9 8.6-1.9.9-4.2-9.2-3.6 8.6-2-.8 4-9.6H8.2z" />
+      <path d="M15.3 2.6h4v2h-4z" />
     </Svg>
   );
 }
@@ -195,21 +74,17 @@ function WallBalls(p: Props) {
 function Strength(p: Props) {
   return (
     <Svg {...p}>
-      <path d="M2.5 12h19" />
-      <path d="M6 8v8M18 8v8" />
-      <path d="M3.5 9.5v5M20.5 9.5v5" />
+      <path d="M2 10.4h1.9v3.2H2zM4.7 8.2h2.6v7.6H4.7zM8.1 11h7.8v2H8.1zM16.7 8.2h2.6v7.6h-2.6zM20.1 10.4H22v3.2h-1.9z" />
     </Svg>
   );
 }
 
-/** CORE — a braced trunk, held off the floor. */
+/** CORE — a braced trunk held off the floor. */
 function Core(p: Props) {
   return (
     <Svg {...p}>
-      <path d="M3 19h18" />
-      <path d="M6 19v-3l6-3h5" />
-      <circle cx="19.5" cy="11.5" r="1.8" />
-      <path d="M12 13v6" />
+      <path d="M18.6 4.2a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2z" />
+      <path d="M16.9 9.6 8.6 13 5 13v6.2H2.6V21H21v-1.8h-9.1V15l5.9-2.4z" />
     </Svg>
   );
 }
@@ -218,8 +93,8 @@ function Core(p: Props) {
 function Warmup(p: Props) {
   return (
     <Svg {...p}>
-      <path d="M3 18.5 8 13l4 3.5L21 6" />
-      <path d="M15.5 6H21v5.5" />
+      <path d="M3.7 17.1 8.2 12l4 3.4 6.6-7.6-2.3-.1V5.5H21v6.4h-2.2l-.1-2.2-6.4 7.4-4-3.4-4.2 4.8z" />
+      <path d="M2.4 19.6H21v1.9H2.4z" />
     </Svg>
   );
 }
@@ -228,55 +103,70 @@ function Warmup(p: Props) {
 function Cooldown(p: Props) {
   return (
     <Svg {...p}>
-      <path d="M3 6l5 5.5 4-3.5 9 10.5" />
-      <path d="M15.5 18.5H21V13" />
+      <path d="M3.7 6.9 8.2 12l4-3.4 6.6 7.6-2.3.1v2.2H21v-6.4h-2.2l-.1 2.2-6.4-7.4-4 3.4L4.1 5.5z" />
+      <path d="M2.4 19.6H21v1.9H2.4z" />
     </Svg>
   );
 }
 
-/** REST. */
+/** REST — a bed. */
 function Rest(p: Props) {
   return (
     <Svg {...p}>
-      <path d="M3 17h18" />
-      <path d="M6 17v-5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v5" />
-      <path d="M6 12H4.5a1.5 1.5 0 0 0 0 3H6" />
-      <path d="M5 20v-3M19 20v-3" />
+      <path d="M2.4 8.6h2.3v7.1H2.4z" />
+      <path d="M4.7 10.9h16.9v4.8H4.7z" />
+      <path d="M6.9 8.1h12.5a2.2 2.2 0 0 1 2.2 2.2v.6H6.9z" />
+      <path d="M2.4 15.7h2.3v3.4H2.4zM19.3 15.7h2.3v3.4h-2.3z" />
+      <path d="M7.6 9.6a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8z" />
     </Svg>
   );
 }
 
 /** Anything unrecognised: a plain marker, never a wrong picture. */
-function Other(p: Props) {
+function Dot(p: Props) {
   return (
     <Svg {...p}>
-      <circle cx="12" cy="12" r="2.6" />
+      <path d="M12 8.6a3.4 3.4 0 1 1 0 6.8 3.4 3.4 0 0 1 0-6.8z" />
     </Svg>
   );
 }
 
-const ICONS: Record<StationKey, (p: Props) => React.ReactElement> = {
-  run: Run,
-  ski: Ski,
-  row: Row,
+/**
+ * The station each key draws with.
+ *
+ * `run` uses the plain runner rather than the run-plus-chevrons, because most
+ * lines in a plan are ordinary running rather than a race transition.
+ */
+const TRACED: Partial<Record<StationKey, string>> = {
+  run: "run",
+  ski: "ski",
+  row: "row",
+  "sled-push": "sled-push",
+  "sled-pull": "sled-pull",
+  burpee: "burpee",
+  farmers: "farmers",
+  lunges: "lunges",
+  "wall-balls": "wall-balls",
+};
+
+const DRAWN: Partial<Record<StationKey, (p: Props) => React.ReactElement>> = {
   bike: Bike,
-  "sled-push": SledPush,
-  "sled-pull": SledPull,
-  burpee: Burpee,
-  farmers: Farmers,
-  lunges: Lunges,
-  "wall-balls": WallBalls,
   strength: Strength,
   core: Core,
   warmup: Warmup,
   cooldown: Cooldown,
   rest: Rest,
-  other: Other,
+  other: Dot,
 };
 
 export function StationIcon({ station, size }: { station: StationKey; size?: number }) {
-  const Icon = ICONS[station] ?? Other;
-  return <Icon size={size} />;
+  const traced = TRACED[station];
+  if (traced) return <Traced name={traced} size={size} />;
+  const Drawn = DRAWN[station] ?? Dot;
+  return <Drawn size={size} />;
 }
 
-export { ICONS as STATION_ICONS };
+/** The transition chevrons, for anywhere a roxzone needs marking. */
+export function RoxzoneIcon({ size }: { size?: number }) {
+  return <Traced name="roxzone" size={size} />;
+}
