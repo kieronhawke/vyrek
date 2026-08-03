@@ -75,7 +75,16 @@ export function RaceReportSheet({
       <header className="print-masthead">
         <div>
           <p className="print-eyebrow">HYROX RACE REPORT</p>
-          <h1 className="print-name">{athleteName}</h1>
+          {/* Deliberately a <p>, not an <h1>.
+           *
+           * This sheet is in the DOM on screen (hidden by CSS) so that Save as
+           * PDF has something to print without a round trip. A second <h1>
+           * would give every result page two — which is an SEO defect and an
+           * accessibility one, since a screen reader announces both.
+           *
+           * The printed page has no document outline to serve, so heading
+           * semantics buy nothing here; the styling carries the hierarchy. */}
+          <p className="print-name">{athleteName}</p>
           <p className="print-sub">
             {eventName} · {divisionLabel.replace("HYROX ", "")} · {ageGroup} · {nationCode(countryIso)}
           </p>

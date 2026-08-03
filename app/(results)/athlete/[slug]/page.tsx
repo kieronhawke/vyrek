@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getResultsSource } from "@/lib/results";
 import { siteUrl } from "@/lib/blog/urls";
+import { athletePerson, breadcrumbList, jsonLd } from "@/lib/results/structured-data";
 import { STATION_IDS, type StationId } from "@/lib/results/model";
 import { formatTime, formatOrdinal, formatCount, formatRelativeDate } from "@/lib/results/format";
 import { ProgressionChart } from "@/components/results/athlete/progression-chart";
@@ -166,20 +167,19 @@ export default async function AthletePage({ params }: { params: Promise<{ slug: 
     ? finished.find((r) => r.rank === bestRank) ?? null
     : null;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: athlete.name,
-    url: `${siteUrl()}/athlete/${slug}`,
-    nationality: athlete.countryIso.toUpperCase(),
-  };
+  const personLd = athletePerson(siteUrl(), {
+    slug, name: athlete.name, countryIso: athlete.countryIso,
+    races: summary.races, pbSeconds: athlete.pbSeconds,
+  });
+  const crumbsLd = breadcrumbList(siteUrl(), [
+    { name: "Results", path: "/results" },
+    { name: athlete.name, path: `/athlete/${slug}` },
+  ]);
 
   return (
     <div className="mx-auto max-w-[1100px] px-5 py-6 md:py-10">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(personLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(crumbsLd) }} />
 
       <nav aria-label="Breadcrumb" className="mb-3">
         <ol className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">

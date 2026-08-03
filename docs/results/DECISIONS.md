@@ -666,3 +666,69 @@ depending on a matching client version a backup that fails on the day it is
 needed. JSON works from anywhere the key works, restores by upsert so it tops
 up rather than replaces, and covers what re-ingestion cannot rebuild: claimed
 profiles, anonymisation decisions, quarantine state, merge resolutions.
+
+### D75 — City imagery: keep the typographic marks, do not generate photos
+Kieron asked whether the coloured city cards are placeholder or the aesthetic, and offered to
+generate images with Gemini. **Keeping the marks**, for three reasons:
+
+1. **A generated "London" is not London.** An image model produces a plausible-looking skyline
+   that is not any real place, on a page whose entire value is that its numbers are true.
+   Publishing invented photography of a real city, on a results site, next to real athletes'
+   names, undermines the thing the section is for.
+2. **Weight.** 223 events at ~200KB each is ~45MB of imagery on the calendar's critical path,
+   against a page that currently scores 96–100 on mobile. The reference site's photo cards are
+   the slowest thing they ship.
+3. **The marks already work.** Each city has a stable, unique identity from its IATA code, and
+   the codes are how the sport already talks about its calendar.
+
+`CityMark` takes a `photo` prop that swaps the wash for a real image *in the same layout*. So
+if licensed or self-shot photography arrives later, it is a prop on one component — not a
+redesign. That is the right place to leave it.
+
+### D76 — Athlete page: clean at the top, deep below the fold
+Kieron asked for "pretty standard to start with, really clean and simple" plus depth for people
+who want to analyse. Structured accordingly: name, four figures, a one-sentence form verdict and
+the progression chart above the fold; power score, sortable station profile and per-division
+bests below it. Someone checking a friend's time never scrolls past the first screen; someone
+planning a season gets the rest.
+
+### D77 — The power score publishes its formula
+Their "Elite Points" is a closed number. Ours shows peak, consistency, recency and field depth
+as four bars, with the weighting explained in one sentence on the card. That is better product
+(an athlete can act on a component score) and better SEO (a page that explains its own maths is
+the kind of page that earns links).
+
+### D78 — The share card is a poster, not a summary
+Rebuilt around one job: someone pastes the link into a group chat the evening after a race. The
+time is the hero at 168px, three supporting figures only, the race strip runs edge to edge, and
+the brand sits small at the bottom. A card that shouts the brand over the athlete's result does
+not get shared, which defeats the point of having one.
+
+The standout figure names the full station ("Wall Balls"), not the strip's short code — "WALL"
+is legible inside a labelled chart and meaningless as a standalone number in a feed.
+
+### D79 — Structured data is built in one module, not per template
+`lib/results/structured-data.ts` builds BreadcrumbList, SportsEvent, Person, Dataset and
+FAQPage. Google is strict about these and a malformed block is worse than none — it earns a
+Search Console error instead of a rich result. Two rules the builders enforce that hand-rolled
+JSON kept getting wrong: **omit a field rather than emit it empty** (the ingested catalogue
+often has no `startDate`, and `""` is a validation error), and **the last breadcrumb carries no
+`item`**, because linking the current page to itself is an invalid-item warning.
+
+Ranking pages emit `Dataset`. They genuinely are datasets — thousands of rows, a documented
+schema, a CSV download — and dataset rich results are a supported route to visibility that
+nobody in this space uses.
+
+`jsonLd()` escapes `<`. Nothing is attacker-controlled today, but athlete names come from an
+external feed and one day will be.
+
+### D80 — The print sheet must not carry an `<h1>`
+It lives in the DOM on screen (hidden by CSS) so Save-as-PDF needs no round trip, which meant
+every result page shipped **two `<h1>`s** — an SEO defect and an accessibility one, since a
+screen reader announces both. Caught by the suite, not by eye. The sheet's masthead is a `<p>`;
+a printed page has no document outline to serve, so heading semantics buy nothing there.
+
+### D81 — Race-strip labels take their ink from their own segment
+Black-on-chartreuse reads; black on the muted station fill was **1.54:1**, flagged serious by
+axe on six nodes. Each segment now picks the ink that contrasts with it rather than one colour
+being applied to all of them.
