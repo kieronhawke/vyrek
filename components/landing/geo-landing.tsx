@@ -346,6 +346,7 @@ export function GeoLanding({
   nearby,
   headingName,
   afterLocalContext,
+  localeLinks,
 }: {
   variant: GeoVariant;
   loc: UkLocation;
@@ -361,6 +362,9 @@ export function GeoLanding({
   nearby?: { items: { slug: string; name: string; km: number }[]; heading: string };
   /** Slotted under the local-context block. Dubai uses it for the VIP offer. */
   afterLocalContext?: React.ReactNode;
+  /** Translated versions of this page. hreflang covers crawlers; this is for
+   *  the reader, who otherwise has no way to know they exist. */
+  localeLinks?: { href: string; label: string; hrefLang: string }[];
 }) {
   const seo = seoOverride ?? getGeoSeo(loc.slug);
   const c = variantCopy(variant, loc, seo, headingName);
@@ -501,6 +505,31 @@ export function GeoLanding({
           context={loc.context}
           guideLink={c.guideLink}
         />
+
+        {localeLinks?.length ? (
+          <div className="border-b border-suth-border-subtle py-5">
+            <Container>
+              {/* Each invitation is written in its own language: asking a
+                  German reader in English whether they want the German page
+                  is the wrong way round. Only locales that actually have this
+                  city are listed. */}
+              <p className="mx-auto max-w-3xl text-sm text-suth-text-tertiary">
+                {localeLinks.map((l, i) => (
+                  <span key={l.href}>
+                    {i > 0 ? " · " : ""}
+                    <Link
+                      href={l.href}
+                      hrefLang={l.hrefLang}
+                      className="text-suth-accent underline decoration-suth-accent/40 underline-offset-4"
+                    >
+                      {l.label}
+                    </Link>
+                  </span>
+                ))}
+              </p>
+            </Container>
+          </div>
+        ) : null}
 
         {afterLocalContext}
 

@@ -5,6 +5,7 @@ import type { UkLocation } from "@/lib/uk-locations";
 import type { GeoSeo } from "@/lib/locations/seo";
 import { nextOccurrence } from "@/lib/locations/seo";
 import { haversineKm } from "@/lib/hyrox/race-geo";
+import { INTL_CITIES } from "@/lib/intl-cities";
 import { venueLabel } from "@/lib/hyrox/races";
 
 /**
@@ -289,7 +290,11 @@ export function countriesByContinent(): {
         .map(([slug, cities]) => ({
           slug,
           name: cities[0].country,
-          cities: cities.length,
+          /* Race cities plus the expanded catalogue. Counting race cities
+             alone ranked Ireland — one race city, and every town in the
+             country — below markets with a fraction of the pages, and the
+             footer picks its ten by this number. */
+          cities: cities.length + intlCountForCountry(cities[0].country),
           races: cities.reduce((n, c) => n + c.races.length, 0),
         }))
         .sort((a, b) => a.name.localeCompare(b.name)),
@@ -299,6 +304,11 @@ export function countriesByContinent(): {
         b.countries.reduce((n, c) => n + c.cities, 0) -
         a.countries.reduce((n, c) => n + c.cities, 0),
     );
+}
+
+/** How many expanded-market cities sit in a country, for the footer ranking. */
+function intlCountForCountry(country: string): number {
+  return INTL_CITIES.filter((c) => c.country === country).length;
 }
 
 /** Total races on the calendar for a country, for the directory copy. */

@@ -10,6 +10,7 @@ import { JsonLd } from "@/lib/blog/jsonld";
 import { siteUrl } from "@/lib/blog/urls";
 import { localesForCountry } from "@/lib/i18n/config";
 import { localisedCities } from "@/lib/i18n/cities";
+import { LOCALE_CONFIG } from "@/lib/i18n/config";
 import { listAllGeoSlugs, resolveGeo } from "@/lib/geo-page";
 import { VipInPerson } from "@/components/landing/vip-in-person";
 import { ChampionshipBanner } from "@/components/landing/championship-banner";
@@ -82,6 +83,17 @@ export async function generateMetadata({
   };
 }
 
+/** Localised versions of this page that actually exist, for the switcher. */
+function localeLinksFor(country: string, slug: string) {
+  return localesForCountry(country)
+    .filter((l) => localisedCities(l).some((c) => c.slug === slug))
+    .map((l) => ({
+      href: `/${l}/hyrox-training/${slug}`,
+      label: LOCALE_CONFIG[l].switcherLabel,
+      hrefLang: LOCALE_CONFIG[l].hreflang,
+    }));
+}
+
 export default async function HyroxTrainingLocationPage({
   params,
 }: {
@@ -106,6 +118,7 @@ export default async function HyroxTrainingLocationPage({
       />
       <GeoLanding
         variant="hyrox"
+        localeLinks={localeLinksFor(city?.country ?? loc.region, loc.slug)}
         loc={loc}
         seo={seo}
         nearby={nearby}

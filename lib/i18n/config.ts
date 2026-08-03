@@ -42,6 +42,9 @@ export type LocaleConfig = {
   label: string;
   /** Countries this locale is written for, matched against the city catalogue. */
   countries: string[];
+  /** The invitation, in that language — a German reader should not be asked
+   *  in English whether they want the German page. */
+  switcherLabel: string;
 };
 
 export const LOCALE_CONFIG: Record<Locale, LocaleConfig> = {
@@ -50,6 +53,7 @@ export const LOCALE_CONFIG: Record<Locale, LocaleConfig> = {
     hreflang: "de",
     ogLocale: "de_DE",
     label: "Deutsch",
+    switcherLabel: "Diese Seite auf Deutsch",
     // Austria and German-speaking Switzerland read the same pages. Switzerland
     // is also a French market, which is why locale is not derived from country.
     countries: ["Germany", "Austria", "Switzerland"],
@@ -59,6 +63,7 @@ export const LOCALE_CONFIG: Record<Locale, LocaleConfig> = {
     hreflang: "fr",
     ogLocale: "fr_FR",
     label: "Français",
+    switcherLabel: "Cette page en français",
     // Belgium is split: Gent reads Dutch, so it is excluded in i18n/cities.
     countries: ["France", "Switzerland", "Belgium"],
   },
@@ -67,6 +72,7 @@ export const LOCALE_CONFIG: Record<Locale, LocaleConfig> = {
     hreflang: "es",
     ogLocale: "es_ES",
     label: "Español",
+    switcherLabel: "Esta página en español",
     // One pack, three markets — the widest reach of any locale on the calendar.
     countries: ["Spain", "Mexico", "Argentina"],
   },
