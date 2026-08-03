@@ -50,6 +50,16 @@ export type ResolvedGeo = {
   city?: RaceCity;
   /** Set on a focus city that carries the in-person VIP offer. */
   vip?: { city: string; country: string };
+  /**
+   * The name to use in the title and H1 where the bare name belongs to
+   * another place — "Newcastle, Australia" against Newcastle, County Down.
+   *
+   * Set by the catalogue rather than the route, because every catalogue that
+   * qualifies a slug has to qualify the title too. Qualifying only the URL
+   * leaves two live pages with the same title, which is the whole problem the
+   * slug qualification was solving.
+   */
+  disambiguatedName?: string;
   /** Set where the city hosts a World Championship, whatever the year. */
   championship?: {
     city: string;
@@ -94,6 +104,7 @@ export function resolveGeo(slug: string): ResolvedGeo | undefined {
     return {
       loc: intlCityAsLocation(intl),
       seo: getIntlCityGeo(slug),
+      disambiguatedName: intl.bareSlug ? `${intl.name}, ${intl.country}` : undefined,
       robots: geoRobotsFor(getIntlCityGeo(slug)),
       parent: {
         name: intl.country,
@@ -134,6 +145,7 @@ export function resolveGeo(slug: string): ResolvedGeo | undefined {
   const wc = city.races.find((r) => r.isWorldChampionship);
   return {
     loc: raceCityAsLocation(city),
+    disambiguatedName: city.bareSlug ? `${city.name}, ${city.country}` : undefined,
     championship: wc
       ? {
           city: city.name,

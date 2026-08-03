@@ -27,7 +27,7 @@ export async function generateMetadata({
   const { location } = await params;
   const r = resolveGeo(location);
   if (!r) return { title: "Not found" };
-  const { loc, seo, city } = r;
+  const { loc, seo, city, disambiguatedName } = r;
   const url = `${siteUrl()}/personal-trainer/${loc.slug}`;
   // app/layout.tsx appends " · Suth Performance" (20 chars), so the title
   // Google renders is this plus 20. The old one ran to 88 and truncated
@@ -41,7 +41,7 @@ export async function generateMetadata({
      enough — without the country these render two identical titles, which is
      the duplicate-title problem this whole scheme exists to avoid. Only the
      qualified side carries it; the UK page keeps the plain name. */
-  const displayName = city?.bareSlug ? `${loc.name}, ${city.country}` : loc.name;
+  const displayName = disambiguatedName ?? loc.name;
   const bare = `Personal trainer in ${displayName}`;
   const title =
     bare.length + 8 + 20 <= 65
@@ -86,10 +86,10 @@ export default async function PersonalTrainerLocationPage({
   const { location } = await params;
   const r = resolveGeo(location);
   if (!r) notFound();
-  const { loc, seo, parent, nearby, city, vip, championship } = r;
+  const { loc, seo, parent, nearby, city, vip, championship, disambiguatedName } = r;
   // See the metadata above: the four names both catalogues claim need the
   // country in the heading, or two live pages carry the same H1.
-  const headingName = city?.bareSlug ? `${loc.name}, ${city.country}` : undefined;
+  const headingName = disambiguatedName;
   return (
     <>
       <JsonLd data={geoFaqJsonLd("pt", loc, seo)} />

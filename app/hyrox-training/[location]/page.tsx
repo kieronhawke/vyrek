@@ -40,7 +40,7 @@ export async function generateMetadata({
   /* Boston, Houston, Perth and Portland each exist twice in the slug space,
      once as a UK town and once as an international race city. The country
      disambiguates the title; see the personal-trainer sibling. */
-  const displayName = city?.bareSlug ? `${loc.name}, ${city.country}` : loc.name;
+  const displayName = disambiguatedName ?? loc.name;
   const title = `Hyrox training in ${displayName}`;
   // A race city can say something no UK town page can: the race is here. That
   // belongs in the snippet, because it is the reason someone in Osaka clicks.
@@ -102,10 +102,10 @@ export default async function HyroxTrainingLocationPage({
   const { location } = await params;
   const r = resolveGeo(location);
   if (!r) notFound();
-  const { loc, seo, parent, nearby, city, vip, championship } = r;
+  const { loc, seo, parent, nearby, city, vip, championship, disambiguatedName } = r;
   // See the metadata above: the four names both catalogues claim need the
   // country in the heading, or two live pages carry the same H1.
-  const headingName = city?.bareSlug ? `${loc.name}, ${city.country}` : undefined;
+  const headingName = disambiguatedName;
   return (
     <>
       <JsonLd data={geoFaqJsonLd("hyrox", loc, seo)} />
