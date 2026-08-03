@@ -153,6 +153,54 @@ Working request:
 
 Pagination is `page=N` with `num_results=100`; a short page is the last page.
 
+### ⚠️ "N Results" counts rendered rows, not entrants
+
+**This is the most misleading number on the source, and it cost more time than
+anything else in this document.**
+
+The counter above each board (`span.str_num`) does not count people. mika renders
+each athlete as **several `list-group-item` blocks** — a wide one and a narrow
+one, plus extras on some divisions — and the counter counts all of them. So
+Manchester 2023 open women reads **"686 Results" for a field of 281**.
+
+The duplication factor is not a constant:
+
+| Division            | Entrants | Counter | Rows per entrant |
+| ------------------- | -------- | ------- | ---------------- |
+| relay men           | 15       | 30      | 2.00             |
+| doubles women       | 291      | 640     | 2.20             |
+| open women          | 281      | 686     | 2.44             |
+| pro men             | 97       | 280     | 2.89             |
+
+Taken literally, the completeness check declared 405 athletes missing from that
+one division, and the adapter partitioned the board by age class to go and find
+them — 15 extra requests per division, and not one new row, because every one was
+already held.
+
+**How it was settled.** The age-class filter (`search[age_class]`) is real: the
+slices are exhaustive, mutually exclusive, and return genuinely disjoint sets
+(zero id overlap between any two). Walking all 15 slices of that division gives
+**280 distinct athletes** against the 281 stored — the missing one has no age
+group recorded — and their counters sum to **684** against the published 686. The
+relay boards show the mechanism at its cleanest: 15 teams, "30 Results", exactly
+two blocks each, ratio 2.00.
+
+So the pager was never truncating. It exhausts the division correctly, and the
+`> 200 Results` ceiling in the next paragraph is about *rendering*, not a cap on
+what you can collect.
+
+**What the engine does.** `parseDivisionRows` reports the raw counter as
+`publishedRowCount` and derives a real `publishedEntrantCount` by dividing it by
+the duplication factor it measures on the page — rows emitted over distinct
+entry ids. The adapter then recomputes it across the whole walk
+(`parsedRows / distinct`), because a full first page duplicates slightly more
+than a partial last one: measured on page one alone, a field of 281 still reads
+as 254. On a complete walk the rows parsed and the rows counted are the same
+quantity, and the corrected figure matches the distinct headcount exactly on all
+four divisions above.
+
+The duplicates collapse on `idp`, which is why 686 parsed rows store as 281.
+
 **One source division code is two of our divisions.** `H_LR3MS4JI163A` is
 "HYROX, Friday" — men and women are the same code with a different filter. Our
 `sourceDivisionId` carries the sex as a `#men` / `#women` suffix, stripped before

@@ -14,7 +14,7 @@ import { siteUrl } from "@/lib/blog/urls";
 // the call. This page describes the coaching options without numbers.
 
 export const metadata: Metadata = {
-  title: "Coaching options. Personalised Hyrox and fitness coaching",
+  title: "Coaching options: personalised Hyrox plans",
   description:
     "Three ways to train with Suth Performance: the coaching hub, online coaching, and 1:1 with Ben Sutherland. Every option starts with a free consultation.",
   alternates: { canonical: "/pricing" },

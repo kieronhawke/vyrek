@@ -6,7 +6,9 @@ import { Eyebrow } from "@/components/shared/eyebrow";
 import { SplitHeading } from "@/components/shared/split-heading";
 
 export const metadata: Metadata = {
-  title: "Contact Suth Performance, support, press & partnerships",
+  /* The root layout appends " \u00b7 Suth Performance" to every child title.
+     Naming the brand here printed it twice. */
+  title: "Contact, support, press and partnerships",
   description:
     "Get in touch with Suth Performance. General questions, billing support, press enquiries, athlete features, brand collaborations. We reply within 24 hours, Monday to Friday.",
   alternates: { canonical: "/contact" },

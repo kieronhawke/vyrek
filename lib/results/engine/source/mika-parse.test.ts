@@ -138,6 +138,30 @@ describe("division rows", () => {
     expect(parsed.rows).toHaveLength(3);
   });
 
+  it("counts people, not the rows the board renders for each of them", () => {
+    // ⚠️ The most expensive lesson in this parser. "N Results" counts rendered
+    // rows, and mika renders each athlete two to four times, so a real field of
+    // 281 advertises itself as "686 Results".
+    //
+    // Read literally, the completeness check concluded 405 athletes were missing
+    // from Manchester 2023 and the engine went partitioning the board by age
+    // group to find them. They did not exist: the 15 age slices are exhaustive,
+    // mutually exclusive, and sum to 280 of the 281 held (the last has no age
+    // group). The relay boards show the mechanism cleanly — 15 teams, "30
+    // Results", exactly two blocks each.
+    //
+    // The duplication factor is not a constant across divisions, so it is
+    // measured on the page rather than assumed.
+    const parsed = parseDivisionRows(fixture("list-rows-duplicated.html"), "EVT", "H_EVT#men");
+    expect(parsed.publishedRowCount).toBe(6);
+    expect(parsed.rowsPerEntrant).toBe(2);
+    expect(parsed.publishedEntrantCount).toBe(3);
+    expect(parsed.diagnostics.distinctRows).toBe(3);
+    // The duplicates are the same athlete, so they collapse on the source's own
+    // id — which is what makes a division of 281 storable from 686 parsed rows.
+    expect(new Set(parsed.rows.map((r) => r.sourceResultId)).size).toBe(3);
+  });
+
   it("carries a DNF through with no time rather than dropping the row", () => {
     const parsed = parseDivisionRows(fixture("list-rows-dnf.html"), "EVT", "H_EVT#men");
     expect(parsed.rows).toHaveLength(2);

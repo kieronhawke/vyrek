@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import QuizV3 from "@/components/quiz-v3/quiz-flow";
 
 export const metadata: Metadata = {
-  title: "Quiz. Find your Hyrox plan in three minutes · Suth Performance",
+  /* The root layout appends " \u00b7 Suth Performance" to every child title.
+     Naming the brand here printed it twice. */
+  title: "Quiz. Find your Hyrox plan in three minutes",
   description:
     "Three-minute quiz to build your personalised Hyrox plan. Programme, weekly schedule, sled and wall ball loads calibrated to you. See Week 1 for free.",
   alternates: { canonical: "/quiz" },

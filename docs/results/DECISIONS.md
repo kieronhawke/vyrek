@@ -1167,3 +1167,45 @@ where it sits directly under the `h1` and skipped a level. It takes a
 `headingLevel` now, defaulting to 3 so every existing usage is unchanged.
 
 A component that renders a heading cannot know its own depth; the page does.
+
+### D104 — The board's own entrant counter is not an entrant count
+The number above every mika board (`span.str_num`, "686 Results") counts
+*rendered rows*, not people. Each athlete is emitted as two to four
+`list-group-item` blocks, so a field of 281 advertises itself as 686.
+
+Trusting it was expensive. The completeness check reported 405 missing athletes
+on one division, the adapter grew an age-class partitioning fallback to go and
+retrieve them, and that fallback spent 15 extra requests per division to return
+rows already held. The engine was correct the whole time; the yardstick was not.
+
+**The partition is what disproved it.** Age slices are exhaustive and mutually
+exclusive, and they return genuinely disjoint sets — so their sum *is* the field.
+For the division in question they sum to 280 distinct athletes against 281
+stored, and their counters sum to 684 against a published 686. The relay boards
+confirm the mechanism at ratio 2.00 exactly: 15 teams, "30 Results".
+
+**Options considered.**
+
+*Hard-code a divisor.* Rejected: the ratio is 2.00 on relay, 2.20 on doubles,
+2.44 on open and 2.89 on pro. A constant would be wrong on three of four.
+
+*Drop the check entirely.* Rejected. A silent half-pull is exactly the failure
+this engine exists to catch, and having been burned by a bad completeness signal
+is an argument for a good one, not for none.
+
+*Use rank contiguity instead.* Rejected as a primary signal: a truncated
+leaderboard is contiguous too — ranks 1..281 look identical whether 281 is the
+whole field or the first page of it. It is kept as a secondary assertion only.
+
+**Chosen: measure the duplication factor on the page being parsed** — rows
+emitted over distinct entry ids — and divide. It is self-calibrating, so it
+survives the ratio differing per division and changing under us.
+
+Computed across the whole walk rather than the first page: a full first page
+duplicates more than a partial last one, and page-one-only still reported a field
+of 281 as 254. Across the walk, the rows we parsed and the rows the board counted
+are the same quantity, and the corrected count now equals the distinct headcount
+exactly on all four divisions spanning every observed ratio.
+
+Age-class partitioning is off the hot path. `parseAgeClasses` stays, because it
+is the tool that settled the question and is the honest way to audit a division.

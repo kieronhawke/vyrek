@@ -156,6 +156,7 @@ export class SyncEngine {
       headerFields: [],
       candidateRows: page.rows.length,
       parsedRows: page.rows.length,
+      distinctRows: new Set(page.rows.map((r) => r.sourceResultId)).size,
       emptyShell: page.rows.length === 0,
     };
 

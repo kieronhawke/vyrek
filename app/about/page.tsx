@@ -11,7 +11,7 @@ import { SplitHeading } from "@/components/shared/split-heading";
 import { CtaButton } from "@/components/shared/cta-button";
 
 export const metadata: Metadata = {
-  title: "About Ben Sutherland. HYROX Elite 15 athlete and founder",
+  title: "About Ben Sutherland, HYROX Elite 15 athlete",
   description:
     "Suth Performance is the coaching platform of Ben Sutherland, a HYROX Elite 15 athlete with Pro Doubles wins in Rotterdam and Glasgow. Personalised 12-week programmes for every level, from first race to professional.",
   alternates: { canonical: "/about" },
