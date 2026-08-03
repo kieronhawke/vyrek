@@ -71,8 +71,12 @@ describe("authorisation gate (§2, SOURCE.md §1)", () => {
 
     const headers = seen[0];
     expect(headers["User-Agent"]).toBe(DEFAULT_USER_AGENT);
+    // Named, versioned and contactable, in the standard identified-bot format.
+    // The leading Mozilla/5.0 token is part of that convention (Googlebot sends
+    // the same shape); what matters is that we are not passing as a plain
+    // browser, so the "compatible;" clause naming us must be present.
+    expect(headers["User-Agent"]).toMatch(/compatible; SuthPerformanceResultsBot\/\d/);
     expect(headers["User-Agent"]).toMatch(/suthperformance\.com/);
-    expect(headers["User-Agent"]).not.toMatch(/Mozilla/);
   });
 
   it("treats a 403 as not-welcome rather than something to retry into", async () => {

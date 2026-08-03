@@ -2,11 +2,11 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
-  extractAjax2Html,
   parseDetailSplits,
   parseDivisionRows,
   parseEventGroups,
   parseRowFields,
+  normalisePersonName,
   splitEventCode,
   splitPartnerNames,
 } from "./mika-parse";
@@ -62,50 +62,99 @@ describe("row fields", () => {
     expect(rows.rows[0].ageGroup).not.toBe("Age Group");
   });
 
-  it("handles an unbalanced field div without losing the row", () => {
+  it("handles an unbalanced field element without losing the row", () => {
+    const fields = parseRowFields('<h4 class="list-field type-fullname">Fenwick, Alaric');
+    expect(fields.fullname).toBe("Fenwick, Alaric");
+  });
+
+  it("strips the flag image so the nationality is not doubled", () => {
     const fields = parseRowFields(
-      '<div class="list-field field-__fullname">Alaric Fenwick',
+      '<div class="list-field type-nation_flag"><div class="list-label">Nat</div>' +
+        '<span class="nation__labelled-icon"><img alt="ITA" title="ITA"/>' +
+        '<span class="nation__abbr">ITA</span></span></div>',
     );
-    expect(fields.fullname).toBe("Alaric Fenwick");
+    expect(fields.nation_flag).toBe("ITA");
+  });
+
+  it("tells overall rank from age-group rank by class, not by order", () => {
+    const fields = parseRowFields(
+      '<div class="list-field type-place place-primary numeric">7</div>' +
+        '<div class="list-field type-place place-secondary numeric">2</div>',
+    );
+    expect(fields.place_all).toBe("7");
+    expect(fields.place_age).toBe("2");
   });
 });
 
 describe("division rows", () => {
   it("parses the whole board", () => {
-    const parsed = parseDivisionRows(fixture("list-rows.html"), "EVT", "H_EVT");
+    const parsed = parseDivisionRows(fixture("list-rows.html"), "EVT", "H_EVT#men");
     expect(parsed.rows).toHaveLength(8);
     expect(parsed.rows[0]).toMatchObject({
+      // Stored the way a person writes their own name, not "Fenwick, Alaric".
       name: "Alaric Fenwick",
       nationality: "GBR",
       ageGroup: "30-34",
       rankOverall: "1",
+      rankAgeGroup: "1",
       finishTime: "01:02:41",
-      bib: "1101",
+      sourceAthleteId: "LRAA0000001",
+      sex: "M",
     });
     expect(parsed.publishedEntrantCount).toBe(8);
   });
 
-  it("keys result ids on the bib, so they are stable across polls", () => {
-    const a = parseDivisionRows(fixture("list-rows.html"), "EVT", "H_EVT");
-    const b = parseDivisionRows(fixture("list-rows-2.html"), "EVT", "H_EVT");
+  it("reads the entrant count from the counter, not from any number near the word", () => {
+    // A loose match once read a 153-row division as having 19 entrants, which
+    // would have gone straight into the completeness checksum as a false pass.
+    const parsed = parseDivisionRows(fixture("list-rows-short.html"), "EVT", "H_EVT#men");
+    expect(parsed.publishedEntrantCount).toBe(8);
+    expect(parsed.rows).toHaveLength(3);
+  });
+
+  it("carries a DNF through with no time rather than dropping the row", () => {
+    const parsed = parseDivisionRows(fixture("list-rows-dnf.html"), "EVT", "H_EVT#men");
+    expect(parsed.rows).toHaveLength(2);
+    expect(parsed.rows[1].finishTime).toBeUndefined();
+    expect(parsed.rows[1].name).toBe("Kit Sorrell");
+  });
+
+  it("keys result ids on the source's own idp, so they are stable across polls", () => {
+    const a = parseDivisionRows(fixture("list-rows.html"), "EVT", "H_EVT#men");
+    const b = parseDivisionRows(fixture("list-rows-2.html"), "EVT", "H_EVT#men");
     const idsA = a.rows.map((r) => r.sourceResultId).sort();
     const idsB = b.rows.map((r) => r.sourceResultId).sort();
     // Two positions swapped between snapshots; the ids must not move with them.
+    // Rank-derived ids would change here, and a live board would then insert
+    // duplicate rows on every position change instead of updating them.
     expect(idsA).toEqual(idsB);
+    expect(idsA[0]).toContain("LRAA");
   });
 
-  it("recognises the empty shell the plain page always returns", () => {
-    const parsed = parseDivisionRows(fixture("list-empty.html"), "EVT", "H_EVT");
+  it("recognises the board that declines to render an unfiltered set", () => {
+    const parsed = parseDivisionRows(fixture("list-empty.html"), "EVT", "H_EVT#men");
     expect(parsed.rows).toHaveLength(0);
     expect(parsed.diagnostics.emptyShell).toBe(true);
     expect(parsed.diagnostics.headerFields).toContain("fullname");
+    // "> 200 Results": it knows how many there are, it just will not show them.
+    expect(parsed.publishedEntrantCount).toBe(200);
   });
 
   it("reports missing fields when the source renames a column", () => {
-    const parsed = parseDivisionRows(fixture("list-rows-renamed.html"), "EVT", "H_EVT");
-    expect(parsed.diagnostics.candidateRows).toBeGreaterThan(0);
+    const parsed = parseDivisionRows(fixture("list-rows-renamed.html"), "EVT", "H_EVT#men");
+    expect(parsed.diagnostics.candidateRows).toBe(0);
     expect(parsed.diagnostics.parsedRows).toBe(0);
     expect(parsed.diagnostics.headerFields).not.toContain("fullname");
+  });
+});
+
+describe("names", () => {
+  it("turns mika's surname-first format into how a person writes their name", () => {
+    expect(normalisePersonName("Benzio, Sergio")).toBe("Sergio Benzio");
+    expect(normalisePersonName("Volkov-Reyes, Dmitri")).toBe("Dmitri Volkov-Reyes");
+    // Already forename-first, or a team row: left alone.
+    expect(normalisePersonName("Sergio Benzio")).toBe("Sergio Benzio");
+    expect(normalisePersonName("A Smith / B Jones")).toBe("A Smith / B Jones");
   });
 });
 
@@ -119,7 +168,7 @@ describe("doubles", () => {
   });
 
   it("carries partner names off a doubles board", () => {
-    const parsed = parseDivisionRows(fixture("list-rows-doubles.html"), "EVT", "HD_EVT");
+    const parsed = parseDivisionRows(fixture("list-rows-doubles.html"), "EVT", "HD_EVT#men");
     expect(parsed.rows[0].partnerNames).toHaveLength(2);
   });
 });
@@ -140,16 +189,5 @@ describe("detail splits", () => {
       "wall-balls",
     ]);
     expect(splits.roxzone).toBe("00:06:14");
-  });
-});
-
-describe("ajax2 envelope", () => {
-  it("finds the markup inside the JSON wrapper", () => {
-    const html = extractAjax2Html(fixture("ajax2-page.json"));
-    expect(html).toContain("field-__fullname");
-  });
-
-  it("returns null when the payload carries no rows", () => {
-    expect(extractAjax2Html('{"status":"ok"}')).toBeNull();
   });
 });

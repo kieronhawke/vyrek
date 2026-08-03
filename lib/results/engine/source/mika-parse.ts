@@ -49,7 +49,11 @@ function decodeEntities(value: string): string {
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#0?39;/g, "'")
-    .replace(/&nbsp;/g, " ");
+    .replace(/&nbsp;/g, " ")
+    // A missing time renders as `<span class="text-muted">&ndash;</span>`.
+    // Left encoded, it survives as the literal string "&ndash;" and lands in
+    // the database as an athlete's finish time.
+    .replace(/&[nm]dash;/g, "–");
 }
 
 function stripTags(value: string): string {
@@ -141,59 +145,104 @@ export type ParsedRows = {
   publishedEntrantCount?: number;
 };
 
-const FIELD_OPEN_RE = /<div[^>]*class="[^"]*field-([a-zA-Z0-9_]+)[^"]*"[^>]*>/g;
+/**
+ * Field containers are keyed by their `type-*` class, on any tag.
+ *
+ * ⚠️ This is the correction that matters. The *header* row carries `field-*`
+ * classes; the **data rows do not** — they carry only `type-*`. A parser keyed
+ * on `field-*` therefore reads the column headings perfectly and finds zero
+ * athletes, on a 200 response, with no error. Verified against a real
+ * season-8 board: 100 rows present, 100 rows invisible.
+ *
+ * The name also arrives inside an `<h4>` rather than a `<div>`, so the reader
+ * cannot assume divs either.
+ */
+const TYPE_OPEN_RE = /<(div|h4|span|td)[^>]*class="([^"]*\btype-([a-z_]+)\b[^"]*)"[^>]*>/g;
 
 /**
- * Field values of one row block, keyed by the `field-*` suffix.
+ * Field values of one row, keyed by `type-*` name.
  *
- * Div-balanced rather than regex-to-the-next-`</div>`, because the responsive
- * layout nests a *label* div inside each field div:
+ * Two nested things have to be stripped before the text is taken:
  *
- *     <div class="list-field field-__nation"><div class="list-label">Nat</div>GBR</div>
+ * - the responsive **label** div (`<div class="list-label">Nat</div>GBR`),
+ *   which otherwise returns the column heading for every row; and
+ * - the flag `<img alt="ITA">`, whose alt text would otherwise duplicate the
+ *   nationality.
  *
- * A non-greedy match stops at the inner close and returns "Nat" — the column
- * heading — for every row on the page. It looks like it works, it typechecks,
- * and every athlete comes out with a nationality of "Nat". The labels are
- * stripped before the text is taken.
+ * `place` appears twice per row — overall then age-group — distinguished by
+ * `place-primary` / `place-secondary` rather than by order, so a layout change
+ * cannot silently swap an athlete's overall rank for their age-group rank.
  */
 export function parseRowFields(block: string): Record<string, string> {
   const fields: Record<string, string> = {};
-  FIELD_OPEN_RE.lastIndex = 0;
+  TYPE_OPEN_RE.lastIndex = 0;
   let match: RegExpExecArray | null;
 
-  while ((match = FIELD_OPEN_RE.exec(block)) !== null) {
-    const key = match[1].replace(/^_+/, "").replace(/^type_/, "");
-    const inner = readBalancedDiv(block, match.index + match[0].length);
-    const withoutLabels = inner.replace(
-      /<div[^>]*class="[^"]*list-label[^"]*"[^>]*>[\s\S]*?<\/div>/g,
-      " ",
+  while ((match = TYPE_OPEN_RE.exec(block)) !== null) {
+    const [, tag, classList, type] = match;
+    let key = type;
+    if (type === "place") {
+      key = /place-secondary/.test(classList) ? "place_age" : "place_all";
+    }
+
+    const inner = readBalancedTag(block, match.index + match[0].length, tag);
+    const value = stripTags(
+      inner
+        .replace(/<div[^>]*class="[^"]*list-label[^"]*"[^>]*>[\s\S]*?<\/div>/g, " ")
+        .replace(/<img[^>]*>/g, " "),
     );
-    const value = stripTags(withoutLabels);
-    if (value && !fields[key]) fields[key] = value;
+
+    // A dash is how this platform prints "no value". Storing it as text is how
+    // a DNF ends up with a finish time of "–".
+    const meaningful = /^[–—-]+$/.test(value) ? "" : value;
+
+    // First non-empty write wins: the mobile duplicate of a field comes later
+    // in the markup and carries the same value.
+    if (meaningful && !fields[key]) fields[key] = meaningful;
   }
+
+  // The stable per-result id lives in the detail link, not in a field.
+  // The href is HTML-escaped in the source, so the separator is `&amp;` and the
+  // character immediately before `idp=` is a semicolon. Matching only [?&] here
+  // silently found nothing, and every id fell back to rank-plus-name — which
+  // changes the moment a rank changes, so a live board would insert duplicates
+  // instead of updating rows. Both separators are accepted.
+  const idp = /(?:[?&]|&amp;)idp=([A-Za-z0-9]+)/.exec(block);
+  if (idp) fields.idp = idp[1];
+
   return fields;
 }
 
 /**
- * Content of the div whose opening tag ends at `start`, counting nesting.
- * Returns to the end of the block if the markup is unbalanced, which is better
- * than throwing on one malformed row and losing the whole division.
+ * Content of the element opened at `start`, counting nesting of that tag name.
+ * Falls back to the rest of the block on unbalanced markup, which loses one
+ * row's precision rather than the whole division.
  */
-function readBalancedDiv(html: string, start: number): string {
+function readBalancedTag(html: string, start: number, tag: string): string {
   let depth = 1;
-  let index = start;
-  const tagRe = /<(\/?)div\b[^>]*>/g;
+  const tagRe = new RegExp(`<(/?)${tag}\\b[^>]*>`, "g");
   tagRe.lastIndex = start;
-  let tag: RegExpExecArray | null;
+  let match: RegExpExecArray | null;
 
-  while ((tag = tagRe.exec(html)) !== null) {
-    depth += tag[1] === "/" ? -1 : 1;
-    if (depth === 0) {
-      index = tag.index;
-      return html.slice(start, index);
-    }
+  while ((match = tagRe.exec(html)) !== null) {
+    depth += match[1] === "/" ? -1 : 1;
+    if (depth === 0) return html.slice(start, match.index);
   }
   return html.slice(start);
+}
+
+/**
+ * mika prints names as `Surname, Firstname`. Stored the way a person writes
+ * their own name, because it is rendered on a public profile page and used for
+ * identity matching — "Benzio, Sergio" and "Sergio Benzio" must not become two
+ * athletes.
+ */
+export function normalisePersonName(raw: string): string {
+  const value = raw.trim().replace(/\s+/g, " ");
+  const parts = value.split(",");
+  if (parts.length !== 2) return value;
+  const [surname, forename] = parts.map((p) => p.trim());
+  return surname && forename ? `${forename} ${surname}` : value;
 }
 
 /**
@@ -211,7 +260,10 @@ export function parseDivisionRows(
   const headerMatch = /<li[^>]*list-group-header[^>]*>([\s\S]*?)<\/li>/i.exec(html);
   const headerFields = headerMatch ? Object.keys(parseRowFields(headerMatch[1])) : [];
 
-  // Data rows are list-group-item rows that are not the header.
+  // `data-sex='M'` on the wrapping column is the only place the board states
+  // which sex it is showing, and the rows themselves never say.
+  const sexAttr = /data-sex=['"]([MWFX])['"]/i.exec(html)?.[1];
+
   const rowRe = /<li[^>]*class="[^"]*list-group-item[^"]*"[^>]*>([\s\S]*?)<\/li>/gi;
   const rows: RawResultRow[] = [];
   let candidateRows = 0;
@@ -220,14 +272,16 @@ export function parseDivisionRows(
   while ((match = rowRe.exec(html)) !== null) {
     const block = match[0];
     if (/list-group-header/i.test(block)) continue;
-    if (!/field-/.test(block)) continue;
+    if (!/type-fullname/.test(block)) continue;
     candidateRows += 1;
 
     const fields = parseRowFields(match[1]);
-    const name = fields.fullname ?? fields.name;
-    if (!name) continue;
+    const rawName = fields.fullname ?? fields.name;
+    if (!rawName) continue;
+    const name = normalisePersonName(rawName);
 
-    const finishTime = fields.time_finish_netto ?? fields.time ?? fields.time_finish_brutto;
+    // `type-time` is the net total; `type-actual_ranking_time` is often a dash.
+    const finishTime = fields.time ?? fields.time_finish_netto ?? fields.actual_ranking_time;
 
     rows.push({
       sourceResultId: buildResultId(sourceDivisionId, fields, name),
@@ -235,9 +289,9 @@ export function parseDivisionRows(
       sourceEventId,
       sourceAthleteId: fields.idp || undefined,
       name,
-      nationality: fields.nation || undefined,
+      nationality: fields.nation_flag ?? fields.nation ?? undefined,
       ageGroup: fields.age_class || undefined,
-      sex: fields.sex || undefined,
+      sex: fields.sex ?? sexAttr ?? undefined,
       rankOverall: fields.place_all || undefined,
       rankAgeGroup: fields.place_age || undefined,
       finishTime: finishTime || undefined,
@@ -249,8 +303,16 @@ export function parseDivisionRows(
     });
   }
 
-  const emptyCount = /(\d+)\s+Results?/i.exec(stripTags(html));
-  const publishedEntrantCount = emptyCount ? Number(emptyCount[1]) : undefined;
+  // The counter mika renders above the board: "153 Results", or "> 200 Results"
+  // when it refuses to render an unfiltered set that large.
+  //
+  // Scoped to the `str_num` span rather than swept off the whole page. A loose
+  // match picked up an unrelated number elsewhere in the markup and reported a
+  // 153-row division as having 19 entrants — which would then have been fed
+  // straight into the completeness checksum as a false pass.
+  const counter = /class="[^"]*str_num[^"]*"[^>]*>([^<]*)</i.exec(html);
+  const countMatch = counter ? /(\d+)/.exec(decodeEntities(counter[1])) : null;
+  const publishedEntrantCount = countMatch ? Number(countMatch[1]) : undefined;
 
   return {
     rows,
@@ -289,6 +351,8 @@ export function buildResultId(
   fields: Record<string, string>,
   name: string,
 ): string {
+  // `idp` is mika's own per-entry id, carried on every detail link. It is the
+  // stable key everything upserts on, and it is why re-running any sync is safe.
   if (fields.idp) return `${sourceDivisionId}:${fields.idp}`;
   const bib = fields.startnumber ?? fields.bib;
   if (bib) return `${sourceDivisionId}:bib:${bib}`;
@@ -359,29 +423,4 @@ export function matchStationLabel(label: string): string | null {
   if (/lunge|sandbag/.test(l)) return "sandbag-lunges";
   if (/wall/.test(l)) return "wall-balls";
   return null;
-}
-
-/**
- * The ajax2 envelope.
- *
- * ⚠️ Shape inferred, not observed: characterising it properly needs an
- * authorised request against a populated event, which we do not have (SOURCE.md
- * §1, §4). So this is deliberately tolerant — it accepts an HTML payload under
- * any of the plausible keys and hands it to the row parser, and it accepts a
- * record array if that is what turns up. The parser-shape sentinel is what
- * tells us we guessed wrong, loudly, on the first authorised run.
- */
-export function extractAjax2Html(payload: string): string | null {
-  const trimmed = payload.trim();
-  if (!trimmed.startsWith("{") && !trimmed.startsWith("[")) return trimmed || null;
-  try {
-    const parsed = JSON.parse(trimmed) as Record<string, unknown>;
-    for (const key of ["html", "content", "list", "data", "body"]) {
-      const value = parsed[key];
-      if (typeof value === "string" && value.includes("field-")) return value;
-    }
-    return null;
-  } catch {
-    return null;
-  }
 }

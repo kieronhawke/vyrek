@@ -1,18 +1,22 @@
 /**
  * Builds the parser fixtures in tests/fixtures/hyrox/.
  *
- * The *markup* is reproduced field for field and class for class from a real
- * results.hyrox.com response (see docs/results/SOURCE.md §5). The *people* are
- * invented.
+ * The *markup* is reproduced from a real results.hyrox.com response, tag for
+ * tag and class for class, including the details that break naive parsers:
  *
- * Why not just save a real page: real rows are third-party personal data —
- * names, nationalities, age groups — belonging to people who never agreed to be
- * in our repository. Committing a sample creates a permanent replicated copy
- * with no lawful basis and no erasure path, to test a regex. The structure is
- * what the parser cares about, and the structure is real.
+ * - data rows carry `type-*` classes and **no** `field-*` classes (only the
+ *   header has those);
+ * - the name sits in an `<h4>`, not a `<div>`, formatted `Surname, Firstname`;
+ * - the stable per-entry id is in the detail link's `idp`, HTML-escaped, so the
+ *   character before it is `;` rather than `&`;
+ * - nationality is inside a `nation__abbr` span next to an `<img alt="ITA">`;
+ * - each field nests a responsive `list-label` div carrying the column heading;
+ * - a missing time renders as `<span class="text-muted">&ndash;</span>`.
  *
- * `scripts/capture-hyrox-fixture.mjs` records genuine samples the moment access
- * is authorised; these tests then run against those unchanged.
+ * The *people* are invented. Real rows are third-party personal data, and
+ * committing a sample creates a permanent replicated copy in git to test a
+ * regex. `scripts/capture-hyrox-fixture.mjs` records genuine samples into a
+ * gitignored directory when you want to check against reality.
  *
  *   node scripts/build-hyrox-fixtures.mjs
  */
@@ -23,6 +27,9 @@ import { join } from "node:path";
 const OUT = join(process.cwd(), "tests", "fixtures", "hyrox");
 mkdirSync(OUT, { recursive: true });
 
+const EVENT = "H_LR3MS4JI163A";
+
+/** The header row. This is the only row carrying `field-*` classes. */
 const HEADER = `<li class="right  list-group row list-group-item  list-group-header ">
 <div class="col-xs-12 col-sm-12 col-md-5 list-field-wrap">
   <div class="row">
@@ -47,39 +54,48 @@ const HEADER = `<li class="right  list-group row list-group-item  list-group-hea
 </div>
 </li>`;
 
-/** One data row, in the same nesting as the header. */
-function row({ place, placeAge, name, nation, ageGroup, time, bib }) {
-  return `<li class="row list-group-item list-group-item">
+/** A data row, in the real shape. */
+function row({ place, placeAge, name, nation, ageGroup, time, idp }) {
+  const total =
+    time === null
+      ? `<span class="text-muted">&ndash;</span>`
+      : time;
+  return `<li class=" list-active list-group-item row">
 <div class="col-xs-12 col-sm-12 col-md-5 list-field-wrap">
   <div class="row">
-  <div class=" list-field type-place field-place_all place-primary" style="width: 60px">${place}</div>
-  <div class=" list-field type-place field-place_age place-secondary hidden-xs" style="width: 60px">${placeAge}</div>
-  <div class=" list-field type-fullname field-__fullname"><a href="?content=detail&amp;idp=${bib}">${name}</a></div>
-  <div class=" list-field type-field field-startnumber" style="width: 60px"><div class="visible-xs-block visible-sm-block list-label">Bib</div>${bib}</div>
+  <div class=" list-field type-place place-primary numeric" style="width: 60px">${place}</div>
+  <div class=" list-field type-place place-secondary hidden-xs numeric" style="width: 60px">${placeAge}</div>
+  <h4 class=" list-field type-fullname"><a href="?content=detail&amp;fpid=list&amp;pid=list&amp;idp=${idp}&amp;lang=EN_CAP&amp;event=${EVENT}&amp;num_results=100">${name}</a></h4>
   </div>
 </div>
-<div class="col-xs-12 col-sm-12 col-md-7  hidden-xs hidden-sm list-field-wrap">
+<div class="col-xs-12 col-sm-12 col-md-7 list-field-wrap">
 <div class="pull-left">
   <div class="row">
-  <div class=" list-field type-nation_flag field-__nation" style="width: 70px"><div class="visible-xs-block visible-sm-block list-label">Nat</div>${nation}</div>
-  <div class=" list-field type-age_class field-_type_age_class" style="width: auto"><div class="visible-xs-block visible-sm-block list-label">Age Group</div>${ageGroup}</div>
+  <div class=" list-field type-nation_flag" style="width: 70px"><div class="visible-xs-block visible-sm-block list-label">Nat</div><span class="nation__labelled-icon">
+                            <img style="width:20px" src="//assets.mikatiming.com/img/mt/results/dark/flags/${nation}.svg" class="nation__icon" alt="${nation}" title="${nation}"/>
+                            <span class="nation__abbr">${nation}</span>
+                        </span></div>
+  <div class=" list-field type-age_class" style="width: auto"><div class="visible-xs-block visible-sm-block list-label">Age Group</div>${ageGroup}</div>
   </div>
 </div>
 <div class="pull-right">
   <div class="row">
-  <div class=" list-field type-actual_ranking_time field-__time" style="width: 130px"><div class="visible-xs-block visible-sm-block list-label">Time</div>${time}</div>
-  <div class="right list-field type-time field-time_finish_netto" style="width: 70px"><div class="visible-xs-block visible-sm-block list-label">Total</div>${time}</div>
+  <div class=" list-field type-actual_ranking_time" style="width: 130px"><div class="visible-xs-block visible-sm-block list-label">Time</div><span class="text-muted">&ndash;</span></div>
+  <div class="right list-field type-time" style="width: 70px"><div class="visible-xs-block visible-sm-block list-label">Total</div>${total}</div>
   </div>
 </div>
 </div>
 </li>`;
 }
 
-function page(rows, published) {
+function page(rows, published, sex = "M") {
   return `<!-- SYNTHETIC IDENTITIES, REAL STRUCTURE. See scripts/build-hyrox-fixtures.mjs. -->
 <!DOCTYPE html><html><body>
-<div class='col-sm-12 row-xs' data-sex='M'>
-<ul class="list-group list-info"><li class="list-group-item"><span class="list-info__text str_num">${published} Results</span></li></ul>
+<ul class="list-group list-info row-xs">
+<li class="list-group-item"><span class="list-info__text str_num">${published} Results</span> | <span class="list-info__text officiality">Unofficial Results</span> | <span class="list-info__filter sex">${sex === "M" ? "Men" : "Women"}</span>
+</li>
+</ul>
+<div class='col-sm-12 row-xs' data-sex='${sex}'>
 <ul class="list-group list-group-multicolumn">
 ${HEADER}
 ${rows.join("\n")}
@@ -89,88 +105,110 @@ ${rows.join("\n")}
 `;
 }
 
-// Invented people. Any resemblance is coincidence, which is the point.
+// Invented people. Names are stored surname-first, exactly as mika prints them.
 const FIELD = [
-  { name: "Alaric Fenwick", nation: "GBR", ageGroup: "30-34", bib: "1101", time: "01:02:41" },
-  { name: "Bram Oosterhuis", nation: "NED", ageGroup: "35-39", bib: "1102", time: "01:04:07" },
-  { name: "Caius Marlowe", nation: "GBR", ageGroup: "25-29", bib: "1103", time: "01:05:52" },
-  { name: "Dmitri Volkov-Reyes", nation: "ESP", ageGroup: "40-44", bib: "1104", time: "01:07:19" },
-  { name: "Eamon Kilbride", nation: "IRL", ageGroup: "30-34", bib: "1105", time: "01:09:03" },
-  { name: "Faisal Anwar", nation: "IND", ageGroup: "35-39", bib: "1106", time: "01:11:44" },
-  { name: "Gustav Lindqvist", nation: "SWE", ageGroup: "45-49", bib: "1107", time: "01:14:26" },
-  { name: "Hamish Rowntree", nation: "GBR", ageGroup: "50-54", bib: "1108", time: "01:18:02" },
+  { name: "Fenwick, Alaric", nation: "GBR", ageGroup: "30-34", idp: "LRAA0000001", time: "01:02:41" },
+  { name: "Oosterhuis, Bram", nation: "NED", ageGroup: "35-39", idp: "LRAA0000002", time: "01:04:07" },
+  { name: "Marlowe, Caius", nation: "GBR", ageGroup: "25-29", idp: "LRAA0000003", time: "01:05:52" },
+  { name: "Volkov-Reyes, Dmitri", nation: "ESP", ageGroup: "40-44", idp: "LRAA0000004", time: "01:07:19" },
+  { name: "Kilbride, Eamon", nation: "IRL", ageGroup: "30-34", idp: "LRAA0000005", time: "01:09:03" },
+  { name: "Anwar, Faisal", nation: "IND", ageGroup: "35-39", idp: "LRAA0000006", time: "01:11:44" },
+  { name: "Lindqvist, Gustav", nation: "SWE", ageGroup: "45-49", idp: "LRAA0000007", time: "01:14:26" },
+  { name: "Rowntree, Hamish", nation: "ENG", ageGroup: "50-54", idp: "LRAA0000008", time: "01:18:02" },
 ];
 
+/** `order` is the finishing order; ids stay with the person, not the position. */
 function build(order) {
   return order.map((idx, i) =>
-    row({
-      place: String(i + 1),
-      placeAge: String(1 + Math.floor(i / 3)),
-      ...FIELD[idx],
-    }),
+    row({ place: String(i + 1), placeAge: String(1 + Math.floor(i / 3)), ...FIELD[idx] }),
   );
 }
 
-// Snapshot 1 — mid-race board.
+// Snapshot 1 — the board mid-race.
 writeFileSync(join(OUT, "list-rows.html"), page(build([0, 1, 2, 3, 4, 5, 6, 7]), 8));
 
-// Snapshot 2 — two positions swapped and one time corrected. The live differ
-// must write exactly the rows that changed, and no others.
-const swapped = build([1, 0, 2, 3, 4, 5, 6, 7]);
+// Snapshot 2 — the top two swap and one time is corrected. The live differ must
+// write exactly the rows that changed and no others, and the ids must not move
+// with the positions.
 writeFileSync(
   join(OUT, "list-rows-2.html"),
-  // replaceAll, not replace: the row prints the time in both the ranking-time
-  // and net-time columns, and correcting only one is not a corrected time.
-  page(swapped, 8).replaceAll("01:11:44", "01:11:38"),
+  // replaceAll, not replace: a corrected time has to change everywhere the row
+  // prints it, or the "corrected" row is not actually different.
+  page(build([1, 0, 2, 3, 4, 5, 6, 7]), 8).replaceAll("01:11:44", "01:11:38"),
 );
 
-// A division whose published count exceeds the rows served: the completeness
-// checksum must flag this rather than accept a short page.
+// The board says 8, serves 3: the completeness checksum must flag it.
 writeFileSync(join(OUT, "list-rows-short.html"), page(build([0, 1, 2]), 8));
 
-// A batch with the name and time columns renamed: the parser-shape sentinel
-// must call this "parser may be broken", not quietly quarantine 8 rows.
+// A shape change: the source renames the name and time columns. The sentinel
+// must call this "parser may be broken" rather than quietly quarantine.
 writeFileSync(
   join(OUT, "list-rows-renamed.html"),
   page(build([0, 1, 2, 3]), 4)
+    .replace(/type-fullname/g, "type-competitorname")
     .replace(/field-__fullname/g, "field-__competitorname")
+    .replace(/type-time\b/g, "type-total_net")
     .replace(/field-time_finish_netto/g, "field-time_total_net"),
 );
 
-// Implausible row: splits that cannot sum to the finish, and a 12-second race.
+// Implausible rows: a 12-second race and a 15-hour one.
 writeFileSync(
   join(OUT, "list-rows-implausible.html"),
   page(
     [
-      row({ place: "1", placeAge: "1", name: "Ivor Quennell", nation: "GBR", ageGroup: "30-34", bib: "1201", time: "00:00:12" }),
-      row({ place: "2", placeAge: "1", name: "Jocasta Pemberton", nation: "GBR", ageGroup: "30-34", bib: "1202", time: "14:59:59" }),
+      row({ place: "1", placeAge: "1", name: "Quennell, Ivor", nation: "GBR", ageGroup: "30-34", idp: "LRAA0000101", time: "00:00:12" }),
+      row({ place: "2", placeAge: "1", name: "Pemberton, Jocasta", nation: "GBR", ageGroup: "30-34", idp: "LRAA0000102", time: "14:59:59" }),
     ],
     2,
   ),
 );
 
-// Doubles: one row per team, both names in the name field (SOURCE.md §8).
+// A DNF: no time at all, which is normal and must not be quarantined.
+writeFileSync(
+  join(OUT, "list-rows-dnf.html"),
+  page(
+    [
+      row({ place: "1", placeAge: "1", name: "Fenwick, Alaric", nation: "GBR", ageGroup: "30-34", idp: "LRAA0000001", time: "01:02:41" }),
+      row({ place: "—", placeAge: "—", name: "Sorrell, Kit", nation: "GBR", ageGroup: "30-34", idp: "LRAA0000201", time: null }),
+    ],
+    2,
+  ),
+);
+
+// Doubles: one row per team, both names in the name field.
 writeFileSync(
   join(OUT, "list-rows-doubles.html"),
   page(
     [
-      row({ place: "1", placeAge: "1", name: "Alaric Fenwick / Caius Marlowe", nation: "GBR", ageGroup: "30-34", bib: "2101", time: "00:58:14" }),
-      row({ place: "2", placeAge: "2", name: "Bram Oosterhuis / Gustav Lindqvist", nation: "NED", ageGroup: "35-39", bib: "2102", time: "01:01:37" }),
+      row({ place: "1", placeAge: "1", name: "Alaric Fenwick / Caius Marlowe", nation: "GBR", ageGroup: "30-34", idp: "LRAA0000301", time: "00:58:14" }),
+      row({ place: "2", placeAge: "2", name: "Bram Oosterhuis / Gustav Lindqvist", nation: "NED", ageGroup: "35-39", idp: "LRAA0000302", time: "01:01:37" }),
     ],
     2,
   ),
 );
 
+// The unfiltered board: it refuses to render and says so.
+writeFileSync(
+  join(OUT, "list-empty.html"),
+  `<!-- SYNTHETIC. The unfiltered board declines to render a large set. -->
+<!DOCTYPE html><html><body>
+<ul class="list-group list-info row-xs">
+<li class="list-group-item"><span class="list-info__text str_num">&gt; 200 Results</span> | <span class="list-info__text officiality">Unofficial Results</span></li>
+</ul>
+<div class='col-sm-12 row-xs' data-sex=''>
+<ul class="list-group list-group-multicolumn">
+${HEADER}
+</ul>
+</div>
+</body></html>
+`,
+);
+
 // The per-result detail view: eight runs, eight stations, Roxzone.
 const STATIONS = [
-  ["SkiErg", "04:12"],
-  ["Sled Push", "02:48"],
-  ["Sled Pull", "03:31"],
-  ["Burpee Broad Jump", "04:55"],
-  ["Rowing", "04:38"],
-  ["Farmers Carry", "02:07"],
-  ["Sandbag Lunges", "04:41"],
-  ["Wall Balls", "05:26"],
+  ["SkiErg", "04:12"], ["Sled Push", "02:48"], ["Sled Pull", "03:31"],
+  ["Burpee Broad Jump", "04:55"], ["Rowing", "04:38"], ["Farmers Carry", "02:07"],
+  ["Sandbag Lunges", "04:41"], ["Wall Balls", "05:26"],
 ];
 const detailRows = [];
 for (let i = 0; i < 8; i += 1) {
@@ -185,20 +223,6 @@ writeFileSync(
 ${detailRows.join("\n")}
 </table></body></html>
 `,
-);
-
-// The ajax2 envelope: shape inferred, not observed (SOURCE.md §4, §9).
-writeFileSync(
-  join(OUT, "ajax2-page.json"),
-  JSON.stringify(
-    {
-      status: "ok",
-      page: 1,
-      html: page(build([0, 1, 2, 3, 4, 5, 6, 7]), 8),
-    },
-    null,
-    2,
-  ),
 );
 
 console.log("✓ hyrox fixtures written to tests/fixtures/hyrox");

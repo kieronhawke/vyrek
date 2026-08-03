@@ -39,10 +39,12 @@ export function checkParseShape(
 ): SentinelVerdict {
   const { headerFields, candidateRows, parsedRows, emptyShell } = diagnostics;
 
-  // An empty shell is the documented normal response of the plain page
-  // (SOURCE.md §4) and of an upcoming event. Not a shape change on its own.
-  if (emptyShell) return { ok: true };
-
+  // The header is checked FIRST, before the empty-shell short-circuit.
+  //
+  // A renamed column usually *also* stops rows rendering, so checking
+  // emptyShell first meant the loudest possible signal — the schema changed —
+  // was swallowed as "quiet event". The header is the thing that tells the two
+  // apart, so it has to be read before anything is excused.
   const missing = REQUIRED_FIELDS.filter((field) => !headerFields.includes(field));
   if (headerFields.length > 0 && missing.length > 0) {
     return {
@@ -55,7 +57,9 @@ export function checkParseShape(
     };
   }
 
-  if (candidateRows === 0) return { ok: true };
+  // An empty shell with an intact header is the normal response for an
+  // upcoming event, or for a board that declines to render unfiltered.
+  if (emptyShell || candidateRows === 0) return { ok: true };
 
   const rate = parsedRows / candidateRows;
   if (rate < MIN_PARSE_RATE) {
