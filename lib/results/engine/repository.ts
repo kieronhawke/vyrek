@@ -88,6 +88,15 @@ export interface ResultsRepository {
   listResultsForAthlete(athleteId: string): Promise<EngineResult[]>;
   listResultsForDivision(divisionId: string): Promise<EngineResult[]>;
   countResultsForDivision(divisionId: string): Promise<number>;
+  /**
+   * Finish times only, ascending, finishers only.
+   *
+   * Deliberately its own method rather than a map over `listResultsForDivision`:
+   * the frontend contract notes that materialising 3,221 row objects to read one
+   * number off each cost a 5.5s LCP. The Supabase implementation selects a single
+   * column; nothing else may.
+   */
+  listFinishTimesForDivision(divisionId: string): Promise<number[]>;
   searchAthletesAndEvents(q: string, limit?: number): Promise<{
     athletes: EngineAthlete[];
     events: EngineEvent[];

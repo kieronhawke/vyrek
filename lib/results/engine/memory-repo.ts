@@ -286,6 +286,13 @@ export class MemoryResultsRepository implements ResultsRepository {
     return (await this.listResultsForDivision(divisionId)).length;
   }
 
+  async listFinishTimesForDivision(divisionId: string) {
+    return (await this.listResultsForDivision(divisionId))
+      .filter((r) => r.status === "finished" && r.finishTimeMs)
+      .map((r) => Math.round((r.finishTimeMs as number) / 1000))
+      .sort((a, b) => a - b);
+  }
+
   async searchAthletesAndEvents(q: string, limit = 10) {
     const needle = q.trim().toLowerCase();
     if (!needle) return { athletes: [], events: [] };

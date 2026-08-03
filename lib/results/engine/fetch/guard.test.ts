@@ -60,12 +60,16 @@ describe("authorisation gate (§2, SOURCE.md §1)", () => {
   });
 
   it("identifies itself honestly when it is authorised", async () => {
-    const fetchImpl = vi.fn(async () => response({ status: 200, body: "ok" }));
+    const seen: Record<string, string>[] = [];
+    const fetchImpl = vi.fn(async (_url: string, init?: { headers?: Record<string, string> }) => {
+      if (init?.headers) seen.push(init.headers);
+      return response({ status: 200, body: "ok" });
+    });
     const fetcher = new SourceFetcher({ fetchImpl, authorised: true });
 
     await fetcher.fetchText("https://results.hyrox.com/season-9/");
 
-    const headers = fetchImpl.mock.calls[0][1].headers;
+    const headers = seen[0];
     expect(headers["User-Agent"]).toBe(DEFAULT_USER_AGENT);
     expect(headers["User-Agent"]).toMatch(/suthperformance\.com/);
     expect(headers["User-Agent"]).not.toMatch(/Mozilla/);
