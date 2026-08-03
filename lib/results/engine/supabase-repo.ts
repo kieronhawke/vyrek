@@ -161,6 +161,15 @@ export function toRepositoryError(error: unknown, context: string): Error {
   return wrapped;
 }
 
+/**
+ * Athletes written per statement.
+ *
+ * Halved from 200 after the trigram index on `name` made each write ten times
+ * more expensive and 200-row batches began timing out. `upsertAthletes` halves
+ * again on a timeout, so this is a starting point rather than a limit.
+ */
+const ATHLETE_BATCH = 100;
+
 /** Split a list into fixed-size batches. PostgREST rejects an over-long URL. */
 function chunk<T>(items: T[], size: number): T[][] {
   const out: T[][] = [];
@@ -490,26 +499,56 @@ export class SupabaseResultsRepository implements ResultsRepository {
     for (const a of input) bySlug.set(a.slug, a);
     const athletes = [...bySlug.values()];
 
-    const out: AthleteRow[] = [];
-    for (let i = 0; i < athletes.length; i += 200) {
-      const chunk = athletes.slice(i, i + 200).map((a) => ({
-        slug: a.slug,
-        name: a.name,
-        nationality: a.nationality ?? null,
-        gender: a.gender ?? null,
-        source_athlete_id: a.sourceAthleteId ?? null,
-        claimed_by_user_id: a.claimedByUserId ?? null,
-        is_demo: a.isDemo,
-        is_anonymised: a.isAnonymised,
-        identity_confidence: a.identityConfidence,
-        needs_identity_review: a.needsIdentityReview,
-      }));
+    const toRow = (a: UpsertAthlete) => ({
+      slug: a.slug,
+      name: a.name,
+      nationality: a.nationality ?? null,
+      gender: a.gender ?? null,
+      source_athlete_id: a.sourceAthleteId ?? null,
+      claimed_by_user_id: a.claimedByUserId ?? null,
+      is_demo: a.isDemo,
+      is_anonymised: a.isAnonymised,
+      identity_confidence: a.identityConfidence,
+      needs_identity_review: a.needsIdentityReview,
+    });
+
+    /**
+     * One batch, halving and retrying if the statement runs out of time.
+     *
+     * ⚠️ Writing `name` costs ten times what writing an unindexed column does —
+     * measured, 1,030ms against 102ms for 200 rows — because the trigram index
+     * that makes search survivable has to be maintained on every one. That trade
+     * is worth it (search went from 13s to 220ms) but it removed the headroom
+     * this batch size assumed, and batches of 200 began hitting the two-minute
+     * statement timeout mid-backfill, failing whole divisions.
+     *
+     * Halving on timeout rather than picking a smaller constant, because the
+     * right size depends on how loaded the database is at that moment, and a
+     * constant chosen against an idle one is the thing that just broke.
+     */
+    const writeBatch = async (batch: UpsertAthlete[]): Promise<AthleteRow[]> => {
       const { data, error } = await this.db
         .from("results_athletes")
-        .upsert(chunk, { onConflict: "slug" })
+        .upsert(batch.map(toRow), { onConflict: "slug" })
         .select();
-      if (error) throw toRepositoryError(error, "athlete batch upsert failed");
-      out.push(...((data ?? []) as AthleteRow[]));
+
+      if (!error) return (data ?? []) as AthleteRow[];
+
+      const timedOut = (error as { code?: string }).code === "57014";
+      if (!timedOut || batch.length === 1) {
+        throw toRepositoryError(error, "athlete batch upsert failed");
+      }
+
+      const half = Math.ceil(batch.length / 2);
+      return [
+        ...(await writeBatch(batch.slice(0, half))),
+        ...(await writeBatch(batch.slice(half))),
+      ];
+    };
+
+    const out: AthleteRow[] = [];
+    for (let i = 0; i < athletes.length; i += ATHLETE_BATCH) {
+      out.push(...(await writeBatch(athletes.slice(i, i + ATHLETE_BATCH))));
     }
     return out.map(toAthlete);
   }
