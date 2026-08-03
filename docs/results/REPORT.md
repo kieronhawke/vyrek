@@ -154,6 +154,28 @@ Verified rendering in live mode with real data and no demo notice:
 `/rankings/world-records` (1.19s), `/events/uk` (1.35s), `/events`,
 `/event/s8-2026-rotterdam`.
 
+### The writes were unbounded, and the index made them dearer
+
+Two failures that only appear when ingest meets a database with real
+indexes on it.
+
+`upsertResults` sent **every changed row of a division in one statement** —
+2,721 rows of `splits` JSONB for Rotterdam's open men. It had no chunking at
+all, which went unnoticed while divisions were small, and a timeout cost the
+whole division rather than one batch.
+
+What pushed it over the edge was my own fix: the trigram index that took
+search from 13s to 220ms costs about **ten times more to write** — measured
+on `results_athletes.name`, 1,030ms against 102ms per 200 rows. That removed
+the headroom the existing batch sizes assumed, and athlete writes started
+timing out too, failing three divisions of one event.
+
+Both writes now share one helper that halves a batch on timeout, down to a
+single row, and rethrows anything that is not a timeout immediately so a
+genuinely bad row is not retried sixty-four times on its way to failing. No
+fixed size would have been right: the cost depends on how loaded the database
+is at that moment, and a constant chosen against an idle one is what broke.
+
 ### Smaller correctness fixes
 
 - **The Elite boards print `MM:SS.hh`.** "60:08.73" is a sixty-minute race, and
