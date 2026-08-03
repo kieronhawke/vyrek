@@ -58,7 +58,59 @@ const PRIVATE_HEADERS = [
   },
 ];
 
+/**
+ * Routes that read the demo results corpus from disk at request time.
+ *
+ * `demo-source.ts` reaches the JSON through a lazy `require("node:fs")` and a
+ * path built from `process.cwd()` — deliberately, because a static import pulls
+ * `node:fs` into the client bundle and freezes the admin console. The cost is
+ * that Next's file tracing cannot see the read, so `data/results-demo` was
+ * never bundled into the serverless functions.
+ *
+ * The symptom was baffling until you line it up: every page rendered at *build*
+ * time worked, because the whole repo is on disk then, and every page rendered
+ * at *request* time 404'd, because the lambda only carries traced files. So
+ * `/results/city` served a full list of cities while `/results/city/london`
+ * did not exist, and `/events` reported zero events after its first
+ * revalidation. Nothing in the logs said "file not found" — the source simply
+ * returned empty and the pages faithfully rendered that.
+ *
+ * Scoped to the routes that actually read it. The corpus is 52 MB and there is
+ * no reason for the marketing pages to carry it. It becomes unnecessary
+ * entirely once NEXT_PUBLIC_DATA_MODE=live, when the engine reads the database.
+ */
+const RESULTS_DATA = ["./data/results-demo/**"];
+
 const nextConfig: NextConfig = {
+  outputFileTracingIncludes: {
+    "/result/[id]": RESULTS_DATA,
+    "/report/[id]": RESULTS_DATA,
+    "/ranking/[slug]": RESULTS_DATA,
+    "/athlete/[slug]": RESULTS_DATA,
+    "/event/[slug]": RESULTS_DATA,
+    "/events": RESULTS_DATA,
+    "/results": RESULTS_DATA,
+    "/results/city": RESULTS_DATA,
+    "/results/city/[slug]": RESULTS_DATA,
+    "/results/course-index": RESULTS_DATA,
+    "/results/compare": RESULTS_DATA,
+    "/rankings": RESULTS_DATA,
+    "/rankings/world-records": RESULTS_DATA,
+    "/rankings/season-bests": RESULTS_DATA,
+    "/starters/[event]": RESULTS_DATA,
+    "/reports": RESULTS_DATA,
+    "/reports/[event]": RESULTS_DATA,
+    "/simulator": RESULTS_DATA,
+    "/tools/good-hyrox-time": RESULTS_DATA,
+    "/sitemap-results.xml": RESULTS_DATA,
+    // Globs rather than an enumeration: the API surface has fifteen routes
+    // across /api/results and five OG card routes, and a list would go stale
+    // the first time one is added — silently, since the failure is an empty
+    // response rather than an error.
+    "/api/results/**": RESULTS_DATA,
+    "/api/og/**": RESULTS_DATA,
+  },
+
   async headers() {
     return [
       { source: "/:path*", headers: BASELINE_HEADERS },

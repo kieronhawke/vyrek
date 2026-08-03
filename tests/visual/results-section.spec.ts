@@ -33,6 +33,7 @@ const ROUTES = [
   { name: "city index", path: "/results/city" },
   { name: "city hub", path: "/results/city/london" },
   { name: "course index", path: "/results/course-index" },
+  { name: "race report", path: "/report/s9-2026-london-hyrox-men-1600" },
 ];
 
 /** Fails the test if the page logged an error or threw during hydration. */
@@ -293,6 +294,119 @@ test.describe("search", () => {
  * The budget is deliberately generous. This is a tripwire for a page pulling
  * a whole hero it does not use, not a byte-level performance target.
  */
+/**
+ * The race report is the section's flagship document, and most of what makes
+ * it work is invisible to a screenshot: the print palette, the pagination, and
+ * whether the charts survive being inverted for paper.
+ *
+ * Every assertion here corresponds to something that was actually broken
+ * during the build and would have shipped silently otherwise.
+ */
+test.describe("race report", () => {
+  const REPORT = "/report/s9-2026-london-hyrox-men-1600";
+
+  test("renders every section with real numbers", async ({ page }) => {
+    await open(page, REPORT);
+    // Twelve numbered sections, each with a heading.
+    const sections = page.locator(".report-section");
+    expect(await sections.count()).toBeGreaterThanOrEqual(8);
+    await expect(page.getByRole("heading", { name: "Overview" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /story of your race/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /How every figure here was worked out/i })).toBeVisible();
+  });
+
+  test("every chart carries a text alternative", async ({ page }) => {
+    await open(page, REPORT);
+    // An SVG chart is a shape to a screen reader unless it says otherwise, and
+    // the numbers are the entire point of this document.
+    const charts = page.locator("figure.report-chart svg");
+    const count = await charts.count();
+    expect(count).toBeGreaterThan(3);
+    for (let i = 0; i < count; i++) {
+      const label = await charts.nth(i).getAttribute("aria-label");
+      expect(label, `chart ${i} has no aria-label`).toBeTruthy();
+      expect(label!.length).toBeGreaterThan(20);
+    }
+  });
+
+  test("the radar labels are inside the canvas, not clipped", async ({ page }) => {
+    await open(page, REPORT);
+    // The first version placed labels past the viewBox and rendered
+    // "Sandbag Lunges" as "ndbag Lunges".
+    const clipped = await page.evaluate(() => {
+      const svg = document.querySelector("figure.report-chart svg") as SVGSVGElement | null;
+      if (!svg) return "no chart";
+      const box = svg.viewBox.baseVal;
+      const bad: string[] = [];
+      for (const text of Array.from(svg.querySelectorAll("text"))) {
+        const b = (text as SVGTextElement).getBBox();
+        if (b.x < 0 || b.x + b.width > box.width) bad.push(text.textContent ?? "?");
+      }
+      return bad;
+    });
+    expect(clipped).toEqual([]);
+  });
+
+  test("prints with a paper palette, not the dark UI one", async ({ page }) => {
+    await open(page, REPORT);
+    await page.emulateMedia({ media: "print" });
+
+    const ink = await page.evaluate(() => {
+      const root = document.querySelector(".results-report") as HTMLElement;
+      const cs = getComputedStyle(root);
+      return {
+        ink: cs.getPropertyValue("--report-ink").trim(),
+        band5: cs.getPropertyValue("--report-band-5").trim(),
+      };
+    });
+
+    // Both blocks target `.results-report` with equal specificity, so source
+    // order decides which wins. With the screen block last it won on paper too
+    // and every chart printed as five shades of near-black.
+    expect(ink.ink.toLowerCase()).toBe("#101010");
+    expect(ink.band5.toLowerCase()).toBe("#f8f8f5");
+  });
+
+  test("paginates: sections break, screen furniture is dropped", async ({ page }) => {
+    await open(page, REPORT);
+    await page.emulateMedia({ media: "print" });
+
+    const layout = await page.evaluate(() => ({
+      sectionBreak: getComputedStyle(document.querySelector(".report-section")!).breakBefore,
+      toolbar: getComputedStyle(document.querySelector(".report-toolbar")!).display,
+      coverMinHeight: getComputedStyle(document.querySelector(".report-cover")!).minHeight,
+    }));
+
+    expect(layout.sectionBreak).toBe("page");
+    expect(layout.toolbar).toBe("none");
+    // `min-height: 82vh` on the cover threw two blank pages before any content.
+    expect(layout.coverMinHeight).toBe("0px");
+  });
+
+  test("the cover photograph is actually visible, not a black rectangle", async ({ page }) => {
+    await open(page, REPORT);
+    const cover = await page.evaluate(() => {
+      const img = document.querySelector(".report-cover img") as HTMLImageElement | null;
+      if (!img) return null;
+      return {
+        loaded: img.complete && img.naturalWidth > 0,
+        opacity: Number(getComputedStyle(img).opacity),
+      };
+    });
+    expect(cover?.loaded).toBe(true);
+    // Dimming the photograph is what made the first version render black; the
+    // scrim shapes it instead, so the image itself stays at full strength.
+    expect(cover?.opacity).toBe(1);
+  });
+
+  test("the report is linked from the result it describes", async ({ page }) => {
+    await open(page, "/result/s9-2026-london-hyrox-men-1600");
+    const link = page.getByRole("link", { name: /full race report/i });
+    await expect(link).toBeVisible();
+    await expect(link).toHaveAttribute("href", REPORT);
+  });
+});
+
 test.describe("page weight", () => {
   const IMAGE_BUDGET_KB = 150;
 

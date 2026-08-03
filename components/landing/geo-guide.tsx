@@ -107,11 +107,24 @@ function runningSection(seo: GeoSeo, name: string, variant: Variant): Section {
     );
   }
 
-  p.push(
-    variant === "hyrox"
-      ? `A Hyrox is eight kilometre runs with a station between each, which means the skill being tested is running on tired legs, not running fresh. Do at least one session a week where the running comes after the hard work rather than before it.`
-      : `Conditioning is where most general programmes quietly fail: it gets dropped first when the week gets busy, and it is the part that carries into everything else. Two sessions a week is enough, and one of them can be a walk with a hill in it.`,
-  );
+  /* Was a paragraph of general argument identical on every page of the family.
+     It earned nothing — shared text is credited to one URL and the rest get
+     none — and it crowded out the space where a place-specific fact could go.
+     Replaced with one derived from this town's own parkrun spread. */
+  if (pk.length >= 2) {
+    const spread = pk
+      .map((x) => x.distanceKm)
+      .filter((d): d is number => typeof d === "number");
+    if (spread.length >= 2) {
+      const near = Math.min(...spread);
+      const far = Math.max(...spread);
+      p.push(
+        far - near <= 5
+          ? `All of them sit within about ${Math.round(far)} km of each other, so you can rotate courses without the travel changing, which makes the times comparable.`
+          : `They spread from roughly ${Math.round(near)} km out to ${Math.round(far)} km, so pick one as the benchmark rather than running whichever is convenient — a different course is a different number.`,
+      );
+    }
+  }
 
   return {
     h: variant === "hyrox" ? `Where to run around ${name}` : `Getting your conditioning in around ${name}`,
@@ -143,9 +156,21 @@ function raceSection(seo: GeoSeo, name: string): Section | null {
     );
   }
 
-  p.push(
-    `Whichever race you enter, the date is what makes a programme a programme. Twelve weeks is the standard build, sixteen if you are starting from very little running, and every session lands on a calendar day rather than a week number.`,
-  );
+  /* Replaced a family-wide closer with something this town's own numbers say. */
+  const pkCount = seo.parkruns.length;
+  if (seo.hostsRace && pkCount) {
+    p.push(
+      `Having both a race and ${pkCount === 1 ? "a measured 5 km" : `${pkCount} measured 5 km courses`} on the doorstep is the combination that makes a season easy to plan: benchmark locally through the build, then race without travelling.`,
+    );
+  } else if (km > 160 && pkCount) {
+    p.push(
+      `With the race that far out, the ${pkCount === 1 ? "local parkrun" : `${pkCount} parkruns nearby`} ${pkCount === 1 ? "does" : "do"} more work than usual — it is the only regular measured effort you will get without a train ticket, so it carries the whole benchmarking job.`,
+    );
+  } else if (seo.gyms.length) {
+    p.push(
+      `Between the race and the ${seo.gyms.length} places to train listed here, the constraint is rarely equipment. It is the calendar, which is why the programme is dated to a day rather than numbered by week.`,
+    );
+  }
 
   return { h: `Racing from ${name}`, p };
 }
@@ -172,9 +197,29 @@ function progressSection(seo: GeoSeo, name: string): Section {
       : `With a smaller choice locally, the programme has to bend to the equipment rather than the other way round. That is a constraint, not a problem: almost every exercise has three substitutes, and the one you can actually do twice a week beats the one you can do occasionally.`,
   );
 
-  p.push(
-    `Progress gets measured rather than felt. A session log, the same benchmark repeated every few weeks, and a plan that responds to both — that is the whole mechanism, and it is the part that a coach charging by the hour cannot give you between appointments.`,
-  );
+  /* Third paragraph was family-wide boilerplate. Now derived from how tightly
+     this town's gyms cluster, which differs everywhere and is already held. */
+  const d = seo.gyms
+    .map((g) => g.distanceKm)
+    .filter((x): x is number => typeof x === "number");
+  if (d.length >= 3) {
+    const near = Math.min(...d);
+    const far = Math.max(...d);
+    p.push(
+      far - near <= 3
+        ? `The options here sit close together — from about ${near} km out to ${far} km — so switching is cheap if the first one does not suit. That is worth knowing before you sign a twelve-month contract rather than after.`
+        : `They are spread out, from roughly ${near} km to ${far} km from the centre, so the nearest is not automatically the right one. Ten minutes further for a floor you can actually train on is usually the better trade.`,
+    );
+  }
+  if (seo.chains.length) {
+    p.push(
+      `${list(seo.chains.slice(0, 2))} ${seo.chains.length === 1 ? "operates" : "operate"} here, which matters if you move or travel for work — the same membership tends to open the door elsewhere, and continuity beats equipment for anyone training year-round.`,
+    );
+  } else {
+    p.push(
+      `No national chain shows up in the listings here, so these are independents. That usually means shorter contracts and a better chance the person on the desk knows what a sled is for, and it does mean checking terms one at a time.`,
+    );
+  }
 
   return { h: `Making it stick in ${name}`, p };
 }

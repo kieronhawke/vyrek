@@ -1,0 +1,134 @@
+/* ─── Race report: print / PDF ─────────────────────────────────────────────
+   The report is one long web page on screen and a paginated A4 document on
+   paper, from the same markup. No server-side PDF, no dependency, and the text
+   comes out selectable rather than as a screenshot.
+
+   ORDER MATTERS IN THIS FILE. The screen variables are declared first and the
+   print overrides second, because both target `.results-report` with identical
+   specificity — `@media print` adds none. With the screen block last it won
+   even on paper, so every chart printed with its dark-UI palette: the band
+   ramp came out as five shades of near-black, which is both unreadable and a
+   full ink cartridge. This was only visible by generating an actual PDF. */
+
+/* ─── Screen ───────────────────────────────────────────────────────────────
+   Chart ink for the dark UI. Declared outside the print block so the charts
+   have values in both media, and scoped to the report so nothing else on the
+   site inherits them. */
+.results-report {
+  --report-ink: var(--suth-text-primary, #F5F5F3);
+  --report-dim: var(--suth-text-tertiary, #8A8A88);
+  --report-axis: #3A3A38;
+  --report-accent: var(--suth-accent, #A3E635);
+  --report-warn: var(--suth-warning, #F59E0B);
+  --report-base: var(--suth-bg-base, #0A0A0A);
+  --report-band-1: #A3E635;
+  --report-band-2: #7E9F3F;
+  --report-band-3: #56603A;
+  --report-band-4: #3A3A34;
+  --report-band-5: #262624;
+}
+
+@media print {
+  /* Chart ink.
+     The charts read these rather than hardcoding hex precisely so that this
+     block can repoint them at paper values. Without it every SVG would come
+     out near-white on white — the charts would simply vanish, which is the
+     failure mode that makes most "printable" dashboards useless. */
+  .results-report {
+    --report-ink: #101010;
+    --report-dim: #55554F;
+    --report-axis: #B8B8B2;
+    --report-accent: #4D7C0F;
+    --report-warn: #B45309;
+    --report-base: #FFFFFF;
+    --report-band-1: #A3C64A;
+    --report-band-2: #CBDE9A;
+    --report-band-3: #E4E7D5;
+    --report-band-4: #EFEFEA;
+    --report-band-5: #F8F8F5;
+  }
+
+  /* Each numbered section starts a page. A report that reflows into
+     half-sections is unusable as a reference document, which is the whole
+     point of printing it. */
+  .results-report .report-section {
+    break-before: page;
+    break-inside: auto;
+    margin-top: 0;
+  }
+
+  /* Nothing that must be read as a unit may be split across a page break. */
+  .results-report .report-figure-block,
+  .results-report .report-note,
+  .results-report .report-photo,
+  .results-report .report-band-row,
+  .results-report figure.report-chart {
+    break-inside: avoid;
+  }
+
+  .results-report table { break-inside: auto; }
+  .results-report thead { display: table-header-group; }
+  .results-report tr { break-inside: avoid; }
+
+  /* The cover sizes itself.
+     `min-height: 82vh` plus `break-after: page` produced three pages before a
+     word of content: the cover overflowed onto a second sheet because `vh` is
+     the full page box and the padding pushed past it, then the forced break
+     threw a third. Section 01 already carries `break-before: page`, so the
+     cover needs no break of its own — it ends where the first section starts. */
+  .results-report .report-cover {
+    border: 0;
+    min-height: 0;
+  }
+
+  /* The finish time is sized for a 1000px screen column and overran the A4
+     text width, clipping the last digit off the athlete's own time — the
+     single worst thing this page could get wrong. */
+  .results-report .report-cover .results-num {
+    font-size: 46pt;
+    line-height: 1;
+  }
+
+  /* Screen-only furniture. */
+  .results-report .report-toolbar,
+  .results-report nav[aria-label="Keep going"] {
+    display: none !important;
+  }
+
+  /* Photographs are expensive in ink and add nothing to a reference document,
+     but the cover earns its place — it is what makes the printout feel like a
+     report rather than a spreadsheet. The interstitials do not. */
+  .results-report .report-photo { display: none !important; }
+
+  /* Coach notes keep a tint so they read as commentary rather than as body
+     copy, but a light one — this is a document someone may print in bulk. */
+  .results-report .report-note {
+    background: #F6F6F3 !important;
+    border-color: #DDDDD9 !important;
+  }
+
+  .results-report .report-note img {
+    filter: grayscale(1);
+  }
+
+  /* Charts scale to the text column rather than to the viewport they were
+     laid out in. */
+  .results-report figure.report-chart svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* The band bars are the one chart where the fills carry the meaning, so the
+     colour-adjust hint from results-print.css matters most here. */
+  .results-report .report-bandbar svg rect {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* The heatmap's shading is computed inline with color-mix; keep it. */
+  .results-report .report-heatmap td {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+

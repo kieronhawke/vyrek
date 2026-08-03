@@ -990,3 +990,73 @@ decorative layer compete with the text that actually is the LCP element, and
 Now `loading="eager"`: it still loads immediately on the geo page, verified
 still painting, and now served through the optimiser at `w=640&q=75` instead of
 as a 400 KB original.
+
+### D94 — The race report, and why nothing in it is a black box
+The paid equivalent is $24.99 for sixteen pages, built on what it calls a
+"machine learning simulation engine". Ours is free, needs no account, and every
+figure states its derivation — because a number an athlete cannot interrogate
+is one they cannot train against, and because we will not claim a model we have
+not built.
+
+The anchor idea, which most of the module rests on: **an athlete's overall
+percentile is their standard, and a segment above it is a strength while one
+below it is a weakness.** One sentence, checkable, and it turns a wall of splits
+into "you are a 51st-percentile athlete running a 15th-percentile sled push".
+
+Two choices worth defending:
+
+**Band edges shift in percentile space, not in seconds.** Ten points is worth
+far more time on the sled push than on the ski erg, so a fixed ±5% in seconds
+would flatter the widest-spread stations and punish the tightest.
+
+**"Same-day potential" is capped at the athlete's own best station**, not at
+perfection. They demonstrated that level on the day, on those legs, so it is a
+target rather than a fantasy figure dressed as analysis.
+
+What we deliberately do *not* claim: per-transition roxzone splits (the feed
+publishes one total), and "fastest split in the field" (we hold the winner's
+splits, not per-segment records). The method section says both.
+
+### D95 — Coach notes are chosen by the numbers
+The paid reports put an Elite 15 athlete's commentary beside each chart, and it
+is the best thing about them — a chart says what happened, a coach says what to
+do next. Theirs is static: the same paragraph ships to an athlete who faded and
+one who paced it perfectly.
+
+Ours are rules with predicates, first match wins. A fading athlete reads about
+fading; an even-paced one reads about what to do with that strength instead.
+Priority order matters and is tested: a bad fade outranks an otherwise even
+variation, because it is the more important thing to say.
+
+### D96 — Three chart defects only a rendered PDF could find
+**The print palette lost to the screen palette.** Both blocks target
+`.results-report` with identical specificity — `@media print` adds none — and
+the screen block was last in the file. Every chart printed in its dark-UI
+colours: the five-band ramp came out as five shades of near-black, unreadable
+and a full ink cartridge. Source order is now load-bearing and the file says so.
+
+**The benchmark chart advertised data that did not exist.** Its legend offered
+"fastest split in the division" as a dashed series, drawn from the same numbers
+as the winner's solid line, so it rendered on top of it. It also asked the
+reader to compare two 400px bars by eye — the comparison a bar chart is worst
+at. It now draws only the *gap*, so the segments rank themselves.
+
+**A scale that looked shared and was not.** The band rows had a numeric axis on
+the first row only; each station is scaled to its own distribution, so 5:22 on
+the ski erg row and 5:22 on the sled row sit in different places. Removed — the
+marker carries the time and the row caption carries the verdict.
+
+### D97 — The cover photograph, twice
+First attempt: a bright start-line shot at 40% opacity under a top-to-bottom
+scrim on a near-black base. It loaded, painted, and rendered as a plain black
+rectangle. `geo-landing.tsx` carries a comment describing exactly this failure,
+which is how I recognised it — after making it.
+
+Dimming the image is the wrong lever; it flattens the whole frame to protect
+one corner. The scrim is shaped instead: near-opaque under the type on the
+left, almost absent on the right where the photograph is. The image runs at
+full opacity, and a test now asserts that.
+
+`min-height: 82vh` on the cover then produced two blank pages before any
+content, because `vh` is the full page box and the padding pushed past it. The
+first section already forces its own break, so the cover needs none.

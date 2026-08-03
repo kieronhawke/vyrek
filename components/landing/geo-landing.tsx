@@ -73,7 +73,9 @@ export function variantCopy(
         },
         {
           title: "Dated to your race, not week numbers",
-          body: "Tell us your race date and every session lands on a calendar day. Miss a week and Sunday's rebuild absorbs it. The plan bends, the race date doesn't.",
+          body: seo.nearestRace
+            ? `Your programme counts back from ${seo.nearestRace.city}. Miss a week and Sunday's rebuild absorbs it — the plan bends, the race date doesn't.`
+            : "Tell us your race date and every session lands on a calendar day. Miss a week and Sunday's rebuild absorbs it. The plan bends, the race date doesn't.",
           image: "/media/images/track/bend-lanes-bw.jpg",
           alt: "Numbered lanes on the track bend with two runners holding form",
         },
@@ -123,7 +125,9 @@ export function variantCopy(
       },
       {
         title: "It adapts every single week",
-        body: "Log your sessions and the plan recalibrates each Sunday. Strong week, next week pushes harder. Missed sessions, next week rebuilds with more recovery.",
+        body: seo.gyms.length
+          ? `Log your sessions and the plan recalibrates each Sunday, around whichever of the ${seo.gyms.length} places near ${name} you actually got to. Strong week, it pushes harder. Missed sessions, it rebuilds with more recovery.`
+          : "Log your sessions and the plan recalibrates each Sunday. Strong week, next week pushes harder. Missed sessions, next week rebuilds with more recovery.",
         image: "/media/images/track/straight-elevated-colour.jpg",
         alt: "Elevated view of two athletes striding down the track straight",
       },
