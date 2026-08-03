@@ -13,10 +13,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { QuizShell, withViewTransition } from "@/components/quiz-v3/quiz-shell";
 import { ContinueButton } from "@/components/quiz-v3/continue-button";
 import { WelcomeCarousel } from "@/components/quiz-v3/welcome-carousel";
-import {
-  PrimaryIntentScreen,
-  applyIntentToggle,
-} from "@/components/quiz-v3/screens/primary-intent";
+import { PrimaryIntentScreen } from "@/components/quiz-v3/screens/primary-intent";
 import { ExperienceScreen } from "@/components/quiz-v3/screens/experience";
 import { BestTimeScreen } from "@/components/quiz-v3/screens/best-time";
 import { ActivityBaselineScreen } from "@/components/quiz-v3/screens/activity-baseline";
@@ -109,6 +106,7 @@ import { useHaptics } from "@/hooks/use-haptics";
 import { capture } from "@/lib/posthog";
 import { supabaseBrowser } from "@/lib/supabase/client";
 import {
+  applyIntent,
   applyIntentPreSelect,
   applyProgrammeShortcutV3,
   applyRailPreSelect,
@@ -161,8 +159,16 @@ const SCREENS: ScreenDef[] = [
   { kind: "welcome" },
   // Skipped when the entry surface already told us the rail, so a visitor
   // from a personal-training page isn't asked what brought them here.
-  { kind: "primary-intent", showIf: (a) => !a.rail },
-  { kind: "goal", showIf: isBeginnerRail },
+  { kind: "primary-intent", showIf: (a) => !a.railLocked },
+  // Skipped when screen one already pinned the goal ("losing weight and
+  // getting stronger"), so nobody is asked what they want immediately
+  // after telling us. Keyed on the intent rather than on `goal` itself:
+  // `goal` is what this screen sets, so testing it would make the screen
+  // vanish as it was answered.
+  {
+    kind: "goal",
+    showIf: (a) => isBeginnerRail(a) && a.intent?.[0] !== "lose-weight",
+  },
   { kind: "starting-point", showIf: isBeginnerRail },
   { kind: "reassurance-1" },
   { kind: "tried-before", showIf: isBeginnerRail },
@@ -681,12 +687,20 @@ function QuizV3Inner() {
   }
   if (current.kind === "reassurance-1") {
     return (
-      <ReassuranceScreen1 onContinue={advance} onBack={backHandler} />
+      <ReassuranceScreen1
+        beginner={isBeginnerRail(state.answers)}
+        onContinue={advance}
+        onBack={backHandler}
+      />
     );
   }
   if (current.kind === "reassurance-2") {
     return (
-      <ReassuranceScreen2 onContinue={advance} onBack={backHandler} />
+      <ReassuranceScreen2
+        beginner={isBeginnerRail(state.answers)}
+        onContinue={advance}
+        onBack={backHandler}
+      />
     );
   }
   if (current.kind === "meet-ben") {
@@ -728,11 +742,12 @@ function QuizV3Inner() {
       >
         <PrimaryIntentScreen
           selected={intent}
-          onToggle={(v: IntentValue) => {
+          onChoose={(v: IntentValue) => {
             haptic("light");
-            setAnswer("intent", (curr) =>
-              applyIntentToggle(curr ?? [], v),
-            );
+            // mergeAnswers, not setAnswer: this one tap sets the intent, the
+            // rail it implies, and clears whatever belongs to the rail being
+            // left. See applyIntent in lib/quiz-flow.ts.
+            mergeAnswers(applyIntent(state.answers, v));
           }}
         />
       </QuizShell>

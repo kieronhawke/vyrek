@@ -30,7 +30,11 @@ export function OptionCard({
       aria-pressed={selected}
       className={cn(
         "relative flex w-full items-start gap-4 rounded-md border bg-suth-elevated px-5 py-4 text-left transition-[border,background,transform] duration-fast ease-out active:scale-[0.99]",
-        "min-h-[4rem]",
+        // 4rem is a thumb target. A mouse does not need one, and on a laptop
+        // the extra height is what pushed Continue below the fold on a screen
+        // with ten options.
+        "min-h-[4rem] lg:min-h-0 lg:py-3",
+        "hover:border-suth-border-strong",
         selected
           ? "border-suth-accent bg-suth-overlay text-suth-text"
           : "border-suth-border text-suth-text hover:border-suth-border-strong",

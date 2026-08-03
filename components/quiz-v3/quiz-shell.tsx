@@ -2,22 +2,39 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useEffect, type ReactNode } from "react";
-import { PlanPanel, PlanStrip } from "@/components/quiz-v3/plan-panel";
+import { QuizAside } from "@/components/quiz-v3/quiz-aside";
 import type { QuizAnswers } from "@/lib/quiz-flow";
 
 /**
  * Shared chrome for every quiz V3 screen except the welcome carousel,
- * interstitials, and the calculating cinematic (all full-bleed). Top bar:
+ * interstitials, and the calculating cinematic (all full-bleed).
  *
- *   ← back  ·  slim 2px progress (fills accent)  ·  X / N counter  ·  ✕ close
+ * THE DESKTOP LAYOUT, rebuilt 3 August 2026.
  *
- * `currentScreen` is 1-indexed for display; the orchestrator passes the index
- * into the visible-screen list.
+ * What it was: the phone layout stretched. The question sat in the top-left
+ * of an otherwise empty half-screen, the options were a narrow column with
+ * a thousand pixels of nothing beside them, the Continue button was a
+ * full-width pill trapped in a bar spanning only the left pane, and the
+ * right-hand third was a list of eight mostly-empty rows. It read as a
+ * mobile page somebody had forgotten to finish.
  *
- * Layout is two-pane from `md` up: question on the left, the live plan panel
- * on the right. Below `md` the panel becomes a collapsible strip under the
- * progress bar. Previously this was `max-w-md` at every breakpoint, which
- * made the whole quiz a phone-width column on desktop.
+ * What it is now:
+ *
+ *   ≥lg   a real split. Left is photography and the reason to carry on
+ *         (components/quiz-aside.tsx); right is the question column,
+ *         optically centred, capped at 34rem so the lines stay readable,
+ *         with the button directly under the options where the eye
+ *         already is. Nothing is pinned to the bottom of the viewport,
+ *         because on a desktop there is no keyboard covering it.
+ *
+ *   <lg   unchanged and still correct: full-width question, button in a
+ *         sticky footer above the home indicator, because on a phone the
+ *         thumb is at the bottom and the content can be taller than the
+ *         screen.
+ *
+ * The button is the clearest tell of the two modes. A 56px full-bleed pill
+ * is right under a thumb and absurd under a mouse, so on desktop it sizes
+ * to its content and sits inline.
  */
 export function QuizShell({
   currentScreen,
@@ -72,11 +89,19 @@ export function QuizShell({
   };
 
   return (
+    /* h-svh + overflow-hidden, not min-h-svh. With a minimum the whole page
+       grew when a screen ran tall and the document scrolled, so the question
+       column never took its own scrollbar and the Continue button sat just
+       under the fold with no obvious way down. Pinning the height moves the
+       overflow inside the column, where it belongs. */
     <div
-      className="flex min-h-svh flex-col bg-suth-base pt-[var(--safe-top)]"
+      className="quiz-viewport flex overflow-hidden bg-suth-base"
       style={{ viewTransitionName: "quiz-shell" }}
     >
-      <header className="grid h-14 shrink-0 grid-cols-[auto_1fr_auto] items-center gap-3 px-5">
+      <QuizAside answers={answers} />
+
+      <div className="flex h-full min-w-0 flex-1 flex-col pt-[var(--safe-top)]">
+      <header className="grid h-14 shrink-0 grid-cols-[auto_1fr_auto] items-center gap-3 px-5 lg:px-10">
         {hideBack || !onBack ? (
           <span className="h-10 w-10" />
         ) : (
@@ -116,28 +141,32 @@ export function QuizShell({
         </button>
       </header>
 
-      <div className="flex min-h-0 flex-1">
-        <div className="flex min-w-0 flex-1 flex-col">
-          {answers ? <PlanStrip answers={answers} /> : null}
+      {/* `my-auto` rather than `justify-center`: auto margins centre a short
+          question without clipping the top of a tall one. The bottom padding
+          below `lg` clears the sticky footer; from `lg` the button is inline
+          so there is nothing to clear. */}
+      <div className="flex flex-1 flex-col overflow-y-auto px-5 pb-32 md:px-8 lg:px-10 lg:pb-10">
+        <div className="mx-auto w-full max-w-md py-4 md:max-w-lg lg:my-auto lg:max-w-[34rem] lg:py-8">
+          {children}
 
-          <div className="flex-1 overflow-y-auto px-5 pb-32 md:flex md:flex-col md:px-8 md:pb-10">
-            {/* `my-auto` rather than `justify-center`: auto margins centre a
-                short question without clipping the top of a tall one. */}
-            <div className="mx-auto max-w-md pt-4 md:my-auto md:max-w-lg md:pt-8 lg:max-w-xl">
-              {children}
-            </div>
-          </div>
-
+          {/* Desktop: the button belongs with the options it confirms, not
+              in a bar at the foot of the window. */}
           {footer && (
-            <footer className="sticky bottom-0 border-t border-suth-border-subtle bg-suth-base/90 pb-[max(1rem,var(--safe-bottom))] pt-4 backdrop-blur-md md:pb-6">
-              <div className="mx-auto flex max-w-md items-center justify-stretch gap-3 px-5 md:max-w-lg md:px-8 lg:max-w-xl">
-                {footer}
-              </div>
-            </footer>
+            <div className="mt-7 hidden items-center gap-3 lg:flex [&>button]:h-12 [&>button]:w-auto [&>button]:min-w-[13rem]">
+              {footer}
+            </div>
           )}
         </div>
+      </div>
 
-        {answers ? <PlanPanel answers={answers} /> : null}
+      {/* Phone and tablet: sticky, full-bleed, thumb-height. */}
+      {footer && (
+        <footer className="sticky bottom-0 border-t border-suth-border-subtle bg-suth-base/90 pb-[max(1rem,var(--safe-bottom))] pt-4 backdrop-blur-md lg:hidden">
+          <div className="mx-auto flex max-w-md items-center justify-stretch gap-3 px-5 md:max-w-lg md:px-8">
+            {footer}
+          </div>
+        </footer>
+      )}
       </div>
 
       {/* Brand-themed leave-quiz confirm. Previously a native

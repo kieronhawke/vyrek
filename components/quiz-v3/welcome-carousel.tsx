@@ -12,14 +12,27 @@ export type WelcomeSlide = {
 
 const SLIDE_DURATION_MS = 3200;
 
+/**
+ * The first thing anybody entering the funnel reads.
+ *
+ * It used to open "Hyrox training, personalised in three minutes" and then
+ * "calibrated to your kit and race date". Both are true of half the people
+ * who arrive. The other half have come to get fit, have never heard of
+ * HYROX, and were told on the entry screen that this is a racing website
+ * before being asked a single question. Screen one now offers them a door;
+ * it is no use if screen zero has already shown them the wrong building.
+ *
+ * So neither slide names a sport or a race. They name the thing both
+ * audiences actually want, which is a plan that fits them.
+ */
 export const WELCOME_SLIDES: WelcomeSlide[] = [
   {
     image: "/media/images/track/programme-first-race.jpg",
-    headline: "Hyrox training, personalised in three minutes.",
+    headline: "Training built around you, not a template.",
   },
   {
     image: "/media/images/track/straight-elevated-bw.jpg",
-    headline: "Dated weekly plan, calibrated to your kit and race date.",
+    headline: "Day one or race day. Same coach.",
   },
 ];
 
@@ -77,7 +90,10 @@ export function WelcomeCarousel({
   return (
     <section
       aria-labelledby="welcome-heading"
-      className="relative isolate min-h-svh overflow-hidden bg-suth-base"
+      /* h-svh, not min-h-svh: with a minimum, a headline that wrapped to five
+         lines on a laptop grew the section past the viewport and the last
+         line and the CTA sat below the fold on the entry screen. */
+      className="quiz-viewport relative isolate overflow-hidden bg-suth-base"
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
@@ -145,10 +161,12 @@ export function WelcomeCarousel({
           and on a phone it wraps across the middle of the screen, so tapping
           the centre to advance hit the headline and did nothing. A dead zone
           over the biggest tap target on the entry screen. */}
-      <div className="pointer-events-none relative z-10 mx-auto flex min-h-svh w-full max-w-lg flex-col justify-end px-6 pb-[max(2rem,calc(var(--safe-bottom)+2rem))] md:mx-0 md:max-w-xl md:px-12">
+      <div className="pointer-events-none relative z-10 mx-auto flex h-full w-full max-w-lg flex-col justify-end px-6 pb-[max(2rem,calc(var(--safe-bottom)+2rem))] md:mx-0 md:max-w-xl md:px-12 lg:px-16 lg:pb-16">
         <h1
           id="welcome-heading"
-          className="max-w-[14ch] text-4xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-6xl"
+          /* Capped at 5xl from lg. 6xl on a 1440px screen put four words on
+             a line and pushed the CTA off the bottom of a laptop. */
+          className="max-w-[15ch] text-balance text-4xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-6xl lg:text-5xl xl:text-6xl"
         >
           {slide?.headline}
         </h1>
