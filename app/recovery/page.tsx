@@ -43,6 +43,21 @@ const ENTRIES: readonly HubEntry[] = [
     kicker: "Load",
     blurb: "Signs you are training too often, and why the fix is a lighter week.",
   },
+  {
+    slug: "common-hyrox-injuries-and-the-training-that-prevents-them",
+    kicker: "Injury",
+    blurb: "Where they cluster, and the load management that prevents most of them.",
+  },
+  {
+    slug: "hyrox-deload-week-when-to-take-one-and-what-to-do",
+    kicker: "Deload",
+    blurb: "Not a rest week and not a taper. What to cut and what to keep.",
+  },
+  {
+    slug: "doms-after-hyrox-what-helps-and-what-does-not",
+    kicker: "Soreness",
+    blurb: "Why it is your quads, and which recovery products are worth the money.",
+  },
 ];
 
 export default function RecoveryHub() {
