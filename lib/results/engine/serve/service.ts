@@ -34,6 +34,7 @@ import { buildDistribution, type Distribution } from "../../percentiles";
 import type { ResultsRepository } from "../repository";
 import type { EngineEvent, EngineEventStatus, EngineResult } from "../types";
 import { toDivisionCode, toDivisionKey } from "./divisions";
+import { readStoredRecords } from "../sync/records";
 
 const msToSeconds = (ms: number | null | undefined): number =>
   ms === null || ms === undefined ? 0 : Math.round(ms / 1000);
@@ -377,11 +378,16 @@ export class ResultsService implements ResultsDataSource {
     // timeout, so `/rankings/world-records` could not have rendered in
     // production; the resilient wrapper would have caught the timeout and
     // quietly served demo records instead.
-    const [records, events] = await Promise.all([
-      this.repo.getDivisionRecords(),
+    const [stored, events] = await Promise.all([
+      readStoredRecords(this.repo),
       // One read for the whole catalogue, rather than a lookup per record.
       this.repo.listEvents(),
     ]);
+
+    // Falling back to deriving it means the very first request after a deploy
+    // pays the full cost, but a board that has never been computed is better
+    // served slowly than not at all.
+    const records = stored?.records ?? (await this.repo.getDivisionRecords());
     const eventById = new Map(events.map((e) => [e.id, e]));
 
     const entries = await Promise.all(

@@ -25,6 +25,7 @@ import { pingHeartbeat } from "../ops/heartbeat";
 import { recomputeDistributionsForEvent } from "./distributions";
 import { enrichEventMetadata } from "./event-metadata";
 import { backfillEventTotals } from "./event-totals";
+import { recomputeRecords } from "./records";
 
 export type CatalogResult = {
   seasonsScanned: string[];
@@ -148,6 +149,10 @@ export async function runCatalogSync(
     // and it repairs any event whose divisions were synced by a path that did
     // not roll them up, rather than relying on that path never existing.
     await backfillEventTotals(repo);
+
+    // The record board, precomputed. It changes only when an event finalises,
+    // and deriving it per request timed out and degraded the page to demo data.
+    await recomputeRecords(repo, now);
 
     // Pull full results for anything that has finalised since the last run.
     const finalised = (await repo.listEvents({ status: "final" }))
