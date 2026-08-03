@@ -1,20 +1,62 @@
-# Results API contract
+# Results API — how the frontend consumes it
 
-What the API must serve for the Results platform to run on it.
+The v1 API already exists in this repo at `app/api/results/v1/*`, built by the
+data-engine lane. `lib/results/api-source.ts` is aligned to those exact routes.
 
 ```bash
 RESULTS_SOURCE=api
-RESULTS_API_URL=https://api.suthperformance.com/v1
+RESULTS_API_URL=https://www.suthperformance.com/api/results/v1
 RESULTS_API_KEY=…            # optional, sent as Authorization: Bearer
 ```
 
-Set those in Vercel and redeploy. **No code changes** — `lib/results/api-source.ts`
-already implements every call. The TypeScript types are the source of truth and
-live in `lib/results/source.ts`; this document is the same thing in prose.
+Set those and redeploy. **No code changes.**
+
+> Server-rendering against the same deployment adds a network hop for no gain.
+> Use `RESULTS_SOURCE=api` when the frontend is consumed from a *different*
+> deployment, or when testing the adapter. Same-deployment rendering should use
+> the direct source (`NEXT_PUBLIC_DATA_MODE=live`).
+
+## The envelope
+
+**Every v1 response is wrapped.** The adapter unwraps `data` and keeps the
+attribution:
+
+```json
+{ "data": …,
+  "attribution": { "timing": "mika:Timing", "organiser": "HYROX",
+                   "note": "Results data is timed and published by mika:Timing for HYROX.",
+                   "url": "https://results.hyrox.com/" },
+  "mode": "demo" }
+```
+
+**Attribution is not decorative.** The underlying results are mika:Timing's
+work published for HYROX, and any page showing them has to credit that.
+`lastAttribution()` in the adapter exposes whatever the API actually returned,
+so the credit follows the data rather than being hard-coded.
+
+## Live route map
+
+| Frontend method | v1 route |
+|---|---|
+| `listEvents` | `GET /events?season&region&status` |
+| `getEvent` | `GET /event/{slug}` |
+| `getRanking` | `GET /ranking/{event}-{division}?cursor&ageGroup&q&limit` |
+| `getResult` | `GET /result/{id}` |
+| `getAthlete` | `GET /athlete/{slug}` |
+| `getStarters` | `GET /starters/{slug}` |
+| `searchAll` | `GET /search?q=` |
+| `getRecords` | `GET /records` |
+| `getDivisionFinishTimes` | `GET /finish-times?event&division` |
+| `getStationDistribution` | `GET /distribution?station&division` |
+| — | `GET /health` — store kind, reachability, event count, ingestion state |
+
+`limit` is capped at **500** server-side. The adapter asks for 500 rather than
+pretending to request everything, so a "give me the whole division" call
+returns a known page rather than a silent truncation.
 
 ---
 
-## Ground rules
+## Payload shapes
 
 - **JSON only.** Every response is `application/json`.
 - **404 means "does not exist"** and renders the not-found page. Any other
@@ -41,7 +83,7 @@ live in `lib/results/source.ts`; this document is the same thing in prose.
 ISO-3166 alpha-2 — it drives the flag. `iata` drives the city mark; if you have
 no code for a venue, send the first three letters of the city.
 
-### `GET /events/{slug}`
+### `GET /event/{slug}`
 `EventSummary` plus `divisions: EventDivisionSummary[]`.
 
 ```json
@@ -55,8 +97,8 @@ no code for a venue, send the first three letters of the city.
 `divisionCode` must be one of the codes in `lib/results/types.ts`. Translate
 your own naming at the boundary — the UI never sees source codes.
 
-### `GET /events/{slug}/rankings/{division}?cursor&ageGroup&q&limit`
-`RankingPage`. `limit=all` requests the whole division.
+### `GET /ranking/{event}-{division}?cursor&ageGroup&q&limit`
+`RankingPage`. `limit` is capped at 500 server-side.
 
 ```json
 { "eventSlug": "…", "eventName": "…", "division": "hyrox-men",
@@ -71,7 +113,7 @@ your own naming at the boundary — the UI never sees source codes.
 `gapToLeaderSeconds` may be computed by you or left at 0 — the UI derives it
 either way. `id` must be **stable**: it is the permanent URL of that race.
 
-### `GET /results/{id}`
+### `GET /result/{id}`
 `ResultDetail` — one race, fully split, plus the division averages.
 
 ```json
@@ -91,7 +133,7 @@ either way. `id` must be **stable**: it is the permanent URL of that race.
 `divisionAverage` should be **precomputed per event and division**. Do not
 aggregate it per request — that is what the whole analysis layer reads.
 
-### `GET /athletes/{slug}`
+### `GET /athlete/{slug}`
 `AthleteProfile` with the full race history.
 
 ```json
@@ -104,7 +146,7 @@ aggregate it per request — that is what the whole analysis layer reads.
               "finishSeconds": 5490, "resultId": "…" }]}
 ```
 
-### `GET /events/{slug}/starters`
+### `GET /starters/{slug}`
 `StartList` — waves with their athletes.
 
 ### `GET /search?q=`
@@ -112,7 +154,7 @@ aggregate it per request — that is what the whole analysis layer reads.
 to be fast; a stale answer beats a slow one. Ranking is applied client-side by
 `lib/results/search.ts`, so return generous matches rather than a strict subset.
 
-### `GET /events/{slug}/divisions/{division}/finish-times`
+### `GET /finish-times?event&division`
 `number[]`, **ascending**. Just the finish times.
 
 Its own endpoint because result pages call it on every render and building it
@@ -124,13 +166,13 @@ from result rows cost 5.5s LCP. Serve it from an indexed column.
 Flag whether records are **ratified**. An unratified record published as fact
 is a correction waiting to happen.
 
-### `GET /distributions/{division}/{station}`
+### `GET /distribution?station&division`
 Either a `Distribution` object or a raw `number[]` of samples — whichever is
 cheaper for you. The app builds the histogram either way.
 
 ---
 
-## Before you build it
+## The one decision that is expensive to change
 
 **Decide athlete identity first.** Every athlete URL depends on `slug` being
 stable across events and seasons. Timing exports usually key on name + DOB
