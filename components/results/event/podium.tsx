@@ -22,7 +22,16 @@ export function PodiumCard({
   if (rows.length === 0) return null;
 
   return (
-    <div className="rounded-md border border-suth-border-subtle bg-suth-elevated p-4">
+    // `min-w-0` is load-bearing, not decoration.
+    //
+    // This card is a grid item, and a grid item defaults to `min-width: auto` —
+    // it refuses to shrink below its content's min-content width. The athlete
+    // name inside already has `min-w-0 truncate`, but that never got a chance
+    // to apply: rather than the name truncating, the whole card grew to 375px
+    // inside a 280px track and pushed the page 75px wide at 320, 5px at 390.
+    // Every phone narrower than about 400px scrolled sideways on every event
+    // page. Letting the card shrink is what makes the truncate downstream work.
+    <div className="min-w-0 rounded-md border border-suth-border-subtle bg-suth-elevated p-4">
       <MicroLabel>{divisionLabel.replace("HYROX ", "")}</MicroLabel>
 
       <ol className="mt-3 space-y-2.5">

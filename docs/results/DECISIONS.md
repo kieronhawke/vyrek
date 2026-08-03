@@ -905,3 +905,52 @@ links — the URL is held as character codes in a `data-silver` attribute —
 showed pages 2 and 3 have zero overlap with page 1. The source was correct; the
 measurement was not. Worth remembering before designing around someone else's
 supposed bug.
+
+### D89 — Every phone under ~400px scrolled sideways, and nothing was watching
+An adversarial sweep across 25 routes × 5 widths found horizontal overflow on
+the event, result and athlete pages at 320px — the event page by 75px, and
+still 5px at 390, which is most iPhones in use.
+
+One root cause, three symptoms: **a grid item defaults to `min-width: auto`**
+and refuses to shrink below its content's min-content width. The podium card's
+athlete name already had `min-w-0 truncate`, but that never got a chance to
+apply — instead of the name truncating, the whole card grew to 375px inside a
+280px track. A second variant of the same thing: an export-button row carried
+`shrink-0`, so its own `flex-wrap` never received a constrained width to wrap
+into and laid out on one line at 356px.
+
+Eleven grids across the section had the latent version of this — `grid gap-N`
+with no explicit `grid-cols-1`, which leaves an implicit `auto` track that
+cannot clamp. All now declare `grid-cols-1`.
+
+Nothing in the suite had ever read `document.scrollWidth`, which is why all of
+it shipped. There is now a 320px overflow guard over eleven routes, and it
+names the deepest offending element rather than an ancestor — an ancestor is
+only wide because a descendant is, and reporting it sends you to the wrong file.
+
+### D90 — Hit area and visual size are not the same thing
+The consent bar's buttons measure 69x32 and 50x18. It is the first control
+every visitor meets and the most-tapped UI on the site, and "Manage" was the
+smallest target anywhere in it.
+
+Growing the bar was not an option: it is deliberately slim because a tall
+banner shifts the layout, which this repo has already paid for once. So the
+touch target is extended with a pseudo-element instead — `after:-inset-y-2` on
+the pills, `-inset-y-[15px]` on the text link — reaching ~48px without moving a
+pixel. The 8px gap between the pills absorbs the 4px each side, so the expanded
+areas meet without overlapping and neither steals the other's taps.
+
+The test clicks 7px *below* the visible pill and asserts the banner dismisses,
+because measuring the element box would prove nothing about a pseudo-element.
+
+### D91 — The global 48px tap rule silently does nothing to inline links
+`globals.css` sets `min-height: 48px` on every `a` and `button`. It has no
+effect on a **non-replaced inline element**, and a bare `<a>` is inline — so
+the rule only ever applied to links that were already block, flex or
+inline-block. Three pages had grown their own "keep going" list of bare text
+links, each rendering 17px tall.
+
+They are now one `RelatedLinks` component rendering chips: `inline-flex` gives
+the rule something to apply to, and a bordered target is easier to aim at than
+underlined text in a wrap-flow list. It reads better too — a row of related
+destinations should look like navigation, not like a sentence containing links.

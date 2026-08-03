@@ -34,7 +34,7 @@ export default async function RankingsIndex() {
         </p>
       </header>
 
-      <div className="mt-6 grid gap-3 md:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
         <BoardLink
           href="/rankings/world-records"
           icon={<Trophy className="size-5" aria-hidden />}

@@ -592,7 +592,7 @@ function SplitPanel({ id, onResize }: { id: string; onResize?: (h: number) => vo
         </span>
       </div>
 
-      <ul className="mt-2 grid gap-x-8 gap-y-1.5 lg:grid-cols-2">
+      <ul className="mt-2 grid grid-cols-1 gap-x-8 gap-y-1.5 lg:grid-cols-2">
         {STATION_IDS.map((station, i) => (
           <SplitBar
             key={station}

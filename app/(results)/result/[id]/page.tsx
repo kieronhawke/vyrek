@@ -156,7 +156,14 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
             {result.eventName} · {division} · {result.ageGroup}
           </p>
         </div>
-        <div className="flex shrink-0 flex-wrap items-center gap-2">
+        {/* Not `shrink-0`.
+         *
+         * This sits in a `flex-wrap` header beside the athlete's name. With
+         * `shrink-0` it refused to narrow, so its own `flex-wrap` never got a
+         * constrained width to wrap into — it laid the buttons out on one line
+         * at 356px inside a 280px header and pushed every phone under ~380px
+         * sideways. Allowing it to shrink is what lets its children wrap. */}
+        <div className="flex flex-wrap items-center gap-2">
         <ShareResult
           athleteName={result.athleteName}
           eventName={result.eventName}
@@ -226,7 +233,7 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
         />
       </Reveal>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
         <PacingChart
           runs={result.runs}
           averageRuns={result.divisionAverage.runs}
@@ -235,7 +242,7 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
         <StationBars standings={standings} />
       </div>
 
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
         <section className="rounded-md border border-suth-border-subtle bg-suth-elevated p-4">
           <MicroLabel>[ ROXZONE ]</MicroLabel>
           <p className="mt-2 flex items-baseline gap-2">

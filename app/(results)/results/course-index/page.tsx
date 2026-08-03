@@ -10,6 +10,7 @@ import {
 import { breadcrumbList, jsonLd } from "@/lib/results/structured-data";
 import { formatTime, formatCount } from "@/lib/results/format";
 import { FaqSection } from "@/components/results/ui/faq-section";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 import { MicroLabel, StatTile, Nationality, EmptyState } from "@/components/results/ui/primitives";
 import { cn } from "@/lib/utils";
 
@@ -228,7 +229,7 @@ export default async function CourseIndexPage() {
             >
               How to read this
             </h2>
-            <div className="mt-3 grid gap-3 md:grid-cols-3">
+            <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-3">
               <ReadingNote
                 signal="course"
                 title="Both columns moved"
@@ -358,17 +359,14 @@ export default async function CourseIndexPage() {
 
       <FaqSection faqs={faqs} title="Course speed: common questions" />
 
-      <nav className="mt-10 border-t border-suth-border-subtle pt-5" aria-label="Related">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-          Keep going
-        </h2>
-        <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-          <li><Link href="/results/city" className="text-suth-accent hover:underline">Results by city</Link></li>
-          <li><Link href="/tools/good-hyrox-time" className="text-suth-accent hover:underline">Is my HYROX time good?</Link></li>
-          <li><Link href="/simulator" className="text-suth-accent hover:underline">Race time simulator</Link></li>
-          <li><Link href="/rankings/world-records" className="text-suth-accent hover:underline">World records</Link></li>
-        </ul>
-      </nav>
+      <RelatedLinks
+        links={[
+          { href: "/results/city", label: "Results by city" },
+          { href: "/tools/good-hyrox-time", label: "Is my HYROX time good?" },
+          { href: "/simulator", label: "Race time simulator" },
+          { href: "/rankings/world-records", label: "World records" },
+        ]}
+      />
     </div>
   );
 }

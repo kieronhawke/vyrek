@@ -120,7 +120,17 @@ export function CookieBanner() {
               <button
                 type="button"
                 onClick={() => setPrefsOpen(true)}
-                className="!min-h-0 text-suth-text-tertiary underline-offset-2 hover:text-suth-text hover:underline"
+                /* The pseudo-element extends the touch target to ~48px
+                   without changing a pixel of the layout. This bar is
+                   deliberately slim to keep it out of the way and to avoid
+                   the layout shift a tall banner causes, so growing it was
+                   not an option — but "Manage" rendered 50x18, which is the
+                   smallest tap target on the site, on the one control every
+                   visitor meets first. Hit area and visual size do not have
+                   to be the same thing. */
+                className="relative !min-h-0 text-suth-text-tertiary underline-offset-2
+                           after:absolute after:-inset-x-1 after:-inset-y-[15px] after:content-['']
+                           hover:text-suth-text hover:underline"
               >
                 Manage
               </button>
@@ -128,14 +138,14 @@ export function CookieBanner() {
             <button
               type="button"
               onClick={rejectAll}
-              className="!min-h-0 inline-flex h-8 shrink-0 items-center rounded-pill border border-suth-border bg-transparent px-3 text-xs font-medium text-suth-text-secondary transition-colors hover:text-suth-text active:scale-[0.97]"
+              className="relative !min-h-0 inline-flex h-8 shrink-0 items-center rounded-pill border border-suth-border bg-transparent px-3 after:absolute after:-inset-x-1 after:-inset-y-2 after:content-[''] text-xs font-medium text-suth-text-secondary transition-colors hover:text-suth-text active:scale-[0.97]"
             >
               Reject
             </button>
             <button
               type="button"
               onClick={acceptAll}
-              className="!min-h-0 inline-flex h-8 shrink-0 items-center rounded-pill bg-suth-accent px-3.5 text-xs font-semibold text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover active:scale-[0.97]"
+              className="relative !min-h-0 inline-flex h-8 shrink-0 items-center rounded-pill bg-suth-accent px-3.5 after:absolute after:-inset-x-1 after:-inset-y-2 after:content-[''] text-xs font-semibold text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover active:scale-[0.97]"
             >
               Accept
             </button>
