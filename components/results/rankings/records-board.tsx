@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { formatTime, formatRelativeDate } from "@/lib/results/format";
 import { Nationality, MicroLabel, EmptyState } from "../ui/primitives";
+import { RankMark } from "../ui/rank-mark";
 import type { RecordEntry } from "@/lib/results/source";
 
 /**
@@ -32,8 +33,9 @@ export function RecordsBoard({
         >
           <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
             <MicroLabel>{entry.divisionLabel.replace("HYROX ", "")}</MicroLabel>
-            <span className="results-num text-[11px] text-suth-text-tertiary">
-              #{i + 1} fastest
+            <span className="flex items-center gap-1.5 text-[11px] text-suth-text-tertiary">
+              <RankMark rank={i + 1} />
+              fastest
             </span>
           </div>
 

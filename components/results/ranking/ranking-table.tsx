@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Search, ChevronDown, X, LocateFixed } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Time, Delta, Nationality, MicroLabel, Skeleton } from "../ui/primitives";
+import { RankMark } from "../ui/rank-mark";
 import { rankBand } from "@/lib/results/percentiles";
 import { AGE_GROUPS, STATION_IDS, STATION_LABEL } from "@/lib/results/model";
 import { formatSplit, formatCount } from "@/lib/results/format";
@@ -417,8 +418,8 @@ function Row({
   return (
     <div className={cn("border-b border-suth-border-subtle bg-suth-base", `results-band-${band}`)}>
       <div className="flex h-11 items-center gap-3 overflow-hidden px-4">
-        <span className="results-num w-12 shrink-0 self-center text-sm leading-4 text-suth-text-tertiary">
-          {rank}
+        <span className="flex w-12 shrink-0 self-center">
+          <RankMark rank={rank} />
         </span>
         <span className="flex min-w-0 flex-1 select-none items-center gap-2 self-center">
           <Nationality iso={iso} />
@@ -487,7 +488,7 @@ function MobileCard({
         className="flex min-h-[56px] w-full items-center gap-3 px-3 py-2.5 text-left
                    focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-suth-accent"
       >
-        <span className="results-num w-8 shrink-0 text-sm text-suth-text-tertiary">{rank}</span>
+        <span className="flex w-8 shrink-0 justify-start"><RankMark rank={rank} /></span>
         <Nationality iso={iso} />
         <span className="min-w-0 flex-1">
           <span className="block truncate text-sm text-suth-text">{name}</span>

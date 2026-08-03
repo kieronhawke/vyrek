@@ -4,7 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search, X, CornerDownLeft, Clock, Percent, Target, CalendarDays } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { flagEmoji, formatTime } from "@/lib/results/format";
+import { formatTime } from "@/lib/results/format";
+import { Flag } from "../ui/flag";
 import { detectIntent } from "@/lib/results/search";
 import type { SearchResults } from "@/lib/results/source";
 
@@ -269,7 +270,7 @@ function SearchPanel({ onClose }: { onClose: () => void }) {
                       onSelect={() => commit({ kind: "athlete", ...a })}
                       onHover={() => setActive(i)}
                     >
-                      <span aria-hidden className="text-sm">{flagEmoji(a.countryIso)}</span>
+                      <Flag iso={a.countryIso} />
                       <span className="flex-1 truncate text-suth-text">{a.name}</span>
                       <span className="results-num text-[11px] text-suth-text-tertiary">
                         {a.raceCount} {a.raceCount === 1 ? "race" : "races"}

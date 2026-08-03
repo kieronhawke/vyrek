@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
-import { formatTime, formatSplit, formatDelta, flagEmoji, nationCode } from "@/lib/results/format";
+import { formatTime, formatSplit, formatDelta, nationCode } from "@/lib/results/format";
+import { Flag } from "./flag";
 import type { EventStatus } from "@/lib/results/types";
 import type { RankBand } from "@/lib/results/percentiles";
 
@@ -139,20 +140,17 @@ export function StatusBadge({ status, className }: { status: EventStatus; classN
 /**
  * Flag plus an accessible nation code.
  *
- * The flag sits in a fixed 1rem box with its line box clamped. Emoji fonts
- * report far larger ascent/descent than the nominal font size, and left
- * unconstrained the glyph inflates its whole flex row — which is exactly what
- * pushed athlete names out of alignment on the first pass of the ranking table.
+ * Uses inline SVG rather than emoji: Windows ships no flag glyphs, so every
+ * emoji flag rendered there as a bare letter pair. SVG also has a fixed box,
+ * which matters — emoji fonts report far larger ascent and descent than their
+ * nominal size, and unconstrained the glyph inflated its whole flex row. That
+ * is what pushed athlete names 24px out of alignment on the first pass of the
+ * ranking table.
  */
 export function Nationality({ iso, withCode = false }: { iso: string; withCode?: boolean }) {
   return (
     <span className="inline-flex shrink-0 items-center gap-1.5">
-      <span
-        aria-hidden
-        className="block h-4 w-[1.2rem] shrink-0 overflow-hidden text-[13px] leading-4"
-      >
-        {flagEmoji(iso)}
-      </span>
+      <Flag iso={iso} />
       <span className="sr-only">{nationCode(iso)}</span>
       {withCode ? (
         <span className="results-num text-[11px] leading-4 text-suth-text-tertiary">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Time, StatusBadge, MicroLabel, Nationality } from "./ui/primitives";
+import { Time, StatusBadge, MicroLabel } from "./ui/primitives";
+import { CityMark } from "./ui/city-mark";
 import { formatCount, formatRelativeDate } from "@/lib/results/format";
 import type { EventSummary, EventDivisionSummary } from "@/lib/results/source";
 
@@ -24,19 +25,21 @@ export function EventTile({
     <Link
       href={`/event/${event.slug}`}
       className={cn(
-        "group flex flex-col gap-3 rounded-md border border-suth-border-subtle",
-        "bg-suth-elevated p-4 transition-colors hover:border-suth-border-strong",
+        "group flex flex-col overflow-hidden rounded-md border border-suth-border-subtle",
+        "bg-suth-elevated transition-colors hover:border-suth-border-strong",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-suth-accent",
         className,
       )}
     >
+      <CityMark iata={event.iata} city={event.city} countryIso={event.countryIso} />
+
+      <div className="flex flex-1 flex-col gap-3 p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <h3 className="truncate text-[15px] font-semibold text-suth-text">
             {event.name}
           </h3>
           <p className="mt-0.5 flex items-center gap-1.5 text-xs text-suth-text-secondary">
-            <Nationality iso={event.countryIso} />
             <span className="truncate">{event.city}</span>
             <span aria-hidden className="text-suth-text-disabled">·</span>
             <span className="whitespace-nowrap">{formatRelativeDate(event.startDate, now)}</span>
@@ -67,6 +70,7 @@ export function EventTile({
                          transition-colors group-hover:text-suth-accent">
           {event.status === "upcoming" ? "Start lists →" : "Results →"}
         </span>
+      </div>
       </div>
     </Link>
   );

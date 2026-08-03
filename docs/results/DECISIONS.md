@@ -275,3 +275,41 @@ suspected and is 2.5KB. The actual causes were a transitioned `padding-top` on `
 a variable set after mount (CLS), and 3,221 row objects built per request (LCP). Both found by
 capturing `layout-shift` entries with their sources and by reading the network log, not by
 inspection.
+
+### D59 — Emoji flags were broken on Windows
+Every flag rendered as a bare letter pair on Windows: Chrome and Edge there ship no flag glyphs
+at all, so a British athlete showed as "GB" in a box on most desktop visits. Replaced with
+inline SVG in `components/results/ui/flag.tsx` — simple geometric approximations drawn to read
+at 16px in a dense row, no sprite to fetch, fixed box. An unmapped nation falls back to its
+three-letter code in a chip rather than a blank space.
+
+### D60 — City identity without city photography
+The reference site puts a desaturated city photograph behind every event card, and it is the
+single biggest reason their calendar looks like a product. We have no licensed photography of
+London or Hong Kong and taking theirs is not an option. `CityMark` is a typographic identity
+instead: the IATA code set large (airport codes are how this sport already talks about its
+calendar), a deterministic wash derived from that code, and the flag. It accepts a `photo` prop
+that swaps the wash for a real image in the same layout — so dropping photography in later is a
+prop, not a redesign.
+
+Hues step by the golden angle rather than plain modulo: modulo put Berlin and Manchester within
+a few degrees and the calendar looked like it had two of the same card.
+
+### D61 — Podium marks frame the numeral, they do not replace it
+The reference site stylises its top-three numerals into custom glyphs. Ours keeps a plain
+tabular numeral — a leaderboard where you cannot read the rank has failed — and puts the meaning
+in the frame: filled chartreuse for first, accent border for second, neutral border for third,
+nothing below that. Position, weight and frame all differ, so it survives greyscale.
+
+### D62 — Age and ability are correlated in the demo data
+A 60-64 athlete finished third of 3,221 in Open Men. Age group and ability were sampled
+independently, which is statistically valid and physically absurd. The fastest few percent of
+any field now draw from the younger distribution regardless of which division they entered.
+Caught by looking at a screenshot of the ranking, not by any test — so there is one now.
+
+### D63 — The API adapter exists and is proven before the API does
+`lib/results/api-source.ts` implements the whole `ResultsDataSource` over REST, with per-request
+timeouts, graceful degradation (a failed search returns no matches rather than a 500) and
+revalidation windows tuned per endpoint. Verified by standing up a mock API and running the app
+against it end to end with zero errors logged. `RESULTS_SOURCE=api` plus `RESULTS_API_URL`
+switches to it with no code change. Contract in `API-CONTRACT.md`.

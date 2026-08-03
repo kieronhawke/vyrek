@@ -51,6 +51,22 @@ async function open(page: Page, path: string) {
   return response;
 }
 
+/**
+ * Opens the results search via the hotkey.
+ *
+ * The binding attaches on hydration, so a fixed sleep races it on a slow run.
+ * This presses and retries until the dialog is actually there, which tests the
+ * real affordance without pinning the test to a magic number.
+ */
+async function openSearch(page: Page) {
+  const box = page.getByPlaceholder("Search athletes and events");
+  await expect(async () => {
+    await page.keyboard.press("ControlOrMeta+k");
+    await expect(box).toBeVisible({ timeout: 1500 });
+  }).toPass({ timeout: 20_000 });
+  return box;
+}
+
 /** Reads a Playwright download into a string. */
 async function readDownload(download: import("@playwright/test").Download): Promise<string> {
   const stream = await download.createReadStream();
@@ -154,8 +170,7 @@ test.describe("share", () => {
 test.describe("search", () => {
   test("⌘K opens the results search, and only that", async ({ page }) => {
     await open(page, "/results");
-    await page.waitForTimeout(1500); // the hotkey binds on hydration
-    await page.keyboard.press("ControlOrMeta+k");
+    await openSearch(page);
 
     // The site has its own CommandPalette on the same combination. Exactly one
     // dialog must open, and it must be ours.
@@ -165,9 +180,7 @@ test.describe("search", () => {
 
   test("understands a goal and a time, not just names", async ({ page }) => {
     await open(page, "/results");
-    await page.waitForTimeout(1500);
-    await page.keyboard.press("ControlOrMeta+k");
-    const box = page.getByPlaceholder("Search athletes and events");
+    const box = await openSearch(page);
 
     await box.fill("sub 90");
     await expect(page.getByText("Build a Sub 90 race")).toBeVisible();
@@ -178,9 +191,7 @@ test.describe("search", () => {
 
   test("ranks an exact name first and rejects nonsense", async ({ page }) => {
     await open(page, "/results");
-    await page.waitForTimeout(1500);
-    await page.keyboard.press("ControlOrMeta+k");
-    const box = page.getByPlaceholder("Search athletes and events");
+    const box = await openSearch(page);
 
     await box.fill("zachary patel");
     await expect(page.getByRole("option").first()).toContainText("Zachary Patel");
@@ -191,9 +202,7 @@ test.describe("search", () => {
 
   test("escape closes it", async ({ page }) => {
     await open(page, "/results");
-    await page.waitForTimeout(1500);
-    await page.keyboard.press("ControlOrMeta+k");
-    await expect(page.getByPlaceholder("Search athletes and events")).toBeVisible();
+    await openSearch(page);
     await page.keyboard.press("Escape");
     await expect(page.getByPlaceholder("Search athletes and events")).toBeHidden();
   });

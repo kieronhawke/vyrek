@@ -99,7 +99,16 @@ const SEASON_INDEX: Record<string, number> = { s7: 0, s8: 1, s9: 2 };
  * came out of the 60-64 bracket and went straight into a generated race
  * report, which no Hyrox reader would believe.
  */
-function ageGroupFor(rng: Rng, tier: "open" | "pro" | "elite" = "open"): AgeGroup {
+function ageGroupFor(
+  rng: Rng,
+  tier: "open" | "pro" | "elite" = "open",
+  ability = 0,
+): AgeGroup {
+  // Age and ability are not independent. Sampling them separately put a 60-64
+  // athlete third of 3,221 in Open Men, which no reader would believe. The
+  // fastest few percent of any field skew young, so they draw from the pro
+  // distribution regardless of which division they entered.
+  if (tier === "open" && ability < -1.6) tier = "pro";
   if (tier === "elite") {
     return weightedPick(rng, [
       ["16-24", 10], ["25-29", 34], ["30-34", 34], ["35-39", 17], ["40-44", 5],
@@ -271,13 +280,14 @@ function main() {
           const gender = profile.gender === "mixed" ? (rng() < 0.5 ? "men" : "women") : profile.gender;
           const nation = weightedPick(rng, nations);
           const name = makeName(rng, gender, nation);
+          const oneOffAbility = normal(rng, 0, 1);
           athlete = {
             slug: `${slugify(name)}-${slug}-${i}`,
             name,
             countryIso: nation,
             gender,
-            ageGroup: ageGroupFor(rng, tierFor(profile.code)),
-            ability: normal(rng, 0, 1),
+            ageGroup: ageGroupFor(rng, tierFor(profile.code), oneOffAbility),
+            ability: oneOffAbility,
             trendPerSeason: 0,
             raceCount: 0,
           };
@@ -287,7 +297,9 @@ function main() {
         // Pool athletes carry an open-weighted age group; elite and pro fields
         // need their own distribution or a 60-64 athlete can win Elite Men.
         const tier = tierFor(profile.code);
-        const ageGroup = tier === "open" ? athlete.ageGroup : ageGroupFor(rng, tier);
+        const ageGroup = tier === "open" && athlete.ability >= -1.6
+          ? athlete.ageGroup
+          : ageGroupFor(rng, tier, athlete.ability);
 
         const trend = athlete.trendPerSeason * seasonIdx;
         const target = profile.meanSeconds
