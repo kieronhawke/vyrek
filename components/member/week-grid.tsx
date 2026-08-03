@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SEED_WEEK, parseSession, type PlanWeek, type Slot } from "@/lib/plan/model";
 import { useRecord } from "@/lib/control/store";
 import { useCelebration } from "./celebrate";
+import { CoachMedia } from "./coach-media";
 
 /**
  * The athlete's week — Ben's spreadsheet, live.
@@ -177,11 +178,11 @@ export function WeekGrid({
           <p className="eyebrow">Ben&apos;s note for the week</p>
           <p>{week.notes}</p>
           {week.coachMedia ? (
-            <button type="button" className="week__media">
-              ▶ {week.coachMedia.label} ·{" "}
-              {Math.floor(week.coachMedia.durationSec / 60)}:
-              {String(week.coachMedia.durationSec % 60).padStart(2, "0")}
-            </button>
+            <CoachMedia
+              label={week.coachMedia.label}
+              durationSec={week.coachMedia.durationSec}
+              url={week.coachMedia.url}
+            />
           ) : null}
         </div>
       ) : null}

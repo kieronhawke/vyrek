@@ -246,6 +246,14 @@ contamination repair, live smoke). `tsc --noEmit` clean, ESLint clean,
   floor is 30 minutes, and that floor exists because Adaptive and Youngstars
   genuinely run a shorter course. A division-aware floor would fix it properly;
   I have not written one because I am not confident of those course lengths.
+- **The 2019 team formats do not have their rosters parsed.** `BT1`, `BT2`,
+  `GT1` and `GT2` at Hamburg 2019 store one row per entry with no partners, so
+  they read short against a published figure that counts the whole roster —
+  "stored 31 of 55". Confined to the oldest season and a few dozen rows; the
+  formats render differently from the modern boards. Modern doubles and relay
+  are complete: Rotterdam 2026 has partners on 2,148 of 2,148 doubles rows,
+  Vienna on 850 of 850. Worth knowing that the completeness check *reported*
+  this rather than quietly storing half a division.
 - **The demo record board is empty**, so the `demo` fallback tier for
   `/rankings/world-records` shows nothing rather than sample records. This is
   what made the timeout above present as "No records yet" instead of visibly

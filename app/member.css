@@ -652,3 +652,72 @@
 @media (prefers-reduced-motion: reduce) {
   .celebrate { display: none; }
 }
+
+/* ─── Coach voice note ──────────────────────────────────────────────────────
+   Was a play triangle with nothing behind it. This is the real control.
+
+   The "none" variant is deliberately not a button: a week with no recording
+   should not offer something to press. */
+.week__media--none {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.week__media-player {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+  padding: var(--space-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.week__media-play {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #0a0a0a;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+}
+.week__media-play:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.week__media-body { flex: 1 1 auto; min-width: 0; }
+
+.week__media-label {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.week__media-scrub {
+  display: block;
+  width: 100%;
+  margin: 6px 0 2px;
+  accent-color: var(--accent);
+  /* Same reasoning as the simulator: a 16px range is fiddly with a thumb. */
+  min-height: 32px;
+}
+
+.week__media-time {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.week__media-error {
+  margin: 4px 0 0;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
