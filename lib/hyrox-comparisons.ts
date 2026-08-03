@@ -29,7 +29,8 @@ export const COMPARISONS: ComparisonDef[] = [
     eyebrow: "Hyrox vs CrossFit",
     title: "Hyrox vs CrossFit: which is harder, and which is right for you?",
     seoTitle: "Hyrox vs CrossFit: which is harder?",
-    hook: "Hyrox and CrossFit look similar from the outside. They're built on different principles. The honest comparison.",
+    hook:
+      "Hyrox and CrossFit look similar from the outside but are built on different principles. What each actually trains, which is harder, and which suits you.",
     intro: [
       "Hyrox is a fixed-format hybrid race: 8 stations, 8 × 1 km runs, in the same order every time. CrossFit is open-format functional fitness, workouts change daily, the movements span everything from Olympic lifting to gymnastics.",
       "If you want a measurable race you can train backwards from, Hyrox. If you want a daily fitness practice with variety, CrossFit. They're complementary as much as they're competing.",
@@ -60,7 +61,8 @@ export const COMPARISONS: ComparisonDef[] = [
     opposite: "Spartan Race",
     eyebrow: "Hyrox vs Spartan",
     title: "Hyrox vs Spartan Race: which one suits you?",
-    hook: "Hyrox is indoor, fixed-format, race-clock. Spartan is outdoor, obstacle-course, weather-dependent. How they differ.",
+    hook:
+      "Hyrox is indoor, fixed-format and run against a race clock. Spartan is outdoor, obstacle-based and weather-dependent. How the training for each differs.",
     intro: [
       "Hyrox happens in arenas, climate-controlled floors, identical lanes, same stations every race. Spartan happens outdoors, mountain courses, mud, weather, varied obstacles.",
       "Both reward functional strength and endurance. The day-of-race experience is very different.",
@@ -88,7 +90,8 @@ export const COMPARISONS: ComparisonDef[] = [
     eyebrow: "Hyrox vs Marathon",
     title: "Hyrox vs Marathon: two endurance events, different sports",
     seoTitle: "Hyrox vs Marathon: how they differ",
-    hook: "Both are 60-180 minutes of effort. The training is almost nothing alike.",
+    hook:
+      "A Hyrox and a marathon are both an hour to three hours of effort, and the training is almost nothing alike. What carries over, and what does not.",
     intro: [
       "A marathon is 42.2 km of running. The training is 4-5 months of progressive running volume, typically 50-100 km per week, with race pace dialed into the body.",
       "Hyrox is 10 km of running broken across 8 hybrid station efforts. Training looks more like CrossFit with serious aerobic emphasis. 30-40 km running per week plus 3-4 station sessions.",
@@ -116,7 +119,8 @@ export const COMPARISONS: ComparisonDef[] = [
     eyebrow: "Hyrox vs Triathlon",
     title: "Hyrox vs Triathlon: hybrid sport, different muscles",
     seoTitle: "Hyrox vs Triathlon: how they differ",
-    hook: "Both are hybrid endurance. Triathlon spreads across swim-bike-run. Hyrox stays on the floor.",
+    hook:
+      "Both are hybrid endurance events, but a triathlon spreads across swim, bike and run while Hyrox stays on the floor under load. How the demands compare.",
     intro: [
       "Triathlon trains three disciplines plus transitions. Hyrox trains running, station strength endurance, and pacing under fatigue. Different muscle groups, different scheduling demands.",
       "Triathlon needs pool access, a bike, and outdoor space. Hyrox needs a gym.",
@@ -143,7 +147,8 @@ export const COMPARISONS: ComparisonDef[] = [
     eyebrow: "Hyrox vs F45",
     title: "Hyrox vs F45: class-based training vs race-specific programming",
     seoTitle: "Hyrox vs F45: which should you do?",
-    hook: "F45 is a class. Hyrox is a race. The training needed for each is fundamentally different.",
+    hook:
+      "F45 is a class, Hyrox is a race, and the training each needs is fundamentally different. What F45 gives you for Hyrox, and the gaps you will have to fill.",
     intro: [
       "F45 is a structured 45-minute group class, varied workouts, group atmosphere, designed for general fitness. Hyrox is a competitive race with a fixed format you train backwards from.",
       "If you want general fitness with social motivation, F45. If you want a measurable race goal, Hyrox.",

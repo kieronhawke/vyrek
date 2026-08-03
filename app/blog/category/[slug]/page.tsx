@@ -40,17 +40,17 @@ export async function generateMetadata({
   const title = `${cat.label}. Suth Performance Journal`;
   return {
     title,
-    description: cat.description,
+    description: cat.metaDescription,
     alternates: { canonical: categoryUrl(slug) },
     openGraph: {
       title,
-      description: cat.description,
+      description: cat.metaDescription,
       url: categoryUrl(slug),
       siteName: "Suth Performance",
       type: "website",
       locale: "en_GB",
     },
-    twitter: { card: "summary", title, description: cat.description },
+    twitter: { card: "summary", title, description: cat.metaDescription },
     robots: { index: true, follow: true },
   };
 }

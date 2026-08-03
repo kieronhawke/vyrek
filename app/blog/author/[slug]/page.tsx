@@ -8,6 +8,7 @@ import { AuthorCard } from "@/components/blog/author-card";
 import { PostCard } from "@/components/blog/post-card";
 import { listPostsByAuthor } from "@/lib/blog/posts";
 import { AUTHORS } from "@/lib/blog/authors";
+import { clampDescription } from "@/lib/seo/description";
 import { authorUrl, blogIndexUrl, siteUrl } from "@/lib/blog/urls";
 import {
   authorPersonJsonLd,
@@ -35,11 +36,11 @@ export async function generateMetadata({
      the team page, at 70 characters. */
   return {
     title: `Posts by ${author.name}`,
-    description: author.bio,
+    description: clampDescription(author.bio),
     alternates: { canonical: authorUrl(slug) },
     openGraph: {
       title: `Posts by ${author.name}`,
-      description: author.bio,
+      description: clampDescription(author.bio),
       url: authorUrl(slug),
       siteName: "Suth Performance",
       type: "profile",

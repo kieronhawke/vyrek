@@ -20,6 +20,7 @@ import {
 } from "@/lib/hyrox/races";
 import type { Race } from "@/lib/hyrox/races";
 import { siteUrl } from "@/lib/blog/urls";
+import { clampDescription } from "@/lib/seo/description";
 
 /**
  * One HYROX race.
@@ -76,9 +77,10 @@ export async function generateMetadata({
        exact dates stay in the description, the H1 and the page body, and
        the full official name stays in the description. */
     title: `${titleName(race.name)}: ${monthAndYear(race)}`,
-    description:
+    description: clampDescription(
       `${race.name} takes place ${formatDates(race)} at ${race.venueName ?? where}. ` +
-      `Dates, venue, and when a twelve-week HYROX build needs to start to land on race day.`,
+        `Dates, venue, and when a twelve-week build needs to start to land on race day.`,
+    ),
     alternates: { canonical: `${siteUrl()}/hyrox/events/${race.slug}` },
     robots: { index: true, follow: true },
   };

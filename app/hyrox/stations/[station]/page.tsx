@@ -21,6 +21,7 @@ import {
 import { siteUrl } from "@/lib/blog/urls";
 import { listPostMeta } from "@/lib/blog/posts";
 import { STATION_READING } from "@/lib/hyrox/station-reading";
+import { clampDescription } from "@/lib/seo/description";
 
 // Real photography from the July 2026 intake (docs/photo-library-2026-07.md),
 // except sled pull, which nothing in the set covers and so keeps its AI
@@ -84,7 +85,11 @@ export async function generateMetadata({
      between 71 and 83 characters once the brand suffix was added. The
      shorter phrase keeps the two terms people actually search for. */
   const title = `Hyrox ${s.name}: technique and drills`;
-  const description = `${s.summary} Coaching cues, common faults, goal splits, and training drills for the Hyrox ${s.name} station.`;
+  /* The trailing "Coaching cues, common faults, goal splits, and training
+     drills for the Hyrox X station" was generic keyword filler that pushed
+     every station page to 220-233 characters, so the summary — the only
+     part specific to this station — was the bit Google cut. */
+  const description = clampDescription(s.summary);
   return {
     title,
     description,

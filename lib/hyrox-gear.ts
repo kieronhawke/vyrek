@@ -79,7 +79,8 @@ export const GEAR_GUIDES: GearGuide[] = [
     title: "Hyrox gloves: when you need them, when you don't",
     seoTitle: "Hyrox gloves: do you need them?",
     eyebrow: "Gloves",
-    hook: "Gloves help on sled pull and farmers carry. They hurt on wall balls and rowing. The honest verdict on whether to wear them.",
+    hook:
+      "Gloves help on the sled pull and farmers carry, and get in the way on wall balls and rowing. The honest verdict on whether to race Hyrox wearing them.",
     intro: [
       "Gloves are the most over-recommended piece of Hyrox kit. Beginner advice says always wear them; experienced racers almost never do for full races. The real answer depends on the station.",
       "On the sled pull (rope, hand-over-hand) gloves protect the hands and grip better in sweat. On the farmers carry (kettlebell handle) most racers prefer bare hands, the friction is what stops you dropping. On rowing, wall ball, and burpee broad jumps, gloves are pure friction loss.",
@@ -114,7 +115,8 @@ export const GEAR_GUIDES: GearGuide[] = [
     slug: "best-hyrox-knee-sleeves",
     title: "Hyrox knee sleeves: do you need them?",
     eyebrow: "Knee sleeves",
-    hook: "Knee sleeves help on heavy sled work and sandbag lunges. They restrict on running. The trade-off explained.",
+    hook:
+      "Knee sleeves help on heavy sled work and sandbag lunges but restrict you across 8km of running. The trade-off, and when they are worth wearing in Hyrox.",
     intro: [
       "Knee sleeves are common in CrossFit but rare in Hyrox. The reason is simple: Hyrox is mostly running, and a tight sleeve restricts blood flow and limits stride mechanics over 8 km.",
       "If you have a known knee issue or feel insecure on heavy sled and sandbag lunge work, a thin 5 mm sleeve can give psychological and mild mechanical support without disrupting the running. Avoid the 7 mm powerlifting sleeves, they're built for one-rep maxes, not aerobic endurance.",
@@ -148,7 +150,8 @@ export const GEAR_GUIDES: GearGuide[] = [
     title: "Hyrox lifting belt: when it's useful and when it's not",
     seoTitle: "Hyrox lifting belt: do you need one?",
     eyebrow: "Belt",
-    hook: "Belts help on heavy sled pulls and sandbag lunges. They restrict on running and burpee broad jumps. The trade-off.",
+    hook:
+      "A belt helps on heavy sled pulls and sandbag lunges and restricts you on running and burpee broad jumps. Whether a Hyrox athlete actually needs one.",
     intro: [
       "A lifting belt is over-used in Hyrox training and under-used on race day for good reasons. In training, you don't always need it, but for the few minutes you're under heavy sled or sandbag load, it can preserve your back across a 12-week build.",
       "On race day most racers don't wear a belt. It restricts breathing on the run, gets in the way on the burpee broad jump, and the load on any single Hyrox movement is sub-maximal for an experienced lifter. The exception is a known back issue.",
@@ -177,7 +180,8 @@ export const GEAR_GUIDES: GearGuide[] = [
     slug: "best-hyrox-socks",
     title: "Hyrox socks: thin, snug, anti-slip",
     eyebrow: "Socks",
-    hook: "Wrong socks cause blisters by km 5. Right socks are thin, snug, and have at least some anti-slip backing.",
+    hook:
+      "The wrong socks cause blisters by kilometre five. The right ones are thin, snug and have some anti-slip backing. What to look for, and what to avoid.",
     intro: [
       "Socks are the most ignored piece of Hyrox kit and a leading cause of mid-race blisters. After two sleds, three runs, and a sandbag lunge, your foot is hot, sweating, and moving around inside the shoe, any sock looseness becomes friction, friction becomes a blister.",
       "Get this right once and you won't think about it again.",
