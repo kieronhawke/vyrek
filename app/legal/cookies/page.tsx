@@ -136,15 +136,17 @@ export default function CookiesPage() {
         Suth Performance uses, why we use them, and how to opt out. We list every cookie
         we set, by category, in the tables below.
       </ProseP>
-      {/* PLACEHOLDER — COMPANY DETAILS: replace the bracketed values below
-          with the real registered company name, Companies House number, and
-          registered office address before launch. */}
-      <ProseP>
-        Suth Performance is operated by [REGISTERED COMPANY NAME TO BE
-        CONFIRMED], a company registered in England and Wales, company number
-        [COMPANIES HOUSE NUMBER TO BE CONFIRMED], registered office
-        [REGISTERED OFFICE ADDRESS TO BE CONFIRMED].
-      </ProseP>
+      {/*
+        The company-details paragraph here carried three bracketed
+        placeholders and is removed as the site goes live, at the owner's
+        request: publishing "[REGISTERED COMPANY NAME TO BE CONFIRMED]" on a
+        legal page was the one option that was actually wrong.
+
+        If it comes back: UK law requires those details once the business
+        trades as a limited company, and then they belong in the footer on
+        every page rather than only here. As a sole trader there is nothing to
+        disclose. The footer carries the same note.
+      */}
 
       <ProseH2>What is a cookie?</ProseH2>
       <ProseP>
