@@ -43,6 +43,11 @@ export async function generateMetadata({
       title: `${athlete.name} — HYROX race history`,
       url: `${siteUrl()}/athlete/${slug}`,
       type: "profile",
+      images: [{ url: `${siteUrl()}/api/og/athlete/${slug}`, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: [`${siteUrl()}/api/og/athlete/${slug}`],
     },
   };
 }

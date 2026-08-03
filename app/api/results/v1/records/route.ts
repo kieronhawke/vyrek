@@ -4,7 +4,7 @@
  * serving when the source is down.
  */
 import { getResultsService } from "@/lib/results/engine";
-import { apiError, apiNotFound, apiResponse } from "@/lib/results/engine/serve/http";
+import { apiError, apiResponse } from "@/lib/results/engine/serve/http";
 
 export const runtime = "nodejs";
 

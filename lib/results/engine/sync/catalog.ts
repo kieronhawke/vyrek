@@ -116,7 +116,7 @@ export async function runCatalogSync(
 
     // Pull full results for anything that has finalised since the last run.
     const finalised = (await repo.listEvents({ status: "final" }))
-      .filter((e) => needsResultPull(e, now))
+      .filter((e) => needsResultPull(e))
       .slice(0, maxEvents);
 
     for (const event of finalised) {
@@ -171,7 +171,7 @@ export async function runCatalogSync(
 }
 
 /** Never synced, or last synced before the event had finished. */
-function needsResultPull(event: EngineEvent, _now: Date): boolean {
+function needsResultPull(event: EngineEvent): boolean {
   if (!event.lastSyncedAt) return true;
   if (!event.endDatetime) return false;
   return new Date(event.lastSyncedAt).getTime() < new Date(event.endDatetime).getTime();

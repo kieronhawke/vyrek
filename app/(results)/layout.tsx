@@ -6,6 +6,7 @@ import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { ResultsShell } from "@/components/results/shell/results-shell";
 import { DemoDataPill } from "@/components/results/shell/demo-pill";
+import { TimingAttribution } from "@/components/results/shell/timing-attribution";
 
 /**
  * While `NEXT_PUBLIC_DATA_MODE=demo` the whole section is noindex.
@@ -47,6 +48,9 @@ export default function ResultsLayout({ children }: { children: React.ReactNode 
           </main>
         </ResultsShell>
       </div>
+      {/* One credit for the whole section rather than per page: it applies to
+          every view here, and repeating it per template is how it drifts. */}
+      <TimingAttribution />
       <DemoDataPill />
       <MarketingFooter />
     </>

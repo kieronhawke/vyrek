@@ -51,9 +51,9 @@ export async function generateMetadata({
       title: `HYROX ${event.city} ${event.year} race report`,
       url: `${siteUrl()}/reports/${slug}`,
       type: "article",
-      images: [{ url: `${siteUrl()}/api/og/event/${slug}`, width: 1200, height: 630 }],
+      images: [{ url: `${siteUrl()}/api/og/report/${slug}`, width: 1200, height: 630 }],
     },
-    twitter: { card: "summary_large_image", images: [`${siteUrl()}/api/og/event/${slug}`] },
+    twitter: { card: "summary_large_image", images: [`${siteUrl()}/api/og/report/${slug}`] },
   };
 }
 
