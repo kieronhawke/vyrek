@@ -283,8 +283,15 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
         cta={weakest ? `Read the ${weakest.label} guide` : "See coaching options"}
       />
 
-      <p className="mt-6 text-center text-xs text-suth-text-tertiary">
-        <Link href={`/ranking/${rankingSlug}`} className="hover:text-suth-accent">
+      {/* A real tap target: at 15px this was the only element in the Results
+          content that failed a thumb test at 360px. */}
+      <p className="mt-6 text-center">
+        <Link
+          href={`/ranking/${rankingSlug}`}
+          className="inline-flex min-h-[44px] items-center justify-center rounded-sm px-4
+                     text-xs text-suth-text-tertiary transition-colors hover:text-suth-accent
+                     focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-suth-accent"
+        >
           ← Back to the full {division} ranking
         </Link>
       </p>

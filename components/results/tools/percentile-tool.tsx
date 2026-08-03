@@ -17,11 +17,18 @@ import type { SimulatorReference } from "../simulator/simulator";
  * bare "top 34%" tells you where you are but not what the field looks like
  * around you.
  */
-export function PercentileTool({ references }: { references: SimulatorReference[] }) {
+export function PercentileTool({
+  references, initialSeconds,
+}: {
+  references: SimulatorReference[];
+  /** Prefilled from search: typing a time in ⌘K lands here with it entered. */
+  initialSeconds?: number;
+}) {
   const [division, setDivision] = useState(references[0]?.division ?? "");
-  const [hours, setHours] = useState("1");
-  const [minutes, setMinutes] = useState("30");
-  const [seconds, setSeconds] = useState("00");
+  const seed = initialSeconds && initialSeconds > 0 ? initialSeconds : 5400;
+  const [hours, setHours] = useState(String(Math.floor(seed / 3600)));
+  const [minutes, setMinutes] = useState(String(Math.floor((seed % 3600) / 60)).padStart(2, "0"));
+  const [seconds, setSeconds] = useState(String(seed % 60).padStart(2, "0"));
 
   const reference = references.find((r) => r.division === division) ?? references[0];
 

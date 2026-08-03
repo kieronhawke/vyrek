@@ -249,3 +249,29 @@ finish column is still an error.
 It is inlined during `next build`, not read at runtime. Passing it to `pnpm start` does
 nothing — verified. It has to be set in the Vercel project environment and the deploy rebuilt.
 Documented in `docs/results/DATA-IMPORT.md`.
+
+### D33 — Two command palettes were fighting over ⌘K
+Pressing ⌘K on any Results page opened **both** the site's `CommandPalette` (z-80, from the root
+layout) and the Results search (z-50) — the marketing palette landing on top of the one the
+user wanted. Both bound the same combination on `window`, and the root layout mounts first so
+its listener always ran first. The Results hotkey now registers in the **capture** phase and
+calls `stopImmediatePropagation`, so it wins on its own pages and changes nothing elsewhere.
+Found by stress-testing, not by reading code — both handlers were individually correct.
+
+### D34 — Search ranks by match quality, not substring order
+`lib/results/search.ts`: exact beats prefix beats word-prefix beats initials beats contains
+beats fuzzy, with race count only as a tie-break. Accent-insensitive ("malaga" finds Málaga),
+typo-tolerant from four characters via capped Damerau-Levenshtein (below that, an edit distance
+of two matches almost anything), and initials-aware ("cj" finds Charlie Johansson).
+
+Also reads intent: "sub 90" offers the simulator in target mode, "1:31:30" offers the percentile
+tool prefilled, "2026" offers the calendar. A results site gets a lot of searches that are not
+names, and "no athletes match 1:31:30" is a dead end where a useful answer exists.
+
+### D35 — LCP was not the images, and CLS was not the fonts
+Recorded because I guessed wrong twice and the measurements are the only reason it got fixed.
+Fonts were preloaded on a hunch and moved CLS by 0.001. The simulator's reference payload was
+suspected and is 2.5KB. The actual causes were a transitioned `padding-top` on `body` driven by
+a variable set after mount (CLS), and 3,221 row objects built per request (LCP). Both found by
+capturing `layout-shift` entries with their sources and by reading the network log, not by
+inspection.

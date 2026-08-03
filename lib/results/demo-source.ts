@@ -13,6 +13,7 @@ import { join } from "node:path";
 import type { DivisionCode, EventStatus } from "./types";
 import { STATION_IDS, PROFILE_BY_CODE, type StationId, type AgeGroup } from "./model";
 import { buildDistribution } from "./percentiles";
+import { rankBy } from "./search";
 import type {
   ResultsDataSource, EventSummary, RaceEventDetail, RankingRow,
   AthleteProfile, StartListWave, RecordEntry, ResultDetail,
@@ -206,22 +207,34 @@ export const demoDataSource: ResultsDataSource = {
   },
 
   async searchAll(q) {
-    const needle = q.trim().toLowerCase();
-    if (needle.length < 2) return { athletes: [], events: [] };
+    const query = q.trim();
+    if (query.length < 2) return { athletes: [], events: [] };
 
-    const events = allEvents()
-      .filter((e) =>
-        e.name.toLowerCase().includes(needle) || e.city.toLowerCase().includes(needle))
-      .slice(0, 8)
-      .map((e) => ({ slug: e.slug, name: e.name, city: e.city, year: e.year, status: e.status }));
+    // Relevance ranking rather than substring order: an exact name beats a
+    // prefix beats a fuzzy match, and race count only breaks ties. See
+    // lib/results/search.ts.
+    const events = rankBy(
+      allEvents().map((e) => ({
+        // City and year are searchable too — "london 2026" is a real query.
+        text: `${e.name} ${e.city} ${e.year} ${e.season}`,
+        weight: e.year,
+        event: e,
+      })),
+      query,
+      8,
+    ).map(({ event }) => ({
+      slug: event.slug, name: event.name, city: event.city,
+      year: event.year, status: event.status,
+    }));
 
-    const athletes = allAthletes()
-      .filter((a) => a.name.toLowerCase().includes(needle))
-      .sort((a, b) => b.races.length - a.races.length)
-      .slice(0, 12)
-      .map((a) => ({
-        slug: a.slug, name: a.name, countryIso: a.countryIso, raceCount: a.races.length,
-      }));
+    const athletes = rankBy(
+      allAthletes().map((a) => ({ text: a.name, weight: a.races.length, athlete: a })),
+      query,
+      12,
+    ).map(({ athlete }) => ({
+      slug: athlete.slug, name: athlete.name,
+      countryIso: athlete.countryIso, raceCount: athlete.races.length,
+    }));
 
     return { athletes, events };
   },
