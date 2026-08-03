@@ -83,6 +83,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/running`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
     { url: `${SITE_URL}/recovery`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
     { url: `${SITE_URL}/fat-loss`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
+    { url: `${SITE_URL}/how-much-is-a-personal-trainer`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
+    { url: `${SITE_URL}/hyrox/times`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
     { url: `${SITE_URL}/hyrox/stations`, lastModified: now, priority: 0.9, changeFrequency: "monthly" },
     { url: `${SITE_URL}/hyrox/events`, lastModified: now, priority: 0.9, changeFrequency: "weekly" },
     { url: `${SITE_URL}/hyrox/gear`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
