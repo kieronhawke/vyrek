@@ -10,7 +10,9 @@ import { RevealOnView } from "@/components/shared/reveal-on-view";
 import { siteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
-  title: "Hyrox programmes. 12-week plans by an Elite 15 coach · Suth Performance",
+  /* The root layout appends " \u00b7 Suth Performance" to every child title.
+     Naming the brand here printed it twice. */
+  title: "Hyrox programmes: four 12-week plans",
   description:
     "Four 12-week Hyrox programmes: First Race, Sub-90, Doubles, Pro. Pick where you are, we'll meet you there. Built by an Elite 15 coach.",
   alternates: { canonical: "/programmes" },

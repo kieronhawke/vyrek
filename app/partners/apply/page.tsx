@@ -6,7 +6,7 @@ import { Eyebrow } from "@/components/shared/eyebrow";
 import { PartnerApplicationForm } from "@/components/partners/application-form";
 
 export const metadata: Metadata = {
-  title: "Apply to the Suth Performance Partner Programme",
+  title: "Apply to the partner programme",
   description:
     "Apply to join the Suth Performance Partner Programme. 11 quick questions. We reply within 48 hours.",
   robots: { index: true, follow: true },

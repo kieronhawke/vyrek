@@ -10,7 +10,9 @@ import { CustomerLoginForm } from "@/components/account/login-form";
 import { DemoEntry } from "@/components/shared/demo-entry";
 
 export const metadata: Metadata = {
-  title: "Sign in. Suth Performance",
+  /* The root layout appends " \u00b7 Suth Performance" to every child title.
+     Naming the brand here printed it twice. */
+  title: "Sign in",
   description:
     "Sign in to your Suth Performance account to see your week, log sessions, and manage your subscription.",
   robots: { index: false, follow: false },
