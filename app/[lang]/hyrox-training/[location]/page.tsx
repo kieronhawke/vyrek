@@ -4,6 +4,8 @@ import { JsonLd } from "@/lib/blog/jsonld";
 import { LocalisedGeoPage } from "@/components/landing/localised-geo";
 import { LOCALE_CONFIG, LOCALES, isLocale, localCountry, type Locale } from "@/lib/i18n/config";
 import { de } from "@/lib/i18n/de";
+import { fr } from "@/lib/i18n/fr";
+import { es } from "@/lib/i18n/es";
 import { localisedCities, localisedNearby } from "@/lib/i18n/cities";
 import { resolveGeo } from "@/lib/geo-page";
 import { siteUrl } from "@/lib/blog/urls";
@@ -23,7 +25,7 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 export const dynamicParams = false;
 
-const COPY = { de } as const;
+const COPY = { de, fr, es } as const;
 
 export async function generateStaticParams() {
   return LOCALES.flatMap((lang) =>

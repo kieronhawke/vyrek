@@ -19,7 +19,11 @@ import { INTL_CITIES } from "@/lib/intl-cities";
  * city data to derive it from, and guessing from coordinates would be worse.
  */
 const WRONG_LANGUAGE: Record<Locale, string[]> = {
+  // Basel and the German-speaking cantons read German; Geneva reads French.
   de: ["geneva"],
+  // Gent is in Flanders and reads Dutch; Basel is German-speaking.
+  fr: ["gent", "basel"],
+  es: [],
 };
 
 /**
@@ -41,6 +45,15 @@ const ENDONYM: Record<Locale, Record<string, string>> = {
     geneva: "Genf",
     zurich: "Zürich",
     nuremberg: "Nürnberg",
+  },
+  fr: {
+    // The catalogue already carries the French spelling for French cities;
+    // only the non-French ones this locale serves need a mapping.
+    geneva: "Genève",
+  },
+  es: {
+    "mexico-city": "Ciudad de México",
+    // The catalogue spells these correctly already, accents included.
   },
 };
 

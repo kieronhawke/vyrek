@@ -28,9 +28,9 @@
  * nice-to-have afterwards.
  */
 
-export type Locale = "de";
+export type Locale = "de" | "fr" | "es";
 
-export const LOCALES: Locale[] = ["de"];
+export const LOCALES: Locale[] = ["de", "fr", "es"];
 
 export type LocaleConfig = {
   /** URL segment and `lang` attribute. */
@@ -54,6 +54,22 @@ export const LOCALE_CONFIG: Record<Locale, LocaleConfig> = {
     // is also a French market, which is why locale is not derived from country.
     countries: ["Germany", "Austria", "Switzerland"],
   },
+  fr: {
+    code: "fr",
+    hreflang: "fr",
+    ogLocale: "fr_FR",
+    label: "Français",
+    // Belgium is split: Gent reads Dutch, so it is excluded in i18n/cities.
+    countries: ["France", "Switzerland", "Belgium"],
+  },
+  es: {
+    code: "es",
+    hreflang: "es",
+    ogLocale: "es_ES",
+    label: "Español",
+    // One pack, three markets — the widest reach of any locale on the calendar.
+    countries: ["Spain", "Mexico", "Argentina"],
+  },
 };
 
 /** Country names as the locale writes them. */
@@ -62,6 +78,16 @@ const COUNTRY_ENDONYM: Record<Locale, Record<string, string>> = {
     Germany: "Deutschland",
     Austria: "Österreich",
     Switzerland: "Schweiz",
+  },
+  fr: {
+    France: "France",
+    Switzerland: "Suisse",
+    Belgium: "Belgique",
+  },
+  es: {
+    Spain: "España",
+    Mexico: "México",
+    Argentina: "Argentina",
   },
 };
 
