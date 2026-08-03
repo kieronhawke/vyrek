@@ -9,32 +9,40 @@ and it is `ACTION-REQUIRED.md` item 1.
 
 ---
 
-## 1. It ingests real data
+## 1. It is live, on its own database, with real data in it
 
-Written permission from HYROX is on file, so the engine was pointed at the live
-source and verified end to end rather than left on fixtures.
+Verified end to end against the real Supabase project and the real source:
 
 ```
-153 real results from one division, in 4 requests
-0 quarantined · published count matched stored count
-splits reconciling to within 0.2% of finish times
-forced re-sync: 0 rows written
+Repository:    10/10 checks against the live database, including the one
+               SQL cannot reach — PostgREST resolving the athlete embed
+               that getRanking depends on
+Catalogue:     season-9 catalogued into 8 events, 146 divisions,
+               dated and timezone-resolved, in 16 requests
+Results:       340 rows across three divisions of a real London weekend
+               (open men 153/153, open women 110/110, doubles men 77/77 —
+               stored counts matching published counts exactly)
+Athletes:      417, splits filling continuously in the background
+Idempotency:   loading the same data three times leaves 340 rows
+Quarantine:    2 rows held back — a 7-second burpee broad jump and a
+               3-second sandbag lunge, both physically impossible
 ```
 
-Access is gated by `HYROX_SOURCE_ACCESS` so that a preview branch, a local
-checkout or CI cannot make outbound requests by accident. It is set in
-production.
+**The results engine has its own Supabase project** (`fsuaovtszewuimtuluzb`),
+separate from the application's. They are different workloads with different
+blast radii, and repointing the shared variables would have broken admin login,
+the quiz and the customer list, because none of those tables exist there.
 
-The fetcher identifies itself as
-`Mozilla/5.0 (compatible; SuthPerformanceResultsBot/1.0; +https://www.suthperformance.com/about)`
-— the standard identified-crawler format, the same shape Googlebot sends. Their
-edge filters on User-Agent *format*, not identity: anything not beginning with
-a `Mozilla/5.0` token gets a 403. Measured, not guessed.
+Access to the source is gated by `HYROX_SOURCE_ACCESS` so a preview branch, a
+local checkout or CI cannot fetch by accident. The fetcher identifies itself as
+`Mozilla/5.0 (compatible; SuthPerformanceResultsBot/1.0; +https://…/about)` —
+the standard identified-crawler format, the same shape Googlebot sends. Their
+edge filters on User-Agent *format*, not identity.
 
 Politeness in force: one global budget of 20 requests a minute across every
 event and worker, jittered, with a circuit breaker, exponential backoff,
-`Retry-After` honoured, and content hashing so an unchanged board is never
-re-processed.
+`Retry-After` honoured, and content hashing per division so an unchanged board
+is never re-processed.
 
 ## 2. What the source actually is
 
@@ -101,8 +109,9 @@ field sizes stay correct.
 ## 4. Test results
 
 ```
-529 tests, 32 files, all passing
-+ 4 live tests, labelled and skipped unless HYROX_LIVE_SMOKE=1
+554 tests, 33 files, all passing
++ 7 live tests against the real source and the real database,
+  labelled and skipped unless explicitly enabled
 ```
 
 Baseline before this work was 343. The deterministic tests need no database, no

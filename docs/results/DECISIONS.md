@@ -528,3 +528,52 @@ timeouts, graceful degradation (a failed search returns no matches rather than a
 revalidation windows tuned per endpoint. Verified by standing up a mock API and running the app
 against it end to end with zero errors logged. `RESULTS_SOURCE=api` plus `RESULTS_API_URL`
 switches to it with no code change. Contract in `API-CONTRACT.md`.
+
+### D63 — The results engine has its own Supabase project
+The application's project holds identity, customers, quiz and Stripe state; the
+engine writes millions of ingested rows on a schedule. Different workloads,
+different blast radii, and since 3 August literally different projects.
+`RESULTS_SUPABASE_URL` / `RESULTS_SUPABASE_SECRET_KEY` fall back to the shared
+pair **together or not at all** — falling back independently pairs one project's
+URL with another's key and fails as a confusing 401.
+
+### D64 — `unique nulls not distinct` on station distributions
+`age_group` and `sex` are null on every whole-division distribution, and
+Postgres treats nulls as distinct in a unique constraint by default. So
+`on conflict` never matched, every recompute inserted a fresh set, and
+`getStationDistribution` — which expects at most one row — would have started
+erroring after the second event sync.
+
+Invisible to the entire unit suite, because the in-memory store compares
+`null === null` and is perfectly happy. Found by loading real data into real
+Postgres twice and counting. The lesson is the general one: an in-memory double
+shares your assumptions, and a database does not.
+
+### D65 — The API adapter was aimed at endpoints that do not exist
+The v1 API was being built in this repo the whole time, at `app/api/results/v1/*`. My adapter
+had been written against a contract I invented, and almost none of the paths matched: `/events/
+{slug}` vs `/event/{slug}`, `/results/{id}` vs `/result/{id}`, a nested rankings path against a
+combined `{event}-{division}` slug, and path segments where the real routes take query
+parameters. Now aligned to the routes that exist, with a test asserting every path.
+
+### D66 — Every v1 response is wrapped, and the adapter was not unwrapping it
+`{ data, attribution, mode }`. The adapter returned the envelope where the app expected the
+payload, so **every call would have produced undefined** the moment it was switched on — while
+looking perfectly correct in review. Found by curling the real API rather than reading it.
+
+The `attribution` block is not decorative: the results are timed and published by mika:Timing
+for HYROX and must be credited wherever they are shown. `lastAttribution()` exposes whatever the
+API actually returned, so the credit follows the data instead of being hard-coded.
+
+### D67 — `server-only` is stubbed under vitest
+It throws by design outside a Server Component, which made every server-side data source
+impossible to unit-test. Aliased to a no-op in `vitest.config.ts`. This is why the adapter had
+no tests until now, and why two integration-breaking bugs sat in it undetected.
+
+### D68 — The shared photo library was left alone
+`solo-watch-bw.jpg` is 403KB and preloads onto Results pages through route prefetch without ever
+rendering there. I recompressed it to 181KB and then reverted: `docs/photo-library-2026-07.md`
+documents a deliberate 2200px / quality-72 standard for that library, and silently re-sizing
+another lane's assets against their own written policy is not my call. The real fix is at the
+render site — those pages use raw `<img>`, and `next/image` would serve a card-sized WebP from
+the same 2200px source. Flagged rather than done.

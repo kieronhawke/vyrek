@@ -180,6 +180,24 @@ async function selectPending(
     ? [await repo.getEventBySlug(opts.eventSlug)].filter(Boolean)
     : await repo.listEvents();
 
+  /**
+   * Rows already quarantined at the splits stage.
+   *
+   * A quarantined row still has no splits, so without this it is selected
+   * again on every run, re-fetched, and re-quarantined — for ever. Two
+   * genuinely bad rows would burn two requests of a 20-a-minute budget on
+   * every tick, and the quarantine table would grow a duplicate per run.
+   *
+   * They come back into the queue when an operator reprocesses them, which
+   * clears `reprocessedAt` on the entry.
+   */
+  const quarantined = new Set(
+    (await repo.listQuarantine({ openOnly: true, limit: 1000 }))
+      .filter((q) => (q.detail as { stage?: string } | null)?.stage === "splits")
+      .map((q) => q.sourceResultId)
+      .filter((id): id is string => Boolean(id)),
+  );
+
   const candidates: (PendingRow & { priority: number })[] = [];
 
   for (const event of events) {
@@ -188,6 +206,7 @@ async function selectPending(
       for (const row of await repo.listResultsForDivision(division.id)) {
         if (hasSplits(row)) continue;
         if (row.status !== "finished") continue;
+        if (quarantined.has(row.sourceResultId)) continue;
 
         const athlete = await repo.getAthleteById(row.athleteId);
         const claimed = Boolean(athlete?.claimedByUserId);

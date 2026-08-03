@@ -1,21 +1,17 @@
 /**
  * The production `ResultsRepository`, over Supabase Postgres.
  *
- * ⚠️ Unverified against a live database. The Supabase project was paused while
- * this was written — `iiezxhzbissemvsfytwl.supabase.co` does not resolve — so
- * this compiles and matches `0101_results_engine.sql` column for column, but no
- * query here has been executed. `ACTION-REQUIRED.md` step 2 is to restore the
- * project and run `scripts/verify-results-repo.mjs`, which exercises every
- * method against the real database and is the thing that turns this comment
- * into a green tick.
+ * Connects through `supabase-client.ts`, which points at the **results**
+ * project rather than the application's — see that file for why they are
+ * separate.
  *
- * The behavioural tests all run against `MemoryResultsRepository`, which
- * implements the same interface with the same semantics. That proves the
- * *engine*; this file is the part that still needs a database to prove.
+ * The behavioural tests run against `MemoryResultsRepository`, which implements
+ * the same interface with the same semantics; `scripts/verify-results-repo.mjs`
+ * exercises this implementation against the real database.
  */
 
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { resultsSupabase } from "./supabase-client";
 import type {
   AthleteMergeReview,
   EngineAlert,
@@ -163,7 +159,7 @@ export function toRepositoryError(error: unknown, context: string): Error {
 }
 
 export class SupabaseResultsRepository implements ResultsRepository {
-  constructor(private db: SupabaseClient = supabaseAdmin()) {}
+  constructor(private db: SupabaseClient = resultsSupabase()) {}
 
   private async one<T>(query: PromiseLike<{ data: unknown; error: unknown }>): Promise<T | null> {
     const { data, error } = await query;

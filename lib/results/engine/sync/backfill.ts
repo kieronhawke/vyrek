@@ -21,6 +21,25 @@
 import type { EngineEvent } from "../types";
 import type { SyncEngine } from "./engine";
 import { recomputeDistributionsForEvent } from "./distributions";
+import { runCatalogSync } from "./catalog";
+
+/**
+ * Every season the source publishes. `/season-1` … `/season-9`.
+ *
+ * Catalogued one per backfill run rather than all at once: each season is N+1
+ * requests (one for the weekend names, one POST each), so nine seasons in a
+ * burst is several hundred requests in a few minutes. One per run spreads that
+ * across hours and leaves budget for live polling.
+ */
+export function allSeasonPaths(): string[] {
+  const configured = process.env.HYROX_SEASONS;
+  if (configured) return configured.split(",").map((s) => s.trim()).filter(Boolean);
+  const current = Number(/season-(\d+)/.exec(process.env.HYROX_CURRENT_SEASON ?? "season-9")?.[1] ?? 9);
+  // Newest first: recent races are what people search for.
+  return Array.from({ length: current }, (_, i) => `season-${current - i}`);
+}
+
+const SEASON_CURSOR_KEY = "backfill_seasons_done";
 
 export const PRIORITY_REGIONS = ["UK", "India", "Hong Kong"] as const;
 
@@ -49,6 +68,8 @@ export function orderForBackfill(events: EngineEvent[]): EngineEvent[] {
 }
 
 export type BackfillResult = {
+  /** The historical season catalogued on this run, if any. */
+  seasonCatalogued: string | null;
   eventsCompleted: string[];
   eventsSkipped: string[];
   eventsFailed: string[];
@@ -65,6 +86,8 @@ export async function runBackfill(
     maxEvents?: number;
     triggerSource?: string;
     now?: Date;
+    /** Set false to pull results only, without deepening the catalogue. */
+    catalogueSeasons?: boolean;
   } = {},
 ): Promise<BackfillResult> {
   const repo = engine.repo;
@@ -78,7 +101,30 @@ export async function runBackfill(
       rowsUpserted: 0,
       rowsQuarantined: 0,
       exhaustedBudget: false,
+      seasonCatalogued: null,
     };
+
+    // One historical season per run, so the catalogue deepens on its own
+    // without a burst. Once every season is catalogued this stops costing
+    // anything and the run goes straight to pulling results.
+    if (opts.catalogueSeasons !== false) {
+      const done = (await repo.getSetting<string[]>(SEASON_CURSOR_KEY)) ?? [];
+      const next = allSeasonPaths().find((s) => !done.includes(s));
+      if (next) {
+        try {
+          await runCatalogSync(engine, {
+            seasonPaths: [next],
+            maxEventsToPull: 0,
+            triggerSource: `backfill:${next}`,
+          });
+          await repo.setSetting(SEASON_CURSOR_KEY, [...done, next]);
+          result.seasonCatalogued = next;
+        } catch {
+          // A season that will not catalogue must not stop the results
+          // backfill; the next run tries it again because it stays uncursored.
+        }
+      }
+    }
 
     const all = await repo.listEvents();
     const ordered = orderForBackfill(all);
@@ -128,6 +174,7 @@ export async function runBackfill(
       rowsUpserted: result.rowsUpserted,
       rowsQuarantined: result.rowsQuarantined,
       detail: {
+        seasonCatalogued: result.seasonCatalogued,
         completed: result.eventsCompleted,
         skipped: result.eventsSkipped.length,
         failed: result.eventsFailed,

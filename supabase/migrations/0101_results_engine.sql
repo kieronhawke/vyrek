@@ -232,9 +232,28 @@ create table if not exists results_station_distributions (
   -- p1, p5, p10, p25, p50, p75, p90, p99 as { "p5": 123456, ... }
   percentiles jsonb not null default '{}'::jsonb,
 
-  computed_at timestamptz not null default now(),
-  unique (scope, event_id, division_key, station_key, age_group, sex)
+  computed_at timestamptz not null default now()
 );
+
+-- ⚠️ NULLS NOT DISTINCT, and it matters.
+--
+-- `age_group` and `sex` are null on every whole-division distribution. Postgres
+-- treats nulls as distinct in a unique constraint by default, so `on conflict`
+-- never matches and each recompute inserts a fresh set instead of updating —
+-- distributions double on every event sync, and `getStationDistribution` then
+-- errors, because it expects at most one row.
+--
+-- Found against a real database: an in-memory store compares `null === null`
+-- and is perfectly happy, so no amount of unit testing would have shown it.
+do $$ begin
+  alter table results_station_distributions
+    drop constraint if exists results_station_distributions_scope_event_id_division_key_s_key;
+  alter table results_station_distributions
+    drop constraint if exists results_station_distributions_unique;
+  alter table results_station_distributions
+    add constraint results_station_distributions_unique
+    unique nulls not distinct (scope, event_id, division_key, station_key, age_group, sex);
+exception when duplicate_table or duplicate_object then null; end $$;
 
 create index if not exists results_station_dist_lookup_idx
   on results_station_distributions (scope, division_key, station_key);

@@ -14,12 +14,18 @@
 
 import { createClient } from "@supabase/supabase-js";
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const key = process.env.SUPABASE_SECRET_KEY;
+// The results engine has its own project (see lib/results/engine/supabase-client.ts),
+// falling back to the shared one only when it has no pair of its own.
+const url = process.env.RESULTS_SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
+const key = process.env.RESULTS_SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SECRET_KEY;
 if (!url || !key) {
-  console.error("Missing NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SECRET_KEY.");
+  console.error(
+    "Missing RESULTS_SUPABASE_URL / RESULTS_SUPABASE_SECRET_KEY " +
+      "(or the shared NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SECRET_KEY).",
+  );
   process.exit(1);
 }
+console.log(`Project: ${/https:\/\/([^.]+)\./.exec(url)?.[1] ?? url}\n`);
 
 const db = createClient(url, key, { auth: { persistSession: false } });
 const SLUG = "s0-2000-verification-throwaway";
@@ -113,6 +119,63 @@ await check("settings round-trip", async () => {
   const { error } = await db.from("results_engine_settings")
     .upsert({ key: "live_interval_seconds", value: 20 }, { onConflict: "key" });
   must(!error, error?.message);
+});
+
+await check("distribution upserts do not duplicate on nullable columns", async () => {
+  // age_group and sex are null on every whole-division distribution, and
+  // Postgres treats nulls as distinct in a unique constraint unless the
+  // constraint says NULLS NOT DISTINCT. Without it, every recompute inserts a
+  // fresh set instead of updating, and getStationDistribution then errors
+  // because it expects at most one row. An in-memory store compares
+  // null === null and never shows this.
+  const row = {
+    scope: "global",
+    event_id: null,
+    division_key: "verification-division",
+    station_key: "verification-station",
+    age_group: null,
+    sex: null,
+    sample_count: 1,
+    percentiles: {},
+    computed_at: new Date().toISOString(),
+  };
+  const conflict = "scope,event_id,division_key,station_key,age_group,sex";
+  await db.from("results_station_distributions").upsert(row, { onConflict: conflict });
+  await db.from("results_station_distributions").upsert(
+    { ...row, sample_count: 2 },
+    { onConflict: conflict },
+  );
+
+  const { count, error } = await db
+    .from("results_station_distributions")
+    .select("id", { count: "exact", head: true })
+    .eq("division_key", "verification-division");
+  must(!error, error?.message);
+  must(count === 1, `expected 1 row after two upserts, found ${count} — the unique constraint needs NULLS NOT DISTINCT`);
+
+  await db
+    .from("results_station_distributions")
+    .delete()
+    .eq("division_key", "verification-division");
+});
+
+await check("PostgREST resolves the athlete embed used by getRanking", async () => {
+  // supabase-js embeds the athlete via the foreign key. If PostgREST cannot see
+  // the relationship, the ranking endpoint fails at runtime with a schema-cache
+  // error that no amount of SQL testing would have caught.
+  const { error } = await db
+    .from("results_results")
+    .select("id, athlete:results_athletes!inner(slug,name)")
+    .limit(1);
+  must(!error, error?.message);
+});
+
+await check("real ingested data is readable", async () => {
+  const { count, error } = await db
+    .from("results_results")
+    .select("id", { count: "exact", head: true });
+  must(!error, error?.message);
+  console.log(`      ${count} results stored`);
 });
 
 await check("cleanup", async () => {

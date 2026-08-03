@@ -20,7 +20,7 @@ import { FailingAdapter } from "../source/replay-adapter";
 import { FallbackChain } from "../source/adapter";
 import { runLiveTick } from "./live";
 import { runReconcile, isReconcileDue } from "./reconcile";
-import { orderForBackfill } from "./backfill";
+import { orderForBackfill, allSeasonPaths, runBackfill } from "./backfill";
 import { recomputeDistributionsForEvent } from "./distributions";
 import { channelForEvent, deliveryModeFor } from "./publisher";
 import { runSplitsBackfill, idpFromSourceResultId, hasSplits } from "./splits";
@@ -364,8 +364,94 @@ describe("splits backfill (§4)", () => {
     expect(filled?.rankOverall).toBe(1);
   });
 
+  it("does not retry a row it has already quarantined", async () => {
+    // The detail fixture's splits cannot reconcile with this board's finish
+    // times, so every row quarantines — which is the case that matters.
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-implausible.html")] },
+        details: { LRAA0000101: fixture("detail-splits.html") },
+      }),
+    });
+    await syncOnce(h);
+
+    // Both rows quarantine at the list stage, so nothing is left to fetch.
+    const first = await runSplitsBackfill(h.engine, { limit: 5 });
+    expect(first.attempted).toBe(0);
+
+    // And a row quarantined at the splits stage is not offered again: without
+    // this it is re-fetched and re-quarantined on every run, for ever.
+    const h2 = await makeHarness({
+      fixtures: defaultFixtures({
+        details: { LRAA0000001: fixture("detail-splits.html") },
+      }),
+    });
+    await syncOnce(h2);
+    await h2.repo.quarantine({
+      sourceEventId: null,
+      sourceDivisionId: null,
+      sourceResultId: `${DIVISION_CODE}:LRAA0000001`,
+      reason: "segment_out_of_range",
+      detail: { stage: "splits" },
+      rawPayload: null,
+      ingestionRunId: null,
+      reprocessedAt: null,
+    });
+
+    const after = await runSplitsBackfill(h2.engine, { limit: 5 });
+    const attemptedIds = [...h2.repo.results.values()].filter(hasSplits);
+    expect(attemptedIds.every((r) => r.sourceResultId !== `${DIVISION_CODE}:LRAA0000001`)).toBe(
+      true,
+    );
+    expect(after.filled).toBeLessThanOrEqual(5);
+  });
+
   it("recovers the source id from the stored result id", () => {
     expect(idpFromSourceResultId("H_LR3MS4JI163A#men:LRAA0000001")).toBe("LRAA0000001");
+  });
+});
+
+describe("historical seasons (§5)", () => {
+  it("walks every season, newest first", () => {
+    const seasons = allSeasonPaths();
+    expect(seasons[0]).toBe("season-9");
+    expect(seasons).toContain("season-1");
+    expect(seasons).toHaveLength(9);
+  });
+
+  it("catalogues one season per run and remembers which", async () => {
+    const index = fixture("season-index.html");
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        seasonIndex: { "season-9": index, "season-8": index },
+      }),
+    });
+
+    const first = await runBackfill(h.engine, { maxEvents: 0 });
+    expect(first.seasonCatalogued).toBe("season-9");
+
+    // The cursor advances, so the next run takes the next season rather than
+    // re-catalogueing the same one for ever.
+    const second = await runBackfill(h.engine, { maxEvents: 0 });
+    expect(second.seasonCatalogued).toBe("season-8");
+
+    const done = await h.repo.getSetting<string[]>("backfill_seasons_done");
+    expect(done).toEqual(["season-9", "season-8"]);
+  });
+
+  it("leaves a season uncursored when it fails, so the next run retries it", async () => {
+    // Only season-9 has a fixture here, so season-8 throws. The failure must
+    // not stop the run or mark the season done.
+    const h = await makeHarness();
+    expect((await runBackfill(h.engine, { maxEvents: 0 })).seasonCatalogued).toBe("season-9");
+    expect((await runBackfill(h.engine, { maxEvents: 0 })).seasonCatalogued).toBeNull();
+    expect(await h.repo.getSetting<string[]>("backfill_seasons_done")).toEqual(["season-9"]);
+  });
+
+  it("can be told to pull results without deepening the catalogue", async () => {
+    const h = await makeHarness();
+    const outcome = await runBackfill(h.engine, { maxEvents: 0, catalogueSeasons: false });
+    expect(outcome.seasonCatalogued).toBeNull();
   });
 });
 

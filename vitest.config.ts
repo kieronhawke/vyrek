@@ -19,6 +19,12 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: { "@": path.resolve(__dirname, ".") },
+    alias: {
+      "@": path.resolve(__dirname, "."),
+      // `server-only` throws by design outside a React Server Component, which
+      // makes any module importing it untestable. Aliased to a no-op so the
+      // server-side data sources can be unit-tested directly.
+      "server-only": path.resolve(__dirname, "tests/stubs/server-only.ts"),
+    },
   },
 });

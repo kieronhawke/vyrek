@@ -16,6 +16,7 @@ import type { ResultsRepository } from "../repository";
 import type { EngineAlert, EngineEvent, IngestionRun, QuarantineRow, SyncState } from "../types";
 import { ingestionStatus } from "../index";
 import { isSourceAuthorised } from "../fetch/fetcher";
+import { hasResultsSupabaseConfig, resultsProjectRef } from "../supabase-client";
 import { DEFAULT_LIVE_INTERVAL_SECONDS, clampLiveInterval, localStartLabel } from "../sync/live";
 
 export type Health = "green" | "amber" | "red";
@@ -157,9 +158,9 @@ function componentHealth(input: {
     {
       key: "database",
       label: "Database",
-      health: process.env.SUPABASE_SECRET_KEY ? "green" : "amber",
-      detail: process.env.SUPABASE_SECRET_KEY
-        ? "Configured"
+      health: hasResultsSupabaseConfig() ? "green" : "amber",
+      detail: hasResultsSupabaseConfig()
+        ? `Configured — project ${resultsProjectRef() ?? "unknown"}`
         : "Not configured — serving from the in-memory store",
     },
     {
