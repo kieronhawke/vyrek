@@ -439,21 +439,34 @@ export class ResultsService implements ResultsDataSource {
    */
   async getStationDistribution(station: StationId, division: string): Promise<Distribution> {
     const divisionKey = toDivisionKey(division) ?? division;
-    const samples: number[] = [];
 
-    for (const event of await this.repo.listEvents()) {
-      for (const d of await this.repo.listDivisions(event.id)) {
-        if (d.divisionKey !== divisionKey) continue;
-        const rows = await this.repo.listResultsForDivision(d.id);
-        for (const row of rows) {
-          if (row.status !== "finished") continue;
+    // ⚠️ Only the rows that carry splits, and only the matching divisions.
+    //
+    // This walked every event, listed its divisions, and read *every column of
+    // every row* of each matching one — to pull a single station's time off
+    // those that had one. Splits are fetched an athlete at a time and 99.5% of
+    // rows have none, so almost all of that was reading `splits: {}`. A station
+    // guide renders two of these and took 95 seconds.
+    //
+    // `listAllDivisions` replaces the per-event walk (223 round trips to find
+    // divisions by key), and `listResultsWithSplitsForDivision` reads the small
+    // populated minority through the partial index from migration 0103.
+    const divisions = (await this.repo.listAllDivisions()).filter(
+      (d) => d.divisionKey === divisionKey,
+    );
+
+    const perDivision = await Promise.all(
+      divisions.map(async (d) => {
+        const rows = await this.repo.listResultsWithSplitsForDivision(d.id);
+        return rows.flatMap((row) => {
+          if (row.status !== "finished") return [];
           const segment = row.splits.stations.find((s) => s.key === station);
-          if (segment) samples.push(Math.round(segment.timeMs / 1000));
-        }
-      }
-    }
+          return segment ? [Math.round(segment.timeMs / 1000)] : [];
+        });
+      }),
+    );
 
-    return buildDistribution(samples);
+    return buildDistribution(perDivision.flat());
   }
 
   /**
