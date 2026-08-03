@@ -19,6 +19,8 @@ import {
   listStationSlugs,
 } from "@/lib/hyrox-stations";
 import { siteUrl } from "@/lib/blog/urls";
+import { listPostMeta } from "@/lib/blog/posts";
+import { STATION_READING } from "@/lib/hyrox/station-reading";
 
 // Real photography from the July 2026 intake (docs/photo-library-2026-07.md),
 // except sled pull, which nothing in the set covers and so keeps its AI
@@ -107,6 +109,13 @@ export default async function StationPage({
   if (!s) notFound();
 
   const url = `${siteUrl()}/hyrox/stations/${s.slug}`;
+
+  // Resolve this station's reading list against what is actually published.
+  const allPosts = await listPostMeta();
+  const bySlug = new Map(allPosts.map((p) => [p.slug, p]));
+  const reading = (STATION_READING[s.slug] ?? [])
+    .map((slug) => bySlug.get(slug))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   // BreadcrumbList
   const breadcrumbLd = {
@@ -355,6 +364,37 @@ export default async function StationPage({
               </Accordion>
             </div>
           </section>
+
+          {/* Go deeper: the writing that belongs to this station. Any slug in
+              STATION_READING that is not live is dropped above, so this
+              section disappears entirely rather than rendering a dead row. */}
+          {reading.length > 0 && (
+            <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
+              <Eyebrow>Go deeper</Eyebrow>
+              <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
+                More on the {s.name.toLowerCase()}
+              </h2>
+              <ul className="mt-6 space-y-3">
+                {reading.map((p) => (
+                  <li key={p.slug}>
+                    <Link
+                      href={`/blog/${p.slug}`}
+                      className="block rounded-lg border border-suth-border-subtle p-4 transition-colors hover:border-suth-text"
+                    >
+                      <span className="block font-bold text-suth-text">
+                        {p.title}
+                      </span>
+                      {p.excerpt && (
+                        <span className="mt-1 block text-sm text-suth-text-muted">
+                          {p.excerpt}
+                        </span>
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
           {/* Next station */}
           <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
