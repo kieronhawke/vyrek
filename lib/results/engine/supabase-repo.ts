@@ -161,11 +161,57 @@ export function toRepositoryError(error: unknown, context: string): Error {
   return wrapped;
 }
 
-/** Split a list into fixed-size batches. PostgREST rejects an over-long URL. */
-function chunk<T>(items: T[], size: number): T[][] {
-  const out: T[][] = [];
-  for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size));
-  return out;
+/**
+ * Athletes written per statement.
+ *
+ * Halved from 200 after the trigram index on `name` made each write ten times
+ * more expensive and 200-row batches began timing out. `upsertAthletes` halves
+ * again on a timeout, so this is a starting point rather than a limit.
+ */
+const ATHLETE_BATCH = 100;
+
+/** Results written per statement. Halved further on a timeout. */
+const RESULT_BATCH = 200;
+
+/**
+ * Upsert in batches, halving any batch that runs out of time.
+ *
+ * ⚠️ Two separate lessons live here.
+ *
+ * The first is that a batch has to be bounded at all: `upsertResults` sent
+ * every changed row of a division in one statement, which for Rotterdam's open
+ * men is 2,721 rows each carrying a `splits` JSONB blob of eighteen segments.
+ *
+ * The second is that no fixed bound is right. Writing an indexed column costs
+ * roughly ten times what writing an unindexed one does — measured on
+ * `results_athletes.name` after the trigram index landed, 1,030ms against
+ * 102ms per 200 rows — so a size chosen against an idle database fails against
+ * a loaded one. Halving on timeout adapts instead of guessing, down to a single
+ * row before it gives up.
+ *
+ * Anything that is not a timeout (57014) is a real error and is rethrown at
+ * once, so a bad row is not retried sixty-four times on its way to failing.
+ */
+async function upsertInBatches<T>(
+  rows: T[],
+  size: number,
+  write: (batch: T[]) => PromiseLike<{ error: unknown }>,
+  context: string,
+): Promise<void> {
+  const run = async (batch: T[]): Promise<void> => {
+    if (batch.length === 0) return;
+    const { error } = await write(batch);
+    if (!error) return;
+
+    const timedOut = (error as { code?: string }).code === "57014";
+    if (!timedOut || batch.length === 1) throw toRepositoryError(error, context);
+
+    const half = Math.ceil(batch.length / 2);
+    await run(batch.slice(0, half));
+    await run(batch.slice(half));
+  };
+
+  for (let i = 0; i < rows.length; i += size) await run(rows.slice(i, i + size));
 }
 
 export class SupabaseResultsRepository implements ResultsRepository {
@@ -488,29 +534,73 @@ export class SupabaseResultsRepository implements ResultsRepository {
     // Same hazard as results: one repeated slug fails the whole statement.
     const bySlug = new Map<string, UpsertAthlete>();
     for (const a of input) bySlug.set(a.slug, a);
-    const athletes = [...bySlug.values()];
+    let athletes = [...bySlug.values()];
 
-    const out: AthleteRow[] = [];
-    for (let i = 0; i < athletes.length; i += 200) {
-      const chunk = athletes.slice(i, i + 200).map((a) => ({
-        slug: a.slug,
-        name: a.name,
-        nationality: a.nationality ?? null,
-        gender: a.gender ?? null,
-        source_athlete_id: a.sourceAthleteId ?? null,
-        claimed_by_user_id: a.claimedByUserId ?? null,
-        is_demo: a.isDemo,
-        is_anonymised: a.isAnonymised,
-        identity_confidence: a.identityConfidence,
-        needs_identity_review: a.needsIdentityReview,
-      }));
-      const { data, error } = await this.db
-        .from("results_athletes")
-        .upsert(chunk, { onConflict: "slug" })
-        .select();
-      if (error) throw toRepositoryError(error, "athlete batch upsert failed");
-      out.push(...((data ?? []) as AthleteRow[]));
+    // ⚠️ `slug` is not the only unique key on this table.
+    //
+    // `results_athletes_source_idx` is a UNIQUE partial index on
+    // `source_athlete_id`, and the upsert below declares `ON CONFLICT (slug)`.
+    // So an athlete already stored under one slug, arriving with a different
+    // one — which happens whenever the source changes the spelling of a name —
+    // is an INSERT that violates a constraint the conflict clause does not
+    // cover. Postgres fails the whole statement, and a division dies with it.
+    // That is exactly what happened to Sports Direct HYROX London 2024.
+    //
+    // Resolving the source id to its stored slug first turns that insert back
+    // into the update it always was. The new name still lands; only the slug is
+    // held stable, which is right anyway — a slug is a URL, and an athlete's
+    // page should not move because a timing operator corrected their spelling.
+    const sourceIds = athletes
+      .map((a) => a.sourceAthleteId)
+      .filter((id): id is string => Boolean(id));
+
+    if (sourceIds.length > 0) {
+      const known = await this.getAthletesBySourceIds(sourceIds);
+      const slugBySourceId = new Map(known.map((a) => [a.sourceAthleteId as string, a.slug]));
+
+      const remapped = new Map<string, UpsertAthlete>();
+      for (const a of athletes) {
+        const stored = a.sourceAthleteId ? slugBySourceId.get(a.sourceAthleteId) : undefined;
+        const athlete = stored && stored !== a.slug ? { ...a, slug: stored } : a;
+        // Remapping can collide two incoming rows onto one stored slug; the
+        // dedupe has to happen again afterwards or the statement fails on the
+        // repeat instead.
+        remapped.set(athlete.slug, athlete);
+      }
+      athletes = [...remapped.values()];
     }
+
+    const toRow = (a: UpsertAthlete) => ({
+      slug: a.slug,
+      name: a.name,
+      nationality: a.nationality ?? null,
+      gender: a.gender ?? null,
+      source_athlete_id: a.sourceAthleteId ?? null,
+      claimed_by_user_id: a.claimedByUserId ?? null,
+      is_demo: a.isDemo,
+      is_anonymised: a.isAnonymised,
+      identity_confidence: a.identityConfidence,
+      needs_identity_review: a.needsIdentityReview,
+    });
+
+    // Athletes come back out, because the caller needs their ids to build
+    // result rows — so this collects rather than only writing. Batching and the
+    // halving retry are `upsertInBatches`'s job; see it for why no fixed size
+    // is right.
+    const out: AthleteRow[] = [];
+    await upsertInBatches(
+      athletes,
+      ATHLETE_BATCH,
+      async (batch) => {
+        const { data, error } = await this.db
+          .from("results_athletes")
+          .upsert(batch.map(toRow), { onConflict: "slug" })
+          .select();
+        if (!error) out.push(...((data ?? []) as AthleteRow[]));
+        return { error };
+      },
+      "athlete batch upsert failed",
+    );
     return out.map(toAthlete);
   }
 
@@ -644,12 +734,15 @@ export class SupabaseResultsRepository implements ResultsRepository {
       }
     }
 
-    if (changed.length > 0) {
-      const { error } = await this.db
-        .from("results_results")
-        .upsert(changed.map(fromResult), { onConflict: "source_result_id" });
-      if (error) throw toRepositoryError(error, "results write failed");
-    }
+    // Bounded and adaptive — see `upsertInBatches`. This was one statement for
+    // the whole division, which is 2,721 rows of splits JSONB on a big board.
+    await upsertInBatches(
+      changed.map(fromResult),
+      RESULT_BATCH,
+      (batch) =>
+        this.db.from("results_results").upsert(batch, { onConflict: "source_result_id" }),
+      "results write failed",
+    );
 
     return { inserted, updated, unchanged };
   }

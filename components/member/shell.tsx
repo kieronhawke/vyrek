@@ -17,12 +17,17 @@ import { Walkthrough } from "@/components/member/walkthrough";
 export function MemberShell({
   base = "/app",
   initials,
+  blockWeek,
+  blockTotal,
   children,
 }: {
   /** Route prefix, so the ungated preview mount reuses this verbatim. */
   base?: string;
   /** Shown in the avatar. Omitted on the preview mount, which has no user. */
   initials?: string;
+  /** Weeks published to this member. 0 hides the block indicator entirely. */
+  blockWeek?: number;
+  blockTotal?: number;
   children: ReactNode;
 }) {
   return (
@@ -36,7 +41,7 @@ export function MemberShell({
 
       {/* Desktop: block progress sits under the wordmark, above the rail. */}
       <div className="member-railprogress">
-        <BlockProgress />
+        <BlockProgress current={blockWeek} total={blockTotal} />
       </div>
 
       {/* Mobile: wordmark left, account right. The rail replaces this above
@@ -45,7 +50,7 @@ export function MemberShell({
         <Link href={base} aria-label="Suth Performance">
           <Wordmark size="sm" accent="var(--accent)" className="text-[color:var(--text)]" />
         </Link>
-        <BlockProgress compact />
+        <BlockProgress compact current={blockWeek} total={blockTotal} />
         {initials ? (
           <Link
             href={`${base}/account`}
@@ -76,7 +81,11 @@ export function MemberShell({
       <main className="member-main">{children}</main>
 
       {/* Shown once, on the first visit after onboarding. */}
-      <Walkthrough />
+      {/* The five-step tour explains Today, the week strip and the session
+          card. None of those exist yet for somebody still waiting on week
+          one, so it was pointing at empty space and covering the screen that
+          actually answers their question. It waits for a real block. */}
+      {blockWeek !== 0 && <Walkthrough />}
     </div>
   );
 }

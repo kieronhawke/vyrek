@@ -93,7 +93,19 @@ export async function POST() {
       success_url: `${site}/welcome?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${site}/plan?cancelled=true`,
       allow_promotion_codes: true,
-      payment_method_types: ["card"],
+      /* No payment_method_types. Naming "card" explicitly pinned Checkout to
+         cards and switched OFF automatic payment methods, which is what was
+         suppressing Apple Pay, Google Pay and Link. Omitting the field lets
+         Stripe serve whatever is enabled in the Dashboard and appropriate to
+         the device, so an iPhone gets the Apple Pay sheet and a Chrome user
+         gets Google Pay, both of which convert far better than typing a card
+         number on a phone.
+
+         This needs Apple Pay and Google Pay switched on in the Stripe
+         Dashboard under Settings, Payment methods. The domain is verified
+         automatically for Checkout, so there is nothing to host. */
+      locale: "en-GB",
+      billing_address_collection: "auto",
       metadata: {
         suth_customer_id: customer.id,
         programme: quizResponse?.program ?? "unknown",

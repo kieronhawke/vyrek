@@ -25,8 +25,12 @@ production. Flipping it is the last step, described under *What is left*. I
 have not flipped it: the backfill is still running and half the archive would
 show partial fields.
 
-**The backfill is still going.** Roughly 1,250 of 2,692 divisions checkpointed.
-Resumable and safe to stop; progress is per division.
+**The backfill is still going, and 38 events are still empty.** 185 of 223
+events hold results; the other 38 hold none. That is a real gap, not an
+artefact: sampling three of them against the source found 750 and 588 results
+waiting for two, and a genuinely empty board for the third (an event that never
+ran). The backfill is resumable and safe to stop — progress is recorded per
+division, so an interrupted run picks up where it left off.
 
 ## What running it for real found
 
@@ -102,19 +106,75 @@ athlete, and `select()` takes all of it. Measured against the real store:
 
 | Call | Before | After |
 | --- | --- | --- |
-| `getRecords` | 365s | ~9–11s |
+| `getRecords` | 365s | 1.1s (precomputed) |
 | `getStarters` (12,366 entrants) | 573s | 10.5s |
 | `getEvent` (15 divisions) | 12.3s | 2.2s |
 | `getRanking` | minutes | 1.8s |
 | `searchAll` | 7.7s | 3.8s |
 
-`getRecords` at 365 seconds is past any serverless timeout, so
-`/rankings/world-records` **could never have rendered in production** — the
-resilient wrapper would have caught the timeout and served demo records.
-
 Migration `0103` adds what the schema lacked at this size: trigram GIN indexes,
 because `name ILIKE '%smith%'` cannot use a btree and was scanning 883,167 rows
 per keystroke, plus partial indexes for the top-1-per-division reads.
+
+### Three pages could not render at all
+
+The data layer being correct is not the same as the pages working, and running
+them in live mode found three that did not.
+
+**`/rankings/world-records` showed "No records yet"** against half a million
+results. Not an empty board — a timeout. Deriving the fastest finish per
+division hit the statement limit, `ResilientDataSource` cannot tell a timeout
+from an outage, and the page degraded to the demo tier, which has no records at
+all. The fallback behaved exactly as designed and produced the most misleading
+outcome available: an authoritative-looking page asserting nothing exists.
+
+It is now a `DISTINCT ON` in a database function carrying its own statement
+timeout (migration `0104`) — the honest cost of sorting 515,370 rows is about
+twenty seconds, far past what the API allows — and precomputed by the catalogue
+pass into a settings blob. **10.7s to compute once, 1.07s to serve.**
+
+**`/results` never responded.** `collectRecordCandidates` read the top 200 of
+every division of every finished event — 218 events, 2,692 divisions — on a page
+render. Bounded to the 30 most recent, which is not a compromise: the only
+caller passes the result straight to `freshRecords`, which keeps records set in
+the last fourteen days, so scanning eight seasons to discard all but a fortnight
+was work whose output was thrown away.
+
+**The station guides took 95 seconds**, and that one was mine.
+`getStationDistribution` walked every event, listed its divisions, and read every
+column of every row of the matching ones to pull one station's time off those
+that had it — and 99.5% of rows have no splits, so nearly all of it was reading
+`splits: {}`. The histogram I added made each guide call it twice, which turned
+a slow query into a visible one.
+
+The pattern across all three: written against the demo dataset, where the
+shortcut is free, meeting a real database for the first time.
+
+Verified rendering in live mode with real data and no demo notice:
+`/rankings/world-records` (1.19s), `/events/uk` (1.35s), `/events`,
+`/event/s8-2026-rotterdam`.
+
+### The writes were unbounded, and the index made them dearer
+
+Two failures that only appear when ingest meets a database with real
+indexes on it.
+
+`upsertResults` sent **every changed row of a division in one statement** —
+2,721 rows of `splits` JSONB for Rotterdam's open men. It had no chunking at
+all, which went unnoticed while divisions were small, and a timeout cost the
+whole division rather than one batch.
+
+What pushed it over the edge was my own fix: the trigram index that took
+search from 13s to 220ms costs about **ten times more to write** — measured
+on `results_athletes.name`, 1,030ms against 102ms per 200 rows. That removed
+the headroom the existing batch sizes assumed, and athlete writes started
+timing out too, failing three divisions of one event.
+
+Both writes now share one helper that halves a batch on timeout, down to a
+single row, and rethrows anything that is not a timeout immediately so a
+genuinely bad row is not retried sixty-four times on its way to failing. No
+fixed size would have been right: the cost depends on how loaded the database
+is at that moment, and a constant chosen against an idle one is what broke.
 
 ### Smaller correctness fixes
 
@@ -145,15 +205,16 @@ per keystroke, plus partial indexes for the top-1-per-division reads.
 
 ## Tests
 
-**995 passing, 9 skipped** (skipped are operator tools: backfill, contamination
-repair, live smoke). `tsc --noEmit` clean, ESLint clean, `next build` clean at
-8,175 static pages.
+**1,032 passing, 9 skipped** (skipped are operator tools: backfill,
+contamination repair, live smoke). `tsc --noEmit` clean, ESLint clean,
+`next build` clean at 8,175 static pages.
 
 ## What is left
 
 ### Mine, in progress
 
-1. **Finish the backfill.** ~1,250 of 2,692 divisions checkpointed.
+1. **Finish the backfill.** 187 of 223 events checkpointed. It stopped early
+   once when processes it shared the machine with were killed; restarted.
 2. **Run the contamination repair.**
    `HYROX_REPAIR=1 HYROX_REPAIR_APPLY=1 HYROX_SOURCE_ACCESS=authorised npx vitest run repair-contamination`
    Report-only by default. Re-fetches each suspect division and deletes only
@@ -185,8 +246,20 @@ repair, live smoke). `tsc --noEmit` clean, ESLint clean, `next build` clean at
   floor is 30 minutes, and that floor exists because Adaptive and Youngstars
   genuinely run a shorter course. A division-aware floor would fix it properly;
   I have not written one because I am not confident of those course lengths.
+- **The 2019 team formats do not have their rosters parsed.** `BT1`, `BT2`,
+  `GT1` and `GT2` at Hamburg 2019 store one row per entry with no partners, so
+  they read short against a published figure that counts the whole roster —
+  "stored 31 of 55". Confined to the oldest season and a few dozen rows; the
+  formats render differently from the modern boards. Modern doubles and relay
+  are complete: Rotterdam 2026 has partners on 2,148 of 2,148 doubles rows,
+  Vienna on 850 of 850. Worth knowing that the completeness check *reported*
+  this rather than quietly storing half a division.
 - **The demo record board is empty**, so the `demo` fallback tier for
-  `/rankings/world-records` shows nothing rather than sample records.
+  `/rankings/world-records` shows nothing rather than sample records. This is
+  what made the timeout above present as "No records yet" instead of visibly
+  wrong data, and it is worth seeding.
+- **`/events` renders 1.67 MB** — every one of 223 events as a tile. It works,
+  but it wants pagination or a season default before it grows further.
 
 ---
 

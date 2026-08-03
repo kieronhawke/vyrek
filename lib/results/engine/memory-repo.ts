@@ -171,7 +171,16 @@ export class MemoryResultsRepository implements ResultsRepository {
       : [...this.athletes.values()].find((a) => a.slug === athlete.slug);
 
     if (existing) {
-      const merged = { ...existing, ...athlete, id: existing.id };
+      // ⚠️ The stored slug wins when the match was on source id.
+      //
+      // A slug is a URL. An athlete's page must not move because a timing
+      // operator corrected the spelling of their name — and in Postgres it
+      // cannot anyway: `source_athlete_id` carries its own unique index, so
+      // re-slugging a known athlete is an insert that violates it and fails
+      // the whole batch. Matching that here keeps the two implementations
+      // honest, which is the only reason to have both.
+      const keepSlug = Boolean(athlete.sourceAthleteId) ? existing.slug : athlete.slug;
+      const merged = { ...existing, ...athlete, slug: keepSlug, id: existing.id };
       this.athletes.set(existing.id, merged);
       return merged;
     }

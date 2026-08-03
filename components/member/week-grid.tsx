@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { SEED_WEEK, parseSession, type PlanWeek, type Slot } from "@/lib/plan/model";
 import { useRecord } from "@/lib/control/store";
+import { useCelebration } from "./celebrate";
+import { CoachMedia } from "./coach-media";
 
 /**
  * The athlete's week — Ben's spreadsheet, live.
@@ -77,9 +80,27 @@ export function WeekGrid({
   );
   const completed = Object.values(done).filter(Boolean).length;
 
+  const { fire, node: celebration } = useCelebration();
+  // Which tick the burst is currently anchored to. One at a time: two bursts
+  // on screen at once reads as a glitch rather than a celebration.
+  const [justTicked, setJustTicked] = useState<string | null>(null);
+
   function toggle(date: string, slot: Slot) {
     const k = slotKey(date, slot);
-    saveDone({ ...done, [k]: !done[k] });
+    const nowDone = !done[k];
+    saveDone({ ...done, [k]: nowDone });
+    setJustTicked(nowDone ? k : null);
+
+    // Only on the way *in*. Celebrating an un-tick would be daft, and it is
+    // the tap people make when they ticked the wrong row.
+    if (nowDone) {
+      const left = total - (completed + 1);
+      fire(
+        left === 0
+          ? "That is the whole week done."
+          : `Session logged. ${left} to go this week.`,
+      );
+    }
   }
 
   return (
@@ -126,15 +147,21 @@ export function WeekGrid({
                     >
                       <div className="week__slot">
                         <span className="eyebrow">{slot}</span>
-                        <button
-                          type="button"
-                          className="week__tick"
-                          aria-pressed={isDone}
-                          aria-label={`Mark ${day.dayName} ${slot} ${isDone ? "not done" : "done"}`}
-                          onClick={() => toggle(day.date, slot)}
-                        >
-                          {isDone ? "✓ Done" : "Mark done"}
-                        </button>
+                        <span style={{ position: "relative", display: "inline-flex" }}>
+                          <button
+                            type="button"
+                            className="week__tick"
+                            aria-pressed={isDone}
+                            aria-label={`Mark ${day.dayName} ${slot} ${isDone ? "not done" : "done"}`}
+                            onClick={() => toggle(day.date, slot)}
+                          >
+                            {isDone ? "✓ Done" : "Mark done"}
+                          </button>
+                          {/* The burst is anchored to the tick that fired it,
+                              so it reads as coming from that session rather
+                              than from the page. */}
+                          {justTicked === slotKey(day.date, slot) ? celebration : null}
+                        </span>
                       </div>
                       <SessionBody text={text} />
                     </div>
@@ -151,11 +178,11 @@ export function WeekGrid({
           <p className="eyebrow">Ben&apos;s note for the week</p>
           <p>{week.notes}</p>
           {week.coachMedia ? (
-            <button type="button" className="week__media">
-              ▶ {week.coachMedia.label} ·{" "}
-              {Math.floor(week.coachMedia.durationSec / 60)}:
-              {String(week.coachMedia.durationSec % 60).padStart(2, "0")}
-            </button>
+            <CoachMedia
+              label={week.coachMedia.label}
+              durationSec={week.coachMedia.durationSec}
+              url={week.coachMedia.url}
+            />
           ) : null}
         </div>
       ) : null}

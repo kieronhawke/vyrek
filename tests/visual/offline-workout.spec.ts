@@ -208,3 +208,36 @@ test.describe("never lose a workout", () => {
     await context.close();
   });
 });
+
+/**
+ * A session with no end.
+ *
+ * On the last exercise "Next exercise" was simply disabled, so the only way
+ * out of a session was the back button. That reads as a broken control rather
+ * than as "you have finished", and it is a large part of why logging a session
+ * felt pointless — you never got told you had done one.
+ */
+test.describe("finishing a session", () => {
+  test("the last exercise offers finishing, not a dead button", async ({ page }) => {
+    await page.goto("/train", { waitUntil: "load" });
+    await page.waitForTimeout(1200);
+
+    // Walk to the end of the session.
+    for (let i = 0; i < 8; i++) {
+      const next = page.getByRole("button", { name: "Next exercise" });
+      if (!(await next.count())) break;
+      await next.click();
+      await page.waitForTimeout(200);
+    }
+
+    const finish = page.getByRole("button", { name: "Finish session" });
+    await expect(finish, "no way to finish the session").toBeVisible();
+
+    await finish.click();
+    await expect(page.getByRole("heading", { name: /session done/i })).toBeVisible();
+
+    // And it is reversible — finishing by accident must not strand somebody.
+    await page.getByRole("button", { name: /back to the session/i }).click();
+    await expect(page.getByTestId("workout-player")).toBeVisible();
+  });
+});

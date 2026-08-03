@@ -202,6 +202,24 @@ export function WorkoutPlayer() {
     [queue, exercise, reps, weight, persist],
   );
 
+  /**
+   * End the session.
+   *
+   * There was no way to. The last exercise left a disabled "Next exercise" and
+   * nothing else, so the only exit was the back button — which is why logging
+   * a session felt like it had no point: you never got told you had done one.
+   *
+   * Marking it finished is local and immediate. The set queue already syncs on
+   * its own schedule and handles being offline; this does not wait on it,
+   * because somebody standing in a gym should not watch a spinner to be told
+   * they have finished training.
+   */
+  const [finished, setFinished] = useState(false);
+  const finishSession = useCallback(() => {
+    setFinished(true);
+    if (navigator.vibrate) navigator.vibrate([10, 50, 10]);
+  }, []);
+
   // Drain the queue whenever there is something to send and a network to
   // send it on. Errors mark for retry; nothing is ever dropped.
   const syncing = useRef(false);
@@ -258,6 +276,42 @@ export function WorkoutPlayer() {
   const setsHere = queue.items
     .filter((i) => i.set.exerciseId === exercise.id)
     .sort((a, b) => a.set.setNumber - b.set.setNumber);
+
+  if (finished) {
+    const totalSets = queue.items.length;
+    return (
+      <div
+        data-testid="workout-finished"
+        style={{
+          minHeight: "100svh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          padding: "var(--space-3)",
+          gap: "var(--space-2)",
+        }}
+      >
+        <p className="eyebrow">{SESSION.title}</p>
+        <h1 style={{ margin: 0, fontSize: "var(--text-2xl)", fontWeight: 800 }}>
+          Session done.
+        </h1>
+        <p style={{ margin: 0, color: "var(--text-muted)", maxWidth: "32ch" }}>
+          {totalSets} {totalSets === 1 ? "set" : "sets"} logged
+          {" "}across {SESSION.exercises.length} exercises.
+          {" "}Ben sees this before he writes next week.
+        </p>
+        {/* Nothing is claimed about syncing here. The queue sends on its own
+            schedule and works offline; telling somebody standing in a gym that
+            their session is "saved to the cloud" when the phone has no signal
+            would be a lie they would catch. */}
+        <div style={{ display: "flex", gap: "var(--space-1)", marginTop: "var(--space-2)" }}>
+          <NavButton label="Back to the session" disabled={false} onClick={() => setFinished(false)} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -502,18 +556,23 @@ export function WorkoutPlayer() {
           Log set {loggedForExercise + 1}
         </button>
 
-        {/* Navigation is secondary and reads that way. */}
+        {/* Navigation is secondary and reads that way.
+         *
+         * On the last exercise "Next exercise" was simply disabled, so the
+         * session had no end: you reached the final movement and the only
+         * forward control was dead. That reads as a broken button rather than
+         * as "you have finished". The last step offers finishing instead. */}
         <div style={{ display: "flex", gap: "var(--space-1)" }}>
           <NavButton
             label="Previous"
             disabled={index === 0}
             onClick={() => goToExercise(index - 1)}
           />
-          <NavButton
-            label="Next exercise"
-            disabled={index >= SESSION.exercises.length - 1}
-            onClick={() => goToExercise(index + 1)}
-          />
+          {index >= SESSION.exercises.length - 1 ? (
+            <NavButton label="Finish session" disabled={false} onClick={finishSession} />
+          ) : (
+            <NavButton label="Next exercise" disabled={false} onClick={() => goToExercise(index + 1)} />
+          )}
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { CLIENTS, LEADS } from "@/lib/control/fixtures";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -37,15 +38,27 @@ export type ModuleLink = {
   group: "Work" | "Money" | "Growth" | "System";
 };
 
+/* The badges were hardcoded and drifted the moment the fixtures grew: the
+   sidebar said 6 clients and 4 leads while the dashboard tiles beside it
+   said 24 and 12. Derived from the same fixtures the tiles read, so the two
+   cannot disagree again. */
+const NEW_LEADS = LEADS.filter((l) => l.status === "new").length;
+const NEEDS_A_PLAN = CLIENTS.filter(
+  (c) => c.programmingStatus === "overdue" || c.programmingStatus === "due_soon",
+).length;
+const PAYMENT_ISSUES = CLIENTS.filter(
+  (c) => c.payment === "late" || c.payment === "failed",
+).length;
+
 export const MODULES: ModuleLink[] = [
   { href: "", label: "Dashboard", short: "Today", group: "Work" },
-  { href: "/leads", label: "Leads", count: 4, group: "Work" },
-  { href: "/tracker", label: "Coach tracker", short: "Tracker", count: 27, group: "Work" },
-  { href: "/clients", label: "Clients", count: 6, group: "Work" },
-  { href: "/plans", label: "Plans", count: 2, group: "Work" },
+  { href: "/leads", label: "Leads", count: NEW_LEADS, group: "Work" },
+  { href: "/tracker", label: "Coach tracker", short: "Tracker", count: CLIENTS.length, group: "Work" },
+  { href: "/clients", label: "Clients", count: CLIENTS.length, group: "Work" },
+  { href: "/plans", label: "Plans", count: NEEDS_A_PLAN, group: "Work" },
   { href: "/diary", label: "Diary", group: "Work" },
   { href: "/messages", label: "Messages", count: 3, group: "Work" },
-  { href: "/payments", label: "Payments", count: 2, group: "Money" },
+  { href: "/payments", label: "Payments", count: PAYMENT_ISSUES, group: "Money" },
   { href: "/finance", label: "Finance", group: "Money" },
   { href: "/activity", label: "Activity", group: "Growth" },
   { href: "/seo", label: "SEO", group: "Growth" },

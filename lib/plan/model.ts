@@ -69,8 +69,20 @@ export type PlanWeek = {
   runningVolume: string;
   /** Set on standalone plans; absent when the plan belongs to a client. */
   recipient?: PlanRecipient;
-  /** Set when Ben has attached a voice note or video talking the week through. */
-  coachMedia?: { kind: "audio" | "video"; label: string; durationSec: number };
+  /**
+   * Set when Ben has attached a voice note or video talking the week through.
+   *
+   * `url` is optional on purpose. The player renders a real control when there
+   * is something to play and says so plainly when there is not — the button
+   * used to look identical either way, which is why tapping it appeared to do
+   * nothing rather than appearing to be unrecorded.
+   */
+  coachMedia?: {
+    kind: "audio" | "video";
+    label: string;
+    durationSec: number;
+    url?: string;
+  };
 };
 
 /**

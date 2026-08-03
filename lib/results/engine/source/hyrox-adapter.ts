@@ -35,7 +35,6 @@ import type {
 import type { SourceAdapter } from "./adapter";
 import { FallbackChain } from "./adapter";
 import {
-  parseAgeClasses,
   parseDetailSplits,
   parseDivisionRows,
   parseEventGroups,
@@ -185,7 +184,9 @@ abstract class MikaAdapter implements SourceAdapter {
   async fetchDivision(
     seasonPath: string,
     sourceDivisionId: string,
-    opts: { maxRows?: number } = {},
+    // The contract's `maxRows` is deliberately not taken: this walk stops when
+    // the source's own pager runs out, not at a row count we pick, and an
+    // implementation may declare fewer parameters than the interface.
   ): Promise<RawDivisionPage> {
     const { code, sex } = splitDivisionRef(sourceDivisionId);
     const sourceEventId = weekendIdOf(code) ?? code;
@@ -193,7 +194,6 @@ abstract class MikaAdapter implements SourceAdapter {
     // times on a page — the same rank, name and entry id repeated — and the
     // duplication factor varies from row to row.
     const byId = new Map<string, RawDivisionPage["rows"][number]>();
-    let publishedEntrantCount: number | undefined;
     const merged: ParseDiagnostics = {
       headerFields: [],
       candidateRows: 0,
@@ -216,7 +216,7 @@ abstract class MikaAdapter implements SourceAdapter {
     // complete division into a false shortfall. Rows-parsed over distinct-people
     // across every page is the true ratio, and on a complete walk the rows we
     // parsed and the rows the board counted are the same quantity: 686 and 686.
-    publishedEntrantCount =
+    const publishedEntrantCount =
       first.publishedRows !== undefined && merged.parsedRows > 0 && byId.size > 0
         ? Math.round(first.publishedRows / (merged.parsedRows / byId.size))
         : first.published;

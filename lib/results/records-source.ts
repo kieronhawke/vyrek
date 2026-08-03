@@ -22,9 +22,28 @@ const DEPTH = 200;
 /** How many division reads to have in flight at once. */
 const BATCH = 8;
 
+/**
+ * How many recent events to read.
+ *
+ * ⚠️ This bound is what makes the page renderable. Unbounded, this read the
+ * top 200 of *every division of every finished event* — 218 events, 2,692
+ * divisions — on a page render, and `/results` simply never responded. It was
+ * written against the demo dataset, where "every finished event" is a handful.
+ *
+ * Bounding it is not a compromise on the answer. The only caller passes the
+ * result through `freshRecords`, which keeps records set in the last fourteen
+ * days; scanning eight seasons of history to then discard all but a fortnight
+ * of it was work whose output was thrown away. Thirty events is comfortably
+ * more than a fortnight's racing.
+ */
+const RECENT_EVENTS = 30;
+
 export async function collectRecordCandidates(): Promise<RecordCandidate[]> {
   const source = getResultsSource();
-  const events = (await source.listEvents()).filter((e) => e.status === "finished");
+  const events = (await source.listEvents())
+    .filter((e) => e.status === "finished")
+    .sort((a, b) => (b.startDate ?? "").localeCompare(a.startDate ?? ""))
+    .slice(0, RECENT_EVENTS);
 
   // Flatten to (event, division) pairs first so the batching is even. Batching
   // by event would put a fourteen-division event and a two-division one in the

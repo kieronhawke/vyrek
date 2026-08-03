@@ -8,9 +8,24 @@ import { DEMO_TODAY, DEMO_WEEKS } from "@/lib/member/demo";
  * lived on the Plan screen only, so five of the six screens gave the athlete no
  * sense of where they were in the block Ben had written.
  */
-export function BlockProgress({ compact = false }: { compact?: boolean }) {
-  const total = DEMO_WEEKS.length;
-  const current = DEMO_TODAY.weekNumber;
+export function BlockProgress({
+  compact = false,
+  current: currentProp,
+  total: totalProp,
+}: {
+  compact?: boolean;
+  /** Real block position. Omit both and it falls back to the demo block,
+      which is what the ungated preview mount wants. */
+  current?: number;
+  total?: number;
+}) {
+  /* A member with no published week has no block position, and the chrome
+     used to assert "Week 4 of 12" at them regardless, directly contradicting
+     the screen underneath saying Ben had not sent anything yet. Nothing is
+     the correct thing to render. */
+  if (currentProp === 0) return null;
+  const total = totalProp ?? DEMO_WEEKS.length;
+  const current = currentProp ?? DEMO_TODAY.weekNumber;
   const pct = Math.round((current / total) * 100);
   const r = 8;
   const circ = 2 * Math.PI * r;
