@@ -1,5 +1,4 @@
 import { MarketingNav } from "@/components/marketing/nav";
-import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
 
 /**
@@ -10,7 +9,13 @@ export default function BlogLoading() {
   return (
     <>
       <MarketingNav />
-      <main className="pb-24 pt-28 md:pt-36">
+      {/* A skeleton must not open a second <main>. This file and the page it
+          stands in for both end up in the prerendered HTML, so the delivered
+          document carried two <main> landmarks on /blog and three on a post
+          page, which is an ARIA landmark violation and invalid HTML. A plain
+          div renders identically. See the note in loading.tsx about the
+          duplicate ids, which needs the nav to move into a layout. */}
+      <div className="pb-24 pt-28 md:pt-36">
         <Container>
           <div className="h-3 w-40 animate-pulse rounded-full bg-suth-elevated" />
           <div className="mt-6 space-y-3">
@@ -52,8 +57,14 @@ export default function BlogLoading() {
             ))}
           </ul>
         </Container>
-      </main>
-      <MarketingFooter />
+      </div>
+      {/* No MarketingFooter here. The skeleton stands in for the page while
+          it loads, and the footer sits a full viewport below the fold, so
+          nobody sees it. Rendering it duplicated the <footer> landmark and
+          the footer-locations-heading id (which is a server component and so
+          cannot take a useId), and added a large block of markup to every
+          blog route's HTML for no benefit. The nav stays: people do click it
+          mid-load. */}
     </>
   );
 }
