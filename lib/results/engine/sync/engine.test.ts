@@ -731,12 +731,21 @@ describe("athlete identity does not multiply (§13)", () => {
 
     const ids = [...h.repo.athletes.values()].map((a) => a.sourceAthleteId).sort();
     // Position-qualified, so the two people on one entry are distinguishable
-    // and neither is confused with the entry itself.
+    // and neither is confused with the entry itself — and **division**-qualified,
+    // because an entry id is not unique across the catalogue.
+    //
+    // ⚠️ The entry id alone was not enough. `LR3MS4JI55C948#p0` was parsed from
+    // boards at Incheon, Taipei, Shanghai, Osaka, Wuhan, Hong Kong and Beijing,
+    // so one synthetic athlete absorbed a different person from each and ended
+    // up listed in all fourteen divisions of a single event. `sourceResultId`
+    // carries the division and is the only identifier here guaranteed unique.
     expect(ids).toEqual([
-      "LRAA0000301#p0", "LRAA0000301#p1",
-      "LRAA0000302#p0", "LRAA0000302#p1",
+      "H_LR3MS4JI1738:LRAA0000301#p0", "H_LR3MS4JI1738:LRAA0000301#p1",
+      "H_LR3MS4JI1738:LRAA0000302#p0", "H_LR3MS4JI1738:LRAA0000302#p1",
     ]);
     expect(new Set(ids).size).toBe(4);
+    // Every id names its own division, so two events cannot share a partner.
+    for (const id of ids) expect(id).toContain(":");
   });
 
   it("re-syncing an individual board creates no new athletes either", async () => {

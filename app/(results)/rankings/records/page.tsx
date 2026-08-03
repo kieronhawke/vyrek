@@ -3,12 +3,18 @@ import Link from "next/link";
 import { siteUrl } from "@/lib/blog/urls";
 import { collectRecordCandidates, RECORD_DEPTH } from "@/lib/results/records-source";
 import {
-  worldRecords, nationalRecords, ageGroupRecords, countriesWithRecords,
-  freshRecords, NEW_RECORD_DAYS,
+  worldRecords,
+  nationalRecords,
+  ageGroupRecords,
+  countriesWithRecords,
+  freshRecords,
+  NEW_RECORD_DAYS,
+  isBlueRiband,
 } from "@/lib/results/records";
 import { breadcrumbList, jsonLd } from "@/lib/results/structured-data";
 import { formatCount, countryName } from "@/lib/results/format";
 import { RecordTable } from "@/components/results/rankings/record-table";
+import { BlueRiband } from "@/components/results/rankings/blue-riband";
 import { RecordBanner } from "@/components/results/rankings/record-banner";
 import { FaqSection } from "@/components/results/ui/faq-section";
 import { RelatedLinks } from "@/components/results/ui/related-links";
@@ -166,16 +172,28 @@ export default async function RecordsPage({
         />
       </div>
 
-      {/* ── World ─────────────────────────────────────────────────── */}
+      {/*
+        ── World ───────────────────────────────────────────────────────
+        Split in two. Sixteen identically-weighted cards in alphabetical order
+        opened the record book on Adaptive Men and gave the fastest HYROX ever
+        run exactly the same presentation as everything else — which is what
+        made the page read as a list rather than a record book.
+
+        The two outright bests come out into their own block; the remaining
+        fourteen keep the existing card but now arrive in significance order
+        (see `divisionRank`) rather than alphabetically.
+      */}
+      <BlueRiband rows={world.filter((r) => isBlueRiband(r.divisionCode))} now={now} />
+
       <section className="mt-12" aria-labelledby="world-heading">
         <h2 id="world-heading" className="text-lg font-semibold text-suth-text">
-          World records
+          Every division
         </h2>
         <p className="mb-4 mt-1 text-sm text-suth-text-secondary">
           The fastest time ever recorded in each division, anywhere.
         </p>
         <RecordTable
-          rows={world}
+          rows={world.filter((r) => !isBlueRiband(r.divisionCode))}
           now={now}
           emptyTitle="No world records yet"
           emptyBody="Records appear as soon as a race is marked final."

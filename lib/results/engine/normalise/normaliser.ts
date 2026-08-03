@@ -268,9 +268,21 @@ export class Normaliser {
         name: name.trim(),
         // A team entry id identifies the entry, not a person, so it is
         // qualified by position. An individual row's idp is already one person.
+        //
+        // ⚠️ Qualified by the *division* too, not just the entry id.
+        //
+        // `idp#p0` alone is not unique across the catalogue: the same entry id
+        // turned up on boards at Incheon, Taipei, Shanghai, Osaka, Wuhan, Hong
+        // Kong and Beijing, so one synthetic athlete absorbed a different
+        // person from each — and ended up listed in all fourteen divisions of a
+        // single event, which no human races. `sourceResultId` already carries
+        // the division, and it is the only identifier here guaranteed unique.
+        //
+        // Individuals are untouched: a real `idp` is a person, and re-scoping it
+        // would split one athlete's career across every event they ever raced.
         stableId: raw.sourceAthleteId
           ? isTeam
-            ? `${raw.sourceAthleteId}#p${position}`
+            ? `${raw.sourceResultId}#p${position}`
             : raw.sourceAthleteId
           : null,
       }));

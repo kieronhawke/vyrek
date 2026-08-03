@@ -96,33 +96,27 @@ export function PrintCover({
   );
 }
 
-/**
- * Repeats on every printed page, in the bottom margin.
+/*
+ * There is no running-header component any more, and that is deliberate.
  *
- * A footer rather than a header, and that is where Chrome actually puts it: a
- * `position: fixed` block in paged media lands against the page box, and the
- * honest thing to do was name it for where it lands rather than describe it as
- * a header and leave the next person confused by the PDF.
+ * The obvious implementation — `position: fixed`, which Chrome repeats on
+ * every printed page — does not place reliably in paged media. With `top: 0`
+ * it printed through the first line of any section that ran onto a second
+ * page. Moved into the page margin with `top: -11mm` it came out at the foot
+ * of the page; flipped to `bottom: -13mm` it came out at the *top*, colliding
+ * with the demo-data notice. Each attempt was verified by generating a real
+ * PDF, and each one landed somewhere different from where it was asked to.
  *
- * Quiet on purpose. It is a wayfinding aid — which report is this, whose is it
- * — not a banner, and it sits in the margin where no body copy can reach it.
+ * So the ident is attached to the thing that already starts every page: the
+ * section itself, via `.report-section::before` reading a custom property set
+ * on the report root. Every content page begins with a numbered section, so
+ * the result is the same running header — deterministic, and with no
+ * dependency on how a particular Chrome version resolves fixed positioning
+ * against a page box.
+ *
+ * (Page numbers remain impossible: Chrome has never supported `@page` margin
+ * boxes, and a faked counter would be worse than none.)
  */
-export function PrintRunningFooter({
-  athleteName,
-  eventName,
-}: {
-  athleteName: string;
-  eventName: string;
-}) {
-  return (
-    <div className="report-print-runner" aria-hidden>
-      <span className="report-print-runner__left">
-        <strong>{athleteName}</strong> · Race Report
-      </span>
-      <span className="report-print-runner__right">{eventName}</span>
-    </div>
-  );
-}
 
 /**
  * The last thing on the last page.

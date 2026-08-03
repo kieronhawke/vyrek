@@ -29,7 +29,7 @@ import { CoachNoteBlock, ReportSection, ReportFigure, PhotoBreak } from "@/compo
 import { PrintButton } from "@/components/results/report/print-button";
 import { ShareReport } from "@/components/results/report/share-report";
 import {
-  PrintCover, PrintRunningFooter, PrintColophon,
+  PrintCover, PrintColophon,
 } from "@/components/results/report/print-furniture";
 import { MicroLabel } from "@/components/results/ui/primitives";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
@@ -129,6 +129,10 @@ export default async function RaceReportPage({
   };
 
   const standings = analyseStations(splits, result.divisionAverage.stations, distributions);
+  // Stations the organiser never published. Excluded from every ranking by
+  // `analyseStations`, and named explicitly in the summary below so a gap
+  // reads as a gap rather than as an ordinary result.
+  const missingStations = standings.filter((st) => st.missing);
   const weakest = weakestStation(standings);
   const strongest = strongestStation(standings);
   const roxzone = analyseRoxzone(splits, result.divisionAverage.roxzone);
@@ -214,7 +218,13 @@ export default async function RaceReportPage({
   const nextNumber = () => String(++sectionNo).padStart(2, "0");
 
   return (
-    <div className="results-report mx-auto max-w-[1000px] px-5 py-8 md:py-12">
+    <div
+      className="results-report mx-auto max-w-[1000px] px-5 py-8 md:py-12"
+      /* Read by `.report-section::before` in print to stamp an ident on
+         every page. A custom property is the only way to get per-athlete
+         text into generated content. */
+      style={{ "--report-ident": `"${result.athleteName} · ${result.eventName}"` } as React.CSSProperties}
+    >
       {/* ── Paper-only furniture ──────────────────────────────────────
         * None of this renders on screen. It exists because a document and a
         * web page want different openings: the screen wants to get to the
@@ -232,11 +242,6 @@ export default async function RaceReportPage({
         finishTime={formatTime(result.finishSeconds)}
         standing={`${formatOrdinal(result.rank)} of ${formatCount(result.fieldSize)} in ${division}`}
       />
-      <PrintRunningFooter
-        athleteName={result.athleteName}
-        eventName={result.eventName}
-      />
-
       {/* ── Cover ─────────────────────────────────────────────────── */}
       <Breadcrumbs trail={[{ name: "Results", path: "/results" }, { name: result.eventName, path: `/event/${result.eventSlug}` }, { name: `${result.athleteName} report`, path: `/report/${result.id}` }]} className="mb-4" />
 
@@ -402,6 +407,23 @@ export default async function RaceReportPage({
             ) : null}
             <Definition term="Division rank" value={`${formatOrdinal(result.rank)} of ${formatCount(result.fieldSize)}`} />
             <Definition term="Age group" value={`${formatOrdinal(result.ageGroupRank)} in ${result.ageGroup}`} />
+
+            {/*
+              Say out loud which stations the organiser never published.
+
+              The analysis now excludes them from every ranking, but silence
+              about a gap is still a small lie by omission: a reader who cannot
+              see that two spokes are placeholders reads the radar as a complete
+              picture. Naming them is also the only way somebody can tell the
+              difference between "no data" and "an average day".
+            */}
+            {missingStations.length > 0 ? (
+              <Definition
+                term="Not published"
+                value={missingStations.map((s) => s.label).join(", ")}
+                note="Left out of every comparison above"
+              />
+            ) : null}
           </dl>
         </div>
 

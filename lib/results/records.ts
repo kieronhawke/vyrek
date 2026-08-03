@@ -181,9 +181,71 @@ export function ageGroupRecords(candidates: RecordCandidate[]): RecordRow[] {
   );
 }
 
+/**
+ * HOW SIGNIFICANT EACH DIVISION'S RECORD IS.
+ *
+ * Records were ordered by `divisionLabel.localeCompare` — alphabetically. The
+ * record book therefore opened on **Adaptive Men**, and the fastest HYROX ever
+ * run by a human being appeared some way down the page between Doubles and
+ * Team Relay. Alphabetical order is not neutral here; it actively misinforms,
+ * because a reader reasonably assumes the first record on a record page is the
+ * important one.
+ *
+ * This is the order the sport actually cares about:
+ *
+ *   1. **Elite** — the Elite 15 field. These are the outright world bests and
+ *      the only two numbers most people came to see.
+ *   2. **Pro** — open pro division, heavier sled, full field.
+ *   3. **Open** — the division nearly everybody reading this races in.
+ *   4. **Doubles**, then **Team Relay** — different formats, not lesser ones,
+ *      but not what "the HYROX world record" means unqualified.
+ *   5. **Adaptive** — last by convention, not by worth. It stays fully listed
+ *      and identically styled; only its position changes.
+ *
+ * Anything unlisted sorts to the end rather than to the front, so a division
+ * added upstream degrades into the tail instead of silently taking top billing.
+ */
+const DIVISION_SIGNIFICANCE: string[] = [
+  "hyrox-elite-men",
+  "hyrox-elite-women",
+  "hyrox-pro-men",
+  "hyrox-pro-women",
+  "hyrox-men",
+  "hyrox-women",
+  "hyrox-pro-doubles-men",
+  "hyrox-pro-doubles-women",
+  "hyrox-doubles-men",
+  "hyrox-doubles-women",
+  "hyrox-doubles-mixed",
+  "hyrox-team-relay-men",
+  "hyrox-team-relay-women",
+  "hyrox-team-relay-mixed",
+  "hyrox-adaptive-men",
+  "hyrox-adaptive-women",
+];
+
+export function divisionRank(code: string): number {
+  const i = DIVISION_SIGNIFICANCE.indexOf(code);
+  return i === -1 ? DIVISION_SIGNIFICANCE.length : i;
+}
+
+/**
+ * The two records that deserve to be presented as events rather than rows.
+ *
+ * Kept to two on purpose. "Everything is a headline" is the state the page was
+ * already in — sixteen identical cards — and promoting six would recreate it
+ * with bigger type.
+ */
+export function isBlueRiband(code: string): boolean {
+  return code === "hyrox-elite-men" || code === "hyrox-elite-women";
+}
+
 function byDivisionThenTime(a: RecordRow, b: RecordRow): number {
-  return a.divisionLabel.localeCompare(b.divisionLabel)
-    || a.holder.finishSeconds - b.holder.finishSeconds;
+  return divisionRank(a.divisionCode) - divisionRank(b.divisionCode)
+    // Same division: the faster time is the record. Falling back to the label
+    // keeps the order stable for any division not in the list above.
+    || a.holder.finishSeconds - b.holder.finishSeconds
+    || a.divisionLabel.localeCompare(b.divisionLabel);
 }
 
 /** Every country that holds at least one record, most records first. */

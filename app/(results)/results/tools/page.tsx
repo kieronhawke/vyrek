@@ -9,6 +9,7 @@ import { getResultsSource } from "@/lib/results";
 import { formatCount } from "@/lib/results/format";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { FaqSection } from "@/components/results/ui/faq-section";
+import { ToolsHero } from "@/components/results/tools/tools-hero";
 import { MicroLabel } from "@/components/results/ui/primitives";
 import { Reveal } from "@/components/results/ui/reveal";
 import { cn } from "@/lib/utils";
@@ -51,6 +52,19 @@ type Tool = {
   badge?: string;
   featured?: boolean;
 };
+
+/**
+ * The one tool promoted out of the grid and into `ToolsHero`.
+ *
+ * Matched on href rather than the `featured` flag: two tools carry that flag —
+ * the race report and the record book — and filtering on it silently dropped
+ * the record book off the page entirely. It is a good tool that belongs in the
+ * grid; it is just not the flagship.
+ *
+ * A test asserts this href still resolves to a tool in GROUPS, because a typo
+ * here fails by showing the report twice, which looks deliberate.
+ */
+const HERO_HREF = "/results";
 
 const GROUPS: { title: string; lede: string; tools: Tool[] }[] = [
   {
@@ -153,6 +167,64 @@ const FAQS = [
     a: "Search your name at the top of any page, open your result, and press "
       + "“Full race report”. It generates instantly from your splits.",
   },
+  {
+    q: "My name is not coming up. What now?",
+    a: "Try your surname on its own first — results are published as the "
+      + "organiser recorded them, so accents, hyphens and swapped first and "
+      + "last names are all common. If it is still missing, the event may not "
+      + "have published finals yet; races usually appear within a day or two.",
+  },
+  {
+    q: "What if some of my splits are missing?",
+    a: "The report is built from whatever is published and says so where "
+      + "something is absent rather than quietly filling the gap. Sections that "
+      + "genuinely cannot be calculated without a split are left out instead of "
+      + "being estimated — a made-up number you cannot tell apart from a real "
+      + "one is worse than no number.",
+  },
+  {
+    q: "How often does the data update?",
+    a: "Results are re-read continuously and the record book is rebuilt every "
+      + "half hour, so a record set on a Saturday is here the same afternoon "
+      + "without anyone touching it.",
+  },
+  {
+    q: "Can I use these for a race I ran years ago?",
+    a: "Yes. Every race in the database gets the same treatment, however long "
+      + "ago it was — and comparing an old race with a recent one is one of the "
+      + "more useful things here.",
+  },
+  {
+    q: "Do these work for doubles and relay?",
+    a: "Yes, across every division we hold, including Pro, Doubles, Team Relay "
+      + "and Adaptive. Standards and comparisons are always drawn from within "
+      + "your own division, never from the overall field.",
+  },
+  {
+    q: "Can I share a report, or print it?",
+    a: "Both. There is a share button on every report that puts the link "
+      + "wherever you want it, and “Save as PDF” lays the whole thing out as an "
+      + "A4 document with a cover page. Anyone who opens the link sees the full "
+      + "report, free, with no account.",
+  },
+  {
+    q: "Is my result showing something wrong?",
+    a: "We publish what the organiser published, so a wrong time here almost "
+      + "always means a wrong time there — that has to be corrected at the "
+      + "source. If a result is attributed to the wrong athlete, tell us and we "
+      + "will fix it.",
+  },
+  {
+    q: "Can I get my result removed?",
+    a: "Yes. There is a removal request form, and we action it without asking "
+      + "for a reason.",
+  },
+  {
+    q: "Are you affiliated with HYROX?",
+    a: "No. Suth Performance is an independent coaching business. These tools "
+      + "are built on publicly published results and are not an official HYROX "
+      + "product.",
+  },
 ];
 
 export default async function ToolsDirectoryPage() {
@@ -182,7 +254,17 @@ export default async function ToolsDirectoryPage() {
         </p>
       </header>
 
-      <div className="mt-10 space-y-12">
+      {/*
+        The flagship comes out of the grid entirely.
+
+        As one card among nine it was indistinguishable from "Race calendar",
+        which is how an accurate inventory becomes a bad shop window: a reader
+        cannot tell which of nine things deserves their next thirty seconds, so
+        they scan all nine and open none.
+      */}
+      <ToolsHero />
+
+      <div className="mt-12 space-y-12">
         {GROUPS.map((group, groupIndex) => (
           <section key={group.title} aria-labelledby={`g-${groupIndex}`}>
             <h2
@@ -194,7 +276,7 @@ export default async function ToolsDirectoryPage() {
             <p className="mt-1 text-sm text-suth-text-secondary">{group.lede}</p>
 
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {group.tools.map((tool, i) => (
+              {group.tools.filter((t) => t.href !== HERO_HREF).map((tool, i) => (
                 // Staggered by index within the group only — a delay that keeps
                 // climbing down a long page leaves the last card arriving well
                 // after the reader has reached it.

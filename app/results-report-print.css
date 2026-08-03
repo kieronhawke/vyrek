@@ -36,7 +36,6 @@
    this way the failure mode is a missing cover on paper rather than a stray
    cover on the web page. */
 .report-print-cover,
-.report-print-runner,
 .report-print-colophon { display: none; }
 
 @media print {
@@ -192,7 +191,7 @@
      * behind it — which is precisely the "printed web page" look this cover
      * exists to fix.
      */
-    height: 234mm;
+    height: 240mm;
     break-after: page;
     padding: 0;
   }
@@ -269,47 +268,24 @@
 
   .results-report .report-print-cover__standing { font-size: 10pt; color: #55554F; text-align: right; }
 
-  /* ═══ RUNNING HEADER ══════════════════════════════════════════════════
-     `position: fixed` is the only way to repeat something on every printed
-     page in Chrome — `@page { @top-center { content: … } }` has never been
-     supported, which is also why there is no page number anywhere in this
-     document. Faking one with a counter would be worse than having none. */
-  /*
-   * The header lives in the page MARGIN, not at the top of the content box.
-   *
-   * With `top: 0` it sat at the start of the content area, and any section
-   * long enough to run onto a second page had its continuation printed
-   * straight through the header — two lines of text overlapping in the same
-   * space, which looked like a rendering fault. Padding the section start does
-   * not help, because a continuation page has no section start to pad.
-   *
-   * So `@page` is given a deeper top margin below and the header is pulled up
-   * into it with a negative offset. Nothing in normal flow can reach it.
-   */
-  @page {
-    margin: 14mm 14mm 22mm;
-  }
-
-  .results-report .report-print-runner {
-    display: flex;
-    position: fixed;
-    bottom: -13mm;
-    left: 0;
-    right: 0;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 6mm;
-    padding-top: 2mm;
-    border-top: 0.5pt solid #E2E2DC;
+  /* ═══ PAGE IDENT ══════════════════════════════════════════════════════
+     Every content page opens with a numbered section, so stamping the section
+     gives the same result as a running header — without depending on how
+     Chrome resolves `position: fixed` against a page box, which it does
+     differently depending on whether you anchor from the top or the bottom.
+     See the note in `print-furniture.tsx` for the three attempts that led
+     here. The text comes from `--report-ident`, set inline on the report root
+     because generated content cannot otherwise carry per-athlete data. */
+  .results-report .report-section::before {
+    content: var(--report-ident, "");
+    display: block;
+    margin-bottom: 6mm;
+    padding-bottom: 2mm;
+    border-bottom: 0.5pt solid #E2E2DC;
     font-size: 7.5pt;
+    letter-spacing: 0.02em;
     color: #6A6A63;
   }
-
-  .results-report .report-print-runner strong { font-weight: 700; color: #101010; }
-  .results-report .report-print-runner__right { text-align: right; white-space: nowrap; }
-
-  /* No clearance needed any more — the header sits in the page margin, above
-     the content box entirely. */
 
   /* ═══ COLOPHON ════════════════════════════════════════════════════════ */
   .results-report .report-print-colophon {

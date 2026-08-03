@@ -35,6 +35,25 @@ export type Segment = {
   seconds: number;
   /** The division's average for this segment at this event. */
   averageSeconds: number;
+  /**
+   * True when the organiser never published this split.
+   *
+   * ⚠️ THIS EXISTS BECAUSE MISSING DATA USED TO READ AS A WORLD-CLASS TIME.
+   *
+   * Splits arrived as `stations[station] ?? 0`, so a station the organiser
+   * never published became a **zero-second** split. Zero is not a neutral
+   * value here — it is the fastest possible one. A missing SkiErg was scored
+   * 3:40 faster than the division average, banded "Excellent", drawn at the
+   * 100th percentile on the radar, and reported back to the athlete as their
+   * strongest station. On a page whose entire promise is "every figure states
+   * its own derivation", silently inventing a personal best is the worst thing
+   * it could do.
+   *
+   * `seconds` stays 0 so layout maths and totals do not have to handle null
+   * everywhere. Anything that *ranks, bands, or compares* must skip these —
+   * that is what this flag is for.
+   */
+  missing?: boolean;
 };
 
 /** Race order: run 1, station 1, run 2, station 2 … then roxzone as a total. */
@@ -47,19 +66,31 @@ export function buildSegments(
   averageRoxzone: number,
 ): Segment[] {
   const segments: Segment[] = [];
+  // A split is "missing" when it is absent, null, or non-positive. Zero is
+  // treated as absent rather than as a time, because no segment of a HYROX
+  // takes zero seconds — a 0 in the feed always means "not recorded".
+  const absent = (v: number | undefined | null): boolean =>
+    v === undefined || v === null || !Number.isFinite(v) || v <= 0;
+
   STATION_IDS.forEach((station, i) => {
     segments.push({
       key: `run-${i + 1}`, label: `Run ${i + 1}`, kind: "run",
-      seconds: runs[i] ?? 0, averageSeconds: averageRuns[i] ?? 0,
+      seconds: absent(runs[i]) ? 0 : runs[i],
+      averageSeconds: averageRuns[i] ?? 0,
+      missing: absent(runs[i]),
     });
     segments.push({
       key: station, label: STATION_LABEL[station], kind: "station", station,
-      seconds: stations[station] ?? 0, averageSeconds: averageStations[station] ?? 0,
+      seconds: absent(stations[station]) ? 0 : stations[station],
+      averageSeconds: averageStations[station] ?? 0,
+      missing: absent(stations[station]),
     });
   });
   segments.push({
     key: "roxzone", label: "Roxzone", kind: "roxzone",
-    seconds: roxzoneSeconds, averageSeconds: averageRoxzone,
+    seconds: absent(roxzoneSeconds) ? 0 : roxzoneSeconds,
+    averageSeconds: averageRoxzone,
+    missing: absent(roxzoneSeconds),
   });
   return segments;
 }
@@ -373,8 +404,11 @@ export function benchmarkSplits(
       yourSeconds: segment.seconds,
       fastestSeconds: fastest,
       winnerSeconds: winner,
-      deltaToFastest: fastest > 0 ? segment.seconds - fastest : 0,
-      deltaToWinner: winner > 0 ? segment.seconds - winner : 0,
+      // A missing split has `seconds: 0`, and 0 minus the winner's time is a
+      // large negative — which this chart would have drawn as the athlete
+      // beating the winner by three minutes on a station they have no time for.
+      deltaToFastest: !segment.missing && fastest > 0 ? segment.seconds - fastest : 0,
+      deltaToWinner: !segment.missing && winner > 0 ? segment.seconds - winner : 0,
     };
   });
 }
