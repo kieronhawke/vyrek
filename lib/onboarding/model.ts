@@ -39,8 +39,8 @@ export type Plan = {
  * The three things Ben actually sells, from his own tracker.
  *
  * Prices are the ones in lib/control/tracker.ts (£220 a month for 1:1) and
- * lib/pricing.ts (£12.99 for the Club), not invented. Tier 2 sits between
- * them at the rate on his sheet.
+ * lib/pricing.ts (£12.99 for the Club), not invented. Programming is £80,
+ * confirmed directly by Kieron.
  */
 export const PLANS: Plan[] = [
   {
@@ -63,8 +63,10 @@ export const PLANS: Plan[] = [
   {
     key: "coaching-tier2",
     name: "Programming",
-    pence: 12000,
-    display: "£120",
+    // £80, corrected from £120 on Kieron's instruction 3 Aug 2026. The old
+    // figure was wrong on the page somebody actually pays from.
+    pence: 8000,
+    display: "£80",
     cadence: "a month",
     summary: "The same programming, reviewed monthly rather than weekly.",
     includes: [

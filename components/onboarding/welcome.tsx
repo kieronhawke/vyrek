@@ -69,7 +69,13 @@ export function OnboardingWelcome({
             : hadSession
               ? "Payment received. The confirmation is still coming through — nothing more for you to do."
               : "Your account is set up."}
-          {plan ? ` ${plan.name}, ${plan.display} ${plan.cadence}.` : ""}
+          {/* The plan name, not the price.
+            *
+            * Somebody who has just paid does not need reminding what it cost
+            * — they chose it two screens ago and they have a receipt coming.
+            * Repeating the figure at the moment of celebration reads as a
+            * charge notification rather than a welcome. */}
+          {plan ? ` You're on ${plan.name}.` : ""}
         </p>
 
         <ol className="obw-next">
