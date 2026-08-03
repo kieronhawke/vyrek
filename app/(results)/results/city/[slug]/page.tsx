@@ -12,6 +12,7 @@ import { breadcrumbList, jsonLd } from "@/lib/results/structured-data";
 import { formatTime, formatCount } from "@/lib/results/format";
 import { EventTile } from "@/components/results/event-tiles";
 import { FaqSection } from "@/components/results/ui/faq-section";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 import { MicroLabel, StatTile, Nationality } from "@/components/results/ui/primitives";
 
 /**
@@ -265,7 +266,7 @@ export default async function CityHubPage({
           >
             Scheduled in {profile.city}
           </h2>
-          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
             {scheduled.map((event) => (
               <EventTile key={event.slug} event={event} now={now} />
             ))}
@@ -286,7 +287,7 @@ export default async function CityHubPage({
             hours of each race.
           </p>
         ) : (
-          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
             {finished.map((event) => (
               <EventTile key={event.slug} event={event} now={now} />
             ))}
@@ -326,33 +327,14 @@ export default async function CityHubPage({
 
       <FaqSection faqs={faqs} title={`HYROX ${profile.city}: common questions`} />
 
-      <nav className="mt-10 border-t border-suth-border-subtle pt-5" aria-label="Related">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-          Keep going
-        </h2>
-        <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-          <li>
-            <Link href="/results/city" className="text-suth-accent hover:underline">
-              Every HYROX city
-            </Link>
-          </li>
-          <li>
-            <Link href="/results/course-index" className="text-suth-accent hover:underline">
-              Which courses run slowest
-            </Link>
-          </li>
-          <li>
-            <Link href="/tools/good-hyrox-time" className="text-suth-accent hover:underline">
-              Is my HYROX time good?
-            </Link>
-          </li>
-          <li>
-            <Link href="/events" className="text-suth-accent hover:underline">
-              Full race calendar
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      <RelatedLinks
+        links={[
+          { href: "/results/city", label: "Every HYROX city" },
+          { href: "/results/course-index", label: "Which courses run slowest" },
+          { href: "/tools/good-hyrox-time", label: "Is my HYROX time good?" },
+          { href: "/events", label: "Full race calendar" },
+        ]}
+      />
     </div>
   );
 }

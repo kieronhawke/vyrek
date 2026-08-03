@@ -259,6 +259,149 @@ test.describe("search", () => {
   });
 });
 
+/**
+ * No page may scroll sideways at 320px.
+ *
+ * 320 is the narrowest phone still in real use and the width every layout bug
+ * shows up at first. An adversarial sweep found three of these at once, all the
+ * same root cause: a grid item defaults to `min-width: auto` and refuses to
+ * shrink below its content, so a card grew past its track instead of letting
+ * the text inside truncate. Nothing in the existing suite looked at document
+ * scroll width, so every one of them had shipped.
+ */
+/**
+ * The consent bar is the first control every visitor meets, and it is
+ * deliberately slim — a tall banner would shift the layout, which is a bug this
+ * repo has already paid for once. So its buttons are 32px and 18px tall on
+ * purpose, and the fix for the tap target was to extend the hit area with a
+ * pseudo-element rather than to grow the bar.
+ *
+ * Measuring the element box would therefore prove nothing. This clicks outside
+ * the visible pill and asserts the tap still lands, which is the only thing a
+ * thumb cares about.
+ */
+/**
+ * No Results page may drag heavy imagery it never renders.
+ *
+ * This bug has now shipped twice. Both times the mechanism was identical: a
+ * marketing page marks a hero `eager` (or `priority`), a Results page links to
+ * it in the footer, Next prefetches the route, and the image comes along —
+ * 403 KB of a 1.1 MB page on pages that render no photography at all. Nothing
+ * in the suite looked at transferred bytes, so both times it was found by
+ * hand, long after release.
+ *
+ * The budget is deliberately generous. This is a tripwire for a page pulling
+ * a whole hero it does not use, not a byte-level performance target.
+ */
+test.describe("page weight", () => {
+  const IMAGE_BUDGET_KB = 150;
+
+  for (const path of ["/results", "/results/city/london", "/results/course-index", "/events"]) {
+    test(`${path} pulls no unrendered imagery`, async ({ page }) => {
+      await open(page, path);
+      // Give prefetch and any post-hydration preloads time to fire.
+      await page.waitForTimeout(2500);
+
+      const images = await page.evaluate(() => {
+        const res = performance.getEntriesByType("resource") as PerformanceResourceTiming[];
+        return res
+          .filter((r) => r.initiatorType === "img" || /\.(png|jpe?g|webp|avif|gif)/.test(r.name))
+          .map((r) => ({
+            kb: Math.round((r.encodedBodySize || r.transferSize || 0) / 1024),
+            name: r.name.replace(location.origin, ""),
+          }))
+          .filter((r) => r.kb > 0)
+          .sort((a, b) => b.kb - a.kb);
+      });
+
+      const totalKb = images.reduce((t, i) => t + i.kb, 0);
+      expect(
+        totalKb,
+        `${totalKb}kB of images on a page that renders none:\n`
+          + images.slice(0, 5).map((i) => `  ${i.kb}kB ${i.name}`).join("\n"),
+      ).toBeLessThan(IMAGE_BUDGET_KB);
+    });
+  }
+});
+
+test.describe("consent bar tap targets", () => {
+  test("a tap below the visible button still hits it", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/results", { waitUntil: "domcontentloaded" });
+
+    const accept = page.getByRole("button", { name: "Accept" });
+    await expect(accept).toBeVisible();
+    const box = (await accept.boundingBox())!;
+
+    // The pill is 32px tall; the hit area should reach ~8px past each edge.
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height + 7;
+
+    const hit = await page.evaluate(
+      ([px, py]) => document.elementFromPoint(px, py)?.closest("button")?.textContent?.trim() ?? "MISS",
+      [x, y],
+    );
+    expect(hit).toBe("Accept");
+
+    await page.mouse.click(x, y);
+    await expect(accept).toBeHidden();
+  });
+});
+
+test.describe("no horizontal scroll on a small phone", () => {
+  for (const path of [
+    "/results",
+    "/events",
+    "/results/city",
+    "/results/city/london",
+    "/results/course-index",
+    "/event/s9-2026-london",
+    "/ranking/s9-2026-london-hyrox-men",
+    "/result/s9-2026-london-hyrox-men-1600",
+    "/athlete/charlie-johansson",
+    "/simulator",
+    "/rankings/world-records",
+  ]) {
+    test(`320px: ${path}`, async ({ page }) => {
+      await page.setViewportSize({ width: 320, height: 800 });
+      await open(page, path);
+
+      const overflow = await page.evaluate(() => {
+        const doc = document.documentElement;
+        const over = doc.scrollWidth - doc.clientWidth;
+        if (over <= 1) return null;
+        let worst = { tag: "", cls: "", right: 0 };
+        for (const el of Array.from(document.querySelectorAll("body *"))) {
+          const r = el.getBoundingClientRect();
+          if (r.width === 0 || r.height === 0) continue;
+          // Report the deepest offender: an ancestor is only wide because a
+          // descendant is, and naming the ancestor sends you to the wrong file.
+          const hasWideChild = Array.from(el.children).some(
+            (c) => c.getBoundingClientRect().right > doc.clientWidth + 1,
+          );
+          if (hasWideChild) continue;
+          if (r.right > worst.right) {
+            worst = {
+              tag: el.tagName.toLowerCase(),
+              cls: (el.className?.toString?.() ?? "").slice(0, 80),
+              right: Math.round(r.right),
+            };
+          }
+        }
+        return { over, worst };
+      });
+
+      expect(
+        overflow,
+        overflow
+          ? `${overflow.over}px of horizontal scroll — widest <${overflow.worst.tag}> `
+            + `right=${overflow.worst.right} "${overflow.worst.cls}"`
+          : "",
+      ).toBeNull();
+    });
+  }
+});
+
 test.describe("unknown URLs 404 rather than rendering an empty page", () => {
   for (const path of [
     "/event/does-not-exist",

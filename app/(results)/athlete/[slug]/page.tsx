@@ -205,7 +205,14 @@ export default async function AthletePage({ params }: { params: Promise<{ slug: 
           </p>
         </div>
 
-        <div className="flex shrink-0 flex-wrap items-center gap-2">
+        {/* Not `shrink-0`.
+         *
+         * This sits in a `flex-wrap` header beside the athlete's name. With
+         * `shrink-0` it refused to narrow, so its own `flex-wrap` never got a
+         * constrained width to wrap into — it laid the buttons out on one line
+         * at 356px inside a 280px header and pushed every phone under ~380px
+         * sideways. Allowing it to shrink is what lets its children wrap. */}
+        <div className="flex flex-wrap items-center gap-2">
         <Link
           href={`/results/compare?a=${athlete.slug}`}
           className="inline-flex min-h-[44px] shrink-0 items-center rounded-sm border
@@ -280,7 +287,7 @@ export default async function AthletePage({ params }: { params: Promise<{ slug: 
       {/* Depth below the fold: the summary above is what most visitors want,
           and this is for the ones who came to dig. */}
       {power.score > 0 || profile.length > 0 ? (
-        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+        <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
           {power.score > 0 ? <PowerCard power={power} /> : null}
           {profile.length > 0 ? <StationProfileTable profile={profile} /> : null}
         </div>

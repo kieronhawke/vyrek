@@ -12,6 +12,7 @@ import {
 } from "@/components/results/ui/primitives";
 import { CityMark } from "@/components/results/ui/city-mark";
 import { FaqSection } from "@/components/results/ui/faq-section";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 import { LiveStrip } from "@/components/results/live/live-strip";
 import { PodiumCard } from "@/components/results/event/podium";
 import { EventCountdown } from "@/components/results/event/countdown";
@@ -195,7 +196,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           <h2 id="podium-heading" className="mb-3 text-lg font-semibold text-suth-text">
             Podiums
           </h2>
-          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
             {podiums.map((podium) => (
               <PodiumCard
                 key={podium.divisionCode}
@@ -292,32 +293,18 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
 
       <FaqSection faqs={eventFaqs(event, formatTime)} title={`${event.name}: common questions`} />
 
-      {/* A link back to the city hub, and it earns its place twice over: it is
-          the internal link that stops this edition competing with its own
-          siblings for "hyrox {city} results", and it is the navigation a reader
-          who landed on the wrong year actually needs. */}
-      <nav className="mt-10 border-t border-suth-border-subtle pt-5" aria-label="Related">
-        <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-          More from {event.city}
-        </h2>
-        <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-          <li>
-            <Link href={`/results/city/${citySlug(event.city)}`} className="text-suth-accent hover:underline">
-              Every HYROX {event.city} result
-            </Link>
-          </li>
-          <li>
-            <Link href="/results/course-index" className="text-suth-accent hover:underline">
-              Does this course run slow?
-            </Link>
-          </li>
-          <li>
-            <Link href="/events" className="text-suth-accent hover:underline">
-              Full race calendar
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      {/* The link back to the city hub earns its place twice over: it is what
+          stops this edition competing with its own siblings for
+          "hyrox {city} results", and it is the navigation a reader who landed
+          on the wrong year actually needs. */}
+      <RelatedLinks
+        title={`More from ${event.city}`}
+        links={[
+          { href: `/results/city/${citySlug(event.city)}`, label: `Every HYROX ${event.city} result` },
+          { href: "/results/course-index", label: "Does this course run slow?" },
+          { href: "/events", label: "Full race calendar" },
+        ]}
+      />
 
       <CoachingCta
         className="mt-10"

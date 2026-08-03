@@ -151,7 +151,7 @@ export default async function CityIndexPage() {
                 <Nationality iso={group[0].countryIso} />
                 HYROX {country}
               </h2>
-              <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {group.map((city) => (
                   <li key={city.slug}>
                     <Link
