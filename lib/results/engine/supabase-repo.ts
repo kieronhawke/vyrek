@@ -534,7 +534,41 @@ export class SupabaseResultsRepository implements ResultsRepository {
     // Same hazard as results: one repeated slug fails the whole statement.
     const bySlug = new Map<string, UpsertAthlete>();
     for (const a of input) bySlug.set(a.slug, a);
-    const athletes = [...bySlug.values()];
+    let athletes = [...bySlug.values()];
+
+    // ⚠️ `slug` is not the only unique key on this table.
+    //
+    // `results_athletes_source_idx` is a UNIQUE partial index on
+    // `source_athlete_id`, and the upsert below declares `ON CONFLICT (slug)`.
+    // So an athlete already stored under one slug, arriving with a different
+    // one — which happens whenever the source changes the spelling of a name —
+    // is an INSERT that violates a constraint the conflict clause does not
+    // cover. Postgres fails the whole statement, and a division dies with it.
+    // That is exactly what happened to Sports Direct HYROX London 2024.
+    //
+    // Resolving the source id to its stored slug first turns that insert back
+    // into the update it always was. The new name still lands; only the slug is
+    // held stable, which is right anyway — a slug is a URL, and an athlete's
+    // page should not move because a timing operator corrected their spelling.
+    const sourceIds = athletes
+      .map((a) => a.sourceAthleteId)
+      .filter((id): id is string => Boolean(id));
+
+    if (sourceIds.length > 0) {
+      const known = await this.getAthletesBySourceIds(sourceIds);
+      const slugBySourceId = new Map(known.map((a) => [a.sourceAthleteId as string, a.slug]));
+
+      const remapped = new Map<string, UpsertAthlete>();
+      for (const a of athletes) {
+        const stored = a.sourceAthleteId ? slugBySourceId.get(a.sourceAthleteId) : undefined;
+        const athlete = stored && stored !== a.slug ? { ...a, slug: stored } : a;
+        // Remapping can collide two incoming rows onto one stored slug; the
+        // dedupe has to happen again afterwards or the statement fails on the
+        // repeat instead.
+        remapped.set(athlete.slug, athlete);
+      }
+      athletes = [...remapped.values()];
+    }
 
     const toRow = (a: UpsertAthlete) => ({
       slug: a.slug,
