@@ -1,5 +1,8 @@
 import { Container } from "@/components/shared/container";
 import type { GeoSeo } from "@/lib/locations/seo";
+import { GymIntel } from "@/components/landing/gym-intel";
+import { placeIntel } from "@/lib/gym-intel/snapshot";
+import { gymKey, verdicts } from "@/lib/gym-intel/types";
 
 /**
  * Where you can actually train, named, in this town.
@@ -37,14 +40,21 @@ function stationNote(
 export function GeoGyms({
   seo,
   name,
+  slug,
   variant = "hyrox",
 }: {
   seo: GeoSeo;
   name: string;
+  /** Location slug, for keying athlete-reported equipment. */
+  slug: string;
   /** The intro differed not at all between the two families; it does now. */
   variant?: "hyrox" | "pt";
 }) {
   const gyms = seo.gyms.slice(0, 12);
+  /* Athlete-reported equipment. OSM records that a site exists, not what is in
+     it; this is the layer that closes that gap, and it is the one thing on
+     these pages a competitor cannot assemble from public sources. */
+  const intel = placeIntel(slug);
   if (!gyms.length) return null;
 
   return (
@@ -82,6 +92,7 @@ export function GeoGyms({
               key={g.name}
               className="flex items-baseline justify-between gap-4 bg-suth-elevated px-5 py-3.5"
             >
+              <div className="min-w-0 flex-1">
               <span className="text-sm text-suth-text">
                 {g.name}
                 {g.chain && g.chain !== g.name ? (
@@ -98,9 +109,23 @@ export function GeoGyms({
                   </span>
                 ) : null}
               </span>
+              </div>
             </li>
           ))}
         </ul>
+
+        {/* One shared control rather than one per gym: six buttons times twelve
+            sites is a wall, and the first gym in the list is the one most
+            people can speak for anyway. */}
+        {gyms.length ? (
+          <div className="mx-auto mt-4 max-w-3xl">
+            <GymIntel
+              place={slug}
+              gym={gyms[0].name}
+              verdicts={verdicts(intel[gymKey(gyms[0].name)])}
+            />
+          </div>
+        ) : null}
 
         <p className="mx-auto mt-5 max-w-3xl text-[11px] leading-relaxed text-suth-text-tertiary">
           {seo.gyms.length > gyms.length
