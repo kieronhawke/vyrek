@@ -1,0 +1,779 @@
+/**
+ * ONBOARDING — the one screen a paying client sees before they pay.
+ *
+ * PHONE FIRST, AND NOT AS A COURTESY. Ben sends this by text. It is opened on
+ * a phone, standing up, once. So: one question a screen, a pinned action bar
+ * so the next button is never below the fold, 17px inputs (anything under 16
+ * makes iOS zoom the whole page on focus, which feels broken), and targets
+ * that a thumb hits without aiming.
+ *
+ * THE BRAND, NOT A GENERIC FORM. Near-black ground, chartreuse for the one
+ * thing to press, Oswald for the question. It has to feel like the same
+ * company as the site they were just looking at.
+ *
+ * MOTION EARNS ITS PLACE. One transition, on the step change, so a new
+ * question reads as a new question rather than the same page redrawing. Off
+ * entirely under prefers-reduced-motion.
+ */
+
+.ob {
+  --ob-bg: #0a0a0a;
+  --ob-surface: #141414;
+  --ob-raised: #1c1c1c;
+  --ob-border: #262626;
+  --ob-border-strong: #3a3a3a;
+  --ob-text: #f5f5f3;
+  --ob-muted: #a8a8a6;
+  --ob-faint: #7e7e7c;
+  --ob-accent: #a3e635;
+  --ob-ink: #0a0a0a;
+  --ob-danger: #f87171;
+
+  min-height: 100svh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--ob-bg);
+  color: var(--ob-text);
+  font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+}
+
+/* ── Chrome ───────────────────────────────────────────────────────────── */
+
+.ob-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: calc(env(safe-area-inset-top) + 14px) 20px 12px;
+}
+
+.ob-mark {
+  font-family: var(--font-display, ui-sans-serif, system-ui, sans-serif);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ob-mark__dot { color: var(--ob-accent); }
+
+.ob-count {
+  font-size: 12px;
+  color: var(--ob-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.ob-progress {
+  height: 3px;
+  background: var(--ob-border);
+  overflow: hidden;
+}
+
+.ob-progress__fill {
+  display: block;
+  height: 100%;
+  background: var(--ob-accent);
+  transition: width 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ob-progress__fill { transition: none; }
+}
+
+/* ── The question ─────────────────────────────────────────────────────── */
+
+.ob-main {
+  flex: 1;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 28px 20px 20px;
+}
+
+/* Keyed on the step, so React remounts it and the animation runs again. */
+.ob-step { animation: ob-in 380ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes ob-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ob-step { animation: none; }
+}
+
+.ob-title {
+  margin: 0 0 6px;
+  font-family: var(--font-display, ui-sans-serif, system-ui, sans-serif);
+  font-size: clamp(28px, 7vw, 38px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+/* Focused programmatically on every step change; the ring would otherwise
+   appear on a heading nobody clicked. */
+.ob-title:focus { outline: none; }
+
+.ob-blurb {
+  margin: 0 0 22px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ob-muted);
+}
+
+.ob-body { display: grid; gap: 18px; }
+
+.ob-lead {
+  margin: 0 0 16px;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.ob-checklist {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.ob-checklist li {
+  position: relative;
+  padding-left: 30px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ob-muted);
+}
+
+.ob-checklist li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 16px;
+  height: 9px;
+  border-left: 2px solid var(--ob-accent);
+  border-bottom: 2px solid var(--ob-accent);
+  transform: rotate(-45deg);
+}
+
+.ob-note {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ob-faint);
+}
+
+.ob-note--warn { color: var(--ob-muted); }
+
+.ob-privacy {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--ob-border-strong);
+  border-left: 3px solid var(--ob-accent);
+  border-radius: 8px;
+  background: var(--ob-surface);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ob-muted);
+}
+
+.ob-error {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--ob-danger);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── Fields ───────────────────────────────────────────────────────────── */
+
+.ob-fields { display: grid; gap: 20px; }
+
+.ob-field { display: grid; gap: 7px; }
+
+.ob-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ob-faint);
+}
+
+.ob-hint { font-size: 13px; color: var(--ob-faint); }
+
+.ob-input {
+  width: 100%;
+  min-height: 54px;
+  padding: 14px 16px;
+  border: 1px solid var(--ob-border-strong);
+  border-radius: 10px;
+  background: var(--ob-surface);
+  color: var(--ob-text);
+  font-family: inherit;
+  /* 17px, not 16 and never 14: iOS zooms the whole page when a focused input
+     is under 16px, and a page that jumps on focus feels broken. */
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.ob-input:focus-visible {
+  outline: 2px solid var(--ob-accent);
+  outline-offset: 2px;
+  border-color: transparent;
+}
+
+.ob-input::placeholder { color: var(--ob-faint); }
+
+.ob-textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+
+/* ── Choices ──────────────────────────────────────────────────────────── */
+
+.ob-choices {
+  display: grid;
+  gap: 8px;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.ob-choices legend { margin-bottom: 4px; padding: 0; }
+
+.ob-choice {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  min-height: 62px;
+  padding: 12px 16px;
+  border: 1px solid var(--ob-border-strong);
+  border-radius: 10px;
+  background: var(--ob-surface);
+  color: var(--ob-text);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 140ms, background 140ms;
+}
+
+.ob-choice[data-on] {
+  border-color: var(--ob-accent);
+  background: var(--ob-raised);
+}
+
+.ob-choice__label { font-size: 17px; font-weight: 650; }
+.ob-choice__note { font-size: 13px; color: var(--ob-faint); }
+
+.ob-numbers, .ob-days {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+  gap: 8px;
+}
+
+.ob-days { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.ob-number, .ob-day {
+  min-height: 56px;
+  border: 1px solid var(--ob-border-strong);
+  border-radius: 10px;
+  background: var(--ob-surface);
+  color: var(--ob-text);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 140ms, background 140ms, color 140ms;
+}
+
+.ob-number[data-on], .ob-day[data-on] {
+  border-color: transparent;
+  background: var(--ob-accent);
+  color: var(--ob-ink);
+}
+
+/* ── Sign-in ──────────────────────────────────────────────────────────── */
+
+.ob-oauth { display: grid; gap: 8px; }
+
+.ob-oauth__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 54px;
+  border: 1px solid var(--ob-border-strong);
+  border-radius: 10px;
+  background: var(--ob-text);
+  color: var(--ob-ink);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.ob-oauth__btn[data-provider="apple"] { background: #000; color: #fff; border-color: #3a3a3a; }
+
+/* Disabled but legible: it is a thing that is coming, not a thing that is
+   broken, and greying it to 30% makes the screen look unfinished. */
+.ob-oauth__btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.ob-oauth__glyph { font-size: 17px; font-weight: 700; }
+
+.ob-or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ob-faint);
+  font-size: 13px;
+}
+
+.ob-or::before, .ob-or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--ob-border);
+}
+
+/* ── Photo ────────────────────────────────────────────────────────────── */
+
+.ob-photo { display: grid; justify-items: center; gap: 16px; }
+
+.ob-avatar {
+  width: 148px;
+  height: 148px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--ob-surface);
+  border: 2px dashed var(--ob-border-strong);
+  display: grid;
+  place-items: center;
+  color: var(--ob-faint);
+  font-size: 40px;
+}
+
+.ob-avatar:not([data-empty]) { border-style: solid; border-color: var(--ob-accent); }
+.ob-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.ob-upload {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 22px;
+  border-radius: 999px;
+  border: 1px solid var(--ob-border-strong);
+  background: var(--ob-surface);
+  font-size: 16px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.ob-remove {
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--ob-faint);
+  font-family: inherit;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ── Plans ────────────────────────────────────────────────────────────── */
+
+.ob-plans { display: grid; gap: 12px; }
+
+.ob-plan {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  padding: 18px;
+  border: 1px solid var(--ob-border-strong);
+  border-radius: 14px;
+  background: var(--ob-surface);
+  color: var(--ob-text);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 160ms, transform 160ms;
+}
+
+.ob-plan[data-featured] { border-color: var(--ob-border-strong); }
+
+.ob-plan[data-on] {
+  border-color: var(--ob-accent);
+  background: var(--ob-raised);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ob-plan[data-on] { transform: translateY(-2px); }
+}
+
+.ob-plan__flag {
+  position: absolute;
+  top: -9px;
+  left: 18px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--ob-accent);
+  color: var(--ob-ink);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ob-plan__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ob-plan__name {
+  font-family: var(--font-display, ui-sans-serif, system-ui, sans-serif);
+  font-size: 19px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.ob-plan__price { font-size: 22px; font-weight: 700; white-space: nowrap; }
+.ob-plan__cadence { font-size: 12px; color: var(--ob-faint); margin-left: 5px; font-weight: 400; }
+.ob-plan__summary { font-size: 14px; line-height: 1.5; color: var(--ob-muted); }
+
+.ob-plan__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.ob-plan__list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ob-muted);
+}
+
+.ob-plan__list li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 5px;
+  width: 11px;
+  height: 6px;
+  border-left: 2px solid var(--ob-accent);
+  border-bottom: 2px solid var(--ob-accent);
+  transform: rotate(-45deg);
+}
+
+.ob-plan__trial {
+  justify-self: start;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--ob-raised);
+  border: 1px solid var(--ob-accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ── Pay ──────────────────────────────────────────────────────────────── */
+
+.ob-pay { display: grid; gap: 18px; }
+
+.ob-total {
+  display: grid;
+  gap: 4px;
+  padding: 18px;
+  border: 1px solid var(--ob-accent);
+  border-radius: 14px;
+  background: var(--ob-surface);
+}
+
+.ob-total__name {
+  font-family: var(--font-display, ui-sans-serif, system-ui, sans-serif);
+  font-size: 15px;
+  text-transform: uppercase;
+  color: var(--ob-muted);
+}
+
+.ob-total__price { font-size: 34px; font-weight: 700; line-height: 1.05; }
+.ob-total__trial { font-size: 14px; color: var(--ob-accent); }
+
+.ob-summary {
+  padding: 16px 18px;
+  border: 1px solid var(--ob-border);
+  border-radius: 12px;
+  background: var(--ob-surface);
+}
+
+.ob-summary__list { margin: 10px 0 0; display: grid; gap: 8px; }
+
+.ob-summary__list > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.ob-summary__list dt { color: var(--ob-faint); white-space: nowrap; }
+.ob-summary__list dd { margin: 0; text-align: right; }
+
+/* ── The action bar ───────────────────────────────────────────────────── */
+
+.ob-actions {
+  position: sticky;
+  isolation: isolate;
+  bottom: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-areas:
+    "stop stop"
+    "back next";
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 14px 20px calc(env(safe-area-inset-bottom) + 16px);
+  /*
+   * Solid, with the fade ABOVE it rather than through it.
+   *
+   * A gradient behind the bar itself leaves the top of it semi-transparent,
+   * so the plan card underneath showed through the "choose a plan" line. On a
+   * bar whose whole job is to be readable, that is not a subtle problem.
+   */
+  background: var(--ob-bg);
+}
+
+.ob-actions::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 28px;
+  background: linear-gradient(to top, var(--ob-bg), transparent);
+  pointer-events: none;
+}
+
+.ob-stop {
+  grid-area: stop;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ob-faint);
+}
+
+.ob-back {
+  grid-area: back;
+  min-height: 54px;
+  padding: 0 20px;
+  border: 1px solid var(--ob-border-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ob-muted);
+  font-family: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.ob-next {
+  grid-area: next;
+  min-height: 54px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ob-accent);
+  color: var(--ob-ink);
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ob-next:disabled {
+  background: var(--ob-raised);
+  color: var(--ob-faint);
+  cursor: not-allowed;
+}
+
+.ob-skip {
+  grid-area: stop;
+  justify-self: end;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--ob-faint);
+  font-family: inherit;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ── At a desk ────────────────────────────────────────────────────────── */
+
+@media (min-width: 720px) {
+  .ob-main { padding: 44px 24px 24px; }
+  .ob-actions { padding: 18px 24px 28px; }
+  .ob-days { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+}
+
+/* ── The moment after they pay ────────────────────────────────────────── */
+
+.obw { justify-content: center; }
+
+.obw-main {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 32px 20px calc(env(safe-area-inset-bottom) + 32px);
+  text-align: center;
+}
+
+.obw-mark { display: flex; justify-content: center; margin-bottom: 22px; }
+
+.obw-ring,
+.obw-tick {
+  fill: none;
+  stroke: var(--ob-accent);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.obw-ring { stroke: var(--ob-border-strong); stroke-width: 2; }
+
+/* The tick draws itself. `pathLength` is unreliable across engines, so the
+   dash is set from the real length of that path — measured, not guessed. */
+.obw-tick {
+  stroke-dasharray: 44;
+  stroke-dashoffset: 44;
+}
+
+.obw-title,
+.obw-lead,
+.obw-next,
+.obw-actions,
+.obw-receipt {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.obw[data-lit] .obw-tick {
+  transition: stroke-dashoffset 520ms cubic-bezier(0.65, 0, 0.35, 1) 120ms;
+  stroke-dashoffset: 0;
+}
+
+.obw[data-lit] .obw-title,
+.obw[data-lit] .obw-lead,
+.obw[data-lit] .obw-next,
+.obw[data-lit] .obw-actions,
+.obw[data-lit] .obw-receipt {
+  opacity: 1;
+  transform: none;
+  transition: opacity 460ms ease, transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Staggered, so it reads top to bottom rather than arriving all at once. */
+.obw[data-lit] .obw-title { transition-delay: 420ms; }
+.obw[data-lit] .obw-lead { transition-delay: 540ms; }
+.obw[data-lit] .obw-next { transition-delay: 660ms; }
+.obw[data-lit] .obw-actions { transition-delay: 780ms; }
+.obw[data-lit] .obw-receipt { transition-delay: 880ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .obw-tick { stroke-dashoffset: 0; }
+  .obw-title, .obw-lead, .obw-next, .obw-actions, .obw-receipt {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+.obw-title {
+  margin: 0 0 10px;
+  font-family: var(--font-display, ui-sans-serif, system-ui, sans-serif);
+  font-size: clamp(30px, 8vw, 42px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.obw-lead {
+  margin: 0 0 26px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ob-muted);
+}
+
+.obw-next {
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+  text-align: left;
+}
+
+.obw-next li {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ob-muted);
+}
+
+.obw-next strong { color: var(--ob-text); font-weight: 650; }
+
+.obw-next__n {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid var(--ob-border-strong);
+  font-size: 13px;
+  color: var(--ob-faint);
+}
+
+.obw-actions { display: grid; gap: 10px; margin-bottom: 18px; }
+
+.obw-go {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  border-radius: 999px;
+  background: var(--ob-accent);
+  color: var(--ob-ink);
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.obw-second {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  color: var(--ob-muted);
+  font-size: 15px;
+  text-decoration: underline;
+}
+
+.obw-receipt { text-align: center; }
+
+.ob-link { color: var(--ob-accent); }

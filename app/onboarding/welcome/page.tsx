@@ -1,0 +1,61 @@
+import type { Metadata } from "next";
+import "@/app/onboarding.css";
+import { stripe } from "@/lib/stripe";
+import { OnboardingWelcome } from "@/components/onboarding/welcome";
+
+export const metadata: Metadata = {
+  title: "You're in · Suth Performance",
+  robots: { index: false, follow: false },
+};
+
+export const dynamic = "force-dynamic";
+
+/**
+ * After the card.
+ *
+ * Verified against Stripe rather than trusting the redirect: anybody can type
+ * this URL, and telling somebody their subscription is live when it is not is
+ * the worst possible thing this page could do. If Stripe cannot be reached the
+ * page still welcomes them — they did just pay — but says the confirmation is
+ * still coming rather than inventing one.
+ */
+export default async function OnboardingWelcomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ session_id?: string }>;
+}) {
+  const { session_id: sessionId } = await searchParams;
+
+  let name = "";
+  let planName = "";
+  let confirmed = false;
+  let trialing = false;
+
+  if (sessionId) {
+    try {
+      const session = await stripe().checkout.sessions.retrieve(sessionId, {
+        expand: ["subscription"],
+      });
+      confirmed =
+        session.payment_status === "paid" || session.status === "complete";
+      name = String(session.metadata?.client_name ?? "");
+      planName = String(session.metadata?.plan ?? "");
+      const sub = session.subscription;
+      trialing = typeof sub === "object" && sub !== null && sub.status === "trialing";
+    } catch {
+      // Stripe unreachable. They still paid; the page says the confirmation
+      // is on its way rather than claiming one it cannot see.
+      confirmed = false;
+    }
+  }
+
+  return (
+    <OnboardingWelcome
+      name={name}
+      planKey={planName}
+      confirmed={confirmed}
+      trialing={trialing}
+      hadSession={Boolean(sessionId)}
+    />
+  );
+}

@@ -1,4 +1,5 @@
 import { AdminShell } from "@/components/control/admin-shell";
+import { ClientIntake } from "@/components/control/client-intake";
 import { ClientsManager } from "@/components/control/clients-manager";
 
 const BASE = "/control-preview/admin";
@@ -13,6 +14,7 @@ const BASE = "/control-preview/admin";
 export default function AdminClients() {
   return (
     <AdminShell base={BASE} title="Clients">
+      <ClientIntake />
       <ClientsManager base={BASE} />
     </AdminShell>
   );

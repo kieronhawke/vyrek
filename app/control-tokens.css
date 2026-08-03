@@ -2696,3 +2696,162 @@
   }
   [data-surface="control"] .mg-editor__grip { display: none; }
 }
+
+/* ── Client intake ────────────────────────────────────────────────────── */
+
+[data-surface="control"] .ci {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+[data-surface="control"] .ci-title { margin: 0; font-size: var(--text-base); }
+
+[data-surface="control"] .ci-blurb {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-xs);
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .ci-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-1);
+}
+
+[data-surface="control"] .ci-field { display: grid; gap: 3px; min-width: 0; }
+
+[data-surface="control"] .ci-input {
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--text-base);
+  width: 100%;
+}
+
+[data-surface="control"] .ci-link {
+  font-family: var(--font-num, monospace);
+  font-size: var(--text-2xs);
+}
+
+[data-surface="control"] .ci-actions {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: var(--space-1);
+}
+
+[data-surface="control"] .ci-send {
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: inherit;
+  font-size: var(--text-base);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+[data-surface="control"] .ci-send--quiet {
+  background: var(--surface-raised);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+}
+
+[data-surface="control"] .ci-send:disabled {
+  background: var(--surface-raised);
+  color: var(--text-faint);
+  border-color: var(--border);
+  cursor: not-allowed;
+}
+
+[data-surface="control"] .ci-hint,
+[data-surface="control"] .ci-warn,
+[data-surface="control"] .ci-error {
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: 1.55;
+}
+
+[data-surface="control"] .ci-hint { color: var(--text-faint); }
+[data-surface="control"] .ci-warn { color: var(--warn); }
+[data-surface="control"] .ci-error { color: var(--danger); }
+
+[data-surface="control"] .ci-result {
+  display: grid;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+  padding: var(--space-2);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-card);
+  background: var(--bg);
+}
+
+[data-surface="control"] .ci-result__head { margin: 0; font-weight: 700; }
+
+[data-surface="control"] .ci-channels {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+  font-size: var(--text-xs);
+  line-height: 1.55;
+}
+
+/* The state is on the row, not on an icon: a green tick beside a message that
+   was never transmitted would stop Ben chasing it. */
+[data-surface="control"] .ci-channels li {
+  padding-left: 18px;
+  position: relative;
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .ci-channels li::before {
+  content: "•";
+  position: absolute;
+  left: 2px;
+}
+
+[data-surface="control"] .ci-channels li[data-state="ok"]::before {
+  content: "✓";
+  color: var(--ok);
+}
+
+[data-surface="control"] .ci-channels li[data-state="failed"]::before {
+  content: "!";
+  color: var(--warn);
+  font-weight: 700;
+}
+
+[data-surface="control"] .ci-copy {
+  justify-self: start;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+@media (min-width: 700px) {
+  [data-surface="control"] .ci-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  [data-surface="control"] .ci-field--wide { grid-column: 1 / -1; }
+}
