@@ -139,3 +139,31 @@ have nowhere to hang. The five HYROX hubs are small builds and could follow the
 Sequencing consequence: **do not write into a cluster whose hub is dead.** The
 post will either ship without its hub link, breaking the spec, or ship with a
 404 in it. Build the hub first, then the cluster.
+
+## The international city guides need real research, not a template
+
+Attempted 3 August 2026 and stopped. The Race Cities & Events cluster has
+travelling-athlete guides for Madrid (1,300), Málaga (1,000), Rome (1,000),
+Oslo (590), Chicago (480) and others, and the scraped race dataset gives real
+dates and venue names for all of them.
+
+Dates and venue names are not enough for a distinct page. Generating them from
+a shared template produced files that were **87.5% identical** — 10 differing
+lines out of 80 — with only the city, date and a season note swapped. That is
+a doorway page, and it is the same pattern this plan already rejects for the
+Stations cluster's templated variants.
+
+What made the UK and Ireland guides work was material the template cannot
+supply: Custom House on the Elizabeth line, the covered walkway at
+Birmingham International, the DART to Ballsbridge, Cardiff Central five
+minutes from the Principality Stadium, and a twelve-week block counted back
+from each date into the season it actually falls in. That is per-city
+knowledge, and it is why those posts differ from each other by more than a
+noun.
+
+**Rule for the remaining city guides:** write one only when there is genuine
+per-city substance — transport, venue layout, seasonal implications for the
+training block, local cost. Where that research has not been done, the honest
+options are to do it, or to leave the keyword unclaimed. Madrid was kept
+because it was written individually and explicitly disclaims venue knowledge
+nobody on the team has.

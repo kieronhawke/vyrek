@@ -262,11 +262,11 @@ G = "Gear"
 add(G, 1, "HYROX trainers: how to choose, and what the race actually demands", "hyrox trainers",
     "2,900/KD22 head commercial term. RETITLED 2026-08-02: was 'Best HYROX shoes 2026: tested by racing feet', which claims testing we have not done (hard rule 1). Write as selection criteria grounded in the eight stations, not a ranked verdict, until a real test exists", "gen:worn racing shoes beside sled track chalk marks, top-down")
 add(G, 1, "Best trainers for HYROX: the shortlist by foot type and budget", "best trainers for hyrox",
-    "1,000/KD25 sibling intent; chooser-format by need", "chart:shoe chooser decision tree")
+    "1,000/KD25 sibling intent. BLOCKED 2026-08-03: a shortlist by foot type and budget requires having tested shoes on real feet, which has not happened. Writing it from spec sheets is a fabricated recommendation (hard rule 1), and it would cannibalise the hyrox-trainers post which now covers selection criteria honestly. Unblock by running an actual test, then say what was tested, over what distance, by whom", "chart:shoe chooser decision tree", "guide", "blocked-testing")
 add(G, 1, "HYROX bag checklist: everything in a racer's kit bag", "hyrox bag",
     "1,600/KD17; flat-lay content; printable checklist; kit-list refresh", "gen:race kit flat lay on gym floor, labelled naturally", "guide", "refresh")
 add(G, 2, "HYROX trainers for women: what actually fits and grips", "hyrox trainers women",
-    "480/KD21; women-specific fit guidance nobody does properly", "gen:female athlete tying laces trackside, shoe detail focus")
+    "480/KD21; women-specific fit guidance nobody does properly. BLOCKED 2026-08-03: same reason as the shortlist post. 'What actually fits and grips' is a claim about tested products. Unblock with a real test", "gen:female athlete tying laces trackside, shoe detail focus", "guide", "blocked-testing")
 add(G, 2, "What to wear for HYROX: kit that survives all 8 stations", "what to wear hyrox",
     "Practical apparel guide; sweat/grip/chafe honesty", "own:track/pair-frontal-bw.jpg")
 add(G, 2, "HYROX equipment guide: what the race uses (and home equivalents)", "hyrox equipment",
