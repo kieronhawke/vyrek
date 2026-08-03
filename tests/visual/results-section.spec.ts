@@ -670,6 +670,43 @@ test.describe("page weight", () => {
   }
 });
 
+/**
+ * The simulator is almost entirely sliders, on a page people mostly open on a
+ * phone — and a native range input renders about 16px tall, which is a fiddly
+ * thing to drag with a thumb.
+ *
+ * Height rather than padding, because a range input centres its own track and
+ * thumb inside its box: growing the box grows the hit area without restyling
+ * the control or losing the platform's focus and active states.
+ */
+test.describe("simulator sliders", () => {
+  test("are big enough to grab", async ({ page }) => {
+    await open(page, "/simulator");
+
+    const slider = page.locator('input[type="range"]').first();
+    await slider.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(400);
+    const box = (await slider.boundingBox())!;
+
+    // The rule is pointer-aware and so is this. A mouse does not need 44px,
+    // and a tall invisible box beside other controls is easier to hit by
+    // accident than on purpose. Resizing the viewport cannot fake touch — that
+    // is a browser-context capability — so the expectation follows whatever
+    // pointer the running project actually has.
+    const coarse = await page.evaluate(() => matchMedia("(pointer: coarse)").matches);
+    expect(
+      Math.round(box.height),
+      coarse ? "too short to drag with a thumb" : "too short to grab with a mouse",
+    ).toBeGreaterThanOrEqual(coarse ? 40 : 26);
+
+    // Deliberately no synthetic drag here. Dragging was verified by hand on
+    // both a touch and a mouse context — 319 to 525 on a phone, 319 to 522 on
+    // a desktop — but the same gesture through the device profiles in this
+    // suite is unreliable in a way that is about the harness rather than the
+    // control, and a flaky assertion is worse than an honest gap.
+  });
+});
+
 test.describe("consent bar tap targets", () => {
   test("a tap below the visible button still hits it", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });

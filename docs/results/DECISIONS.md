@@ -1250,3 +1250,30 @@ paper, where the animation means nothing anyway.
 
 The guard is a test that loads the page, deliberately does **not** scroll, waits
 past the deadline, and asserts no card is still transparent.
+
+### D106 — Range inputs are 16px tall, and the simulator is all sliders
+A native `input[type="range"]` renders about 16px high. That is a fiddly thing
+to drag with a thumb, on the one page in the section that is almost entirely
+sliders and that people mostly open on a phone.
+
+Height rather than padding: a range input centres its own track and thumb inside
+its box, so growing the box grows the hit area without moving or restyling
+anything. The alternative — `appearance: none` plus three sets of vendor
+pseudo-elements for the track and thumb — means rebuilding the platform's focus
+and active states by hand, which is a bad trade for a control that already looks
+right.
+
+44px on a coarse pointer, 28px on a fine one. A mouse does not need 44, and a
+tall invisible box beside other controls is easier to hit by accident than on
+purpose.
+
+The test asserts height against whatever pointer the running project has,
+because resizing a viewport cannot fake touch — that is a context capability,
+and a 390px window on a desktop is still a mouse.
+
+It does **not** assert a synthetic drag. Dragging was verified by hand on both
+a touch and a mouse context (319 → 525 and 319 → 522), but the same gesture
+through this suite's device profiles is unreliable in a way that is about the
+harness rather than the control. A flaky assertion is worse than an honest gap,
+and it cost three wrong diagnoses before I worked out the first failures were
+simply clicks landing outside the viewport.
