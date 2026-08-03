@@ -7,7 +7,7 @@ import { getGeoSeo, geoPriority, isRaceCity } from "@/lib/locations/seo";
 import { RACE_CITIES, listCountrySlugs } from "@/lib/race-cities";
 import { US_STATES } from "@/lib/us-states";
 import { FOCUS_CITIES } from "@/lib/focus-cities";
-import { INTL_CITIES } from "@/lib/intl-cities";
+import { INTL_CITIES, getIntlCityGeo } from "@/lib/intl-cities";
 import { LOCALES } from "@/lib/i18n/config";
 import { localisedCities } from "@/lib/i18n/cities";
 import { STATIONS } from "@/lib/hyrox-stations";
@@ -202,12 +202,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     /* The expanded English-language markets. Same priority as a UK town:
        they are the same kind of page, built from the same kind of data.
 
-       Filtered on `indexable` exactly as UK_LOCATIONS are above. Without it
+       Filtered on `indexable` via getIntlCityGeo — NOT getGeoSeo, which
+       resolves against the UK registry and enrichment/ and therefore returns
+       false for every international city (it reads enrichment-country/).
+       Using the wrong one drops all 1,560 intl URLs instead of 146. Without
+       the filter at all
        this block submitted 146 URLs that serve noindex: the page gate is
        `gyms.length > 0 || parkruns.length > 0 || evidence.length > 0`
        (lib/locations/seo.ts), and 73 of the 780 international cities have
        none of the three. Audited 2026-08-03. */
-    ...INTL_CITIES.filter((c) => getGeoSeo(c.slug).indexable).flatMap((c) => [
+    ...INTL_CITIES.filter((c) => getIntlCityGeo(c.slug).indexable).flatMap((c) => [
       { url: `${SITE_URL}/hyrox-training/${c.slug}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
       { url: `${SITE_URL}/personal-trainer/${c.slug}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
     ]),
