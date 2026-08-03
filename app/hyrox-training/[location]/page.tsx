@@ -123,6 +123,7 @@ export default async function HyroxTrainingLocationPage({
         loc={loc}
         seo={seo}
         nearby={nearby}
+        parentPath={parent.path("/hyrox-training")}
         headingName={headingName}
         afterLocalContext={
           <>

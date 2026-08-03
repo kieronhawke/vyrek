@@ -347,6 +347,7 @@ export function GeoLanding({
   headingName,
   afterLocalContext,
   localeLinks,
+  parentPath,
 }: {
   variant: GeoVariant;
   loc: UkLocation;
@@ -365,6 +366,12 @@ export function GeoLanding({
   /** Translated versions of this page. hreflang covers crawlers; this is for
    *  the reader, who otherwise has no way to know they exist. */
   localeLinks?: { href: string; label: string; hrefLang: string }[];
+  /**
+   * The directory this place sits under. Without it GeoNearby falls back to
+   * the UK region shape — /personal-trainer/in/{region} — which for a
+   * Canadian or Irish city is a 404, because those sit under /country/.
+   */
+  parentPath?: string;
 }) {
   const seo = seoOverride ?? getGeoSeo(loc.slug);
   const c = variantCopy(variant, loc, seo, headingName);
@@ -550,6 +557,7 @@ export function GeoLanding({
           county={loc.county}
           items={nearby?.items}
           heading={nearby?.heading}
+          parentPath={parentPath}
           base={variant === "hyrox" ? "/hyrox-training" : "/personal-trainer"}
         />
 
