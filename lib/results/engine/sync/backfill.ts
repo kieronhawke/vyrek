@@ -129,6 +129,20 @@ export async function runBackfill(
     const all = await repo.listEvents();
     const ordered = orderForBackfill(all);
 
+    // Every checkpoint in one read.
+    //
+    // This used to be a `getSyncState` per event inside the loop — 223
+    // sequential round trips on every round, just to discover which event to
+    // work on next. The work itself is rate-limited to 40 requests a minute, so
+    // spending several hundred database calls to decide what to do is the
+    // difference between a backfill that finishes overnight and one that does
+    // not.
+    const checkpointed = new Set(
+      (await repo.listSyncStates())
+        .filter((state) => state.lastSeenHash)
+        .map((state) => state.sourceEventId),
+    );
+
     for (const event of ordered) {
       if (result.eventsCompleted.length >= maxEvents) {
         result.exhaustedBudget = true;
@@ -136,11 +150,10 @@ export async function runBackfill(
       }
 
       const sourceEventId = event.sourceEventId ?? event.slug;
-      const state = await repo.getSyncState(sourceEventId);
 
       // The checkpoint: an event with a hash has been pulled. Re-running the
       // backfill is therefore free and safe, which is the recovery story.
-      if (state?.lastSeenHash) {
+      if (checkpointed.has(sourceEventId)) {
         result.eventsSkipped.push(event.slug);
         continue;
       }
