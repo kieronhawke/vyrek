@@ -121,7 +121,15 @@ export async function runBackfill(
     // One historical season per run, so the catalogue deepens on its own
     // without a burst. Once every season is catalogued this stops costing
     // anything and the run goes straight to pulling results.
-    if (opts.catalogueSeasons !== false && !outOfTime()) {
+    //
+    // ⚠️ Cataloguing a season is 200+ requests — an order of magnitude more
+    // than pulling one event's results. On a serverless function that is the
+    // whole time budget and then some, so it only runs when there is real room
+    // for it, and the results phase is never starved by it. This was the actual
+    // cause of a backfill cron that timed out every invocation having done
+    // nothing at all.
+    const roomToCatalogue = budgetMs === 0 || budgetMs >= 600_000;
+    if (opts.catalogueSeasons !== false && roomToCatalogue && !outOfTime()) {
       const done = (await repo.getSetting<string[]>(SEASON_CURSOR_KEY)) ?? [];
       const next = allSeasonPaths().find((s) => !done.includes(s));
       if (next) {

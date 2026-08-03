@@ -635,6 +635,20 @@ describe("historical seasons (§5)", () => {
     expect((await h.repo.latestRun("backfill"))?.status).toBe("ok");
   });
 
+  it("does not start a season catalogue it has no room to finish", async () => {
+    // A season is 200+ requests. Attempting one inside a four-minute serverless
+    // budget spends the whole window and returns having done nothing — which is
+    // exactly what the backfill cron did on every invocation.
+    const h = await makeHarness();
+    const outcome = await runBackfill(h.engine, { maxEvents: 0, budgetMs: 240_000 });
+    expect(outcome.seasonCatalogued).toBeNull();
+
+    // With a generous budget it goes ahead.
+    const roomy = await makeHarness();
+    const second = await runBackfill(roomy.engine, { maxEvents: 0, budgetMs: 900_000 });
+    expect(second.seasonCatalogued).toBe("season-9");
+  });
+
   it("can be told to pull results without deepening the catalogue", async () => {
     const h = await makeHarness();
     const outcome = await runBackfill(h.engine, { maxEvents: 0, catalogueSeasons: false });
