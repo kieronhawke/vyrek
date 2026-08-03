@@ -28,6 +28,42 @@ import {
   regionFor,
   timeZoneFor,
 } from "../normalise/timezones";
+import { resolveCityName } from "../normalise/city-name";
+import { HOST_CITIES } from "../normalise/host-cities";
+
+/** Every city we can place, from the live calendar and the archive together. */
+const PLACEABLE_CITIES = new Set([
+  ...RACES.map((r) => normaliseKey(r.city)),
+  ...Object.keys(HOST_CITIES).map(normaliseKey),
+]);
+
+const HOST_CITY_BY_KEY = new Map(
+  Object.entries(HOST_CITIES).map(([city, place]) => [normaliseKey(city), { city, ...place }]),
+);
+
+/**
+ * Country, region and timezone for an event whose weekend has no calendar entry.
+ *
+ * Deliberately partial: it answers *where*, never *when*. A finished event's
+ * date is year-specific and cannot be recovered from its city, so this leaves
+ * dates null rather than inventing one — an event with a wrong date sorts wrong
+ * and, if it were ever `upcoming`, would arm the live poller on the wrong day.
+ */
+export function placeFor(label: string): { city: string; country: string; timeZone: string } | null {
+  const resolved = resolveCityName(label, PLACEABLE_CITIES);
+  if (!resolved) return null;
+
+  const host = HOST_CITY_BY_KEY.get(normaliseKey(resolved));
+  if (host) return { city: host.city, country: host.country, timeZone: host.timeZone };
+
+  // On the calendar but not in the archive table: take its country from there.
+  const race = RACES.find((r) => normaliseKey(r.city) === normaliseKey(resolved));
+  if (race?.country) {
+    const zone = timeZoneFor(race.city, race.country);
+    if (zone) return { city: race.city, country: race.country, timeZone: zone };
+  }
+  return null;
+}
 
 /**
  * Local start hour assumed for arming.
@@ -129,6 +165,8 @@ export type EnrichResult = {
   ambiguous: string[];
   /** Undated events closed because their season is over. */
   closedBySeason: string[];
+  /** Events with no calendar entry that were still given a country and region. */
+  placed: string[];
 };
 
 /**
@@ -142,7 +180,9 @@ export async function enrichEventMetadata(
   opts: { races?: Race[] } = {},
 ): Promise<EnrichResult> {
   const races = opts.races ?? RACES;
-  const result: EnrichResult = { enriched: [], unmatched: [], ambiguous: [], closedBySeason: [] };
+  const result: EnrichResult = {
+    enriched: [], unmatched: [], ambiguous: [], closedBySeason: [], placed: [],
+  };
 
   for (const event of await repo.listEvents()) {
     // Already dated: leave it alone. Re-deriving would overwrite a correction
@@ -153,12 +193,36 @@ export async function enrichEventMetadata(
     if (!metadata) {
       result.unmatched.push({ slug: event.slug, city: event.city, year: event.year });
 
+      // No calendar entry, but the archive still knows where this raced.
+      //
+      // 208 of 223 events reach this branch — the published calendar only lists
+      // upcoming races, so every finished season falls off it. Left as it was,
+      // all of them had a null country and region, which emptied the regional
+      // calendars and left the whole archive unfilterable. `placeFor` answers
+      // where without pretending to know when.
+      const place = placeFor(event.city);
+      const status =
+        event.status === "upcoming" && isPastSeason(event.season) ? "final" : event.status;
+
+      if (place && (!event.country || !event.region)) {
+        await repo.upsertEvent({
+          ...(event as EngineEvent),
+          status,
+          country: event.country || place.country,
+          countryIso: event.countryIso || countryIsoFor(place.country),
+          region: event.region || regionFor(place.country),
+        });
+        result.placed.push(event.slug);
+        if (status !== event.status) result.closedBySeason.push(event.slug);
+        continue;
+      }
+
       // No date, but a season number is itself evidence: HYROX runs one season
       // at a time, so anything from an earlier one has finished. Without this,
       // 208 undated historical events sit as "upcoming" for ever and the live
       // poller reconsiders every one of them every minute.
-      if (event.status === "upcoming" && isPastSeason(event.season)) {
-        await repo.upsertEvent({ ...(event as EngineEvent), status: "final" });
+      if (status !== event.status) {
+        await repo.upsertEvent({ ...(event as EngineEvent), status });
         result.closedBySeason.push(event.slug);
       }
       continue;
@@ -190,16 +254,22 @@ export async function enrichEventMetadata(
     result.enriched.push(event.slug);
   }
 
-  // An event we cannot date can never self-arm, so it is worth an operator
-  // seeing rather than a silent gap in the calendar.
-  if (result.unmatched.length > 0) {
+  // Only the events we could not even place are worth an operator's attention.
+  //
+  // Nearly every event misses the calendar — it lists upcoming races only, so
+  // the whole archive falls off it — and alerting on all of them buried the
+  // signal under 208 lines of routine history. What actually needs a human is an
+  // event whose label names no city we recognise: it has no country, no region,
+  // and sits outside every regional calendar until someone looks at it.
+  const unplaceable = result.unmatched.filter((u) => !placeFor(u.city));
+  if (unplaceable.length > 0) {
     await repo.raiseAlert({
       kind: "completeness",
       severity: "info",
       message:
-        `${result.unmatched.length} event(s) have no match in the HYROX calendar, so they have ` +
-        `no dates and cannot self-arm: ${result.unmatched.map((u) => u.slug).join(", ")}`,
-      detail: { unmatched: result.unmatched },
+        `${unplaceable.length} event(s) name no city we can place, so they have no country or ` +
+        `region: ${unplaceable.map((u) => `${u.slug} ("${u.city}")`).join(", ")}`,
+      detail: { unplaceable, placed: result.placed.length, unmatched: result.unmatched.length },
       sourceEventId: null,
       acknowledgedAt: null,
     });

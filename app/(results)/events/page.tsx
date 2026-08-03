@@ -7,6 +7,7 @@ import { MicroLabel, EmptyState } from "@/components/results/ui/primitives";
 import { cn } from "@/lib/utils";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { PLACES } from "@/lib/results/places";
 
 /**
  * `/events` — the season calendar.
@@ -88,6 +89,25 @@ export default async function EventsPage({
         <FilterRow label="Season" options={SEASONS} active={season} build={(v) => buildHref({ season: v })} />
         <FilterRow label="Region" options={REGIONS} active={region} build={(v) => buildHref({ region: v })} />
       </div>
+
+      {/* The filters above are query strings, which rank for nothing. These are
+          real pages with their own copy, and they are how "hyrox uk" finds us. */}
+      <nav aria-label="Calendars by place" className="mt-5">
+        <span className="mr-2 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
+          By place
+        </span>
+        <span className="inline-flex flex-wrap gap-2 align-middle">
+          {PLACES.map((place) => (
+            <Link
+              key={place.slug}
+              href={`/events/${place.slug}`}
+              className="inline-flex min-h-[36px] items-center rounded-pill border border-suth-border bg-suth-elevated px-3 text-xs text-suth-text-secondary transition-colors hover:text-suth-text focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-suth-accent"
+            >
+              {place.label}
+            </Link>
+          ))}
+        </span>
+      </nav>
 
       {events.length === 0 ? (
         <div className="mt-8">

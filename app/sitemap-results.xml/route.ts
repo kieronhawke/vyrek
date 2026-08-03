@@ -1,6 +1,7 @@
 import { getResultsSource, getDataMode } from "@/lib/results";
 import { buildRankingSlug } from "@/lib/results/slugs";
 import { groupEventsByCity } from "@/lib/results/city";
+import { PLACES } from "@/lib/results/places";
 import { siteUrl } from "@/lib/site-url";
 import { STATIONS } from "@/lib/hyrox-stations";
 
@@ -78,9 +79,13 @@ export async function GET() {
     ));
   }
 
-  // Regional calendars — real URLs that server-render.
-  for (const region of ["Europe", "Asia"]) {
-    entries.push(urlEntry(`${base}/events?region=${encodeURIComponent(region)}`, "weekly", "0.5"));
+  // Regional calendars — real pages, not filtered views of /events.
+  //
+  // These used to be submitted as `/events?region=Europe`. A query string is a
+  // filter: it has no title of its own, no copy, and competes with the page it
+  // is filtering. `/events/uk` is what "hyrox uk" can actually rank for.
+  for (const place of PLACES) {
+    entries.push(urlEntry(`${base}/events/${place.slug}`, "weekly", "0.7"));
   }
   for (const season of [...new Set(events.map((e) => e.season))]) {
     entries.push(urlEntry(`${base}/events?season=${season}`, "weekly", "0.5"));
