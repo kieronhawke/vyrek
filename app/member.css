@@ -590,3 +590,45 @@
 @media (min-width: 768px) {
   .walkthrough { align-items: center; }
 }
+
+/* ─── Celebration ───────────────────────────────────────────────────────────
+   Ticking a session off was a silent state change. This is the burst that
+   fires with it — twenty spans and two keyframes, no library.
+
+   The pieces are absolute and pointer-events:none, so the tick underneath
+   stays tappable while they are on screen. The parent needs position:relative.
+
+   Entirely off under reduced motion, which is enforced in the component as
+   well as here: confetti is exactly what that setting exists to stop, and for
+   some people it is a trigger rather than a preference. */
+.celebrate {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 2;
+}
+
+.celebrate__piece {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 9px;
+  border-radius: 1px;
+  opacity: 0;
+  animation: celebrate-fly 900ms cubic-bezier(0.22, 0.8, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes celebrate-fly {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.6) rotate(0deg); }
+  12%  { opacity: 1; }
+  /* Up and out first, then gravity takes it past the start point. */
+  55%  { transform: translate(calc(-50% + var(--dx) * 0.75), calc(-50% - var(--rise))) scale(1) rotate(calc(var(--spin) * 0.6)); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + 26px)) scale(0.9) rotate(var(--spin)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .celebrate { display: none; }
+}
