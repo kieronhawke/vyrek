@@ -17,6 +17,7 @@ import { StationBars } from "@/components/results/result/station-bars";
 import { WhatIfCard } from "@/components/results/result/what-if";
 import { ShareResult } from "@/components/results/result/share-result";
 import { ResultExport } from "@/components/results/export/result-export";
+import { RaceReportSheet } from "@/components/results/export/race-report-sheet";
 import { StatTile, MicroLabel, Nationality, Time } from "@/components/results/ui/primitives";
 import { CoachingCta } from "@/components/results/coaching-cta";
 import { Reveal } from "@/components/results/ui/reveal";
@@ -108,7 +109,8 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
   const rankingSlug = buildRankingSlug(result.eventSlug, result.division);
 
   return (
-    <div className="mx-auto max-w-[1100px] px-5 py-6 md:py-10">
+    <>
+    <div className="results-print-hide-on-paper mx-auto max-w-[1100px] px-5 py-6 md:py-10">
       <nav aria-label="Breadcrumb" className="mb-3">
         <ol className="flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
           <li><Link href="/results" className="hover:text-suth-accent">Results</Link></li>
@@ -297,5 +299,35 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
         </Link>
       </p>
     </div>
+
+    {/* Screen-hidden. `results-print.css` hides the page above and reveals
+        this instead, so Save as PDF produces a document rather than a
+        screenshot of an interactive page. */}
+    <RaceReportSheet
+      athleteName={result.athleteName}
+      eventName={result.eventName}
+      eventCity={result.eventCity}
+      divisionLabel={result.divisionLabel}
+      ageGroup={result.ageGroup}
+      countryIso={result.countryIso}
+      rank={result.rank}
+      fieldSize={result.fieldSize}
+      ageGroupRank={result.ageGroupRank}
+      finishSeconds={result.finishSeconds}
+      percentile={percentile}
+      runs={result.runs}
+      stations={result.stations}
+      roxzoneSeconds={result.roxzoneSeconds}
+      averageRuns={result.divisionAverage.runs}
+      averageStations={result.divisionAverage.stations}
+      averageRoxzone={result.divisionAverage.roxzone}
+      standings={standings}
+      pacing={pacing}
+      roxzone={roxzone}
+      whatIf={whatIf}
+      generatedOn={new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+      isDemo={getDataMode() === "demo"}
+    />
+    </>
   );
 }
