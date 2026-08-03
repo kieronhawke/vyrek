@@ -73,6 +73,8 @@ export type BackfillResult = {
   eventsCompleted: string[];
   eventsSkipped: string[];
   eventsFailed: string[];
+  /** Catalogued, but the source listed no divisions for them. */
+  eventsWithoutDivisions: string[];
   rowsUpserted: number;
   rowsQuarantined: number;
   exhaustedBudget: boolean;
@@ -112,6 +114,7 @@ export async function runBackfill(
       eventsCompleted: [],
       eventsSkipped: [],
       eventsFailed: [],
+      eventsWithoutDivisions: [],
       rowsUpserted: 0,
       rowsQuarantined: 0,
       exhaustedBudget: false,
@@ -188,6 +191,34 @@ export async function runBackfill(
 
       try {
         const divisions = await repo.listDivisions(event.id);
+
+        // An event with no divisions has nothing to sync, so nothing ever
+        // writes its checkpoint — and it is therefore chosen again on every
+        // round, "completing" instantly and occupying one of the run's few
+        // slots for ever. One such event was picked in every round for an hour.
+        //
+        // It is checkpointed explicitly and reported: an event the catalogue
+        // knows about but has no divisions for is worth a human glance, not a
+        // silent skip.
+        if (divisions.length === 0) {
+          await repo.upsertSyncState({
+            sourceEventId,
+            eventId: event.id,
+            lastSeenHash: "no-divisions",
+            lastPolledAt: new Date().toISOString(),
+            lastSuccessAt: new Date().toISOString(),
+            isLive: false,
+            liveArmedAt: null,
+            liveIntervalSeconds: 20,
+            consecutiveFailures: 0,
+            updatesPaused: false,
+            reconcileUntil: null,
+            reconcileAttempts: 0,
+          });
+          result.eventsWithoutDivisions.push(event.slug);
+          continue;
+        }
+
         for (const division of divisions) {
           const outcome = await engine.syncDivision({
             seasonPath: event.sourceSeasonPath ?? opts.seasonPaths?.[0] ?? "season-9",
@@ -219,6 +250,7 @@ export async function runBackfill(
         completed: result.eventsCompleted,
         skipped: result.eventsSkipped.length,
         failed: result.eventsFailed,
+        withoutDivisions: result.eventsWithoutDivisions,
       },
     } as BackfillResult & Record<string, unknown>;
   });
