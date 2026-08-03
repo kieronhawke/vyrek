@@ -35,6 +35,7 @@ const ROUTES = [
   { name: "course index", path: "/results/course-index" },
   { name: "race report", path: "/report/s9-2026-london-hyrox-men-1600" },
   { name: "record book", path: "/rankings/records" },
+  { name: "tools directory", path: "/results/tools" },
 ];
 
 /** Fails the test if the page logged an error or threw during hydration. */
@@ -323,6 +324,60 @@ test.describe("search", () => {
  * Every assertion here corresponds to something that was actually broken
  * during the build and would have shipped silently otherwise.
  */
+/**
+ * Discoverability, and the scroll-reveal that nearly broke it.
+ *
+ * The nav carries six links and the section had grown well past six things
+ * worth using — the race report, the record book and the course speed index
+ * were each reachable only from one page deep inside it. `/results/tools` is
+ * the directory that fixes that, so the things it lists are worth pinning.
+ */
+test.describe("tools directory", () => {
+  test("lists every headline feature", async ({ page }) => {
+    await open(page, "/results/tools");
+    for (const name of [
+      /full race report/i, /record book/i, /course speed index/i,
+      /race simulator/i, /is my time any good/i, /compare two races/i,
+    ]) {
+      await expect(page.getByRole("link", { name }).first(), `missing: ${name}`).toBeVisible();
+    }
+  });
+
+  test("every card links somewhere real", async ({ page }) => {
+    await open(page, "/results/tools");
+    const hrefs = await page.evaluate(() =>
+      Array.from(document.querySelectorAll("main a[href^='/']")).map((a) => a.getAttribute("href")!),
+    );
+    expect(hrefs.length).toBeGreaterThan(10);
+    for (const href of new Set(hrefs)) {
+      const res = await page.request.get(href);
+      expect(res.status(), `${href} returned ${res.status()}`).toBeLessThan(400);
+    }
+  });
+
+  test("content below the fold is visible without scrolling to it", async ({ page }) => {
+    await open(page, "/results/tools");
+    // `Reveal` rests at opacity 0 until its observer fires. A full-page capture
+    // of this page came back with the entire third section blank, and the same
+    // would happen in print or anywhere the page renders off-screen. It settles
+    // on a deadline now whether or not it is ever scrolled past.
+    await page.waitForTimeout(2600);
+    const hidden = await page.evaluate(() =>
+      Array.from(document.querySelectorAll("main a[href^='/']"))
+        .filter((a) => Number(getComputedStyle(a.parentElement ?? a).opacity) < 0.9)
+        .map((a) => (a.textContent ?? "").trim().slice(0, 30)),
+    );
+    expect(hidden, `still invisible: ${hidden.join(", ")}`).toEqual([]);
+  });
+
+  test("is reachable from the section navigation", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await open(page, "/results");
+    const nav = page.locator('nav[aria-label="Results sections"]');
+    await expect(nav.getByRole("link", { name: "Tools" })).toHaveAttribute("href", "/results/tools");
+  });
+});
+
 test.describe("the record book", () => {
   test("lists world, national and age-group records", async ({ page }) => {
     await open(page, "/rankings/records");

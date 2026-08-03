@@ -37,7 +37,25 @@ function usePrefersReducedMotion(): boolean {
   );
 }
 
-/** Fires a callback once, the first time the element scrolls into view. */
+/**
+ * How long content may stay hidden waiting to be scrolled to.
+ *
+ * The reveal starts at `opacity: 0`, which means content is invisible until the
+ * observer fires — and if it never fires, the content is invisible for good.
+ * That is not theoretical: a full-page screenshot of the tools directory came
+ * back with an entire section blank, because nothing below the fold had been
+ * scrolled past. The same happens when printing, when a page is rendered
+ * off-screen, and on any browser where the observer is unavailable.
+ *
+ * So the reveal is now a progressive enhancement with a deadline. If the
+ * element has not been seen within this window it settles anyway, visible and
+ * un-animated. Two seconds is long enough that a real reader scrolling down a
+ * page still gets the effect, and short enough that nobody ever stares at a
+ * blank block wondering whether it failed to load.
+ */
+const REVEAL_DEADLINE_MS = 2000;
+
+/** Fires once, the first time the element scrolls into view — or on a deadline. */
 function useInView(enabled: boolean, rootMargin = "0px 0px -8% 0px", threshold = 0.05) {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
@@ -46,6 +64,15 @@ function useInView(enabled: boolean, rootMargin = "0px 0px -8% 0px", threshold =
     if (!enabled) return;
     const node = ref.current;
     if (!node) return;
+
+    // No IntersectionObserver at all: show everything rather than nothing.
+    // Deferred to a timeout callback rather than set here — a synchronous
+    // setState in an effect body cascades renders, which the lint rule in this
+    // repo rejects for good reason.
+    if (typeof IntersectionObserver === "undefined") {
+      const immediate = window.setTimeout(() => setInView(true), 0);
+      return () => window.clearTimeout(immediate);
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -58,7 +85,13 @@ function useInView(enabled: boolean, rootMargin = "0px 0px -8% 0px", threshold =
       { rootMargin, threshold },
     );
     observer.observe(node);
-    return () => observer.disconnect();
+
+    const deadline = window.setTimeout(() => {
+      setInView(true);
+      observer.disconnect();
+    }, REVEAL_DEADLINE_MS);
+
+    return () => { window.clearTimeout(deadline); observer.disconnect(); };
   }, [enabled, rootMargin, threshold]);
 
   return { ref, inView };

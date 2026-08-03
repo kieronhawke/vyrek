@@ -24,6 +24,7 @@ import { summariseShape, type SentinelVerdict } from "../validate/sentinel";
 import { pingHeartbeat } from "../ops/heartbeat";
 import { recomputeDistributionsForEvent } from "./distributions";
 import { enrichEventMetadata } from "./event-metadata";
+import { backfillEventTotals } from "./event-totals";
 
 export type CatalogResult = {
   seasonsScanned: string[];
@@ -142,6 +143,11 @@ export async function runCatalogSync(
     // it has to happen before arming, because an event with no start instant
     // can never self-arm.
     const enriched = await enrichEventMetadata(repo);
+
+    // Keep every event's headline total honest. Cheap, no network, idempotent —
+    // and it repairs any event whose divisions were synced by a path that did
+    // not roll them up, rather than relying on that path never existing.
+    await backfillEventTotals(repo);
 
     // Pull full results for anything that has finalised since the last run.
     const finalised = (await repo.listEvents({ status: "final" }))

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Search, CalendarDays, Trophy, SlidersHorizontal, Dumbbell, MapPin } from "lucide-react";
+import { Search, CalendarDays, Trophy, SlidersHorizontal, Dumbbell, MapPin, Medal } from "lucide-react";
 
 /**
  * Results sub-navigation.
@@ -16,14 +16,22 @@ import { Search, CalendarDays, Trophy, SlidersHorizontal, Dumbbell, MapPin } fro
  * On mobile it is replaced by the bottom tab bar, in the thumb zone.
  */
 
-// Desktop only — the mobile bar below keeps its own five, because a sixth tab
-// in the thumb zone makes every tap target too narrow to hit reliably.
+/**
+ * Desktop only — the mobile bar below keeps its own five, because a sixth tab
+ * in the thumb zone makes every tap target too narrow to hit reliably.
+ *
+ * "Tools" replaced "Simulator". The simulator is one tool among a dozen, and
+ * pointing a whole nav slot at it left the race report, the record book, the
+ * course speed index and the percentile check reachable only from one page
+ * deep in the section or from a grid below the fold. A feature nobody can find
+ * is a feature nobody uses.
+ */
 const LINKS = [
   { href: "/results", label: "Results", icon: Trophy, exact: true },
   { href: "/events", label: "Events", icon: CalendarDays },
   { href: "/results/city", label: "Cities", icon: MapPin },
-  { href: "/rankings", label: "Rankings", icon: Trophy },
-  { href: "/simulator", label: "Simulator", icon: SlidersHorizontal },
+  { href: "/rankings", label: "Rankings", icon: Medal },
+  { href: "/results/tools", label: "Tools", icon: SlidersHorizontal },
   { href: "/hyrox/stations", label: "Stations", icon: Dumbbell },
 ];
 
@@ -88,7 +96,7 @@ export function MobileTabBar({ onOpenSearch }: { onOpenSearch?: () => void }) {
     { href: "/results", label: "Results", icon: Trophy, exact: true },
     { href: "/events", label: "Events", icon: CalendarDays },
     { type: "search" as const, label: "Search", icon: Search },
-    { href: "/simulator", label: "Tools", icon: SlidersHorizontal },
+    { href: "/results/tools", label: "Tools", icon: SlidersHorizontal },
     { href: "/hyrox/stations", label: "Guides", icon: Dumbbell },
   ];
 

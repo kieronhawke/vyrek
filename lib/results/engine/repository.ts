@@ -114,6 +114,8 @@ export interface ResultsRepository {
   getResultBySourceId(sourceResultId: string): Promise<EngineResult | null>;
   getRanking(query: RankingQuery): Promise<RankingResultPage>;
   listResultsForAthlete(athleteId: string): Promise<EngineResult[]>;
+  /** How many races an athlete has, without materialising any of them. */
+  countResultsForAthlete(athleteId: string): Promise<number>;
   listResultsForDivision(divisionId: string): Promise<EngineResult[]>;
   countResultsForDivision(divisionId: string): Promise<number>;
   /**
@@ -125,6 +127,69 @@ export interface ResultsRepository {
    * column; nothing else may.
    */
   listFinishTimesForDivision(divisionId: string): Promise<number[]>;
+  /**
+   * The headline numbers for one division, without reading its rows.
+   *
+   * `getEvent` renders a card per division — field size, finisher count, the
+   * leader, the wave list — and used to load every column of every row of every
+   * division to derive them. `results_results` carries a `splits` JSONB blob of
+   * eighteen segments per athlete, so a fifteen-division event meant megabytes
+   * of JSON to print a handful of integers.
+   */
+  getDivisionSummary(divisionId: string): Promise<{
+    total: number;
+    finisherCount: number;
+    leader: { athleteId: string; finishTimeMs: number | null } | null;
+    waves: (string | null)[];
+  }>;
+  /**
+   * Only the rows that actually carry splits.
+   *
+   * Splits arrive one athlete at a time, long after the board does, so most
+   * rows have none. Averaging segment times across *all* rows divides real
+   * totals by a field that is mostly zeroes and reports a division average far
+   * faster than anybody ran — which is what the "vs division average" bars on
+   * every result page were drawn from.
+   */
+  listResultsWithSplitsForDivision(divisionId: string): Promise<EngineResult[]>;
+  /**
+   * Start-list rows for one division, with the athlete already joined.
+   *
+   * The start list needs a name, a nationality and an age group per entrant and
+   * nothing else. Building it from `listResultsForDivision` plus a
+   * `getAthleteById` per row meant 12,366 sequential athlete lookups for one
+   * event, which took nine and a half minutes.
+   */
+  listStartersForDivision(divisionId: string): Promise<
+    {
+      wave: string | null;
+      ageGroup: string | null;
+      slug: string;
+      name: string;
+      nationality: string | null;
+      isAnonymised: boolean;
+    }[]
+  >;
+  /**
+   * The fastest finish ever recorded in each division, across every event.
+   *
+   * The record board is one row per division and used to be assembled by
+   * walking every event, every division and every row — 2,692 divisions, all
+   * columns, plus an athlete lookup per improvement. It took six minutes, which
+   * is past any serverless timeout: the page could not have rendered in
+   * production at all.
+   *
+   * One ordered, limited query per division key instead.
+   */
+  getDivisionRecords(): Promise<
+    {
+      divisionKey: string;
+      divisionLabel: string;
+      athleteId: string;
+      finishTimeMs: number;
+      eventId: string;
+    }[]
+  >;
   searchAthletesAndEvents(q: string, limit?: number): Promise<{
     athletes: EngineAthlete[];
     events: EngineEvent[];
