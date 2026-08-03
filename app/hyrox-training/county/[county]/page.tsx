@@ -29,7 +29,10 @@ export async function generateMetadata({
   const data = getCountyBySlug(county);
   if (!data) return { title: "Not found" };
   const url = `${siteUrl()}/hyrox-training/county/${county}`;
-  const title = `Hyrox training in ${data.county}`;
+  // A directory lists places; a town page is about one. "across" keeps the
+  // two off the same query — Leeds the city and Leeds the county both had
+  // the title "Hyrox training in Leeds".
+  const title = `Hyrox training across ${data.county}`;
   const description = `Hyrox training across ${data.county}: ${data.locations.length} towns and cities, each with its local gyms, nearest measured 5 km and closest race. Online coaching from HYROX Elite 15 athlete Ben Sutherland.`;
   return {
     title,

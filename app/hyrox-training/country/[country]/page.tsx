@@ -33,7 +33,10 @@ export async function generateMetadata({
   if (!data) return { title: "Not found" };
   const url = `${siteUrl()}/hyrox-training/country/${country}`;
   const races = countryRaceCount(country);
-  const title = `Hyrox training in ${data.country}`;
+  // A directory lists places; a town page is about one. "across" keeps the
+  // two off the same query — Leeds the city and Leeds the county both had
+  // the title "Hyrox training in Leeds".
+  const title = `Hyrox training across ${data.country}`;
   const description = `Hyrox training across ${data.country}: ${data.cities.length} ${data.cities.length === 1 ? "host city" : "host cities"} and ${races} ${races === 1 ? "race" : "races"} on the calendar. A 12-week programme dated backwards from race day, from HYROX Elite 15 athlete Ben Sutherland.`;
   return {
     title,

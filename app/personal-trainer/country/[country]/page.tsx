@@ -40,7 +40,10 @@ export async function generateMetadata({
   if (!data) return { title: "Not found" };
   const url = `${siteUrl()}/personal-trainer/country/${country}`;
   const races = countryRaceCount(country);
-  const title = `Personal trainer in ${data.country}`;
+  // A directory lists places; a town page is about one. "across" keeps the
+  // two off the same query — Leeds the city and Leeds the county both had
+  // the title "Hyrox training in Leeds".
+  const title = `Personal trainer across ${data.country}`;
   const description = `Online personal training across ${data.country}: ${data.cities.length} ${data.cities.length === 1 ? "city" : "cities"} on the HYROX calendar, ${races} ${races === 1 ? "race" : "races"} between them, each with the gyms actually near it. Coaching from HYROX Elite 15 athlete Ben Sutherland.`;
   return {
     title,

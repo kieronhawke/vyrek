@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/lib/blog/jsonld";
 import { UsStatePage } from "@/components/landing/us-state-page";
 import { getUsState, listUsStateSlugs } from "@/lib/us-states";
+import { getLocationBySlug } from "@/lib/uk-locations";
 import {
   stateServiceJsonLd,
   stateFaqJsonLd,
@@ -34,7 +35,13 @@ export async function generateMetadata({
   const url = `${siteUrl()}/hyrox-training/state/${s.slug}`;
   // layout.tsx appends " · Suth Performance" (20 chars). Every state name fits
   // inside 65 with the prefix below; the longest is District of Columbia.
-  const title = `Hyrox training in ${s.name}`;
+  /* Washington the US state and Washington in Tyne and Wear produced the
+     same title on two live URLs. Any state whose slug a town already owns
+     carries the country, so the two never compete. */
+  const collides = Boolean(getLocationBySlug(s.slug));
+  const title = collides
+    ? `Hyrox training in ${s.name}, United States`
+    : `Hyrox training in ${s.name}`;
   return {
     title,
     description: stateDescription("hyrox", s),

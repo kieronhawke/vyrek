@@ -20,7 +20,9 @@ export async function generateMetadata({
   const data = getRegionBySlug(region);
   if (!data) return { title: "Not found" };
   const url = `${siteUrl()}/hyrox-training/in/${region}`;
-  const title = `Hyrox training in ${data.region}`;
+  // See the county directories: "across" keeps a region page off the same
+  // query as the town that shares its name (London, Wales).
+  const title = `Hyrox training across ${data.region}`;
   const description = `Hyrox coaching across ${regionWithArticle(data.region)}. ${data.locations.length} towns and cities, each with its nearest race venue and local running options. From HYROX Elite 15 athlete Ben Sutherland.`;
   return {
     title,

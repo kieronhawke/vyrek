@@ -20,7 +20,9 @@ export async function generateMetadata({
   const data = getRegionBySlug(region);
   if (!data) return { title: "Not found" };
   const url = `${siteUrl()}/personal-trainer/in/${region}`;
-  const title = `Personal training in ${data.region}`;
+  // See the county directories: "across" keeps a region page off the same
+  // query as the town that shares its name (London, Wales).
+  const title = `Personal training across ${data.region}`;
   const description = `Personal training across ${regionWithArticle(data.region)}. ${data.locations.length} towns and cities covered, each with local running options and the nearest race. Online coaching from an Elite 15 athlete.`;
   return {
     title,
