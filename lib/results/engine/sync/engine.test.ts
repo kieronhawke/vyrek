@@ -20,7 +20,7 @@ import { FailingAdapter } from "../source/replay-adapter";
 import { FallbackChain } from "../source/adapter";
 import { runLiveTick } from "./live";
 import { runReconcile, isReconcileDue } from "./reconcile";
-import { orderForBackfill } from "./backfill";
+import { orderForBackfill, allSeasonPaths, runBackfill } from "./backfill";
 import { recomputeDistributionsForEvent } from "./distributions";
 import { channelForEvent, deliveryModeFor } from "./publisher";
 import { runSplitsBackfill, idpFromSourceResultId, hasSplits } from "./splits";
@@ -408,6 +408,50 @@ describe("splits backfill (§4)", () => {
 
   it("recovers the source id from the stored result id", () => {
     expect(idpFromSourceResultId("H_LR3MS4JI163A#men:LRAA0000001")).toBe("LRAA0000001");
+  });
+});
+
+describe("historical seasons (§5)", () => {
+  it("walks every season, newest first", () => {
+    const seasons = allSeasonPaths();
+    expect(seasons[0]).toBe("season-9");
+    expect(seasons).toContain("season-1");
+    expect(seasons).toHaveLength(9);
+  });
+
+  it("catalogues one season per run and remembers which", async () => {
+    const index = fixture("season-index.html");
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        seasonIndex: { "season-9": index, "season-8": index },
+      }),
+    });
+
+    const first = await runBackfill(h.engine, { maxEvents: 0 });
+    expect(first.seasonCatalogued).toBe("season-9");
+
+    // The cursor advances, so the next run takes the next season rather than
+    // re-catalogueing the same one for ever.
+    const second = await runBackfill(h.engine, { maxEvents: 0 });
+    expect(second.seasonCatalogued).toBe("season-8");
+
+    const done = await h.repo.getSetting<string[]>("backfill_seasons_done");
+    expect(done).toEqual(["season-9", "season-8"]);
+  });
+
+  it("leaves a season uncursored when it fails, so the next run retries it", async () => {
+    // Only season-9 has a fixture here, so season-8 throws. The failure must
+    // not stop the run or mark the season done.
+    const h = await makeHarness();
+    expect((await runBackfill(h.engine, { maxEvents: 0 })).seasonCatalogued).toBe("season-9");
+    expect((await runBackfill(h.engine, { maxEvents: 0 })).seasonCatalogued).toBeNull();
+    expect(await h.repo.getSetting<string[]>("backfill_seasons_done")).toEqual(["season-9"]);
+  });
+
+  it("can be told to pull results without deepening the catalogue", async () => {
+    const h = await makeHarness();
+    const outcome = await runBackfill(h.engine, { maxEvents: 0, catalogueSeasons: false });
+    expect(outcome.seasonCatalogued).toBeNull();
   });
 });
 
