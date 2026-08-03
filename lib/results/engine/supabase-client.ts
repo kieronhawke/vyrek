@@ -69,7 +69,10 @@ export function hasResultsSupabaseConfig(): boolean {
 
 /** Which project the engine is pointed at, for the console. Never the key. */
 export function resultsProjectRef(): string | null {
-  const url = resultsSupabaseUrl();
+  // Trimmed: an environment variable set through a dashboard or a pipe can
+  // carry a trailing newline, and a diagnostic that silently reads "unknown"
+  // because of one is worse than no diagnostic.
+  const url = resultsSupabaseUrl()?.trim();
   if (!url) return null;
   return /https:\/\/([^.]+)\.supabase\.co/.exec(url)?.[1] ?? null;
 }
