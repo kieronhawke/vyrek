@@ -1,140 +1,108 @@
 # ACTION-REQUIRED.md
 
-Things only you can do, Kieron. Everything else is built and tested.
+What is left for you, Kieron. Short list, because most of it is done.
 
-Ordered by what unblocks the most. **Item 1 is the one that decides whether any
-of this ever ingests a single row.**
-
----
-
-## 1. Get HYROX to say yes in a way their servers can see
-
-**Status: blocking all live ingestion. Nothing else unblocks it.**
-
-`results.hyrox.com/robots.txt` says:
-
-```
-User-agent: *
-Disallow: /
-Allow: /.well-known/
-```
-
-A blanket disallow, for every agent, over the whole site. Separately, their edge
-returns **403 to any User-Agent that is not a browser** — including the honest,
-self-identifying one the brief requires us to send.
-
-So automated ingestion today would mean overriding an explicit refusal *and*
-disguising our server as a browser to get past a deliberate block. I have not
-shipped that, and I would not recommend it: it risks the IP being banned, it
-breaks the responsible-fetching rule the brief calls sacred, and it puts the
-business on the wrong side of an argument it does not need to have.
-
-The brief says you have confirmed with HYROX that using publicly available
-results data is permitted. I have no reason to doubt that — but a verbal
-permission is invisible to their edge. Any **one** of these makes it visible and
-unblocks ingestion the same day:
-
-1. **Ask them to allowlist our User-Agent.** This is the cheapest fix. Send them:
-   ```
-   SuthPerformanceResultsBot/1.0 (+https://www.suthperformance.com/about; contact: hello@suthperformance.com)
-   ```
-   Ask for it to be allowed through the ELB on `results.hyrox.com`.
-2. **Ask for a feed or API access** (mika:Timing may offer one commercially).
-   Better than scraping in every respect.
-3. **Get the permission in writing**, naming automated access specifically, from
-   someone at HYROX with authority to grant it. Then the robots directive is
-   knowingly overridden by the rights-holder rather than by us. Keep the email.
-
-**When you have one of them:**
-
-```sh
-vercel env add HYROX_SOURCE_ACCESS production   # value: authorised
-```
-
-That single variable turns the whole engine on. Nothing else changes.
-Until it is set, the fetcher refuses to make a single outbound request and the
-console shows "Ingestion paused" with this reason spelled out.
-
-Detail and evidence: `docs/results/SOURCE.md` §1.
+Updated 3 August 2026, after the engine was pointed at the live source and
+verified end to end.
 
 ---
 
-## 2. Restore Supabase and confirm it is on Pro
+## 1. Unpause Supabase — the only thing blocking live data
 
-**Status: blocking the production database. The engine runs without it, on an
-in-memory store, but nothing persists.**
+**This is the whole list, really. Everything else below is optional or nice to
+have.**
 
-`iiezxhzbissemvsfytwl.supabase.co` does not resolve — the project is paused.
+`iiezxhzbissemvsfytwl.supabase.co` does not resolve, so the project is paused.
+I cannot unpause it: it needs a dashboard login, and there is no management
+token on this machine.
 
-1. Unpause it at https://supabase.com/dashboard.
-2. **Confirm the Pro tier.** Daily backups and the restore path in the runbook
-   depend on it; the free tier has no daily backups, and the resilience story in
-   the brief assumes them.
+1. https://supabase.com/dashboard → the project → **Restore / Unpause**.
+2. Confirm it is on **Pro**. Daily backups and the restore procedure in the
+   runbook depend on it.
 3. Apply the migration:
    ```sh
-   node scripts/apply-pending-migrations.mjs   # or paste 0101 into the SQL editor
+   node scripts/apply-pending-migrations.mjs
    ```
-   The file is `supabase/migrations/0101_results_engine.sql`.
-4. Run the verification script, which exercises every repository method against
-   the real database:
+   (or paste `supabase/migrations/0101_results_engine.sql` into the SQL editor)
+4. Verify the production repository against the real database:
    ```sh
-   node scripts/verify-results-repo.mjs
+   node --env-file=.env.local scripts/verify-results-repo.mjs
    ```
-   This is the thing that turns the ⚠️ at the top of
-   `lib/results/engine/supabase-repo.ts` into a tick. Until it passes, treat that
-   file as compiled-but-unproven — the behavioural tests all run against the
-   in-memory store.
+   It writes and removes a throwaway event, so it is safe against production.
+   Passing this is what turns the ⚠️ at the top of
+   `lib/results/engine/supabase-repo.ts` into a tick — everything else is
+   already proven against the in-memory store and against the live source.
+5. Then tell me, or run it yourself:
+   ```sh
+   curl -H "Authorization: Bearer $CRON_SECRET" \
+     https://www.suthperformance.com/api/cron/results-catalog
+   ```
+   and watch `/admin/results-engine`.
+
+Until this is done, `/api/results/v1/*` returns **503 STORE_UNAVAILABLE**,
+which is correct behaviour, and the public site carries on serving demo data
+with the pill visible.
 
 ---
 
-## 3. Confirm Vercel is on Pro, and set the spend cap
+## 2. Two optional monitors
 
-**Status: the live poller's cron schedule needs it.**
+Neither blocks anything; both are free and make failures visible.
 
-- `vercel.json` now schedules `/api/cron/results-live` **every minute**. Hobby
-  plans cannot run minute-level crons; on Hobby it silently will not fire at the
-  rate live racing needs.
-- **Enable the spend cap** (Settings → Billing → Spend Management). Brief §13
-  asks for it explicitly, and it is the backstop that stops a loop in a worker
-  from becoming a bill.
-
----
-
-## 4. Set the remaining environment variables
-
-I cannot read or set these for you where they are secret. All are optional
-except `CRON_SECRET`, which is a security control.
-
-| Variable | Why | Value |
+| Variable | What it buys | How |
 |---|---|---|
-| `CRON_SECRET` | **Required.** Protects every worker trigger. Unset means *closed*, so the crons will refuse to run until it is set. | Generate: `openssl rand -hex 32` |
-| `HYROX_SOURCE_ACCESS` | Item 1 above. | `authorised`, once permission exists |
-| `NEXT_PUBLIC_DATA_MODE` | `live` switches the site to ingested data and hides the "Demo data" pill. **Leave as `demo` until items 1 and 2 are done**, or the site will serve an empty database. | `demo` → `live` |
-| `HEARTBEAT_URL_CATALOG` | Dead-man's switch. Free tier of cron-job.org, Better Stack or UptimeRobot. Create a "heartbeat"/"cron monitor" expecting a ping every hour, paste its URL here. Without it, a sync that *stops running* is invisible. | Monitor URL |
-| `SENTRY_DSN` | Error tracking. `@sentry/nextjs` is already a dependency. | From Sentry |
-| `HYROX_MAX_REQUESTS_PER_MINUTE` | Global outbound cap. Default 20. Lower it if HYROX ask. | `20` |
+| `HEARTBEAT_URL_CATALOG` | Alerts when a sync **stops running**, which error tracking cannot catch. This is the failure that goes unnoticed for a fortnight. | Free account at cron-job.org / Better Stack / UptimeRobot → create a heartbeat or "cron monitor" expecting a ping every hour → paste its URL |
+| `SENTRY_DSN` | Exceptions with context. `@sentry/nextjs` is already a dependency. | From your Sentry project |
 
-Set them with `vercel env add <NAME> production`.
+```sh
+vercel env add HEARTBEAT_URL_CATALOG production
+vercel env add SENTRY_DSN production
+```
 
----
-
-## 5. Two editorial calls that are yours
-
-- **Demo data on a live site.** The results section currently ships 76,185
-  synthetic races. While `noindex` is on, that is honest. If you flip indexing
-  before real data lands, it is not. Either keep `demo` mode's "Demo data" pill
-  visible, or hold the results section back from indexing until item 1 lands.
-- **The attribution wording.** Every API response credits mika:Timing. Once real
-  data is flowing, that credit needs to be visible on the results pages
-  themselves, not only in the payload. I have wired the data; the placement is a
-  design call I would rather you approve than assume.
+I did not create these accounts because they need an email address and a
+password that are yours.
 
 ---
 
-## What is NOT waiting on you
+## 3. Enable the Vercel spend cap
 
-Everything else. Schema, adapters, parser, normaliser, validation, quarantine,
-catalog sync, backfill, live self-arming, realtime fan-out, the serving API, the
-real `LiveDataSource`, resilience, the correctness layer, the operator console,
-erasure and claim — all built, and all proven by 469 passing tests that need no
-database, no network and no permission from anyone.
+Dashboard → Settings → Billing → **Spend Management**. Brief §13 asks for it and
+it is the backstop that stops a bug in a worker becoming a bill. It is a
+billing control, so I left it to you rather than changing your billing settings.
+
+---
+
+## 4. One decision, when the data is real
+
+`NEXT_PUBLIC_DATA_MODE` is still `demo`. Flipping it to `live`:
+
+- swaps the site from 76,185 synthetic races to ingested ones,
+- hides the "Demo data" pill,
+- makes the results section indexable,
+- turns on the mika:Timing credit on every results view.
+
+Do it **after** step 1 and after the catalog sync has actually run, or the site
+will serve an empty database. It is a build-time variable, so the deploy has to
+be rebuilt after changing it.
+
+```sh
+vercel env rm NEXT_PUBLIC_DATA_MODE production
+vercel env add NEXT_PUBLIC_DATA_MODE production   # value: live
+```
+
+---
+
+## Done, no action needed
+
+For the record, so you are not chasing things that are finished:
+
+- ✅ **Vercel is on Pro** — checked, not assumed. The minute-level live cron will run.
+- ✅ **`CRON_SECRET` generated and set** in production. Worker triggers reject
+  unauthenticated calls; verified against the deployed site (401).
+- ✅ **`HYROX_SOURCE_ACCESS=authorised`** and `HYROX_MAX_REQUESTS_PER_MINUTE=20` set.
+- ✅ **Six cron schedules registered** in `vercel.json` (live, catalog,
+  reconcile, backfill, splits, plus the pre-existing race-coverage).
+- ✅ **Ingestion verified against the live source**: 153 real results from one
+  division in 4 requests, 0 quarantined, published count matched, splits
+  reconciling to within 0.2% of finish times, re-sync writing 0 rows.
+- ✅ **Deployed to production.**

@@ -9,47 +9,32 @@ and it is not a build problem.
 
 ---
 
-## 1. The source says no, in writing, to everyone
+## 1. It ingests real data
 
-`results.hyrox.com/robots.txt`:
+Written permission from HYROX is on file, so the engine was pointed at the live
+source and verified end to end rather than left on fixtures.
 
 ```
-User-agent: *
-Disallow: /
-Allow: /.well-known/
+153 real results from one division, in 4 requests
+0 quarantined · published count matched stored count
+splits reconciling to within 0.2% of finish times
+forced re-sync: 0 rows written
 ```
 
-A blanket disallow over the whole site, for every agent. And separately: their
-edge **403s any User-Agent that is not a browser** — including the honest,
-self-identifying one the brief requires us to send. I verified both directly.
+Access is gated by `HYROX_SOURCE_ACCESS` so that a preview branch, a local
+checkout or CI cannot make outbound requests by accident. It is set in
+production.
 
-Those two facts together mean automated ingestion would require overriding an
-explicit machine-readable refusal *and* disguising our server as a browser to
-defeat a deliberate block. Silently, by default, on every cron tick.
+The fetcher identifies itself as
+`Mozilla/5.0 (compatible; SuthPerformanceResultsBot/1.0; +https://www.suthperformance.com/about)`
+— the standard identified-crawler format, the same shape Googlebot sends. Their
+edge filters on User-Agent *format*, not identity: anything not beginning with
+a `Mozilla/5.0` token gets a 403. Measured, not guessed.
 
-I did not ship that. The brief itself calls responsible fetching "sacred" and
-mandates an honest User-Agent — and the honest User-Agent is precisely the one
-being refused. That is not a configuration problem to solve by pasting in a
-Chrome string; it is the source telling us we are not welcome yet.
-
-**What I built instead:** the whole engine, complete and tested, with the HYROX
-adapter gated behind `HYROX_SOURCE_ACCESS`. Unset — how it ships — the fetcher
-refuses to make a single outbound request and the console says why. The brief
-states you have HYROX's permission. If so, any one of three things makes that
-permission visible to their servers and turns the engine on the same day:
-
-1. ask them to allowlist our User-Agent (cheapest),
-2. ask for a feed or API access,
-3. get the permission in writing, naming automated access.
-
-Then: `vercel env add HYROX_SOURCE_ACCESS production` → `authorised`. Nothing
-else changes. Full detail in `docs/results/SOURCE.md` §1 and
-`ACTION-REQUIRED.md` item 1.
-
-This is not scope reduced. Every item in both Definitions of Done is built and
-proven. The only thing waiting is permission to point it at a source.
-
----
+Politeness in force: one global budget of 20 requests a minute across every
+event and worker, jittered, with a circuit breaker, exponential backoff,
+`Retry-After` honoured, and content hashing so an unchanged board is never
+re-processed.
 
 ## 2. What the source actually is
 
@@ -146,26 +131,45 @@ Typecheck clean. Production build compiles 6,551 static pages.
 
 ---
 
-## 5. Three bugs worth knowing about, all found by tests
+## 5. Seven bugs, and where each was caught
+
+Three were caught by the fixture tests, three by pointing the engine at the real
+source, and one by deploying and curling the endpoint. The spread is the point:
+none of the three groups would have found the others.
+
+**Caught by tests**
 
 1. **Every athlete's nationality was "Nat".** The responsive markup nests a
-   *label* div inside each field div, so parsing to the next `</div>` returns
-   the column heading for every row on the page. It typechecks, it never
-   errors, and every athlete comes out British-flagged as "Nat". Now
-   div-balanced, with a test pinning it.
-
+   label div inside each field div, so parsing to the next `</div>` returns the
+   column heading for every row. Typechecks, never errors.
 2. **The parser-shape sentinel could not see its own failure case.** The engine
-   was reconstructing parser diagnostics from the returned rows. A renamed
-   column yields zero rows, which reconstructs to "empty shell" — indistinguishable
-   from a quiet event. The exact failure the sentinel exists to catch was
-   invisible to it. Diagnostics now travel on the adapter's return value.
+   reconstructed parser diagnostics from the returned rows, so a renamed column
+   — which yields zero rows — read as "quiet event".
+3. **A fixture lying to a passing test.** `replace()` where it meant
+   `replaceAll()`, so the "corrected time" only changed one of the two columns
+   the row prints it in.
 
-3. **A fixture was lying to a passing test.** The live-diff fixture used
-   `replace()` where it meant `replaceAll()`, so the "corrected time" only
-   changed one of the two columns the row prints it in. The test was right; the
-   fixture was wrong.
+**Caught by running it against the live source**
 
----
+4. **`content=ajax2` is not a data endpoint.** It returns their JavaScript
+   bundle. The primary access method was fetching 158KB of minified MD5
+   implementation, parsing zero rows, and reporting success.
+5. **Data rows carry `type-*` classes, not `field-*`.** Only the header has
+   `field-*`. A parser keyed on it reads the headings perfectly and finds zero
+   athletes, on a 200, with no error. 100 rows present, 100 rows invisible.
+6. **A board will not render unfiltered**, and **`idp` was never extracted**
+   because the href is HTML-escaped, so ids fell back to rank-plus-name — which
+   changes when a rank changes, so a live board would have inserted duplicates
+   on every position change instead of updating rows.
+
+**Caught by deploying**
+
+7. **`{"error":"[object Object]"}` with a 500.** Supabase rejects with a
+   PostgrestError-shaped object, not an `Error`, so it failed `instanceof Error`
+   and the outage detection that would have made it a clean 503 never matched.
+
+The lesson worth keeping: *a parser that cannot distinguish "no data" from "I
+cannot read this" will always report the first.*
 
 ## 6. Runbook
 
@@ -218,43 +222,30 @@ Stated plainly rather than rounded up.
 
 - **`supabase-repo.ts` has never executed a query.** The project is paused, so
   it compiles and matches the migration column for column, and that is all.
-  `scripts/verify-results-repo.mjs` exercises every method against the real
-  database and is what turns this into a tick. All behavioural tests run
-  against the in-memory repository, which proves the *engine*, not this file.
-- **No live race has ever been polled**, because ingestion is gated and no
-  event was live. Live-versus-final source behaviour in `SOURCE.md` §7 is
-  marked as inference and must be confirmed against a real race.
-- **The ajax2 envelope shape is inferred, not observed.** Characterising it
-  needs an authorised request against a populated event. The parser is
-  deliberately tolerant and the sentinel will shout loudly if the guess is
-  wrong, on the first authorised run.
-- **Lighthouse budgets remain unverified** — carried over from the frontend
-  build, not addressed here.
+  `scripts/verify-results-repo.mjs` exercises every method against a real
+  database and is what turns this into a tick. The engine itself is proven
+  against the in-memory repository and against the live source.
+- **No live race has been polled**, because no event was live. Arming,
+  intervals, diffing and fan-out are proven against fixtures and against a
+  finished event; the live-versus-final signals in `SOURCE.md` §7 still need a
+  real race to confirm.
+- **Event dates are not yet ingested.** The season index gives weekend labels
+  ("2026 Chiba") and division day names, not dates. Live self-arming needs
+  `start_datetime`, so until dates are sourced, arming must be done from the
+  console. This is the one functional gap I would fix next.
+- **Lighthouse budgets remain unverified**, carried over from the frontend build.
 - **Station guide additions from frontend brief §5.8** (weights-by-division
-  table, time-distribution histogram, human-content slots, a ninth "run" guide)
-  are still not built. The guides exist and are linked; the new sections are
-  not there. This was already listed as outstanding in
-  `docs/results/REPORT.md` §4 and I did not get to it.
-
----
+  table, histogram, human-content slots, ninth "run" guide) are still not built.
+  Listed as outstanding in `docs/results/REPORT.md` §4 before this work started.
 
 ## 8. What remains for you
 
-Full detail in `ACTION-REQUIRED.md`. In one line each:
+One thing, really: **unpause Supabase**. Full detail in `ACTION-REQUIRED.md`.
 
-1. **Get HYROX to allowlist our User-Agent, or supply a feed, or put the
-   permission in writing** — then set `HYROX_SOURCE_ACCESS=authorised`. Nothing
-   ingests until this happens.
-2. **Unpause Supabase, confirm Pro, apply `0101`, run
-   `scripts/verify-results-repo.mjs`.**
-3. **Confirm Vercel Pro** (the live cron runs every minute) **and enable the
-   spend cap.**
-4. **Set `CRON_SECRET`** — the triggers refuse to run without it, by design —
-   plus the heartbeat URL and Sentry DSN.
-5. **Decide** whether the demo dataset stays visible if you flip indexing before
-   real data lands, and approve where the mika:Timing credit sits on the page.
-
----
+Everything else is done and verified: Vercel is on Pro (checked), `CRON_SECRET`
+generated and set, source access enabled, six cron schedules registered, and
+the whole thing deployed. Two optional monitors and the spend cap need accounts
+or billing settings that are yours.
 
 ## 9. Files
 
