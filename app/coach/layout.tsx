@@ -3,6 +3,7 @@ import { Archivo } from "next/font/google";
 import { CoachTabs } from "@/components/control/coach-tabs";
 import { CommandPalette } from "@/components/control/command-palette";
 import "@/app/control-tokens.css";
+import { ThemeScript } from "@/components/control/theme-script";
 
 /**
  * COACH MODE — docs/build-pack/spec/09 §0.
@@ -34,10 +35,13 @@ export default function CoachLayout({
   return (
     <div
       data-surface="control"
+      // ThemeScript sets data-theme here before paint.
+      suppressHydrationWarning
       data-density="comfortable"
       className={archivo.variable}
       style={{ minHeight: "100svh", display: "flex", flexDirection: "column" }}
     >
+      <ThemeScript />
       <header
         style={{
           position: "sticky",

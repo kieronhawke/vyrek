@@ -16,7 +16,9 @@ export type BlockCategory =
   | "Erg"
   | "HYROX"
   | "Strength"
-  | "Cool-down";
+  | "Cool-down"
+  /** Blocks Ben has saved from a cell. */
+  | "Saved";
 
 export type PlanBlock = {
   id: string;
@@ -133,6 +135,21 @@ export const BLOCK_LIBRARY: PlanBlock[] = [
   { id: "b_cd_rest", name: "Rest day", category: "Cool-down", body: "Rest" },
 ];
 
+/**
+ * Ben's own blocks.
+ *
+ * The library ships with what he already writes, but every coach has their own
+ * shorthand and a fixed list goes stale the week after it is written. Saving a
+ * cell as a block is the difference between a library and a starter pack.
+ *
+ * Kept in the same store as everything else, so a saved block survives a
+ * reload and swaps to a shared database with the rest of it.
+ */
+export const CUSTOM_BLOCKS_KEY = "plan.blocks.custom";
+
+/** Where saved blocks appear. A category of his own, listed last. */
+export const CUSTOM_CATEGORY: BlockCategory = "Saved";
+
 export const CATEGORIES: BlockCategory[] = [
   "Warm-up",
   "Running",
@@ -140,6 +157,7 @@ export const CATEGORIES: BlockCategory[] = [
   "HYROX",
   "Strength",
   "Cool-down",
+  "Saved",
 ];
 
 /**

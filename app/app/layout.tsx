@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/app/control-tokens.css";
 import "@/app/member.css";
+import { ThemeScript } from "@/components/control/theme-script";
 
 /**
  * The member area's outermost layer: surface, font, nothing else.
@@ -25,9 +26,12 @@ export default function MemberRootLayout({
   return (
     <div
       data-surface="control"
+      // ThemeScript sets data-theme here before paint.
+      suppressHydrationWarning
       data-density="comfortable"
       style={{ minHeight: "100svh" }}
     >
+      <ThemeScript />
       {children}
     </div>
   );

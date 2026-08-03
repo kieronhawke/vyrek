@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useMounted } from "@/lib/hooks/use-mounted";
 import {
   deleteMedia,
   formatBytes,
@@ -31,22 +32,30 @@ export function FormVideo({ subject, label }: { subject: string; label: string }
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const mounted = useMounted();
+  /**
+   * One object URL per record, revoked when the list changes or the component
+   * goes away. It used to be minted inline in the JSX, which meant a fresh URL
+   * on every render and the browser holding every one of those blobs alive —
+   * a leak that grows with the size of a training video.
+   */
+  const urls = useMemo(
+    () =>
+      Object.fromEntries(
+        items.map((m) => [m.id, URL.createObjectURL(m.blob)]),
+      ) as Record<string, string>,
+    [items],
+  );
+  useEffect(
+    () => () => Object.values(urls).forEach((u) => URL.revokeObjectURL(u)),
+    [urls],
+  );
   const input = useRef<HTMLInputElement>(null);
-  const urls = useRef<string[]>([]);
 
   useEffect(() => {
     listMedia(subject).then((m) => setItems(m.filter((x) => x.kind === "form-video")));
-    // Object URLs are a leak if they are not revoked; the browser holds the
-    // whole blob alive until they are.
-    const held = urls.current;
-    return () => held.forEach((u) => URL.revokeObjectURL(u));
   }, [subject]);
 
-  function objectUrl(blob: Blob) {
-    const u = URL.createObjectURL(blob);
-    urls.current.push(u);
-    return u;
-  }
 
   async function onPick(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -91,6 +100,7 @@ export function FormVideo({ subject, label }: { subject: string; label: string }
     setItems((cur) => cur.filter((m) => m.id !== id));
   }
 
+  if (!mounted) return null;
   if (!storageAvailable()) {
     return (
       <p style={{ margin: 0, fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
@@ -175,7 +185,7 @@ export function FormVideo({ subject, label }: { subject: string; label: string }
         >
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <video
-            src={objectUrl(m.blob)}
+            src={urls[m.id]}
             controls
             playsInline
             preload="metadata"

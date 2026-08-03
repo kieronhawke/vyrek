@@ -121,6 +121,12 @@ export default function RootLayout({
     <html
       lang="en-GB"
       className={`dark ${oswald.variable} ${inter.variable} ${geistMono.variable}`}
+      // The consent-height script below writes to this element before React
+      // hydrates — that is the whole point of it. Without this, React sees an
+      // attribute it did not render, calls the tree mismatched, and throws
+      // away the server HTML for the whole app. Client state set before that
+      // point goes with it, which is why plan-builder edits silently reverted.
+      suppressHydrationWarning
     >
       <head>
         {/* Set the consent-strip height BEFORE first paint.

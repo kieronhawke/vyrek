@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { CommandPalette } from "@/components/control/command-palette";
 import { Wordmark } from "@/components/shared/logo";
+import { ThemeToggle } from "@/components/control/theme-toggle";
 
 /**
  * OPERATOR MODE SHELL — docs/build-pack/spec/14 §5.
@@ -98,6 +99,7 @@ export function AdminShell({
             className="text-[color:var(--text)]"
           />
         </span>
+        <ThemeToggle compact />
         <CommandPalette />
       </header>
 

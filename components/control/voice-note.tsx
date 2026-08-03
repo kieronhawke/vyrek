@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useMounted } from "@/lib/hooks/use-mounted";
 import {
   deleteMedia,
   formatDuration,
@@ -26,26 +27,36 @@ export function VoiceNote({ subject }: { subject: string }) {
   const [recording, setRecording] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const mounted = useMounted();
+  /**
+   * One object URL per record, revoked when the list changes or the component
+   * goes away. It used to be minted inline in the JSX, which meant a fresh URL
+   * on every render and the browser holding every one of those blobs alive —
+   * a leak that grows with the size of a training video.
+   */
+  const urls = useMemo(
+    () =>
+      Object.fromEntries(
+        items.map((m) => [m.id, URL.createObjectURL(m.blob)]),
+      ) as Record<string, string>,
+    [items],
+  );
+  useEffect(
+    () => () => Object.values(urls).forEach((u) => URL.revokeObjectURL(u)),
+    [urls],
+  );
 
   const recorder = useRef<MediaRecorder | null>(null);
   const chunks = useRef<BlobPart[]>([]);
   const ticker = useRef<ReturnType<typeof setInterval> | null>(null);
-  const urls = useRef<string[]>([]);
 
   useEffect(() => {
     listMedia(subject).then((m) => setItems(m.filter((x) => x.kind === "voice-note")));
-    const held = urls.current;
     return () => {
-      held.forEach((u) => URL.revokeObjectURL(u));
       if (ticker.current) clearInterval(ticker.current);
     };
   }, [subject]);
 
-  function objectUrl(blob: Blob) {
-    const u = URL.createObjectURL(blob);
-    urls.current.push(u);
-    return u;
-  }
 
   async function start() {
     setError(null);
@@ -100,6 +111,7 @@ export function VoiceNote({ subject }: { subject: string }) {
     setItems((cur) => cur.filter((m) => m.id !== id));
   }
 
+  if (!mounted) return null;
   if (!storageAvailable()) return null;
 
   return (
@@ -148,7 +160,7 @@ export function VoiceNote({ subject }: { subject: string }) {
           }}
         >
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-          <audio src={objectUrl(m.blob)} controls preload="metadata" style={{ flex: "1 1 220px" }} />
+          <audio src={urls[m.id]} controls preload="metadata" style={{ flex: "1 1 220px" }} />
           <button
             type="button"
             onClick={() => remove(m.id)}

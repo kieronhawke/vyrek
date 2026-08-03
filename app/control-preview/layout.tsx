@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
 import "@/app/control-tokens.css";
+import { ThemeScript } from "@/components/control/theme-script";
 
 /**
  * Layout for the control-centre surfaces.
@@ -33,9 +34,12 @@ export default function ControlPreviewLayout({
   return (
     <div
       data-surface="control"
+      // ThemeScript sets data-theme here before paint.
+      suppressHydrationWarning
       className={archivo.variable}
       style={{ minHeight: "100svh" }}
     >
+      <ThemeScript />
       {children}
     </div>
   );

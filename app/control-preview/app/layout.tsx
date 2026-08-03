@@ -1,6 +1,7 @@
 import { MemberShell } from "@/components/member/shell";
 import "@/app/control-tokens.css";
 import "@/app/member.css";
+import { ThemeScript } from "@/components/control/theme-script";
 
 /**
  * Ungated preview of the member area.
@@ -23,9 +24,12 @@ export default function MemberPreviewLayout({
   return (
     <div
       data-surface="control"
+      // ThemeScript sets data-theme here before paint.
+      suppressHydrationWarning
       data-density="comfortable"
       style={{ minHeight: "100svh" }}
     >
+      <ThemeScript />
       <MemberShell base="/control-preview/app" initials="SP">
         {children}
       </MemberShell>

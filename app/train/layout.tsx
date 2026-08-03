@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
 import { RegisterTrainSW } from "@/components/client-app/register-sw";
 import "@/app/control-tokens.css";
+import { ThemeScript } from "@/components/control/theme-script";
 
 /**
  * The Train tab is a focused player: no chrome, no navigation, one exercise
@@ -24,10 +25,13 @@ export default function TrainLayout({ children }: { children: React.ReactNode })
   return (
     <div
       data-surface="control"
+      // ThemeScript sets data-theme here before paint.
+      suppressHydrationWarning
       data-density="comfortable"
       className={archivo.variable}
       style={{ minHeight: "100svh" }}
     >
+      <ThemeScript />
       <main
         style={{
           padding: "var(--space-3) var(--space-2)",
