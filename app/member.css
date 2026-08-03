@@ -512,10 +512,30 @@
   align-items: flex-end;
   justify-content: center;
   padding: var(--space-2);
-  padding-bottom: calc(env(safe-area-inset-bottom) + var(--space-2));
+  /*
+   * The card clears the tab bar rather than sitting on top of it.
+   *
+   * Every card in this walkthrough names a tab — "Today", "Plan", "Fuel" — and
+   * the card was covering the very tabs it was describing, with a sliver of
+   * them showing underneath. Somebody reading "start here every day" could not
+   * see the thing being pointed at, which is the one job a walkthrough has.
+   *
+   * The scrim still covers the whole screen: the tabs stay visible but are not
+   * meant to be tapped mid-walkthrough.
+   */
+  padding-bottom: calc(
+    var(--tabbar-h, 64px) + env(safe-area-inset-bottom) + var(--space-3)
+  );
   background: rgb(0 0 0 / 62%);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
+}
+
+/* Above the tab bar's own z-index (40) so the scrim dims it, but the card is
+   positioned clear of it. */
+@media (min-width: 768px) {
+  /* No tab bar on desktop — the rail is at the side. */
+  .walkthrough { padding-bottom: var(--space-4); }
 }
 
 .walkthrough__card {
