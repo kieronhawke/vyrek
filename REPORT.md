@@ -44,6 +44,50 @@ event and worker, jittered, with a circuit breaker, exponential backoff,
 `Retry-After` honoured, and content hashing per division so an unchanged board
 is never re-processed.
 
+## 1b. Hardening pass — what real data found
+
+Ten bugs, none of which the test suite could reach, because it ran one process,
+once, in memory, against fixtures I wrote from my own assumptions. Every one was
+found by running the engine at real scale against the real source and then
+looking at the database.
+
+| Found | Consequence had it shipped |
+|---|---|
+| Mixed divisions were never fetched | Every mixed doubles and mixed relay in HYROX history silently absent |
+| Athlete profiles multiplied per sync | 1,006 orphans, one person with eleven profiles, growing for ever |
+| A weekend id was treated as an event's identity | 76 events thrashing their id every run; a duplicate crashed a whole season |
+| Runs killed mid-flight stayed "running" | Console shows dead jobs as busy, never as failed |
+| The "global" rate budget was per-process | Three workers each believing they were alone |
+| Alerts never deduplicated | Console unreadable within hours |
+| A short fetch was invisible if storage was full | The fetch degrading quietly until it became data loss |
+| One bad event aborted a season catalogue | An entire season missing from one failure |
+| Distributions duplicated on nullable columns | `getStationDistribution` erroring after the second sync |
+| Supabase errors stringified to `[object Object]` | A paused database reported as an unexplained 500 |
+
+**The pattern worth keeping:** every one of these was invisible to a green test
+suite. Fixtures encode the author's assumptions, and an in-memory double shares
+them — `null === null` in JavaScript, but not in a Postgres unique constraint;
+one sync in a test, thousands in production. Real data at real scale is not a
+nicer version of testing, it is a different instrument.
+
+### Contingency, end to end
+
+| Failure | What happens |
+|---|---|
+| Source unreachable | Freeze on last-good; live events marked `updates_paused`; nothing written |
+| Source changed shape | Distinct "parser may be broken" alert, not silent mass-quarantine |
+| Source returns junk | Parsed to nothing; stored nothing; no crash (8 junk shapes tested) |
+| Source rate-limits us | `Retry-After` honoured, exponential backoff, breaker trips |
+| Database unreachable | Live → last-good → demo, tier announced in API, header and page |
+| Both tiers down | Contract resolves to empty rather than throwing |
+| Worker killed mid-run | Reaped by the next run; every write idempotent, so it just resumes |
+| Bad row | Quarantined with its payload, never retried in a loop, reprocessable |
+| Total data loss | Re-ingest (idempotent, exercised constantly) or restore the JSON snapshot |
+
+Accuracy is verified rather than assumed: `scripts/audit-results-accuracy.mjs`
+answers eight questions across the whole database and exits non-zero on any
+error, so it can gate a deploy. Current state: **all eight clean.**
+
 ## 2. What the source actually is
 
 mika:Timing's platform. Full detail in `docs/results/SOURCE.md`, corrected
@@ -109,8 +153,8 @@ field sizes stay correct.
 ## 4. Test results
 
 ```
-554 tests, 33 files, all passing
-+ 7 live tests against the real source and the real database,
+620 tests, 36 files, all passing
++ 8 live tests against the real source and the real database,
   labelled and skipped unless explicitly enabled
 ```
 
