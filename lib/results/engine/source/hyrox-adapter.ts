@@ -236,10 +236,30 @@ abstract class MikaAdapter implements SourceAdapter {
     // point — the slices are exhaustive and sum to 280 of 281 — but it has no
     // place on the hot path. See SOURCE.md §7.
 
-    // A method that returns nothing where the board itself says there are
-    // entrants has not succeeded, it has failed quietly. Throwing hands over to
-    // the next method in the chain rather than storing an empty division.
-    const rows = [...byId.values()];
+    // ⚠️ Every row must belong to the division we asked for.
+    //
+    // The fallback adapter sends no `search[sex]` at all, so it returns the
+    // whole event — and whatever it returned was stored under the division that
+    // was requested. Barcelona 2023's *women's* board was filled with the
+    // overall leaderboard: Lee Tuck, Thomas Fry and Diego Caballero Nistal
+    // ranked 1, 2 and 3 among the women. A fallback that silently changes what
+    // the data *means* is worse than one that fails.
+    //
+    // Checked against each row's own parsed sex rather than trusting the
+    // request, so it holds no matter which method in the chain produced the
+    // page. Mixed divisions take both, and a row whose sex did not parse is
+    // kept — dropping it would lose a real athlete over a missing column.
+    const rows = [...byId.values()].filter(
+      (row) => sex === null || sex === "X" || !row.sex || row.sex === sex,
+    );
+    const wrongDivision = byId.size - rows.length;
+    if (wrongDivision > 0 && rows.length === 0) {
+      throw new Error(
+        `${this.name}: every row returned for ${sourceDivisionId} belongs to another ` +
+          `division (${wrongDivision} dropped) — the sex filter was not applied`,
+      );
+    }
+
     if (rows.length === 0 && (publishedEntrantCount ?? 0) > 0) {
       throw new Error(
         `${this.name}: board reports ${publishedEntrantCount} entrants but rendered no rows ` +

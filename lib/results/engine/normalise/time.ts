@@ -26,7 +26,16 @@ export function parseTimeToMs(raw: string | null | undefined): number | null {
   const hours = h ? Number(h) : 0;
   const minutes = Number(m);
   const seconds = Number(s);
-  if (minutes > 59 || seconds > 59) return null;
+
+  // ⚠️ Minutes may exceed 59 when they are the *leading* unit.
+  //
+  // The Elite boards print `MM:SS.hh` — "60:08.73" is a sixty-minute race, not
+  // a malformed one. Rejecting any minutes over 59 outright quarantined 516
+  // real elite results, which are the fastest and most-read races on the site.
+  // With an hours component present, minutes are a subdivision and 60 really is
+  // malformed. Seconds are always a subdivision.
+  if (seconds > 59) return null;
+  if (h !== undefined && minutes > 59) return null;
 
   const ms =
     hours * 3_600_000 + minutes * 60_000 + seconds * 1000 + (frac ? Number(frac.padEnd(3, "0")) : 0);

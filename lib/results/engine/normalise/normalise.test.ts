@@ -37,6 +37,24 @@ describe("time parsing", () => {
     expect(parseTimeToMs("04:12.5")).toBe(252_500);
   });
 
+  it("reads the Elite boards' MM:SS.hh, where minutes run past 59", () => {
+    // ⚠️ "60:08.73" is a sixty-minute race, not a malformed time. The Elite
+    // boards print `MM:SS.hh` with no hours component, and rejecting any
+    // minutes over 59 quarantined 516 real elite results — the fastest and
+    // most-read races on the site.
+    expect(parseTimeToMs("60:08.73")).toBe(3_608_730);
+    expect(parseTimeToMs("62:34.29")).toBe(3_754_290);
+    expect(parseTimeToMs("90:15")).toBe(5_415_000);
+  });
+
+  it("still rejects minutes over 59 when they are a subdivision", () => {
+    // With an hours component present, minutes are a subdivision and 99 is
+    // genuinely malformed.
+    expect(parseTimeToMs("01:99:00")).toBeNull();
+    expect(parseTimeToMs("01:02:99")).toBeNull();
+    expect(parseTimeToMs("60:99")).toBeNull();
+  });
+
   it("returns null rather than NaN or zero for a non-time", () => {
     // A zero finish time sorts to the top of a leaderboard and reads as a
     // world record, so this is the important half of the function.
@@ -160,6 +178,24 @@ describe("row validation (§9)", () => {
 
   it("accepts a plausible row", () => {
     expect(validateRow(ok).ok).toBe(true);
+  });
+
+  it("rejects a placeholder that is punctuation rather than a name", () => {
+    // ⚠️ "- -" passed a length check and reached the world-record board as the
+    // fastest women's HYROX ever recorded. The source uses these where an entry
+    // has no name attached.
+    for (const name of ["- -", "--", ". .", "···"]) {
+      const verdict = validateRow({ ...ok, name });
+      expect(verdict.ok, name).toBe(false);
+      expect(verdict.ok === false && verdict.failures[0].reason).toBe("missing_name");
+    }
+  });
+
+  it("accepts names in any script", () => {
+    // The field is full of non-Latin names and every one is a real person.
+    for (const name of ["瀞儀 曾", "Ольга Иванова", "Γιώργος Παπάς", "田中 太郎"]) {
+      expect(validateRow({ ...ok, name }).ok, name).toBe(true);
+    }
   });
 
   it("rejects a race nobody could have run", () => {

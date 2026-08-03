@@ -46,7 +46,16 @@ export type ValidationOutcome =
 export function validateRow(row: ValidationInput): ValidationOutcome {
   const failures: ValidationFailure[] = [];
 
-  if (!row.name || row.name.trim().length < 2) {
+  // ⚠️ A name has to contain a letter.
+  //
+  // A length check alone passes "- -", "--" and ". .", which the source uses as
+  // a placeholder for an entry with no name attached. One of those reached the
+  // world-record board as the fastest women's HYROX ever recorded — a page that
+  // is meant to be the most authoritative thing on the site.
+  //
+  // `\p{L}` rather than A–Z: the field is full of Chinese, Japanese, Korean,
+  // Greek and Cyrillic names, and every one of them is a real person.
+  if (!row.name || row.name.trim().length < 2 || !/\p{L}/u.test(row.name)) {
     failures.push({ reason: "missing_name", detail: { name: row.name } });
   }
 

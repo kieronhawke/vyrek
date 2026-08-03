@@ -205,7 +205,19 @@ export class SyncEngine {
         0,
       );
 
-      if (stored < page.publishedEntrantCount) {
+      // ⚠️ The published figure is derived, so it carries rounding.
+      //
+      // The board counts rendered rows, not people, and each athlete renders two
+      // to four times; the headcount is that counter divided by the duplication
+      // factor measured on the page (SOURCE.md §4). Division and rounding land
+      // it within a row or so of the truth, which produced warnings reading
+      // "stored 239 against a published 240" — noise that trains an operator to
+      // ignore the one that says 1,000 against 1,620.
+      //
+      // One row of slack, or 1% on a big board, whichever is larger.
+      const tolerance = Math.max(1, Math.round(page.publishedEntrantCount * 0.01));
+
+      if (stored + tolerance < page.publishedEntrantCount) {
         completenessMismatch = { published: page.publishedEntrantCount, stored };
         await this.deps.repo.raiseAlert({
           kind: "completeness",
@@ -217,7 +229,7 @@ export class SyncEngine {
           sourceEventId: event.sourceEventId ?? null,
           acknowledgedAt: null,
         });
-      } else if (fetched < page.publishedEntrantCount) {
+      } else if (fetched + tolerance < page.publishedEntrantCount) {
         // Rows are never deleted on a short fetch: eight athletes vanishing
         // from history is far less likely than one bad page, so what we hold
         // stands and the discrepancy is reported instead.
