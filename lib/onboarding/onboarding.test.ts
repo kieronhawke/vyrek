@@ -90,9 +90,10 @@ describe("the invite token", () => {
     expect(r.ok && r.invite.name).toBe("Zoë O'Brien-Smith");
   });
 
-  it("builds a link without a double slash", () => {
-    expect(inviteUrl("abc.def", "https://x.com/")).toBe("https://x.com/onboarding/abc.def");
-    expect(inviteUrl("abc.def", "https://x.com")).toBe("https://x.com/onboarding/abc.def");
+  it("builds a link without a double slash, on the short path", () => {
+    // Short because it rides in an SMS — see lib/onboarding/invite-cost.test.ts.
+    expect(inviteUrl("abc.def", "https://x.com/")).toBe("https://x.com/o/abc.def");
+    expect(inviteUrl("abc.def", "https://x.com")).toBe("https://x.com/o/abc.def");
   });
 });
 
