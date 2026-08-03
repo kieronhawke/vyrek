@@ -28,6 +28,7 @@ import {
 import { CoachNoteBlock, ReportSection, ReportFigure, PhotoBreak } from "@/components/results/report/furniture";
 import { PrintButton } from "@/components/results/report/print-button";
 import { ShareReport } from "@/components/results/report/share-report";
+import { ResultStatusNotice } from "@/components/results/result/status-notice";
 import {
   PrintCover, PrintColophon,
 } from "@/components/results/report/print-furniture";
@@ -337,6 +338,18 @@ export default async function RaceReportPage({
           <PrintButton />
         </div>
       </div>
+
+      {/*
+        What actually happened to this entry.
+
+        The page guarded the event's status and never the athlete's, so a
+        disqualified entry received the full report — rank, percentile, band
+        charts — with nothing anywhere saying the result did not stand.
+      */}
+      <ResultStatusNotice
+        status={result.status}
+        penaltySeconds={result.penaltySeconds}
+      />
 
       {isDemo ? (
         <p className="mt-4 rounded-sm border border-suth-warning/40 bg-suth-warning/5 px-3 py-2 text-xs text-suth-warning">

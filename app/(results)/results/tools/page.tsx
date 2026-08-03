@@ -27,20 +27,31 @@ import { cn } from "@/lib/utils";
  * "I want to know if my time was any good" is the question people arrive with —
  * not "show me the tools directory".
  *
- * The flagship goes first and says what it costs elsewhere. That is the single
- * most useful sentence on the page.
+ * The flagship goes first and is sold rather than listed — see `ToolsHero`.
+ * It no longer names a competitor's price: anchoring on somebody else's number
+ * makes free read as a discount rather than as the offer.
  */
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Free HYROX Tools & Race Analytics",
+  // 197 characters before. Google truncates a description around 160, so the
+  // last third — "percentile checks and head-to-head comparison" — was written
+  // for a reader who would never see it. Cut to lead with the strongest items.
   description:
-    "Every HYROX tool we build, free and without an account: a full race "
-    + "report, the record book, the course speed index, a race simulator, "
-    + "percentile checks and head-to-head comparison.",
+    "Free HYROX tools, no account needed: a full race report on any result, "
+    + "the complete record book, a race simulator and the course speed index.",
   alternates: { canonical: "/results/tools" },
-  openGraph: { url: `${siteUrl()}/results/tools`, type: "website" },
+  openGraph: {
+    url: `${siteUrl()}/results/tools`,
+    type: "website",
+    // These are the pages that travel: someone finds a record or a
+    // report and sends the link on. A shared link with no card is a
+    // link people scroll past.
+    images: [{ url: "/media/images/track/og-default.jpg", width: 1200, height: 630, alt: "HYROX athletes racing" }],
+  },
+  twitter: { card: "summary_large_image", images: ["/media/images/track/og-default.jpg"] },
 };
 
 type Tool = {

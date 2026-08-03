@@ -41,7 +41,15 @@ export const metadata: Metadata = {
     "The complete HYROX record book — world records in every division, national "
     + "records by country and every age-group mark, with what each one beat.",
   alternates: { canonical: "/rankings/records" },
-  openGraph: { url: `${siteUrl()}/rankings/records`, type: "website" },
+  openGraph: {
+    url: `${siteUrl()}/rankings/records`,
+    type: "website",
+    // These are the pages that travel: someone finds a record or a
+    // report and sends the link on. A shared link with no card is a
+    // link people scroll past.
+    images: [{ url: "/media/images/track/og-default.jpg", width: 1200, height: 630, alt: "HYROX athletes racing" }],
+  },
+  twitter: { card: "summary_large_image", images: ["/media/images/track/og-default.jpg"] },
 };
 
 export default async function RecordsPage({

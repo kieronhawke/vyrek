@@ -24,7 +24,27 @@ export const metadata: Metadata = {
     siteName: "Suth Performance",
     type: "website",
     locale: "en_GB",
+    /*
+      Shared when somebody sends a station guide to a training partner, which
+      is most of how these pages travel. Without it the link arrives as a bare
+      grey rectangle in WhatsApp and gets scrolled past.
+    */
+    images: [{ url: "/media/images/track/og-default.jpg", width: 1200, height: 630, alt: "HYROX athletes racing" }],
   },
+  /*
+    ⚠️ Inconsistent with the rest of the site, and inert only by accident.
+
+    Every other page inherits `robots: { index: false }` from the root layout
+    under a stated pre-launch rule. These two station routes declare the
+    opposite. Right now it makes no difference, because the `X-Robots-Tag`
+    header in next.config.ts overrides all per-page metadata — but that header
+    is described in its own comment as the single line to remove at launch, and
+    the moment it goes these become the only indexable pages on the site while
+    everything else stays blocked.
+
+    Left as-is rather than flipped: opening or closing indexing is explicitly
+    Kieron's call. Flagged here so whoever removes that header sees this too.
+  */
   robots: { index: true, follow: true },
 };
 

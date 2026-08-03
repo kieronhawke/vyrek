@@ -1,3 +1,5 @@
+import type { ResultStatus } from "./status";
+
 /**
  * Race model for the Results section.
  *
@@ -70,7 +72,22 @@ export type RaceResult = {
   runs: number[];
   stations: Record<StationId, number>;
   roxzoneSeconds: number;
-  status: "finished" | "dnf";
+  status: ResultStatus;
+  /**
+   * Time added by the officials, in seconds.
+   *
+   * HYROX penalties are real and common — a no-repped wall ball, a missed
+   * lunge, a sled short of the line — and they are applied as time. Organisers
+   * publish the *penalised* finish, so `finishSeconds` already includes this;
+   * it is carried separately so the report can say why a station looks slower
+   * than the athlete's own splits imply.
+   *
+   * Absent means "no penalty published", which is not the same as "no penalty
+   * given" on feeds that do not report them. Nothing infers one from a
+   * mismatch between the splits and the finish: split timing has its own
+   * rounding, and a guessed penalty on somebody's race is worse than none.
+   */
+  penaltySeconds?: number;
   partnerSlugs?: string[];
 };
 

@@ -155,8 +155,21 @@ export async function generateMetadata({
       siteName: "Suth Performance",
       type: "article",
       locale: "en_GB",
+      // The station's own photograph where there is one, so a shared guide
+      // shows the movement it is about; the general race image otherwise.
+      images: [{
+        url: STATION_IMAGES[s.slug]?.src ?? "/media/images/track/og-default.jpg",
+        width: 1200,
+        height: 630,
+        alt: `HYROX ${s.name}`,
+      }],
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [STATION_IMAGES[s.slug]?.src ?? "/media/images/track/og-default.jpg"],
+    },
     robots: { index: true, follow: true },
   };
 }

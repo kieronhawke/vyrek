@@ -1,3 +1,4 @@
+import { isFinish, type ResultStatus } from "./status";
 /**
  * Real-data ingestion.
  *
@@ -33,7 +34,7 @@ export type IngestIssue = {
 
 export type IngestedResult = {
   /** `dnf` rows carry no finish time and are excluded from ranking. */
-  status: "finished" | "dnf";
+  status: ResultStatus;
   eventSlug: string;
   division: string;
   athleteName: string;
@@ -273,7 +274,7 @@ export function rankDivision(results: IngestedResult[]): (IngestedResult & {
 })[] {
   // DNFs never enter the ranking — rank 1 must mean fastest finisher.
   const sorted = results
-    .filter((r) => r.status === "finished" && r.finishSeconds > 0)
+    .filter((r) => isFinish(r.status, r.finishSeconds))
     .sort((a, b) => a.finishSeconds - b.finishSeconds);
   const ageCounters = new Map<string, number>();
 

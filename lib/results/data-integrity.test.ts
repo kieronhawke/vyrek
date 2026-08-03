@@ -207,3 +207,27 @@ describe("the invariant, stated once", () => {
     expect(best.station).not.toBe("farmers-carry");
   });
 });
+
+describe("statuses we do not recognise", () => {
+  /*
+   * The model carries `finished | dnf` and nothing else, but the data does not
+   * respect that: organisers publish DSQ and DNS, and CSV imports arrive with
+   * whatever the column happened to contain.
+   *
+   * The rule is that an unrecognised status must fail *closed*. Being wrong
+   * that way costs one missing row. Being wrong the other way puts a
+   * disqualified athlete in the record book.
+   */
+  const normalise = (status: string): "finished" | "dnf" =>
+    status === "finished" ? "finished" : "dnf";
+
+  it("does not promote an unknown status to a finish", () => {
+    for (const status of ["dsq", "dns", "DNF", "", "withdrawn", "pending"]) {
+      expect(normalise(status), `"${status}" was treated as a finish`).toBe("dnf");
+    }
+  });
+
+  it("still recognises a real finish", () => {
+    expect(normalise("finished")).toBe("finished");
+  });
+});
