@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import {
   SEED_WEEK,
+  planTitle,
   sessionCount,
   type PlanWeek,
   type Slot,
@@ -58,7 +59,29 @@ const DAY_SHORT = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export function WeekBuilder({ client }: { client: string }) {
   const storeKey = `plan.${client.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-  const { value: week, save, reset } = useRecord<PlanWeek>(storeKey, SEED_WEEK);
+  /**
+   * A plan opened from a client seeds with Ben's real week so he has something
+   * to work from. A standalone plan starts blank — seeding "New plan" with
+   * somebody else's training is how a wrong week gets sent.
+   */
+  const standalone = client.trim().toLowerCase() === "new";
+  const seed = useMemo<PlanWeek>(
+    () =>
+      standalone
+        ? {
+            ...SEED_WEEK,
+            id: "w_new",
+            days: SEED_WEEK.days.map((d) => ({ ...d, am: "", pm: "" })),
+            notes: "",
+            runningVolume: "",
+            coachMedia: undefined,
+            recipient: { name: "", email: "" },
+          }
+        : SEED_WEEK,
+    [standalone],
+  );
+  const { value: week, save, reset } = useRecord<PlanWeek>(storeKey, seed);
+  const title = planTitle(week, client);
   const custom = useCollection<PlanBlock>(CUSTOM_BLOCKS_KEY, []);
 
   const [category, setCategory] = useState<BlockCategory>("HYROX");
@@ -128,9 +151,9 @@ export function WeekBuilder({ client }: { client: string }) {
     setSent(false);
   }
 
-  async function downloadXlsx() {
+  async function downloadXlsx(version: 1 | 2 = 2) {
     const slug = storeKey.replace("plan.", "");
-    const res = await fetch(`/api/export/${slug}/xlsx`, {
+    const res = await fetch(`/api/export/${slug}/${version === 2 ? "xlsx-v2" : "xlsx"}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ week }),
@@ -139,7 +162,7 @@ export function WeekBuilder({ client }: { client: string }) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `suth-${slug}-${week.weekOf}.xlsx`;
+    a.download = `suth-${slug}-${week.weekOf}${version === 2 ? "-v2" : ""}.xlsx`;
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -200,6 +223,29 @@ export function WeekBuilder({ client }: { client: string }) {
         <button type="button" onClick={reset} style={btn}>
           Reset
         </button>
+        {/* Both versions are offered rather than one replacing the other.
+            v2 is the designed one and the default; v1 is the ink-saver that
+            looks like Ben's own sheet, which is the right thing to send to
+            somebody who has used that sheet for a year. */}
+        <a
+          href={`/print/plan/${slug}/v2`}
+          target="_blank"
+          rel="noreferrer"
+          style={{
+            ...btn,
+            border: "none",
+            background: "var(--accent)",
+            color: "var(--accent-ink)",
+            display: "inline-flex",
+            alignItems: "center",
+            textDecoration: "none",
+          }}
+        >
+          PDF
+        </a>
+        <button type="button" onClick={() => downloadXlsx(2)} style={btn}>
+          Excel
+        </button>
         <a
           href={`/print/plan/${slug}`}
           target="_blank"
@@ -209,13 +255,12 @@ export function WeekBuilder({ client }: { client: string }) {
             display: "inline-flex",
             alignItems: "center",
             textDecoration: "none",
+            fontWeight: 500,
+            color: "var(--text-muted)",
           }}
         >
-          PDF
+          Plain PDF
         </a>
-        <button type="button" onClick={downloadXlsx} style={btn}>
-          Excel
-        </button>
       </div>
 
       {/* ── Save-as-block prompt ──────────────────────────────────────── */}
@@ -252,6 +297,49 @@ export function WeekBuilder({ client }: { client: string }) {
           <button type="button" onClick={() => setSaving(null)} style={btn}>
             Cancel
           </button>
+        </div>
+      ) : null}
+
+      {standalone ? (
+        <div className="pb-who">
+          <p className="pb-who__label">
+            Who is this plan for?{" "}
+            <span className="pb-who__note">
+              Not attached to a client — this name is what goes on the PDF and
+              the spreadsheet.
+            </span>
+          </p>
+          <div className="pb-who__fields">
+            <label className="pb-field">
+              <span className="eyebrow">Name</span>
+              <input
+                value={week.recipient?.name ?? ""}
+                onChange={(e) =>
+                  save({
+                    ...week,
+                    recipient: { name: e.target.value, email: week.recipient?.email ?? "" },
+                  })
+                }
+                placeholder="Their name"
+                className="pb-input"
+              />
+            </label>
+            <label className="pb-field">
+              <span className="eyebrow">Email (optional)</span>
+              <input
+                type="email"
+                value={week.recipient?.email ?? ""}
+                onChange={(e) =>
+                  save({
+                    ...week,
+                    recipient: { name: week.recipient?.name ?? "", email: e.target.value },
+                  })
+                }
+                placeholder="name@example.com"
+                className="pb-input"
+              />
+            </label>
+          </div>
         </div>
       ) : null}
 
@@ -463,7 +551,7 @@ export function WeekBuilder({ client }: { client: string }) {
             cursor: week.notes.trim() && count ? "pointer" : "not-allowed",
           }}
         >
-          Send to {client}
+          Send to {title}
         </button>
       </div>
 
@@ -475,7 +563,7 @@ export function WeekBuilder({ client }: { client: string }) {
 
       {sent ? (
         <p role="status" className="pb-sent">
-          <strong>Saved, not sent.</strong> The week is stored and {client} would
+          <strong>Saved, not sent.</strong> The week is stored and {title} would
           see it in their account. The SMS, the branded email and the attached
           PDF and Excel need Twilio and Resend connecting.
         </p>

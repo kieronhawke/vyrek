@@ -57,7 +57,32 @@ const COLUMNS: Column<PlanRow>[] = [
 
 export default function AdminPlans() {
   return (
-    <AdminShell base={BASE} title="Plans">
+    <AdminShell
+      base={BASE}
+      title="Plans"
+      /* Ben also writes plans that belong to nobody yet — a template, a
+         one-off for an enquiry, a block drafted before the person has an
+         account. It needed a way in that was not "pick a client first". */
+      action={
+        <a
+          href={`${BASE}/plans/new`}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            minHeight: 44,
+            padding: "0 18px",
+            borderRadius: 999,
+            background: "var(--accent)",
+            color: "var(--accent-ink)",
+            fontSize: "var(--text-sm)",
+            fontWeight: 700,
+            textDecoration: "none",
+          }}
+        >
+          + New plan
+        </a>
+      }
+    >
       <StatStrip
         stats={[
           { label: "Plans", value: String(PLAN_ROWS.length) },

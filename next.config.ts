@@ -6,7 +6,8 @@ import type { NextConfig } from "next";
  * - HSTS: force HTTPS on browsers for two years (and preload-eligible).
  * - X-Content-Type-Options: stop browsers from MIME-sniffing.
  * - Referrer-Policy: only leak the origin cross-site, never the path.
- * - Permissions-Policy: deny camera / mic / geolocation we never use.
+ * - Permissions-Policy: geolocation stays denied outright; camera and
+ *   microphone are allowed for our own origin only.
  * - X-Frame-Options on `/admin/*` and `/app/*` (DENY) so the signed-in
  *   surfaces cannot be iframed for clickjacking. The marketing surface
  *   stays embeddable so press / preview tools can iframe a page.
@@ -30,8 +31,21 @@ const BASELINE_HEADERS = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   {
+    /**
+     * `microphone=()` is an EMPTY allowlist, not "ask the user" — it denies
+     * the microphone to every origin including this one, so the browser never
+     * shows a prompt and getUserMedia rejects immediately with
+     * NotAllowedError. Ben pressing "Record a voice note" got "microphone
+     * permission refused" without ever being asked for it.
+     *
+     * This header predates both features that need the hardware: Ben's voice
+     * notes on a plan, and the athlete filming a station for review. `(self)`
+     * restores the normal prompt for our own pages while still denying every
+     * embedded third party. Geolocation stays denied outright — nothing here
+     * uses it.
+     */
     key: "Permissions-Policy",
-    value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+    value: "camera=(self), microphone=(self), geolocation=(), interest-cohort=()",
   },
 ];
 

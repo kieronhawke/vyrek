@@ -2220,3 +2220,152 @@
 
   [data-surface="control"] .ac-detail__grip { display: none; }
 }
+
+/* ── Voice note ───────────────────────────────────────────────────────── */
+
+[data-surface="control"] .vn { display: grid; gap: var(--space-1); }
+
+[data-surface="control"] .vn-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+[data-surface="control"] .vn-record,
+[data-surface="control"] .vn-upload {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+[data-surface="control"] .vn-record {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+[data-surface="control"] .vn-record[data-recording] {
+  background: var(--danger);
+  color: #fff;
+}
+
+[data-surface="control"] .vn-record:disabled {
+  background: var(--surface-raised);
+  color: var(--text-faint);
+  cursor: wait;
+}
+
+/* Pulses only where motion is welcome. A blinking red dot is the one signal
+   that says "this is live" without reading anything. */
+[data-surface="control"] .vn-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #fff;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-surface="control"] .vn-dot { animation: vn-pulse 1.4s ease-in-out infinite; }
+}
+
+@keyframes vn-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+[data-surface="control"] .vn-count { margin-inline-start: auto; }
+
+[data-surface="control"] .vn-hint,
+[data-surface="control"] .vn-trouble {
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: 1.55;
+}
+
+[data-surface="control"] .vn-hint { color: var(--text-muted); }
+
+[data-surface="control"] .vn-trouble {
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  color: var(--text);
+}
+
+[data-surface="control"] .vn-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+  padding: var(--space-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+[data-surface="control"] .vn-player { flex: 1 1 220px; min-width: 0; }
+
+[data-surface="control"] .vn-meta {
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .vn-delete {
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+/* ── Plan builder: standalone recipient ───────────────────────────────── */
+
+[data-surface="control"] .pb-who {
+  padding: var(--space-2);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  display: grid;
+  gap: var(--space-1);
+}
+
+[data-surface="control"] .pb-who__label {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+[data-surface="control"] .pb-who__note {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .pb-who__fields {
+  display: grid;
+  gap: var(--space-1);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+[data-surface="control"] .pb-field { display: grid; gap: 3px; }
+
+@media (min-width: 700px) {
+  [data-surface="control"] .pb-who__fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

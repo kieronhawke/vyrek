@@ -44,6 +44,18 @@ export type PlanDay = {
   pm: string;
 };
 
+/**
+ * Who a plan is for.
+ *
+ * A plan reached from a client is for that client. But Ben also writes plans
+ * that are not attached to anybody yet — a template, a one-off for somebody
+ * enquiring, a block he is drafting before the person has an account. Those
+ * carry their own recipient, typed in, and it is what the exports use.
+ *
+ * Optional, so every plan written before this existed still loads.
+ */
+export type PlanRecipient = { name: string; email: string };
+
 export type PlanWeek = {
   id: string;
   /** The sheet name he uses: "Aug 3- 9". Kept verbatim. */
@@ -55,9 +67,26 @@ export type PlanWeek = {
   notes: string;
   /** The "Weekly Running Volume total" column. Free text: "30km". */
   runningVolume: string;
+  /** Set on standalone plans; absent when the plan belongs to a client. */
+  recipient?: PlanRecipient;
   /** Set when Ben has attached a voice note or video talking the week through. */
   coachMedia?: { kind: "audio" | "video"; label: string; durationSec: number };
 };
+
+/**
+ * The name to put on an export.
+ *
+ * A plan opened from a client is titled with that client. A standalone plan
+ * carries its own recipient, typed in by Ben. Neither falls back to a slug
+ * turned into title case, because "New" at the top of a training plan is worse
+ * than nothing.
+ */
+export function planTitle(week: PlanWeek, fallback: string): string {
+  const typed = week.recipient?.name?.trim();
+  if (typed) return typed;
+  const slugged = fallback.trim();
+  return slugged && slugged.toLowerCase() !== "new" ? slugged : "Training plan";
+}
 
 /** A single line of a session, after parsing. */
 export type SessionLine = {

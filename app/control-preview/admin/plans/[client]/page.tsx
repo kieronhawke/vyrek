@@ -19,10 +19,24 @@ export default async function PlanBuilderPage({
   const row = PLAN_ROWS.find(
     (p) => p.client.toLowerCase().replace(/[^a-z0-9]+/g, "-") === client,
   );
-  const name = row?.client ?? "Haseeb";
+
+  /**
+   * This used to fall back to "Haseeb" for any slug not in the fixtures, which
+   * meant every athlete reached from the coach tracker opened — and edited —
+   * the same person's week. The builder keys its store on this name, so a
+   * shared fallback is a shared plan. The slug is the identity; the fixture
+   * only supplies nicer capitalisation when it happens to know the person.
+   */
+  const fromSlug = client
+    .split("-")
+    .filter(Boolean)
+    .map((p) => p[0]?.toUpperCase() + p.slice(1))
+    .join(" ");
+  const name = row?.client ?? fromSlug;
+  const standalone = client === "new";
 
   return (
-    <AdminShell base={BASE} title={`Plan · ${name}`}>
+    <AdminShell base={BASE} title={standalone ? "New plan" : `Plan · ${name}`}>
       <p style={{ marginTop: 0, marginBottom: "var(--space-2)" }}>
         <Link
           href={`${BASE}/plans`}
