@@ -43,7 +43,7 @@ export default function ResultsLayout({ children }: { children: React.ReactNode 
       <MarketingNav />
       {/* Spacer for the fixed marketing nav and cookie strip. Fixed height,
           not the sticky offset variable — see results-tokens.css. */}
-      <div className="pt-[var(--results-content-offset)]">
+      <div className="results-section pt-[var(--results-content-offset)]">
         {/* Above the content, because "these numbers may be stale" is not a
             footnote. Renders nothing when everything is healthy. */}
         <DataNotice />

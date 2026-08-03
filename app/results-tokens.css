@@ -141,3 +141,29 @@
   outline: none;
   border-color: transparent;
 }
+
+/* ─── Range inputs ──────────────────────────────────────────────────────────
+   A native range input renders about 16px tall, which is a fiddly thing to
+   drag with a thumb — and the simulator is almost entirely sliders, on a page
+   people mostly open on a phone.
+
+   Height rather than padding: a range input centres its own track and thumb
+   inside its box, so growing the box grows the hit area without moving or
+   restyling the control. The alternative — restyling the track and thumb with
+   `appearance: none` — means writing three sets of vendor pseudo-elements and
+   losing the platform's own focus and active states, which is a poor trade for
+   a control that already looks right.
+
+   Scoped to the Results section so nothing else on the site shifts. */
+.results-section input[type="range"] {
+  min-height: 44px;
+  /* The box is now taller than the track, so the cursor should still read as
+     draggable across all of it. */
+  cursor: pointer;
+}
+
+@media (pointer: fine) {
+  /* A mouse does not need 44px, and a tall invisible box next to other
+     controls is easier to hit by accident than to hit on purpose. */
+  .results-section input[type="range"] { min-height: 28px; }
+}
