@@ -308,12 +308,18 @@ export class SyncEngine {
       }
     }
 
+    // Not every failure is the source's fault. Labelling a database error
+    // "source unreachable" sent me hunting for a network problem that did not
+    // exist while a duplicate-key error sat in the detail field.
+    const fromSource = error instanceof AllSourcesFailedError;
     await this.deps.repo.raiseAlert({
-      kind: error instanceof AllSourcesFailedError ? "source_unreachable" : "source_unreachable",
+      kind: fromSource ? "source_unreachable" : "parser_shape",
       severity: wasLive ? "critical" : "warning",
-      message:
-        `Source unreachable for ${event.name}; froze on last-good data` +
-        (wasLive ? " and paused live updates." : "."),
+      message: fromSource
+        ? `Source unreachable for ${event.name}; froze on last-good data` +
+          (wasLive ? " and paused live updates." : ".")
+        : `Sync failed for ${event.name}, and not because of the source: ` +
+          `${error instanceof Error ? error.message : String(error)}`,
       detail: {
         error: error instanceof Error ? error.message : String(error),
         attempts: error instanceof AllSourcesFailedError ? error.attempts : undefined,

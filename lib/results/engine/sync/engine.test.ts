@@ -17,7 +17,7 @@ import {
 } from "../testing";
 import { ReplayAdapter } from "../source/replay-adapter";
 import { FailingAdapter } from "../source/replay-adapter";
-import { FallbackChain } from "../source/adapter";
+import { AllSourcesFailedError, FallbackChain } from "../source/adapter";
 import { runLiveTick } from "./live";
 import { runReconcile, isReconcileDue } from "./reconcile";
 import { orderForBackfill, allSeasonPaths, runBackfill } from "./backfill";
@@ -150,7 +150,15 @@ describe("fallback chain and source failure (§11, §14)", () => {
       }),
     ).rejects.toThrow(/Every source access method failed/);
 
-    await h.engine.freezeOnFailure(h.event, new Error("all failed"));
+    // A real AllSourcesFailedError, because the label now depends on the type:
+    // a database error must not be reported as the source being unreachable.
+    await h.engine.freezeOnFailure(
+      h.event,
+      new AllSourcesFailedError([
+        { adapter: "primary", ok: false, error: "simulated" },
+        { adapter: "secondary", ok: false, error: "simulated" },
+      ]),
+    );
 
     // Nothing written.
     expect(h.repo.results.size).toBe(0);
@@ -162,6 +170,18 @@ describe("fallback chain and source failure (§11, §14)", () => {
     expect((await h.repo.getEventBySlug(h.event.slug))?.status).toBe("updates_paused");
     expect(h.publisher.published.at(-1)?.update.updatesPaused).toBe(true);
     expect((await h.repo.listAlerts()).some((a) => a.kind === "source_unreachable")).toBe(true);
+  });
+
+  it("does not blame the source for a failure that was ours", async () => {
+    const h = await makeHarness({ event: { status: "live" } });
+    await h.engine.freezeOnFailure(h.event, new Error("duplicate key value violates…"));
+
+    const alerts = await h.repo.listAlerts();
+    // Calling a database error "source unreachable" sent me hunting for a
+    // network problem that did not exist, while the real cause sat in a detail
+    // field nobody reads.
+    expect(alerts.some((a) => a.kind === "source_unreachable")).toBe(false);
+    expect(alerts.some((a) => a.message.includes("not because of the source"))).toBe(true);
   });
 
   it("keeps serving stored data while the source is unreachable", async () => {
@@ -506,6 +526,43 @@ describe("identity keys that can disagree", () => {
     });
     expect(b.id).toBe(a.id);
     expect(b.entrantCount).toBe(5);
+  });
+});
+
+describe("a batch that repeats a key", () => {
+  /**
+   * Postgres refuses an ON CONFLICT statement that would touch the same row
+   * twice, and it fails the *whole* command — so one repeated id cost an entire
+   * division. Fifteen events failed this way, and the alert called it "source
+   * unreachable", which sent me looking at the network.
+   */
+  it("keeps the last of a repeated result id rather than failing the batch", async () => {
+    const h = await makeHarness();
+    const base = {
+      eventId: h.event.id, divisionId: h.division.id, athleteId: "ath_x",
+      status: "finished" as const, splits: { runs: [], stations: [] },
+      partnerAthleteIds: [], isDemo: false,
+    };
+    const counts = await h.repo.upsertResults([
+      { ...base, sourceResultId: "DUP", rankOverall: 1, finishTimeMs: 3_600_000 },
+      { ...base, sourceResultId: "DUP", rankOverall: 2, finishTimeMs: 3_700_000 },
+    ]);
+    expect(counts.inserted + counts.updated).toBe(1);
+    expect((await h.repo.getResultBySourceId("DUP"))?.rankOverall).toBe(2);
+  });
+
+  it("keeps the last of a repeated athlete slug", async () => {
+    const h = await makeHarness();
+    const base = {
+      name: "Repeated Person", nationality: "GBR", gender: "men",
+      claimedByUserId: null, isDemo: false, isAnonymised: false,
+      identityConfidence: 1, needsIdentityReview: false,
+    };
+    const created = await h.repo.upsertAthletes([
+      { ...base, slug: "repeated-person", sourceAthleteId: "A" },
+      { ...base, slug: "repeated-person", sourceAthleteId: "B" },
+    ]);
+    expect(created).toHaveLength(1);
   });
 });
 

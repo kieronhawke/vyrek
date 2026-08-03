@@ -206,9 +206,11 @@ export class MemoryResultsRepository implements ResultsRepository {
     );
   }
 
-  async upsertAthletes(athletes: UpsertAthlete[]) {
+  async upsertAthletes(input: UpsertAthlete[]) {
+    const bySlug = new Map<string, UpsertAthlete>();
+    for (const a of input) bySlug.set(a.slug, a);
     const out: EngineAthlete[] = [];
-    for (const athlete of athletes) out.push(await this.upsertAthlete(athlete));
+    for (const athlete of bySlug.values()) out.push(await this.upsertAthlete(athlete));
     return out;
   }
 
@@ -254,7 +256,13 @@ export class MemoryResultsRepository implements ResultsRepository {
 
   /* ── Results ────────────────────────────────────────────────────────── */
 
-  async upsertResults(rows: UpsertResult[]) {
+  async upsertResults(input: UpsertResult[]) {
+    // Deduplicated on the conflict key, matching Postgres, which refuses a
+    // statement that would touch the same row twice.
+    const byId = new Map<string, UpsertResult>();
+    for (const row of input) byId.set(row.sourceResultId, row);
+    const rows = [...byId.values()];
+
     let inserted = 0;
     let updated = 0;
     let unchanged = 0;
