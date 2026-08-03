@@ -25,9 +25,12 @@ production. Flipping it is the last step, described under *What is left*. I
 have not flipped it: the backfill is still running and half the archive would
 show partial fields.
 
-**The backfill is still going.** 187 of 223 events checkpointed. Resumable and
-safe to stop; progress is recorded per division, so an interrupted run picks up
-where it left off rather than starting again.
+**The backfill is still going, and 38 events are still empty.** 185 of 223
+events hold results; the other 38 hold none. That is a real gap, not an
+artefact: sampling three of them against the source found 750 and 588 results
+waiting for two, and a genuinely empty board for the third (an event that never
+ran). The backfill is resumable and safe to stop — progress is recorded per
+division, so an interrupted run picks up where it left off.
 
 ## What running it for real found
 
