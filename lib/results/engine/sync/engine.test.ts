@@ -773,6 +773,22 @@ describe("historical seasons (§5)", () => {
     expect(second.seasonCatalogued).toBe("season-9");
   });
 
+  it("treats an event as done when its divisions are, not when its event row says so", async () => {
+    /**
+     * The checkpoint used to read the *event's* sync state, and that quietly
+     * stopped working when the content hash moved to the division: once every
+     * division skipped as unchanged, nothing wrote the event-level checkpoint,
+     * so the event was chosen again every round. One repeated for three rounds
+     * straight, re-fetching fourteen divisions each time to learn nothing.
+     */
+    const h = await makeHarness();
+    await syncOnce(h); // division now carries a hash
+
+    const outcome = await runBackfill(h.engine, { maxEvents: 3, catalogueSeasons: false });
+    expect(outcome.eventsSkipped).toContain(h.event.slug);
+    expect(outcome.eventsCompleted).toEqual([]);
+  });
+
   it("checkpoints an event that has no divisions instead of retrying it for ever", async () => {
     // Nothing syncs it, so nothing writes its checkpoint, so it is chosen
     // again every round — occupying one of the run's three slots permanently.

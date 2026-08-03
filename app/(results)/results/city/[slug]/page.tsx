@@ -130,7 +130,19 @@ export default async function CityHubPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const events = await getResultsSource().listEvents().catch(() => []);
+
+  // Deliberately *not* wrapped in a catch.
+  //
+  // The first version swallowed source failures into an empty array, which
+  // then fell through to `notFound()` — so a transient outage rendered as
+  // "this city does not exist". That is the worst available outcome: 404 is a
+  // permanent signal, Google drops the URL on it, and ISR caches the 404 so it
+  // outlives the outage that caused it. An error must surface as a 500, which
+  // says "try again" to a crawler and shows up in the logs.
+  //
+  // `notFound()` below now means only what it should: the catalogue loaded,
+  // and it has no such city.
+  const events = await getResultsSource().listEvents();
   const profile = findCityProfile(events, slug);
   if (!profile) notFound();
 

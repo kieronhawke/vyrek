@@ -542,7 +542,7 @@ export function GeoLanding({
 
         {/* The named local gyms. The one section only this town's page can
             carry, and the reason the page is worth indexing. */}
-        <GeoGyms seo={seo} name={loc.name} />
+        <GeoGyms seo={seo} name={loc.name} variant={variant} />
 
         {/* Several hundred words of guidance that branches on this town's own
             numbers. The part of the page a reader actually gets value from. */}

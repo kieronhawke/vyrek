@@ -818,3 +818,90 @@ same reason.
 made the accessible name "HYROX London ResultsGBR" — which is what a screen
 reader announces and what Google reads as the page's primary heading. It sits
 beside the `<h1>` now, in a flex wrapper.
+
+### D88 — A source failure must be a 500, never a 404
+The city hub originally wrapped `listEvents()` in `.catch(() => [])`, which fell
+through to `notFound()`. So a transient outage rendered as "this city does not
+exist" — the worst available outcome, because 404 is a *permanent* signal:
+Google drops the URL on it, and ISR then caches the 404 so it outlives the
+outage that produced it.
+
+The catch is gone from all three new pages' render paths. `notFound()` now means
+only what it should: the catalogue loaded and has no such city. A catalogue that
+is genuinely still filling up returns an empty array **successfully**, so the
+empty states still work — nothing was gained by the catch and a de-indexing risk
+was created by it.
+
+`generateStaticParams` keeps its catch, because a failure there should prebuild
+nothing rather than fail the deploy.
+
+---
+
+# PART 4 — MAKING IT ACTUALLY FINISH (3 August 2026)
+
+The backfill was not slow. It was broken in five compounding ways, each hidden
+behind the last, and every one of them only appeared at real scale. Recorded in
+the order they were found, because the order is the lesson.
+
+### D75 — `fetch` has no timeout, and `timeoutMs` was wired to nothing
+A backfill sat at 0% CPU with no open sockets and no progress for nine minutes.
+A connection that opens and goes quiet blocks a worker for ever. The option had
+existed in the type since the first draft and was never used. On serverless the
+same fault presents as a run that always hits `maxDuration` having done
+nothing, which is far harder to read than a hung laptop.
+
+### D76 — Athlete resolution is a batch, not a loop
+Up to three round trips per athlete: roughly 460 for a 77-row doubles board and
+half a million across the catalogue. Fifteen hours of pure latency at 100ms a
+call. It also leaked — every call is a window in which the process can die with
+athletes written and their rows not — and a killed run left 13,329 profiles
+attached to nothing.
+
+### D77 — Slug allocation is a batch too
+The last per-athlete round trip, and the one that made a 638-row board never
+finish: 1,276 sequential calls to ask "is this slug free". Now one bulk lookup,
+with collisions resolved in memory against both the database and slugs claimed
+earlier in the same batch — the latter invisible to the database, since those
+rows do not exist yet.
+
+### D78 — PostgREST filters travel in the URL, so they must be chunked
+The result upsert's existing-row lookup put every source id in a query string.
+A 638-id filter was rejected outright as a 400, so the division failed to store
+*after* its athletes were written. That is where the orphans kept coming from.
+
+### D79 — Deduplicate a batch on its conflict key before sending it
+Postgres refuses an `ON CONFLICT` statement that would touch the same row twice
+and fails the **entire** command, so one repeated source id cost a whole
+division. Fifteen events died this way. A repeated id means the same entry
+appeared twice on the board, so the later one wins rather than the pair being
+fatal.
+
+### D80 — Do not blame the source for our own failures
+`freezeOnFailure` raised "source unreachable" for *any* error, so a
+duplicate-key failure in our own database was reported as HYROX being down. I
+spent real time looking for a network problem that did not exist while the
+actual cause sat in a detail field nobody reads.
+
+### D81 — The checkpoint must follow the unit of work
+Two separate versions of this bug, both causing an event to be re-chosen every
+round for ever:
+
+- An event with **no divisions** never ran a division sync, so nothing wrote
+  its checkpoint. It "completed" instantly and permanently occupied one of the
+  run's three slots.
+- Once the content hash moved to the division, an event whose divisions all
+  skipped as unchanged never updated its *event-level* row. One event repeated
+  three rounds running, re-fetching fourteen divisions each time to learn
+  nothing.
+
+An event is done when every division is. Division-less events get an explicit
+checkpoint and a report, because a catalogued event with no divisions is the
+shape of a catalogue that half-succeeded.
+
+### D82 — Measure before believing a source is at fault
+A broken regex in a throwaway probe made it look as though HYROX ignored its
+`page` parameter and served identical rows for ever. Decoding the pagination
+links — the URL is held as character codes in a `data-silver` attribute —
+showed pages 2 and 3 have zero overlap with page 1. The source was correct; the
+measurement was not. Worth remembering before designing around someone else's
+supposed bug.

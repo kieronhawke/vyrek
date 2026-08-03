@@ -159,6 +159,10 @@ export class MemoryResultsRepository implements ResultsRepository {
     return [...this.divisions.values()].filter((d) => d.eventId === eventId);
   }
 
+  async listAllDivisions() {
+    return [...this.divisions.values()];
+  }
+
   /* ── Athletes ───────────────────────────────────────────────────────── */
 
   async upsertAthlete(athlete: UpsertAthlete): Promise<EngineAthlete> {

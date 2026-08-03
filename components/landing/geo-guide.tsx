@@ -22,6 +22,7 @@ import type { GeoSeo } from "@/lib/locations/seo";
  */
 
 type Section = { h: string; p: string[] };
+type Variant = "hyrox" | "pt";
 
 /** "A, B and C" rather than "A, B". */
 function list(items: string[]): string {
@@ -29,7 +30,7 @@ function list(items: string[]): string {
   return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
 }
 
-function equipmentSection(seo: GeoSeo, name: string): Section {
+function equipmentSection(seo: GeoSeo, name: string, variant: Variant): Section {
   const n = seo.gyms.length;
   const p: string[] = [];
 
@@ -47,7 +48,9 @@ function equipmentSection(seo: GeoSeo, name: string): Section {
     );
   } else {
     p.push(
-      `Training options in ${name} are thin on the ground, which matters far less than it sounds. Most of a Hyrox build is running, carrying and squatting, and almost all of it substitutes.`,
+      variant === "hyrox"
+        ? `Training options in ${name} are thin on the ground, which matters far less than it sounds. Most of a Hyrox build is running, carrying and squatting, and almost all of it substitutes.`
+        : `Training options in ${name} are thin on the ground, which matters far less than it sounds. Most of what changes a body is squatting, pulling, pressing and walking, and every one of those has a version that works with almost nothing.`,
     );
   }
 
@@ -56,11 +59,11 @@ function equipmentSection(seo: GeoSeo, name: string): Section {
   const named = seo.gyms.slice(0, 3).map((g) => g.name);
   if (named.length >= 2) {
     p.push(
-      `Closest to the centre you have ${list(named)}${typeof seo.gyms[0].distanceKm === "number" ? `, the nearest of them about ${seo.gyms[0].distanceKm} km out` : ""}. Ring before you join and ask two questions: is there floor space to push a sled, and can you throw a ball at a wall. Those answers decide more than any membership tier.`,
+      `Closest to the centre you have ${list(named)}${typeof seo.gyms[0].distanceKm === "number" ? `, the nearest of them about ${seo.gyms[0].distanceKm} km out` : ""}. ${variant === "hyrox" ? "Ring before you join and ask two questions: is there floor space to push a sled, and can you throw a ball at a wall. Those answers decide more than any membership tier." : "Ring before you join and ask what the free-weight area looks like at the hour you would actually be there. A rack you have to queue twenty minutes for at six o'clock is the single most common reason a programme stops getting done."}`,
     );
   } else if (named.length === 1) {
     p.push(
-      `${named[0]} is the closest${typeof seo.gyms[0].distanceKm === "number" ? `, roughly ${seo.gyms[0].distanceKm} km from the centre` : ""}. Worth ringing to ask whether there is floor space for a sled and a wall you can throw a ball at, because those two shape the programme more than anything on the price list.`,
+      `${named[0]} is the closest${typeof seo.gyms[0].distanceKm === "number" ? `, roughly ${seo.gyms[0].distanceKm} km from the centre` : ""}. ${variant === "hyrox" ? "Worth ringing to ask whether there is floor space for a sled and a wall you can throw a ball at, because those two shape the programme more than anything on the price list." : "Worth ringing to ask how many squat racks there are and how busy it gets after work, because those two shape whether a programme survives contact with a Tuesday evening."}`,
     );
   }
 
@@ -72,7 +75,7 @@ function equipmentSection(seo: GeoSeo, name: string): Section {
     // "Council-run" was an assertion we cannot support: OSM records the leisure
     // class, not the operator model. The useful, true point is about floor space.
     p.push(
-      `${list(sportsNames)} ${sportsNames.length === 1 ? "is listed as a sports centre" : "are listed as sports centres"} rather than ${sportsNames.length === 1 ? "a gym" : "gyms"}. Multi-use sites are usually where the floor space is, which tends to be where the sled and carry work ends up happening.`,
+      `${list(sportsNames)} ${sportsNames.length === 1 ? "is listed as a sports centre" : "are listed as sports centres"} rather than ${sportsNames.length === 1 ? "a gym" : "gyms"}. Multi-use sites are usually where the floor space is, ${variant === "hyrox" ? "which tends to be where the sled and carry work ends up happening" : "and often where the off-peak hours are quietest, which matters more to a training habit than the equipment list does"}.`,
     );
   }
 
@@ -85,7 +88,7 @@ function equipmentSection(seo: GeoSeo, name: string): Section {
   return { h: `Where to train in ${name}`, p };
 }
 
-function runningSection(seo: GeoSeo, name: string): Section {
+function runningSection(seo: GeoSeo, name: string, variant: Variant): Section {
   const p: string[] = [];
   const pk = seo.parkruns;
 
@@ -105,10 +108,15 @@ function runningSection(seo: GeoSeo, name: string): Section {
   }
 
   p.push(
-    `A Hyrox is eight kilometre runs with a station between each, which means the skill being tested is running on tired legs, not running fresh. Do at least one session a week where the running comes after the hard work rather than before it.`,
+    variant === "hyrox"
+      ? `A Hyrox is eight kilometre runs with a station between each, which means the skill being tested is running on tired legs, not running fresh. Do at least one session a week where the running comes after the hard work rather than before it.`
+      : `Conditioning is where most general programmes quietly fail: it gets dropped first when the week gets busy, and it is the part that carries into everything else. Two sessions a week is enough, and one of them can be a walk with a hill in it.`,
   );
 
-  return { h: `Where to run around ${name}`, p };
+  return {
+    h: variant === "hyrox" ? `Where to run around ${name}` : `Getting your conditioning in around ${name}`,
+    p,
+  };
 }
 
 function raceSection(seo: GeoSeo, name: string): Section | null {
@@ -142,6 +150,35 @@ function raceSection(seo: GeoSeo, name: string): Section | null {
   return { h: `Racing from ${name}`, p };
 }
 
+/**
+ * The general-training counterpart to raceSection.
+ *
+ * Dropping the race block for the personal-trainer variant left that page a
+ * strict subset of the Hyrox one, which is the worst possible relationship
+ * between two URLs: same words, one shorter. This gives the PT page a section
+ * the Hyrox page does not have, about the thing its reader actually asked.
+ */
+function progressSection(seo: GeoSeo, name: string): Section {
+  const p: string[] = [];
+  const n = seo.gyms.length;
+
+  p.push(
+    `The hard part of training in ${name} is not the first fortnight, it is week seven, when the novelty has gone and the weather has turned. What survives that is a programme that already knows which days you train and does not need you to decide anything on the day.`,
+  );
+
+  p.push(
+    n >= 10
+      ? `With this many places to train nearby, the useful discipline is picking one and staying put long enough to progress on it. Switching gyms resets your reference points — the same bar, the same rack, the same walk in — and those references are most of what tells you whether the last month worked.`
+      : `With a smaller choice locally, the programme has to bend to the equipment rather than the other way round. That is a constraint, not a problem: almost every exercise has three substitutes, and the one you can actually do twice a week beats the one you can do occasionally.`,
+  );
+
+  p.push(
+    `Progress gets measured rather than felt. A session log, the same benchmark repeated every few weeks, and a plan that responds to both — that is the whole mechanism, and it is the part that a coach charging by the hour cannot give you between appointments.`,
+  );
+
+  return { h: `Making it stick in ${name}`, p };
+}
+
 export function GeoGuide({
   seo,
   name,
@@ -151,10 +188,16 @@ export function GeoGuide({
   name: string;
   variant: "hyrox" | "pt";
 }) {
+  /* Both families used to share these two sections verbatim and differ only by
+     the race block, which left 24 of 34 content blocks identical between the
+     two pages for the same town — measured, not estimated. The guidance now
+     branches on intent throughout: a reader looking for a personal trainer is
+     not asking about sled lanes, and telling them about one was both
+     duplicative and wrong. */
   const sections = [
-    equipmentSection(seo, name),
-    runningSection(seo, name),
-    variant === "hyrox" ? raceSection(seo, name) : null,
+    equipmentSection(seo, name, variant),
+    runningSection(seo, name, variant),
+    variant === "hyrox" ? raceSection(seo, name) : progressSection(seo, name),
   ].filter(Boolean) as Section[];
 
   if (!sections.length) return null;
