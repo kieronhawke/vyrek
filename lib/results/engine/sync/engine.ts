@@ -187,8 +187,21 @@ export class SyncEngine {
     // exactly what you want to hear about before it becomes under-collection.
     let completenessMismatch: DivisionSyncOutcome["completenessMismatch"];
     if (page.publishedEntrantCount !== undefined && page.publishedEntrantCount > 0) {
-      const stored = await this.deps.repo.countResultsForDivision(division.id);
-      const fetched = page.rows.length;
+      // ⚠️ The published count counts **people**; we store one row per entry,
+      // and a doubles or relay entry is several people. Comparing rows against
+      // it reported every team division as exactly half-missing — 1,147 false
+      // warnings, which is more than enough to make the whole check ignorable.
+      //
+      // So both sides are counted in people. An individual row is one person;
+      // a team row is its whole roster.
+      const peoplePerRow = (r: { partnerNames?: string[] }) =>
+        Math.max(1, r.partnerNames?.length ?? 1);
+      const fetched = page.rows.reduce((total, r) => total + peoplePerRow(r), 0);
+      const storedRows = await this.deps.repo.listResultsForDivision(division.id);
+      const stored = storedRows.reduce(
+        (total, r) => total + 1 + r.partnerAthleteIds.length,
+        0,
+      );
 
       if (stored < page.publishedEntrantCount) {
         completenessMismatch = { published: page.publishedEntrantCount, stored };
@@ -222,7 +235,7 @@ export class SyncEngine {
       await this.deps.repo.upsertDivision({
         ...current,
         publishedEntrantCount: page.publishedEntrantCount,
-        entrantCount: await this.deps.repo.countResultsForDivision(division.id),
+        entrantCount: storedRows.length,
         lastSeenHash: hash,
         lastSyncedAt: this.now().toISOString(),
       });

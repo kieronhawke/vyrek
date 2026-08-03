@@ -251,6 +251,29 @@ describe("parser-shape sentinel (§13, §14)", () => {
   });
 });
 
+describe("completeness counts people, not rows", () => {
+  /**
+   * The published count counts people; we store one row per entry, and a
+   * doubles entry is two people. Comparing rows against it reported every team
+   * division as exactly half-missing — 1,147 false warnings, which is more than
+   * enough to make the whole check ignorable.
+   */
+  it("does not report a doubles board as half-missing", async () => {
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-doubles.html")] },
+      }),
+    });
+    // The fixture publishes 2 and serves 2 team rows — 4 people either way once
+    // both sides are counted the same.
+    const outcome = await syncOnce(h);
+    expect(outcome.inserted).toBe(2);
+
+    const complaints = (await h.repo.listAlerts()).filter((a) => a.kind === "completeness");
+    expect(complaints).toEqual([]);
+  });
+});
+
 describe("completeness reconciliation (§13, §14)", () => {
   it("flags a division short of its published entrant count", async () => {
     const h = await makeHarness({
