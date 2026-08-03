@@ -27,7 +27,13 @@ export const metadata: Metadata = {
   openGraph: { url: `${siteUrl()}/tools/good-hyrox-time`, type: "article" },
 };
 
-export default function GoodTimePage() {
+export default async function GoodTimePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ t?: string }>;
+}) {
+  const { t } = await searchParams;
+  const initialSeconds = Number(t) > 0 ? Number(t) : undefined;
   const references = listDivisionReferences(SIMULATOR_DIVISIONS);
   const men = references.find((r) => r.division === "hyrox-men");
   const women = references.find((r) => r.division === "hyrox-women");
@@ -95,7 +101,7 @@ export default function GoodTimePage() {
 
       <div className="mt-6">
         {references.length > 0 ? (
-          <PercentileTool references={references} />
+          <PercentileTool references={references} initialSeconds={initialSeconds} />
         ) : (
           <p className="text-sm text-suth-text-secondary">Reference data is unavailable.</p>
         )}

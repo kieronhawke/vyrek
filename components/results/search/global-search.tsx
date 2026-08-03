@@ -2,9 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, X, CornerDownLeft, Clock } from "lucide-react";
+import { Search, X, CornerDownLeft, Clock, Percent, Target, CalendarDays } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { flagEmoji } from "@/lib/results/format";
+import { flagEmoji, formatTime } from "@/lib/results/format";
+import { detectIntent } from "@/lib/results/search";
 import type { SearchResults } from "@/lib/results/source";
 
 /**
@@ -97,6 +98,15 @@ function SearchPanel({ onClose }: { onClose: () => void }) {
 
   const trimmed = query.trim();
   const showResults = trimmed.length >= 2;
+
+  /**
+   * Not every search is a name.
+   *
+   * People type their finish time to see where it places them, or "sub 90"
+   * because that is how a goal is spoken. Recognising those turns a dead end
+   * ("no athletes match 1:31:30") into the tool they actually wanted.
+   */
+  const intent = detectIntent(trimmed);
   const flat: Flat[] = showResults
     ? [
         ...results.athletes.map((a) => ({ kind: "athlete" as const, ...a })),
@@ -194,6 +204,38 @@ function SearchPanel({ onClose }: { onClose: () => void }) {
             </Section>
           ) : null}
 
+          {intent.type !== "text" ? (
+            <Section title="Jump to">
+              {intent.type === "time" ? (
+                <IntentRow
+                  href={`/tools/good-hyrox-time?t=${intent.seconds}`}
+                  onGo={onClose}
+                  icon={<Percent className="size-3.5" aria-hidden />}
+                  label={`See where ${formatTime(intent.seconds)} places you`}
+                  detail="Percentile against every division"
+                />
+              ) : null}
+              {intent.type === "goal" ? (
+                <IntentRow
+                  href={`/simulator?mode=target&goal=${intent.seconds}`}
+                  onGo={onClose}
+                  icon={<Target className="size-3.5" aria-hidden />}
+                  label={`Build a ${intent.label} race`}
+                  detail="The split you need at every station"
+                />
+              ) : null}
+              {intent.type === "year" ? (
+                <IntentRow
+                  href={`/events`}
+                  onGo={onClose}
+                  icon={<CalendarDays className="size-3.5" aria-hidden />}
+                  label={`Events in ${intent.year}`}
+                  detail="Season calendar"
+                />
+              ) : null}
+            </Section>
+          ) : null}
+
           {failed ? (
             <p className="px-4 py-8 text-center text-sm text-suth-text-secondary">
               Search is unavailable right now. Try again in a moment.
@@ -275,6 +317,33 @@ function SearchPanel({ onClose }: { onClose: () => void }) {
   );
 }
 
+function IntentRow({
+  href, onGo, icon, label, detail,
+}: {
+  href: string;
+  onGo: () => void;
+  icon: React.ReactNode;
+  label: string;
+  detail: string;
+}) {
+  const router = useRouter();
+  return (
+    <button
+      type="button"
+      onClick={() => { onGo(); router.push(href); }}
+      className="flex min-h-[52px] w-full items-center gap-3 px-4 text-left
+                 hover:bg-suth-overlay focus-visible:outline-2 focus-visible:outline-suth-accent"
+    >
+      <span className="text-suth-accent">{icon}</span>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-sm text-suth-text">{label}</span>
+        <span className="block truncate text-[11px] text-suth-text-tertiary">{detail}</span>
+      </span>
+      <span aria-hidden className="text-suth-accent">→</span>
+    </button>
+  );
+}
+
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="py-2">
@@ -311,16 +380,29 @@ function Row({
   );
 }
 
-/** Binds ⌘K / Ctrl+K anywhere in the Results section. */
+/**
+ * Binds ⌘K / Ctrl+K inside the Results section.
+ *
+ * The site already has its own `CommandPalette` bound to the same combination
+ * in the root layout, and it was opening *on top of* this one — two stacked
+ * dialogs, the marketing palette (z-80) covering the results search (z-50).
+ *
+ * Registered in the capture phase so this runs before the root listener, and
+ * `stopImmediatePropagation` stops the other palette opening at all. Capture
+ * rather than ordering luck: the root layout mounts first, so its listener
+ * would otherwise always win. Outside the Results section nothing changes —
+ * this hook is only mounted here.
+ */
 export function useSearchHotkey(onOpen: () => void) {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
+        e.stopImmediatePropagation();
         onOpen();
       }
     };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
+    window.addEventListener("keydown", handler, true);
+    return () => window.removeEventListener("keydown", handler, true);
   }, [onOpen]);
 }

@@ -151,6 +151,90 @@ test.describe("share", () => {
   });
 });
 
+test.describe("search", () => {
+  test("⌘K opens the results search, and only that", async ({ page }) => {
+    await open(page, "/results");
+    await page.waitForTimeout(1500); // the hotkey binds on hydration
+    await page.keyboard.press("ControlOrMeta+k");
+
+    // The site has its own CommandPalette on the same combination. Exactly one
+    // dialog must open, and it must be ours.
+    await expect(page.locator('[role="dialog"]')).toHaveCount(1);
+    await expect(page.locator('[role="dialog"]')).toHaveAttribute("aria-label", "Search athletes and events");
+  });
+
+  test("understands a goal and a time, not just names", async ({ page }) => {
+    await open(page, "/results");
+    await page.waitForTimeout(1500);
+    await page.keyboard.press("ControlOrMeta+k");
+    const box = page.getByPlaceholder("Search athletes and events");
+
+    await box.fill("sub 90");
+    await expect(page.getByText("Build a Sub 90 race")).toBeVisible();
+
+    await box.fill("1:31:30");
+    await expect(page.getByText(/where 1:31:30 places you/)).toBeVisible();
+  });
+
+  test("ranks an exact name first and rejects nonsense", async ({ page }) => {
+    await open(page, "/results");
+    await page.waitForTimeout(1500);
+    await page.keyboard.press("ControlOrMeta+k");
+    const box = page.getByPlaceholder("Search athletes and events");
+
+    await box.fill("zachary patel");
+    await expect(page.getByRole("option").first()).toContainText("Zachary Patel");
+
+    await box.fill("qqqzzz");
+    await expect(page.getByText(/No athletes or events match/)).toBeVisible();
+  });
+
+  test("escape closes it", async ({ page }) => {
+    await open(page, "/results");
+    await page.waitForTimeout(1500);
+    await page.keyboard.press("ControlOrMeta+k");
+    await expect(page.getByPlaceholder("Search athletes and events")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.getByPlaceholder("Search athletes and events")).toBeHidden();
+  });
+});
+
+test.describe("unknown URLs 404 rather than rendering an empty page", () => {
+  for (const path of [
+    "/event/does-not-exist",
+    "/ranking/s9-2026-london-hyrox-nonsense",
+    "/ranking/garbage",
+    "/result/nope",
+    "/athlete/nobody",
+    "/starters/nope",
+    "/reports/nope",
+  ]) {
+    test(`404: ${path}`, async ({ page }) => {
+      const response = await page.goto(path, { waitUntil: "domcontentloaded" });
+      expect(response?.status()).toBe(404);
+    });
+  }
+});
+
+test.describe("no layout shift", () => {
+  test("nothing moves after first paint", async ({ page }) => {
+    await page.addInitScript(() => {
+      (window as unknown as { __cls: number }).__cls = 0;
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          const e = entry as PerformanceEntry & { hadRecentInput?: boolean; value?: number };
+          if (!e.hadRecentInput) (window as unknown as { __cls: number }).__cls += e.value ?? 0;
+        }
+      }).observe({ type: "layout-shift", buffered: true });
+    });
+    await page.goto("/results", { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(4000);
+    const cls = await page.evaluate(() => (window as unknown as { __cls: number }).__cls);
+    // The cookie strip used to push every page down 48px on load.
+    expect(cls).toBeLessThan(0.01);
+  });
+});
+
 test.describe("export", () => {
   test("downloads the whole division as CSV, and honours the active filter", async ({ page }) => {
     await open(page, "/ranking/s9-2026-london-hyrox-men");
