@@ -445,3 +445,40 @@ suspected and is 2.5KB. The actual causes were a transitioned `padding-top` on `
 a variable set after mount (CLS), and 3,221 row objects built per request (LCP). Both found by
 capturing `layout-shift` entries with their sources and by reading the network log, not by
 inspection.
+
+### D56 — The catalogue is N+1 requests, and there is no cheaper correct option
+The season page lists every weekend's division codes flat with nothing saying
+which is which, and neither a query parameter nor a deep link narrows it. Only
+a POST of `event_main_group` does. One GET plus one POST per weekend is ~29
+requests an hour against a 20/minute budget — affordable, and the alternative
+was filing 22 race weekends under one city, which is what the first version did.
+
+### D57 — A weekend that cannot be named does not become an event
+The label carries the city and year, so an unnamed weekend has no slug of its
+own and would collapse onto another event's. It is skipped and alerted instead.
+
+### D58 — Dates come from HYROX's own calendar, joined on city and year
+The timing source has no dates. `data/hyrox/races.normalised.json` does, read
+from HYROX event pages by an earlier lane. Matching requires the year as well as
+the city, because HYROX returns to cities annually and city alone would silently
+pick one. No match means null dates and an alert — never a guessed date, which
+would then be armed on.
+
+### D59 — An IANA zone per race city, resolved at the event's own date
+Arming compares instants, so a date is not enough. Longitude-derived offsets are
+within an hour usually and two hours across a DST boundary, and two hours late
+is the first two hours of a race missed. 96 cities is a bounded set, so the map
+is written out and `Intl` resolves the true offset for that date — which is what
+gets Brisbane (no DST) and Tenerife (an hour behind Madrid) right.
+
+### D60 — 07:00 local is the assumed start hour
+The calendar publishes dates, not times. 07:00 is earlier than any HYROX first
+wave and `PRE_ROLL_MINUTES` widens it further. Being early costs wasted polls;
+being late costs the start of the race.
+
+### D61 — The content hash belongs to the division, not the event
+One weekend has a source id per race day and many divisions under each, so an
+event-level hash was overwritten by each division in turn: the unchanged check
+never matched and every poll rewrote every row. `syncDivision` re-reads the
+division rather than trusting the caller's copy, because a stale object disables
+the optimisation with no visible symptom beyond churn.

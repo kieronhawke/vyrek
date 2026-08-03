@@ -89,6 +89,36 @@ important normalisation decision on the source side.
 **These are the identifiers to key upserts on.** They are opaque, assigned by
 the timing provider, and stable across a season. Nothing else on the page is.
 
+### ⚠️ The weekend name is NOT on the season page
+
+The `event` select lists **every weekend's codes at once** — 73 codes across 22
+weekend ids on season 9 — with:
+
+- no `<optgroup>`,
+- no `selected` marker tying a code to a weekend,
+- and **no change** when `event_main_group` is passed as a query parameter, or
+  when a specific `event=` code is deep-linked.
+
+Attributing codes by document order, or naming them after the selected weekend,
+files every race under one city. That is not hypothetical: it happened, and
+Delhi's results were headed for a Chiba event until the catalogue was run
+against the live source and the events counted.
+
+The mapping exists only behind a **POST**:
+
+```
+POST /season-9/index.php?pid=list
+     event_main_group=2026 Delhi&pid=list&lang=EN
+```
+
+which narrows the `event` select to that weekend (15 codes, 4 weekend ids,
+including the tellingly-named `DEL26_OVERALL`). So a full catalogue is N+1
+requests: one GET for the weekend names, one POST each.
+
+**One race weekend has a source id per race day.** Six ids for Chiba
+(Thursday to Sunday plus finals) all belong to one event. Fewer events than
+weekend ids is correct; *one* event is the bug.
+
 ## 4. How the rows arrive
 
 Three things here were wrong in the first version of this document, and each one
@@ -201,6 +231,21 @@ transfers a full body. Budget for that in the rate plan.
 
 `x-results-cache` is their own edge cache indicator and is useful telemetry: a
 `MISS` on a finalised event is a hint that something changed upstream.
+
+## 6b. What the source does not have: dates
+
+The season page gives a weekend label ("2026 Chiba") and division day names
+("HYROX - Friday"). **No date, no country, no venue, no start time.**
+
+Without a date, live mode cannot arm, the calendar cannot sort, and
+`SportsEvent` markup has nothing to assert. Those facts come instead from
+`data/hyrox/races.normalised.json` — HYROX's own published calendar, 113 races
+read from their event pages — joined on city and year
+(`lib/results/engine/sync/event-metadata.ts`).
+
+Start *times* are not published either. Arming assumes 07:00 local, which is
+earlier than any first wave, widened further by the pre-roll: being early costs
+a few wasted polls, being late costs the start of the race.
 
 ## 7. Live versus final
 
