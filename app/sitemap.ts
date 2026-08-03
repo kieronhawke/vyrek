@@ -73,6 +73,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/hyrox/doubles`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
     { url: `${SITE_URL}/hyrox/nutrition`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
     { url: `${SITE_URL}/hyrox-vs`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
+    { url: `${SITE_URL}/hyrox/workouts`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
     { url: `${SITE_URL}/hyrox/stations`, lastModified: now, priority: 0.9, changeFrequency: "monthly" },
     { url: `${SITE_URL}/hyrox/events`, lastModified: now, priority: 0.9, changeFrequency: "weekly" },
     { url: `${SITE_URL}/hyrox/gear`, lastModified: now, priority: 0.8, changeFrequency: "monthly" },
