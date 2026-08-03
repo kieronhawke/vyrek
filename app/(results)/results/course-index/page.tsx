@@ -44,7 +44,11 @@ const BATCH = 8;
 
 async function loadSamples(): Promise<EditionSample[]> {
   const source = getResultsSource();
-  const events = (await source.listEvents().catch(() => []))
+  // No catch: an outage must surface as a 500, not as an empty state that
+  // claims there is no data. A catalogue that is genuinely still filling up
+  // returns an empty array *successfully*, and that case still renders the
+  // empty state below — so nothing is lost by letting a real failure through.
+  const events = (await source.listEvents())
     .filter((e) => e.status === "finished" && e.totalAthletes > 0)
     .sort((a, b) => (b.startDate || String(b.year)).localeCompare(a.startDate || String(a.year)))
     .slice(0, MAX_EDITIONS);

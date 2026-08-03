@@ -59,7 +59,11 @@ const FAQS = [
 ];
 
 export default async function CityIndexPage() {
-  const events = await getResultsSource().listEvents().catch(() => []);
+  // No catch: an outage must surface as a 500, not as an empty state that
+  // claims there is no data. A catalogue that is genuinely still filling up
+  // returns an empty array *successfully*, and that case still renders the
+  // empty state below — so nothing is lost by letting a real failure through.
+  const events = await getResultsSource().listEvents();
   const cities = groupEventsByCity(events);
 
   const byCountry = new Map<string, typeof cities>();

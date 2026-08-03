@@ -818,3 +818,19 @@ same reason.
 made the accessible name "HYROX London ResultsGBR" — which is what a screen
 reader announces and what Google reads as the page's primary heading. It sits
 beside the `<h1>` now, in a flex wrapper.
+
+### D88 — A source failure must be a 500, never a 404
+The city hub originally wrapped `listEvents()` in `.catch(() => [])`, which fell
+through to `notFound()`. So a transient outage rendered as "this city does not
+exist" — the worst available outcome, because 404 is a *permanent* signal:
+Google drops the URL on it, and ISR then caches the 404 so it outlives the
+outage that produced it.
+
+The catch is gone from all three new pages' render paths. `notFound()` now means
+only what it should: the catalogue loaded and has no such city. A catalogue that
+is genuinely still filling up returns an empty array **successfully**, so the
+empty states still work — nothing was gained by the catch and a de-indexing risk
+was created by it.
+
+`generateStaticParams` keeps its catch, because a failure there should prebuild
+nothing rather than fail the deploy.
