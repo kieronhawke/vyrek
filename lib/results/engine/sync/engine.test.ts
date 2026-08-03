@@ -411,6 +411,80 @@ describe("splits backfill (§4)", () => {
   });
 });
 
+describe("athlete identity does not multiply (§13)", () => {
+  /**
+   * The failure this pins down, measured on real data: 1,006 orphaned athlete
+   * profiles and one person with eleven of them. A partner on a doubles row had
+   * no source id, so every appearance created a fresh profile with an
+   * incremented slug — and did it again on the next sync, for ever.
+   */
+  it("re-syncing a doubles board creates no new athletes", async () => {
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-doubles.html")] },
+      }),
+    });
+
+    await syncOnce(h);
+    const first = h.repo.athletes.size;
+    expect(first).toBe(4); // two teams, two people each
+
+    // Three more syncs. The count must not move by one.
+    await syncOnce(h, { force: true });
+    await syncOnce(h, { force: true });
+    await syncOnce(h, { force: true });
+    expect(h.repo.athletes.size).toBe(first);
+  });
+
+  it("gives every person in a team a stable id derived from the entry", async () => {
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-doubles.html")] },
+      }),
+    });
+    await syncOnce(h);
+
+    const ids = [...h.repo.athletes.values()].map((a) => a.sourceAthleteId).sort();
+    // Position-qualified, so the two people on one entry are distinguishable
+    // and neither is confused with the entry itself.
+    expect(ids).toEqual([
+      "LRAA0000301#p0", "LRAA0000301#p1",
+      "LRAA0000302#p0", "LRAA0000302#p1",
+    ]);
+    expect(new Set(ids).size).toBe(4);
+  });
+
+  it("re-syncing an individual board creates no new athletes either", async () => {
+    const h = await makeHarness();
+    await syncOnce(h);
+    const first = h.repo.athletes.size;
+    expect(first).toBe(8);
+
+    await syncOnce(h, { force: true });
+    await syncOnce(h, { force: true });
+    expect(h.repo.athletes.size).toBe(first);
+  });
+
+  it("leaves no athlete without a race attached", async () => {
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-doubles.html")] },
+      }),
+    });
+    await syncOnce(h);
+
+    // Every profile must be reachable from a result, as its athlete or as a
+    // partner. An orphan is a profile nobody can ever find.
+    const results = [...h.repo.results.values()];
+    for (const athlete of h.repo.athletes.values()) {
+      const attached = results.some(
+        (r) => r.athleteId === athlete.id || r.partnerAthleteIds.includes(athlete.id),
+      );
+      expect(attached, `${athlete.slug} has no race`).toBe(true);
+    }
+  });
+});
+
 describe("historical seasons (§5)", () => {
   it("walks every season, newest first", () => {
     const seasons = allSeasonPaths();

@@ -95,3 +95,4 @@ docs/audit-*/
 scripts/*-capture.mjs
 scripts/check-leave-dialog.mjs
 tests/fixtures/hyrox/captured/
+backups/
