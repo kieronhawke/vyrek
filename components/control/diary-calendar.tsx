@@ -363,12 +363,17 @@ function TimeGrid({
                       borderColor: colour,
                     }}
                   >
-                    <span className="dc-event__time num">{a.start}</span>
+                    {/* A 30-minute entry is a 26px box, which at the 12px
+                        floor holds one line. The title is the line worth
+                        keeping — where the box sits already says when it is. */}
+                    {height >= 34 ? (
+                      <span className="dc-event__time num">{a.start}</span>
+                    ) : null}
                     <span className="dc-event__title">{a.title || "Untitled"}</span>
                     {/* A 30-minute box is 26px. Time, title and client do not
                         fit in it, and half a name clipped by an overflow rule
                         reads as a broken layout rather than a short entry. */}
-                    {a.client && height >= 46 ? (
+                    {a.client && height >= 58 ? (
                       <span className="dc-event__who">{a.client}</span>
                     ) : null}
                   </button>

@@ -65,6 +65,16 @@ function planHref(base: string, a: TrackedAthlete) {
   return `${base}/plans/${a.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 }
 
+/**
+ * The tracker is the fast sheet; the profile is the drawer behind it.
+ *
+ * Keyed on the tracker's own id rather than the name, so renaming somebody
+ * does not orphan everything written about them.
+ */
+function profileHref(base: string, a: TrackedAthlete) {
+  return `${base}/clients/${a.id}`;
+}
+
 export function CoachTracker({ base }: { base: string }) {
   const { items, update, add, remove, reset } = useCollection<TrackedAthlete>(
     "tracker",
@@ -256,6 +266,17 @@ export function CoachTracker({ base }: { base: string }) {
                         </span>
                       ) : null}
 
+                      <Link
+                        href={profileHref(base, a)}
+                        style={{
+                          ...btn,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          textDecoration: "none",
+                        }}
+                      >
+                        Profile
+                      </Link>
                       <Link
                         href={planHref(base, a)}
                         style={{
