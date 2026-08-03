@@ -30,16 +30,15 @@ export async function generateMetadata({
   const { location } = await params;
   const r = resolveGeo(location);
   if (!r) return { title: "Not found" };
-  const { loc, city } = r;
+  const { loc, city, disambiguatedName } = r;
   const url = `${siteUrl()}/hyrox-training/${loc.slug}`;
   // app/layout.tsx appends " · Suth Performance" (20 chars). Lead with the
   // exact query and keep the rendered title under 65 characters.
   //
   // This is also the conversion half of the intent split (see /hyrox/[city]):
   // this page sells the coaching, /hyrox/{slug} answers the research question.
-  /* Boston, Houston, Perth and Portland each exist twice in the slug space,
-     once as a UK town and once as an international race city. The country
-     disambiguates the title; see the personal-trainer sibling. */
+  /* Any catalogue that qualifies a slug supplies the qualified name too; see
+     resolveGeo. Boston, Perth, Newcastle NSW and 60 others need it. */
   const displayName = disambiguatedName ?? loc.name;
   const title = `Hyrox training in ${displayName}`;
   // A race city can say something no UK town page can: the race is here. That
