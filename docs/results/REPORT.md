@@ -25,8 +25,9 @@ production. Flipping it is the last step, described under *What is left*. I
 have not flipped it: the backfill is still running and half the archive would
 show partial fields.
 
-**The backfill is still going.** Roughly 1,250 of 2,692 divisions checkpointed.
-Resumable and safe to stop; progress is per division.
+**The backfill is still going.** 187 of 223 events checkpointed. Resumable and
+safe to stop; progress is recorded per division, so an interrupted run picks up
+where it left off rather than starting again.
 
 ## What running it for real found
 
