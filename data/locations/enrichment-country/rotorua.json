@@ -1,0 +1,151 @@
+{
+  "slug": "rotorua",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Ethos",
+        "type": "gym",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Reform Pilates",
+        "type": "gym",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Rotorua Badminton Hall",
+        "type": "sports-centre",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Pilates Focus Body Conditioning",
+        "type": "gym",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "The Wall",
+        "type": "sports-centre",
+        "website": "http://www.thewall.co.nz",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "CityFitness",
+        "type": "gym",
+        "chain": "CityFitness",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Rotorua Aquatic Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Reboot",
+        "type": "gym",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "The Vault",
+        "type": "gym",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "BFT",
+        "type": "gym",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Geyser City Squash Club",
+        "type": "sports-centre",
+        "website": "https://www.geysercitysquash.co.nz/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Gold's Health & Fitness",
+        "type": "gym",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Profiles Gym",
+        "type": "gym",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Profiles",
+        "type": "gym",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Profiles 2.0",
+        "type": "gym",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Arawa Park Racecourse",
+        "type": "sports-centre",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Drift Kartz",
+        "type": "sports-centre",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Blaze 24hr Fitness",
+        "type": "gym",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Rotovegas Boxing Gym",
+        "type": "gym",
+        "website": "https://www.rvbg.co.nz/",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Rugby Club",
+        "type": "sports-centre",
+        "distanceKm": 2.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

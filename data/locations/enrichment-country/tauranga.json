@@ -1,0 +1,147 @@
+{
+  "slug": "tauranga",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Beyond Fitness",
+        "type": "gym",
+        "website": "http://www.beyondfitness.co.nz/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Cadets Cricket Club",
+        "type": "sports-centre",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Haumaru Sport and Recreation Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "TGA BOX",
+        "type": "sports-centre",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Tauranga Bridge Club",
+        "type": "sports-centre",
+        "website": "https://www.taurangabridge.co.nz/",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Otumoetai Pool",
+        "type": "sports-centre",
+        "distanceKm": 3.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Rocktopia",
+        "type": "sports-centre",
+        "website": "https://rocktopia.co.nz/",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Mount Maunganui Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.bayvenues.co.nz/find-a-venue/mount-sports-centre",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Otumoetai Soccer Club",
+        "type": "sports-centre",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Junior Football Club",
+        "type": "sports-centre",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Jetts Fitness",
+        "type": "gym",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Configure Express",
+        "type": "sports-centre",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Mount Ocean Sports Club",
+        "type": "sports-centre",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "BayActive",
+        "type": "sports-centre",
+        "website": "https://bayactive.co.nz/",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Welcome Bay Tennis Club",
+        "type": "sports-centre",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Baywave",
+        "type": "sports-centre",
+        "distanceKm": 5.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Greerton Aquatic Centre",
+        "type": "sports-centre",
+        "distanceKm": 5.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Skatescool Tauranga",
+        "type": "sports-centre",
+        "website": "https://skatescooltauranga.co.nz/",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Liz Van Wellie Swim School",
+        "type": "sports-centre",
+        "website": "http://www.lvwswimschool.co.nz/",
+        "distanceKm": 7.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

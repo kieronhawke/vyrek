@@ -1,0 +1,36 @@
+{
+  "slug": "bracebridge",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Vita Fitness",
+        "type": "gym",
+        "website": "https://www.vitafitnesstraining.com/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Muskoka Lumber Community Centre",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "RPM | Ride. Perform. Move.",
+        "type": "gym",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Bracebridge Sportsplex",
+        "type": "sports-centre",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

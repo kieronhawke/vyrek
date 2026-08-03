@@ -1,0 +1,160 @@
+{
+  "slug": "delta",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Holly Park Synthetic Field",
+        "type": "sports-centre",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Delta Gymnastics",
+        "type": "sports-centre",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Lacrosse",
+        "type": "sports-centre",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Ladner Leisure Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "South Delta Recreational Boxing",
+        "type": "gym",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Snap Fitness",
+        "type": "gym",
+        "chain": "Snap Fitness",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Ladner Outdoor Pool",
+        "type": "sports-centre",
+        "website": "https://www.delta.ca/parks-recreation/parks-trails/park-and-amenity-search/ladner-outdoor-pool",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Ladner Lawn Bowling",
+        "type": "sports-centre",
+        "website": "https://www.ladnerlawnbowling.ca/",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "CoastLife Strength & Conditioning",
+        "type": "gym",
+        "website": "https://www.coastlifeconditioning.com/",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Open Space Yoga",
+        "type": "gym",
+        "website": "https://www.openspaceyoga.com/",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Delta Deas Rowing Club",
+        "type": "sports-centre",
+        "website": "https://www.deltadeas.com",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Wayland Sports Centre - Swimming & Gymnastics Club",
+        "type": "gym",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Watermania",
+        "type": "sports-centre",
+        "chain": "City of Richmond",
+        "website": "https://www.richmond.ca/parks-recreation/centres/watermania.htm",
+        "distanceKm": 5.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Pacific Pickleball",
+        "type": "sports-centre",
+        "website": "https://www.pacpickleball.ca/",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Extreme Air Park",
+        "type": "sports-centre",
+        "distanceKm": 5.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "G Force Gym South",
+        "type": "gym",
+        "website": "https://www.vancouverallstarcheer.com/south/",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Anytime Fitness",
+        "type": "gym",
+        "chain": "Anytime Fitness",
+        "distanceKm": 5.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Club16 Trevor Linden Fitness",
+        "type": "gym",
+        "distanceKm": 5.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Axé Capoeira Richmond",
+        "type": "gym",
+        "website": "https://richmondcapoeira.com/",
+        "distanceKm": 5.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Living Fit",
+        "type": "gym",
+        "website": "https://www.livingfunctionallyfit.com/",
+        "distanceKm": 5.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

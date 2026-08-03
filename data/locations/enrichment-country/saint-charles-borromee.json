@@ -1,0 +1,37 @@
+{
+  "slug": "saint-charles-borromee",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Éconofitness",
+        "type": "gym",
+        "chain": "Éconofitness",
+        "website": "https://econofitness.ca/fr/gym/lanaudiere/1075-boulevard-firestone",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Centre récréatif Marcel-Bonin",
+        "type": "sports-centre",
+        "distanceKm": 3.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Hockey QC Joliette",
+        "type": "sports-centre",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Club de Tir Lanaudière",
+        "type": "sports-centre",
+        "distanceKm": 5.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

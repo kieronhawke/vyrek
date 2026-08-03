@@ -1,0 +1,21 @@
+{
+  "slug": "central-saanich",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Panorama Recreation Centre",
+        "type": "sports-centre",
+        "distanceKm": 6.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Saanich Commonwealth Place",
+        "type": "sports-centre",
+        "distanceKm": 7.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

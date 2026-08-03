@@ -1,0 +1,36 @@
+{
+  "slug": "wellington-south-africa",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Equilibrium Fitness Center Wellington",
+        "type": "gym",
+        "website": "https://www.facebook.com/EquilibriumWellington?mibextid=ZbWKwL",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Pentz Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Groenheuwel Urban Park",
+        "type": "sports-centre",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Dal Josaphat Stadium",
+        "type": "sports-centre",
+        "distanceKm": 7.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

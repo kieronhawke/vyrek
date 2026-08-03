@@ -1,0 +1,22 @@
+{
+  "slug": "hawera",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Hāwera Aquatic Centre",
+        "type": "sports-centre",
+        "website": "https://www.southtaranaki.com/our-facilities/swimming-pools/hawera-aquatic-centre",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Hāwera Racecourse",
+        "type": "sports-centre",
+        "distanceKm": 2.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

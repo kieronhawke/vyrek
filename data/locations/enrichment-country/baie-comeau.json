@@ -1,0 +1,14 @@
+{
+  "slug": "baie-comeau",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Centre sportif Alcoa",
+        "type": "sports-centre",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

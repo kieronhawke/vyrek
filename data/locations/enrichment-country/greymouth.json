@@ -1,0 +1,14 @@
+{
+  "slug": "greymouth",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Westland Recreation Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "mdantsane",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Mdantsane Indoor Sports Centre",
+        "type": "sports-centre",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "sasolburg",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Bodyworks",
+        "type": "gym",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

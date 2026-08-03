@@ -1,0 +1,46 @@
+{
+  "slug": "goulburn",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Plus Fitness",
+        "type": "gym",
+        "chain": "Plus Fitness",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Goulburn Aquatic and Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.goulburnaquaticcentre.com.au/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Veolia Arena",
+        "type": "sports-centre",
+        "website": "http://www.goulburnmfc.com.au/sports/netball/",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Goulburn Speedway",
+        "type": "sports-centre",
+        "website": "https://goulburnspeedway.com/",
+        "distanceKm": 4.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Goulburn Racecourse & Trotting Track",
+        "type": "sports-centre",
+        "distanceKm": 5.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

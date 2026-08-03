@@ -1,0 +1,30 @@
+{
+  "slug": "kingsville",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Kingsville Arena Complex",
+        "type": "sports-centre",
+        "website": "https://www.kingsville.ca/en/explore-and-play/arena-and-ice-rink.aspx",
+        "distanceKm": 5.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "The Garage Gym",
+        "type": "gym",
+        "website": "https://thegaragegym.net",
+        "distanceKm": 6.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Movati Athletic",
+        "type": "gym",
+        "distanceKm": 7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

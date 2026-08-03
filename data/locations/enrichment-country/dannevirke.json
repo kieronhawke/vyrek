@@ -1,0 +1,22 @@
+{
+  "slug": "dannevirke",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Activate Gym",
+        "type": "gym",
+        "website": "https://activategymdvke.co.nz/",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Rifle range",
+        "type": "sports-centre",
+        "distanceKm": 6.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

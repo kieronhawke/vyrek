@@ -1,0 +1,14 @@
+{
+  "slug": "qonce",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Zwelitsha Sports Grounds",
+        "type": "sports-centre",
+        "distanceKm": 5.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "slug": "knysna",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Lotus Studio",
+        "type": "gym",
+        "website": "https://lotusstudio.co.za/",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Belvedere Tennis Court",
+        "type": "sports-centre",
+        "distanceKm": 5.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Pezula Field of Dreams Clubhouse",
+        "type": "sports-centre",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

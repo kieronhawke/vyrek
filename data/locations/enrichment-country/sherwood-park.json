@@ -1,0 +1,129 @@
+{
+  "slug": "sherwood-park",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Kinsmen Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Strathcona County Recreation Parks and Culture",
+        "website": "https://www.strathcona.ca/recreation-events/recreation-centres/kinsmen-leisure-centre/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "GoodLife Fitness",
+        "type": "gym",
+        "chain": "GoodLife Fitness",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Glen Allan Recreation Complex",
+        "type": "sports-centre",
+        "chain": "Strathcona County Recreation Parks and Culture",
+        "website": "https://www.strathcona.ca/recreation-events/recreation-centres/glen-allan-recreation-complex/",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Anytime Fitness",
+        "type": "gym",
+        "chain": "Anytime Fitness",
+        "website": "https://www.anytimefitness.com/",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Millennium Place",
+        "type": "sports-centre",
+        "chain": "Strathcona County Recreation Parks and Culture",
+        "website": "http://www.strathcona.ab.ca/departments/Recreation_Parks_and_Culture/Recreation_Centres/millennium-place.aspx",
+        "distanceKm": 4.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Spa Lady Fitness Centre",
+        "type": "gym",
+        "website": "https://spalady.ca/club-locations/whitemud/",
+        "distanceKm": 5.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Emerald Hills Leisure Centre",
+        "type": "sports-centre",
+        "chain": "Strathcona County Recreation Parks and Culture",
+        "website": "https://www.strathcona.ca/recreation-events/recreation-centres/emerald-hills-leisure-centre/",
+        "distanceKm": 5.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "ACT Center",
+        "type": "sports-centre",
+        "website": "https://www.edmonton.ca/activities_parks_recreation/act",
+        "distanceKm": 6.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Fit4Less By Goodlife",
+        "type": "gym",
+        "distanceKm": 7.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Meadows Community Recreation Centre",
+        "type": "sports-centre",
+        "website": "https://www.edmonton.ca/activities_parks_recreation/meadows",
+        "distanceKm": 7.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Two Sisters Yoga",
+        "type": "sports-centre",
+        "website": "http://www.twosistersyoga.ca/",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Fit4Less",
+        "type": "gym",
+        "chain": "Fit4Less",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Edmonton Soccer Centre South",
+        "type": "sports-centre",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Abbottsfield Recreation Centre",
+        "type": "sports-centre",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Impact Martial Arts",
+        "type": "gym",
+        "website": "https://edmontontaekwondo.com/",
+        "distanceKm": 7.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

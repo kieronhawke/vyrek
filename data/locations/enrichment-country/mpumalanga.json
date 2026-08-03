@@ -1,0 +1,14 @@
+{
+  "slug": "mpumalanga",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Summerveld Horseracing Training Centre",
+        "type": "sports-centre",
+        "distanceKm": 7.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

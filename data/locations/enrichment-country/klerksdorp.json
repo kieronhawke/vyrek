@@ -1,0 +1,14 @@
+{
+  "slug": "klerksdorp",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Fitis Zone",
+        "type": "gym",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

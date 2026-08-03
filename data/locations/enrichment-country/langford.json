@@ -1,0 +1,164 @@
+{
+  "slug": "langford",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "F45",
+        "type": "gym",
+        "website": "https://f45training.com/ca/studio/langford/",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Master Hong's Marine Taekwondo",
+        "type": "gym",
+        "website": "https://www.marinetaekwondo.com/",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Spinco",
+        "type": "gym",
+        "website": "https://spinco.ca/locations/westshore/",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Align Martial Arts",
+        "type": "gym",
+        "website": "https://alignmartialarts.com/",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Club Phoenix Fitness",
+        "type": "gym",
+        "website": "http://www.club-phoenix.com/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "The Lab Westshore",
+        "type": "gym",
+        "website": "https://labstudios.ca/",
+        "distanceKm": 0.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Anytime Fitness",
+        "type": "gym",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Mel-Fit Crosstraining Centre",
+        "type": "gym",
+        "website": "https://www.melfit.ca/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "The Rising - Victoria Centre for Circus Arts",
+        "type": "gym",
+        "website": "https://www.therisingcircus.com/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Oxygen Yoga & Fitness",
+        "type": "gym",
+        "website": "https://oxygenyogaandfitness.com/langford-location/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "The Westshore Warehouse",
+        "type": "gym",
+        "website": "https://www.thewestshorewarehouse.com/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Eagle Ridge Community Centre",
+        "type": "sports-centre",
+        "website": "http://www.eagleridgecentre.com/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "BoulderHouse Langford",
+        "type": "sports-centre",
+        "website": "https://boulderhouse.ca/langford/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Goudy Field",
+        "type": "sports-centre",
+        "website": "https://citycentrepark.ca/facilities/goudy/",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "YMCA/YWCA Westhills",
+        "type": "sports-centre",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Victoria Barbell",
+        "type": "gym",
+        "website": "https://www.victoriabarbell.com/",
+        "distanceKm": 2.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Recreation Centre",
+        "type": "sports-centre",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Club Pilates",
+        "type": "gym",
+        "website": "https://www.clubpilates.com/location/Colwood",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Juan de Fuca Recreation Centre",
+        "type": "sports-centre",
+        "website": "https://explore.wspr.ca/Westshore/public/category/browse/FAC_ISC",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Juan de Fuca Arena",
+        "type": "sports-centre",
+        "website": "https://explore.wspr.ca/Westshore/public/booking/items/JDFARENAWEB",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

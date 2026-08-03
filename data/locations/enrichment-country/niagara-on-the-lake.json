@@ -1,0 +1,14 @@
+{
+  "slug": "niagara-on-the-lake",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Lakeside Quarter Horses",
+        "type": "sports-centre",
+        "distanceKm": 3.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

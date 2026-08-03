@@ -1,0 +1,162 @@
+{
+  "slug": "burnaby",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Driftwood Athletics",
+        "type": "gym",
+        "website": "https://www.driftwoodathletics.com",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Athena Fencing Club",
+        "type": "gym",
+        "website": "https://www.athenafencingclub.com/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Kraken Fitness",
+        "type": "gym",
+        "website": "https://krakentraining.com/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Burnaby Karate Academy",
+        "type": "gym",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Kensington Complex",
+        "type": "sports-centre",
+        "website": "https://www.burnaby.ca/Things-To-Do/Community-Centres/Kensington-Complex.html",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Kensington Park Outdoor Pool",
+        "type": "sports-centre",
+        "website": "https://www.burnaby.ca/recreation-and-arts/recreation-facilities/kensington-park-outdoor-pool",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Christine Sinclair Community Centre",
+        "type": "sports-centre",
+        "website": "https://www.burnaby.ca/Things-To-Do/Community-Centres/Christine-Sinclair-Community-Centre.html",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Yoga Spirit",
+        "type": "gym",
+        "website": "https://myyogaspirit.ca/",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Scotia Barn",
+        "type": "sports-centre",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "REVS",
+        "type": "sports-centre",
+        "website": "https://www.revs.ca/revs-burnaby",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Field 4",
+        "type": "sports-centre",
+        "distanceKm": 2.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "SFU Climbing Wall",
+        "type": "sports-centre",
+        "website": "https://sfurec.ca/sports/2021/4/27/instructional-programs.aspx",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Capitol Hill Athletics",
+        "type": "gym",
+        "website": "https://www.capitolhillathletics.com/",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Advantage fitness",
+        "type": "gym",
+        "website": "https://www.advantage-fit.ca/",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Lorne Davies Complex",
+        "type": "sports-centre",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Terry Fox Field",
+        "type": "sports-centre",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "SFU Aquatic Centre",
+        "type": "sports-centre",
+        "website": "https://sfurec.ca/sports/2021/5/18/private-swim-lessons.aspx",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Beyond boxing",
+        "type": "gym",
+        "website": "https://beyondboxing.com/",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Harry Jerome Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.burnabyvelodrome.ca/",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Burnaby Winter Club",
+        "type": "sports-centre",
+        "website": "https://www.burnabywinterclub.com/",
+        "distanceKm": 2.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

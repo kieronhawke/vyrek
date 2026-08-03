@@ -1,0 +1,169 @@
+{
+  "slug": "victoria",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Crystal Pool and Fitness Centre",
+        "type": "sports-centre",
+        "website": "https://www.victoria.ca/parks-recreation/recreation/crystal-pool-fitness-centre",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "CrossFit Zone",
+        "type": "gym",
+        "website": "https://www.crossfitzone.ca/",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Forge Gym",
+        "type": "gym",
+        "website": "https://www.forgevictoria.com/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Tropos Fitness Club",
+        "type": "gym",
+        "website": "https://troposfitnessclub.com/",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "BoulderHouse Climbing",
+        "type": "gym",
+        "website": "https://boulderhouse.ca/victoria/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Peterec's Kombat Centre",
+        "type": "gym",
+        "website": "https://peterecskickboxing.com/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Spinco",
+        "type": "gym",
+        "website": "https://spinco.ca/locations/victoria/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Crag X Climbing Centre",
+        "type": "sports-centre",
+        "website": "https://www.cragx.ca",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Victoria Martial Arts",
+        "type": "gym",
+        "website": "https://victoriamartialarts.ca/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Anytime Fitness",
+        "type": "gym",
+        "chain": "Anytime Fitness",
+        "website": "https://www.anytimefitness.ca/gyms/4726/victoria-bc-v8w-0e5/",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Victoria Fitness",
+        "type": "gym",
+        "website": "https://victoria-fitness.ca",
+        "distanceKm": 1.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Vic City Gymnastics",
+        "type": "gym",
+        "website": "https://viccitygymnastics.com/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Studio 4 Athletics",
+        "type": "gym",
+        "website": "https://studio4athletics.com/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Limitless Training",
+        "type": "gym",
+        "website": "https://www.limitlessvictoria.com/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Kadampa Meditation Centre",
+        "type": "gym",
+        "website": "https://meditateinvictoria.org/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "YMCA-YWCA Downtown",
+        "type": "sports-centre",
+        "chain": "YMCA",
+        "website": "https://vancouverislandy.com/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Gracie Barra Brazilian Jiu-Jitsu",
+        "type": "gym",
+        "website": "https://graciebarra.com/victoria-bc/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Park's MBA Tae-Kwon-Do",
+        "type": "gym",
+        "website": "https://www.parksmba.com/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "VBC Fitness",
+        "type": "gym",
+        "website": "https://www.vbcfitness.com/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "West Coast Jiu-Jitsu",
+        "type": "gym",
+        "website": "https://www.westcoastjj.ca/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

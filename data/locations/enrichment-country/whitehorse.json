@@ -1,0 +1,44 @@
+{
+  "slug": "whitehorse",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Better Bodies",
+        "type": "gym",
+        "website": "https://www.betterbodieswhitehorse.ca/",
+        "distanceKm": 2.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Whitehorse Nordic Centre",
+        "type": "gym",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Mount McIntyre Recreation Centre",
+        "type": "sports-centre",
+        "website": "https://www.whitehorse.ca/departments/recreation-and-facility-services/indoor-facilities-/mount-mcintyre-recreation-centre",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Yukon University Gymnasium",
+        "type": "gym",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Whitehorse Rifle & Pistol Club",
+        "type": "sports-centre",
+        "distanceKm": 6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

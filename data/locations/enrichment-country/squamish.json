@@ -1,0 +1,76 @@
+{
+  "slug": "squamish",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Seed Studio Pilates & Wellness",
+        "type": "gym",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Club Flex",
+        "type": "gym",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Rope Runner",
+        "type": "sports-centre",
+        "website": "https://roperunnerpark.com/",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Mountain Fitness Center",
+        "type": "sports-centre",
+        "distanceKm": 2.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Ground Up Climbing Centre",
+        "type": "sports-centre",
+        "website": "https://www.climbgroundup.com/",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Airhouse",
+        "type": "sports-centre",
+        "website": "https://airhouse.ca/",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Mountain Jiu Jitsu",
+        "type": "gym",
+        "website": "https://www.mtnjjsq.com",
+        "distanceKm": 2.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Brennan Park Recreation Centre",
+        "type": "sports-centre",
+        "website": "https://squamish.ca/rec/recreation-facilities/brennan-park-recreation-centre/",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Brennan Park Aquatic Centre",
+        "type": "sports-centre",
+        "website": "https://squamish.ca/rec/pool#Pool",
+        "distanceKm": 3.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

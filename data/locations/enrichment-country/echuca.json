@@ -1,0 +1,37 @@
+{
+  "slug": "echuca",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "City of Echuca Bowls Club",
+        "type": "sports-centre",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Echuca Harness Racing Club",
+        "type": "sports-centre",
+        "website": "https://www.harness.org.au/echuca",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Next Level Fitness",
+        "type": "gym",
+        "website": "https://www.nextlevelfitnessechuca.com.au/",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Squash courts",
+        "type": "sports-centre",
+        "distanceKm": 2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

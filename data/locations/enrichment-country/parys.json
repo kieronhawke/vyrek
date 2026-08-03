@@ -1,0 +1,14 @@
+{
+  "slug": "parys",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "DFC Gym",
+        "type": "gym",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

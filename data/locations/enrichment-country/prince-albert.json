@@ -1,0 +1,15 @@
+{
+  "slug": "prince-albert",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Kinsman Arena",
+        "type": "sports-centre",
+        "website": "https://www.citypa.ca/en/parks-recreation-and-culture/kinsmen-arena.aspx",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

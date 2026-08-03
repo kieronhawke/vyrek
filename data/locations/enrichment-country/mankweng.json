@@ -1,0 +1,21 @@
+{
+  "slug": "mankweng",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Mankweng Sports Complex",
+        "type": "sports-centre",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Anglo Platinum Multipurpose Centre",
+        "type": "sports-centre",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "miramichi",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Lord Beaverbrook Arena",
+        "type": "sports-centre",
+        "distanceKm": 3.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

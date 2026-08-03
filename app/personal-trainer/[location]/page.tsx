@@ -48,7 +48,13 @@ export async function generateMetadata({
       ? `${bare}, online`
       : bare.length + 20 <= 65
         ? bare
-        : `Personal trainer, ${displayName}`;
+        : `Personal trainer, ${displayName}`.length + 20 <= 65
+          ? `Personal trainer, ${displayName}`
+          : /* Montreal's boroughs run to 40 characters —
+               "Rivière-des-Prairies–Pointe-aux-Trembles" — and overflow even
+               the comma form. The place name alone fits and reads; a title
+               truncated mid-word does neither. */
+            displayName;
   // Per-town, because this is the snippet in the results page. A description
   // identical across 1,973 places gives a searcher no reason to click ours.
   // The international cities lead on the race instead of the gym count: it is

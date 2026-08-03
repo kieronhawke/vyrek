@@ -1,0 +1,14 @@
+{
+  "slug": "kenora",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Keewatin Memorial Arena",
+        "type": "sports-centre",
+        "distanceKm": 5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "slug": "oamaru",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Fitness 24",
+        "type": "gym",
+        "website": "https://fitness24.co.nz",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Snap Fitness",
+        "type": "gym",
+        "chain": "Snap Fitness",
+        "website": "https://www.snapfitness.com/nz/gyms/oamaru",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

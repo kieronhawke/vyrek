@@ -1,0 +1,14 @@
+{
+  "slug": "delmas",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Simon Gondwe Sport Center",
+        "type": "sports-centre",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

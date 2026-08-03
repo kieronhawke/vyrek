@@ -1,0 +1,29 @@
+{
+  "slug": "port-hedland",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Tennis Club (3.0m)",
+        "type": "sports-centre",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Gratwick Fitness Centre",
+        "type": "gym",
+        "website": "https://www.porthedlandleisure.wa.gov.au/gym-fitness/gyms/gratwick-fitness-centre.aspx",
+        "distanceKm": 0.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Pilates on Point",
+        "type": "gym",
+        "distanceKm": 3.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

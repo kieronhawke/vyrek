@@ -1,0 +1,30 @@
+{
+  "slug": "leamington",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Leamington Kinsmen Recreation Complex",
+        "type": "sports-centre",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Sun Parlour Curling Club",
+        "type": "sports-centre",
+        "website": "https://sunparlourcurling.com/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Point Pelee Karting",
+        "type": "sports-centre",
+        "website": "https://www.pointpeleekarting.com/",
+        "distanceKm": 4.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

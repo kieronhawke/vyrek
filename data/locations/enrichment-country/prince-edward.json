@@ -1,0 +1,15 @@
+{
+  "slug": "prince-edward",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "PEFAC",
+        "type": "gym",
+        "website": "https://pefac.ca/wp/",
+        "distanceKm": 7.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

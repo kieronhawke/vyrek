@@ -1,0 +1,115 @@
+{
+  "slug": "lloydminster",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "The Sticks Billiards & Lounge",
+        "type": "sports-centre",
+        "website": "https://thestickspoolhall.com/",
+        "distanceKm": 0.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Archie Miller Arena",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Russ Robertson Arena",
+        "type": "sports-centre",
+        "website": "https://www.lloydminster.ca/en/recreation-and-culture/arenas.aspx",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Lloydminster Outdoor Pool",
+        "type": "sports-centre",
+        "website": "https://www.lloydminster.ca/en/recreation-and-culture/outdoor-pool.aspx",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Fit4Less",
+        "type": "gym",
+        "chain": "Fit4Less",
+        "website": "https://www.fit4less.ca",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Axe Rising",
+        "type": "sports-centre",
+        "website": "https://www.axerising.com/",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "The Synergy Vault",
+        "type": "sports-centre",
+        "distanceKm": 1.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "To The Core Pilates Studio",
+        "type": "gym",
+        "website": "https://tothecore.ca/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Oasis Hot Yoga and Spin Studio",
+        "type": "gym",
+        "distanceKm": 1.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Bioclean Aquatic Centre",
+        "type": "sports-centre",
+        "website": "https://www.lloydminster.ca/en/recreation-and-culture/bioclean-aquatic-centre.aspx",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Viking Strength",
+        "type": "gym",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Serenity Yoga Studio",
+        "type": "gym",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Centennial Civic Centre",
+        "type": "sports-centre",
+        "website": "https://facilities.lloydminster.ca/Home/Detail?Id=e38bfb1c-ed88-452c-9776-e33cb87e9cfa",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Servus Sports Centre",
+        "type": "sports-centre",
+        "website": "https://www.lloydminster.ca/en/recreation-and-culture/servus-sports-centre.aspx",
+        "distanceKm": 2.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "slug": "saint-hyacinthe",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Centre Aquatique Desjardins",
+        "type": "sports-centre",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Nautilus",
+        "type": "gym",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Éconofitness",
+        "type": "gym",
+        "chain": "Éconofitness",
+        "website": "https://econofitness.ca/en/gym/monteregie/3040-bd-choquette?utm_source=G&utm_medium=LPM&utm_campaign=Econofitness",
+        "distanceKm": 1.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Club Aventure Plein Air St-Hyacinthe",
+        "type": "sports-centre",
+        "website": "https://sites.google.com/site/clubaventurepleinairsthya/",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

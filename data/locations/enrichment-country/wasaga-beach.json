@@ -1,0 +1,31 @@
+{
+  "slug": "wasaga-beach",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Wasaga Nordic and Trail Centre",
+        "type": "sports-centre",
+        "website": "https://www.ontarioparks.ca/snowreport/detail/wasagabeach",
+        "distanceKm": 0.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Wasaga Beach Arena",
+        "type": "sports-centre",
+        "website": "http://www.wasagabeach.com/Pages/Arena.aspx",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Wasaga 500",
+        "type": "sports-centre",
+        "website": "https://wasaga500.com/",
+        "distanceKm": 3.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

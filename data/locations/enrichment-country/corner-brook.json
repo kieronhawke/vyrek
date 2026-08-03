@@ -1,0 +1,14 @@
+{
+  "slug": "corner-brook",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Gymnastics Building",
+        "type": "sports-centre",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

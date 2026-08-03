@@ -1,0 +1,21 @@
+{
+  "slug": "evaton",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Chris Hani Sports Complex",
+        "type": "sports-centre",
+        "distanceKm": 5.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Saul Tsotetsi Sports Complex",
+        "type": "sports-centre",
+        "distanceKm": 6.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

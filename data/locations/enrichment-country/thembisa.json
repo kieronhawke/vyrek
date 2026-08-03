@@ -1,0 +1,15 @@
+{
+  "slug": "thembisa",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Barnstormers Model Flying Club",
+        "type": "sports-centre",
+        "website": "https://www.barnstormersmfc.club/",
+        "distanceKm": 7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

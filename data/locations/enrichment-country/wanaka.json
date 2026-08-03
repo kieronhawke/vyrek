@@ -1,0 +1,37 @@
+{
+  "slug": "wanaka",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Wānaka Recreation Centre",
+        "type": "sports-centre",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Indoor Climbing Wanaka",
+        "type": "sports-centre",
+        "website": "https://www.basecampadventures.co.nz/indoor-climbing-wanaka/",
+        "distanceKm": 1.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Gun club",
+        "type": "sports-centre",
+        "distanceKm": 6.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Crossfire",
+        "type": "sports-centre",
+        "website": "https://www.crossfirewanaka.co.nz/",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

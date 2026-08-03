@@ -1,0 +1,14 @@
+{
+  "slug": "dargaville",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Brian's Gym And Fitness Centre",
+        "type": "gym",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

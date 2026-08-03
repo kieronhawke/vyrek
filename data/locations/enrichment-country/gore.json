@@ -1,0 +1,45 @@
+{
+  "slug": "gore",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "RSA Bowling Club",
+        "type": "sports-centre",
+        "website": "https://www.gorersa.co.nz",
+        "distanceKm": 0.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Citizens Tennis Club",
+        "type": "sports-centre",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Gore Tennis Club",
+        "type": "sports-centre",
+        "website": "http://www.tennissouthland.co.nz",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Hokonui Bowling Club",
+        "type": "sports-centre",
+        "website": "https://www.sporty.co.nz/hokonuibowls",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "The Base",
+        "type": "gym",
+        "distanceKm": 2.1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

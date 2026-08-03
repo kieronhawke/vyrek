@@ -1,0 +1,14 @@
+{
+  "slug": "cradock",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Rovers Sports Grounds",
+        "type": "sports-centre",
+        "distanceKm": 3.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

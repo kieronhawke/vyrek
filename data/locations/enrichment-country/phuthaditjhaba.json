@@ -1,0 +1,14 @@
+{
+  "slug": "phuthaditjhaba",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Bluegumbosch Stadium",
+        "type": "sports-centre",
+        "distanceKm": 6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

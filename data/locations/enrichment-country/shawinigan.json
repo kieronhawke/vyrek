@@ -1,0 +1,45 @@
+{
+  "slug": "shawinigan",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Mega Gym Maxi-Forme",
+        "type": "gym",
+        "website": "https://www.maxi-forme.ca/",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Aréna Gilles-Bourassa",
+        "type": "sports-centre",
+        "distanceKm": 5.6,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Vallée du Parc",
+        "type": "sports-centre",
+        "website": "https://valleeduparc.com/",
+        "distanceKm": 6.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Aréna de Grand-Mère",
+        "type": "sports-centre",
+        "distanceKm": 6.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Mont SM",
+        "type": "sports-centre",
+        "website": "https://www.montsm.com/",
+        "distanceKm": 7.7,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

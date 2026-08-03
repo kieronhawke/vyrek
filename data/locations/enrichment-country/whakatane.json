@@ -1,0 +1,23 @@
+{
+  "slug": "whakatane",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Jetts Fitness",
+        "type": "gym",
+        "chain": "Jetts Fitness",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Nidhi Yoga",
+        "type": "gym",
+        "website": "https://www.nidhiyoga.co.nz/",
+        "distanceKm": 4.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

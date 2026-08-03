@@ -1,0 +1,14 @@
+{
+  "slug": "esikhaleni",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Esikhawini Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

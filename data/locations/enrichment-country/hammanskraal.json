@@ -1,0 +1,14 @@
+{
+  "slug": "hammanskraal",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Temba Public Swimming Pool",
+        "type": "sports-centre",
+        "distanceKm": 5.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

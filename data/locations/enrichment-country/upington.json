@@ -1,0 +1,21 @@
+{
+  "slug": "upington",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Upington Sports Grounds",
+        "type": "sports-centre",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Jacobus Maasdorp Sports Grounds",
+        "type": "sports-centre",
+        "distanceKm": 5.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

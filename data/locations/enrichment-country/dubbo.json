@@ -1,0 +1,54 @@
+{
+  "slug": "dubbo",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Dubbo Aquatic Leisure Centre",
+        "type": "sports-centre",
+        "website": "https://www.dubbo.nsw.gov.au/community-groups/sport-leisure/dubbo-aquatic-leisure-centre",
+        "distanceKm": 0.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Paramount Tennis Club",
+        "type": "sports-centre",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "West Dubbo Bowling Club",
+        "type": "sports-centre",
+        "website": "https://www.clubdubbo.com.au/",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "City of Dubbo Turf Club",
+        "type": "sports-centre",
+        "website": "https://www.dubboturfclub.com.au/",
+        "distanceKm": 3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Dubbo Sports World",
+        "type": "sports-centre",
+        "website": "https://www.dubbosportsworld.com.au/",
+        "distanceKm": 4.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Anytime Fitness",
+        "type": "gym",
+        "chain": "Anytime Fitness",
+        "distanceKm": 4.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

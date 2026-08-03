@@ -1,0 +1,71 @@
+{
+  "slug": "fort-st-john",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "The Gym",
+        "type": "gym",
+        "distanceKm": 0.3,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Gators Gym",
+        "type": "gym",
+        "website": "http://www.gatorsgym.ca/",
+        "distanceKm": 0.4,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Prevail Athletics",
+        "type": "gym",
+        "website": "https://www.prevailathleticsfsj.com/",
+        "distanceKm": 0.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "North Peace Leisure Pool",
+        "type": "sports-centre",
+        "website": "https://www.fortstjohn.ca/parks-and-recreation/recreation-facilities/north-peace-leisure-pool",
+        "distanceKm": 1,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "Pomeroy Sport Centre",
+        "type": "sports-centre",
+        "website": "https://www.fortstjohn.ca/en/main/parks-rec/facilities/pomeroy-sport-centre.html?media=standard",
+        "distanceKm": 1.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "GoodLife Fitness",
+        "type": "gym",
+        "chain": "GoodLife Fitness",
+        "website": "https://www.goodlifefitness.com/clubs/club.345.html",
+        "distanceKm": 1.5,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "CrossFit Exhale",
+        "type": "gym",
+        "website": "https://crossfit-exhale.com/",
+        "distanceKm": 1.8,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      },
+      {
+        "name": "The Sweat Box",
+        "type": "gym",
+        "website": "https://www.thesweatboxfsj.ca/",
+        "distanceKm": 1.9,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}

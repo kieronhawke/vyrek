@@ -1,0 +1,14 @@
+{
+  "slug": "conception-bay-south",
+  "gyms": {
+    "equippedGyms": [
+      {
+        "name": "Platinum Gym",
+        "type": "sports-centre",
+        "distanceKm": 2.2,
+        "source": "https://www.openstreetmap.org/copyright (via Overpass API)",
+        "verifiedOn": "2026-08-03"
+      }
+    ]
+  }
+}
