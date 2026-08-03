@@ -99,3 +99,30 @@ export const NATION_CODE: Record<string, string> = {
 export function nationCode(iso: string): string {
   return NATION_CODE[iso] ?? iso.toUpperCase();
 }
+
+/**
+ * Full country names, for prose where a three-letter code reads as jargon.
+ *
+ * "GBR record" is fine in a table header and wrong in a sentence — "New Men's
+ * British record" is what a person would say. Deliberately covers the nations
+ * on the HYROX calendar rather than every ISO code: an unmapped country falls
+ * back to its code, which is honest, whereas a generated name would not be.
+ *
+ * These are the *adjectival* forms where one exists, because that is how a
+ * record is described.
+ */
+export const NATION_NAME: Record<string, string> = {
+  gb: "British", ie: "Irish", de: "German", in: "Indian", hk: "Hong Kong",
+  sg: "Singaporean", us: "American", se: "Swedish", nl: "Dutch", es: "Spanish",
+  fr: "French", it: "Italian", pl: "Polish", at: "Austrian", ch: "Swiss",
+  be: "Belgian", dk: "Danish", no: "Norwegian", fi: "Finnish", pt: "Portuguese",
+  au: "Australian", nz: "New Zealand", ca: "Canadian", za: "South African",
+  ae: "Emirati", jp: "Japanese", kr: "South Korean", cn: "Chinese",
+  br: "Brazilian", mx: "Mexican", cz: "Czech", hu: "Hungarian", gr: "Greek",
+  tr: "Turkish", th: "Thai", my: "Malaysian", ph: "Filipino", id: "Indonesian",
+};
+
+export function countryName(iso: string): string | null {
+  if (!iso) return null;
+  return NATION_NAME[iso.toLowerCase()] ?? null;
+}

@@ -36,6 +36,12 @@ export default async function RankingsIndex() {
 
       <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
         <BoardLink
+          href="/rankings/records"
+          icon={<Trophy className="size-5" aria-hidden />}
+          title="The record book"
+          detail="World, national and age-group records — every single one"
+        />
+        <BoardLink
           href="/rankings/world-records"
           icon={<Trophy className="size-5" aria-hidden />}
           title="All-time records"

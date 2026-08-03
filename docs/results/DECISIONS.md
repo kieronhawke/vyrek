@@ -1060,3 +1060,72 @@ full opacity, and a test now asserts that.
 `min-height: 82vh` on the cover then produced two blank pages before any
 content, because `vh` is the full page box and the padding pushed past it. The
 first section already forces its own break, so the cover needs none.
+
+### D98 — The record book, and the bug that made it necessary
+The old records page read each event's winner, kept the best per division, and
+stamped **`countryIso: "gb"` on every single entry** — so a Swedish world record
+flew a British flag. It also had no national records and no age-group records
+at all, which is most of what a record book is for.
+
+`records.ts` computes the whole thing from published results: world records per
+division, national records for every country that holds one, and every
+division-and-age-group mark. It walks each scope *chronologically*, so it also
+knows what each mark beat, by how much, and how many times it has changed hands
+— which is the difference between a record book and a list of fast times.
+
+Undated results sort **last**, not first. An undated row at the front would
+claim to be the original mark and make every later, faster time look like a
+break of it; sorting it last means it can only ever take a record, which is the
+conservative reading.
+
+### D99 — A record is never "new" without a date
+The freshness window is a fortnight: long enough that someone who raced on
+Saturday still sees it celebrated the following weekend, short enough that the
+banner does not become furniture. A record with no date is **never** fresh, and
+a future date returns null rather than a negative age.
+
+That last guard is load-bearing on the current demo corpus, which contains
+"finished" events dated December 2026 — three months ahead of today. Without it
+those would be announced as just-set. The banner correctly shows nothing on
+demo data, which is why it cannot be seen there; `records.test.ts` proves the
+behaviour instead.
+
+`announce()` is scope-accurate by construction, because calling a national
+record a world record is the one mistake this feature cannot make.
+
+### D100 — Sharing on a phone: the card, and the link that survives
+Three defects, all invisible on a desktop.
+
+**Capability was read during render.** `typeof navigator !== "undefined"` is
+false on the server and true on the client, so the share buttons were a
+hydration mismatch waiting to happen. Now read through `useSyncExternalStore`,
+which is exactly what it is for: an external value that never changes and needs
+an SSR snapshot. Setting it from an effect would trip the cascading-render rule.
+
+**The link did not survive the share.** `navigator.share({text, url})` looks
+complete, but several iOS targets take `text` and silently drop `url` — so a
+share meant to bring someone back arrived as a bare sentence. The URL is now
+repeated inside `text`. Apps that handle `url` properly still get a real link
+and the card preview.
+
+**You could not share the card itself.** Only a download, and on iOS Safari the
+`download` attribute on a blob is unreliable — it opens the image in a tab and
+leaves you to long-press it. `navigator.share({files})` opens the native sheet
+with the image, which is the share that actually happens after a race. Two
+details matter: `canShare` must be probed with a real `File`, because passing a
+plain object returns true on browsers that cannot take one; and the file is
+fetched while the sheet is open rather than on tap, because Safari drops the
+transient user activation across an await and the sheet then refuses to open.
+
+### D101 — Two report defects a five-athlete PDF sweep found
+Generating the report for the winner, the back of the field, a woman and a
+doubles pair — rather than one mid-pack man — turned up two things.
+
+**Section numbers were hardcoded.** The winner gets no "against the winner"
+section, so their own report read 06, then 08. To a reader that is a missing
+page. Numbers are counted as sections render now.
+
+**The longest bar's label collided with its row label.** On the biggest
+improvement in the race — the row a reader looks at first — "Wall Balls" and
+"−0:42" printed on top of each other. The value now sits inside the bar when
+there is no room outside it.

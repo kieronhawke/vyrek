@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getResultsSource } from "@/lib/results";
+import { collectRecordCandidates } from "@/lib/results/records-source";
+import { worldRecords, ageGroupRecords, freshRecords } from "@/lib/results/records";
+import { RecordBanner } from "@/components/results/rankings/record-banner";
 import { siteUrl } from "@/lib/blog/urls";
 import { HeroSearch } from "@/components/results/search/hero-search";
 import { EventTile, EventRail, RailItem } from "@/components/results/event-tiles";
@@ -38,7 +41,7 @@ const TOOLS = [
   { href: "/simulator", label: "Race simulator", detail: "Model your finish, station by station", icon: SlidersHorizontal },
   { href: "/results/compare", label: "Compare", detail: "Two athletes, or two of your own races", icon: GitCompareArrows },
   { href: "/tools/good-hyrox-time", label: "Percentile check", detail: "Where your time actually places you", icon: Percent },
-  { href: "/rankings/world-records", label: "Records", detail: "Fastest times by division", icon: Trophy },
+  { href: "/rankings/records", label: "The record book", detail: "World, national and age-group records", icon: Trophy },
   { href: "/results/course-index", label: "Course speed index", detail: "Which venues actually run slow", icon: Gauge },
   { href: "/results/city", label: "Browse by city", detail: "Every host city, every edition", icon: MapPin },
 ];
@@ -47,11 +50,20 @@ export default async function ResultsLandingPage() {
   const source = getResultsSource();
   const now = new Date();
 
-  const [events, live, upcoming] = await Promise.all([
+  const [events, live, upcoming, recordCandidates] = await Promise.all([
     source.listEvents({ status: "finished" }),
     source.listEvents({ status: "live" }),
     source.listEvents({ status: "upcoming" }),
+    // A record falling is the only moment most people look at a record book,
+    // so it is announced on the page they are already on. Failing softly here
+    // is right: a banner is not worth taking the whole hub down for.
+    collectRecordCandidates().catch(() => []),
   ]);
+
+  const freshlySet = freshRecords(
+    [...worldRecords(recordCandidates), ...ageGroupRecords(recordCandidates)],
+    now,
+  ).sort((a, b) => (a.scope === "world" ? -1 : 1) - (b.scope === "world" ? -1 : 1));
 
   const athleteTotal = [...events, ...live, ...upcoming]
     .reduce((sum, e) => sum + e.totalAthletes, 0);
@@ -88,6 +100,12 @@ export default async function ResultsLandingPage() {
           </div>
           <LiveStrip eventSlug={live[0].slug} eventName={live[0].name} />
         </section>
+      ) : null}
+
+      {freshlySet.length > 0 ? (
+        <div className="mt-8">
+          <RecordBanner rows={freshlySet} />
+        </div>
       ) : null}
 
       <section className="mt-12" aria-labelledby="latest-heading">

@@ -34,6 +34,7 @@ const ROUTES = [
   { name: "city hub", path: "/results/city/london" },
   { name: "course index", path: "/results/course-index" },
   { name: "race report", path: "/report/s9-2026-london-hyrox-men-1600" },
+  { name: "record book", path: "/rankings/records" },
 ];
 
 /** Fails the test if the page logged an error or threw during hydration. */
@@ -302,6 +303,46 @@ test.describe("search", () => {
  * Every assertion here corresponds to something that was actually broken
  * during the build and would have shipped silently otherwise.
  */
+test.describe("the record book", () => {
+  test("lists world, national and age-group records", async ({ page }) => {
+    await open(page, "/rankings/records");
+    await expect(page.getByRole("heading", { name: "World records" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "National records" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Age-group records" })).toBeVisible();
+
+    const cards = page.locator("article").filter({ hasText: "race report" });
+    expect(await cards.count()).toBeGreaterThan(10);
+  });
+
+  test("every record names a real holder, not a placeholder flag", async ({ page }) => {
+    await open(page, "/rankings/records");
+    // The previous implementation stamped countryIso "gb" on every entry, so a
+    // Swedish world record flew a British flag. Records must show more than one
+    // nationality across the board.
+    // `Nationality` exposes the country as sr-only text beside the flag.
+    const codes = await page.evaluate(() =>
+      Array.from(document.querySelectorAll("article .sr-only"))
+        .map((el) => (el.textContent ?? "").trim())
+        .filter((code) => /^[A-Z]{3}$/.test(code)),
+    );
+    expect(codes.length, "no nationality codes rendered at all").toBeGreaterThan(5);
+    expect(new Set(codes).size, `every record shows ${codes[0]}`).toBeGreaterThan(1);
+  });
+
+  test("filters by country through a real URL", async ({ page }) => {
+    await open(page, "/rankings/records?country=se");
+    await expect(page.getByRole("heading", { name: /Swedish records/i })).toBeVisible();
+  });
+
+  test("does not flag anything as new when nothing is recent", async ({ page }) => {
+    await open(page, "/rankings/records");
+    // Demo data's finished events are months old or future-dated, so the
+    // freshness window is correctly empty. A "New" badge here would mean the
+    // date guard had broken.
+    await expect(page.locator("text=/^New$/").first()).toBeHidden();
+  });
+});
+
 test.describe("race report", () => {
   const REPORT = "/report/s9-2026-london-hyrox-men-1600";
 
@@ -385,6 +426,14 @@ test.describe("race report", () => {
 
   test("the cover photograph is actually visible, not a black rectangle", async ({ page }) => {
     await open(page, REPORT);
+    // Wait for the decode rather than sampling immediately — on the slower
+    // device profiles the check raced the image and failed intermittently,
+    // which is a flaky test rather than a black cover.
+    await page.waitForFunction(() => {
+      const img = document.querySelector(".report-cover img") as HTMLImageElement | null;
+      return Boolean(img?.complete && img.naturalWidth > 0);
+    }, undefined, { timeout: 15_000 });
+
     const cover = await page.evaluate(() => {
       const img = document.querySelector(".report-cover img") as HTMLImageElement | null;
       if (!img) return null;
@@ -399,11 +448,115 @@ test.describe("race report", () => {
     expect(cover?.opacity).toBe(1);
   });
 
+  test("section numbers run in sequence even when sections are skipped", async ({ page }) => {
+    // The winner of a division gets no "against the winner" section, and a
+    // first-timer gets no comparison. With hardcoded numbers the winner's own
+    // report read 06 then 08, which looks like a missing page.
+    await open(page, "/report/s9-2026-london-hyrox-men-1");
+    const numbers = await page.evaluate(() =>
+      Array.from(document.querySelectorAll(".report-section h2"))
+        .map((h) => h.previousElementSibling?.textContent?.trim() ?? "")
+        .filter(Boolean),
+    );
+    expect(numbers.length).toBeGreaterThan(6);
+    expect(numbers).toEqual(numbers.map((_, i) => String(i + 1).padStart(2, "0")));
+  });
+
   test("the report is linked from the result it describes", async ({ page }) => {
     await open(page, "/result/s9-2026-london-hyrox-men-1600");
     const link = page.getByRole("link", { name: /full race report/i });
     await expect(link).toBeVisible();
     await expect(link).toHaveAttribute("href", REPORT);
+  });
+});
+
+/**
+ * The share sheet is where a PB actually leaves the site, and most of what
+ * makes it work on a phone is invisible on a desktop test run. These cover the
+ * parts that were wrong: a capability read during render, and a share payload
+ * that dropped the link back to us.
+ */
+test.describe("share", () => {
+  const RESULT = "/result/s9-2026-london-hyrox-men-1600";
+
+  test("opens without a hydration mismatch", async ({ page }) => {
+    const errors = trackErrors(page);
+    await open(page, RESULT);
+    await page.getByRole("button", { name: "Share", exact: true }).click();
+    await expect(page.getByRole("dialog", { name: /share this result/i })).toBeVisible();
+    expect(errors.filter((e) => /hydrat|did not match/i.test(e))).toEqual([]);
+  });
+
+  test("the shared caption carries a link back to us", async ({ page }) => {
+    // The stub has to be installed BEFORE the page renders. The share buttons
+    // are gated on `navigator.share` existing, and headless Chromium has no
+    // Web Share API — stubbing after load meant the button under test was
+    // never drawn, which is what the first version of this test got wrong.
+    await page.addInitScript(() => {
+      (window as unknown as { __shared: unknown[] }).__shared = [];
+      Object.defineProperty(navigator, "share", {
+        configurable: true,
+        value: async (data: unknown) => {
+          (window as unknown as { __shared: unknown[] }).__shared.push(data);
+        },
+      });
+    });
+
+    await open(page, RESULT);
+    await page.getByRole("button", { name: "Share", exact: true }).click();
+    await page.getByRole("button", { name: /share the link/i }).click();
+
+    const shared = await page.evaluate(
+      () => (window as unknown as { __shared: Record<string, unknown>[] }).__shared[0] ?? null,
+    );
+
+    expect(shared, "native share was never called").toBeTruthy();
+    // Several iOS targets take `text` and drop `url`, so the link has to be in
+    // the text too or the share arrives with no way to follow it back here.
+    expect(String(shared!.text)).toContain("/result/");
+    expect(String(shared!.url)).toContain("/result/");
+  });
+
+  test("the copied caption carries the link too", async ({ page }) => {
+    // The clipboard is stubbed rather than permitted: `clipboard-write` is not
+    // a grantable permission on WebKit, so granting it fails the whole test on
+    // every iPhone and iPad project. Intercepting `writeText` also asserts the
+    // exact string we hand over, which is the thing under test.
+    await page.addInitScript(() => {
+      (window as unknown as { __copied: string[] }).__copied = [];
+      Object.defineProperty(navigator, "clipboard", {
+        configurable: true,
+        value: {
+          writeText: async (text: string) => {
+            (window as unknown as { __copied: string[] }).__copied.push(text);
+          },
+        },
+      });
+    });
+
+    await open(page, RESULT);
+    await page.getByRole("button", { name: "Share", exact: true }).click();
+    await page.getByRole("button", { name: /copy caption/i }).click();
+
+    const copied = await page.evaluate(
+      () => (window as unknown as { __copied: string[] }).__copied[0] ?? "",
+    );
+    expect(copied).toContain("/result/");
+    expect(copied).toMatch(/\d+:\d\d/);
+  });
+
+  test("generates a real card file for the native sheet", async ({ page }) => {
+    await open(page, RESULT);
+    await page.getByRole("button", { name: "Share", exact: true }).click();
+    // The card is fetched while the sheet is open rather than on tap, because
+    // Safari drops the user activation across an await.
+    const ok = await page.evaluate(async () => {
+      const res = await fetch(
+        document.querySelector<HTMLImageElement>("[role=dialog] img")?.src ?? "",
+      );
+      return res.ok && (await res.blob()).size > 1000;
+    });
+    expect(ok).toBe(true);
   });
 });
 
