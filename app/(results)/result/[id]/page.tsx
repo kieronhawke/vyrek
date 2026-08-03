@@ -41,7 +41,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const result = await getResultsSource().getResult(id);
-  if (!result) return { title: "Result not found | Suth Performance" };
+  if (!result) return { title: "Result not found" };
 
   const division = result.divisionLabel.replace("HYROX ", "");
   return {

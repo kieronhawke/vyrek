@@ -7,7 +7,7 @@ import { MicroLabel } from "@/components/results/ui/primitives";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "HYROX World Records by Division | Suth Performance",
+  title: "HYROX World Records by Division",
   description:
     "The fastest HYROX time recorded in every division — Open, Pro, Doubles, Relay and "
     + "Adaptive — with the event and athlete behind each one.",

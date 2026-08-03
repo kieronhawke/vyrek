@@ -36,7 +36,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const athlete = await getResultsSource().getAthlete(slug);
-  if (!athlete) return { title: "Athlete not found | Suth Performance" };
+  if (!athlete) return { title: "Athlete not found" };
 
   const pb = athlete.pbSeconds ? formatTime(athlete.pbSeconds) : null;
   return {

@@ -24,7 +24,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { event: slug } = await params;
   const event = await getResultsSource().getEvent(slug);
-  if (!event) return { title: "Start list not found | Suth Performance" };
+  if (!event) return { title: "Start list not found" };
 
   return {
     title: `HYROX ${event.city} ${event.year} Start List & Wave Times`,

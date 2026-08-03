@@ -732,3 +732,89 @@ a printed page has no document outline to serve, so heading semantics buy nothin
 Black-on-chartreuse reads; black on the muted station fill was **1.54:1**, flagged serious by
 axe on six nodes. Each segment now picks the ink that contrasts with it rather than one colour
 being applied to all of them.
+
+### D82 — The search palette's accent goes on the element that owns the radius
+Reported twice, and the first two fixes were both wrong in the same way. The
+ring started on the `<input>` and was clipped on three sides by the sheet's
+`overflow-hidden`. Moving it to the input's row fixed the sides but not the
+corners: a square-cornered child sitting flush inside a rounded, clipping parent
+gets its top corners sliced off, which is exactly what the user described — a
+straight green line with black notches bitten out of each end.
+
+A ring can only follow a curve if it is drawn on the element that has the curve.
+The accent is now a border plus box-shadow on the sheet itself; both inherit
+`border-radius` by definition, and an element's own shadow is not clipped by its
+own `overflow-hidden`, which clips children. It reads as a glow rather than a
+hard rule because the input is autofocused on open — this is the palette's
+resting state, not a transient highlight, so it should look deliberate.
+
+The regression test asserts the *structure*, not a screenshot: the sheet has a
+radius, an accent border and a shadow, **and no descendant carries its own
+box-shadow**. That last clause is the one that would have caught both earlier
+attempts.
+
+### D83 — City hubs, because "hyrox london results" is the query
+Editions rank for "hyrox london 2025". Nobody searches a season slug, and
+without a hub the twelve London editions compete with each other for the phrase
+with the actual volume and split their link equity twelve ways.
+
+The competitor ships `/location/london` at **226 words** — an h1, a list, no h2,
+no numbers, and a title that opens "HYROX location LON". Ours is 566 on a
+single-edition city because every clause is computed from what happened at those
+races: editions, total finishers, median finish, fastest ever, venue history.
+That is also what stops two hundred sibling pages reading as near-duplicates,
+which is how thin location pages get filtered out of an index.
+
+`generateStaticParams` prebuilds only hubs with two or more editions, capped at
+60. The tail renders on demand and caches; prebuilding two hundred thin cities
+would lengthen every deploy to serve pages nobody has asked for.
+
+### D84 — The course speed index, and why it has two columns
+Every HYROX race is nominally identical. Athletes know perfectly well they are
+not, and nobody publishes the difference because it requires joining every
+venue's results to every other. We already have the corpus.
+
+The honest problem is that a field median is a fact about **who entered** as
+much as about the course — a championship draws a deeper field and posts a
+faster median on an identical layout. Publishing that as "difficulty" would be
+dishonest, so it is a *speed* index, and the winner's time is shown beside the
+median. The front of the field is the part least sensitive to who else turned
+up: when both move together the venue is the likelier explanation, and when only
+the median moves the entry list is. One number would hide that distinction.
+
+The baseline is a median of per-edition medians, not a median of all finishers
+pooled — pooling would let the biggest race define "normal" and then measure it
+against itself. Fields under 100 are excluded; a league table that ranks noise
+at the top is worse than a shorter table.
+
+The honest upgrade is a paired comparison — the same athletes at two venues in
+one season, controlling for field quality outright. That needs athlete-level
+cross-event data and is noted as next rather than pretended at.
+
+### D85 — FAQ copy and FAQ schema come from one array
+The commonest way `FAQPage` goes wrong is the JSON and the visible copy drifting
+apart; Google requires the answer to be present on the page, and a block
+promising answers a reader cannot see is a manual-action risk rather than a rich
+result. `FaqSection` takes one array and produces both, so that failure is
+impossible by construction. `<details>` rather than a JS accordion, so the
+answers are in the HTML whether or not anything hydrates.
+
+Questions the data cannot answer are not asked. An invented answer inside schema
+markup is worse than no schema.
+
+### D86 — Seventeen pages had the brand in the title twice
+`app/layout.tsx` sets `title.template = "%s · Suth Performance"`. Seventeen
+Results pages also hard-coded `| Suth Performance`, so every tab and every SERP
+entry read "… | Suth Performance · Suth Performance" — roughly 20 wasted
+characters of the ~60 Google displays.
+
+Typecheck cannot see it and neither can a screenshot, because the title tag is
+not on the page. It survived because nothing asserted on it. Guarded now in
+`metadata-urls.test.ts`, alongside the `${siteUrl}` guard that exists for the
+same reason.
+
+### D87 — The flag comes out of the `<h1>`
+`Nationality` renders the ISO code as text, so nesting it in the city heading
+made the accessible name "HYROX London ResultsGBR" — which is what a screen
+reader announces and what Google reads as the page's primary heading. It sits
+beside the `<h1>` now, in a flex wrapper.
