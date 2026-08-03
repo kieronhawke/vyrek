@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { supabaseServer } from "@/lib/supabase/server";
+import { currentUserOrNull } from "@/lib/supabase/optional";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
@@ -34,10 +34,9 @@ export default async function LoginPage({
 
   // If already signed in, send them where they were trying to go (or
   // to the member app by default).
-  const sb = await supabaseServer();
-  const {
-    data: { user },
-  } = await sb.auth.getUser();
+  // Missing Supabase keys means "signed out", not a 500 — this page is how
+  // someone gets in, so it has to render even when auth is unavailable.
+  const user = await currentUserOrNull();
   if (user) redirect(next);
 
   return (

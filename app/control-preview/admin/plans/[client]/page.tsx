@@ -1,16 +1,14 @@
 import Link from "next/link";
 import { AdminShell } from "@/components/control/admin-shell";
-import { PlanBuilder } from "@/components/control/plan-builder";
+import { WeekBuilder } from "@/components/control/week-builder";
 import { PLAN_ROWS } from "@/lib/control/admin-fixtures";
 
 const BASE = "/control-preview/admin";
 
 /**
- * Write a week for one client.
- *
- * The Plans table lists who is due; this is where the plan actually gets
- * written. It closes the loop the member area opened: the athlete's verdict on
- * last week sits on the same screen as the week being written.
+ * Write a week for one client, in the shape of the spreadsheet Ben already
+ * uses: seven day columns, AM and PM rows, free text, plus a block library he
+ * can drag from. Autosaves; the athlete's Plan screen reads the same store.
  */
 export default async function PlanBuilderPage({
   params,
@@ -18,8 +16,10 @@ export default async function PlanBuilderPage({
   params: Promise<{ client: string }>;
 }) {
   const { client } = await params;
-  const row = PLAN_ROWS.find((p) => slugify(p.client) === client);
-  const name = row?.client ?? "Client";
+  const row = PLAN_ROWS.find(
+    (p) => p.client.toLowerCase().replace(/[^a-z0-9]+/g, "-") === client,
+  );
+  const name = row?.client ?? "Haseeb";
 
   return (
     <AdminShell base={BASE} title={`Plan · ${name}`}>
@@ -39,11 +39,7 @@ export default async function PlanBuilderPage({
           ← All plans
         </Link>
       </p>
-      <PlanBuilder client={name} />
+      <WeekBuilder client={name} />
     </AdminShell>
   );
-}
-
-function slugify(s: string): string {
-  return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }

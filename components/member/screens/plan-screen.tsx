@@ -3,6 +3,7 @@ import Link from "next/link";
 import { DEMO_WEEKS, DEMO_TODAY } from "@/lib/member/demo";
 import { weekFor } from "@/lib/member/week";
 import { PhaseBar } from "@/components/member/phase-bar";
+import { WeekGrid } from "@/components/member/week-grid";
 import { SessionFeedback } from "@/components/member/session-feedback";
 import {
   Card,
@@ -146,91 +147,10 @@ export function PlanScreen({
         </StatTiles>
       </section>
 
-      {/* ── The sessions ─────────────────────────────────────────────── */}
+      {/* ── The week, as Ben wrote it ────────────────────────────────── */}
       <section style={{ marginBottom: "var(--space-4)" }}>
-        <Eyebrow right="Tap a day">Sessions</Eyebrow>
-        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-          {week7.map((day) => {
-            const isToday = day.isToday;
-            const rest = day.type === "rest";
-            return (
-              <Card
-                key={day.slug}
-                padded={false}
-                style={{
-                  borderColor: isToday ? "var(--accent)" : "var(--border)",
-                  background: rest ? "var(--surface-raised)" : "var(--surface)",
-                }}
-              >
-                <Link
-                  href={`${base}/plan/${day.slug}`}
-                  style={{
-                    display: "block",
-                    padding: "var(--space-2)",
-                    textDecoration: "none",
-                    color: "inherit",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "baseline",
-                      justifyContent: "space-between",
-                      gap: "var(--space-2)",
-                    }}
-                  >
-                    <span
-                      className="eyebrow"
-                      style={{ color: isToday ? "var(--accent-text)" : undefined }}
-                    >
-                      {day.day} {day.date}
-                      {isToday ? " · Today" : ""}
-                    </span>
-                    {day.durationMin ? (
-                      <span
-                        className="num"
-                        style={{
-                          fontSize: "var(--text-xs)",
-                          color: "var(--text-muted)",
-                        }}
-                      >
-                        {day.durationMin} min
-                      </span>
-                    ) : null}
-                  </div>
-
-                  <p
-                    style={{
-                      margin: "4px 0 var(--space-1)",
-                      fontSize: "var(--text-base)",
-                      fontWeight: 650,
-                      lineHeight: 1.3,
-                    }}
-                  >
-                    {day.title}
-                  </p>
-
-                  <ChipRow>
-                    <Chip tone={TYPE_TONE[day.type] ?? "neutral"}>{day.type}</Chip>
-                    {day.done ? <Chip tone="ok">Done</Chip> : null}
-                  </ChipRow>
-                </Link>
-
-                {isToday ? (
-                  <div
-                    style={{
-                      padding: "var(--space-2)",
-                      borderTop: "1px solid var(--border)",
-                      background: "var(--surface-raised)",
-                    }}
-                  >
-                    <SessionFeedback sessionTitle={day.title} />
-                  </div>
-                ) : null}
-              </Card>
-            );
-          })}
-        </div>
+        <Eyebrow right="Tap a session to tick it off">This week</Eyebrow>
+        <WeekGrid base={base} />
       </section>
 
       {/* ── Take it with you ─────────────────────────────────────────── */}

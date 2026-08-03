@@ -4,6 +4,22 @@
     {
       "path": "/api/cron/race-coverage",
       "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/results-live",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/results-catalog",
+      "schedule": "17 * * * *"
+    },
+    {
+      "path": "/api/cron/results-reconcile",
+      "schedule": "42 */6 * * *"
+    },
+    {
+      "path": "/api/cron/results-backfill",
+      "schedule": "*/20 * * * *"
     }
   ]
 }

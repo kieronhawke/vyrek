@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { supabaseServer } from "@/lib/supabase/server";
+import { currentUserOrNull } from "@/lib/supabase/optional";
 import { isAdminEmail } from "@/lib/admin/auth";
 import { AdminLoginForm } from "@/components/admin/login-form";
 import { DemoEntry } from "@/components/shared/demo-entry";
@@ -13,10 +13,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function AdminLoginPage() {
-  const sb = await supabaseServer();
-  const {
-    data: { user },
-  } = await sb.auth.getUser();
+  const user = await currentUserOrNull();
 
   if (user && isAdminEmail(user.email)) {
     redirect("/admin");

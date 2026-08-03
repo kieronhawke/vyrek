@@ -142,7 +142,17 @@
  * monitor.
  */
 [data-surface="control"] {
+  /**
+   * 760px is a reading column. It was applied to every member screen at every
+   * width, so a seven-column week grid rendered on a 1600px monitor inside a
+   * phone-width column with 90px days — the whole "there is no desktop
+   * version" complaint in one number.
+   *
+   * The column widens with the viewport; prose inside caps itself where a long
+   * line would hurt.
+   */
   --member-max: 760px;
+  --member-prose: 68ch;
   --rail-w: 232px;
 }
 
@@ -214,5 +224,15 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* The plan builder puts its block library beside the week once there is room
+   for both. This lives with the tokens rather than in member.css because the
+   admin does not import that file — which is why the rule silently did
+   nothing the first time. */
+@media (min-width: 1100px) {
+  [data-surface="control"] .builder-layout {
+    grid-template-columns: 250px minmax(0, 1fr) !important;
   }
 }

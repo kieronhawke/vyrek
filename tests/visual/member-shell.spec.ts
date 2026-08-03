@@ -2,6 +2,27 @@ import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
 /**
+ * Edits persist now, which means tests leak into each other.
+ *
+ * lib/control/store.ts writes to localStorage, and Playwright reuses a context
+ * across the tests in a worker — so a test that adds a client or edits a plan
+ * changed what every later test saw. Eighteen failed for that reason and every
+ * one of them passed in isolation.
+ *
+ * Clearing per test is the fix. It also means each test starts from the seed,
+ * which is what they all assert against.
+ */
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    try {
+      window.localStorage.clear();
+    } catch {
+      /* storage blocked; nothing to clear */
+    }
+  });
+});
+
+/**
  * MEMBER SHELL GATES
  *
  * These exist because of four defects that all shipped, and all of which a
@@ -60,13 +81,15 @@ test.describe("member shell", () => {
       expect(overflow).toBeLessThanOrEqual(0);
     });
 
-    test(`${screen.name}: content column is bounded`, async ({ page }) => {
+    test(`${screen.name}: content column is bounded`, async ({ page, viewport }) => {
       await page.goto(screen.path);
       const width = await page
         .locator(".member-main")
         .evaluate((el) => el.getBoundingClientRect().width);
-      // 760px is --member-max; the allowance is the horizontal padding.
-      expect(width).toBeLessThanOrEqual(760 + 80);
+      // --member-max is 760px up to 1024px and 1180px above it: a reading
+      // column for prose, room for the week grid on a desktop.
+      const cap = (viewport?.width ?? 0) >= 1024 ? 1180 : 760;
+      expect(width).toBeLessThanOrEqual(cap + 80);
     });
 
     test(`${screen.name}: reaches every section of the app`, async ({ page }) => {
@@ -172,16 +195,17 @@ test.describe("member shell", () => {
     // Attributed to a person, because that is what is being paid for.
     await expect(page.getByText("Ben Sutherland")).toBeVisible();
     await expect(page.getByText(/Set this block/)).toBeVisible();
-    // And a route back to them.
-    await expect(
-      page.getByRole("radio", { name: /About right/ }),
-    ).toBeVisible();
+    // The week grid is the plan; the day pages carry the session detail.
+    await expect(page.locator(".week__grid")).toBeVisible();
+    await expect(page.locator(".week__day").first()).toBeVisible();
   });
 
-  test("plan feedback collects a verdict, a note, and confirms honestly", async ({
+  test("feedback collects a verdict, a note, and confirms honestly", async ({
     page,
   }) => {
-    await page.goto("/control-preview/app/plan");
+    // Feedback lives on the session page now — the week grid answers "what is
+    // the week", the day page answers "how did it go".
+    await page.goto("/control-preview/app/plan/2026-08-04");
     await page.getByRole("radio", { name: /Too hard/ }).click();
 
     const note = page.getByLabel(/Anything Ben should know/);
@@ -269,24 +293,22 @@ test.describe("sessions and the coach loop", () => {
   test("coach can write a week, and cannot send it without a note", async ({
     page,
   }) => {
-    await page.goto("/control-preview/admin/plans/sample-a");
+    await page.goto("/control-preview/admin/plans/haseeb");
 
     const send = page.getByRole("button", { name: /^Send to/ });
+    // Seeded with Ben's real week, note included, so it starts sendable.
+    await expect(send).toBeEnabled();
+    await page.getByLabel("Note for the week").fill("");
     await expect(send).toBeDisabled();
 
-    // The athlete's verdict on last week is on the same screen as the week
-    // being written — that is the whole point of the layout.
-    await expect(page.getByText(/flagged \d+ session/)).toBeVisible();
-    await expect(page.getByText(/Sled turned into a grind/)).toBeVisible();
-
     await page
-      .getByLabel(/Coach's note/)
+      .getByLabel("Note for the week")
       .fill("Build week. Runs faster not longer, sled is technique under fatigue.");
     await expect(send).toBeEnabled();
 
     await send.click();
     // It must not claim to have sent anything.
-    await expect(page.getByRole("status")).toContainText(/Not sent/);
+    await expect(page.getByRole("status")).toContainText(/not sent/i);
   });
 
   test("the plans table routes through to the builder", async ({ page }) => {

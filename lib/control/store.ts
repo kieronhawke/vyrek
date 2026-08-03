@@ -5,16 +5,17 @@
  *
  * WHY THIS EXISTS
  * ---------------
- * Every admin module so far renders a fixture and cannot be edited. The reason
+ * Every admin module rendered a fixture and could not be edited. The reason
  * given each time was "no database", which was true and also an excuse: there
  * is no Supabase key, no Postgres URL and no blob token, but none of that stops
  * an edit from persisting in the browser it was made in.
  *
- * So this is the seam. Modules talk to `useCollection`, never to a fixture and
- * never to localStorage directly. Today the driver writes to localStorage, so
- * an edit survives a reload and the admin genuinely works for one operator on
- * one machine. When a datastore credential arrives, the driver is replaced in
- * this file and every module that uses it becomes multi-user without changing.
+ * So this is the seam. Modules talk to `useCollection` and `useRecord`, never
+ * to a fixture and never to localStorage directly. Today the driver writes to
+ * localStorage, so an edit survives a reload and the admin genuinely works for
+ * one operator on one machine. When a datastore credential arrives, the driver
+ * is replaced in this file and every module built on these hooks becomes
+ * multi-user without changing.
  *
  * WHAT IT IS NOT
  * --------------
@@ -22,9 +23,18 @@
  * change what Kieron sees. Everything that renders store data says so, because
  * a console that silently keeps your changes to itself is worse than one that
  * admits it.
+ *
+ * WHY useSyncExternalStore
+ * ------------------------
+ * The obvious shape — useState plus a useEffect that reads storage — sets state
+ * synchronously inside an effect, which cascades renders and is the exact
+ * pattern the repo already has six lint errors for. localStorage is an external
+ * store, and React has a primitive for subscribing to one with a separate
+ * server snapshot, which is also what keeps hydration honest: the server always
+ * renders the seed, the client swaps to stored data after mount.
  */
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo, useSyncExternalStore } from "react";
 
 const PREFIX = "suth.store.v1.";
 
@@ -32,42 +42,102 @@ const PREFIX = "suth.store.v1.";
 export type Entity = { id: string };
 
 type Driver = {
-  read<T>(key: string): T | null;
-  write<T>(key: string, value: T): void;
+  read(key: string): string | null;
+  write(key: string, raw: string): void;
 };
 
 /**
- * localStorage, guarded. Private browsing and blocked storage both throw on
- * write rather than returning false, and an admin that crashes because a
- * setting could not be saved is worse than one that keeps working in memory.
+ * localStorage, guarded. Private browsing and blocked storage both throw rather
+ * than returning false, and an admin that crashes because a setting could not
+ * be saved is worse than one that keeps working in memory.
  */
 const browserDriver: Driver = {
-  read<T>(key: string): T | null {
+  read(key) {
     if (typeof window === "undefined") return null;
     try {
-      const raw = window.localStorage.getItem(PREFIX + key);
-      return raw ? (JSON.parse(raw) as T) : null;
+      return window.localStorage.getItem(PREFIX + key);
     } catch {
       return null;
     }
   },
-  write<T>(key: string, value: T): void {
+  write(key, raw) {
     if (typeof window === "undefined") return;
     try {
-      window.localStorage.setItem(PREFIX + key, JSON.stringify(value));
+      window.localStorage.setItem(PREFIX + key, raw);
     } catch {
-      // Out of quota or storage blocked. The in-memory state still updated,
-      // so the session keeps working; it just will not survive a reload.
+      /* quota or storage blocked; the in-memory value still updated */
     }
   },
 };
 
 const driver: Driver = browserDriver;
 
+/** Same-tab listeners. `storage` only fires cross-tab, which is not enough. */
+const listeners = new Map<string, Set<() => void>>();
+
+function subscribe(key: string, fn: () => void) {
+  const set = listeners.get(key) ?? new Set();
+  set.add(fn);
+  listeners.set(key, set);
+  return () => set.delete(fn);
+}
+
+function emit(key: string) {
+  listeners.get(key)?.forEach((fn) => fn());
+}
+
+/**
+ * Cache the parsed value per key so the snapshot is referentially stable.
+ * useSyncExternalStore re-renders forever if getSnapshot returns a new object
+ * each call, and JSON.parse always does.
+ */
+const cache = new Map<string, { raw: string | null; parsed: unknown }>();
+
+function snapshot<T>(key: string, seed: T): T {
+  const raw = driver.read(key);
+  const hit = cache.get(key);
+  if (hit && hit.raw === raw) return hit.parsed as T;
+
+  let parsed: T = seed;
+  if (raw !== null) {
+    try {
+      parsed = JSON.parse(raw) as T;
+    } catch {
+      parsed = seed;
+    }
+  }
+  cache.set(key, { raw, parsed });
+  return parsed;
+}
+
+function write<T>(key: string, value: T) {
+  const raw = JSON.stringify(value);
+  driver.write(key, raw);
+  cache.set(key, { raw, parsed: value });
+  emit(key);
+}
+
+/**
+ * A single persisted record. The server renders `seed`; the client swaps to
+ * stored data on hydration.
+ */
+export function useRecord<T>(key: string, seed: T) {
+  const sub = useCallback((fn: () => void) => subscribe(key, fn), [key]);
+  const get = useCallback(() => snapshot<T>(key, seed), [key, seed]);
+  const getServer = useCallback(() => seed, [seed]);
+
+  const value = useSyncExternalStore(sub, get, getServer);
+
+  const save = useCallback((next: T) => write(key, next), [key]);
+  const reset = useCallback(() => write(key, seed), [key, seed]);
+
+  return { value, save, reset, ready: true };
+}
+
 /**
  * A persisted collection, seeded from fixtures the first time it is opened.
  *
- * `seed` is only used when the key has never been written. Otherwise edits
+ * `seed` is only used when the key has never been written; otherwise edits
  * would be reverted by their own fixtures on every reload, which is the exact
  * failure this replaces.
  */
@@ -75,41 +145,21 @@ export function useCollection<T extends Entity>(
   key: string,
   seed: readonly T[],
 ) {
-  const [items, setItems] = useState<T[]>(seed as T[]);
-  // Hydration: the server has no localStorage, so the first paint is the seed
-  // and the stored value lands on mount. Rendering stored data on the server
-  // would mismatch and React would throw it away anyway.
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const stored = driver.read<T[]>(key);
-    if (stored) setItems(stored);
-    setReady(true);
-  }, [key]);
-
-  const persist = useCallback(
-    (next: T[]) => {
-      setItems(next);
-      driver.write(key, next);
-    },
-    [key],
-  );
+  const seedArray = useMemo(() => seed as T[], [seed]);
+  const { value: items, save, reset, ready } = useRecord<T[]>(key, seedArray);
 
   const update = useCallback(
     (id: string, patch: Partial<T>) =>
-      persist(items.map((i) => (i.id === id ? { ...i, ...patch } : i))),
-    [items, persist],
+      save(items.map((i) => (i.id === id ? { ...i, ...patch } : i))),
+    [items, save],
   );
 
-  const add = useCallback((item: T) => persist([item, ...items]), [items, persist]);
+  const add = useCallback((item: T) => save([item, ...items]), [items, save]);
 
   const remove = useCallback(
-    (id: string) => persist(items.filter((i) => i.id !== id)),
-    [items, persist],
+    (id: string) => save(items.filter((i) => i.id !== id)),
+    [items, save],
   );
-
-  /** Back to fixtures. The way out when a demo has been edited into a mess. */
-  const reset = useCallback(() => persist(seed as T[]), [persist, seed]);
 
   return { items, ready, update, add, remove, reset };
 }
