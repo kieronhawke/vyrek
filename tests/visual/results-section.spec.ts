@@ -125,9 +125,29 @@ test.describe("ranking table", () => {
     await page.waitForTimeout(1500);
 
     await page.getByPlaceholder("Find an athlete").fill("patel");
-    await page.waitForTimeout(400);
+    await page.waitForTimeout(600);
     const counter = await page.locator('p[aria-live="polite"]').innerText();
     expect(counter).toMatch(/^\d+ of 3,\d{3}$/);
+
+    /*
+     * And the rows shown actually match.
+     *
+     * The counter alone is a weak assertion: a filter that updated the count
+     * but kept rendering the unfiltered board would pass it. Counting rows is
+     * no better, because the list is virtualised to roughly twenty — a common
+     * surname still fills the viewport, so the count does not move. The
+     * invariant that holds either way is that every row *displayed* contains
+     * what was typed.
+     */
+    const shown = await page.locator('a[href^="/result/"]').allInnerTexts();
+    expect(shown.length).toBeGreaterThan(0);
+    for (const row of shown) {
+      expect(row.toLowerCase(), `row shown that does not match "patel"`).toContain("patel");
+    }
+
+    await page.getByPlaceholder("Find an athlete").fill("zzzznotaname");
+    await page.waitForTimeout(600);
+    expect(await page.locator('a[href^="/result/"]').count()).toBe(0);
   });
 
   test("expands splits in place", async ({ page }) => {
