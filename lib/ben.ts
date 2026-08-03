@@ -31,7 +31,7 @@ export const BEN = {
    * he coaches rather than what he has won.
    */
   beginnerPromise:
-    "What I enjoy more than racing is helping other people get where they want to go, whether that's finishing a first race or never having set foot in a gym before.",
+    "Most of the people I coach have never competed at anything. They came to me because nothing had stuck before, and that is almost always the plan's fault rather than theirs.",
 
   /**
    * The line that matters most to an athlete: the range of outcomes he has
@@ -107,6 +107,6 @@ export const BEN_ATHLETE_PROOF: string[] = [
  */
 export const BEN_BEGINNER_PROOF: string[] = [
   "Coaches total beginners",
-  "Races at Elite 15 level",
+  "Elite-level athlete",
   "Over a decade in elite sport",
 ];

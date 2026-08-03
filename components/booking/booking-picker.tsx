@@ -151,14 +151,26 @@ export function BookingPicker({
           </div>
         </div>
 
+        {/* A group, not a grid.
+            It carried role="grid", which is a promise: a grid must contain
+            rows, and rows must contain gridcells, and it has neither — this
+            is a flat set of buttons in a CSS grid, which is a different
+            thing wearing the same word. axe flags it critical, and a screen
+            reader announces a table with no rows.
+
+            Every button already names its own date and says when nothing is
+            free, so a labelled group is both honest and enough. The column
+            headings are decoration for sighted users — the dates carry their
+            weekday themselves. */}
         <div
+          role="group"
+          aria-label={`Choose a day in ${monthLabel(y, m)}`}
           className="grid grid-cols-7 gap-1"
-          role="grid"
-          aria-label={`Available days in ${monthLabel(y, m)}`}
         >
           {WEEKDAY_LABELS.map((d) => (
             <div
               key={d}
+              aria-hidden
               className="pb-2 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-suth-text-tertiary"
             >
               {d}
@@ -181,7 +193,13 @@ export function BookingPicker({
                 disabled={!bookable}
                 onClick={() => pickDate(d)}
                 aria-pressed={selected}
-                aria-label={`${i + 1} ${monthLabel(y, m)}${bookable ? "" : ", nothing available"}`}
+                aria-label={`${new Intl.DateTimeFormat("en-GB", {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long",
+                }).format(new Date(Date.UTC(y, m, i + 1)))}${
+                  bookable ? "" : ", nothing available"
+                }`}
                 className={cn(
                   "relative aspect-square rounded-lg text-sm font-medium tabular-nums transition-[background,color,border] duration-fast",
                   selected

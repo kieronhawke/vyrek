@@ -96,16 +96,21 @@ export default async function LeadPage({
         {lead.email}
       </a>
 
-      <Section title="What they want">
-        <Row label="Route" value={lead.rail} />
+      <Section
+        title="What they want"
+        rows={
+          <>
+            <Row label="Route" value={lead.rail} />
         <Row label="Wants" value={lead.wants} />
         <Row label="Ready" value={lead.readiness} />
         <Row label="Goal" value={lead.goal} />
         <Row label="Plan" value={lead.programme} />
-        <Row label="Injury" value={lead.injury} />
-      </Section>
+            <Row label="Injury" value={lead.injury} />
+          </>
+        }
+      />
 
-      <Section title="Where they are">
+      <Section title="Where they are" rows={<Row label="Roughly" value={place} />}>
         {hasCoords && maps ? (
           <a href={maps} className="mt-1 block overflow-hidden rounded-xl border border-suth-border">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -118,7 +123,6 @@ export default async function LeadPage({
             />
           </a>
         ) : null}
-        <Row label="Roughly" value={place} />
         {maps ? (
           <p className="mt-3">
             <a
@@ -136,16 +140,21 @@ export default async function LeadPage({
         </p>
       </Section>
 
-      <Section title="How they got here">
-        <Row label="Landed on" value={lead.landingPath} />
+      <Section
+        title="How they got here"
+        rows={
+          <>
+            <Row label="Landed on" value={lead.landingPath} />
         <Row label="Came via" value={lead.referrer} />
         <Row label="Time on site" value={timeOnSite} />
         <Row
           label="Pages"
           value={lead.pageViews ? String(lead.pageViews) : null}
         />
-        <Row label="Enquired from" value={lead.sourcePath} />
-      </Section>
+            <Row label="Enquired from" value={lead.sourcePath} />
+          </>
+        }
+      />
 
       <Section title="Everything they told us">
         <pre className="mt-1 whitespace-pre-wrap font-mono text-[13px] leading-relaxed text-suth-text-secondary">
@@ -161,19 +170,32 @@ export default async function LeadPage({
   );
 }
 
+/**
+ * `rows` when the body is label/value pairs, `children` when it is prose or
+ * an image.
+ *
+ * It used to wrap everything in a <dl>, including a <pre> of the brief and
+ * the map with its caption. A definition list may only directly contain
+ * dt/dd pairs (optionally grouped in divs), so anything else makes it a
+ * list whose contents are not definitions — flagged as a serious issue by
+ * axe, and heard as nonsense by anybody using a screen reader.
+ */
 function Section({
   title,
+  rows,
   children,
 }: {
   title: string;
-  children: React.ReactNode;
+  rows?: React.ReactNode;
+  children?: React.ReactNode;
 }) {
   return (
     <section className="mt-10">
       <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
         {title}
       </h2>
-      <dl className="mt-3">{children}</dl>
+      {rows ? <dl className="mt-3">{rows}</dl> : null}
+      {children}
     </section>
   );
 }

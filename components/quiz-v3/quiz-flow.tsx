@@ -1021,6 +1021,7 @@ function QuizV3Inner() {
         }
       >
         <EquipmentScreen
+          beginner={isBeginnerRail(state.answers)}
           selected={selected}
           onToggle={(v) => {
             haptic("light");
