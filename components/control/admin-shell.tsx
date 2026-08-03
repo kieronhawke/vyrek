@@ -2,38 +2,45 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CommandPalette } from "@/components/control/command-palette";
 import { Wordmark } from "@/components/shared/logo";
 import { ThemeToggle } from "@/components/control/theme-toggle";
+import { MODULE_ICONS, IconMore } from "@/components/control/icons";
 
 /**
  * OPERATOR MODE SHELL — docs/build-pack/spec/14 §5.
  *
- * Fixed 216px sidebar, 48px top bar, 1440px content, superscript count
- * badges on anything needing action. Collapsible to 56px icons.
+ * TWO NAVIGATIONS, BECAUSE THERE ARE TWO JOBS
  *
- * spec/09 §0: this is genuinely a different interface from Coach Mode, not
- * the same dashboard with a toggle. Dense, keyboard-driven, every number in
- * mono — "a timing system, not a CRM".
+ * At a desk Ben is *working* — writing a week, chasing a payment — and wants
+ * every module one click away, so the rail shows all fourteen, grouped, with
+ * counts. On a phone he is *checking* — between clients, in a car park — and
+ * wants the four things he opens daily under his thumb. A fourteen-item
+ * horizontal scroller, which is what this was, serves neither: it is a rail
+ * lying on its side, most of it off-screen, none of it reachable one-handed.
  *
- * Below 768px the sidebar becomes a horizontal scroller rather than a
- * hamburger: spec/09 says the admin must be *fully usable* on mobile, not
- * merely responsive, and hiding thirteen modules behind a menu on the device
- * Kieron is most likely to check things on would fail that.
+ * So below 900px the rail becomes a bottom tab bar of the four daily modules
+ * plus More, which opens the full list as a sheet. That is the shape every app
+ * on his phone already uses, which is the point — spec/09 says the admin must
+ * be fully usable on mobile, not merely responsive.
+ *
+ * ICONS, NOT EMOJI. See components/control/icons.tsx for why.
  */
 
 export type ModuleLink = {
   href: string;
   label: string;
+  /** Shorter label for the bottom bar, where 64px is the whole column. */
+  short?: string;
   count?: number;
   group: "Work" | "Money" | "Growth" | "System";
 };
 
 export const MODULES: ModuleLink[] = [
-  { href: "", label: "Dashboard", group: "Work" },
+  { href: "", label: "Dashboard", short: "Today", group: "Work" },
   { href: "/leads", label: "Leads", count: 4, group: "Work" },
-  { href: "/tracker", label: "Coach tracker", count: 27, group: "Work" },
+  { href: "/tracker", label: "Coach tracker", short: "Tracker", count: 27, group: "Work" },
   { href: "/clients", label: "Clients", count: 6, group: "Work" },
   { href: "/plans", label: "Plans", count: 2, group: "Work" },
   { href: "/diary", label: "Diary", group: "Work" },
@@ -49,6 +56,15 @@ export const MODULES: ModuleLink[] = [
 
 const GROUPS: ModuleLink["group"][] = ["Work", "Money", "Growth", "System"];
 
+/**
+ * What goes under his thumb.
+ *
+ * Chosen from what the week actually is: the queue, who needs programming,
+ * the plan he is writing, and anything a client has said. Payments matters
+ * enormously and is checked weekly, not hourly — it lives in More.
+ */
+const TAB_BAR = ["", "/tracker", "/plans", "/messages"];
+
 export function AdminShell({
   base,
   title,
@@ -63,159 +79,72 @@ export function AdminShell({
 }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const [sheet, setSheet] = useState(false);
+
+  // Escape closes it. Anything modal that traps you is worse than no sheet.
+  useEffect(() => {
+    if (!sheet) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setSheet(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [sheet]);
+
+  const isActive = (href: string) => pathname === `${base}${href}`;
+  const tabs = TAB_BAR.map((h) => MODULES.find((m) => m.href === h)!).filter(Boolean);
+  /** Lights More when the page you are on is not one of the four tabs. */
+  const inMore = !tabs.some((m) => isActive(m.href));
 
   return (
-    <div style={{ minHeight: "100svh", display: "flex", flexDirection: "column" }}>
-      {/* ── Top bar: palette, alerts, account. Nothing else. ─────────── */}
-      <header
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 30,
-          minHeight: "var(--topbar-h)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "var(--space-2)",
-          padding: "0 var(--space-2)",
-          paddingTop: "env(safe-area-inset-top)",
-          background: "var(--bg)",
-          borderBottom: "1px solid var(--border)",
-        }}
-      >
-        <span
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {/* The admin rendered the company name as bold text. It has a
-              wordmark; not using it is why the console did not read as the
-              same product as the site. */}
-          <Wordmark
-            size="sm"
-            accent="var(--accent)"
-            className="text-[color:var(--text)]"
-          />
+    <div className="ash" data-collapsed={collapsed || undefined}>
+      {/* ── Top bar ───────────────────────────────────────────────────── */}
+      <header className="ash-top">
+        <span className="ash-top__mark">
+          <Wordmark size="sm" accent="var(--accent)" className="text-[color:var(--text)]" />
         </span>
-        <ThemeToggle compact />
-        <CommandPalette />
+        {/* Grouped, or space-between strands the toggle in the middle of an
+            otherwise empty bar. */}
+        <span className="ash-top__tools">
+          <ThemeToggle compact />
+          <CommandPalette />
+        </span>
       </header>
 
-      <div className="admin-body">
-        {/* ── Sidebar. Horizontal scroller below md. ────────────────── */}
-        <nav
-          aria-label="Modules"
-          data-testid="admin-sidebar"
-          style={{
-            flexShrink: 0,
-            borderRight: "1px solid var(--border)",
-            background: "var(--surface)",
-            padding: "var(--space-1)",
-          }}
-          className="admin-sidebar"
-        >
+      <div className="ash-body">
+        {/* ── Rail: every module, grouped. Desktop only. ──────────────── */}
+        <nav aria-label="Modules" data-testid="admin-sidebar" className="ash-rail">
           <button
             type="button"
             onClick={() => setCollapsed((c) => !c)}
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-            style={{
-              minHeight: 44,
-              minWidth: 44,
-              width: "100%",
-              background: "transparent",
-              border: "none",
-              color: "var(--text-muted)",
-              fontSize: "var(--text-xs)",
-              cursor: "pointer",
-              textAlign: "left",
-              padding: "0 var(--space-1)",
-            }}
+            className="ash-collapse"
           >
-            {collapsed ? "»" : "« Collapse"}
+            <span aria-hidden>{collapsed ? "»" : "«"}</span>
+            {collapsed ? null : <span>Collapse</span>}
           </button>
 
           {GROUPS.map((group) => (
-            <div key={group} style={{ marginTop: "var(--space-1)" }}>
-              {!collapsed ? (
-                <p className="eyebrow" style={{ padding: "0 var(--space-1)" }}>
-                  {group}
-                </p>
-              ) : null}
-              <ul role="list" style={{ listStyle: "none", margin: 0, padding: 0 }}>
-                {MODULES.filter((m) => m.group === group).map((m) => {
-                  const href = `${base}${m.href}`;
-                  const active = pathname === href;
-                  return (
-                    <li key={m.label}>
-                      <Link
-                        href={href}
-                        aria-current={active ? "page" : undefined}
-                        title={m.label}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          gap: "var(--space-1)",
-                          minHeight: 44,
-                          padding: "0 var(--space-1)",
-                          borderRadius: "var(--radius-button)",
-                          background: active ? "var(--surface-raised)" : "transparent",
-                          color: active ? "var(--text)" : "var(--text-muted)",
-                          textDecoration: "none",
-                          fontSize: "var(--text-sm)",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        <span>{collapsed ? m.label.slice(0, 2) : m.label}</span>
-                        {m.count && !collapsed ? (
-                          <sup
-                            className="num"
-                            style={{ color: "var(--accent-text)", fontSize: "var(--text-xs)" }}
-                          >
-                            {m.count}
-                          </sup>
-                        ) : null}
-                      </Link>
-                    </li>
-                  );
-                })}
+            <div key={group} className="ash-group">
+              <p className="eyebrow ash-group__name">{group}</p>
+              <ul role="list" className="ash-list">
+                {MODULES.filter((m) => m.group === group).map((m) => (
+                  <li key={m.label}>
+                    <ModuleTile
+                      module={m}
+                      base={base}
+                      active={isActive(m.href)}
+                      collapsed={collapsed}
+                    />
+                  </li>
+                ))}
               </ul>
             </div>
           ))}
         </nav>
 
-        <main
-          style={{
-            flex: 1,
-            minWidth: 0,
-            padding: "var(--space-3) var(--space-2)",
-            paddingBottom: "calc(env(safe-area-inset-bottom) + var(--space-4))",
-          }}
-        >
-          <div style={{ maxWidth: "var(--content-max)", margin: "0 auto" }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "baseline",
-                justifyContent: "space-between",
-                gap: "var(--space-2)",
-                flexWrap: "wrap",
-                marginBottom: "var(--space-3)",
-              }}
-            >
-              <h1
-                style={{
-                  fontSize: "var(--text-xl)",
-                  lineHeight: "var(--text-xl-lh)",
-                  fontWeight: 800,
-                  letterSpacing: "-0.02em",
-                  margin: 0,
-                }}
-              >
-                {title}
-              </h1>
+        <main className="ash-main">
+          <div className="ash-content">
+            <div className="ash-head">
+              <h1 className="ash-title">{title}</h1>
               {action}
             </div>
             {children}
@@ -223,33 +152,119 @@ export function AdminShell({
         </main>
       </div>
 
-      {/* Sidebar responsiveness lives in a style tag rather than inline,
-          because a media query cannot be expressed as an inline style. */}
-      <style>{`
-        .admin-body { display: flex; flex: 1; min-height: 0; }
-        .admin-sidebar { width: var(--sidebar-w); overflow-y: auto; }
-        @media (max-width: 767px) {
-          /* Stack, or the sidebar and the content sit side by side and the
-             page overflows horizontally — which the gate rightly rejects. */
-          .admin-body { flex-direction: column; }
-          .admin-sidebar { max-width: 100%; }
-          .admin-sidebar {
-            width: 100%;
-            position: sticky;
-            top: var(--topbar-h);
-            z-index: 20;
-            border-right: none;
-            border-bottom: 1px solid var(--border);
-            overflow-x: auto;
-            display: flex;
-            gap: var(--space-1);
-          }
-          .admin-sidebar > button { display: none; }
-          .admin-sidebar > div { margin-top: 0 !important; display: flex; align-items: center; gap: 4px; }
-          .admin-sidebar > div > p { display: none; }
-          .admin-sidebar ul { display: flex; gap: 4px; }
-        }
-      `}</style>
+      {/* ── Bottom bar: four modules and everything else. Mobile only. ── */}
+      <nav aria-label="Main" className="ash-tabs" data-testid="admin-tabbar">
+        {tabs.map((m) => {
+          const Icon = MODULE_ICONS[m.href];
+          const active = isActive(m.href);
+          return (
+            <Link
+              key={m.href}
+              href={`${base}${m.href}`}
+              className="ash-tab"
+              data-on={active || undefined}
+              aria-current={active ? "page" : undefined}
+            >
+              <span className="ash-tab__icon">
+                <Icon size={22} />
+                {m.count ? <span className="ash-tab__dot" /> : null}
+              </span>
+              <span className="ash-tab__label">{m.short ?? m.label}</span>
+            </Link>
+          );
+        })}
+        <button
+          type="button"
+          className="ash-tab"
+          data-on={inMore || undefined}
+          // The bar has to say where you are even when where you are is not a
+          // tab. Without this, every page behind More reads as "nowhere".
+          aria-current={inMore ? "page" : undefined}
+          aria-expanded={sheet}
+          onClick={() => setSheet((s) => !s)}
+        >
+          <span className="ash-tab__icon">
+            <IconMore size={22} />
+          </span>
+          <span className="ash-tab__label">More</span>
+        </button>
+      </nav>
+
+      {/* ── The More sheet ────────────────────────────────────────────── */}
+      {sheet ? (
+        <div className="ash-sheet" role="dialog" aria-modal="true" aria-label="All modules">
+          <button
+            type="button"
+            className="ash-sheet__scrim"
+            aria-label="Close"
+            onClick={() => setSheet(false)}
+          />
+          <div className="ash-sheet__panel">
+            <div className="ash-sheet__grip" aria-hidden />
+            {GROUPS.map((group) => (
+              <div key={group}>
+                <p className="eyebrow ash-sheet__group">{group}</p>
+                <ul role="list" className="ash-sheet__grid">
+                  {MODULES.filter((m) => m.group === group).map((m) => {
+                    const Icon = MODULE_ICONS[m.href];
+                    return (
+                      <li key={m.label}>
+                        <Link
+                          href={`${base}${m.href}`}
+                          // Closed here rather than on a route change: a sheet
+                          // that outlives the tap covers the page it just
+                          // asked for.
+                          onClick={() => setSheet(false)}
+                          className="ash-sheet__item"
+                          data-on={isActive(m.href) || undefined}
+                        >
+                          <Icon size={22} />
+                          <span className="ash-sheet__label">{m.label}</span>
+                          {m.count ? <span className="num ash-sheet__count">{m.count}</span> : null}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
     </div>
+  );
+}
+
+/** One rail row. Collapsed, the label goes and the icon carries it alone. */
+function ModuleTile({
+  module: m,
+  base,
+  active,
+  collapsed,
+}: {
+  module: ModuleLink;
+  base: string;
+  active: boolean;
+  collapsed: boolean;
+}) {
+  const Icon = MODULE_ICONS[m.href];
+  return (
+    <Link
+      href={`${base}${m.href}`}
+      aria-current={active ? "page" : undefined}
+      // The title is what makes a collapsed rail usable at all: without it the
+      // icons are a guess for anyone who has not learned them yet.
+      title={m.count ? `${m.label} — ${m.count}` : m.label}
+      className="ash-item"
+      data-on={active || undefined}
+    >
+      <Icon size={20} />
+      {collapsed ? null : <span className="ash-item__label">{m.label}</span>}
+      {m.count ? (
+        <span className="num ash-item__count" aria-hidden={collapsed}>
+          {m.count}
+        </span>
+      ) : null}
+    </Link>
   );
 }

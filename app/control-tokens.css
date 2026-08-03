@@ -583,3 +583,329 @@
     color: var(--text-muted);
   }
 }
+
+/* ── Admin shell ──────────────────────────────────────────────────────────
+   Two navigations. The rail carries all fourteen modules at a desk; the
+   bottom bar carries the four daily ones under a thumb. Exactly one of them
+   is on screen at any width — a rail that also shows as a tab bar is two
+   sets of the same links and a horizontal overflow. */
+
+[data-surface="control"] .ash {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+[data-surface="control"] .ash-top {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  min-height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: 0 var(--space-2);
+  padding-top: env(safe-area-inset-top);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+[data-surface="control"] .ash-top__mark {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+[data-surface="control"] .ash-top__tools {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+[data-surface="control"] .ash-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+[data-surface="control"] .ash-main {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-3) var(--space-2);
+  /* Clears the tab bar. Content ending underneath it is the single most
+     common mistake in a phone layout with a fixed bottom bar. */
+  padding-bottom: calc(
+    var(--tabbar-h, 0px) + env(safe-area-inset-bottom) + var(--space-4)
+  );
+}
+
+[data-surface="control"] .ash-content {
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+
+[data-surface="control"] .ash-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+}
+
+[data-surface="control"] .ash-title {
+  font-size: var(--text-xl);
+  line-height: var(--text-xl-lh);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+/* ── The rail ─────────────────────────────────────────────────────────── */
+
+[data-surface="control"] .ash-rail { display: none; }
+
+[data-surface="control"] .ash-collapse {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--space-1);
+  background: transparent;
+  border: none;
+  color: var(--text-faint);
+  font-size: var(--text-xs);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+[data-surface="control"] .ash-group + .ash-group { margin-top: var(--space-2); }
+
+[data-surface="control"] .ash-group__name {
+  padding: 0 var(--space-1);
+  margin: 0 0 2px;
+}
+
+[data-surface="control"] .ash-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+}
+
+[data-surface="control"] .ash-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-button);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  /* The active marker is a left edge rather than a filled pill: at fourteen
+     rows a filled block is the loudest thing on the screen, and the sidebar
+     is not what he came to look at. */
+  box-shadow: inset 2px 0 0 transparent;
+}
+
+[data-surface="control"] .ash-item:hover { background: var(--surface-raised); }
+
+[data-surface="control"] .ash-item[data-on] {
+  background: var(--surface-raised);
+  color: var(--text);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+[data-surface="control"] .ash-item[data-on] svg { color: var(--accent); }
+
+[data-surface="control"] .ash-item__label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+[data-surface="control"] .ash-item__count {
+  font-size: var(--text-2xs);
+  color: var(--accent-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── The bottom bar ───────────────────────────────────────────────────── */
+
+[data-surface="control"] .ash-tabs {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+[data-surface="control"] .ash-tab {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 3px;
+  min-height: var(--tabbar-h, 56px);
+  padding: 6px 2px;
+  border: 0;
+  background: transparent;
+  color: var(--text-faint);
+  font-family: inherit;
+  /* 12px is the floor spec/16 sets and the gate enforces. A tab label is the
+     smallest text in the console; going under it to fit "Messages" would be
+     buying a word with legibility. */
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+[data-surface="control"] .ash-tab[data-on] { color: var(--accent-text); }
+[data-surface="control"] .ash-tab[data-on] svg { color: var(--accent); }
+
+[data-surface="control"] .ash-tab__icon { position: relative; display: block; }
+
+/* A count, not a number — a badge reading "27" at this size is unreadable and
+   the only question a tab bar answers is "is there anything waiting". */
+[data-surface="control"] .ash-tab__dot {
+  position: absolute;
+  top: -1px;
+  right: -3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--accent);
+  border: 1.5px solid var(--surface);
+}
+
+[data-surface="control"] .ash-tab__label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── The More sheet ───────────────────────────────────────────────────── */
+
+[data-surface="control"] .ash-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+[data-surface="control"] .ash-sheet__scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+}
+
+[data-surface="control"] .ash-sheet__panel {
+  position: relative;
+  max-height: 78svh;
+  overflow-y: auto;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-radius: 14px 14px 0 0;
+  padding: 10px var(--space-2)
+    calc(var(--tabbar-h, 56px) + env(safe-area-inset-bottom) + var(--space-2));
+}
+
+[data-surface="control"] .ash-sheet__grip {
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border-strong);
+  margin: 0 auto var(--space-2);
+}
+
+[data-surface="control"] .ash-sheet__group { margin: var(--space-2) 0 6px; }
+
+[data-surface="control"] .ash-sheet__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+[data-surface="control"] .ash-sheet__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 12px;
+  border-radius: var(--radius-card);
+  background: var(--surface-raised);
+  color: var(--text);
+  text-decoration: none;
+  font-size: var(--text-base);
+}
+
+[data-surface="control"] .ash-sheet__item[data-on] {
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+[data-surface="control"] .ash-sheet__item[data-on] svg { color: var(--accent); }
+
+[data-surface="control"] .ash-sheet__label { flex: 1; min-width: 0; }
+
+[data-surface="control"] .ash-sheet__count {
+  font-size: var(--text-xs);
+  color: var(--accent-text);
+  font-variant-numeric: tabular-nums;
+}
+
+[data-surface="control"] .ash-tabs { --tabbar-h: 56px; }
+[data-surface="control"] .ash-main { --tabbar-h: 56px; }
+
+/* ── At a desk ────────────────────────────────────────────────────────── */
+
+@media (min-width: 900px) {
+  [data-surface="control"] .ash-tabs,
+  [data-surface="control"] .ash-sheet { display: none; }
+
+  [data-surface="control"] .ash-main { --tabbar-h: 0px; }
+
+  [data-surface="control"] .ash-rail {
+    display: block;
+    flex-shrink: 0;
+    width: var(--sidebar-w);
+    overflow-y: auto;
+    border-right: 1px solid var(--border);
+    background: var(--surface);
+    padding: var(--space-1);
+  }
+
+  [data-surface="control"] .ash[data-collapsed] .ash-rail {
+    width: var(--sidebar-w-collapsed);
+  }
+
+  /* Collapsed, the group headings would be four stray words over an icon
+     column. The grouping still reads from the gaps between blocks. */
+  [data-surface="control"] .ash[data-collapsed] .ash-group__name,
+  [data-surface="control"] .ash[data-collapsed] .ash-item__count {
+    display: none;
+  }
+
+  [data-surface="control"] .ash[data-collapsed] .ash-item {
+    justify-content: center;
+    padding: 0;
+  }
+}
