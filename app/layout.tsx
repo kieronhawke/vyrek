@@ -192,17 +192,18 @@ export default function RootLayout({
                 "@type": "WebSite",
                 name: "Suth Performance",
                 url: SITE,
-                potentialAction: {
-                  "@type": "SearchAction",
-                  target:
-                    `${SITE}/quiz?program={search_term_string}`,
-                  "query-input": "required name=search_term_string",
-                },
+                /* No SearchAction. It pointed at /quiz?program={term}, but
+                   the quiz is not a search endpoint and the site has no
+                   search route at all, so the markup described something
+                   that does not exist. Google also retired the sitelinks
+                   searchbox rich result, so it bought nothing in exchange
+                   for the inaccuracy. */
               },
-              // SoftwareApplication: lets Google surface Suth Performance as an
-              // "app" rich-result for queries like "best Hyrox training
-              // app". Also pulls in the rating + price for the SERP
-              // card.
+              /* SoftwareApplication: lets Google surface Suth Performance
+                 as an "app" rich result for queries like "best Hyrox
+                 training app". It carries no aggregateRating or offers,
+                 deliberately: we have neither real ratings nor a published
+                 coaching price, and inventing either is out. */
               {
                 "@context": "https://schema.org",
                 "@type": "SoftwareApplication",
@@ -212,7 +213,11 @@ export default function RootLayout({
                   "Personalised Hyrox training. Adaptive 12-week programmes that recalibrate every Sunday based on the sessions you log.",
                 url: SITE,
                 applicationCategory: "HealthApplication",
-                operatingSystem: "Web, iOS, Android",
+                /* Web only. This claimed "Web, iOS, Android" while no iOS
+                   or Android app exists, which is exactly the kind of
+                   inaccurate markup that earns a spammy-structured-data
+                   manual action. */
+                operatingSystem: "Web",
                 inLanguage: "en-GB",
               },
             ]),

@@ -53,37 +53,54 @@ export type Category =
   | "race-day"
   | "recovery";
 
+/* `description` is the blurb printed under the category heading, so it is
+   written to be read. `metaDescription` is the <meta> tag only: the crawl on
+   2026-08-03 found these categories serving 57-93 character descriptions,
+   which wastes the one line of the SERP we control. Padding the visible
+   blurb to fix that would have made the page worse. */
 export const CATEGORIES: Record<
   Category,
-  { label: string; description: string }
+  { label: string; description: string; metaDescription: string }
 > = {
   "first-race": {
     label: "First race",
     description:
       "Step-by-step preparation for your first Hyrox. Build a base, train smart, finish strong.",
+    metaDescription:
+      "Everything you need for a first Hyrox: how the race works, how long to train, what to expect on the day, and how to pace it so the back half does not fall apart.",
   },
   training: {
     label: "Training",
     description:
       "Programming, periodisation, and the week-by-week structure that gets you race-ready.",
+    metaDescription:
+      "Hyrox training guides: how to build a week, structure a twelve-week block, taper properly, and train the compromised running that decides most finish times.",
   },
   technique: {
     label: "Technique",
     description:
       "Station-by-station how-tos from coaches who've done the work. Drills, scaling, and cues.",
+    metaDescription:
+      "Station-by-station Hyrox technique: cues, common faults and the drills that fix them, across the SkiErg, both sleds, burpees, row, carry, lunges and wall balls.",
   },
   nutrition: {
     label: "Nutrition",
     description: "What to eat before, during, and after, without the noise.",
+    metaDescription:
+      "What to eat around Hyrox training and racing: fuelling a twelve-week block, race-week carbs, race-morning timing, and what to take on the course itself.",
   },
   "race-day": {
     label: "Race day",
     description: "Pacing, warm-up, mental cues, and the small things that make a big difference.",
+    metaDescription:
+      "Hyrox race day: pacing plans, warm-up, the Roxzone, what to pack, how waves and start times work, and the small decisions that cost or save real minutes.",
   },
   recovery: {
     label: "Recovery",
     description:
       "Sleep, mobility, and the boring habits that compound across a 12-week build.",
+    metaDescription:
+      "Recovering from Hyrox training and racing: sleep, mobility, deload weeks, and how long to leave between races so the next block starts from a good place.",
   },
 };
 

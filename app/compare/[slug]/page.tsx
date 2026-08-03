@@ -37,18 +37,18 @@ export async function generateMetadata({
   if (!c) return { title: "Not found" };
   const url = `${siteUrl()}/compare/${c.slug}`;
   return {
-    title: c.title,
+    title: c.seoTitle ?? c.title,
     description: c.hook,
     alternates: { canonical: url },
     openGraph: {
-      title: c.title,
+      title: c.seoTitle ?? c.title,
       description: c.hook,
       url,
       siteName: "Suth Performance",
       type: "article",
       locale: "en_GB",
     },
-    twitter: { card: "summary_large_image", title: c.title, description: c.hook },
+    twitter: { card: "summary_large_image", title: c.seoTitle ?? c.title, description: c.hook },
     robots: { index: true, follow: true },
   };
 }

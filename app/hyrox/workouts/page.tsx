@@ -77,6 +77,36 @@ const ENTRIES: readonly HubEntry[] = [
     kicker: "The race as a workout",
     blurb: "What a HYROX actually asks of you, session by session.",
   },
+  {
+    slug: "hyrox-training-week-structure",
+    kicker: "The week",
+    blurb: "How to lay out runs, strength and station work across seven days.",
+  },
+  {
+    slug: "hyrox-taper-week-protocol",
+    kicker: "Taper",
+    blurb: "What to cut and what to keep in the final week.",
+  },
+  {
+    slug: "hyrox-offseason-training",
+    kicker: "Offseason",
+    blurb: "What to do between races so you start the next block ahead.",
+  },
+  {
+    slug: "hyrox-at-home-simulations",
+    kicker: "At home",
+    blurb: "Running a useful simulation without a sled or the ergs.",
+  },
+  {
+    slug: "hyrox-first-5km-strategy",
+    kicker: "Pacing",
+    blurb: "The opening half decides the race more than the closing half.",
+  },
+  {
+    slug: "hyrox-exercise-order-why-the-sequence-is-the-strategy",
+    kicker: "Sequence",
+    blurb: "Why the fixed order is the strategy, not just the running order.",
+  },
 ];
 
 export default function HyroxWorkoutsHub() {

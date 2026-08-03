@@ -51,8 +51,11 @@ export async function generateMetadata({
   // intent split from docs/phase-d-groundwork-report.md finding 1: this URL is
   // the race-city guide, /hyrox-training/{slug} is the coaching conversion
   // page, and the two carried the same title for 94 locations.
+  /* "venue, dates and how to prepare" put the longer city names past 65
+     once the brand suffix was added (Manchester and Birmingham at 68).
+     The shorter form keeps all three ideas. */
   const title = isRaceCity
-    ? `Hyrox ${loc.name}: venue, dates and how to prepare`
+    ? `Hyrox ${loc.name}: venue, dates, prep`
     : `Hyrox training in ${loc.name}, personalised 12-week plans`;
   const description = isRaceCity
     ? `Everything a ${loc.name} Hyrox race weekend involves: the venue, the expected dates, getting there, and the twelve weeks before it. Written by an Elite 15 coach.`

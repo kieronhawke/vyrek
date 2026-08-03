@@ -12,7 +12,7 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "Hyrox pace calculator, predict your finish time",
+  title: "Hyrox pace calculator: predict your time",
   description:
     "Free Hyrox pace calculator. Enter your 1 km pace and station splits, get your projected finish time, kilometre breakdown, and pacing strategy.",
   alternates: { canonical: `${siteUrl()}/tools/pace-calculator` },

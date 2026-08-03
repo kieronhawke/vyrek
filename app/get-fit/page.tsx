@@ -55,6 +55,16 @@ const ENTRIES: readonly HubEntry[] = [
     kicker: "Starting later",
     blurb: "Why progressive strength beats gentle circuits after sixty.",
   },
+  {
+    slug: "hyrox-for-parents",
+    kicker: "Training round a family",
+    blurb: "Fitting real training into the hours a parent actually has.",
+  },
+  {
+    slug: "hyrox-shift-workers",
+    kicker: "Shift work",
+    blurb: "Training when your sleep and your week move every fortnight.",
+  },
 ];
 
 export default function GetFitHub() {

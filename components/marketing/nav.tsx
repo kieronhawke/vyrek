@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useMagnetic } from "@/hooks/use-magnetic";
@@ -19,6 +19,12 @@ const LINKS = [
 export function MarketingNav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  /* The nav renders more than once per document: a page renders it, and so
+     does the loading skeleton that stands in for that page, so a hardcoded
+     drawer id appeared two or three times on every blog route. Duplicate ids
+     are invalid HTML and aria-controls resolves to the first match, so the
+     second toggle pointed at the first drawer. */
+  const drawerId = useId();
   const ctaRef = useRef<HTMLAnchorElement>(null);
   const pathname = usePathname();
 
@@ -137,7 +143,7 @@ export function MarketingNav() {
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
-              aria-controls="mobile-nav-drawer"
+              aria-controls={drawerId}
               aria-label={open ? "Close navigation": "Open navigation"}
               className="inline-flex size-11 items-center justify-center rounded-pill border border-suth-border bg-suth-elevated text-suth-text transition-colors hover:border-suth-border-strong md:hidden"
             >
@@ -173,7 +179,7 @@ export function MarketingNav() {
           was visible the drawer card slid up over the nav bar and hid
           the logo + close-button hamburger. */}
       <div
-        id="mobile-nav-drawer"
+        id={drawerId}
         aria-hidden={!open}
         // `inert` (when closed) prevents the focusable links inside
         // from being reachable by keyboard navigation while the drawer

@@ -18,7 +18,9 @@ import {
   formatDates,
   racesInCountry,
 } from "@/lib/hyrox/races";
+import type { Race } from "@/lib/hyrox/races";
 import { siteUrl } from "@/lib/blog/urls";
+import { clampDescription } from "@/lib/seo/description";
 
 /**
  * One HYROX race.
@@ -41,6 +43,21 @@ export function generateStaticParams() {
   return RACES.map((r) => ({ slug: r.slug }));
 }
 
+/** Drop any sponsor prefix so the title leads with "HYROX <place>". */
+function titleName(name: string): string {
+  const i = name.toUpperCase().indexOf("HYROX");
+  return i > 0 ? name.slice(i) : name;
+}
+
+/** "Apr 2027". The full range is still shown on the page itself. */
+function monthAndYear(race: Race): string {
+  return new Intl.DateTimeFormat("en-GB", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${race.startDate}T00:00:00Z`));
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -52,10 +69,22 @@ export async function generateMetadata({
 
   const where = [race.city, race.country].filter(Boolean).join(", ");
   return {
-    title: `${race.name}: ${formatDates(race)}`,
-    description:
-      `${race.name} takes place ${formatDates(race)} at ${race.venueName ?? where}. ` +
-      `Dates, venue, and when a twelve-week HYROX build needs to start to land on race day.`,
+    /* Race names carry a sponsor prefix ("all inclusive Fitness HYROX
+       Cologne", "MAYBELLINE HYROX PARIS GRAND-PALAIS"), which buried the
+       part people actually search for and pushed roughly forty of these
+       pages past 65 characters once the brand suffix was added. Lead with
+       "HYROX <place>" and give the month rather than the full range; the
+       exact dates stay in the description, the H1 and the page body, and
+       the full official name stays in the description. */
+    title: `${titleName(race.name)}: ${monthAndYear(race)}`,
+    /* The build-start date is the one thing we can say here that the
+       official listing cannot, and it also fills out the descriptions on
+       events with short venue names, a dozen of which were sitting under
+       100 characters. clampDescription keeps the long ones in range. */
+    description: clampDescription(
+      `${titleName(race.name)}: ${formatDates(race)} at ${race.venueName ?? where}. ` +
+        `Venue, dates, and the date a twelve-week build has to start to land on race day.`,
+    ),
     alternates: { canonical: `${siteUrl()}/hyrox/events/${race.slug}` },
     robots: { index: true, follow: true },
   };
