@@ -15,6 +15,7 @@ import {
   type PlanBlock,
 } from "@/lib/plan/blocks";
 import { useRecord } from "@/lib/control/store";
+import { VoiceNote } from "@/components/control/voice-note";
 
 /**
  * THE PLAN BUILDER.
@@ -352,6 +353,9 @@ export function WeekBuilder({ client }: { client: string }) {
                     placeholder="What this week is for, and what to watch."
                     style={{ ...cellText, minHeight: 64 }}
                   />
+                  <div style={{ marginTop: "var(--space-1)" }}>
+                    <VoiceNote subject={week.id} />
+                  </div>
                 </td>
               </tr>
             </tbody>

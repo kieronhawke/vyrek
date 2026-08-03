@@ -3,6 +3,7 @@ import Link from "next/link";
 import { MemberNav } from "@/components/member/nav";
 import { Wordmark } from "@/components/shared/logo";
 import { BlockProgress } from "@/components/member/block-progress";
+import { Walkthrough } from "@/components/member/walkthrough";
 
 /**
  * The member area frame. One shell for every member page.
@@ -73,6 +74,9 @@ export function MemberShell({
       <MemberNav base={base} />
 
       <main className="member-main">{children}</main>
+
+      {/* Shown once, on the first visit after onboarding. */}
+      <Walkthrough />
     </div>
   );
 }

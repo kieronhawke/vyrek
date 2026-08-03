@@ -12,14 +12,21 @@ import AxeBuilder from "@axe-core/playwright";
  * Clearing per test is the fix. It also means each test starts from the seed,
  * which is what they all assert against.
  */
-test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => {
+test.beforeEach(async ({ page }, testInfo) => {
+  // The walkthrough suite needs a genuine first visit; everything else needs
+  // it out of the way, because clearing storage makes every test a first
+  // visit and the sheet then swallows the first click.
+  const dismiss = !testInfo.titlePath.includes("walkthrough");
+  await page.addInitScript((dismissWalkthrough: boolean) => {
     try {
       window.localStorage.clear();
+      if (dismissWalkthrough) {
+        window.localStorage.setItem("suth.store.v1.walkthrough.seen", "true");
+      }
     } catch {
       /* storage blocked; nothing to clear */
     }
-  });
+  }, dismiss);
 });
 
 /**
@@ -524,5 +531,55 @@ test.describe("review index", () => {
 
     await page.goto("/admin/login");
     await expect(page.getByRole("link", { name: "Open the admin" })).toBeVisible();
+  });
+});
+
+/** Shown once, after onboarding, then never again. */
+test.describe("walkthrough", () => {
+  test("greets a new athlete on the first visit", async ({ page }) => {
+    await page.goto("/control-preview/app/today");
+    const sheet = page.getByRole("dialog");
+    await expect(sheet).toBeVisible();
+    await expect(sheet).toContainText("Start here every day");
+    await expect(sheet).toContainText("1 of 5");
+  });
+
+  test("advances a step when Next is pressed", async ({ page }) => {
+    await page.goto("/control-preview/app/today");
+    const sheet = page.getByRole("dialog");
+    // Scoped to the sheet: there is another "Next" button further down the
+    // page, and an unscoped locator picked that one and timed out on a click
+    // it could never land.
+    await sheet.getByRole("button", { name: "Next" }).click();
+    await expect(sheet).toContainText("2 of 5");
+    await expect(sheet).toContainText("The whole week, as Ben wrote it");
+  });
+
+  test("records that it has been seen when dismissed", async ({ page }) => {
+    await page.goto("/control-preview/app/today");
+    const sheet = page.getByRole("dialog");
+    await sheet.getByRole("button", { name: "Skip" }).click();
+    await expect(sheet).toBeHidden();
+    // Checked through the store rather than a reload: the init script clears
+    // storage on every navigation, so a reload would re-show it regardless.
+    expect(
+      await page.evaluate(() =>
+        window.localStorage.getItem("suth.store.v1.walkthrough.seen"),
+      ),
+    ).toBe("true");
+  });
+});
+
+/** Filming a set is the one thing a written plan cannot do. */
+test.describe("form video", () => {
+  test("is offered on a session, attached to that session", async ({ page }) => {
+    await page.goto("/control-preview/app/plan/2026-08-04");
+    await expect(page.getByText("Film or upload a clip")).toBeVisible();
+    await expect(page.getByLabel("What should Ben look at?")).toBeVisible();
+  });
+
+  test("is not offered on a rest day", async ({ page }) => {
+    await page.goto("/control-preview/app/plan/2026-08-07");
+    await expect(page.getByText("Film or upload a clip")).toHaveCount(0);
   });
 });
