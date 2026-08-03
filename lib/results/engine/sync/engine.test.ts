@@ -521,7 +521,6 @@ describe("a division resolves its athletes in bulk", () => {
   it("does not make a database call per athlete", async () => {
     const h = await makeHarness();
     let singleReads = 0;
-    let singleWrites = 0;
     let batchReads = 0;
     let batchWrites = 0;
 
@@ -532,7 +531,7 @@ describe("a division resolves its athletes in bulk", () => {
     const origBatchWrite = repo.upsertAthletes.bind(repo);
 
     repo.getAthleteBySourceId = async (id) => { singleReads += 1; return origRead(id); };
-    repo.upsertAthlete = async (a) => { singleWrites += 1; return origWrite(a); };
+    repo.upsertAthlete = async (a) => origWrite(a);
     repo.getAthletesBySourceIds = async (ids) => { batchReads += 1; return origBatchRead(ids); };
     repo.upsertAthletes = async (rows) => { batchWrites += 1; return origBatchWrite(rows); };
 

@@ -410,6 +410,17 @@ export class SupabaseResultsRepository implements ResultsRepository {
     return found.map(toAthlete);
   }
 
+  async findTakenSlugs(slugs: string[]) {
+    const taken = new Set<string>();
+    for (let i = 0; i < slugs.length; i += 200) {
+      const rows = await this.many<{ slug: string }>(
+        this.db.from("results_athletes").select("slug").in("slug", slugs.slice(i, i + 200)),
+      );
+      for (const r of rows) taken.add(r.slug);
+    }
+    return taken;
+  }
+
   async upsertAthletes(athletes: UpsertAthlete[]) {
     if (athletes.length === 0) return [];
     const out: AthleteRow[] = [];
@@ -522,10 +533,19 @@ export class SupabaseResultsRepository implements ResultsRepository {
   async upsertResults(rows: UpsertResult[]) {
     if (rows.length === 0) return { inserted: 0, updated: 0, unchanged: 0 };
 
+    // Chunked. PostgREST filters travel in the URL, and a 638-entrant board
+    // makes an `in` list long enough to be rejected outright as a 400 — which
+    // is what a whole division silently failing to store looked like from the
+    // outside.
     const ids = rows.map((r) => r.sourceResultId);
-    const existing = await this.many<ResultRow>(
-      this.db.from("results_results").select().in("source_result_id", ids),
-    );
+    const existing: ResultRow[] = [];
+    for (let i = 0; i < ids.length; i += 150) {
+      existing.push(
+        ...(await this.many<ResultRow>(
+          this.db.from("results_results").select().in("source_result_id", ids.slice(i, i + 150)),
+        )),
+      );
+    }
     const before = new Map(existing.map((r) => [r.source_result_id, toResult(r)]));
 
     const changed: UpsertResult[] = [];

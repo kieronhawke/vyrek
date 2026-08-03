@@ -199,6 +199,13 @@ export class MemoryResultsRepository implements ResultsRepository {
     );
   }
 
+  async findTakenSlugs(slugs: string[]) {
+    const wanted = new Set(slugs);
+    return new Set(
+      [...this.athletes.values()].map((a) => a.slug).filter((slug) => wanted.has(slug)),
+    );
+  }
+
   async upsertAthletes(athletes: UpsertAthlete[]) {
     const out: EngineAthlete[] = [];
     for (const athlete of athletes) out.push(await this.upsertAthlete(athlete));

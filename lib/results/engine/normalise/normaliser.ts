@@ -292,9 +292,36 @@ export class Normaliser {
     /* 3 ── Decide what is missing, then write it in one go. */
 
     const toCreate: UpsertAthlete[] = [];
-    const claimedSlugs = new Set<string>();
     const pendingBySlug = new Map<string, string>(); // stableId -> slug
     let identityReviews = 0;
+
+    // Every slug this division might need, checked in one go.
+    //
+    // Allocating them one at a time was the last per-athlete round trip: a
+    // 638-row doubles board needed 1,276 of them, which is what turned a
+    // seven-request fetch into a division that never finished. Collisions are
+    // then resolved in memory, against the database *and* against slugs
+    // claimed earlier in this same batch — which the database cannot warn
+    // about, because those rows do not exist yet.
+    const missing = prepared.flatMap((p) =>
+      p.people.filter(
+        (person) => !(person.stableId && known.has(person.stableId)),
+      ),
+    );
+    const bases = [...new Set(missing.map((person) => athleteSlug(person.name)))];
+    const candidates = bases.flatMap((base) => [base, ...Array.from({ length: 9 }, (_, i) => `${base}-${i + 2}`)]);
+    const taken = await this.repo.findTakenSlugs(candidates);
+    const claimedSlugs = new Set<string>(taken);
+
+    const allocate = (name: string): string => {
+      const base = athleteSlug(name);
+      if (!claimedSlugs.has(base)) return base;
+      for (let n = 2; n < 500; n += 1) {
+        const candidate = `${base}-${n}`;
+        if (!claimedSlugs.has(candidate)) return candidate;
+      }
+      return `${base}-${Date.now().toString(36)}`;
+    };
 
     for (const p of prepared) {
       for (const person of p.people) {
@@ -323,7 +350,7 @@ export class Normaliser {
           if (needsReview) identityReviews += 1;
         }
 
-        const slug = await this.uniqueSlug(person.name, claimedSlugs);
+        const slug = allocate(person.name);
         claimedSlugs.add(slug);
         if (person.stableId) pendingBySlug.set(person.stableId, slug);
 

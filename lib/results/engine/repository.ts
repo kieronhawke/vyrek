@@ -79,6 +79,14 @@ export interface ResultsRepository {
   getAthletesBySourceIds(sourceAthleteIds: string[]): Promise<EngineAthlete[]>;
   /** Many athletes at once, keyed on slug. Same reasoning as the read. */
   upsertAthletes(athletes: UpsertAthlete[]): Promise<EngineAthlete[]>;
+  /**
+   * Which of these slugs are already taken.
+   *
+   * Allocating slugs one at a time was the last per-athlete round trip left:
+   * a 638-row doubles board needed 1,276 of them, which is what turned a
+   * seven-request fetch into a division that never finished.
+   */
+  findTakenSlugs(slugs: string[]): Promise<Set<string>>;
   findAthletesByName(name: string): Promise<EngineAthlete[]>;
   anonymiseAthlete(athleteId: string): Promise<void>;
   claimAthlete(athleteId: string, userId: string): Promise<void>;
