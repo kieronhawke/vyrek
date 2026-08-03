@@ -42,6 +42,21 @@ const ENTRIES: readonly HubEntry[] = [
     kicker: "Heat and hydration",
     blurb: "What changes when the hall is warm, and how to prepare for it.",
   },
+  {
+    slug: "hyrox-carb-loading-the-last-48-hours",
+    kicker: "Race week",
+    blurb: "Why it starts two days out, and why fibre comes down as carbs go up.",
+  },
+  {
+    slug: "under-fuelling-in-hybrid-training-the-signs-people-miss",
+    kicker: "Eating enough",
+    blurb: "Under-eating looks exactly like overtraining, so people rest instead.",
+  },
+  {
+    slug: "plant-based-hyrox-nutrition",
+    kicker: "Plant-based",
+    blurb: "What actually changes, and the one supplement that is not optional.",
+  },
 ];
 
 export default function HyroxNutritionHub() {
