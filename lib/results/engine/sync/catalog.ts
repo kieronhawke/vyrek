@@ -18,6 +18,7 @@ import {
   divisionDisplayName,
   divisionKeyFor,
   normaliseEventGroup,
+  sexesForPrefix,
 } from "../normalise/normaliser";
 import { summariseShape, type SentinelVerdict } from "../validate/sentinel";
 import { pingHeartbeat } from "../ops/heartbeat";
@@ -106,9 +107,9 @@ export async function runCatalogSync(
 
         for (const ref of group.divisions) {
           // The source splits sex by query filter rather than by code, so one
-          // code becomes our men's and women's divisions. Both are recorded;
-          // the row's own sex decides which one a result lands in.
-          for (const sex of ["men", "women"] as const) {
+          // code becomes several of our divisions. Which ones depends on the
+          // format: team codes can be Mixed, individual ones cannot.
+          for (const sex of sexesForPrefix(ref.divisionPrefix)) {
             await repo.upsertDivision({
               eventId: event.id,
               divisionKey: divisionKeyFor(ref.divisionPrefix, sex),

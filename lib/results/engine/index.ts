@@ -23,6 +23,8 @@ import { createHyroxChain } from "./source/hyrox-adapter";
 import { ReplayAdapter, type ReplayFixtures } from "./source/replay-adapter";
 import type { SourceAdapter } from "./source/adapter";
 import { MemoryPublisher, type RealtimePublisher } from "./sync/publisher";
+import { ResilientDataSource } from "./serve/resilient-source";
+import { demoDataSource } from "../demo-source";
 
 import {
   hasResultsSupabaseConfig,
@@ -50,6 +52,27 @@ export function getResultsRepository(): ResultsRepository {
 
 export function getResultsService(): ResultsService {
   return new ResultsService(getResultsRepository());
+}
+
+let servingSingleton: ResilientDataSource | null = null;
+
+/**
+ * What `/api/results/v1/*` reads.
+ *
+ * The same three tiers the site uses — live, last-good, demo — so a database
+ * outage degrades the API instead of flattening it. A consumer that would
+ * rather have an error than stale data can look at `tier` in the envelope, or
+ * the `X-Results-Tier` header, and decide for itself. Serving stale data
+ * without saying so is the only option that would be wrong.
+ */
+export function getServingSource(): ResilientDataSource {
+  if (servingSingleton) return servingSingleton;
+  servingSingleton = new ResilientDataSource(getResultsService(), demoDataSource);
+  return servingSingleton;
+}
+
+export function servingDegradation() {
+  return getServingSource().degradation();
 }
 
 /** One per process. See decision 3 above. */

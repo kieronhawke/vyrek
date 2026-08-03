@@ -28,6 +28,15 @@ export type ApiEnvelope<T> = {
   attribution: typeof ATTRIBUTION;
   /** `demo` when the payload came from seeded data rather than ingestion. */
   mode: "demo" | "live";
+  /**
+   * Which tier answered: `live` from the database, `last-good` from the most
+   * recent successful read, `demo` from the seeded dataset.
+   *
+   * Always present, because a consumer cannot tell stale data from fresh data
+   * by looking at it, and quietly serving one as the other is the failure mode
+   * worth engineering against.
+   */
+  tier: "live" | "last-good" | "demo";
 };
 
 export type CachePolicy = "live" | "entity" | "static";
@@ -45,18 +54,23 @@ const CACHE_HEADERS: Record<CachePolicy, string> = {
 
 export function apiResponse<T>(
   data: T,
-  opts: { cache?: CachePolicy; status?: number } = {},
+  opts: { cache?: CachePolicy; status?: number; tier?: ApiEnvelope<T>["tier"] } = {},
 ): NextResponse {
+  const tier = opts.tier ?? "live";
   const body: ApiEnvelope<T> = {
     data,
     attribution: ATTRIBUTION,
     mode: process.env.NEXT_PUBLIC_DATA_MODE === "live" ? "live" : "demo",
+    tier,
   };
   return NextResponse.json(body, {
     status: opts.status ?? 200,
     headers: {
-      "Cache-Control": CACHE_HEADERS[opts.cache ?? "entity"],
+      // Degraded answers are never cached at the edge: caching a fallback
+      // would outlive the outage that caused it.
+      "Cache-Control": tier === "live" ? CACHE_HEADERS[opts.cache ?? "entity"] : "no-store",
       "X-Results-Attribution": ATTRIBUTION.timing,
+      "X-Results-Tier": tier,
     },
   });
 }

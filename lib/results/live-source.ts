@@ -34,6 +34,8 @@ import type {
   StartList,
 } from "./source";
 import type { EventStatus } from "./types";
+import { demoDataSource } from "./demo-source";
+import { ResilientDataSource } from "./engine/serve/resilient-source";
 
 /* ── Server: straight to the service ──────────────────────────────────── */
 
@@ -177,6 +179,38 @@ export class HttpLiveDataSource implements ResultsDataSource {
   }
 }
 
-/** Server gets the direct source; browser gets the HTTP one. */
-export const liveDataSource: ResultsDataSource =
-  typeof window === "undefined" ? new DirectLiveDataSource() : new HttpLiveDataSource();
+/* ── Resilience ───────────────────────────────────────────────────────── */
+
+/**
+ * The exported source is wrapped, not raw.
+ *
+ * A paused project, a revoked key or a network partition would otherwise turn
+ * every server-rendered results page into a 500. Wrapped, the same failure
+ * serves the last good answer, or the seeded dataset, and says which — see
+ * `resilient-source.ts` for the reasoning.
+ *
+ * A module-level singleton on purpose: the last-good cache and the circuit
+ * breaker are only worth anything if they survive between requests.
+ */
+let resilient: ResilientDataSource | null = null;
+
+function resilientSource(): ResilientDataSource {
+  if (resilient) return resilient;
+  const primary: ResultsDataSource =
+    typeof window === "undefined" ? new DirectLiveDataSource() : new HttpLiveDataSource();
+  resilient = new ResilientDataSource(primary, demoDataSource);
+  return resilient;
+}
+
+/** What tier the last read came from, for the UI and the health endpoint. */
+export function liveSourceDegradation() {
+  return resilientSource().degradation();
+}
+
+export const liveDataSource: ResultsDataSource = new Proxy({} as ResultsDataSource, {
+  get(_target, prop) {
+    const source = resilientSource() as unknown as Record<string | symbol, unknown>;
+    const value = source[prop];
+    return typeof value === "function" ? value.bind(source) : value;
+  },
+});
