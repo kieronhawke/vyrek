@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getResultsSource } from "@/lib/results";
 import { parseRankingSlug, buildRankingSlug } from "@/lib/results/slugs";
 import { siteUrl } from "@/lib/blog/urls";
+import { breadcrumbList, rankingDataset, jsonLd } from "@/lib/results/structured-data";
 import { formatCount } from "@/lib/results/format";
 import { RankingTable } from "@/components/results/ranking/ranking-table";
 import { DivisionTabs } from "@/components/results/ranking/division-tabs";
@@ -71,6 +72,25 @@ export default async function RankingPage({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="mx-auto max-w-[1400px] px-5 py-6 md:py-10">
+      {/* A ranking genuinely is a dataset, and dataset rich results are a
+          route to visibility nobody in this space uses. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(rankingDataset(siteUrl(), {
+          slug, eventName: event.name, divisionLabel: page.divisionLabel,
+          fieldSize: page.fieldSize, date: event.startDate,
+        })) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(breadcrumbList(siteUrl(), [
+          { name: "Results", path: "/results" },
+          { name: "Events", path: "/events" },
+          { name: `${event.city} ${event.year}`, path: `/event/${event.slug}` },
+          { name: divisionLabel, path: `/ranking/${slug}` },
+        ])) }}
+      />
+
       <nav aria-label="Breadcrumb" className="mb-3">
         <ol className="flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
           <li><Link href="/results" className="hover:text-suth-accent">Results</Link></li>

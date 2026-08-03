@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getResultsSource } from "@/lib/results";
 import { siteUrl } from "@/lib/blog/urls";
+import { breadcrumbList, sportsEvent, jsonLd } from "@/lib/results/structured-data";
 import { formatCount, formatRelativeDate } from "@/lib/results/format";
 import {
   Time, StatusBadge, MicroLabel, Nationality, StatTile, EmptyState,
@@ -94,30 +95,22 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
       )).filter((p) => p.rows.length > 0)
     : [];
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SportsEvent",
-    name: event.name,
-    startDate: event.startDate,
-    endDate: event.endDate,
-    eventStatus: isUpcoming
-      ? "https://schema.org/EventScheduled"
-      : "https://schema.org/EventScheduled",
-    location: {
-      "@type": "Place",
-      name: event.venue,
-      address: { "@type": "PostalAddress", addressLocality: event.city, addressCountry: event.country },
-    },
-    url: `${siteUrl()}/event/${event.slug}`,
-    sport: "HYROX",
-  };
+  const eventLd = sportsEvent(siteUrl(), {
+    slug: event.slug, name: event.name, city: event.city,
+    country: event.country, venue: event.venue,
+    startDate: event.startDate, endDate: event.endDate,
+    status: event.status, totalAthletes: event.totalAthletes,
+  });
+  const crumbsLd = breadcrumbList(siteUrl(), [
+    { name: "Results", path: "/results" },
+    { name: "Events", path: "/events" },
+    { name: `${event.city} ${event.year}`, path: `/event/${event.slug}` },
+  ]);
 
   return (
     <div className="mx-auto max-w-[1400px] px-5 py-8 md:py-12">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(eventLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(crumbsLd) }} />
 
       <nav aria-label="Breadcrumb" className="mb-4">
         <ol className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
