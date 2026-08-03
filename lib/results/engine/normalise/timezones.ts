@@ -254,21 +254,33 @@ export function regionFor(country: string | null | undefined): string {
       "ireland", "france", "germany", "spain", "italy", "netherlands", "belgium",
       "austria", "switzerland", "poland", "sweden", "norway", "denmark", "finland",
       "greece", "hungary", "latvia", "turkiye", "türkiye", "turkey",
+      "portugal", "czechia", "czech republic", "romania", "bulgaria", "croatia",
+      "slovenia", "slovakia", "estonia", "lithuania", "iceland", "luxembourg",
     ].includes(key)
   ) {
     return "Europe";
   }
-  if (["united states", "canada", "mexico", "brazil", "argentina"].includes(key)) {
+  if (
+    ["united states", "canada", "mexico", "brazil", "argentina", "chile", "colombia",
+      "peru", "uruguay", "ecuador", "panama", "costa rica"].includes(key)
+  ) {
     return "Americas";
   }
   if (
     ["china", "japan", "south korea", "taiwan", "thailand", "malaysia", "singapore",
-      "hong kong", "india"].includes(key)
+      "hong kong", "india", "indonesia", "philippines", "vietnam", "macau",
+      // Western Asia. The existing facet set has no Middle East, and the UN
+      // scheme puts these in Asia — so they go there rather than growing a
+      // seventh region that no filter, sitemap or calendar renders yet.
+      "united arab emirates", "qatar", "saudi arabia", "israel", "bahrain",
+      "kuwait", "oman", "jordan", "lebanon"].includes(key)
   ) {
     return "Asia";
   }
   if (["australia", "new zealand"].includes(key)) return "Oceania";
-  if (["south africa", "egypt"].includes(key)) return "Africa";
+  if (["south africa", "egypt", "morocco", "kenya", "nigeria", "tunisia"].includes(key)) {
+    return "Africa";
+  }
   return "";
 }
 
@@ -283,6 +295,14 @@ export const COUNTRY_ISO: Record<string, string> = {
   "south korea": "KR", spain: "ES", sweden: "SE", switzerland: "CH",
   taiwan: "TW", thailand: "TH", "türkiye": "TR", turkiye: "TR", turkey: "TR",
   "united kingdom": "GB", "united states": "US",
+  portugal: "PT", czechia: "CZ", "czech republic": "CZ", romania: "RO",
+  bulgaria: "BG", croatia: "HR", slovenia: "SI", slovakia: "SK", estonia: "EE",
+  lithuania: "LT", iceland: "IS", luxembourg: "LU",
+  chile: "CL", colombia: "CO", peru: "PE", uruguay: "UY", ecuador: "EC",
+  indonesia: "ID", philippines: "PH", vietnam: "VN", macau: "MO",
+  "united arab emirates": "AE", qatar: "QA", "saudi arabia": "SA", israel: "IL",
+  bahrain: "BH", kuwait: "KW", oman: "OM", jordan: "JO", lebanon: "LB",
+  morocco: "MA", kenya: "KE", nigeria: "NG", tunisia: "TN",
 };
 
 export function countryIsoFor(country: string | null | undefined): string {

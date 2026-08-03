@@ -211,7 +211,48 @@ describe("enrichment, end to end", () => {
     const event = await h.repo.getEventBySlug("s9-2026-nowhere");
     expect(event?.startDatetime).toBeFalsy();
 
-    const alert = (await h.repo.listAlerts()).find((a) => a.message.includes("no match"));
+    const alert = (await h.repo.listAlerts()).find((a) => a.message.includes("no city we can place"));
     expect(alert).toBeTruthy();
+  });
+
+  it("gives a forgotten event a country without giving it a date", async () => {
+    // The published calendar lists upcoming races only, so every finished
+    // season has fallen off it — 208 of our 223 events. They still raced
+    // somewhere, and leaving country and region null emptied the regional
+    // calendars and made the whole archive unfilterable.
+    const h = await makeHarness({
+      event: {
+        slug: "s5-2023-manchester", city: "Manchester", season: "s5", year: 2023,
+        startDate: null, endDate: null, startDatetime: null, endDatetime: null,
+        country: "", countryIso: "", region: "", status: "upcoming",
+      },
+    });
+
+    const outcome = await enrichEventMetadata(h.repo, { races: [] });
+    expect(outcome.placed).toContain("s5-2023-manchester");
+
+    const event = await h.repo.getEventBySlug("s5-2023-manchester");
+    expect(event?.country).toBe("United Kingdom");
+    expect(event?.region).toBe("UK");
+    expect(event?.countryIso).toBe("GB");
+    // ⚠️ Where, never when. A date derived from a city would be a guess, and a
+    // guessed date sorts the calendar wrong.
+    expect(event?.startDatetime).toBeFalsy();
+    expect(event?.startDate).toBeFalsy();
+    // A past season with no date is still finished.
+    expect(event?.status).toBe("final");
+  });
+
+  it("does not invent a country for a label that names no city", async () => {
+    const h = await makeHarness({
+      event: {
+        slug: "s7-2024-elite-12", city: "Elite 12", startDatetime: null,
+        country: "", countryIso: "", region: "",
+      },
+    });
+    await enrichEventMetadata(h.repo, { races: [] });
+    const event = await h.repo.getEventBySlug("s7-2024-elite-12");
+    expect(event?.country).toBeFalsy();
+    expect(event?.region).toBeFalsy();
   });
 });
