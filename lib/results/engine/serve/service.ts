@@ -584,11 +584,7 @@ function averageOf(
   };
 }
 
-function wavesOf(rows: EngineResult[]): { wave: number; time: string; athletes: number }[] {
-  return wavesFromLabels(rows.map((r) => r.wave ?? null));
-}
-
-/** The same tally, from the wave column alone. */
+/** Waves tallied from the wave column alone. */
 function wavesFromLabels(
   labels: (string | null)[],
 ): { wave: number; time: string; athletes: number }[] {

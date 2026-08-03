@@ -66,7 +66,7 @@ suite("fill empty events", () => {
 
     let filled = 0;
     let genuinelyEmpty = 0;
-    let failed = 0;
+    let failedDivisions = 0;
     let rows = 0;
 
     for (const event of empty) {
@@ -93,6 +93,7 @@ suite("fill empty events", () => {
             `[fill] ${event.slug}/${division.divisionKey} failed: ` +
               `${(error as Error).message.slice(0, 70)}`,
           );
+          failedDivisions += 1;
         }
       }
 
@@ -112,7 +113,7 @@ suite("fill empty events", () => {
 
     console.log(
       `[fill] done: ${filled} events filled (+${rows} rows), ${genuinelyEmpty} empty at ` +
-        `source, ${failed} failed, ${chain.requestCount()} requests`,
+        `source, ${failedDivisions} divisions failed, ${chain.requestCount()} requests`,
     );
     expect(filled + genuinelyEmpty).toBeGreaterThan(0);
   }, MINUTES * 60_000 + 120_000);

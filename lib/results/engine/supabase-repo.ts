@@ -170,11 +170,48 @@ export function toRepositoryError(error: unknown, context: string): Error {
  */
 const ATHLETE_BATCH = 100;
 
-/** Split a list into fixed-size batches. PostgREST rejects an over-long URL. */
-function chunk<T>(items: T[], size: number): T[][] {
-  const out: T[][] = [];
-  for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size));
-  return out;
+/** Results written per statement. Halved further on a timeout. */
+const RESULT_BATCH = 200;
+
+/**
+ * Upsert in batches, halving any batch that runs out of time.
+ *
+ * ⚠️ Two separate lessons live here.
+ *
+ * The first is that a batch has to be bounded at all: `upsertResults` sent
+ * every changed row of a division in one statement, which for Rotterdam's open
+ * men is 2,721 rows each carrying a `splits` JSONB blob of eighteen segments.
+ *
+ * The second is that no fixed bound is right. Writing an indexed column costs
+ * roughly ten times what writing an unindexed one does — measured on
+ * `results_athletes.name` after the trigram index landed, 1,030ms against
+ * 102ms per 200 rows — so a size chosen against an idle database fails against
+ * a loaded one. Halving on timeout adapts instead of guessing, down to a single
+ * row before it gives up.
+ *
+ * Anything that is not a timeout (57014) is a real error and is rethrown at
+ * once, so a bad row is not retried sixty-four times on its way to failing.
+ */
+async function upsertInBatches<T>(
+  rows: T[],
+  size: number,
+  write: (batch: T[]) => PromiseLike<{ error: unknown }>,
+  context: string,
+): Promise<void> {
+  const run = async (batch: T[]): Promise<void> => {
+    if (batch.length === 0) return;
+    const { error } = await write(batch);
+    if (!error) return;
+
+    const timedOut = (error as { code?: string }).code === "57014";
+    if (!timedOut || batch.length === 1) throw toRepositoryError(error, context);
+
+    const half = Math.ceil(batch.length / 2);
+    await run(batch.slice(0, half));
+    await run(batch.slice(half));
+  };
+
+  for (let i = 0; i < rows.length; i += size) await run(rows.slice(i, i + size));
 }
 
 export class SupabaseResultsRepository implements ResultsRepository {
@@ -512,44 +549,24 @@ export class SupabaseResultsRepository implements ResultsRepository {
       needs_identity_review: a.needsIdentityReview,
     });
 
-    /**
-     * One batch, halving and retrying if the statement runs out of time.
-     *
-     * ⚠️ Writing `name` costs ten times what writing an unindexed column does —
-     * measured, 1,030ms against 102ms for 200 rows — because the trigram index
-     * that makes search survivable has to be maintained on every one. That trade
-     * is worth it (search went from 13s to 220ms) but it removed the headroom
-     * this batch size assumed, and batches of 200 began hitting the two-minute
-     * statement timeout mid-backfill, failing whole divisions.
-     *
-     * Halving on timeout rather than picking a smaller constant, because the
-     * right size depends on how loaded the database is at that moment, and a
-     * constant chosen against an idle one is the thing that just broke.
-     */
-    const writeBatch = async (batch: UpsertAthlete[]): Promise<AthleteRow[]> => {
-      const { data, error } = await this.db
-        .from("results_athletes")
-        .upsert(batch.map(toRow), { onConflict: "slug" })
-        .select();
-
-      if (!error) return (data ?? []) as AthleteRow[];
-
-      const timedOut = (error as { code?: string }).code === "57014";
-      if (!timedOut || batch.length === 1) {
-        throw toRepositoryError(error, "athlete batch upsert failed");
-      }
-
-      const half = Math.ceil(batch.length / 2);
-      return [
-        ...(await writeBatch(batch.slice(0, half))),
-        ...(await writeBatch(batch.slice(half))),
-      ];
-    };
-
+    // Athletes come back out, because the caller needs their ids to build
+    // result rows — so this collects rather than only writing. Batching and the
+    // halving retry are `upsertInBatches`'s job; see it for why no fixed size
+    // is right.
     const out: AthleteRow[] = [];
-    for (let i = 0; i < athletes.length; i += ATHLETE_BATCH) {
-      out.push(...(await writeBatch(athletes.slice(i, i + ATHLETE_BATCH))));
-    }
+    await upsertInBatches(
+      athletes,
+      ATHLETE_BATCH,
+      async (batch) => {
+        const { data, error } = await this.db
+          .from("results_athletes")
+          .upsert(batch.map(toRow), { onConflict: "slug" })
+          .select();
+        if (!error) out.push(...((data ?? []) as AthleteRow[]));
+        return { error };
+      },
+      "athlete batch upsert failed",
+    );
     return out.map(toAthlete);
   }
 
@@ -683,12 +700,15 @@ export class SupabaseResultsRepository implements ResultsRepository {
       }
     }
 
-    if (changed.length > 0) {
-      const { error } = await this.db
-        .from("results_results")
-        .upsert(changed.map(fromResult), { onConflict: "source_result_id" });
-      if (error) throw toRepositoryError(error, "results write failed");
-    }
+    // Bounded and adaptive — see `upsertInBatches`. This was one statement for
+    // the whole division, which is 2,721 rows of splits JSONB on a big board.
+    await upsertInBatches(
+      changed.map(fromResult),
+      RESULT_BATCH,
+      (batch) =>
+        this.db.from("results_results").upsert(batch, { onConflict: "source_result_id" }),
+      "results write failed",
+    );
 
     return { inserted, updated, unchanged };
   }
