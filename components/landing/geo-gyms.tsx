@@ -18,15 +18,32 @@ import type { GeoSeo } from "@/lib/locations/seo";
  * Attribution is required by the ODbL licence and is rendered, not optional.
  */
 
-function stationNote(count: number, name: string): string {
+function stationNote(
+  count: number,
+  name: string,
+  variant: "hyrox" | "pt",
+): string {
   if (count >= 12)
-    return `${name} has plenty of choice, which means you can be picky. The thing to look for is not a Hyrox sticker on the door, it is a sled lane long enough to push on, a spare wall for wall balls, and a rower nobody queues for at 6pm.`;
+    return variant === "pt" ? `${name} has plenty of choice, which means you can be picky about the thing that actually matters: whether you will still be going in March. Proximity beats facilities almost every time, and a rack you can get on at the hour you train beats both.` : `${name} has plenty of choice, which means you can be picky. The thing to look for is not a Hyrox sticker on the door, it is a sled lane long enough to push on, a spare wall for wall balls, and a rower nobody queues for at 6pm.`;
   if (count >= 5)
-    return `Enough choice in ${name} to find one that suits the training rather than the other way round. Ring ahead and ask about sled space and a wall you are allowed to throw at, because those two decide more than anything on the membership page.`;
-  return `${name} is not spoilt for choice, which matters less than it sounds. Six of the eight stations need a sled, a rower, a ski erg, kettlebells and a wall, and most of that substitutes cleanly. Your programme is built around what you can actually get to.`;
+    return variant === "pt"
+      ? `Enough choice in ${name} to pick on convenience rather than compromise. The gym you pass on the way home gets used; the better one across town gets paid for. Worth being honest with yourself about which is which before you sign anything.`
+      : `Enough choice in ${name} to find one that suits the training rather than the other way round. Ring ahead and ask about sled space and a wall you are allowed to throw at, because those two decide more than anything on the membership page.`;
+  return variant === "pt"
+    ? `${name} is not spoilt for choice, which matters less than it sounds. A barbell, something to pull on and somewhere to walk covers most of what changes a body, and your programme is written around what you can actually get to rather than an ideal setup.`
+    : `${name} is not spoilt for choice, which matters less than it sounds. Six of the eight stations need a sled, a rower, a ski erg, kettlebells and a wall, and most of that substitutes cleanly. Your programme is built around what you can actually get to.`;
 }
 
-export function GeoGyms({ seo, name }: { seo: GeoSeo; name: string }) {
+export function GeoGyms({
+  seo,
+  name,
+  variant = "hyrox",
+}: {
+  seo: GeoSeo;
+  name: string;
+  /** The intro differed not at all between the two families; it does now. */
+  variant?: "hyrox" | "pt";
+}) {
   const gyms = seo.gyms.slice(0, 12);
   if (!gyms.length) return null;
 
@@ -47,7 +64,7 @@ export function GeoGyms({ seo, name }: { seo: GeoSeo; name: string }) {
             Where you can train in {name}.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-suth-text-secondary">
-            {stationNote(seo.gyms.length, name)}
+            {stationNote(seo.gyms.length, name, variant)}
           </p>
           {seo.chains.length ? (
             <p className="mt-4 text-base leading-relaxed text-suth-text-secondary">
