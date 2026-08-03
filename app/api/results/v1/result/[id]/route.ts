@@ -3,7 +3,7 @@
  * there is no code path from here to the source, which is why the site keeps
  * serving when the source is down.
  */
-import { getResultsService } from "@/lib/results/engine";
+import { getServingSource, servingDegradation } from "@/lib/results/engine";
 import { apiError, apiNotFound, apiResponse } from "@/lib/results/engine/serve/http";
 
 export const runtime = "nodejs";
@@ -14,8 +14,8 @@ export async function GET(
 ) {
   const { id } = await params;
   try {
-    const result = await getResultsService().getResult(id);
-    return result ? apiResponse(result, { cache: "entity" }) : apiNotFound("Result");
+    const result = await getServingSource().getResult(id);
+    return result ? apiResponse(result, { cache: "entity", tier: servingDegradation().tier }) : apiNotFound("Result");
   } catch (error) {
     return apiError(error);
   }

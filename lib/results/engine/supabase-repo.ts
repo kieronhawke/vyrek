@@ -44,6 +44,7 @@ type EventRow = {
   venue: string | null; status: EngineEventStatus; start_datetime: string | null;
   end_datetime: string | null; tz_offset_minutes: number; start_date: string | null;
   end_date: string | null; athlete_count: number; source_event_id: string | null;
+  source_event_ids: string[] | null;
   source_season_path: string | null; is_demo: boolean; last_synced_at: string | null;
 };
 
@@ -53,7 +54,8 @@ const toEvent = (r: EventRow): EngineEvent => ({
   venue: r.venue, status: r.status, startDatetime: r.start_datetime,
   endDatetime: r.end_datetime, tzOffsetMinutes: r.tz_offset_minutes,
   startDate: r.start_date, endDate: r.end_date, athleteCount: r.athlete_count,
-  sourceEventId: r.source_event_id, sourceSeasonPath: r.source_season_path,
+  sourceEventId: r.source_event_id, sourceEventIds: r.source_event_ids ?? [],
+  sourceSeasonPath: r.source_season_path,
   isDemo: r.is_demo, lastSyncedAt: r.last_synced_at,
 });
 
@@ -64,6 +66,7 @@ const fromEvent = (e: UpsertEvent) => ({
   end_datetime: e.endDatetime ?? null, tz_offset_minutes: e.tzOffsetMinutes,
   start_date: e.startDate ?? null, end_date: e.endDate ?? null,
   athlete_count: e.athleteCount, source_event_id: e.sourceEventId ?? null,
+  source_event_ids: e.sourceEventIds ?? (e.sourceEventId ? [e.sourceEventId] : []),
   source_season_path: e.sourceSeasonPath ?? null, is_demo: e.isDemo,
   last_synced_at: e.lastSyncedAt ?? null,
 });
@@ -175,7 +178,53 @@ export class SupabaseResultsRepository implements ResultsRepository {
 
   /* ── Events ───────────────────────────────────────────────────────── */
 
+  /**
+   * Upsert an event, keyed on the source id first and the slug second.
+   *
+   * ⚠️ Both columns are unique, and they can disagree. `source_event_id` is the
+   * timing provider's stable weekend id; `slug` is derived from the label,
+   * which is not stable — the same weekend catalogued from a different season
+   * page can produce a different city and therefore a different slug.
+   *
+   * Upserting on `slug` alone then crashed the whole season sync on a duplicate
+   * `source_event_id`, which is how one relabelled event took down an entire
+   * backfill run. Found by running a real backfill, not by any test.
+   *
+   * The source id wins because it is the thing that cannot change. A slug can
+   * be corrected; an identity cannot be guessed.
+   */
   async upsertEvent(event: UpsertEvent): Promise<EngineEvent> {
+    // Slug first: season, year and city are what an athlete means by "the
+    // event". A weekend id identifies one race *day* within it, so several
+    // belong to one event and none can be the key.
+    const existing =
+      (await this.getEventBySlug(event.slug)) ??
+      (event.sourceEventId ? await this.getEventBySourceId(event.sourceEventId) : null);
+
+    if (existing) {
+      const ids = new Set([
+        ...(existing.sourceEventIds ?? []),
+        ...(event.sourceEventIds ?? []),
+        ...(event.sourceEventId ? [event.sourceEventId] : []),
+      ]);
+      const row = await this.one<EventRow>(
+        this.db
+          .from("results_events")
+          .update({
+            ...fromEvent(event),
+            // Widened, never narrowed: a later sync that saw only Sunday must
+            // not erase Saturday.
+            source_event_ids: [...ids],
+            source_event_id: existing.sourceEventId ?? event.sourceEventId ?? null,
+          })
+          .eq("id", existing.id)
+          .select()
+          .single(),
+      );
+      if (!row) throw new Error(`Failed to update event ${event.slug}`);
+      return toEvent(row);
+    }
+
     const row = await this.one<EventRow>(
       this.db
         .from("results_events")
@@ -195,10 +244,10 @@ export class SupabaseResultsRepository implements ResultsRepository {
   }
 
   async getEventBySourceId(sourceEventId: string) {
-    const row = await this.one<EventRow>(
-      this.db.from("results_events").select().eq("source_event_id", sourceEventId).maybeSingle(),
+    const rows = await this.many<EventRow>(
+      this.db.from("results_events").select().contains("source_event_ids", [sourceEventId]).limit(1),
     );
-    return row ? toEvent(row) : null;
+    return rows[0] ? toEvent(rows[0]) : null;
   }
 
   async listEvents(filter: { season?: string; region?: string; status?: EngineEventStatus } = {}) {
@@ -217,7 +266,42 @@ export class SupabaseResultsRepository implements ResultsRepository {
     if (error) throw toRepositoryError(error, "results write failed");
   }
 
+  /**
+   * Divisions carry the same hazard: `source_division_id` is unique, and so is
+   * `(event_id, division_key)`. A division that moves between events — which a
+   * relabelled weekend can cause — would collide the same way.
+   */
   async upsertDivision(division: UpsertDivision): Promise<EngineDivision> {
+    if (division.sourceDivisionId) {
+      const found = await this.one<DivisionRow>(
+        this.db
+          .from("results_divisions")
+          .select()
+          .eq("source_division_id", division.sourceDivisionId)
+          .maybeSingle(),
+      );
+      if (found) {
+        const updated = await this.one<DivisionRow>(
+          this.db
+            .from("results_divisions")
+            .update({
+              event_id: division.eventId,
+              division_key: division.divisionKey,
+              display_name: division.displayName,
+              entrant_count: division.entrantCount,
+              published_entrant_count: division.publishedEntrantCount ?? null,
+              last_seen_hash: division.lastSeenHash ?? null,
+              last_synced_at: division.lastSyncedAt ?? null,
+            })
+            .eq("id", found.id)
+            .select()
+            .single(),
+        );
+        if (!updated) throw new Error(`Failed to update division ${division.divisionKey}`);
+        return toDivision(updated);
+      }
+    }
+
     const row = await this.one<DivisionRow>(
       this.db
         .from("results_divisions")
@@ -746,6 +830,36 @@ export class SupabaseResultsRepository implements ResultsRepository {
   }
 
   async raiseAlert(alert: Omit<EngineAlert, "id" | "createdAt">) {
+    // Deduplicated against open alerts: the catalogue raises the same message
+    // every run, and a console of a hundred identical rows is a console nobody
+    // reads. The occurrence count carries how persistent it is.
+    const open = await this.one<Record<string, unknown>>(
+      this.db
+        .from("results_alerts")
+        .select()
+        .eq("kind", alert.kind)
+        .eq("message", alert.message)
+        .is("acknowledged_at", null)
+        .limit(1)
+        .maybeSingle(),
+    );
+
+    if (open) {
+      const previous = (open.detail as { occurrences?: number } | null)?.occurrences ?? 1;
+      const updated = await this.one<Record<string, unknown>>(
+        this.db
+          .from("results_alerts")
+          .update({
+            detail: { ...alert.detail, occurrences: previous + 1, lastSeenAt: new Date().toISOString() },
+            severity: alert.severity,
+          })
+          .eq("id", open.id as string)
+          .select()
+          .single(),
+      );
+      if (updated) return toAlert(updated);
+    }
+
     const row = await this.one<Record<string, unknown>>(
       this.db
         .from("results_alerts")
@@ -753,7 +867,7 @@ export class SupabaseResultsRepository implements ResultsRepository {
           kind: alert.kind,
           severity: alert.severity,
           message: alert.message,
-          detail: alert.detail,
+          detail: { ...alert.detail, occurrences: 1 },
           source_event_id: alert.sourceEventId ?? null,
         })
         .select()

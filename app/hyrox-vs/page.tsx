@@ -5,7 +5,7 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "HYROX vs everything else: CrossFit, Spartan, DEKA and running",
+  title: "HYROX vs CrossFit, Spartan, DEKA and running",
   description:
     "Honest comparisons between HYROX and the things people weigh it against: CrossFit, obstacle racing, DEKA, and whether to train strength or running first.",
   alternates: { canonical: `${siteUrl()}/hyrox-vs` },

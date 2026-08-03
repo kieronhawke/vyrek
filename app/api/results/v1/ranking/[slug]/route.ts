@@ -3,7 +3,7 @@
  * there is no code path from here to the source, which is why the site keeps
  * serving when the source is down.
  */
-import { getResultsService } from "@/lib/results/engine";
+import { getServingSource, servingDegradation } from "@/lib/results/engine";
 import { apiError, apiNotFound, apiResponse } from "@/lib/results/engine/serve/http";
 
 export const runtime = "nodejs";
@@ -22,14 +22,14 @@ export async function GET(
   try {
     // Cursor-paginated by default. Never return thousands of rows in one
     // payload just because a caller forgot a limit.
-    const page = await getResultsService().getRanking(parsed.eventSlug, parsed.division, {
+    const page = await getServingSource().getRanking(parsed.eventSlug, parsed.division, {
       cursor: query.get("cursor") ?? undefined,
       ageGroup: query.get("ageGroup") ?? undefined,
       q: query.get("q") ?? undefined,
       limit: Math.min(Number(query.get("limit") ?? 100), 500),
     });
     if (!page) return apiNotFound("Ranking");
-    return apiResponse(page, { cache: "live" });
+    return apiResponse(page, { cache: "live", tier: servingDegradation().tier });
   } catch (error) {
     return apiError(error);
   }

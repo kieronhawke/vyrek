@@ -1,122 +1,205 @@
-import { STATION_IDS, STATION_LABEL, type StationId } from "@/lib/results/model";
-import { formatSplit } from "@/lib/results/format";
-import { MicroLabel } from "../ui/primitives";
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import {
+  STATION_IDS, STATION_LABEL, STATION_SHORT, stationGuideHref, type StationId,
+} from "@/lib/results/model";
+import { formatSplit, formatPercent } from "@/lib/results/format";
+import { MicroLabel, Delta } from "../ui/primitives";
 
 /**
- * The race strip — the signature element of the whole section.
+ * The race strip — the signature element of the section.
  *
- * One horizontal bar for the entire race, runs and stations in order, each
- * segment's width proportional to the time it took. Chartreuse where the
- * athlete beat the division average for that segment, muted where they did
- * not. In one glance you can see the shape of a race: where it was won, where
- * it fell apart, how much of it was spent standing in the Roxzone.
+ * The first version was a row of proportional blocks with a colour legend and
+ * nothing else, and the feedback was fair: it looked decorative and told you
+ * almost nothing. Colour alone cannot say *which* station is which, and an SVG
+ * `<title>` tooltip does not exist on a phone at all.
  *
- * Nothing on the reference site does this. Their breakdown is a table of
- * numbers; this is the race.
+ * So it is a control now, not a picture. Every segment is a button: select one
+ * and the panel underneath reads out its time, the division average, the
+ * delta, its share of the race, and a link to the guide. The whole race stays
+ * visible while you interrogate one part of it, which is the thing a table of
+ * splits cannot do.
  *
- * Server-rendered inline SVG — no chart library, no client JS, no layout shift.
+ * Selection defaults to the segment where the most time was lost, because that
+ * is what the reader came to find.
  */
+
+type Segment = {
+  key: string;
+  label: string;
+  short: string;
+  kind: "run" | "station" | "roxzone";
+  station?: StationId;
+  seconds: number;
+  average: number;
+};
+
 export function RaceStrip({
-  runs, stations, roxzoneSeconds, averageRuns, averageStations,
+  runs, stations, roxzoneSeconds, averageRuns, averageStations, averageRoxzone,
 }: {
   runs: number[];
   stations: Record<StationId, number>;
   roxzoneSeconds: number;
   averageRuns: number[];
   averageStations: Record<StationId, number>;
+  averageRoxzone: number;
 }) {
-  type Segment = {
-    key: string; label: string; seconds: number; average: number; kind: "run" | "station";
-  };
-
   const segments: Segment[] = [];
   STATION_IDS.forEach((station, i) => {
     segments.push({
-      key: `run-${i + 1}`, label: `Run ${i + 1}`, kind: "run",
+      key: `run-${i + 1}`, label: `Run ${i + 1}`, short: `R${i + 1}`, kind: "run",
       seconds: runs[i] ?? 0, average: averageRuns[i] ?? 0,
     });
     segments.push({
-      key: station, label: STATION_LABEL[station], kind: "station",
-      seconds: stations[station] ?? 0, average: averageStations[station] ?? 0,
+      key: station,
+      label: STATION_LABEL[station],
+      short: STATION_SHORT[station],
+      kind: "station",
+      station,
+      seconds: stations[station] ?? 0,
+      average: averageStations[station] ?? 0,
     });
   });
+  segments.push({
+    key: "roxzone", label: "Roxzone", short: "RX", kind: "roxzone",
+    seconds: roxzoneSeconds, average: averageRoxzone,
+  });
 
-  const working = segments.reduce((sum, s) => sum + s.seconds, 0);
-  const total = working + roxzoneSeconds;
+  const total = segments.reduce((sum, s) => sum + s.seconds, 0);
+
+  const worst = segments.reduce(
+    (a, b) => (b.seconds - b.average > a.seconds - a.average ? b : a),
+    segments[0],
+  );
+  const [selectedKey, setSelectedKey] = useState(worst.key);
+  const selected = segments.find((s) => s.key === selectedKey) ?? worst;
+
   if (total <= 0) return null;
 
-  let cursor = 0;
-  const placed = segments.map((segment) => {
-    const width = (segment.seconds / total) * 100;
-    const x = cursor;
-    cursor += width;
-    return { ...segment, x, width };
-  });
-  const roxWidth = (roxzoneSeconds / total) * 100;
+  const share = (s: Segment) => (s.seconds / total) * 100;
+  const delta = selected.seconds - selected.average;
 
   return (
     <figure className="rounded-md border border-suth-border-subtle bg-suth-elevated p-4">
       <figcaption className="flex flex-wrap items-baseline justify-between gap-2">
         <MicroLabel>[ THE RACE ]</MicroLabel>
         <span className="text-[11px] text-suth-text-tertiary">
-          Segment width is time. Chartreuse beat the division average.
+          Width is time · tap a segment
         </span>
       </figcaption>
 
-      <svg
-        viewBox="0 0 100 12"
-        preserveAspectRatio="none"
-        className="mt-3 h-16 w-full md:h-20"
-        role="img"
-        aria-label={
-          `Race timeline. ${placed.map((s) => `${s.label} ${formatSplit(s.seconds)}`).join(", ")}, `
-          + `Roxzone ${formatSplit(roxzoneSeconds)}.`
-        }
+      {/* Runs run full height, stations sit inset, so the alternating rhythm of
+          the race reads before you look at a single label. */}
+      <div
+        className="mt-3 flex h-16 w-full items-stretch gap-px md:h-20"
+        role="group"
+        aria-label="Race segments"
       >
-        {placed.map((segment) => {
+        {segments.map((segment) => {
           const faster = segment.average > 0 && segment.seconds < segment.average;
+          const isSelected = segment.key === selected.key;
           return (
-            <rect
+            <button
               key={segment.key}
-              x={segment.x}
-              y={segment.kind === "run" ? 0 : 4}
-              width={Math.max(0.15, segment.width - 0.12)}
-              height={segment.kind === "run" ? 12 : 8}
-              rx={0.2}
-              className={
+              type="button"
+              data-inline-tap
+              onClick={() => setSelectedKey(segment.key)}
+              aria-pressed={isSelected}
+              aria-label={`${segment.label}, ${formatSplit(segment.seconds)}`}
+              title={`${segment.label} · ${formatSplit(segment.seconds)}`}
+              style={{ width: `${share(segment)}%` }}
+              className={cn(
+                "group relative min-w-[3px] rounded-[2px] transition-opacity",
+                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-suth-accent",
+                segment.kind === "run" ? "self-stretch" : "my-2",
                 faster
-                  ? "fill-[var(--results-segment-fast)]"
+                  ? "bg-[var(--results-segment-fast)]"
                   : segment.kind === "run"
-                    ? "fill-[var(--results-run)]"
-                    : "fill-[var(--results-station)]"
-              }
+                    ? "bg-[var(--results-run)]"
+                    : segment.kind === "roxzone"
+                      ? "bg-[var(--results-roxzone)]"
+                      : "bg-[var(--results-station)]",
+                isSelected ? "ring-2 ring-inset ring-suth-text" : "opacity-80 hover:opacity-100",
+              )}
             >
-              {/* Single string child: multiple text nodes inside an SVG <title>
-                  serialise differently on server and client and trip hydration. */}
-              <title>
-                {`${segment.label}: ${formatSplit(segment.seconds)}${
-                  segment.average > 0 ? ` (division average ${formatSplit(segment.average)})` : ""
-                }`}
-              </title>
-            </rect>
+              {/* Labels are rotated to run down the segment.
+               *
+               * Horizontally they never fit: a station is 3–6% of the race, so
+               * "PUSH" clipped to "PUS" and read as a different station.
+               * Estimating a character count from the width does not work
+               * either — glyph widths differ. Vertical text uses the one axis
+               * these blocks actually have, and `truncate` lets the browser
+               * measure rather than guessing. The readout below names the
+               * segment in full regardless. */}
+              {share(segment) > 2.6 ? (
+                <span
+                  className="pointer-events-none absolute inset-0 flex items-center justify-center"
+                  aria-hidden
+                >
+                  <span
+                    className="max-h-full truncate font-mono text-[8px] uppercase leading-none
+                               tracking-[0.08em] text-black/65
+                               [writing-mode:vertical-rl] [text-orientation:mixed]"
+                  >
+                    {segment.short}
+                  </span>
+                </span>
+              ) : null}
+            </button>
           );
         })}
-        <rect
-          x={cursor}
-          y={0}
-          width={Math.max(0.15, roxWidth - 0.12)}
-          height={12}
-          rx={0.2}
-          className="fill-[var(--results-roxzone)]"
-        >
-          <title>{`Roxzone (transitions): ${formatSplit(roxzoneSeconds)}`}</title>
-        </rect>
-      </svg>
+      </div>
 
-      {/* Legend. Runs are the full-height blocks, stations the inset ones —
-          without saying so the strip is decorative rather than readable. */}
+      <div className="mt-3 rounded-sm border border-suth-border-subtle bg-suth-base/60 p-3">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+          <span className="text-sm font-semibold text-suth-text">{selected.label}</span>
+          <span className="flex items-baseline gap-3">
+            <span className="results-num text-lg text-suth-text">
+              {formatSplit(selected.seconds)}
+            </span>
+            <Delta seconds={delta} className="text-xs" />
+          </span>
+        </div>
+
+        <dl className="mt-2 grid grid-cols-3 gap-3 text-[11px]">
+          <div>
+            <dt className="text-suth-text-tertiary">Division average</dt>
+            <dd className="results-num mt-0.5 text-suth-text-secondary">
+              {formatSplit(selected.average)}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-suth-text-tertiary">Share of race</dt>
+            <dd className="results-num mt-0.5 text-suth-text-secondary">
+              {formatPercent(share(selected), 1)}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-suth-text-tertiary">Verdict</dt>
+            <dd className="mt-0.5 text-suth-text-secondary">
+              {delta <= -5 ? "Gained time" : delta >= 5 ? "Lost time" : "On par"}
+            </dd>
+          </div>
+        </dl>
+
+        {selected.station ? (
+          <Link
+            href={stationGuideHref(selected.station)}
+            data-inline-tap
+            className="mt-2.5 inline-block font-mono text-[10px] uppercase tracking-[0.16em]
+                       text-suth-accent hover:underline
+                       focus-visible:outline-2 focus-visible:outline-suth-accent"
+          >
+            How to fix {selected.label} →
+          </Link>
+        ) : null}
+      </div>
+
       <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[11px] text-suth-text-tertiary">
-        <LegendKey className="bg-[var(--results-segment-fast)]" label="Faster than average" />
+        <LegendKey className="bg-[var(--results-segment-fast)]" label="Beat the average" />
         <LegendKey className="bg-[var(--results-run)]" label="Run" />
         <LegendKey className="bg-[var(--results-station)]" label="Station" />
         <LegendKey className="bg-[var(--results-roxzone)]" label="Roxzone" />

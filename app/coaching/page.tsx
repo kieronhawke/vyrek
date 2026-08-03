@@ -17,9 +17,9 @@ export const revalidate = 86400;
  * consultation. See docs/strategy/rules/HARD-RULES.md.
  */
 export const metadata: Metadata = {
-  title: "Coaching: how to choose one, and whether you need one",
+  title: "Coaching: how to choose one",
   description:
-    "Honest guides to personal training and online coaching: comparing formats, what good coaching actually includes, how to vet a coach, and when you do not need one.",
+    "Honest guides to personal training and online coaching: comparing formats, what good coaching includes, and when you do not need one.",
   alternates: { canonical: `${siteUrl()}/coaching` },
   openGraph: {
     title: "Coaching guides. Suth Performance",

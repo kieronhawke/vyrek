@@ -11,9 +11,9 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "Hyrox topic hubs, women, masters, doubles, first race",
+  title: "HYROX topics: women, masters, doubles",
   description:
-    "Curated Hyrox content by audience: women's open standards, masters programmes, doubles strategy, first-race preparation. Plans, stations, blog posts, all in one place.",
+    "Curated HYROX content by audience: women's standards, masters programmes, doubles strategy and first-race preparation, all in one place.",
   alternates: { canonical: `${siteUrl()}/topics` },
   robots: { index: true, follow: true },
 };

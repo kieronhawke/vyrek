@@ -59,6 +59,7 @@ export function splitDivisionRef(sourceDivisionId: string): { code: string; sex:
   if (!suffix) return { code, sex: null };
   if (suffix === "men") return { code, sex: "M" };
   if (suffix === "women") return { code, sex: "W" };
+  if (suffix === "mixed") return { code, sex: "X" };
   return { code, sex: null };
 }
 

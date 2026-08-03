@@ -23,7 +23,9 @@ export function HeroSearch({ athleteCount, eventCount }: { athleteCount: number;
         className="group flex w-full items-center gap-3 rounded-md border border-suth-border
                    bg-suth-elevated px-4 py-4 text-left transition-colors
                    hover:border-suth-accent/40 md:py-5
-                   focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-suth-accent"
+                   focus-visible:outline-none focus-visible:ring-2
+                   focus-visible:ring-suth-accent focus-visible:ring-offset-2
+                   focus-visible:ring-offset-suth-base"
       >
         <Search className="size-5 shrink-0 text-suth-text-tertiary transition-colors
                            group-hover:text-suth-accent" aria-hidden />

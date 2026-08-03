@@ -59,7 +59,16 @@ export type EngineEvent = {
   startDate?: string | null;
   endDate?: string | null;
   athleteCount: number;
+  /** First weekend id seen. Kept for display; NOT an identity. */
   sourceEventId?: string | null;
+  /**
+   * Every mika weekend id belonging to this event — one per race day.
+   *
+   * A HYROX weekend carries a separate source id per day, and "Cardiff 2026" is
+   * one event that ran Saturday and Sunday. Storing a single id meant 76 events
+   * thrashing theirs on every catalogue run.
+   */
+  sourceEventIds?: string[];
   sourceSeasonPath?: string | null;
   isDemo: boolean;
   lastSyncedAt?: string | null;

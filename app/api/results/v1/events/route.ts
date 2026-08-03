@@ -3,7 +3,7 @@
  * there is no code path from here to the source, which is why the site keeps
  * serving when the source is down.
  */
-import { getResultsService } from "@/lib/results/engine";
+import { getServingSource, servingDegradation } from "@/lib/results/engine";
 import { apiError, apiResponse } from "@/lib/results/engine/serve/http";
 
 export const runtime = "nodejs";
@@ -11,12 +11,12 @@ export const runtime = "nodejs";
 export async function GET(request: Request) {
   const params = new URL(request.url).searchParams;
   try {
-    const events = await getResultsService().listEvents({
+    const events = await getServingSource().listEvents({
       season: params.get("season") ?? undefined,
       region: params.get("region") ?? undefined,
       status: (params.get("status") as "upcoming" | "live" | "finished") ?? undefined,
     });
-    return apiResponse(events, { cache: "entity" });
+    return apiResponse(events, { cache: "entity", tier: servingDegradation().tier });
   } catch (error) {
     return apiError(error);
   }

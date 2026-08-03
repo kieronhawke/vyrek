@@ -30,7 +30,7 @@ import {
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Suth Performance Journal. Hyrox training, technique, race-day guides",
+  title: "The Journal: HYROX training and race guides",
   description:
     "Practical Hyrox content from an Elite 15 coach. Training plans, station-by-station technique, nutrition, and race-day pacing. Plain English, no fluff.",
   alternates: {

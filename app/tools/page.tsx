@@ -8,9 +8,9 @@ import { SplitHeading } from "@/components/shared/split-heading";
 import { siteUrl } from "@/lib/blog/urls";
 
 export const metadata: Metadata = {
-  title: "Free Hyrox tools, pace calculator, station splits",
+  title: "Free HYROX tools: pace and split calculators",
   description:
-    "Free Hyrox calculators and tools. Project your finish time, plan your station splits, predict your race pace.",
+    "Free HYROX calculators: project your finish time from your 1km pace, plan your station splits, and work out a realistic race pace.",
   alternates: { canonical: `${siteUrl()}/tools` },
   robots: { index: true, follow: true },
 };

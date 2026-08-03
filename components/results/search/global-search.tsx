@@ -165,7 +165,18 @@ function SearchPanel({ onClose }: { onClose: () => void }) {
                    shadow-2xl md:rounded-lg"
         onKeyDown={onKeyDown}
       >
-        <div className="flex items-center gap-3 border-b border-suth-border-subtle px-4">
+        {/* Focus lives on the row, not the input.
+         *
+         * An outline on the input was being clipped by this sheet's
+         * `overflow-hidden` — the top and both sides were cut off, and with no
+         * offset it sat directly against the text. A ring on the row, drawn
+         * inset, cannot be clipped by an ancestor and keeps clear of the
+         * caret. */}
+        <div
+          className="flex items-center gap-3 border-b border-suth-border-subtle px-4
+                     transition-shadow focus-within:ring-2 focus-within:ring-inset
+                     focus-within:ring-suth-accent/70"
+        >
           <Search className="size-4 shrink-0 text-suth-text-tertiary" aria-hidden />
           <input
             ref={inputRef}
@@ -173,8 +184,13 @@ function SearchPanel({ onClose }: { onClose: () => void }) {
             onChange={(e) => onChange(e.target.value)}
             placeholder="Search athletes and events"
             aria-label="Search athletes and events"
-            className="min-h-[44px] flex-1 bg-transparent py-3 text-base text-suth-text
-                       outline-none placeholder:text-suth-text-tertiary"
+            /* globals.css paints a box-shadow ring outside every focused input.
+               On a full-bleed field inside this overflow-hidden sheet that ring
+               was clipped on three sides and sat against the caret. The row
+               above owns the focus state instead, so the input's own ring is
+               suppressed rather than drawn and cut. */
+            className="results-search-field min-h-[52px] flex-1 bg-transparent py-3
+                       text-base text-suth-text placeholder:text-suth-text-tertiary"
           />
           <button
             type="button"

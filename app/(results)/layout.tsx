@@ -7,6 +7,7 @@ import { MarketingFooter } from "@/components/marketing/footer";
 import { ResultsShell } from "@/components/results/shell/results-shell";
 import { DemoDataPill } from "@/components/results/shell/demo-pill";
 import { TimingAttribution } from "@/components/results/shell/timing-attribution";
+import { DataNotice } from "@/components/results/shell/data-notice";
 
 /**
  * While `NEXT_PUBLIC_DATA_MODE=demo` the whole section is noindex.
@@ -42,6 +43,9 @@ export default function ResultsLayout({ children }: { children: React.ReactNode 
       {/* Spacer for the fixed marketing nav and cookie strip. Fixed height,
           not the sticky offset variable — see results-tokens.css. */}
       <div className="pt-[var(--results-content-offset)]">
+        {/* Above the content, because "these numbers may be stale" is not a
+            footnote. Renders nothing when everything is healthy. */}
+        <DataNotice />
         <ResultsShell>
           <main id="main" className="min-h-screen pb-20 md:pb-0">
             {children}

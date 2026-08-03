@@ -5,7 +5,7 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "HYROX nutrition: race day, training weeks and the 12-week build",
+  title: "HYROX nutrition: race day and training weeks",
   description:
     "How to fuel a HYROX: race-morning timing, what to take mid-race, the weekly framework through a training block, and hydration when the hall is hot.",
   alternates: { canonical: `${siteUrl()}/hyrox/nutrition` },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 const ENTRIES: readonly HubEntry[] = [
   {
-    slug: "race-day-nutrition",
+    slug: "hyrox-race-day-nutrition",
     kicker: "Race day",
     blurb: "Breakfast timing, mid-race carbs, and recovery inside 60 minutes.",
   },

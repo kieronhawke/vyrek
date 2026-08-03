@@ -8,8 +8,6 @@
  */
 
 import "server-only";
-import { readFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
 import type { DivisionCode, EventStatus } from "./types";
 import { STATION_IDS, PROFILE_BY_CODE, type StationId, type AgeGroup } from "./model";
 import { buildDistribution } from "./percentiles";
@@ -26,11 +24,11 @@ import type {
  * wrote from real CSVs. Same shape either way, which is the point: swapping to
  * real data is a data-loading job, not a rewrite.
  */
-const DATA_DIR = join(
+const DATA_DIR = [
   process.cwd(),
   "data",
   process.env.NEXT_PUBLIC_DATA_MODE === "live" ? "results-live" : "results-demo",
-);
+].join("/");
 const PAGE_SIZE = 100;
 
 type RawResult = {
@@ -43,8 +41,26 @@ type RawResult = {
 
 type EventShard = { slug: string; results: Record<string, RawResult[]> };
 
+/**
+ * `node:fs` is required lazily rather than imported.
+ *
+ * `server-only` stops a *direct* client import, but it does not help when a
+ * client component reaches this module through a chain of server modules —
+ * which is what happened: the admin results-engine console imports the engine,
+ * the engine imports this source for its fallback, and Turbopack then tried to
+ * put `node:fs` in a browser chunk and failed the whole build.
+ *
+ * A lazy require keeps the specifier out of the module graph, so the file is
+ * safe to appear anywhere while still only ever reading from disk on a server.
+ */
+function nodeFs() {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  return require("node:fs") as typeof import("node:fs");
+}
+
 function readJson<T>(file: string, fallback: T): T {
-  const path = join(DATA_DIR, file);
+  const { existsSync, readFileSync } = nodeFs();
+  const path = `${DATA_DIR}/${file}`;
   if (!existsSync(path)) return fallback;
   return JSON.parse(readFileSync(path, "utf8")) as T;
 }

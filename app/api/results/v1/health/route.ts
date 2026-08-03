@@ -10,7 +10,13 @@
  */
 
 import { NextResponse } from "next/server";
-import { getResultsRepository, hasSupabaseConfig, ingestionStatus } from "@/lib/results/engine";
+import {
+  getResultsRepository,
+  hasSupabaseConfig,
+  ingestionStatus,
+  resultsProjectRef,
+  servingDegradation,
+} from "@/lib/results/engine";
 import { ATTRIBUTION, describeError } from "@/lib/results/engine/serve/http";
 
 export const runtime = "nodejs";
@@ -43,9 +49,12 @@ export async function GET() {
       dataMode: process.env.NEXT_PUBLIC_DATA_MODE === "live" ? "live" : "demo",
       store: {
         kind: hasSupabaseConfig() ? "supabase" : "memory",
+        project: resultsProjectRef(),
         ...store,
       },
       ingestion,
+      // Which tier the serving layer is currently answering from, and why.
+      serving: servingDegradation(),
       attribution: ATTRIBUTION,
       checkedInMs: Date.now() - started,
     },

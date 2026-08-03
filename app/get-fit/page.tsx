@@ -13,9 +13,9 @@ export const revalidate = 86400;
  * single blocked group in the plan, and the route did not exist.
  */
 export const metadata: Metadata = {
-  title: "Getting fit: honest guides for people starting out",
+  title: "Getting fit: honest guides for beginners",
   description:
-    "Where to start when you are starting from nothing: how often to train, what actually matters, what to ignore, and why the first eight weeks are about turning up.",
+    "Where to start from nothing: how often to train, what actually matters, what to ignore, and why the first eight weeks are about turning up.",
   alternates: { canonical: `${siteUrl()}/get-fit` },
   openGraph: {
     title: "Getting fit. Suth Performance",

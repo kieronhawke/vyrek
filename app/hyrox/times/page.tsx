@@ -12,7 +12,7 @@ export const revalidate = 86400;
  * to what can be written without it.
  */
 export const metadata: Metadata = {
-  title: "HYROX times: what good looks like, and what your splits mean",
+  title: "HYROX times: what good actually looks like",
   description:
     "What counts as a good HYROX time by division and age group, how to read your splits, and why comparing your finish across venues is unreliable.",
   alternates: { canonical: `${siteUrl()}/hyrox/times` },

@@ -6,7 +6,7 @@ export const revalidate = 86400;
 
 /** Hub for Pain & Injury and Injury & Return (28 planned posts). */
 export const metadata: Metadata = {
-  title: "Recovery and injury: training around it, not stopping",
+  title: "Recovery and injury: training around it",
   description:
     "When to train through a niggle and when to stop, what modification actually means, the red flags that need assessing, and how to come back without repeating it.",
   alternates: { canonical: `${siteUrl()}/recovery` },

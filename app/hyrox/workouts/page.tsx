@@ -5,9 +5,9 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "HYROX workouts: sessions for every station and every level",
+  title: "HYROX workouts: sessions by station",
   description:
-    "Complete HYROX sessions, from a first workout that needs no equipment to five prescribed sessions for each of the eight stations, with benchmarks to test progress.",
+    "Complete HYROX sessions: five prescribed workouts for each of the eight stations, plus benchmarks to test whether they are working.",
   alternates: { canonical: `${siteUrl()}/hyrox/workouts` },
   openGraph: {
     title: "HYROX workouts. Suth Performance",

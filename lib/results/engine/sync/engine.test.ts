@@ -411,6 +411,178 @@ describe("splits backfill (§4)", () => {
   });
 });
 
+describe("identity keys that can disagree", () => {
+  /**
+   * Both `slug` and `source_event_id` are unique, and they can point at
+   * different rows. A weekend catalogued from another season page can produce a
+   * different label, therefore a different city, therefore a different slug —
+   * while carrying the same source id.
+   *
+   * Upserting on the slug alone then failed on a duplicate source id and took
+   * down the whole season sync. One relabelled event, an entire backfill run
+   * lost. Found by running a real backfill; no test had ever produced two
+   * labels for one weekend.
+   */
+  it("re-labelling a weekend updates the event rather than colliding", async () => {
+    const h = await makeHarness();
+
+    const first = await h.repo.upsertEvent({
+      slug: "s8-2026-london",
+      name: "HYROX London 2026",
+      city: "London",
+      country: "", countryIso: "", region: "UK",
+      season: "s8", year: 2026, status: "final",
+      tzOffsetMinutes: 0, athleteCount: 0,
+      sourceEventId: "WEEKEND-1",
+      isDemo: false,
+    });
+
+    // Same weekend, different label, therefore a different slug.
+    const second = await h.repo.upsertEvent({
+      slug: "s8-2026-london-excel",
+      name: "HYROX London ExCeL 2026",
+      city: "London ExCeL",
+      country: "", countryIso: "", region: "UK",
+      season: "s8", year: 2026, status: "final",
+      tzOffsetMinutes: 0, athleteCount: 0,
+      sourceEventId: "WEEKEND-1",
+      isDemo: false,
+    });
+
+    // One event, updated — not two, and not a crash.
+    expect(second.id).toBe(first.id);
+    expect(second.city).toBe("London ExCeL");
+    expect((await h.repo.listEvents()).filter((e) => e.sourceEventId === "WEEKEND-1")).toHaveLength(1);
+  });
+
+  /**
+   * A HYROX weekend carries a separate source id per race day, so "Cardiff
+   * 2026" is one event with several. Storing a single id meant whichever day
+   * was written last won, and 76 real events thrashed theirs on every catalogue
+   * run — while the schema's unique constraint made a shared slug fatal.
+   */
+  it("collects every race day of a weekend into one event", async () => {
+    const h = await makeHarness();
+    const base = {
+      slug: "s8-2026-cardiff", name: "HYROX Cardiff 2026", city: "Cardiff",
+      country: "", countryIso: "", region: "UK", season: "s8", year: 2026,
+      status: "final" as const, tzOffsetMinutes: 0, athleteCount: 0, isDemo: false,
+    };
+
+    const saturday = await h.repo.upsertEvent({ ...base, sourceEventId: "WEEKEND-SAT" });
+    const sunday = await h.repo.upsertEvent({ ...base, sourceEventId: "WEEKEND-SUN" });
+
+    expect(sunday.id).toBe(saturday.id);
+    expect([...(sunday.sourceEventIds ?? [])].sort()).toEqual(["WEEKEND-SAT", "WEEKEND-SUN"]);
+
+    // Either day finds the event.
+    expect((await h.repo.getEventBySourceId("WEEKEND-SAT"))?.id).toBe(saturday.id);
+    expect((await h.repo.getEventBySourceId("WEEKEND-SUN"))?.id).toBe(saturday.id);
+  });
+
+  it("never narrows the set of race days it knows about", async () => {
+    const h = await makeHarness();
+    const base = {
+      slug: "s8-2026-stockholm", name: "x", city: "Stockholm",
+      country: "", countryIso: "", region: "Europe", season: "s8", year: 2026,
+      status: "final" as const, tzOffsetMinutes: 0, athleteCount: 0, isDemo: false,
+    };
+    await h.repo.upsertEvent({ ...base, sourceEventId: "D1" });
+    await h.repo.upsertEvent({ ...base, sourceEventId: "D2" });
+    // A later sync that only saw one day must not erase the other.
+    const after = await h.repo.upsertEvent({ ...base, sourceEventId: "D1" });
+    expect([...(after.sourceEventIds ?? [])].sort()).toEqual(["D1", "D2"]);
+  });
+
+  it("keys a division on its source id before its event and key", async () => {
+    const h = await makeHarness();
+    const a = await h.repo.upsertDivision({
+      eventId: h.event.id, divisionKey: "open-men", displayName: "HYROX Men",
+      entrantCount: 0, sourceDivisionId: "H_X#men",
+    });
+    const b = await h.repo.upsertDivision({
+      eventId: h.event.id, divisionKey: "open-men-renamed", displayName: "HYROX Men",
+      entrantCount: 5, sourceDivisionId: "H_X#men",
+    });
+    expect(b.id).toBe(a.id);
+    expect(b.entrantCount).toBe(5);
+  });
+});
+
+describe("athlete identity does not multiply (§13)", () => {
+  /**
+   * The failure this pins down, measured on real data: 1,006 orphaned athlete
+   * profiles and one person with eleven of them. A partner on a doubles row had
+   * no source id, so every appearance created a fresh profile with an
+   * incremented slug — and did it again on the next sync, for ever.
+   */
+  it("re-syncing a doubles board creates no new athletes", async () => {
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-doubles.html")] },
+      }),
+    });
+
+    await syncOnce(h);
+    const first = h.repo.athletes.size;
+    expect(first).toBe(4); // two teams, two people each
+
+    // Three more syncs. The count must not move by one.
+    await syncOnce(h, { force: true });
+    await syncOnce(h, { force: true });
+    await syncOnce(h, { force: true });
+    expect(h.repo.athletes.size).toBe(first);
+  });
+
+  it("gives every person in a team a stable id derived from the entry", async () => {
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-doubles.html")] },
+      }),
+    });
+    await syncOnce(h);
+
+    const ids = [...h.repo.athletes.values()].map((a) => a.sourceAthleteId).sort();
+    // Position-qualified, so the two people on one entry are distinguishable
+    // and neither is confused with the entry itself.
+    expect(ids).toEqual([
+      "LRAA0000301#p0", "LRAA0000301#p1",
+      "LRAA0000302#p0", "LRAA0000302#p1",
+    ]);
+    expect(new Set(ids).size).toBe(4);
+  });
+
+  it("re-syncing an individual board creates no new athletes either", async () => {
+    const h = await makeHarness();
+    await syncOnce(h);
+    const first = h.repo.athletes.size;
+    expect(first).toBe(8);
+
+    await syncOnce(h, { force: true });
+    await syncOnce(h, { force: true });
+    expect(h.repo.athletes.size).toBe(first);
+  });
+
+  it("leaves no athlete without a race attached", async () => {
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-doubles.html")] },
+      }),
+    });
+    await syncOnce(h);
+
+    // Every profile must be reachable from a result, as its athlete or as a
+    // partner. An orphan is a profile nobody can ever find.
+    const results = [...h.repo.results.values()];
+    for (const athlete of h.repo.athletes.values()) {
+      const attached = results.some(
+        (r) => r.athleteId === athlete.id || r.partnerAthleteIds.includes(athlete.id),
+      );
+      expect(attached, `${athlete.slug} has no race`).toBe(true);
+    }
+  });
+});
+
 describe("historical seasons (§5)", () => {
   it("walks every season, newest first", () => {
     const seasons = allSeasonPaths();

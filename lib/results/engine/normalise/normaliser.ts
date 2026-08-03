@@ -88,6 +88,40 @@ export function divisionKeyFor(prefix: string, sex?: string | null): string {
   return suffix ? `${base}-${suffix}` : base;
 }
 
+/**
+ * Which sexes a division code can actually have entrants in.
+ *
+ * The source offers M, W and X (Mixed) on every board, but Mixed only means
+ * something for team formats — an individual race cannot be mixed, and asking
+ * returns an empty board at the cost of a request.
+ *
+ * ⚠️ Omitting X entirely, which is what this did at first, silently drops whole
+ * divisions: HYROX Relay Mixed is a real category with real results, and it was
+ * never being fetched. Missing an entire division is the worst class of
+ * accuracy bug, because nothing looks wrong — the board that is there is
+ * complete, and the one that is not simply does not appear.
+ *
+ * Pro Doubles and Elite Doubles are deliberately absent: HYROX does not run
+ * them mixed, and the frontend's DivisionCode union has no member for them, so
+ * a mixed row there would have nowhere to live.
+ */
+export const SEXES_FOR_PREFIX: Record<string, ("men" | "women" | "mixed")[]> = {
+  H: ["men", "women"],
+  HPRO: ["men", "women"],
+  HA: ["men", "women"],
+  HE: ["men", "women"],
+  HD: ["men", "women", "mixed"],
+  HD1: ["men", "women", "mixed"],
+  HD2: ["men", "women", "mixed"],
+  HMR: ["men", "women", "mixed"],
+  HDP: ["men", "women"],
+  HDE: ["men", "women"],
+};
+
+export function sexesForPrefix(prefix: string): ("men" | "women" | "mixed")[] {
+  return SEXES_FOR_PREFIX[prefix] ?? ["men", "women"];
+}
+
 export function normaliseSex(sex?: string | null): "men" | "women" | "mixed" | null {
   if (!sex) return null;
   const value = sex.trim().toLowerCase();
@@ -209,11 +243,10 @@ export class Normaliser {
       // race history is complete too.
       const partnerIds: string[] = [];
       if (raw.partnerNames && raw.partnerNames.length > 1) {
-        for (const partner of raw.partnerNames.slice(1)) {
-          const partnerResolved = await this.resolveAthlete(
-            { ...raw, name: partner, sourceAthleteId: undefined },
-            ageGroup,
-          );
+        for (let position = 1; position < raw.partnerNames.length; position += 1) {
+          // Same row, different position — so the partner inherits the entry's
+          // stable id qualified by where they sit in it.
+          const partnerResolved = await this.resolveAthlete(raw, ageGroup, position);
           partnerIds.push(partnerResolved.athleteId);
           athletesCreated += partnerResolved.created ? 1 : 0;
         }
@@ -252,25 +285,49 @@ export class Normaliser {
   /**
    * Find or create the athlete this row belongs to.
    *
-   * Never merges below the confidence threshold: an uncertain match creates a
-   * second profile and files a review, so a human decides whether two James
-   * Smiths are one person.
+   * ⚠️ Every athlete must get a **stable** source id, or this function is a
+   * profile factory. The failure it caused, measured on real data: 1,006
+   * orphaned profiles and one person with eleven of them.
+   *
+   * The mechanism was that a partner on a doubles row had no source id at all,
+   * so each appearance scored into the review band, created a fresh profile
+   * with an incremented slug, and did it again on the next sync — for ever. And
+   * because athletes are created while *parsing*, before the rows they belong
+   * to are written, a sync that failed afterwards left them behind with nothing
+   * attached.
+   *
+   * The fix is that identity is derived, not discovered: person *n* of entry
+   * *X* is `X#pn`, which is stable across every re-sync and cannot collide with
+   * anyone else. Fragmentation across different races is still possible and is
+   * still flagged for review — but it is bounded, and re-running a sync is now
+   * genuinely free.
    */
   private async resolveAthlete(
     raw: RawResultRow,
     ageGroup: string | null,
+    /** Position within a team row. 0 is the row's primary athlete. */
+    position = 0,
   ): Promise<{ athleteId: string; created: boolean; review: boolean }> {
-    const name = (raw.partnerNames?.[0] ?? raw.name).trim();
+    const name = (raw.partnerNames?.[position] ?? raw.name).trim();
     const nationality = normaliseNationality(raw.nationality);
 
-    if (raw.sourceAthleteId) {
-      const existing = await this.repo.getAthleteBySourceId(raw.sourceAthleteId);
+    // A team entry id identifies the *entry*, not a person, so it is qualified
+    // by position. An individual row's idp already identifies one person.
+    const isTeam = Boolean(raw.isTeam || (raw.partnerNames && raw.partnerNames.length > 1));
+    const stableId = raw.sourceAthleteId
+      ? isTeam
+        ? `${raw.sourceAthleteId}#p${position}`
+        : raw.sourceAthleteId
+      : null;
+
+    if (stableId) {
+      const existing = await this.repo.getAthleteBySourceId(stableId);
       if (existing) return { athleteId: existing.id, created: false, review: false };
     }
 
     const candidates = (await this.repo.findAthletesByName(name)) as ExistingAthlete[];
     const decision = decideIdentity(
-      { name, nationality, ageGroup, sourceAthleteId: raw.sourceAthleteId ?? null },
+      { name, nationality, ageGroup, sourceAthleteId: stableId },
       candidates,
     );
 
@@ -286,7 +343,7 @@ export class Normaliser {
       name,
       nationality,
       gender: normaliseSex(raw.sex),
-      sourceAthleteId: raw.sourceAthleteId ?? null,
+      sourceAthleteId: stableId,
       claimedByUserId: null,
       isDemo: false,
       isAnonymised: false,

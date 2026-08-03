@@ -3,7 +3,7 @@
  * there is no code path from here to the source, which is why the site keeps
  * serving when the source is down.
  */
-import { getResultsService } from "@/lib/results/engine";
+import { getServingSource, servingDegradation } from "@/lib/results/engine";
 import { apiError, apiNotFound, apiResponse } from "@/lib/results/engine/serve/http";
 
 export const runtime = "nodejs";
@@ -17,8 +17,8 @@ export async function GET(request: Request) {
   if (!station || !division) return apiNotFound("Distribution");
 
   try {
-    const distribution = await getResultsService().getStationDistribution(station, division);
-    return apiResponse(distribution, { cache: "static" });
+    const distribution = await getServingSource().getStationDistribution(station, division);
+    return apiResponse(distribution, { cache: "static", tier: servingDegradation().tier });
   } catch (error) {
     return apiError(error);
   }

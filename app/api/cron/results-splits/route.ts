@@ -7,7 +7,8 @@
  */
 import { NextResponse } from "next/server";
 import { assertCron, UnauthorisedError } from "@/lib/results/engine/ops/auth";
-import { getSyncEngine, ingestionStatus } from "@/lib/results/engine";
+import { getResultsRepository, getSyncEngine, ingestionStatus } from "@/lib/results/engine";
+import { sharedBudgetAllows } from "@/lib/results/engine/ops/run-hygiene";
 import { runSplitsBackfill } from "@/lib/results/engine/sync/splits";
 
 export const runtime = "nodejs";
@@ -19,6 +20,13 @@ export async function GET(request: Request) {
     const status = ingestionStatus();
     if (!status.canIngest) {
       return NextResponse.json({ skipped: true, reason: status.reason }, { status: 200 });
+    }
+    const budget = await sharedBudgetAllows(getResultsRepository(), { need: 2 });
+    if (!budget.allowed) {
+      // Another worker is already using the minute's allowance. Deferring is
+      // free: the next tick picks this up, and the source sees one steady rate
+      // rather than three workers arriving together.
+      return NextResponse.json({ deferred: true, reason: budget.reason }, { status: 200 });
     }
     const result = await runSplitsBackfill(getSyncEngine(), { triggerSource: "cron" });
     return NextResponse.json(result);

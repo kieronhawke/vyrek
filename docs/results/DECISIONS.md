@@ -577,3 +577,92 @@ documents a deliberate 2200px / quality-72 standard for that library, and silent
 another lane's assets against their own written policy is not my call. The real fix is at the
 render site — those pages use raw `<img>`, and `next/image` would serve a card-sized WebP from
 the same 2200px source. Flagged rather than done.
+
+---
+
+# PART 3 — HARDENING (3 August 2026)
+
+Everything below was found by running the engine against real data at real
+scale, not by reading it. Each one passed the whole test suite first.
+
+### D65 — Mixed is a division, and it was never being fetched
+The source offers M, W and X on every board. The catalogue only ever created
+men's and women's, so every mixed doubles and mixed relay division in HYROX
+history was silently absent — 20 real results on the one weekend I measured.
+Missing a whole division is the worst class of accuracy bug: the boards that
+exist are complete, and the one that does not simply never appears. Mixed is
+created only for team formats, because an individual race cannot be mixed and
+asking costs a request for an empty board.
+
+### D66 — Three serving tiers, and the tier is never hidden
+Ingestion already survived the source vanishing. Nothing survived our own
+*database* vanishing. Live → last-good → demo, with a breaker in front so a
+dead store does not make every page wait for the same timeout, and a probe
+after cooldown so recovery is noticed rather than the site sulking on demo data.
+
+The tier is in the API envelope, in `X-Results-Tier`, on the health endpoint,
+and on the page itself. A degraded answer is never edge-cached, because a
+cached fallback outlives the outage that caused it. Serving stale data as
+though it were fresh is the one outcome worth engineering against.
+
+### D67 — Every athlete needs a *derived* stable id
+Partners on a doubles row had no source id, so each appearance created a fresh
+profile under an incremented slug — and did it again next sync. 1,006 orphaned
+profiles and one person with eleven. Athletes are also created while *parsing*,
+before the rows they belong to are written, so a failed sync left them behind.
+
+Identity is now derived: person *n* of entry *X* is `X#pn`. Stable across every
+re-sync, cannot collide, does not falsely claim two people are one. A team
+entry id identifies the entry, not a person, so it is qualified by position —
+previously the first-named athlete silently inherited the whole team's id.
+
+### D68 — The slug is the event's identity; weekend ids are plural
+`SOURCE.md` said from the first investigation that a weekend carries a source
+id per race day. The schema said one. That disagreement produced both failures:
+upserting on the slug thrashed the id on 76 events, and upserting on the source
+id crashed on a duplicate and took a season's catalogue with it. Season, year
+and city are what an athlete means by "the event". The id set is widened, never
+narrowed — a sync that saw only Sunday must not erase Saturday.
+
+### D69 — Reap runs that were killed rather than thrown
+`withRun` closes its row on a thrown error and cannot close it when the process
+is killed. Four runs sat at "running" an hour later, and the console reads the
+newest run to decide whether a job is working — so those jobs would have shown
+as busy for ever and never as failed. A monitor that cannot tell "working" from
+"died" is worse than none, because it is trusted.
+
+### D70 — The outbound budget lives in the database, not in memory
+`OutboundBudget` counts per process. On Vercel the live poller, the splits
+worker and the backfill are separate invocations on separate instances, each
+believing it is alone — the aggregate-rate failure the brief warns about,
+arriving by a different route. Requests are recorded in the shared database and
+every cron checks the minute's allowance before starting. The window slides,
+because a counter that resets on the minute permits a double-rate burst across
+the join. Advisory, not a lock: a limiter that can block a worker indefinitely
+is a worse failure than briefly exceeding a politeness budget.
+
+### D71 — Alerts deduplicate
+The catalogue raises the same message every run. Four identical rows deep and
+climbing, and a console full of duplicates is a console nobody reads. Same kind
+plus same message refreshes the open alert and counts occurrences.
+Acknowledging resets it, because a problem recurring after a human has seen it
+is news.
+
+### D72 — A short fetch is reported even when storage is complete
+Completeness compared stored rows against the published count, which misses a
+fetch that came back short while the table already holds a full set. That is
+the fetch quietly degrading — exactly what you want to hear about before it
+becomes under-collection. Rows are never deleted on a short fetch: eight
+athletes vanishing from history is far less likely than one bad page.
+
+### D73 — A bad event costs an event, not a season
+The catalogue ran its event upsert unguarded, so one failure ended the loop and
+the remaining weekends were never catalogued. Recorded, skipped, alerted,
+retried next run.
+
+### D74 — Backups are JSON over the API, not pg_dump
+pg_dump refuses to talk to a server newer than itself, which makes a backup
+depending on a matching client version a backup that fails on the day it is
+needed. JSON works from anywhere the key works, restores by upsert so it tops
+up rather than replaces, and covers what re-ingestion cannot rebuild: claimed
+profiles, anonymisation decisions, quarantine state, merge resolutions.
