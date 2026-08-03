@@ -38,12 +38,15 @@ export function bookingStoreReady(): boolean {
   return redisOrNull() !== null;
 }
 
-/* In-memory fallback. Module scope, so it survives between requests in a
-   single dev process and nothing more. */
-const memory: { availability: Availability | null; bookings: Booking[] } = {
-  availability: null,
-  bookings: [],
-};
+/* In-memory fallback, pinned to globalThis rather than module scope.
+   Next.js gives route handlers and page components separate module graphs,
+   so a module-level object is two objects — the booking endpoint would
+   write to one and the admin diary read from the other, and every booking
+   made in development would be invisible on the page meant to show it. */
+const memory: { availability: Availability | null; bookings: Booking[] } =
+  ((globalThis as unknown as {
+    __suthBookings?: { availability: Availability | null; bookings: Booking[] };
+  }).__suthBookings ??= { availability: null, bookings: [] });
 
 /* ── Availability ──────────────────────────────────────────────────────── */
 

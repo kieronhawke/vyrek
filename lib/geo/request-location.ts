@@ -85,31 +85,12 @@ export function googleMapsUrl(loc: RequestLocation): string | null {
     : null;
 }
 
-/**
- * A static map image for the email.
- *
- * OpenStreetMap's renderer rather than Google's, because Google Static Maps
- * requires a key and billing account and this is worth neither. The trade
- * is reliability: it is a community service and it sometimes does not
- * answer.
- *
- * That is survivable by design — the image sits inside a link with the
- * location as its alt text, so an email client that blocks images, or a
- * render that fails, still shows "Roughly: Leeds, England" and still opens
- * Google Maps when tapped. The map is the nicety; the link is the feature.
- */
-export function staticMapUrl(
-  loc: RequestLocation,
-  { width = 560, height = 220, zoom = 9 } = {},
-): string | null {
-  if (!hasCoordinates(loc)) return null;
-  const { latitude: lat, longitude: lon } = loc;
-  return (
-    `https://staticmap.openstreetmap.de/staticmap.php` +
-    `?center=${lat},${lon}&zoom=${zoom}&size=${width}x${height}` +
-    `&maptype=mapnik&markers=${lat},${lon},red-pushpin`
-  );
-}
+/* The static-map helper that used to live here pointed at
+   staticmap.openstreetmap.de, the keyless service everybody links to for
+   this. It no longer resolves — the DNS lookup fails outright — so it was
+   a permanently broken image in the one email Ben acts on. The map is now
+   composed from OSM tiles and served from our own domain; see
+   lib/geo/static-map.ts and /api/lead-map. */
 
 /* ── Session context ───────────────────────────────────────────────────── */
 

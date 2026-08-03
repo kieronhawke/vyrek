@@ -129,7 +129,7 @@ export const EMAIL_SAMPLES: EmailSample[] = [
     when: "Instantly, same trigger",
     subject: internalLeadSubject({
       name: NAME,
-      rail: "beginner",
+      place: "Leeds, England",
       readiness: "this week",
     }),
     element: (
@@ -145,6 +145,14 @@ export const EMAIL_SAMPLES: EmailSample[] = [
         injury="Knee, bothering them now"
         sourcePath="/personal-trainer/leeds"
         brief={BRIEF}
+        place="Leeds, England"
+        mapUrl="https://www.google.com/maps/search/?api=1&query=53.7997,-1.5492"
+        mapImageUrl="https://www.suthperformance.com/api/lead-map?lat=53.800&lon=-1.549&z=11"
+        landingPath="/personal-trainer/leeds"
+        referrer="https://www.google.com/"
+        timeOnSite="8 minutes"
+        pageViews={5}
+        leadUrl="https://www.suthperformance.com/l/abcdefghjkmnpqrs"
       />
     ),
   },

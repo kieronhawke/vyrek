@@ -284,7 +284,7 @@ export function sendInternalLeadBrief(args: {
   sourcePath?: string | null;
   brief: string;
   /** Context added 3 Aug 2026: where they are, and how they got here. */
-  location?: string | null;
+  place?: string | null;
   mapUrl?: string | null;
   mapImageUrl?: string | null;
   landingPath?: string | null;
@@ -298,7 +298,7 @@ export function sendInternalLeadBrief(args: {
     to,
     subject: internalLeadSubject({
       name: rest.name,
-      rail: rest.rail,
+      place: rest.place,
       readiness: rest.readiness,
     }),
     react: InternalLeadEmail(rest),

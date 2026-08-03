@@ -5,7 +5,6 @@ import {
   describeLocation,
   googleMapsUrl,
   requestLocation,
-  staticMapUrl,
 } from "./request-location";
 
 function req(headers: Record<string, string>): Request {
@@ -96,11 +95,6 @@ describe("what Ben sees", () => {
   it("falls back to searching the place name", () => {
     const noCoords = { ...leeds, latitude: null, longitude: null };
     expect(googleMapsUrl(noCoords)).toContain("Leeds%2C%20England%2C%20GB");
-  });
-
-  it("has no map to draw without coordinates", () => {
-    expect(staticMapUrl({ ...leeds, latitude: null, longitude: null })).toBeNull();
-    expect(staticMapUrl(leeds)).toContain("53.7997,-1.5492");
   });
 });
 

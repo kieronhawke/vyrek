@@ -3,6 +3,10 @@ import { render } from "@react-email/components";
 import { OnboardingInviteEmail } from "@/lib/email/templates/onboarding-invite";
 import { WelcomeEmail } from "@/lib/email/templates/welcome";
 import { PaymentFailedEmail } from "@/lib/email/templates/payment-failed";
+import {
+  InternalLeadEmail,
+  internalLeadSubject,
+} from "@/lib/email/templates/internal-lead";
 
 /**
  * DOES THIS EMAIL ACTUALLY SURVIVE AN INBOX?
@@ -26,6 +30,31 @@ import { PaymentFailedEmail } from "@/lib/email/templates/payment-failed";
  */
 
 const LINK = "https://www.suthperformance.com/o/eyJuIjoiU2FtIn0.abc123";
+
+/** A realistic lead, as the consultation endpoint builds one. */
+const LEAD = {
+  name: "Sam Reeves",
+  email: "sam@example.com",
+  phone: "07700 900123",
+  rail: "Getting fit",
+  wants: "COACHING WITH BEN",
+  readiness: "Could start this week",
+  goal: "Lose weight",
+  programme: "Weight loss, 12 weeks",
+  injury: "Knee, bothering them now",
+  sourcePath: "/free-consultation",
+  brief:
+    "Wants to lose weight and feel better.\nNot trained in 3 years.\nLeft knee gives him trouble on stairs.",
+  place: "Leeds, England",
+  mapUrl: "https://www.google.com/maps/search/?api=1&query=53.7997,-1.5492",
+  mapImageUrl:
+    "https://www.suthperformance.com/api/lead-map?lat=53.800&lon=-1.549&z=11",
+  landingPath: "/hyrox/leeds",
+  referrer: "https://www.google.com/",
+  timeOnSite: "7 minutes",
+  pageViews: 6,
+  leadUrl: "https://www.suthperformance.com/l/y2k4cdksu8ak3cam",
+};
 
 const EMAILS: { name: string; el: React.ReactElement }[] = [
   {
@@ -52,6 +81,10 @@ const EMAILS: { name: string; el: React.ReactElement }[] = [
   {
     name: "payment failed",
     el: PaymentFailedEmail({ updatePaymentUrl: "https://www.suthperformance.com/account" }),
+  },
+  {
+    name: "internal lead brief",
+    el: InternalLeadEmail(LEAD),
   },
 ];
 
@@ -87,7 +120,16 @@ describe.each(EMAILS)("$name", ({ el }) => {
     const hrefs = [...html.matchAll(/(?:href|src)="([^"]+)"/gi)].map((m) => m[1]);
     expect(hrefs.length).toBeGreaterThan(0);
     for (const h of hrefs) {
-      if (h.startsWith("mailto:") || h.startsWith("#") || h.startsWith("data:")) continue;
+      // mailto: and tel: are absolute URIs with no authority. tel: in
+      // particular is the point of the lead brief — it opens the dialler.
+      if (
+        h.startsWith("mailto:") ||
+        h.startsWith("tel:") ||
+        h.startsWith("#") ||
+        h.startsWith("data:")
+      ) {
+        continue;
+      }
       expect(h, `not absolute: ${h}`).toMatch(/^https?:\/\//);
     }
   });
@@ -169,5 +211,94 @@ describe("the invite specifically", () => {
     // HARD-RULES §11. An opt-out here invites somebody to opt out of their
     // own account setup.
     expect(html.toLowerCase()).not.toContain("unsubscribe");
+  });
+});
+
+describe("the lead brief Ben acts on", () => {
+  it("makes the phone number a button he can press", async () => {
+    const html = await render(InternalLeadEmail(LEAD));
+    // Not a number to select and copy: `tel:` opens the dialler on a phone
+    // and hands off to FaceTime or a desk phone on a Mac. This is the whole
+    // point of the email.
+    expect(html).toMatch(/href="tel:07700900123"/);
+    // Asserted on the plain-text render: React splices <!-- --> markers
+    // between adjacent JSX expressions, so "Call {firstName}" is not a
+    // contiguous string in the HTML even though it reads as one.
+    const text = await render(InternalLeadEmail(LEAD), { plainText: true });
+    expect(text).toMatch(/Call Sam/);
+  });
+
+  it("links straight to the full request", async () => {
+    const html = await render(InternalLeadEmail(LEAD));
+    expect(html).toContain("View the full request");
+    expect(html).toContain("/l/y2k4cdksu8ak3cam");
+  });
+
+  it("shows the map, and survives it being blocked", async () => {
+    const html = await render(InternalLeadEmail(LEAD));
+    // A large share of clients block images by default, so the alt text has
+    // to name the place and the text link underneath has to work alone.
+    expect(html).toMatch(
+      /<img[^>]*alt="Map showing roughly Leeds, England"/,
+    );
+    expect(html).toContain("Open in Google Maps");
+  });
+
+  it("says the location is a region, not an address", async () => {
+    const html = await render(InternalLeadEmail(LEAD));
+    // An IP places somebody at their mobile network's gateway, which in the
+    // UK can be a hundred miles out. Presenting a pin as fact would make
+    // Ben's "can I see them in person?" decision worse, not better.
+    expect(html).toMatch(/region rather than an address/i);
+  });
+
+  it("carries every detail he would otherwise have to go looking for", async () => {
+    const html = await render(InternalLeadEmail(LEAD));
+    for (const fact of [
+      "Sam Reeves",
+      "sam@example.com",
+      "COACHING WITH BEN",
+      "Could start this week",
+      "Weight loss, 12 weeks",
+      "Knee, bothering them now",
+      "/hyrox/leeds",
+      "7 minutes",
+      "Leeds, England",
+      "Left knee gives him trouble",
+    ]) {
+      expect(html, fact).toContain(fact);
+    }
+  });
+
+  it("puts the name and the place in the subject", async () => {
+    // Read on a lock screen before the email is ever opened.
+    expect(
+      internalLeadSubject({
+        name: "Sam Reeves",
+        place: "Leeds, England",
+        readiness: "this week",
+      }),
+    ).toBe("New lead · Sam Reeves · Leeds, England · this week");
+    // And degrades when there is no location.
+    expect(internalLeadSubject({ name: "Sam Reeves" })).toBe(
+      "New lead · Sam Reeves",
+    );
+  });
+
+  it("renders with nothing optional at all", async () => {
+    // Off Vercel, or from the plain consultation form, most of this is
+    // absent. It must not produce an empty panel or the word undefined.
+    const bare = await render(
+      InternalLeadEmail({
+        name: "Sam Reeves",
+        email: "sam@example.com",
+        rail: "Direct enquiry",
+        wants: "A free consultation",
+        brief: "No quiz answers.",
+      }),
+    );
+    expect(bare).not.toMatch(/>undefined</);
+    expect(bare).not.toContain("Map showing");
+    expect(bare).toMatch(/href="mailto:sam@example.com"/);
   });
 });
