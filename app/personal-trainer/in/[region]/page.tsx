@@ -22,7 +22,11 @@ export async function generateMetadata({
   const url = `${siteUrl()}/personal-trainer/in/${region}`;
   // See the county directories: "across" keeps a region page off the same
   // query as the town that shares its name (London, Wales).
-  const title = `Personal training across ${data.region}`;
+  /* layout.tsx appends 20 characters. "Cheshire West and Chester" and
+     "East Riding of Yorkshire" push "across" past 65, so those fall back to
+     a comma, which reads as a directory just as well and fits. */
+  const across = `Personal training across ${data.region}`;
+  const title = across.length + 20 <= 65 ? across : `Personal training, ${data.region}`;
   const description = `Personal training across ${regionWithArticle(data.region)}. ${data.locations.length} towns and cities covered, each with local running options and the nearest race. Online coaching from an Elite 15 athlete.`;
   return {
     title,

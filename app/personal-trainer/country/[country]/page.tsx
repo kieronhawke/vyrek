@@ -43,7 +43,11 @@ export async function generateMetadata({
   // A directory lists places; a town page is about one. "across" keeps the
   // two off the same query — Leeds the city and Leeds the county both had
   // the title "Hyrox training in Leeds".
-  const title = `Personal trainer across ${data.country}`;
+  /* layout.tsx appends 20 characters. "Cheshire West and Chester" and
+     "East Riding of Yorkshire" push "across" past 65, so those fall back to
+     a comma, which reads as a directory just as well and fits. */
+  const across = `Personal trainer across ${data.country}`;
+  const title = across.length + 20 <= 65 ? across : `Personal trainer, ${data.country}`;
   const description = `Online personal training across ${data.country}: ${data.cities.length} ${data.cities.length === 1 ? "city" : "cities"} on the HYROX calendar, ${races} ${races === 1 ? "race" : "races"} between them, each with the gyms actually near it. Coaching from HYROX Elite 15 athlete Ben Sutherland.`;
   return {
     title,

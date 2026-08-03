@@ -22,7 +22,11 @@ export async function generateMetadata({
   const url = `${siteUrl()}/hyrox-training/in/${region}`;
   // See the county directories: "across" keeps a region page off the same
   // query as the town that shares its name (London, Wales).
-  const title = `Hyrox training across ${data.region}`;
+  /* layout.tsx appends 20 characters. "Cheshire West and Chester" and
+     "East Riding of Yorkshire" push "across" past 65, so those fall back to
+     a comma, which reads as a directory just as well and fits. */
+  const across = `Hyrox training across ${data.region}`;
+  const title = across.length + 20 <= 65 ? across : `Hyrox training, ${data.region}`;
   const description = `Hyrox coaching across ${regionWithArticle(data.region)}. ${data.locations.length} towns and cities, each with its nearest race venue and local running options. From HYROX Elite 15 athlete Ben Sutherland.`;
   return {
     title,
