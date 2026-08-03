@@ -98,10 +98,37 @@ export function metadataFor(city: string, year: number, races: Race[] = RACES): 
   };
 }
 
+/**
+ * Status derived from the clock, never downgraded.
+ *
+ * `final` is a decision the reconciler and the live poller make deliberately;
+ * this only ever promotes a stale `upcoming` whose date has passed, and leaves
+ * a live or paused event alone so a race in progress is never demoted
+ * mid-flight by a metadata pass.
+ */
+export function statusFor(
+  current: EngineEvent["status"],
+  endsAt: string | null,
+  now: Date = new Date(),
+): EngineEvent["status"] {
+  if (current !== "upcoming") return current;
+  if (!endsAt) return current;
+  return new Date(endsAt).getTime() < now.getTime() ? "final" : "upcoming";
+}
+
+/** `s8` when the current season is `s9`. */
+export function isPastSeason(season: string, current = process.env.HYROX_CURRENT_SEASON ?? "season-9"): boolean {
+  const n = Number(/s(\d+)/.exec(season)?.[1]);
+  const c = Number(/season-(\d+)/.exec(current)?.[1]);
+  return Number.isFinite(n) && Number.isFinite(c) && n < c;
+}
+
 export type EnrichResult = {
   enriched: string[];
   unmatched: { slug: string; city: string; year: number }[];
   ambiguous: string[];
+  /** Undated events closed because their season is over. */
+  closedBySeason: string[];
 };
 
 /**
@@ -115,7 +142,7 @@ export async function enrichEventMetadata(
   opts: { races?: Race[] } = {},
 ): Promise<EnrichResult> {
   const races = opts.races ?? RACES;
-  const result: EnrichResult = { enriched: [], unmatched: [], ambiguous: [] };
+  const result: EnrichResult = { enriched: [], unmatched: [], ambiguous: [], closedBySeason: [] };
 
   for (const event of await repo.listEvents()) {
     // Already dated: leave it alone. Re-deriving would overwrite a correction
@@ -125,6 +152,15 @@ export async function enrichEventMetadata(
     const metadata = metadataFor(event.city, event.year, races);
     if (!metadata) {
       result.unmatched.push({ slug: event.slug, city: event.city, year: event.year });
+
+      // No date, but a season number is itself evidence: HYROX runs one season
+      // at a time, so anything from an earlier one has finished. Without this,
+      // 208 undated historical events sit as "upcoming" for ever and the live
+      // poller reconsiders every one of them every minute.
+      if (event.status === "upcoming" && isPastSeason(event.season)) {
+        await repo.upsertEvent({ ...(event as EngineEvent), status: "final" });
+        result.closedBySeason.push(event.slug);
+      }
       continue;
     }
 
@@ -137,6 +173,10 @@ export async function enrichEventMetadata(
 
     await repo.upsertEvent({
       ...(event as EngineEvent),
+      // A race that has already happened is not upcoming. Left alone, every
+      // historical event stays "upcoming" for ever — 221 of them, back to
+      // 2017 — and the live poller re-examines all of them every minute.
+      status: statusFor(event.status, metadata.endDatetime ?? metadata.startDatetime),
       startDate: metadata.startDate,
       endDate: metadata.endDate,
       startDatetime: metadata.startDatetime,
