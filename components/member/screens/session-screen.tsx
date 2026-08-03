@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { DEMO_TODAY } from "@/lib/member/demo";
 import type { DatedDay } from "@/lib/member/week";
 import { SessionFeedback } from "@/components/member/session-feedback";
 import {

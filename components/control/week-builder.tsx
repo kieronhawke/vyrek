@@ -111,6 +111,23 @@ export function WeekBuilder({ client }: { client: string }) {
     setSent(false);
   }
 
+  /** POST the week rather than GET, because it lives in this browser. */
+  async function downloadXlsx() {
+    const slug = storeKey.replace("plan.", "");
+    const res = await fetch(`/api/export/${slug}/xlsx`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ week }),
+    });
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `suth-${slug}-${week.weekOf}.xlsx`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   const count = sessionCount(week);
 
   return (
@@ -135,6 +152,17 @@ export function WeekBuilder({ client }: { client: string }) {
         </button>
         <button type="button" onClick={reset} style={btn}>
           Reset
+        </button>
+        <a
+          href={`/print/plan/${storeKey.replace("plan.", "")}`}
+          target="_blank"
+          rel="noreferrer"
+          style={{ ...btn, display: "inline-flex", alignItems: "center", textDecoration: "none" }}
+        >
+          PDF
+        </a>
+        <button type="button" onClick={downloadXlsx} style={btn}>
+          Excel
         </button>
       </div>
 

@@ -157,9 +157,9 @@ export function PlanScreen({
       <section>
         <Eyebrow>Take it with you</Eyebrow>
         <RowGroup>
+          <Row label="Print or save as PDF" value="Open →" tone="var(--accent-text)" href="/print/plan/haseeb" />
+          <Row label="Spreadsheet" value="Download .xlsx →" tone="var(--accent-text)" href="/api/export/haseeb/xlsx" />
           <Row label="Add this week to your calendar" value="Download .ics →" tone="var(--accent-text)" />
-          <Row label="Print or save as PDF" value="Download →" tone="var(--accent-text)" />
-          <Row label="Spreadsheet" value="Download .xlsx →" tone="var(--accent-text)" />
           <Row label="Station technique guides" value="Open →" href={`${base}/plan/stations`} />
           <Row label="Your splits and benchmarks" value="Open →" href={`${base}/progress`} />
         </RowGroup>

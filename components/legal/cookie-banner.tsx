@@ -100,6 +100,7 @@ export function CookieBanner() {
       <div
         role="region"
         aria-label="Cookie preferences"
+        data-print-hide
         className="fixed inset-x-0 top-0 z-[60] pt-[var(--safe-top)]"
         style={{
           // Set the real measured height for the body push.

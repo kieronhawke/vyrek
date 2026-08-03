@@ -1,0 +1,266 @@
+/**
+ * The plan, on paper.
+ *
+ * Printed in black on white, not the brand's near-black ground: an athlete
+ * printing a training week should not empty a cartridge, and a solid black A4
+ * page looks cheap however good it is on screen. The brand carries through the
+ * masthead, the condensed display face and the chartreuse rule instead.
+ *
+ * Landscape A4, one week to a page, seven columns. Sized so a full session —
+ * ten lines of Ben's free text — fits without clipping.
+ */
+
+@page {
+  size: A4 landscape;
+  margin: 10mm;
+}
+
+.print {
+  --ink: #0a0a0a;
+  --muted: #5f5f5d;
+  --hair: #d8d8d4;
+  --accent: #a3e635;
+
+  background: #fff;
+  color: var(--ink);
+  box-sizing: border-box;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 9.5pt;
+  line-height: 1.4;
+  /* On screen this is a preview, so it gets a page-like frame. In print the
+     @page margin already provides the edge, and adding padding on top of it
+     pushed the last column and the athlete's name off the sheet. */
+  padding: 12mm;
+  max-width: 297mm;
+  margin: 0 auto;
+}
+
+/* ── Masthead ─────────────────────────────────────────────────────────── */
+
+.print__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8mm;
+  padding-bottom: 3mm;
+  border-bottom: 2pt solid var(--ink);
+}
+
+.print__brand {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: 20pt;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.print__brand span { color: var(--accent); }
+
+.print__who {
+  text-align: right;
+  font-size: 9pt;
+  color: var(--muted);
+}
+
+.print__who strong {
+  display: block;
+  font-family: var(--font-display), sans-serif;
+  font-size: 14pt;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.print__meta {
+  display: flex;
+  gap: 6mm;
+  flex-wrap: wrap;
+  padding: 2.5mm 0;
+  font-size: 8.5pt;
+  color: var(--muted);
+  border-bottom: 0.5pt solid var(--hair);
+}
+
+.print__meta b { color: var(--ink); }
+
+/* ── The week ─────────────────────────────────────────────────────────── */
+
+.print__grid {
+  display: grid;
+  /* minmax(0, 1fr), not 1fr: 1fr's implicit min-width is min-content, so a
+     long line like "1: 12.5m sled push @ open weight" pushed the track wider
+     than its share and the seventh column ran off the sheet. */
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 3mm;
+  border: 0.5pt solid var(--hair);
+}
+
+.print__day {
+  border-right: 0.5pt solid var(--hair);
+  padding: 2mm 2.5mm 3mm;
+  break-inside: avoid;
+  min-height: 92mm;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.print__day:last-child { border-right: 0; }
+
+.print__dayhead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2mm;
+  padding-bottom: 1.5mm;
+  margin-bottom: 2mm;
+  border-bottom: 1pt solid var(--ink);
+}
+
+.print__dow {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: 10.5pt;
+  text-transform: uppercase;
+}
+
+.print__date { font-size: 8pt; color: var(--muted); }
+
+.print__slot {
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 2mm;
+}
+
+/* A box the athlete ticks with a pen. The whole point of paper. */
+.print__slot::after {
+  content: "";
+  display: inline-block;
+  width: 3mm;
+  height: 3mm;
+  margin-left: 1.5mm;
+  border: 0.7pt solid var(--muted);
+  vertical-align: -0.4mm;
+}
+
+.print__lines { list-style: none; margin: 1mm 0 0; padding: 0; }
+
+.print__line {
+  font-size: 8.5pt;
+  line-height: 1.35;
+  padding: 0.3mm 0;
+  break-inside: avoid;
+}
+
+.print__line b { font-weight: 700; }
+
+.print__line--connector {
+  font-size: 7pt;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.print__rest {
+  font-size: 8.5pt;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ── Note and footer ──────────────────────────────────────────────────── */
+
+.print__note {
+  margin-top: 3mm;
+  padding: 2.5mm 3mm;
+  border-left: 2pt solid var(--accent);
+  background: #f7f7f5;
+  break-inside: avoid;
+}
+
+.print__note p { margin: 0; font-size: 9pt; }
+
+.print__note .print__slot::after { content: none; }
+
+.print__foot {
+  margin-top: 4mm;
+  padding-top: 2mm;
+  border-top: 0.5pt solid var(--hair);
+  display: flex;
+  justify-content: space-between;
+  gap: 6mm;
+  font-size: 7.5pt;
+  color: var(--muted);
+}
+
+/* ── Screen-only chrome ───────────────────────────────────────────────── */
+
+.print__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  padding: 16px;
+  background: #0a0a0a;
+}
+
+.print__actions button,
+.print__actions a {
+  min-height: 44px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid #2a2a2a;
+  background: #141414;
+  color: #f5f5f3;
+  font-size: 14px;
+  font-weight: 650;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.print__actions button:first-child {
+  background: var(--accent, #a3e635);
+  color: #0a0a0a;
+  border-color: transparent;
+}
+
+@media print {
+  .print__actions { display: none; }
+
+  /* Site chrome must not print. The consent banner was landing on the PDF,
+     which is the sort of thing you only see by actually rendering one. */
+  [data-print-hide],
+  nav,
+  footer:not(.print__foot) {
+    display: none !important;
+  }
+
+  /* The banner is position:fixed at the top of every page, so it also has to
+     stop reserving space once hidden. */
+  body { padding-top: 0 !important; }
+
+  /* The @page margin is the only margin. Anything else double-counts and
+     clips the seventh column. */
+  .print {
+    padding: 0;
+    /* A4 landscape is 297mm; the @page margin takes 10mm a side. Stating the
+       printable width explicitly rather than trusting 100% of an ambiguous
+       containing block is what stopped the seventh column and the athlete's
+       name being sheared off the right edge. */
+    width: 277mm;
+    max-width: 277mm;
+    margin: 0;
+  }
+
+  /* The site renders on a near-black ground; paper does not. */
+  html,
+  body {
+    background: #fff !important;
+  }
+
+  .print__day { min-height: 84mm; }
+}
