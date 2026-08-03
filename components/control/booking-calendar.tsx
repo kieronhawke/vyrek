@@ -349,14 +349,15 @@ function BookingRow({
                     email: booking.email,
                     phone: booking.phone,
                     kind: "full",
+                    rail: booking.rail === "beginner" ? "beginner" : undefined,
                   }),
                 });
-                const d = (await res.json()) as { url?: string; error?: string };
-                if (!res.ok || !d.url) {
+                const d = (await res.json()) as { link?: string; error?: string };
+                if (!res.ok || !d.link) {
                   setError(d.error ?? "Couldn't send the setup link.");
                   return;
                 }
-                setInvited(d.url);
+                setInvited(d.link);
               } catch {
                 setError("Couldn't reach the server.");
               } finally {

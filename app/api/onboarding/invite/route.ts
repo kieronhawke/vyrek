@@ -41,6 +41,8 @@ type Body = {
   phone?: string;
   kind?: "full" | "payment";
   plan?: string;
+  /** "beginner" keeps racing language out of their onboarding. */
+  rail?: string;
 };
 
 export async function POST(request: Request) {
@@ -82,7 +84,17 @@ export async function POST(request: Request) {
    * no link. The response says which form was used so the admin can report it
    * rather than quietly shipping the long one for ever.
    */
-  const fields = { name, email, phone, kind: kind as InviteKind, plan: plan?.key };
+  // Only "beginner" is meaningful; anything else is the default athlete
+  // route and is left off so the link stays as short as it was.
+  const rail = body.rail === "beginner" ? ("beginner" as const) : undefined;
+  const fields = {
+    name,
+    email,
+    phone,
+    kind: kind as InviteKind,
+    plan: plan?.key,
+    ...(rail ? { rail } : {}),
+  };
   const stored = await storeInvite({
     ...fields,
     iat: Math.floor(Date.now() / 1000),

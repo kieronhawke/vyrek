@@ -36,6 +36,16 @@ export type InvitePayload = {
   kind: InviteKind;
   /** Suggested plan, when Ben has already agreed one. */
   plan?: string;
+  /**
+   * Which route they came in on, so onboarding can ask the right questions.
+   *
+   * One character in the link, and it fixes a real hole: somebody who came
+   * down the "getting fit" rail — a quiz that deliberately never says HYROX
+   * — was then sent a setup link whose first real question was "My first
+   * HYROX / A few races in / Experienced". All that care, undone at the
+   * moment they actually become a client.
+   */
+  rail?: "beginner" | "athlete";
   /** Issued at, epoch seconds. */
   iat: number;
   /** Expires at, epoch seconds. */
@@ -144,6 +154,9 @@ export function createInvite(
     n: payload.name.trim().split(/\s+/)[0],
     k: payload.kind === "payment" ? "p" : "f",
     ...(payload.plan ? { l: payload.plan } : {}),
+    // Only ever "b": athlete is the default, so spending a character to say
+    // so would make every racing link longer for nothing.
+    ...(payload.rail === "beginner" ? { r: "b" } : {}),
     x: Math.floor(payload.exp / 86400),
   };
   const body = b64url(JSON.stringify(compact));
@@ -204,6 +217,9 @@ export function readInvite(token: string, now = Date.now()): InviteResult {
       phone: String(raw.p ?? raw.phone ?? ""),
       kind,
       ...(raw.l || raw.plan ? { plan: String(raw.l ?? raw.plan) } : {}),
+      ...(raw.r === "b" || raw.rail === "beginner"
+        ? { rail: "beginner" as const }
+        : {}),
       iat: Number(raw.i ?? raw.iat ?? 0),
       exp,
     };

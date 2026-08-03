@@ -13,6 +13,7 @@ export const dynamic = "force-dynamic";
 
 const NAV: { href: string; label: string; group: string }[] = [
   { href: "/admin", label: "Overview", group: "Today" },
+  { href: "/admin/leads", label: "Enquiries", group: "Today" },
   { href: "/admin/calendar", label: "Consultations", group: "Today" },
   { href: "/admin/live", label: "Live on site", group: "Today" },
   { href: "/admin/results-engine", label: "Results engine", group: "Today" },

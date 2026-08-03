@@ -52,9 +52,13 @@ export const PLANS: Plan[] = [
     summary: "Everything written for you, week by week, with Ben on the end of the phone.",
     includes: [
       "A dated week, every week, written for you",
-      "Video form checks on any station",
+      // Reworded 3 Aug 2026. "Any station" and "your races" are true of the
+      // racing half of the client base and meaningless to the other half —
+      // and the plan screen is shown to both, at the moment they hand over
+      // a card. Both lines say the same thing without naming a sport.
+      "Video form checks on any movement",
       "Direct line to Ben",
-      "Plan rewritten around your races and your life",
+      "Rewritten around your life, and whatever you're working towards",
       "Cancel any time",
     ],
     featured: true,
@@ -242,7 +246,19 @@ export function progress(steps: Step[], current: number): number {
  * Somebody about to enter a card should be able to see what they have just
  * spent five minutes on, without scrolling back through nine screens.
  */
-export function summarise(a: Answers): { label: string; value: string }[] {
+export function summarise(
+  a: Answers,
+  /**
+   * Reads the answers back the way they were asked.
+   *
+   * The experience row was hardcoded to "First HYROX" / "A few races in" /
+   * "Experienced" whatever route the client came down, so somebody who had
+   * been asked "starting from scratch / a bit active / I train regularly"
+   * was shown "A few races in" on the screen where they hand over a card.
+   * The stored value is the same; only the reading changes.
+   */
+  beginner = false,
+): { label: string; value: string }[] {
   const out: { label: string; value: string }[] = [];
   if (a.goal.trim()) out.push({ label: "Goal", value: a.goal.trim() });
   if (a.nextRace.trim()) {
@@ -254,8 +270,13 @@ export function summarise(a: Answers): { label: string; value: string }[] {
   if (a.experience) {
     out.push({
       label: "Experience",
-      value:
-        a.experience === "first"
+      value: beginner
+        ? a.experience === "first"
+          ? "Starting from scratch"
+          : a.experience === "some"
+            ? "A bit active"
+            : "Trains regularly"
+        : a.experience === "first"
           ? "First HYROX"
           : a.experience === "some"
             ? "A few races in"
