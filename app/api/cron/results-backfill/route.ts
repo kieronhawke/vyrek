@@ -31,6 +31,9 @@ export async function GET(request: Request) {
     const result = await runBackfill(getSyncEngine(), {
       triggerSource: "cron",
       maxEvents: Number(process.env.HYROX_BACKFILL_EVENTS_PER_RUN ?? 2),
+      // Comfortably inside maxDuration, so the run closes its own books
+      // instead of being killed with its row still saying "running".
+      budgetMs: 240_000,
     });
     return NextResponse.json(result);
   } catch (error) {

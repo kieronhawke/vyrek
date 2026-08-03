@@ -620,6 +620,21 @@ describe("historical seasons (§5)", () => {
     expect(await h.repo.getSetting<string[]>("backfill_seasons_done")).toEqual(["season-9"]);
   });
 
+  it("stops before its time budget rather than being killed", async () => {
+    const h = await makeHarness();
+    // A clock started ten seconds ago against a one-second budget: already
+    // expired, without the test having to sleep for it.
+    const outcome = await runBackfill(h.engine, {
+      maxEvents: 5,
+      budgetMs: 1_000,
+      now: new Date(Date.now() - 10_000),
+    });
+    expect(outcome.exhaustedBudget).toBe(true);
+    expect(outcome.eventsCompleted).toEqual([]);
+    // And the run is properly closed, not left saying "running".
+    expect((await h.repo.latestRun("backfill"))?.status).toBe("ok");
+  });
+
   it("can be told to pull results without deepening the catalogue", async () => {
     const h = await makeHarness();
     const outcome = await runBackfill(h.engine, { maxEvents: 0, catalogueSeasons: false });

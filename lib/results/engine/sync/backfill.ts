@@ -88,10 +88,24 @@ export async function runBackfill(
     now?: Date;
     /** Set false to pull results only, without deepening the catalogue. */
     catalogueSeasons?: boolean;
+    /**
+     * Stop starting new events after this many milliseconds.
+     *
+     * Serverless functions are killed at their `maxDuration`, and a killed run
+     * leaves its row saying `running` and its work half-done. Finishing early
+     * and cleanly always beats being cut off: the next tick resumes from the
+     * checkpoint either way, but only one of them closes its books.
+     */
+    budgetMs?: number;
   } = {},
 ): Promise<BackfillResult> {
   const repo = engine.repo;
   const maxEvents = opts.maxEvents ?? 2;
+  // Taken from `opts.now` when supplied, so a test can start the clock in the
+  // past and exercise expiry without sleeping.
+  const startedAt = opts.now?.getTime() ?? Date.now();
+  const budgetMs = opts.budgetMs ?? Number(process.env.HYROX_BACKFILL_BUDGET_MS ?? 0);
+  const outOfTime = () => budgetMs > 0 && Date.now() - startedAt >= budgetMs;
 
   return engine.withRun("backfill", opts.triggerSource ?? "manual", async (runId) => {
     const result: BackfillResult = {
@@ -107,7 +121,7 @@ export async function runBackfill(
     // One historical season per run, so the catalogue deepens on its own
     // without a burst. Once every season is catalogued this stops costing
     // anything and the run goes straight to pulling results.
-    if (opts.catalogueSeasons !== false) {
+    if (opts.catalogueSeasons !== false && !outOfTime()) {
       const done = (await repo.getSetting<string[]>(SEASON_CURSOR_KEY)) ?? [];
       const next = allSeasonPaths().find((s) => !done.includes(s));
       if (next) {
@@ -145,6 +159,12 @@ export async function runBackfill(
 
     for (const event of ordered) {
       if (result.eventsCompleted.length >= maxEvents) {
+        result.exhaustedBudget = true;
+        break;
+      }
+      // Checked before starting an event rather than mid-event: a division
+      // half-written is not a state worth creating to save a few seconds.
+      if (outOfTime()) {
         result.exhaustedBudget = true;
         break;
       }
