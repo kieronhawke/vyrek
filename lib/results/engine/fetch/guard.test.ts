@@ -90,6 +90,55 @@ describe("authorisation gate (§2, SOURCE.md §1)", () => {
   });
 });
 
+describe("a request that never answers", () => {
+  /**
+   * `fetch` has no default timeout. A connection that opens and then goes
+   * quiet blocks the worker for ever — observed as a backfill sitting at 0%
+   * CPU with no open sockets and no progress for nine minutes. On a serverless
+   * function the same fault presents as a run that always hits maxDuration
+   * having done nothing, which is much harder to read.
+   */
+  it("aborts rather than hanging, and reports it as a timeout", async () => {
+    const deps = clockDeps();
+    const fetchImpl = vi.fn(
+      (_url: string, init?: { signal?: AbortSignal }) =>
+        new Promise<ReturnType<typeof response>>((_resolve, reject) => {
+          // Never resolves. Only the abort signal can end this.
+          init?.signal?.addEventListener("abort", () => {
+            const e = new Error("aborted");
+            e.name = "AbortError";
+            reject(e);
+          });
+        }),
+    );
+
+    const fetcher = new SourceFetcher({
+      fetchImpl,
+      authorised: true,
+      deps,
+      sleep: async () => {},
+      timeoutMs: 20,
+      maxAttempts: 2,
+    });
+
+    await expect(fetcher.fetchText("https://results.hyrox.com/")).rejects.toThrow(/timed out/);
+    // It retried rather than giving up on the first stall, and stopped at the
+    // limit rather than retrying for ever.
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not abort a request that answers in time", async () => {
+    const fetcher = new SourceFetcher({
+      fetchImpl: async () => response({ status: 200, body: "ok" }),
+      authorised: true,
+      timeoutMs: 5_000,
+    });
+    await expect(fetcher.fetchText("https://results.hyrox.com/")).resolves.toMatchObject({
+      body: "ok",
+    });
+  });
+});
+
 describe("backoff and Retry-After (§14)", () => {
   it("honours Retry-After in seconds over its own guess", () => {
     const deps = clockDeps();
