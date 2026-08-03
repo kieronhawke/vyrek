@@ -105,7 +105,19 @@ export function Hero() {
         {shouldServeVideo && videoReady && (
           <video
             src={HERO_VIDEO.src}
-            poster={HERO_VIDEO.poster}
+            /*
+              No `poster`. MEASURED: it pointed at the same file as the
+              `<Image>` directly beneath this video —
+              `/media/images/track/pair-frontal-bw.jpg` — so the home page
+              fetched that photograph twice: 151 KB through the Next optimiser
+              for the Image, and 247 KB raw for the poster attribute, which
+              does not go through the optimiser at all.
+
+              The poster also never had anything to show. This element only
+              mounts after `window.load` plus an idle callback, by which point
+              the identical still is already painted underneath it at full
+              opacity. 247 KB for a frame nobody can see.
+            */
             autoPlay
             muted
             loop

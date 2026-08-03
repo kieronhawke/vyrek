@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
 import { PLACES } from "@/lib/results/places";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * `/events` — the season calendar.
@@ -25,7 +26,10 @@ export const metadata: Metadata = {
     "The full HYROX race calendar — every event by season, region and country, "
     + "with results, start lists and entrant counts.",
   alternates: { canonical: "/events" },
-  openGraph: { url: `${siteUrl()}/events`, type: "website" },
+  openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(), url: `${siteUrl()}/events`, type: "website" },
 };
 
 const SEASONS = [

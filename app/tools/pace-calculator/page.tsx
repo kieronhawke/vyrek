@@ -8,6 +8,7 @@ import { SplitHeading } from "@/components/shared/split-heading";
 import { CtaButton } from "@/components/shared/cta-button";
 import { PaceCalculator } from "@/components/tools/pace-calculator";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 
@@ -17,6 +18,9 @@ export const metadata: Metadata = {
     "Free Hyrox pace calculator. Enter your 1 km pace and station splits, get your projected finish time, kilometre breakdown, and pacing strategy.",
   alternates: { canonical: `${siteUrl()}/tools/pace-calculator` },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "Hyrox pace calculator. Suth Performance",
     description:
       "Free Hyrox pace calculator: project your finish time from your 1 km pace and station splits.",

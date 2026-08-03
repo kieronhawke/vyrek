@@ -10,6 +10,7 @@ import { CumulativeGap } from "@/components/results/compare/cumulative-gap";
 import type { ResultDetail } from "@/lib/results/source";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * `/compare` — two athletes, side by side.
@@ -28,7 +29,10 @@ export const metadata: Metadata = {
     "Put two HYROX races side by side — segment by segment, with a cumulative gap chart "
     + "showing exactly where the race was won.",
   alternates: { canonical: "/results/compare" },
-  openGraph: { url: `${siteUrl()}/results/compare`, type: "website" },
+  openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(), url: `${siteUrl()}/results/compare`, type: "website" },
 };
 
 /** Most recent finished race for an athlete, which is what people mean by "their race". */

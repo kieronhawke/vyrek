@@ -549,7 +549,13 @@ export default function ProgrammesPage() {
 
               <p className="mt-10 text-sm text-suth-text-secondary">
                 Still not sure which one?{" "}
-                <Link href="/quiz" className="text-suth-accent hover:underline">
+                <Link
+                  href="/quiz"
+                  /* Underlined always, not just on hover. `hover:underline` alone
+                     fails WCAG 1.4.1: the link is distinguished by colour only,
+                     and on touch there is no hover state to reveal it. */
+                  className="text-suth-accent underline underline-offset-4"
+                >
                   Take the three-minute quiz
                 </Link>{" "}
                 and Ben will tell you on a free consultation.

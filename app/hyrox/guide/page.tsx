@@ -8,6 +8,7 @@ import { SplitHeading } from "@/components/shared/split-heading";
 import { CtaButton } from "@/components/shared/cta-button";
 import { listPostMeta } from "@/lib/blog/posts";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 
@@ -31,6 +32,9 @@ export const metadata: Metadata = {
     "Everything a first-time HYROX racer needs in one place. The format, the eight stations, official weights by division, age groups, and how long to train.",
   alternates: { canonical: `${siteUrl()}/hyrox/guide` },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "The HYROX guide. Suth Performance",
     description:
       "The format, the weights, the divisions and the training timeline, from an Elite 15 coaching team.",

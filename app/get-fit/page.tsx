@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClusterHub, type HubEntry } from "@/components/hyrox/cluster-hub";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 
@@ -18,6 +19,9 @@ export const metadata: Metadata = {
     "Where to start from nothing: how often to train, what actually matters, what to ignore, and why the first eight weeks are about turning up.",
   alternates: { canonical: `${siteUrl()}/get-fit` },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "Getting fit. Suth Performance",
     description:
       "Honest, unglamorous guidance for people at the beginning, from a coaching team that races.",

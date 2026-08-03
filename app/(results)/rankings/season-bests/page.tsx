@@ -6,6 +6,7 @@ import { MicroLabel } from "@/components/results/ui/primitives";
 import type { RecordEntry } from "@/lib/results/source";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 3600;
 
@@ -15,7 +16,10 @@ export const metadata: Metadata = {
     "The quickest HYROX time in every division this season, with the event and athlete "
     + "behind each one.",
   alternates: { canonical: "/rankings/season-bests" },
-  openGraph: { url: `${siteUrl()}/rankings/season-bests`, type: "website" },
+  openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(), url: `${siteUrl()}/rankings/season-bests`, type: "website" },
 };
 
 export default async function SeasonBestsPage() {

@@ -10,6 +10,7 @@ import { EventTile, EventRail, RailItem } from "@/components/results/event-tiles
 import { LiveStrip } from "@/components/results/live/live-strip";
 import { StatusBadge, MicroLabel, EmptyState } from "@/components/results/ui/primitives";
 import { SlidersHorizontal, GitCompareArrows, Percent, Trophy, Gauge, MapPin } from "lucide-react";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * `/results` — the landing page.
@@ -30,6 +31,9 @@ export const metadata: Metadata = {
     + "athletes, simulate your race, and see exactly where your time goes.",
   alternates: { canonical: "/results" },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "HYROX Results, Rankings & Race Analytics",
     description: "Every HYROX result, ranking and split, searchable in one place.",
     url: `${siteUrl()}/results`,

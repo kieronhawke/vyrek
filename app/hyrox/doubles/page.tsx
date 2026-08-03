@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClusterHub, type HubEntry } from "@/components/hyrox/cluster-hub";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 
@@ -10,6 +11,9 @@ export const metadata: Metadata = {
     "Everything on racing HYROX Doubles: what the rules allow, how to split each station, handover tactics, and how to choose a partner you can actually race with.",
   alternates: { canonical: `${siteUrl()}/hyrox/doubles` },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "HYROX Doubles. Suth Performance",
     description:
       "Rules, station splits and partner selection, from an Elite 15 doubles racer.",

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalLayout } from "@/components/shared/legal-layout";
+import Link from "next/link";
 import {
   ProseH2,
   ProseH3,
@@ -116,12 +117,12 @@ export default function TermsPage() {
         <ProseLi>
           After cancellation we keep your training data for 90 days in case
           you return, then delete it (see the{" "}
-          <a
+          <Link
             className="text-suth-text underline underline-offset-4 hover:text-suth-accent"
             href="/legal/privacy"
           >
             Privacy policy
-          </a>
+          </Link>
           ).
         </ProseLi>
       </ProseUl>
@@ -139,12 +140,12 @@ export default function TermsPage() {
         Your statutory rights under the Consumer Rights Act 2015 remain
         unaffected. If the service is not as described or not delivered with
         reasonable skill, contact us; we will put it right or refund. See the{" "}
-        <a
+        <Link
           className="text-suth-text underline underline-offset-4 hover:text-suth-accent"
           href="/legal/refunds"
         >
           Refund policy
-        </a>{" "}
+        </Link>{" "}
         for detail.
       </ProseP>
 

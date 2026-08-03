@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { daysUntil, flagFor, formatDates, type Race } from "@/lib/hyrox/races";
 import { HEROES, pickPhoto } from "@/lib/photo-library";
@@ -28,8 +29,26 @@ export function RaceCard({ race }: { race: Race }) {
       aria-label={`${race.name}, ${formatDates(race)}`}
     >
       <span className="race-card__img" aria-hidden>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={photo.wide ?? photo.src} alt="" loading="lazy" />
+        {/*
+          MEASURED: this was a raw `<img>` pointing at the 1800x1013 source and
+          rendered at 331x166. On `/hyrox/events`, which lists 111 races, that
+          is 1.9 MB of photography where roughly 150 KB does the same job — by
+          some distance the heaviest thing on the site.
+          
+          `sizes` is what actually fixes it. Without it Next assumes 100vw and
+          serves a 1920-wide file to a 331px slot, so the optimiser runs and the
+          page is no lighter. These are three-up on desktop, two-up on tablet.
+          
+          The parent span is already `position: absolute; inset: 0`, so `fill`
+          needs no extra wrapper.
+        */}
+        <Image
+          src={photo.wide ?? photo.src}
+          alt=""
+          fill
+          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          className="race-card__photo"
+        />
       </span>
 
       <span className="race-card__body">

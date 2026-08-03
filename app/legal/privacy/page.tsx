@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalLayout } from "@/components/shared/legal-layout";
+import Link from "next/link";
 import {
   ProseH2,
   ProseH3,
@@ -244,12 +245,12 @@ export default function PrivacyPage() {
         items are always on; analytics and session replay are opt-in via the
         cookie banner. For the full list, including names, providers, and
         durations, see our{" "}
-        <a
+        <Link
           className="text-suth-text underline underline-offset-4 hover:text-suth-accent"
           href="/legal/cookies"
         >
           Cookie policy
-        </a>
+        </Link>
         .
       </ProseP>
 

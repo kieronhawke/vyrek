@@ -14,6 +14,7 @@ import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
 import { MicroLabel, StatTile, Nationality, EmptyState } from "@/components/results/ui/primitives";
 import { cn } from "@/lib/utils";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * `/results/course-index` — which HYROX venues actually run slow.
@@ -83,7 +84,10 @@ export const metadata: Metadata = {
     "Every HYROX venue ranked by how fast its field actually ran — median and "
     + "winning times against the global pool, so you can see which courses cost time.",
   alternates: { canonical: "/results/course-index" },
-  openGraph: { url: `${siteUrl()}/results/course-index`, type: "website" },
+  openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(), url: `${siteUrl()}/results/course-index`, type: "website" },
 };
 
 export default async function CourseIndexPage() {

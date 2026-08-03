@@ -6,10 +6,11 @@ import { Eyebrow } from "@/components/shared/eyebrow";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { verifyOnboardingToken } from "@/lib/partners/tokens";
 import { OnboardingForm } from "@/components/partners/onboarding-form";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Welcome to the Suth Performance Partner Programme",
-  description: "Set up your partner profile and payout details.",
+  description: "Set up your Suth Performance partner profile, referral link and payout details. Takes about five minutes and needs your bank details to hand.",
   robots: { index: false, follow: false },
 };
 
@@ -79,12 +80,12 @@ export default async function PartnersOnboardPage({
               {alreadyOnboarded ? (
                 <>
                   Your partner profile is already set up. Open the{" "}
-                  <a
+                  <Link
                     href="/partners/dashboard"
                     className="text-suth-accent underline underline-offset-4"
                   >
                     dashboard
-                  </a>{" "}
+                  </Link>{" "}
                   to share your link and track referrals.
                 </>
               ) : (

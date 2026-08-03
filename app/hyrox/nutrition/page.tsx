@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClusterHub, type HubEntry } from "@/components/hyrox/cluster-hub";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 
@@ -10,6 +11,9 @@ export const metadata: Metadata = {
     "How to fuel a HYROX: race-morning timing, what to take mid-race, the weekly framework through a training block, and hydration when the hall is hot.",
   alternates: { canonical: `${siteUrl()}/hyrox/nutrition` },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "HYROX nutrition. Suth Performance",
     description:
       "Race-day fuelling, weekly frameworks and the 12-week timeline, without the supplement noise.",

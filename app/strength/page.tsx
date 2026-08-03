@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClusterHub, type HubEntry } from "@/components/hyrox/cluster-hub";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 
@@ -11,6 +12,9 @@ export const metadata: Metadata = {
     "Squat, hinge, push, pull, carry. How to start strength training, how heavy to go, how to progress, and how to tell it is working without using the mirror.",
   alternates: { canonical: `${siteUrl()}/strength` },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "Strength training guides. Suth Performance",
     description: "The five patterns, how to load them, and how to progress.",
     url: `${siteUrl()}/strength`,

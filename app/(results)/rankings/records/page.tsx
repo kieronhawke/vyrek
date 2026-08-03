@@ -250,7 +250,10 @@ export default async function RecordsPage({
                 <h3 className="mb-3 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                   <Nationality iso={book.iso} />
                   {book.name} records
-                  <span className="text-suth-text-disabled">· {book.rows.length}</span>
+                  {/* `text-suth-text-disabled` (#555553) is 2.9:1 on this surface and
+                      fails AA. It is a count, not decoration — somebody scanning
+                      the record book uses it to see which divisions are populated. */}
+                  <span className="text-suth-text-tertiary">· {book.rows.length}</span>
                 </h3>
                 <RecordTable
                   rows={book.rows}

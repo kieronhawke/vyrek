@@ -10,7 +10,7 @@ export const metadata: Metadata = {
      Naming the brand here printed it twice. */
   title: "Contact, support, press and partnerships",
   description:
-    "Get in touch with Suth Performance. General questions, billing support, press enquiries, athlete features, brand collaborations. We reply within 24 hours, Monday to Friday.",
+    "Questions, billing, press or partnership enquiries for Suth Performance. We reply within 24 hours, Monday to Friday.",
   alternates: { canonical: "/contact" },
 };
 
@@ -121,7 +121,9 @@ export default function ContactPage() {
                   href="https://instagram.com/bennysuth95"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-suth-accent underline-offset-4 hover:underline"
+                  /* Always underlined. On touch there is no hover, so
+                     `hover:underline` leaves the link colour-only. */
+                  className="text-suth-accent underline underline-offset-4"
                 >
                   @bennysuth95 on Instagram
                 </a>

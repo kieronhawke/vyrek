@@ -7,6 +7,7 @@ import { MicroLabel, EmptyState } from "@/components/results/ui/primitives";
 import { AUTOMATED_LABEL } from "@/lib/results/report-generator";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { ogImages } from "@/lib/seo/og";
 
 /** `/reports` — index of automated race reports. */
 export const revalidate = 3600;
@@ -17,7 +18,10 @@ export const metadata: Metadata = {
     "A report for every finished HYROX event — winners, podiums, the fastest station splits "
     + "of the weekend and standout age-group results.",
   alternates: { canonical: "/reports" },
-  openGraph: { url: `${siteUrl()}/reports`, type: "website" },
+  openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(), url: `${siteUrl()}/reports`, type: "website" },
 };
 
 export default async function ReportsIndex() {

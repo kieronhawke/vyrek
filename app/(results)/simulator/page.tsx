@@ -7,6 +7,7 @@ import { MicroLabel, SkeletonRows } from "@/components/results/ui/primitives";
 import { CoachingCta } from "@/components/results/coaching-cta";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * `/simulator` — race time calculator.
@@ -23,7 +24,10 @@ export const metadata: Metadata = {
     "Model your HYROX finish station by station, or set a goal time and get the splits "
     + "you need to hit it. Built on real division distributions.",
   alternates: { canonical: "/simulator" },
-  openGraph: { url: `${siteUrl()}/simulator`, type: "website" },
+  openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(), url: `${siteUrl()}/simulator`, type: "website" },
 };
 
 export default async function SimulatorPage() {

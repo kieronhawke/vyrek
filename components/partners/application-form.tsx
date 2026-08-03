@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const DRAFT_KEY = "suth:partners:apply:draft:v1";
 
@@ -452,12 +453,12 @@ export function PartnerApplicationForm() {
               />
               <span>
                 I accept the{" "}
-                <a
+                <Link
                   href="/legal/terms"
                   className="text-suth-accent underline underline-offset-4"
                 >
                   Suth Performance Terms
-                </a>{" "}
+                </Link>{" "}
                 and the Partner Programme T&amp;Cs, including the no-bidding
                 rule on Suth Performance brand terms and the 30-day commission clawback
                 window.

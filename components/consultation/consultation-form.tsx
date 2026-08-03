@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const GOALS = [
   { value: "get-fit", label: "Get fit and feel better" },
@@ -72,12 +73,12 @@ export function ConsultationForm() {
           consultation. In the meantime, the three-minute quiz gives him a
           head start on your plan.
         </p>
-        <a
+        <Link
           href="/quiz"
           className="mt-5 inline-flex h-11 items-center justify-center rounded-pill bg-suth-accent px-5 text-sm font-semibold uppercase tracking-wide text-[#0A0A0A] transition-[background] duration-fast hover:bg-suth-accent-hover"
         >
           Take the quiz →
-        </a>
+        </Link>
       </div>
     );
   }

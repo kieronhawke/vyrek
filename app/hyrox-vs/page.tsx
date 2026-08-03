@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClusterHub, type HubEntry } from "@/components/hyrox/cluster-hub";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 
@@ -10,6 +11,9 @@ export const metadata: Metadata = {
     "Honest comparisons between HYROX and the things people weigh it against: CrossFit, obstacle racing, DEKA, and whether to train strength or running first.",
   alternates: { canonical: `${siteUrl()}/hyrox-vs` },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "HYROX vs everything else. Suth Performance",
     description:
       "How HYROX compares to CrossFit, Spartan, DEKA and pure running, and who each one actually suits.",

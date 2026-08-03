@@ -121,7 +121,9 @@ export default function EventsIndex() {
             <Link
               href="https://hyrox.com/find-my-race/"
               rel="nofollow"
-              className="text-suth-accent"
+              /* Underlined: inside a paragraph, colour alone is not a
+                 sufficient cue (WCAG 1.4.1). */
+              className="text-suth-accent underline underline-offset-4"
             >
               hyrox.com
             </Link>

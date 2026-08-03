@@ -9,7 +9,7 @@ import { siteUrl } from "@/lib/blog/urls";
 export const metadata: Metadata = {
   title: "Free consultation with Ben Sutherland",
   description:
-    "A free, no-pressure call with HYROX Elite 15 athlete Ben Sutherland about your goals, whether that's getting fit, losing weight, your first Hyrox, or chasing an elite time.",
+    "A free, no-pressure call with HYROX Elite 15 athlete Ben Sutherland about your goals and how to train for them. No card, no commitment.",
   alternates: { canonical: `${siteUrl()}/free-consultation` },
 };
 

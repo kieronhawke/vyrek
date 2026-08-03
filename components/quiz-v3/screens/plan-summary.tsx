@@ -17,6 +17,7 @@ import { getBeginnerBenefits, getBenefits } from "@/lib/plan-generator";
 import { recommendationLine, sift } from "@/lib/quiz-sift";
 import { ConsultationCapture } from "@/components/quiz-v3/consultation-capture";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import Link from "next/link";
 
 /**
  * Screen 14 (brief 3.5 + 3.6). Sales-pitch plan summary.
@@ -263,12 +264,12 @@ function RouteBlock({ answers }: { answers: QuizAnswers }) {
       <p className="mt-2 text-base font-medium leading-snug text-suth-text">
         Your plan is ready. Start free for seven days inside Suth Club.
       </p>
-      <a
+      <Link
         href="/club"
         className="mt-3 inline-block text-sm font-medium text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
       >
         Start 7 days free →
-      </a>
+      </Link>
       <p className="mt-3 text-xs leading-relaxed text-suth-text-tertiary">
         No card needed. Cancel any time. Nobody will call you.
       </p>
