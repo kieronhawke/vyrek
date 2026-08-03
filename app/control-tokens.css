@@ -1704,3 +1704,519 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* ── Activity ─────────────────────────────────────────────────────────────
+   Ordered by what a person can act on: how many came, where the quiz leaks,
+   where they are, what they read, who they were. */
+
+[data-surface="control"] .ac { display: grid; gap: var(--space-2); }
+
+[data-surface="control"] .ac-sample {
+  margin: 0;
+  padding: var(--space-2);
+  border: 1px solid var(--warn);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+[data-surface="control"] .ac-range,
+[data-surface="control"] .ac-filters,
+[data-surface="control"] .ac-controls {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+[data-surface="control"] .ac-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+[data-surface="control"] .ac-chip[data-on] {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: transparent;
+}
+
+/* Two date inputs have a minimum intrinsic width that Chrome will not shrink
+   below. Side by side they are wider than a 344px screen, and because the row
+   is a flex container that pushed the whole page 41px wide. They wrap and
+   shrink instead. */
+[data-surface="control"] .ac-dates {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+  color: var(--text-faint);
+}
+
+[data-surface="control"] .ac-dates .ac-input {
+  flex: 1 1 130px;
+  min-width: 0;
+}
+
+[data-surface="control"] .ac-input {
+  min-height: 44px;
+  padding: 6px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+}
+
+[data-surface="control"] .ac-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-1);
+}
+
+[data-surface="control"] .ac-stat {
+  display: grid;
+  gap: 2px;
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+[data-surface="control"] .ac-stat__v {
+  font-size: var(--text-xl);
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+[data-surface="control"] .ac-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  padding: var(--space-2);
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+[data-surface="control"] .ac-panel__title { margin: 0; font-size: var(--text-base); }
+
+[data-surface="control"] .ac-lead {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+[data-surface="control"] .ac-hint {
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+/* ── Funnel ───────────────────────────────────────────────────────────── */
+
+[data-surface="control"] .ac-funnel {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+[data-surface="control"] .ac-step {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) 34px 34px;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-2xs);
+}
+
+[data-surface="control"] .ac-step__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .ac-step__bar {
+  height: 16px;
+  border-radius: 3px;
+  background: var(--surface-raised);
+  overflow: hidden;
+}
+
+[data-surface="control"] .ac-step__fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+/* The step that leaks worst is the only thing on this chart worth acting on. */
+[data-surface="control"] .ac-step__fill[data-worst] { background: var(--warn); }
+
+[data-surface="control"] .ac-step__n { text-align: right; }
+[data-surface="control"] .ac-step__lost { text-align: right; color: var(--danger); }
+
+/* ── Geography ────────────────────────────────────────────────────────── */
+
+[data-surface="control"] .ac-geo {
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+[data-surface="control"] .ac-map { min-width: 0; }
+
+[data-surface="control"] .ac-map__svg,
+[data-surface="control"] .ac-detail__map {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+}
+
+[data-surface="control"] .ac-map__grid {
+  stroke: var(--border);
+  stroke-width: 0.5;
+}
+
+[data-surface="control"] .ac-map__equator {
+  stroke: var(--border-strong);
+  stroke-width: 0.7;
+}
+
+[data-surface="control"] .ac-map__pin {
+  fill: var(--text-muted);
+}
+
+[data-surface="control"] .ac-map__pin[data-enquiry] { fill: var(--accent); }
+
+[data-surface="control"] .ac-map__halo {
+  fill: var(--text-muted);
+  opacity: 0.14;
+}
+
+[data-surface="control"] .ac-map__halo[data-enquiry] {
+  fill: var(--accent);
+  opacity: 0.22;
+}
+
+[data-surface="control"] .ac-map__key {
+  list-style: none;
+  margin: var(--space-1) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+[data-surface="control"] .ac-map__city {
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-raised);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: var(--text-2xs);
+  cursor: pointer;
+}
+
+[data-surface="control"] .ac-countries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 3px;
+  align-content: start;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+[data-surface="control"] .ac-country {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  text-align: left;
+  cursor: pointer;
+}
+
+[data-surface="control"] .ac-country[data-on] { border-color: var(--accent); }
+[data-surface="control"] .ac-country__name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+[data-surface="control"] .ac-country__n { font-weight: 700; }
+[data-surface="control"] .ac-country__e { font-size: var(--text-2xs); color: var(--accent-text); }
+
+/* ── Pages ────────────────────────────────────────────────────────────── */
+
+[data-surface="control"] .ac-pages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+[data-surface="control"] .ac-pages li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 40px 74px;
+  gap: 8px;
+  align-items: center;
+  min-height: 36px;
+  font-size: var(--text-sm);
+}
+
+[data-surface="control"] .ac-pages__path {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-num, monospace);
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .ac-pages__n { text-align: right; font-weight: 700; }
+[data-surface="control"] .ac-pages__t { text-align: right; font-size: var(--text-2xs); color: var(--text-faint); }
+
+/* ── Visitor table ────────────────────────────────────────────────────── */
+
+[data-surface="control"] .ac-sort { display: inline-flex; align-items: center; gap: 6px; }
+
+[data-surface="control"] .ac-tablewrap { overflow-x: auto; }
+
+[data-surface="control"] .ac-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+[data-surface="control"] .ac-table th,
+[data-surface="control"] .ac-table td {
+  text-align: left;
+  padding: 6px 12px 6px 0;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+[data-surface="control"] .ac-table th {
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+}
+
+[data-surface="control"] .ac-rowbtn {
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+}
+
+[data-surface="control"] .ac-cell--path {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .ac-cell--when { font-size: var(--text-2xs); color: var(--text-muted); }
+
+[data-surface="control"] .ac-intent {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  background: var(--surface-raised);
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .ac-intent[data-level="high"] { background: var(--accent); color: var(--accent-ink); }
+[data-surface="control"] .ac-intent[data-level="medium"] { color: var(--text); }
+
+[data-surface="control"] .ac-excluded {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+[data-surface="control"] .ac-excluded li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+}
+
+/* ── Session detail ───────────────────────────────────────────────────── */
+
+[data-surface="control"] .ac-detail {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+[data-surface="control"] .ac-detail__scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+}
+
+[data-surface="control"] .ac-detail__panel {
+  position: relative;
+  display: grid;
+  gap: var(--space-1);
+  max-height: 88svh;
+  overflow-y: auto;
+  padding: 10px var(--space-2) calc(env(safe-area-inset-bottom) + var(--space-3));
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-radius: 14px 14px 0 0;
+}
+
+[data-surface="control"] .ac-detail__grip {
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border-strong);
+  margin: 0 auto 6px;
+}
+
+[data-surface="control"] .ac-detail__title { margin: 0; font-size: var(--text-lg); }
+[data-surface="control"] .ac-detail__sub { margin: var(--space-1) 0 0; font-size: var(--text-sm); }
+
+[data-surface="control"] .ac-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-1);
+  margin: 0;
+}
+
+[data-surface="control"] .ac-fact dd { margin: 0; font-size: var(--text-sm); word-break: break-all; }
+
+[data-surface="control"] .ac-trail {
+  list-style: none;
+  counter-reset: trail;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+[data-surface="control"] .ac-trail li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 70px;
+  gap: 8px;
+  align-items: center;
+  min-height: 32px;
+  padding-left: 18px;
+  position: relative;
+  font-size: var(--text-sm);
+}
+
+[data-surface="control"] .ac-trail li::before {
+  counter-increment: trail;
+  content: counter(trail);
+  position: absolute;
+  left: 0;
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+}
+
+[data-surface="control"] .ac-trail__path {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+}
+
+[data-surface="control"] .ac-trail__t { text-align: right; font-size: var(--text-2xs); }
+
+/* Pinned to the bottom of the sheet. The primary action of this panel should
+   not be behind six pages of visit trail on a 344px screen — which is exactly
+   where it was, and where the click landed on the list instead. */
+[data-surface="control"] .ac-detail__actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  gap: var(--space-1);
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: var(--space-1);
+  padding-top: var(--space-1);
+  background: var(--surface);
+  box-shadow: 0 -8px 12px -8px var(--surface);
+}
+
+[data-surface="control"] .ac-exclude {
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+@media (min-width: 900px) {
+  [data-surface="control"] .ac-geo {
+    grid-template-columns: minmax(0, 1.6fr) minmax(220px, 1fr);
+  }
+
+  [data-surface="control"] .ac-detail { justify-content: center; align-items: center; }
+
+  [data-surface="control"] .ac-detail__panel {
+    width: min(620px, 92vw);
+    max-height: 86svh;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: var(--space-2) var(--space-3) var(--space-3);
+  }
+
+  [data-surface="control"] .ac-detail__grip { display: none; }
+}
