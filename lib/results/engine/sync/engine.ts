@@ -112,13 +112,28 @@ export class SyncEngine {
     const hash = hashRows(page);
     const state = await this.deps.repo.getSyncState(event.sourceEventId ?? event.slug);
 
-    if (!force && state?.lastSeenHash === hash) {
+    // Re-read rather than trusting the caller's copy. A stale division object —
+    // captured before an earlier sync wrote its hash — makes the unchanged
+    // check silently never match, which costs a full rewrite per poll and is
+    // invisible except as churn.
+    const current =
+      (await this.deps.repo.listDivisions(event.id)).find((d) => d.id === division.id) ??
+      division;
+
+    // Compared against the *division's* hash. An event-level hash is overwritten
+    // by every division in turn, so the check never matches and every poll
+    // rewrites every row of every division.
+    if (!force && current.lastSeenHash === hash) {
       await this.deps.repo.upsertSyncState({
         ...emptyState(event),
         ...state,
         lastPolledAt: this.now().toISOString(),
         lastSuccessAt: this.now().toISOString(),
         consecutiveFailures: 0,
+      });
+      await this.deps.repo.upsertDivision({
+        ...current,
+        lastSyncedAt: this.now().toISOString(),
       });
       return {
         sourceDivisionId,
@@ -175,9 +190,17 @@ export class SyncEngine {
         });
       }
       await this.deps.repo.upsertDivision({
-        ...division,
+        ...current,
         publishedEntrantCount: page.publishedEntrantCount,
         entrantCount: await this.deps.repo.countResultsForDivision(division.id),
+        lastSeenHash: hash,
+        lastSyncedAt: this.now().toISOString(),
+      });
+    } else {
+      await this.deps.repo.upsertDivision({
+        ...current,
+        lastSeenHash: hash,
+        lastSyncedAt: this.now().toISOString(),
       });
     }
 

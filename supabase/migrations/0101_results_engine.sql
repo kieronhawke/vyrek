@@ -107,6 +107,15 @@ create table if not exists results_divisions (
   -- Full source code including division prefix and race day: HPRO_LR3MS4JI163A
   source_division_id text,
 
+  -- Content hash of this division's last fetched board.
+  --
+  -- Per division, not per event: one race weekend has a source id per race day
+  -- and many divisions under each. Hashing at event level means every division
+  -- overwrites the previous one's hash, the "unchanged" check never matches,
+  -- and every poll rewrites every row.
+  last_seen_hash text,
+  last_synced_at timestamptz,
+
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   unique (event_id, division_key)

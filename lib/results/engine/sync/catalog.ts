@@ -22,6 +22,7 @@ import {
 import { summariseShape, type SentinelVerdict } from "../validate/sentinel";
 import { pingHeartbeat } from "../ops/heartbeat";
 import { recomputeDistributionsForEvent } from "./distributions";
+import { enrichEventMetadata } from "./event-metadata";
 
 export type CatalogResult = {
   seasonsScanned: string[];
@@ -59,12 +60,20 @@ export async function runCatalogSync(
       shapeAlert: { ok: true },
     };
     const shapes: SentinelVerdict[] = [];
+    const unnamed: string[] = [];
 
     for (const seasonPath of seasonPaths) {
       const groups = await engine.adapter.listEventGroups(seasonPath);
       result.seasonsScanned.push(seasonPath);
 
       for (const group of groups) {
+        // An unnamed weekend cannot be turned into an event: the label is where
+        // the city and year come from, and without them every unnamed weekend
+        // would collapse onto the same slug.
+        if (!group.label.trim()) {
+          unnamed.push(group.sourceEventId);
+          continue;
+        }
         const normalised = normaliseEventGroup(group);
         if (!normalised) continue;
 
@@ -114,6 +123,12 @@ export async function runCatalogSync(
       }
     }
 
+    // Dates and place, joined from HYROX's own published calendar. No network,
+    // so it is cheap enough to run every time rather than as its own job — and
+    // it has to happen before arming, because an event with no start instant
+    // can never self-arm.
+    const enriched = await enrichEventMetadata(repo);
+
     // Pull full results for anything that has finalised since the last run.
     const finalised = (await repo.listEvents({ status: "final" }))
       .filter((e) => needsResultPull(e))
@@ -153,6 +168,19 @@ export async function runCatalogSync(
       });
     }
 
+    if (unnamed.length > 0) {
+      await repo.raiseAlert({
+        kind: "parser_shape",
+        severity: "warning",
+        message:
+          `${unnamed.length} race weekend(s) could not be attributed to a name, so no event ` +
+          `was created for them. The weekend selector narrowing may have changed.`,
+        detail: { weekendIds: unnamed.slice(0, 20) },
+        sourceEventId: null,
+        acknowledgedAt: null,
+      });
+    }
+
     // Only a *successful* run pings. A failed run must leave the monitor
     // silent, or the dead-man's switch is decorative.
     await pingHeartbeat("catalog");
@@ -165,6 +193,9 @@ export async function runCatalogSync(
       detail: {
         seasonsScanned: result.seasonsScanned,
         finalisedSynced: result.finalisedSynced,
+        datesEnriched: enriched.enriched.length,
+        datesUnmatched: enriched.unmatched.length,
+        unnamedWeekends: unnamed.length,
       },
     } as CatalogResult & Record<string, unknown>;
   });

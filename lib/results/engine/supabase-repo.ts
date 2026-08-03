@@ -75,7 +75,8 @@ const fromEvent = (e: UpsertEvent) => ({
 type DivisionRow = {
   id: string; event_id: string; division_key: string; display_name: string;
   entrant_count: number; published_entrant_count: number | null;
-  source_division_id: string | null;
+  source_division_id: string | null; last_seen_hash: string | null;
+  last_synced_at: string | null;
 };
 
 const toDivision = (r: DivisionRow): EngineDivision => ({
@@ -83,6 +84,8 @@ const toDivision = (r: DivisionRow): EngineDivision => ({
   displayName: r.display_name, entrantCount: r.entrant_count,
   publishedEntrantCount: r.published_entrant_count,
   sourceDivisionId: r.source_division_id,
+  lastSeenHash: r.last_seen_hash,
+  lastSyncedAt: r.last_synced_at,
 });
 
 type AthleteRow = {
@@ -230,6 +233,8 @@ export class SupabaseResultsRepository implements ResultsRepository {
             entrant_count: division.entrantCount,
             published_entrant_count: division.publishedEntrantCount ?? null,
             source_division_id: division.sourceDivisionId ?? null,
+            last_seen_hash: division.lastSeenHash ?? null,
+            last_synced_at: division.lastSyncedAt ?? null,
           },
           { onConflict: "event_id,division_key" },
         )

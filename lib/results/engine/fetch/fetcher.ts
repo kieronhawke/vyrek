@@ -79,8 +79,15 @@ export type FetchResponseLike = {
   text(): Promise<string>;
 };
 
+export type RequestInitLike = {
+  headers?: Record<string, string>;
+  method?: string;
+  body?: string;
+  signal?: AbortSignal;
+};
+
 export type FetcherOptions = {
-  fetchImpl?: (url: string, init?: { headers?: Record<string, string>; signal?: AbortSignal }) => Promise<FetchResponseLike>;
+  fetchImpl?: (url: string, init?: RequestInitLike) => Promise<FetchResponseLike>;
   sleep?: (ms: number) => Promise<void>;
   deps?: GuardDeps;
   budget?: OutboundBudget;
@@ -149,7 +156,11 @@ export class SourceFetcher {
     return this.budget.remaining();
   }
 
-  async fetchText(url: string): Promise<FetchOutcome> {
+  /**
+   * `form` turns this into a POST of url-encoded fields, which is how the
+   * weekend selector is submitted — see `hyrox-adapter.listEventGroups`.
+   */
+  async fetchText(url: string, form?: Record<string, string>): Promise<FetchOutcome> {
     this.assertAuthorised();
 
     let lastError: Error | null = null;
@@ -170,10 +181,13 @@ export class SourceFetcher {
 
       try {
         const response = await this.fetchImpl(url, {
+          method: form ? "POST" : "GET",
+          body: form ? new URLSearchParams(form).toString() : undefined,
           headers: {
             "User-Agent": this.userAgent,
             Accept: "text/html,application/json;q=0.9,*/*;q=0.8",
             "Accept-Language": "en-GB,en;q=0.9",
+            ...(form ? { "Content-Type": "application/x-www-form-urlencoded" } : {}),
           },
         });
 

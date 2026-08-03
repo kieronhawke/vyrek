@@ -84,52 +84,53 @@ export function parseSelectOptions(
   return options;
 }
 
-/**
- * A season index page into race weekends and their division codes.
- *
- * The page renders the *selected* weekend's divisions only, so a full catalogue
- * means one request per weekend. That is why the catalog sync is scheduled
- * hourly and not more often — it is inherently O(weekends) requests.
- */
-export function parseEventGroups(html: string, seasonPath: string): RawEventGroup[] {
-  const groups = parseSelectOptions(html, "event_main_group");
-  const divisions = parseSelectOptions(html, "event");
+/** The weekend names the season offers, e.g. "2026 Chiba", "2026 Delhi". */
+export function parseGroupNames(html: string): string[] {
+  return parseSelectOptions(html, "event_main_group")
+    .map((o) => o.value)
+    .filter((v) => !splitEventCode(v));
+}
 
+/**
+ * The division codes on a page, grouped by the weekend id inside each code.
+ *
+ * ⚠️ On the plain season page this returns **every weekend's codes at once**
+ * with nothing saying which weekend is which — 73 codes across 22 weekends,
+ * regardless of which group is selected, and with no `<optgroup>` to attribute
+ * them. An earlier version labelled all of them with the first group name, so
+ * 22 real race weekends collapsed onto one slug and Delhi's results would have
+ * been stored against Chiba.
+ *
+ * The caller must therefore pass the weekend name it asked for, having narrowed
+ * the page by POSTing `event_main_group` — see `hyrox-adapter.listEventGroups`.
+ */
+export function parseEventGroups(
+  html: string,
+  seasonPath: string,
+  groupLabel?: string,
+): RawEventGroup[] {
+  const divisions = parseSelectOptions(html, "event");
   const byWeekend = new Map<string, RawEventGroup>();
 
   for (const division of divisions) {
     const parsed = splitEventCode(division.value);
     if (!parsed) continue;
-    const existing = byWeekend.get(parsed.weekendId);
     const ref = {
       sourceDivisionId: division.value,
       label: division.label,
       divisionPrefix: parsed.prefix,
     };
+    const existing = byWeekend.get(parsed.weekendId);
     if (existing) {
       existing.divisions.push(ref);
     } else {
       byWeekend.set(parsed.weekendId, {
         sourceEventId: parsed.weekendId,
-        // The selected group is the one this page is showing divisions for.
-        label: groups.find((g) => g.value.includes("selected"))?.label ?? groups[0]?.label ?? "",
+        // Empty when the caller did not narrow to a single weekend. An unnamed
+        // weekend is skipped by the catalogue rather than guessed at.
+        label: groupLabel ?? "",
         seasonPath,
         divisions: [ref],
-      });
-    }
-  }
-
-  // Weekends the selector lists but whose divisions this page did not render.
-  // Recorded with no divisions so the catalog sync knows to visit them.
-  for (const group of groups) {
-    if (splitEventCode(group.value)) continue; // it is a division code, not a weekend
-    const known = [...byWeekend.values()].some((w) => w.label === group.label);
-    if (!known) {
-      byWeekend.set(`label:${group.value}`, {
-        sourceEventId: group.value,
-        label: group.label,
-        seasonPath,
-        divisions: [],
       });
     }
   }

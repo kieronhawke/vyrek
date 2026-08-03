@@ -5,6 +5,7 @@ import {
   parseDetailSplits,
   parseDivisionRows,
   parseEventGroups,
+  parseGroupNames,
   parseRowFields,
   normalisePersonName,
   splitEventCode,
@@ -29,22 +30,46 @@ describe("event codes", () => {
 });
 
 describe("season index", () => {
-  it("groups division codes under their weekend", () => {
-    const groups = parseEventGroups(fixture("season-index.html"), "season-9");
+  it("reads the weekend names, and only the names", () => {
+    const names = parseGroupNames(fixture("season-index.html"));
+    expect(names.length).toBeGreaterThan(0);
+    expect(names).toContain("2026 Chiba");
+    // Division codes live in the other select and must not leak into this one.
+    expect(names.every((n) => !/^[A-Z]+\d?_/.test(n))).toBe(true);
+  });
+
+  it("groups division codes under their weekend id", () => {
+    const groups = parseEventGroups(fixture("season-index.html"), "season-9", "2026 Chiba");
     expect(groups.length).toBeGreaterThan(0);
-    const withDivisions = groups.filter((g) => g.divisions.length > 0);
-    expect(withDivisions.length).toBeGreaterThan(0);
-    // Every division under one weekend shares that weekend's id.
-    for (const group of withDivisions) {
+    for (const group of groups) {
+      expect(group.divisions.length).toBeGreaterThan(0);
       for (const division of group.divisions) {
         expect(division.sourceDivisionId).toContain(group.sourceEventId);
       }
     }
   });
 
-  it("keeps weekends the page listed but did not render divisions for", () => {
+  /**
+   * The bug this pins down cost a whole catalogue.
+   *
+   * The plain season page lists every weekend's codes flat — 73 codes across 22
+   * weekends — with no optgroup and no marker saying which is which, and
+   * narrowing by query parameter changes nothing. Labelling them all after the
+   * selected weekend filed 22 real race weekends under one slug, so Delhi's
+   * results would have been stored against Chiba.
+   *
+   * So an un-narrowed parse yields **unlabelled** groups, and the catalogue
+   * refuses to create an event it cannot name.
+   */
+  it("leaves weekends unlabelled when the caller has not narrowed to one", () => {
     const groups = parseEventGroups(fixture("season-index.html"), "season-9");
-    expect(groups.some((g) => g.divisions.length === 0)).toBe(true);
+    expect(groups.length).toBeGreaterThan(0);
+    expect(groups.every((g) => g.label === "")).toBe(true);
+  });
+
+  it("labels them only when told which weekend was requested", () => {
+    const groups = parseEventGroups(fixture("season-index.html"), "season-9", "2026 Delhi");
+    expect(groups.every((g) => g.label === "2026 Delhi")).toBe(true);
   });
 });
 

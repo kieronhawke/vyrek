@@ -38,6 +38,7 @@ import {
   parseDetailSplits,
   parseDivisionRows,
   parseEventGroups,
+  parseGroupNames,
   weekendIdOf,
 } from "./mika-parse";
 
@@ -72,13 +73,46 @@ abstract class MikaAdapter implements SourceAdapter {
     return this.fetcher.requestCount;
   }
 
+  /**
+   * Every race weekend in a season, with its division codes.
+   *
+   * One GET for the weekend names, then **one POST per weekend** to find out
+   * which division codes belong to it. That is N+1 requests and it is not
+   * avoidable: the plain page lists all 73 codes across 22 weekends flat, with
+   * no optgroup and no other marker, and passing `event_main_group` as a query
+   * parameter changes nothing. Only the POST narrows it.
+   *
+   * This matters more than it looks. Attributing codes by position, or naming
+   * them all after the selected weekend, silently files Delhi's results under
+   * Chiba — one event, 22 weekends' results, unrecoverable without a re-sync.
+   */
   async listEventGroups(seasonPath: string): Promise<RawEventGroup[]> {
-    // The bare season path. `?pid=list` is the results view and carries no
-    // event selector; only the season landing page does.
     const { body } = await this.fetcher.fetchText(seasonUrl(seasonPath, {}));
-    const groups = parseEventGroups(body, seasonPath);
+    const names = parseGroupNames(body);
+    if (names.length === 0) {
+      throw new Error(`No weekend names parsed from ${seasonPath} — selector markup changed?`);
+    }
+
+    const groups: RawEventGroup[] = [];
+    const seen = new Set<string>();
+
+    for (const name of names) {
+      const narrowed = await this.fetcher.fetchText(
+        `${SOURCE_ORIGIN}/${seasonPath.replace(/^\/|\/$/g, "")}/index.php?pid=list`,
+        { event_main_group: name, pid: "list", lang: "EN" },
+      );
+      for (const group of parseEventGroups(narrowed.body, seasonPath, name)) {
+        // A weekend id can only belong to one weekend. If it turns up twice the
+        // narrowing has failed, and taking the first is safer than overwriting
+        // a correct attribution with a wrong one.
+        if (seen.has(group.sourceEventId)) continue;
+        seen.add(group.sourceEventId);
+        groups.push(group);
+      }
+    }
+
     if (groups.length === 0) {
-      throw new Error(`No event groups parsed from ${seasonPath} — selector markup changed?`);
+      throw new Error(`No division codes parsed for any weekend in ${seasonPath}`);
     }
     return groups;
   }

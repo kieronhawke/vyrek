@@ -74,6 +74,9 @@ export type EngineDivision = {
   /** What the source published. Null when it published nothing to check against. */
   publishedEntrantCount?: number | null;
   sourceDivisionId?: string | null;
+  /** Content hash of the last fetched board for this division. */
+  lastSeenHash?: string | null;
+  lastSyncedAt?: string | null;
 };
 
 export type EngineAthlete = {
