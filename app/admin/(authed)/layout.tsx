@@ -14,6 +14,7 @@ export const dynamic = "force-dynamic";
 const NAV: { href: string; label: string; group: string }[] = [
   { href: "/admin", label: "Overview", group: "Today" },
   { href: "/admin/live", label: "Live on site", group: "Today" },
+  { href: "/admin/results-engine", label: "Results engine", group: "Today" },
   { href: "/admin/customers", label: "Customers", group: "Members" },
   { href: "/admin/subscriptions", label: "Subscriptions", group: "Members" },
   { href: "/admin/partners", label: "Applications", group: "Partners" },
