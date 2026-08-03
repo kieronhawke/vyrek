@@ -71,19 +71,29 @@ test("stamps every section with the athlete and event", async ({ page }) => {
    * if that ever stops being set the ident silently becomes an empty string
    * and every page loses its identification.
    */
+  /*
+   * Read the athlete off the page rather than hard-coding one. An earlier
+   * version asserted "Edward Edwards", which was true until the demo dataset
+   * was regenerated and that result id belonged to somebody else — a test
+   * failure that said nothing about the feature. What matters is that the
+   * ident matches whoever this report is actually about.
+   */
+  const athlete = (await page.locator(".report-print-cover__name").textContent())?.trim() ?? "";
+  expect(athlete.length).toBeGreaterThan(3);
+
   const ident = await page.evaluate(() => {
     const el = document.querySelector(".results-report");
     return el ? getComputedStyle(el).getPropertyValue("--report-ident").trim() : "";
   });
 
-  expect(ident).toContain("Edward Edwards");
+  expect(ident).toContain(athlete);
   expect(ident).toContain("HYROX Malaga 2025");
 
   const rendered = await page.evaluate(() => {
     const section = document.querySelector(".report-section");
     return section ? getComputedStyle(section, "::before").content : "";
   });
-  expect(rendered).toContain("Edward Edwards");
+  expect(rendered).toContain(athlete);
 });
 
 test("ends on a colophon carrying the URL", async ({ page }) => {
@@ -119,11 +129,16 @@ test("offers a share control on screen", async ({ page }) => {
   const share = page.getByRole("button", { name: /share report/i });
   await expect(share).toBeVisible();
 
+  // Taken from the page, not hard-coded: the demo dataset is regenerated and
+  // the time attached to any given result id is not stable.
+  const finishTime = (await page.locator(".report-print-cover__time").textContent())?.trim() ?? "";
+  expect(finishTime).toMatch(/^\d+:\d{2}(:\d{2})?$/);
+
   await share.click();
   const dialog = page.getByRole("dialog", { name: /share this race report/i });
   await expect(dialog).toBeVisible();
   // The message must carry the numbers — "my race report" means nothing to
   // somebody who has not seen one.
-  await expect(dialog).toContainText("54:30");
+  await expect(dialog).toContainText(finishTime);
   await expect(dialog).toContainText(/report\//);
 });

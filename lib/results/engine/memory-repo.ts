@@ -625,8 +625,27 @@ export class MemoryResultsRepository implements ResultsRepository {
  * bookkeeping is deliberately excluded, or every poll would look like a change
  * and the fan-out would publish constantly.
  */
+/**
+ * Is this the same row, unchanged?
+ *
+ * ⚠️ **Who the row belongs to counts.** This compared ranks, times, status and
+ * splits and not `athleteId` or `partnerAthleteIds`, exactly as the Supabase
+ * implementation did, so a re-pull that resolved a row to a *different athlete*
+ * reported "unchanged" and wrote nothing. A leaderboard is a list of names; a
+ * row whose name changed is a changed row.
+ *
+ * Kept in step with `materiallyDifferent` in `supabase-repo.ts` — the two
+ * implementations exist to prove behaviour, which they cannot do while they
+ * disagree about what a change is.
+ */
 function sameResult(a: EngineResult, b: EngineResult): boolean {
+  const samePartners =
+    a.partnerAthleteIds.length === b.partnerAthleteIds.length &&
+    a.partnerAthleteIds.every((id, i) => id === b.partnerAthleteIds[i]);
+
   return (
+    a.athleteId === b.athleteId &&
+    samePartners &&
     a.rankOverall === b.rankOverall &&
     a.rankAgeGroup === b.rankAgeGroup &&
     a.finishTimeMs === b.finishTimeMs &&
