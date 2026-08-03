@@ -411,6 +411,65 @@ describe("splits backfill (§4)", () => {
   });
 });
 
+describe("identity keys that can disagree", () => {
+  /**
+   * Both `slug` and `source_event_id` are unique, and they can point at
+   * different rows. A weekend catalogued from another season page can produce a
+   * different label, therefore a different city, therefore a different slug —
+   * while carrying the same source id.
+   *
+   * Upserting on the slug alone then failed on a duplicate source id and took
+   * down the whole season sync. One relabelled event, an entire backfill run
+   * lost. Found by running a real backfill; no test had ever produced two
+   * labels for one weekend.
+   */
+  it("re-labelling a weekend updates the event rather than colliding", async () => {
+    const h = await makeHarness();
+
+    const first = await h.repo.upsertEvent({
+      slug: "s8-2026-london",
+      name: "HYROX London 2026",
+      city: "London",
+      country: "", countryIso: "", region: "UK",
+      season: "s8", year: 2026, status: "final",
+      tzOffsetMinutes: 0, athleteCount: 0,
+      sourceEventId: "WEEKEND-1",
+      isDemo: false,
+    });
+
+    // Same weekend, different label, therefore a different slug.
+    const second = await h.repo.upsertEvent({
+      slug: "s8-2026-london-excel",
+      name: "HYROX London ExCeL 2026",
+      city: "London ExCeL",
+      country: "", countryIso: "", region: "UK",
+      season: "s8", year: 2026, status: "final",
+      tzOffsetMinutes: 0, athleteCount: 0,
+      sourceEventId: "WEEKEND-1",
+      isDemo: false,
+    });
+
+    // One event, updated — not two, and not a crash.
+    expect(second.id).toBe(first.id);
+    expect(second.city).toBe("London ExCeL");
+    expect((await h.repo.listEvents()).filter((e) => e.sourceEventId === "WEEKEND-1")).toHaveLength(1);
+  });
+
+  it("keys a division on its source id before its event and key", async () => {
+    const h = await makeHarness();
+    const a = await h.repo.upsertDivision({
+      eventId: h.event.id, divisionKey: "open-men", displayName: "HYROX Men",
+      entrantCount: 0, sourceDivisionId: "H_X#men",
+    });
+    const b = await h.repo.upsertDivision({
+      eventId: h.event.id, divisionKey: "open-men-renamed", displayName: "HYROX Men",
+      entrantCount: 5, sourceDivisionId: "H_X#men",
+    });
+    expect(b.id).toBe(a.id);
+    expect(b.entrantCount).toBe(5);
+  });
+});
+
 describe("athlete identity does not multiply (§13)", () => {
   /**
    * The failure this pins down, measured on real data: 1,006 orphaned athlete

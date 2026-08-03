@@ -175,7 +175,39 @@ export class SupabaseResultsRepository implements ResultsRepository {
 
   /* ── Events ───────────────────────────────────────────────────────── */
 
+  /**
+   * Upsert an event, keyed on the source id first and the slug second.
+   *
+   * ⚠️ Both columns are unique, and they can disagree. `source_event_id` is the
+   * timing provider's stable weekend id; `slug` is derived from the label,
+   * which is not stable — the same weekend catalogued from a different season
+   * page can produce a different city and therefore a different slug.
+   *
+   * Upserting on `slug` alone then crashed the whole season sync on a duplicate
+   * `source_event_id`, which is how one relabelled event took down an entire
+   * backfill run. Found by running a real backfill, not by any test.
+   *
+   * The source id wins because it is the thing that cannot change. A slug can
+   * be corrected; an identity cannot be guessed.
+   */
   async upsertEvent(event: UpsertEvent): Promise<EngineEvent> {
+    if (event.sourceEventId) {
+      const existing = await this.getEventBySourceId(event.sourceEventId);
+      if (existing) {
+        const row = await this.one<EventRow>(
+          this.db
+            .from("results_events")
+            .update(fromEvent(event))
+            .eq("id", existing.id)
+            .select()
+            .single(),
+        );
+        if (!row) throw new Error(`Failed to update event ${event.slug}`);
+        return toEvent(row);
+      }
+    }
+
+    // No source id, or one we have never seen: the slug is the identity.
     const row = await this.one<EventRow>(
       this.db
         .from("results_events")
@@ -217,7 +249,42 @@ export class SupabaseResultsRepository implements ResultsRepository {
     if (error) throw toRepositoryError(error, "results write failed");
   }
 
+  /**
+   * Divisions carry the same hazard: `source_division_id` is unique, and so is
+   * `(event_id, division_key)`. A division that moves between events — which a
+   * relabelled weekend can cause — would collide the same way.
+   */
   async upsertDivision(division: UpsertDivision): Promise<EngineDivision> {
+    if (division.sourceDivisionId) {
+      const found = await this.one<DivisionRow>(
+        this.db
+          .from("results_divisions")
+          .select()
+          .eq("source_division_id", division.sourceDivisionId)
+          .maybeSingle(),
+      );
+      if (found) {
+        const updated = await this.one<DivisionRow>(
+          this.db
+            .from("results_divisions")
+            .update({
+              event_id: division.eventId,
+              division_key: division.divisionKey,
+              display_name: division.displayName,
+              entrant_count: division.entrantCount,
+              published_entrant_count: division.publishedEntrantCount ?? null,
+              last_seen_hash: division.lastSeenHash ?? null,
+              last_synced_at: division.lastSyncedAt ?? null,
+            })
+            .eq("id", found.id)
+            .select()
+            .single(),
+        );
+        if (!updated) throw new Error(`Failed to update division ${division.divisionKey}`);
+        return toDivision(updated);
+      }
+    }
+
     const row = await this.one<DivisionRow>(
       this.db
         .from("results_divisions")

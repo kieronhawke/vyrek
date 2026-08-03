@@ -106,9 +106,18 @@ export class MemoryResultsRepository implements ResultsRepository {
   }
 
   async upsertDivision(division: UpsertDivision): Promise<EngineDivision> {
-    const existing = [...this.divisions.values()].find(
-      (d) => d.eventId === division.eventId && d.divisionKey === division.divisionKey,
-    );
+    // Source id first, then (event, key) — the same order the Supabase
+    // implementation uses, because `source_division_id` is unique there and a
+    // division that moves between events would otherwise collide.
+    const existing =
+      (division.sourceDivisionId
+        ? [...this.divisions.values()].find(
+            (d) => d.sourceDivisionId === division.sourceDivisionId,
+          )
+        : undefined) ??
+      [...this.divisions.values()].find(
+        (d) => d.eventId === division.eventId && d.divisionKey === division.divisionKey,
+      );
     if (existing) {
       const merged = { ...existing, ...division, id: existing.id };
       this.divisions.set(existing.id, merged);
