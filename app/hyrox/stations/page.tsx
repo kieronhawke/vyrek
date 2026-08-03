@@ -12,9 +12,9 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "The 8 Hyrox stations, technique, splits, training drills",
+  title: "The 8 HYROX stations: technique and splits",
   description:
-    "All eight Hyrox race stations explained. Coaching cues, common faults, goal splits, and training drills for SkiErg, sled push, sled pull, burpee broad jumps, rowing, farmers carry, sandbag lunges, and wall balls.",
+    "All eight HYROX stations explained: coaching cues, common faults, goal splits and training drills, from the official 26/27 movement standards.",
   alternates: { canonical: `${siteUrl()}/hyrox/stations` },
   openGraph: {
     title: "The 8 Hyrox stations. Suth Performance technique guides",

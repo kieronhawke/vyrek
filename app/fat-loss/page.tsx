@@ -6,7 +6,7 @@ export const revalidate = 86400;
 
 /** Hub for the Fat Loss cluster (12 planned posts). */
 export const metadata: Metadata = {
-  title: "Fat loss: the four things that do the work",
+  title: "Fat loss: the four things that work",
   description:
     "What actually drives fat loss, why the scales mislead you weekly, and the long list of things that barely matter. No supplements, no fasting windows.",
   alternates: { canonical: `${siteUrl()}/fat-loss` },

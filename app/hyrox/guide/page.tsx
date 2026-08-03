@@ -26,7 +26,7 @@ export const revalidate = 86400;
  * first batch.
  */
 export const metadata: Metadata = {
-  title: "The HYROX guide: format, weights, divisions and how to start",
+  title: "The HYROX guide: format, weights, divisions",
   description:
     "Everything a first-time HYROX racer needs in one place. The format, the eight stations, official weights by division, age groups, and how long to train.",
   alternates: { canonical: `${siteUrl()}/hyrox/guide` },

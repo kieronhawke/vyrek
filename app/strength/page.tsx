@@ -6,7 +6,7 @@ export const revalidate = 86400;
 
 /** Hub for Beginner Strength and Goal Training (22 planned posts). */
 export const metadata: Metadata = {
-  title: "Strength training: five movements, and how to progress them",
+  title: "Strength training: the five movements",
   description:
     "Squat, hinge, push, pull, carry. How to start strength training, how heavy to go, how to progress, and how to tell it is working without using the mirror.",
   alternates: { canonical: `${siteUrl()}/strength` },

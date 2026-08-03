@@ -14,7 +14,7 @@ export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "Hyrox training plans, by goal time and athlete",
   description:
-    "Personalised Hyrox training plans by goal time (sub-60, sub-75, sub-90, sub-100) and audience (beginner, women, over-40, doubles). 12 weeks, dated, Elite 15 programming.",
+    "Personalised HYROX training plans by goal time and audience: beginner, women, over-40 and doubles. Twelve weeks, dated, Elite 15 programming.",
   alternates: { canonical: `${siteUrl()}/plans` },
   robots: { index: true, follow: true },
 };

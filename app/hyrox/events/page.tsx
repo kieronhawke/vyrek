@@ -20,9 +20,9 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "HYROX race calendar — every upcoming race, dates and venues",
+  title: "HYROX race calendar: dates and venues",
   description:
-    "Every upcoming HYROX race with a confirmed date and venue. UK races at ExCeL London, Manchester Central, NEC Birmingham, the SEC Glasgow and Principality Stadium Cardiff, plus the full international calendar.",
+    "Every upcoming HYROX race with a confirmed date and venue: ExCeL London, the NEC, Manchester Central, the SEC and Cardiff, plus the international calendar.",
   alternates: { canonical: `${siteUrl()}/hyrox/events` },
   robots: { index: true, follow: true },
 };

@@ -52,7 +52,7 @@ export async function generateMetadata({
 
   const where = [race.city, race.country].filter(Boolean).join(", ");
   return {
-    title: `${race.name} — ${formatDates(race)}, dates and venue`,
+    title: `${race.name}: ${formatDates(race)}`,
     description:
       `${race.name} takes place ${formatDates(race)} at ${race.venueName ?? where}. ` +
       `Dates, venue, and when a twelve-week HYROX build needs to start to land on race day.`,
@@ -190,7 +190,7 @@ export default async function RacePage({
 
             {/* The city's own coaching page: the gyms actually near this venue
                 and what training here involves. Deliberately outside the block
-                above, which only renders for a race still ahead of us — a race
+                above, which only renders for a race still ahead of us, a race
                 that has been run keeps its page forever, and it would otherwise
                 have no route into the rest of the site at all. */}
             {coachingSlug ? (
@@ -214,7 +214,7 @@ export default async function RacePage({
               >
                 HYROX&apos;s official event page
               </Link>
-              . Entries, divisions and start times are theirs — check before
+              . Entries, divisions and start times are theirs, so check before
               booking travel.
             </p>
           </div>

@@ -15,7 +15,7 @@ export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "Hyrox training. UK cities and boroughs",
   description:
-    "Suth Performance Hyrox programmes for every UK city and London borough. Personalised 12-week plans built by an Elite 15 coach. Find your local Hyrox training in three minutes.",
+    "HYROX programmes for every UK city and London borough. Personalised twelve-week plans built by an Elite 15 coach, dated to your race.",
   alternates: { canonical: `${siteUrl()}/hyrox` },
   openGraph: {
     title: "Hyrox training across the UK. Suth Performance",

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   // characters of a title that has to fit in about 65.
   title: "Online personal training across the UK",
   description:
-    "Online personal training from a HYROX Elite 15 athlete. Personalised weekly programming that adapts to you, wherever you are in the UK. Starts with a free consultation.",
+    "Online personal training from a HYROX Elite 15 athlete. Weekly programming that adapts to you, anywhere in the UK. Starts with a free consultation.",
   alternates: { canonical: `${siteUrl()}/personal-trainer` },
   // See the note on the /hyrox-training hub: the layout defaults to
   // index: false and this hub never overrode it.

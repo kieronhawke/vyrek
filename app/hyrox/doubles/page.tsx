@@ -5,7 +5,7 @@ import { siteUrl } from "@/lib/blog/urls";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "HYROX Doubles: rules, tactics and picking a partner",
+  title: "HYROX Doubles: rules, tactics, partners",
   description:
     "Everything on racing HYROX Doubles: what the rules allow, how to split each station, handover tactics, and how to choose a partner you can actually race with.",
   alternates: { canonical: `${siteUrl()}/hyrox/doubles` },

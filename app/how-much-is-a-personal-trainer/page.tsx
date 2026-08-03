@@ -14,7 +14,7 @@ export const revalidate = 86400;
  * enforcement in scripts/proof-posts.mjs.
  */
 export const metadata: Metadata = {
-  title: "What coaching costs, and what you are actually paying for",
+  title: "What coaching costs, and what you get",
   description:
     "Honest guides to what personal training and online coaching cost in the UK, what changes the number, and how to tell whether the premium is buying you anything.",
   alternates: { canonical: `${siteUrl()}/how-much-is-a-personal-trainer` },

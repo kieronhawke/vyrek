@@ -6,7 +6,7 @@ export const revalidate = 86400;
 
 /** Hub for Beginner Running (8 planned posts). */
 export const metadata: Metadata = {
-  title: "Running for beginners: start slower than you think",
+  title: "Running for beginners: start slower",
   description:
     "Most people who hate running have only ever run too fast. The conversational pace test, run-walk structure, and what changes after eight weeks.",
   alternates: { canonical: `${siteUrl()}/running` },
