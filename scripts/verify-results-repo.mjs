@@ -121,6 +121,44 @@ await check("settings round-trip", async () => {
   must(!error, error?.message);
 });
 
+await check("distribution upserts do not duplicate on nullable columns", async () => {
+  // age_group and sex are null on every whole-division distribution, and
+  // Postgres treats nulls as distinct in a unique constraint unless the
+  // constraint says NULLS NOT DISTINCT. Without it, every recompute inserts a
+  // fresh set instead of updating, and getStationDistribution then errors
+  // because it expects at most one row. An in-memory store compares
+  // null === null and never shows this.
+  const row = {
+    scope: "global",
+    event_id: null,
+    division_key: "verification-division",
+    station_key: "verification-station",
+    age_group: null,
+    sex: null,
+    sample_count: 1,
+    percentiles: {},
+    computed_at: new Date().toISOString(),
+  };
+  const conflict = "scope,event_id,division_key,station_key,age_group,sex";
+  await db.from("results_station_distributions").upsert(row, { onConflict: conflict });
+  await db.from("results_station_distributions").upsert(
+    { ...row, sample_count: 2 },
+    { onConflict: conflict },
+  );
+
+  const { count, error } = await db
+    .from("results_station_distributions")
+    .select("id", { count: "exact", head: true })
+    .eq("division_key", "verification-division");
+  must(!error, error?.message);
+  must(count === 1, `expected 1 row after two upserts, found ${count} — the unique constraint needs NULLS NOT DISTINCT`);
+
+  await db
+    .from("results_station_distributions")
+    .delete()
+    .eq("division_key", "verification-division");
+});
+
 await check("PostgREST resolves the athlete embed used by getRanking", async () => {
   // supabase-js embeds the athlete via the foreign key. If PostgREST cannot see
   // the relationship, the ranking endpoint fails at runtime with a schema-cache

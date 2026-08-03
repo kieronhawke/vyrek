@@ -528,3 +528,23 @@ timeouts, graceful degradation (a failed search returns no matches rather than a
 revalidation windows tuned per endpoint. Verified by standing up a mock API and running the app
 against it end to end with zero errors logged. `RESULTS_SOURCE=api` plus `RESULTS_API_URL`
 switches to it with no code change. Contract in `API-CONTRACT.md`.
+
+### D63 — The results engine has its own Supabase project
+The application's project holds identity, customers, quiz and Stripe state; the
+engine writes millions of ingested rows on a schedule. Different workloads,
+different blast radii, and since 3 August literally different projects.
+`RESULTS_SUPABASE_URL` / `RESULTS_SUPABASE_SECRET_KEY` fall back to the shared
+pair **together or not at all** — falling back independently pairs one project's
+URL with another's key and fails as a confusing 401.
+
+### D64 — `unique nulls not distinct` on station distributions
+`age_group` and `sex` are null on every whole-division distribution, and
+Postgres treats nulls as distinct in a unique constraint by default. So
+`on conflict` never matched, every recompute inserted a fresh set, and
+`getStationDistribution` — which expects at most one row — would have started
+erroring after the second event sync.
+
+Invisible to the entire unit suite, because the in-memory store compares
+`null === null` and is perfectly happy. Found by loading real data into real
+Postgres twice and counting. The lesson is the general one: an in-memory double
+shares your assumptions, and a database does not.
