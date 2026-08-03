@@ -77,9 +77,13 @@ export async function generateMetadata({
        exact dates stay in the description, the H1 and the page body, and
        the full official name stays in the description. */
     title: `${titleName(race.name)}: ${monthAndYear(race)}`,
+    /* The build-start date is the one thing we can say here that the
+       official listing cannot, and it also fills out the descriptions on
+       events with short venue names, a dozen of which were sitting under
+       100 characters. clampDescription keeps the long ones in range. */
     description: clampDescription(
-      `${race.name} takes place ${formatDates(race)} at ${race.venueName ?? where}. ` +
-        `Dates, venue, and when a twelve-week build needs to start to land on race day.`,
+      `${titleName(race.name)}: ${formatDates(race)} at ${race.venueName ?? where}. ` +
+        `Venue, dates, and the date a twelve-week build has to start to land on race day.`,
     ),
     alternates: { canonical: `${siteUrl()}/hyrox/events/${race.slug}` },
     robots: { index: true, follow: true },

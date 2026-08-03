@@ -23,9 +23,12 @@ export function clampDescription(text: string, max: number = MAX): string {
     window.lastIndexOf("! "),
     window.lastIndexOf("? "),
   );
-  // Only worth it if it keeps most of the budget; otherwise we throw away
-  // more than we save and the description reads truncated anyway.
-  if (lastSentence >= max * 0.6) return clean.slice(0, lastSentence + 1);
+  // Only worth it if it keeps nearly all of the budget. At a lower bar this
+  // quietly binned the second sentence of every event description whose
+  // first sentence happened to clear it, which is how the most useful half
+  // of a dozen of them disappeared. Losing a clause to a word boundary beats
+  // losing a whole sentence.
+  if (lastSentence >= max * 0.85) return clean.slice(0, lastSentence + 1);
 
   const lastSpace = window.lastIndexOf(" ");
   const cut = lastSpace > 0 ? lastSpace : max;
