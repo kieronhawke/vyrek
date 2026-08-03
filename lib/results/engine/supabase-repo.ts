@@ -170,46 +170,53 @@ export class SupabaseResultsRepository implements ResultsRepository {
     return (data as T) ?? null;
   }
 
+  /** One request. Correct only where the caller has bounded the result itself. */
+  private async many<T>(query: PromiseLike<{ data: unknown; error: unknown }>): Promise<T[]> {
+    const { data, error } = await query;
+    if (error) throw toRepositoryError(error, "results query failed");
+    return (data as T[]) ?? [];
+  }
+
   /**
    * Every matching row, not the first page of them.
    *
    * ⚠️ PostgREST caps an unbounded response at `max-rows` — 1,000 on Supabase —
    * and says nothing about having done so. A truncated read is indistinguishable
-   * from a small table, which is the worst possible failure for a store whose
-   * entire job is to be complete.
+   * from a small table, which is the worst failure available to a store whose
+   * whole job is to be complete.
    *
-   * It was silently wrong in both directions. `listAllDivisions` saw 1,000 of
-   * 2,692, so the backfill could not see a third of its own work. Division reads
-   * stopped at 1,000 rows, so `entrantCount` for every large board was written
-   * as exactly 1,000 — which is what the completeness alerts were reporting
-   * ("stored 1000 against a published 1620"), correctly, about our own read
-   * rather than the source.
+   * It was wrong in both directions and silent in both. `listAllDivisions` saw
+   * 1,000 of 2,692, so the backfill could not see a third of its own work. And
+   * division reads stopped at 1,000 rows, so `entrantCount` for every large
+   * board was written as exactly 1,000 — which is what the completeness alerts
+   * were reporting ("stored 1000 against a published 1620"). They were right,
+   * and they were describing our own read, not the source.
    *
-   * So this pages until a short page arrives. A caller that has already applied
-   * its own `.limit()` gets that limit back on the first page and stops, because
-   * a limited response is a short one.
+   * ⚠️ Takes a *factory*, not a query. A PostgREST builder cannot be re-ranged
+   * and re-awaited: calling `.range()` on one that has already run yields the
+   * same first page again, so paging over a single builder never terminates.
+   * The factory produces a fresh builder per page, which is the only way this
+   * is safe.
    */
-  private async many<T>(query: PromiseLike<{ data: unknown; error: unknown }>): Promise<T[]> {
+  private async manyAll<T>(
+    build: (from: number, to: number) => PromiseLike<{ data: unknown; error: unknown }>,
+  ): Promise<T[]> {
     const PAGE = 1000;
-    const ranged = query as PromiseLike<{ data: unknown; error: unknown }> & {
-      range?: (from: number, to: number) => PromiseLike<{ data: unknown; error: unknown }>;
-    };
-
-    // Not every caller passes something rangeable; those stay single-shot.
-    if (typeof ranged.range !== "function") {
-      const { data, error } = await query;
-      if (error) throw toRepositoryError(error, "results query failed");
-      return (data as T[]) ?? [];
-    }
-
+    // 500 pages is half a million rows from one division — far past anything
+    // real, and a bound is what stops a paging bug becoming a hung request.
+    const MAX_PAGES = 500;
     const out: T[] = [];
-    for (let from = 0; ; from += PAGE) {
-      const { data, error } = await ranged.range(from, from + PAGE - 1);
+
+    for (let page = 0; page < MAX_PAGES; page += 1) {
+      const from = page * PAGE;
+      const { data, error } = await build(from, from + PAGE - 1);
       if (error) throw toRepositoryError(error, "results query failed");
       const rows = (data as T[]) ?? [];
       out.push(...rows);
       if (rows.length < PAGE) return out;
     }
+
+    return out;
   }
 
   /* ── Events ───────────────────────────────────────────────────────── */
@@ -693,11 +700,15 @@ export class SupabaseResultsRepository implements ResultsRepository {
   }
 
   async listResultsForAthlete(athleteId: string) {
-    const own = await this.many<ResultRow>(
-      this.db.from("results_results").select().eq("athlete_id", athleteId),
+    const own = await this.manyAll<ResultRow>((from, to) =>
+      this.db.from("results_results").select().eq("athlete_id", athleteId).range(from, to),
     );
-    const partnered = await this.many<ResultRow>(
-      this.db.from("results_results").select().contains("partner_athlete_ids", [athleteId]),
+    const partnered = await this.manyAll<ResultRow>((from, to) =>
+      this.db
+        .from("results_results")
+        .select()
+        .contains("partner_athlete_ids", [athleteId])
+        .range(from, to),
     );
     const byId = new Map([...own, ...partnered].map((r) => [r.id, r]));
     return [...byId.values()].map(toResult);
@@ -708,14 +719,15 @@ export class SupabaseResultsRepository implements ResultsRepository {
     // building it from `listResultsForAthlete` pulled every column of every race
     // — splits included — to call `.length` on the array.
     const [own, partnered] = await Promise.all([
-      this.many<{ id: string }>(
-        this.db.from("results_results").select("id").eq("athlete_id", athleteId),
+      this.manyAll<{ id: string }>((from, to) =>
+        this.db.from("results_results").select("id").eq("athlete_id", athleteId).range(from, to),
       ),
-      this.many<{ id: string }>(
+      this.manyAll<{ id: string }>((from, to) =>
         this.db
           .from("results_results")
           .select("id")
-          .contains("partner_athlete_ids", [athleteId]),
+          .contains("partner_athlete_ids", [athleteId])
+          .range(from, to),
       ),
     ]);
     // Deduped rather than summed: a doubles row can list the athlete in both
@@ -725,8 +737,9 @@ export class SupabaseResultsRepository implements ResultsRepository {
 
   async listResultsForDivision(divisionId: string) {
     return (
-      await this.many<ResultRow>(
-        this.db.from("results_results").select().eq("division_id", divisionId),
+      await this.manyAll<ResultRow>(
+        (from, to) =>
+          this.db.from("results_results").select().eq("division_id", divisionId).range(from, to),
       )
     ).map(toResult);
   }
@@ -755,8 +768,8 @@ export class SupabaseResultsRepository implements ResultsRepository {
           .order("finish_time_ms", { ascending: true })
           .limit(1),
       ),
-      this.many<{ wave: string | null }>(
-        this.db.from("results_results").select("wave").eq("division_id", divisionId),
+      this.manyAll<{ wave: string | null }>((from, to) =>
+        this.db.from("results_results").select("wave").eq("division_id", divisionId).range(from, to),
       ),
     ]);
 
@@ -770,17 +783,19 @@ export class SupabaseResultsRepository implements ResultsRepository {
   async listStartersForDivision(divisionId: string) {
     // One join, four columns. The athlete arrives with the row rather than
     // being fetched per row.
-    const rows = await this.many<{
+    const rows = await this.manyAll<{
       wave: string | null;
       age_group: string | null;
       athlete: {
         slug: string; name: string; nationality: string | null; is_anonymised: boolean;
       } | null;
     }>(
-      this.db
-        .from("results_results")
-        .select("wave,age_group,athlete:results_athletes!inner(slug,name,nationality,is_anonymised)")
-        .eq("division_id", divisionId),
+      (from, to) =>
+        this.db
+          .from("results_results")
+          .select("wave,age_group,athlete:results_athletes!inner(slug,name,nationality,is_anonymised)")
+          .eq("division_id", divisionId)
+          .range(from, to),
     );
 
     return rows
@@ -842,12 +857,13 @@ export class SupabaseResultsRepository implements ResultsRepository {
   async listResultsWithSplitsForDivision(divisionId: string) {
     // `splits` defaults to `{}`, so "has splits" is "is not the empty object".
     return (
-      await this.many<ResultRow>(
+      await this.manyAll<ResultRow>((from, to) =>
         this.db
           .from("results_results")
           .select()
           .eq("division_id", divisionId)
-          .neq("splits", "{}"),
+          .neq("splits", "{}")
+          .range(from, to),
       )
     ).map(toResult);
   }
@@ -863,13 +879,14 @@ export class SupabaseResultsRepository implements ResultsRepository {
 
   /** One column. See the interface docstring for why this is not a map(). */
   async listFinishTimesForDivision(divisionId: string) {
-    const rows = await this.many<{ finish_time_ms: number | null }>(
+    const rows = await this.manyAll<{ finish_time_ms: number | null }>((from, to) =>
       this.db
         .from("results_results")
         .select("finish_time_ms")
         .eq("division_id", divisionId)
         .eq("status", "finished")
-        .order("finish_time_ms", { ascending: true }),
+        .order("finish_time_ms", { ascending: true })
+        .range(from, to),
     );
     return rows
       .map((r) => r.finish_time_ms)
