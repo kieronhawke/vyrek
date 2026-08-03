@@ -11,6 +11,10 @@ export type TopicHub = {
   slug: string;
   /** Display title. */
   title: string;
+  /** Optional shorter title for the <title> tag only, when the H1 is too
+   *  long once the root layout appends " · Suth Performance" (19 chars,
+   *  leaving 46). The H1 keeps the full wording. */
+  seoTitle?: string;
   /** Eyebrow + intro. */
   eyebrow: string;
   hook: string;
@@ -27,6 +31,7 @@ export const TOPIC_HUBS: TopicHub[] = [
   {
     slug: "womens-hyrox",
     title: "Hyrox for women, programmes, stations, race-day",
+    seoTitle: "Hyrox for women: a full guide",
     eyebrow: "Topic · Women's Hyrox",
     hook: "Personalised Hyrox training for women athletes. Calibrated loads, race-specific work, programmes for first-timers to Pro qualifiers.",
     intro: [
@@ -56,6 +61,7 @@ export const TOPIC_HUBS: TopicHub[] = [
   {
     slug: "masters-hyrox",
     title: "Masters Hyrox, over-40 programmes and recovery-first training",
+    seoTitle: "Masters Hyrox: training over 40",
     eyebrow: "Topic · Masters (40+)",
     hook: "Sustainable Hyrox programming for masters athletes. More deloads, more Zone 2, joint-aware substitutions, real recovery built in.",
     intro: [
@@ -89,6 +95,7 @@ export const TOPIC_HUBS: TopicHub[] = [
   {
     slug: "doubles-hyrox",
     title: "Hyrox doubles, paired training, splits, and handoff strategy",
+    seoTitle: "Hyrox doubles: strategy and splits",
     eyebrow: "Topic · Doubles",
     hook: "Hyrox doubles is the fastest-growing division. Different race, different strategy. Programmes, splits, partner-pacing, handoff drills.",
     intro: [

@@ -120,6 +120,7 @@ export class SourceFetcher {
   private readonly fetchImpl: NonNullable<FetcherOptions["fetchImpl"]>;
   private readonly userAgent: string;
   private readonly maxAttempts: number;
+  private readonly timeoutMs: number;
   private readonly authorisedOverride?: boolean;
 
   /** Every request this instance has made, for `ingestion_runs.requests_made`. */
@@ -135,6 +136,7 @@ export class SourceFetcher {
       ((url, init) => fetch(url, init) as unknown as Promise<FetchResponseLike>);
     this.userAgent = opts.userAgent ?? process.env.HYROX_SOURCE_USER_AGENT ?? DEFAULT_USER_AGENT;
     this.maxAttempts = opts.maxAttempts ?? 4;
+    this.timeoutMs = opts.timeoutMs ?? Number(process.env.HYROX_FETCH_TIMEOUT_MS ?? 30_000);
     this.authorisedOverride = opts.authorised;
   }
 
@@ -179,10 +181,23 @@ export class SourceFetcher {
 
       this.requestCount += 1;
 
+      // ⚠️ Every request is bounded.
+      //
+      // `fetch` has no default timeout. A connection that opens and then goes
+      // quiet — a silently dropped TCP session, a load balancer that accepts
+      // and never answers — blocks the worker for ever. Observed exactly that:
+      // a backfill sitting at 0% CPU with no open sockets and no progress,
+      // for nine minutes, until it was killed. On a serverless function this
+      // presents instead as a run that always hits maxDuration having done
+      // nothing, which is far harder to read.
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), this.timeoutMs);
+
       try {
         const response = await this.fetchImpl(url, {
           method: form ? "POST" : "GET",
           body: form ? new URLSearchParams(form).toString() : undefined,
+          signal: controller.signal,
           headers: {
             "User-Agent": this.userAgent,
             Accept: "text/html,application/json;q=0.9,*/*;q=0.8",
@@ -229,6 +244,7 @@ export class SourceFetcher {
         }
 
         const body = await response.text();
+        clearTimeout(timer);
         this.breaker.recordSuccess();
         return {
           body,
@@ -240,9 +256,17 @@ export class SourceFetcher {
       } catch (error) {
         if (error instanceof SourceAccessDeniedError) throw error;
         this.breaker.recordFailure();
-        lastError = error instanceof Error ? error : new Error(String(error));
+        const aborted =
+          error instanceof Error && (error.name === "AbortError" || error.name === "TimeoutError");
+        lastError = aborted
+          ? new SourceUnavailableError(`Request timed out after ${this.timeoutMs}ms: ${url}`)
+          : error instanceof Error
+            ? error
+            : new Error(String(error));
         if (attempt + 1 >= this.maxAttempts) break;
         await this.sleep(backoffDelayMs(attempt, null, this.deps));
+      } finally {
+        clearTimeout(timer);
       }
     }
 

@@ -37,18 +37,18 @@ export async function generateMetadata({
   if (!g) return { title: "Not found" };
   const url = `${siteUrl()}/hyrox/gear/${g.slug}`;
   return {
-    title: g.title,
+    title: g.seoTitle ?? g.title,
     description: g.hook,
     alternates: { canonical: url },
     openGraph: {
-      title: g.title,
+      title: g.seoTitle ?? g.title,
       description: g.hook,
       url,
       siteName: "Suth Performance",
       type: "article",
       locale: "en_GB",
     },
-    twitter: { card: "summary_large_image", title: g.title, description: g.hook },
+    twitter: { card: "summary_large_image", title: g.seoTitle ?? g.title, description: g.hook },
     robots: { index: true, follow: true },
   };
 }

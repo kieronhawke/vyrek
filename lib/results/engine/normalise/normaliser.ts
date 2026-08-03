@@ -16,7 +16,7 @@
  */
 
 import type { ResultsRepository } from "../repository";
-import type { UpsertResult } from "../repository";
+import type { UpsertAthlete, UpsertResult } from "../repository";
 import type {
   EngineDivision,
   EngineEvent,
@@ -193,14 +193,42 @@ export function normaliseEventGroup(group: RawEventGroup): {
 export class Normaliser {
   constructor(private repo: ResultsRepository) {}
 
+  /**
+   * A whole division: parse, validate, resolve athletes, build rows.
+   *
+   * ⚠️ Athletes are resolved in **bulk**, and the reason is not only speed.
+   *
+   * Resolving one at a time cost up to three round trips each — around 460 for
+   * a single 77-row doubles board, and half a million across the catalogue.
+   * That is fifteen hours of pure latency at 100ms a call, and it made the
+   * backfill look broken when it was merely crawling.
+   *
+   * It also leaked. Every one of those calls is a window in which the process
+   * can die with athletes created and their rows unwritten, and a killed
+   * backfill left 13,000 profiles attached to nothing. Batching shrinks that
+   * window from hundreds of calls to two.
+   */
   async normaliseDivision(
     page: RawDivisionPage,
     ctx: NormaliseContext,
   ): Promise<NormaliseOutcome> {
-    const rows: UpsertResult[] = [];
     const quarantined: NormaliseOutcome["quarantined"] = [];
-    let athletesCreated = 0;
-    let identityReviews = 0;
+
+    /* 1 ── Validate first, so nothing is resolved for a row we will not keep. */
+
+    type Prepared = {
+      raw: RawResultRow;
+      status: EngineResultStatus;
+      finishTimeMs: number | null;
+      roxzoneTimeMs: number | null;
+      splits: Splits;
+      ageGroup: string | null;
+      rankOverall: number | null;
+      /** One entry per person on the row; index 0 owns it. */
+      people: { name: string; stableId: string | null }[];
+    };
+
+    const prepared: Prepared[] = [];
 
     for (const raw of page.rows) {
       const status = normaliseStatus(raw.status);
@@ -234,40 +262,151 @@ export class Normaliser {
         continue;
       }
 
-      const resolved = await this.resolveAthlete(raw, ageGroup);
-      athletesCreated += resolved.created ? 1 : 0;
-      identityReviews += resolved.review ? 1 : 0;
+      const isTeam = Boolean(raw.isTeam || (raw.partnerNames && raw.partnerNames.length > 1));
+      const names = raw.partnerNames?.length ? raw.partnerNames : [raw.name];
+      const people = names.map((name, position) => ({
+        name: name.trim(),
+        // A team entry id identifies the entry, not a person, so it is
+        // qualified by position. An individual row's idp is already one person.
+        stableId: raw.sourceAthleteId
+          ? isTeam
+            ? `${raw.sourceAthleteId}#p${position}`
+            : raw.sourceAthleteId
+          : null,
+      }));
 
-      // Doubles and relay: the row is a team. The first named athlete owns the
-      // row; the rest are partners, resolved to their own profiles so their
-      // race history is complete too.
-      const partnerIds: string[] = [];
-      if (raw.partnerNames && raw.partnerNames.length > 1) {
-        for (let position = 1; position < raw.partnerNames.length; position += 1) {
-          // Same row, different position — so the partner inherits the entry's
-          // stable id qualified by where they sit in it.
-          const partnerResolved = await this.resolveAthlete(raw, ageGroup, position);
-          partnerIds.push(partnerResolved.athleteId);
-          athletesCreated += partnerResolved.created ? 1 : 0;
-        }
+      prepared.push({
+        raw, status, finishTimeMs, roxzoneTimeMs, splits, ageGroup, rankOverall, people,
+      });
+    }
+
+    /* 2 ── One read for every athlete this division already knows. */
+
+    const stableIds = [
+      ...new Set(prepared.flatMap((p) => p.people.map((x) => x.stableId).filter(Boolean))),
+    ] as string[];
+    const known = new Map(
+      (await this.repo.getAthletesBySourceIds(stableIds)).map((a) => [a.sourceAthleteId!, a]),
+    );
+
+    /* 3 ── Decide what is missing, then write it in one go. */
+
+    const toCreate: UpsertAthlete[] = [];
+    const pendingBySlug = new Map<string, string>(); // stableId -> slug
+    let identityReviews = 0;
+
+    // Every slug this division might need, checked in one go.
+    //
+    // Allocating them one at a time was the last per-athlete round trip: a
+    // 638-row doubles board needed 1,276 of them, which is what turned a
+    // seven-request fetch into a division that never finished. Collisions are
+    // then resolved in memory, against the database *and* against slugs
+    // claimed earlier in this same batch — which the database cannot warn
+    // about, because those rows do not exist yet.
+    const missing = prepared.flatMap((p) =>
+      p.people.filter(
+        (person) => !(person.stableId && known.has(person.stableId)),
+      ),
+    );
+    const bases = [...new Set(missing.map((person) => athleteSlug(person.name)))];
+    const candidates = bases.flatMap((base) => [base, ...Array.from({ length: 9 }, (_, i) => `${base}-${i + 2}`)]);
+    const taken = await this.repo.findTakenSlugs(candidates);
+    const claimedSlugs = new Set<string>(taken);
+
+    const allocate = (name: string): string => {
+      const base = athleteSlug(name);
+      if (!claimedSlugs.has(base)) return base;
+      for (let n = 2; n < 500; n += 1) {
+        const candidate = `${base}-${n}`;
+        if (!claimedSlugs.has(candidate)) return candidate;
       }
+      return `${base}-${Date.now().toString(36)}`;
+    };
+
+    for (const p of prepared) {
+      for (const person of p.people) {
+        if (person.stableId && known.has(person.stableId)) continue;
+        if (person.stableId && pendingBySlug.has(person.stableId)) continue;
+
+        const nationality = normaliseNationality(p.raw.nationality);
+
+        // The name fallback only matters when the source gave no id at all,
+        // which is rare — but when it happens the conservative rule still
+        // applies: never merge two people on a name alone.
+        let confidence = 1;
+        let needsReview = false;
+        if (!person.stableId) {
+          const candidates = (await this.repo.findAthletesByName(person.name)) as ExistingAthlete[];
+          const decision = decideIdentity(
+            { name: person.name, nationality, ageGroup: p.ageGroup, sourceAthleteId: null },
+            candidates,
+          );
+          if (decision.action === "match") {
+            known.set(`name:${person.name}`, candidates.find((c) => c.id === decision.athleteId)!);
+            continue;
+          }
+          confidence = decision.confidence;
+          needsReview = decision.action === "review";
+          if (needsReview) identityReviews += 1;
+        }
+
+        const slug = allocate(person.name);
+        claimedSlugs.add(slug);
+        if (person.stableId) pendingBySlug.set(person.stableId, slug);
+
+        toCreate.push({
+          slug,
+          name: person.name,
+          nationality,
+          gender: normaliseSex(p.raw.sex),
+          sourceAthleteId: person.stableId,
+          claimedByUserId: null,
+          isDemo: false,
+          isAnonymised: false,
+          identityConfidence: confidence,
+          needsIdentityReview: needsReview,
+        });
+      }
+    }
+
+    const created = await this.repo.upsertAthletes(toCreate);
+    for (const a of created) {
+      if (a.sourceAthleteId) known.set(a.sourceAthleteId, a);
+      known.set(`slug:${a.slug}`, a);
+    }
+
+    /* 4 ── Build the rows. */
+
+    const rows: UpsertResult[] = [];
+
+    for (const p of prepared) {
+      const ids = p.people.map((person) => {
+        if (person.stableId && known.has(person.stableId)) return known.get(person.stableId)!.id;
+        const slug = person.stableId ? pendingBySlug.get(person.stableId) : undefined;
+        if (slug && known.has(`slug:${slug}`)) return known.get(`slug:${slug}`)!.id;
+        return known.get(`name:${person.name}`)?.id;
+      });
+
+      // A row whose owner could not be resolved is not written. Storing a
+      // result pointing at nobody is worse than not storing it.
+      if (!ids[0]) continue;
 
       rows.push({
         eventId: ctx.event.id,
         divisionId: ctx.division.id,
-        athleteId: resolved.athleteId,
-        sourceResultId: raw.sourceResultId,
-        rankOverall,
-        rankAgeGroup: parseRank(raw.rankAgeGroup),
-        ageGroup,
-        sex: normaliseSex(raw.sex),
-        finishTimeMs,
-        roxzoneTimeMs: roxzoneTimeMs ?? splits.roxzoneMs ?? null,
-        status,
-        wave: raw.wave ?? null,
-        bib: raw.bib ?? null,
-        splits,
-        partnerAthleteIds: partnerIds,
+        athleteId: ids[0],
+        sourceResultId: p.raw.sourceResultId,
+        rankOverall: p.rankOverall,
+        rankAgeGroup: parseRank(p.raw.rankAgeGroup),
+        ageGroup: p.ageGroup,
+        sex: normaliseSex(p.raw.sex),
+        finishTimeMs: p.finishTimeMs,
+        roxzoneTimeMs: p.roxzoneTimeMs ?? p.splits.roxzoneMs ?? null,
+        status: p.status,
+        wave: p.raw.wave ?? null,
+        bib: p.raw.bib ?? null,
+        splits: p.splits,
+        partnerAthleteIds: ids.slice(1).filter(Boolean) as string[],
         isDemo: false,
       });
     }
@@ -279,97 +418,20 @@ export class Normaliser {
         })
       : { ok: true as const };
 
-    return { rows, quarantined, shape, athletesCreated, identityReviews };
+    return { rows, quarantined, shape, athletesCreated: created.length, identityReviews };
   }
 
   /**
-   * Find or create the athlete this row belongs to.
-   *
-   * ⚠️ Every athlete must get a **stable** source id, or this function is a
-   * profile factory. The failure it caused, measured on real data: 1,006
-   * orphaned profiles and one person with eleven of them.
-   *
-   * The mechanism was that a partner on a doubles row had no source id at all,
-   * so each appearance scored into the review band, created a fresh profile
-   * with an incremented slug, and did it again on the next sync — for ever. And
-   * because athletes are created while *parsing*, before the rows they belong
-   * to are written, a sync that failed afterwards left them behind with nothing
-   * attached.
-   *
-   * The fix is that identity is derived, not discovered: person *n* of entry
-   * *X* is `X#pn`, which is stable across every re-sync and cannot collide with
-   * anyone else. Fragmentation across different races is still possible and is
-   * still flagged for review — but it is bounded, and re-running a sync is now
-   * genuinely free.
+   * A slug nobody else is using — including anyone claimed earlier in this same
+   * batch, which the database cannot tell us about because they are not written
+   * yet.
    */
-  private async resolveAthlete(
-    raw: RawResultRow,
-    ageGroup: string | null,
-    /** Position within a team row. 0 is the row's primary athlete. */
-    position = 0,
-  ): Promise<{ athleteId: string; created: boolean; review: boolean }> {
-    const name = (raw.partnerNames?.[position] ?? raw.name).trim();
-    const nationality = normaliseNationality(raw.nationality);
-
-    // A team entry id identifies the *entry*, not a person, so it is qualified
-    // by position. An individual row's idp already identifies one person.
-    const isTeam = Boolean(raw.isTeam || (raw.partnerNames && raw.partnerNames.length > 1));
-    const stableId = raw.sourceAthleteId
-      ? isTeam
-        ? `${raw.sourceAthleteId}#p${position}`
-        : raw.sourceAthleteId
-      : null;
-
-    if (stableId) {
-      const existing = await this.repo.getAthleteBySourceId(stableId);
-      if (existing) return { athleteId: existing.id, created: false, review: false };
-    }
-
-    const candidates = (await this.repo.findAthletesByName(name)) as ExistingAthlete[];
-    const decision = decideIdentity(
-      { name, nationality, ageGroup, sourceAthleteId: stableId },
-      candidates,
-    );
-
-    if (decision.action === "match") {
-      return { athleteId: decision.athleteId, created: false, review: false };
-    }
-
-    // Both "create" and "review" create a profile. The difference is that a
-    // review also files the pair for a human to look at.
-    const slug = await this.uniqueSlug(name);
-    const athlete = await this.repo.upsertAthlete({
-      slug,
-      name,
-      nationality,
-      gender: normaliseSex(raw.sex),
-      sourceAthleteId: stableId,
-      claimedByUserId: null,
-      isDemo: false,
-      isAnonymised: false,
-      identityConfidence: decision.confidence,
-      needsIdentityReview: decision.action === "review",
-    });
-
-    if (decision.action === "review") {
-      await this.repo.recordMergeReview({
-        athleteId: athlete.id,
-        candidateAthleteId: decision.athleteId,
-        confidence: decision.confidence,
-        signals: decision.signals,
-        resolution: null,
-        resolvedAt: null,
-      });
-    }
-
-    return { athleteId: athlete.id, created: true, review: decision.action === "review" };
-  }
-
-  private async uniqueSlug(name: string): Promise<string> {
+  private async uniqueSlug(name: string, claimed: Set<string> = new Set()): Promise<string> {
     const base = athleteSlug(name);
-    if (!(await this.repo.getAthleteBySlug(base))) return base;
+    if (!claimed.has(base) && !(await this.repo.getAthleteBySlug(base))) return base;
     for (let n = 2; n < 500; n += 1) {
       const candidate = `${base}-${n}`;
+      if (claimed.has(candidate)) continue;
       if (!(await this.repo.getAthleteBySlug(candidate))) return candidate;
     }
     // 500 people with one name is not a real case; a suffix beats throwing.

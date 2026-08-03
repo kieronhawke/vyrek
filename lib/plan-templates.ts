@@ -32,7 +32,8 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     slug: "sub-60-hyrox-training-plan",
     kind: "goal-time",
     title: "Sub-60 Hyrox training plan",
-    hook: "The plan for elite-track Hyrox athletes targeting a sub-60-minute finish. Race-specific, brutal, calibrated.",
+    hook:
+      "A twelve-week Hyrox plan for elite-track athletes chasing a sub-60 finish: race-specific volume, calibrated loads, and a free consultation with Ben first.",
     eyebrow: "Pro · Elite",
     programmeSlug: "pro",
     intro: [
@@ -99,7 +100,8 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     slug: "sub-75-hyrox-training-plan",
     kind: "goal-time",
     title: "Sub-75 Hyrox training plan",
-    hook: "Break 75 minutes with a structured 12-week build. Sample week, prerequisites, training plan.",
+    hook:
+      "Break 75 minutes with a structured twelve-week Hyrox build. See the prerequisites, a full sample week, and how the plan is calibrated to your current running.",
     eyebrow: "Sub-90 · advanced",
     programmeSlug: "sub-90",
     intro: [
@@ -157,7 +159,8 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     slug: "sub-90-hyrox-training-plan",
     kind: "goal-time",
     title: "Sub-90 Hyrox training plan",
-    hook: "Break 90 minutes with the Sub-90 programme. 12 weeks, diagnostic-led, plateau-breaker.",
+    hook:
+      "Break 90 minutes with a diagnostic-led twelve-week Hyrox plan built to clear the plateau most second-race athletes hit. Sample week and prerequisites inside.",
     eyebrow: "Sub-90 · benchmark",
     programmeSlug: "sub-90",
     intro: [
@@ -207,7 +210,8 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     slug: "sub-100-hyrox-training-plan",
     kind: "goal-time",
     title: "Sub-100 Hyrox training plan",
-    hook: "Break 100 minutes with a structured 12-week plan. Built for first-race graduates moving to their second.",
+    hook:
+      "Break 100 minutes with a structured twelve-week Hyrox plan built for first-race finishers moving to their second. Sample week, prerequisites and pacing.",
     eyebrow: "Intermediate",
     programmeSlug: "first-race",
     intro: [
@@ -254,7 +258,8 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     slug: "hyrox-training-plan-beginner",
     kind: "audience",
     title: "Beginner Hyrox training plan",
-    hook: "Your first Hyrox in 12 weeks. Zero CrossFit background needed. Built for someone who's never raced.",
+    hook:
+      "Your first Hyrox in twelve weeks, with no CrossFit background needed. Built for someone who has never raced, starting from the running base you actually have.",
     eyebrow: "First Race",
     programmeSlug: "first-race",
     intro: [
@@ -309,7 +314,8 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     slug: "hyrox-training-plan-female",
     kind: "audience",
     title: "Hyrox training plan for women",
-    hook: "Personalised Hyrox programming for women athletes. Calibrated loads, race-specific work, designed by Elite 15 coaches.",
+    hook:
+      "Personalised Hyrox programming for women: the women's station loads, race-specific work, and a twelve-week build calibrated to your running and strength.",
     eyebrow: "Women",
     programmeSlug: "first-race",
     intro: [
@@ -364,7 +370,8 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     slug: "hyrox-training-plan-over-40",
     kind: "audience",
     title: "Hyrox training plan for over-40 athletes",
-    hook: "Masters Hyrox programming, recovery-first, sustainable, race-ready. Built around your real-world recovery rate.",
+    hook:
+      "Recovery-first Hyrox programming for masters athletes over 40, built around the recovery rate you actually have rather than the one a generic plan assumes.",
     eyebrow: "Masters",
     programmeSlug: "first-race",
     intro: [
@@ -419,7 +426,8 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
     slug: "hyrox-doubles-training-plan",
     kind: "audience",
     title: "Hyrox doubles training plan",
-    hook: "Paired programming for Hyrox doubles teams. Handoff strategy, split decisions, paired interval work.",
+    hook:
+      "Paired programming for Hyrox doubles: how to split the stations, rehearse handovers, and train together when the two of you are not the same athlete.",
     eyebrow: "Doubles",
     programmeSlug: "doubles",
     intro: [

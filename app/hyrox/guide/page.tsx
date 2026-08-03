@@ -104,6 +104,31 @@ const CORE = [
     kicker: "Race dates",
     blurb: "Every UK and Ireland race, with the date your build should start.",
   },
+  {
+    slug: "what-does-hyrox-stand-for",
+    kicker: "The name",
+    blurb: "Whether it is an acronym, and what it actually means.",
+  },
+  {
+    slug: "first-hyrox-preparation-guide",
+    kicker: "Your first race",
+    blurb: "Everything to sort before race day, in the order it matters.",
+  },
+  {
+    slug: "how-do-hyrox-waves-and-start-times-work",
+    kicker: "Waves",
+    blurb: "How start times are allocated, and what a wave means for your race.",
+  },
+  {
+    slug: "womens-hyrox-strategy-weights-pacing",
+    kicker: "Women's racing",
+    blurb: "The women's loads, and how the pacing differs in practice.",
+  },
+  {
+    slug: "hyrox-world-championship-qualifying",
+    kicker: "Qualifying",
+    blurb: "How the World Championship pathway actually works.",
+  },
 ] as const;
 
 export default async function HyroxGuideIndex() {

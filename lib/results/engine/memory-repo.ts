@@ -192,6 +192,26 @@ export class MemoryResultsRepository implements ResultsRepository {
     return [...this.athletes.values()].find((a) => a.sourceAthleteId === sourceAthleteId) ?? null;
   }
 
+  async getAthletesBySourceIds(sourceAthleteIds: string[]) {
+    const wanted = new Set(sourceAthleteIds);
+    return [...this.athletes.values()].filter(
+      (a) => a.sourceAthleteId && wanted.has(a.sourceAthleteId),
+    );
+  }
+
+  async findTakenSlugs(slugs: string[]) {
+    const wanted = new Set(slugs);
+    return new Set(
+      [...this.athletes.values()].map((a) => a.slug).filter((slug) => wanted.has(slug)),
+    );
+  }
+
+  async upsertAthletes(athletes: UpsertAthlete[]) {
+    const out: EngineAthlete[] = [];
+    for (const athlete of athletes) out.push(await this.upsertAthlete(athlete));
+    return out;
+  }
+
   async findAthletesByName(name: string) {
     const needle = name.trim().toLowerCase();
     return [...this.athletes.values()].filter(

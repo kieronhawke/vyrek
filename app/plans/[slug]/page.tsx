@@ -37,7 +37,15 @@ export async function generateMetadata({
   const p = getPlanTemplate(slug);
   if (!p) return { title: "Not found" };
   const url = `${siteUrl()}/plans/${p.slug}`;
-  const title = `${p.title}. 12 weeks, personalised by Suth Performance`;
+  /* The root layout appends " · Suth Performance" to every child title, so
+     naming the brand here printed it twice: "…personalised by Suth
+     Performance · Suth Performance". That also pushed all eight plan pages
+     past 65 characters, up to 103 on the over-40 plan, which Google truncates.
+     Keep the qualifier only while it still fits the budget. */
+  const SUFFIX = " · Suth Performance".length;
+  const withQualifier = `${p.title}. 12 weeks, personalised`;
+  const title =
+    withQualifier.length + SUFFIX <= 65 ? withQualifier : p.title;
   return {
     title,
     description: p.hook,

@@ -14,7 +14,13 @@ import {
   regionFor,
   timeZoneFor,
 } from "../normalise/timezones";
-import { enrichEventMetadata, matchRace, metadataFor } from "./event-metadata";
+import {
+  enrichEventMetadata,
+  isPastSeason,
+  matchRace,
+  metadataFor,
+  statusFor,
+} from "./event-metadata";
 import { makeHarness } from "../testing";
 import { shouldArmLive } from "./live";
 
@@ -112,6 +118,38 @@ describe("matching the results source to the published calendar", () => {
     expect(regionFor("Ireland")).toBe("Europe");
     expect(regionFor("Australia")).toBe("Oceania");
     expect(countryIsoFor("United Kingdom")).toBe("GB");
+  });
+});
+
+describe("stale status", () => {
+  it("closes a dated event whose race has been and gone", () => {
+    expect(statusFor("upcoming", "2020-01-01T00:00:00Z")).toBe("final");
+    expect(statusFor("upcoming", "2099-01-01T00:00:00Z")).toBe("upcoming");
+  });
+
+  it("never demotes an event that is live or already final", () => {
+    // A metadata pass must not pull the rug from under a race in progress.
+    expect(statusFor("live", "2020-01-01T00:00:00Z")).toBe("live");
+    expect(statusFor("updates_paused", "2020-01-01T00:00:00Z")).toBe("updates_paused");
+    expect(statusFor("final", "2099-01-01T00:00:00Z")).toBe("final");
+  });
+
+  it("treats an earlier season as finished, date or no date", () => {
+    expect(isPastSeason("s8", "season-9")).toBe(true);
+    expect(isPastSeason("s9", "season-9")).toBe(false);
+    expect(isPastSeason("nonsense", "season-9")).toBe(false);
+  });
+
+  it("closes undated events from a past season", async () => {
+    const h = await makeHarness({
+      event: {
+        slug: "s3-2019-nowhere", city: "Nowhere-on-Sea", season: "s3",
+        year: 2019, status: "upcoming", startDatetime: null,
+      },
+    });
+    const outcome = await enrichEventMetadata(h.repo);
+    expect(outcome.closedBySeason).toContain("s3-2019-nowhere");
+    expect((await h.repo.getEventBySlug("s3-2019-nowhere"))?.status).toBe("final");
   });
 });
 

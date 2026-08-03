@@ -382,16 +382,18 @@ export class SyncEngine {
     const run = await this.deps.repo.startRun({ mode, triggerSource });
 
     const settle = async (patch: Record<string, unknown>) => {
-      const made = this.deps.adapter.requestCount() - before;
+      // The delta, not `requestCount()`. The fetcher is a module singleton, so
+      // on a warm serverless instance its counter is cumulative across every
+      // run that instance has served — a live tick that made no requests was
+      // reporting 160, which is the sort of number that sends you hunting for
+      // a runaway that does not exist.
+      const made = Math.max(0, this.deps.adapter.requestCount() - before);
       // Recorded against the budget every instance shares, so the cap holds
       // however many workers are running at once.
       if (made > 0) {
         await recordSharedRequests(this.deps.repo, made, this.now()).catch(() => {});
       }
-      await this.deps.repo.finishRun(run.id, {
-        requestsMade: this.deps.adapter.requestCount(),
-        ...patch,
-      });
+      await this.deps.repo.finishRun(run.id, { requestsMade: made, ...patch });
     };
 
     try {

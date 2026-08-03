@@ -8,6 +8,7 @@ import { AuthorCard } from "@/components/blog/author-card";
 import { PostCard } from "@/components/blog/post-card";
 import { listPostsByAuthor } from "@/lib/blog/posts";
 import { AUTHORS } from "@/lib/blog/authors";
+import { clampDescription } from "@/lib/seo/description";
 import { authorUrl, blogIndexUrl, siteUrl } from "@/lib/blog/urls";
 import {
   authorPersonJsonLd,
@@ -30,13 +31,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const author = AUTHORS[slug];
   if (!author) return { title: "Not found" };
+  /* Was "${author.name}. Suth Performance Journal", which the root layout's
+     " · Suth Performance" template turned into the brand three times over on
+     the team page, at 70 characters. */
   return {
-    title: `${author.name}. Suth Performance Journal`,
-    description: author.bio,
+    title: `Posts by ${author.name}`,
+    description: clampDescription(author.bio),
     alternates: { canonical: authorUrl(slug) },
     openGraph: {
-      title: `${author.name}. Suth Performance Journal`,
-      description: author.bio,
+      title: `Posts by ${author.name}`,
+      description: clampDescription(author.bio),
       url: authorUrl(slug),
       siteName: "Suth Performance",
       type: "profile",
@@ -77,6 +81,14 @@ export default async function AuthorPage({
               { name: author.name, url: `/blog/author/${slug}` },
             ]}
           />
+
+          {/* The page had no h1 at all: the author card leads with an h2 and
+              the post grid adds eleven more, so the document started at
+              level two. Names the page's actual subject rather than
+              repeating the name the card already shows. */}
+          <h1 className="mt-8 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
+            Posts by {author.name}
+          </h1>
 
           <div className="mt-8 max-w-3xl">
             <AuthorCard author={author} showLink={false} />

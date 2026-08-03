@@ -47,6 +47,11 @@ const ENTRIES: readonly HubEntry[] = [
     kicker: "What it is not",
     blurb: "Not an acronym, not a workout style, not an obstacle race.",
   },
+  {
+    slug: "hyrox-vs-hydrox-the-fitness-race-vs-the-cookie",
+    kicker: "Spelling",
+    blurb: "Hyrox, Hydrox, and why the search results are confusing.",
+  },
 ];
 
 export default function HyroxVsHub() {

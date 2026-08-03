@@ -22,7 +22,16 @@ export default function robots(): MetadataRoute.Robots {
     "/partners/dashboard",
     "/partners/onboard",
     "/p/",
-    "/plan",
+    /* "/plan" alone was a prefix match, and robots.txt prefix matching does
+       not stop at a path segment: it blocked /plans/ and all eight public
+       plan pages too. The wildcard group happened to survive on the
+       longest-match rule because it carries an explicit "Allow: /plans/",
+       but the Googlebot and Bingbot groups do not, so for Google and Bing
+       every /plans page was disallowed while sitting in the sitemap and
+       serving "index, follow". The $ anchors the exact path; the trailing
+       slash entry keeps /plan/share/* blocked. */
+    "/plan$",
+    "/plan/",
     "/studio/",
     "/welcome",
   ];

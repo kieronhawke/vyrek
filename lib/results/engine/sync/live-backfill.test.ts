@@ -51,9 +51,15 @@ suite("backfill", () => {
     const seasons = allSeasonPaths();
     let catalogued = 0;
 
-    // Phase one: know what exists. Cheap relative to pulling results, and
-    // nothing can be backfilled that the catalogue has never heard of.
-    for (const season of seasons) {
+    // Phase one: know what exists. Nothing can be backfilled that the catalogue
+    // has never heard of.
+    //
+    // Skippable, because it is ~700 requests and it only has to be right once.
+    // A long backfill will be interrupted — a laptop lid, a deploy, a kill —
+    // and re-spending the catalogue on every restart is the difference between
+    // resuming and starting again.
+    const skipCatalogue = process.env.HYROX_SKIP_CATALOGUE === "1";
+    for (const season of skipCatalogue ? [] : seasons) {
       if (Date.now() > deadline) break;
       try {
         const r = await runCatalogSync(engine, {
@@ -73,7 +79,11 @@ suite("backfill", () => {
 
     await enrichEventMetadata(repo);
     const events = await repo.listEvents();
-    console.log(`[backfill] catalogue complete: ${events.length} events across ${catalogued} seasons`);
+    console.log(
+      skipCatalogue
+        ? `[backfill] catalogue skipped; ${events.length} events already known`
+        : `[backfill] catalogue complete: ${events.length} events across ${catalogued} seasons`,
+    );
 
     // Phase two: results, in market order, until the clock runs out.
     let rounds = 0;
@@ -96,6 +106,12 @@ suite("backfill", () => {
       if (r.eventsCompleted.length === 0 && r.eventsFailed.length === 0) {
         console.log("[backfill] every known event is pulled");
         break;
+      }
+      // Progress against the whole job, so an interrupted run tells you where
+      // it got to rather than only what it just did.
+      if (rounds % 5 === 0) {
+        const done = (await repo.listSyncStates()).filter((x) => x.lastSeenHash).length;
+        console.log(`[backfill] progress: ${done} events checkpointed of ${events.length}`);
       }
     }
 
