@@ -67,6 +67,18 @@ export interface ResultsRepository {
   getAthleteById(id: string): Promise<EngineAthlete | null>;
   getAthleteBySlug(slug: string): Promise<EngineAthlete | null>;
   getAthleteBySourceId(sourceAthleteId: string): Promise<EngineAthlete | null>;
+  /**
+   * Many athletes by source id, in one round trip.
+   *
+   * Resolving a division one athlete at a time cost up to three calls each —
+   * roughly 460 for a single 77-row doubles board, and half a million across
+   * the catalogue. At even 100ms a call that is fifteen hours of pure latency,
+   * and every one of those calls is a window in which the process can die
+   * leaving athletes created but their rows unwritten.
+   */
+  getAthletesBySourceIds(sourceAthleteIds: string[]): Promise<EngineAthlete[]>;
+  /** Many athletes at once, keyed on slug. Same reasoning as the read. */
+  upsertAthletes(athletes: UpsertAthlete[]): Promise<EngineAthlete[]>;
   findAthletesByName(name: string): Promise<EngineAthlete[]>;
   anonymiseAthlete(athleteId: string): Promise<void>;
   claimAthlete(athleteId: string, userId: string): Promise<void>;

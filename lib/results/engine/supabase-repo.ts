@@ -391,6 +391,51 @@ export class SupabaseResultsRepository implements ResultsRepository {
     return row ? toAthlete(row) : null;
   }
 
+  async getAthletesBySourceIds(sourceAthleteIds: string[]) {
+    if (sourceAthleteIds.length === 0) return [];
+    const found: AthleteRow[] = [];
+    // Chunked: a very long `in` list makes an unwieldy URL and PostgREST will
+    // refuse it. 200 keeps the request comfortable and still turns a division
+    // into two or three round trips rather than hundreds.
+    for (let i = 0; i < sourceAthleteIds.length; i += 200) {
+      found.push(
+        ...(await this.many<AthleteRow>(
+          this.db
+            .from("results_athletes")
+            .select()
+            .in("source_athlete_id", sourceAthleteIds.slice(i, i + 200)),
+        )),
+      );
+    }
+    return found.map(toAthlete);
+  }
+
+  async upsertAthletes(athletes: UpsertAthlete[]) {
+    if (athletes.length === 0) return [];
+    const out: AthleteRow[] = [];
+    for (let i = 0; i < athletes.length; i += 200) {
+      const chunk = athletes.slice(i, i + 200).map((a) => ({
+        slug: a.slug,
+        name: a.name,
+        nationality: a.nationality ?? null,
+        gender: a.gender ?? null,
+        source_athlete_id: a.sourceAthleteId ?? null,
+        claimed_by_user_id: a.claimedByUserId ?? null,
+        is_demo: a.isDemo,
+        is_anonymised: a.isAnonymised,
+        identity_confidence: a.identityConfidence,
+        needs_identity_review: a.needsIdentityReview,
+      }));
+      const { data, error } = await this.db
+        .from("results_athletes")
+        .upsert(chunk, { onConflict: "slug" })
+        .select();
+      if (error) throw toRepositoryError(error, "athlete batch upsert failed");
+      out.push(...((data ?? []) as AthleteRow[]));
+    }
+    return out.map(toAthlete);
+  }
+
   async findAthletesByName(name: string) {
     return (
       await this.many<AthleteRow>(

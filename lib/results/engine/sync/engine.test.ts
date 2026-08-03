@@ -509,6 +509,74 @@ describe("identity keys that can disagree", () => {
   });
 });
 
+describe("a division resolves its athletes in bulk", () => {
+  /**
+   * Resolving one athlete at a time cost up to three round trips each — around
+   * 460 for a 77-row doubles board, half a million across the catalogue. That
+   * is fifteen hours of pure latency, and it made a working backfill look
+   * broken. It also leaked: every call is a window in which the process can die
+   * with athletes created and their rows unwritten, and a killed run left
+   * 13,000 profiles attached to nothing.
+   */
+  it("does not make a database call per athlete", async () => {
+    const h = await makeHarness();
+    let singleReads = 0;
+    let singleWrites = 0;
+    let batchReads = 0;
+    let batchWrites = 0;
+
+    const repo = h.repo;
+    const origRead = repo.getAthleteBySourceId.bind(repo);
+    const origWrite = repo.upsertAthlete.bind(repo);
+    const origBatchRead = repo.getAthletesBySourceIds.bind(repo);
+    const origBatchWrite = repo.upsertAthletes.bind(repo);
+
+    repo.getAthleteBySourceId = async (id) => { singleReads += 1; return origRead(id); };
+    repo.upsertAthlete = async (a) => { singleWrites += 1; return origWrite(a); };
+    repo.getAthletesBySourceIds = async (ids) => { batchReads += 1; return origBatchRead(ids); };
+    repo.upsertAthletes = async (rows) => { batchWrites += 1; return origBatchWrite(rows); };
+
+    await syncOnce(h);
+
+    expect(h.repo.athletes.size).toBe(8);
+    // One read and one write for the whole board, however many athletes it has.
+    expect(batchReads).toBe(1);
+    expect(batchWrites).toBe(1);
+    expect(singleReads).toBe(0);
+  });
+
+  it("writes no athlete it cannot attach to a row", async () => {
+    // The orphan invariant, stated as an invariant rather than a count.
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-doubles.html")] },
+      }),
+    });
+    await syncOnce(h);
+
+    const results = [...h.repo.results.values()];
+    for (const athlete of h.repo.athletes.values()) {
+      const attached = results.some(
+        (r) => r.athleteId === athlete.id || r.partnerAthleteIds.includes(athlete.id),
+      );
+      expect(attached, `${athlete.slug} is attached to nothing`).toBe(true);
+    }
+  });
+
+  it("creates nothing at all for a board that is entirely invalid", async () => {
+    // Validation runs before resolution, so a quarantined board leaves no
+    // profiles behind to be adopted by a row that will never exist.
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-implausible.html")] },
+      }),
+    });
+    const outcome = await syncOnce(h);
+    expect(outcome.quarantined).toBe(2);
+    expect(h.repo.athletes.size).toBe(0);
+  });
+});
+
 describe("athlete identity does not multiply (§13)", () => {
   /**
    * The failure this pins down, measured on real data: 1,006 orphaned athlete

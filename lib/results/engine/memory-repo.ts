@@ -192,6 +192,19 @@ export class MemoryResultsRepository implements ResultsRepository {
     return [...this.athletes.values()].find((a) => a.sourceAthleteId === sourceAthleteId) ?? null;
   }
 
+  async getAthletesBySourceIds(sourceAthleteIds: string[]) {
+    const wanted = new Set(sourceAthleteIds);
+    return [...this.athletes.values()].filter(
+      (a) => a.sourceAthleteId && wanted.has(a.sourceAthleteId),
+    );
+  }
+
+  async upsertAthletes(athletes: UpsertAthlete[]) {
+    const out: EngineAthlete[] = [];
+    for (const athlete of athletes) out.push(await this.upsertAthlete(athlete));
+    return out;
+  }
+
   async findAthletesByName(name: string) {
     const needle = name.trim().toLowerCase();
     return [...this.athletes.values()].filter(
