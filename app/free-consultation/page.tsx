@@ -3,7 +3,7 @@ import Image from "next/image";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
-import { ConsultationForm } from "@/components/consultation/consultation-form";
+import { BookingForm } from "@/components/booking/booking-form";
 import { siteUrl } from "@/lib/blog/urls";
 
 export const metadata: Metadata = {
@@ -84,7 +84,7 @@ export default function FreeConsultationPage() {
 
             <div className="lg:col-span-6">
               <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-6 md:p-8 lg:sticky lg:top-28">
-                <ConsultationForm />
+                <BookingForm />
               </div>
             </div>
           </div>

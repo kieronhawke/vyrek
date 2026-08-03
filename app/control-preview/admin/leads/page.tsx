@@ -11,7 +11,7 @@ const BASE = "/control-preview/admin";
  * Anything untouched past 24h is escalated, past 72h flagged at-risk.
  */
 const COLUMNS: Column<LeadRow>[] = [
-  { key: "name", label: "Lead", render: (r) => r.name, csv: (r) => r.name },
+  { key: "name", label: "Client", render: (r) => r.name, csv: (r) => r.name },
   { key: "segment", label: "Segment", render: (r) => r.segment, csv: (r) => r.segment },
   { key: "status", label: "Stage", render: (r) => r.status, csv: (r) => r.status },
   { key: "source", label: "Source", render: (r) => r.source, csv: (r) => r.source },

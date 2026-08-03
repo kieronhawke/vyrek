@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { recordPageView } from "@/lib/session-context";
 
 const SESSION_KEY = "suth:presence:sid";
 const HEARTBEAT_MS = 30_000;
@@ -35,6 +36,14 @@ export function PresencePing() {
   // render body.
   useEffect(() => {
     pathRef.current = pathname;
+  }, [pathname]);
+
+  // Piggy-backing on the component that already runs on every route change,
+  // rather than adding a second one that does the same walk. This writes to
+  // sessionStorage only — nothing is sent anywhere until somebody submits a
+  // form. See lib/session-context.ts.
+  useEffect(() => {
+    recordPageView(pathname);
   }, [pathname]);
 
   useEffect(() => {

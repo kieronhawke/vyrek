@@ -72,10 +72,17 @@ export function MarketingNav() {
   // creators / coaches, so "Start training" sends the wrong signal.
   // Swap to "Apply to join" pointing at the partner application.
   const onPartnerRoute = pathname.startsWith("/partners");
-  const ctaHref = onPartnerRoute ? "/partners/apply" : "/quiz";
-  // "Start training" names no outcome and matches nothing at the other
-  // end. The quiz builds a plan, so the button says so.
-  const ctaLabel = onPartnerRoute ? "Apply to join" : "Build my plan";
+  // The primary path is the free consultation, not the quiz.
+  //
+  // Both routes exist and both are wanted, but only one can be the button
+  // in the nav, and they ask for very different things. "Build my plan"
+  // starts a fifteen-screen questionnaire that ends in a price. "Book a
+  // free call" costs half an hour and nothing else, and it is the step Ben
+  // actually converts on — he speaks to them, then sends the account link.
+  // The quiz stays as the secondary route for people who would rather not
+  // talk to anybody yet.
+  const ctaHref = onPartnerRoute ? "/partners/apply" : "/book";
+  const ctaLabel = onPartnerRoute ? "Apply to join" : "Book a free call";
 
   return (
     <header

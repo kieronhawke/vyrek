@@ -283,6 +283,15 @@ export function sendInternalLeadBrief(args: {
   injury?: string;
   sourcePath?: string | null;
   brief: string;
+  /** Context added 3 Aug 2026: where they are, and how they got here. */
+  location?: string | null;
+  mapUrl?: string | null;
+  mapImageUrl?: string | null;
+  landingPath?: string | null;
+  referrer?: string | null;
+  timeOnSite?: string | null;
+  pageViews?: number | null;
+  leadUrl?: string | null;
 }): Promise<Result> {
   const { to, ...rest } = args;
   return send({

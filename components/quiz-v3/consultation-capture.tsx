@@ -4,6 +4,7 @@ import { useState } from "react";
 import { capture } from "@/lib/posthog";
 import { consultationGoal, leadBrief } from "@/lib/lead-brief";
 import { sift } from "@/lib/quiz-sift";
+import { sessionContext } from "@/lib/session-context";
 import {
   INJURY_LABEL,
   isBeginnerRail,
@@ -65,6 +66,9 @@ export function ConsultationCapture({ answers }: { answers: QuizAnswers }) {
           // Structured context so Ben's brief leads with the useful bits
           // instead of making him parse the plain-text dump.
           rail: isBeginnerRail(answers) ? "Beginner" : "HYROX",
+          // Where they came in and how long they stayed. Read from the tab,
+          // re-validated server-side before it reaches Ben's inbox.
+          session: sessionContext(),
           wants:
             result.route === "coached"
               ? "COACHING WITH BEN"

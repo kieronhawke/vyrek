@@ -2,6 +2,15 @@ import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { limiters, requestIp } from "@/lib/rate-limit";
 import {
+  cleanSessionContext,
+  describeDuration,
+  describeLocation,
+  googleMapsUrl,
+  requestLocation,
+  staticMapUrl,
+} from "@/lib/geo/request-location";
+import { siteUrl } from "@/lib/site-url";
+import {
   sendInternalLeadBrief,
   sendLeadConfirmation,
 } from "@/lib/email/send";
@@ -38,6 +47,8 @@ type Body = {
   readiness?: string;
   programme?: string;
   injury?: string;
+  /** How they got here, sent by the browser. Sanitised before use. */
+  session?: unknown;
 };
 
 /** Trim and cap a free-text field coming from the client. */
@@ -119,6 +130,11 @@ export async function POST(req: Request) {
   const inbox = process.env.CONSULTATION_INBOX ?? "kieron.hawke@gmail.com";
   const firstName = lead.name.split(" ")[0];
 
+  // City-level, off the Vercel edge headers. Null everywhere else, which
+  // the template is written to handle.
+  const loc = requestLocation(req);
+  const session = cleanSessionContext(body.session);
+
   const internal = await sendInternalLeadBrief({
     to: inbox,
     name: lead.name,
@@ -132,6 +148,14 @@ export async function POST(req: Request) {
     injury: short(body.injury),
     sourcePath: lead.source_path,
     brief: lead.message ?? "No quiz answers: came from the consultation form.",
+    location: describeLocation(loc),
+    mapUrl: googleMapsUrl(loc),
+    mapImageUrl: staticMapUrl(loc),
+    landingPath: session.landingPath ?? null,
+    referrer: session.referrer ?? null,
+    timeOnSite: describeDuration(session.secondsOnSite),
+    pageViews: session.pageViews ?? null,
+    leadUrl: `${siteUrl()}/admin/quiz`,
   });
   emailed = internal.ok;
   if (!internal.ok) {
