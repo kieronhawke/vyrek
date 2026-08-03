@@ -421,8 +421,13 @@ export class SupabaseResultsRepository implements ResultsRepository {
     return taken;
   }
 
-  async upsertAthletes(athletes: UpsertAthlete[]) {
-    if (athletes.length === 0) return [];
+  async upsertAthletes(input: UpsertAthlete[]) {
+    if (input.length === 0) return [];
+    // Same hazard as results: one repeated slug fails the whole statement.
+    const bySlug = new Map<string, UpsertAthlete>();
+    for (const a of input) bySlug.set(a.slug, a);
+    const athletes = [...bySlug.values()];
+
     const out: AthleteRow[] = [];
     for (let i = 0; i < athletes.length; i += 200) {
       const chunk = athletes.slice(i, i + 200).map((a) => ({
@@ -530,8 +535,19 @@ export class SupabaseResultsRepository implements ResultsRepository {
    * from updated from unchanged — the live differ publishes on that, and an
    * upsert alone cannot tell you which of the three happened.
    */
-  async upsertResults(rows: UpsertResult[]) {
-    if (rows.length === 0) return { inserted: 0, updated: 0, unchanged: 0 };
+  async upsertResults(input: UpsertResult[]) {
+    if (input.length === 0) return { inserted: 0, updated: 0, unchanged: 0 };
+
+    // ⚠️ Deduplicated on the conflict key before anything is sent.
+    //
+    // Postgres refuses an ON CONFLICT statement that would touch the same row
+    // twice — "cannot affect row a second time" — and it fails the *whole*
+    // command, so one repeated id costs an entire division. A source id
+    // appearing twice means the same entry appeared twice on the board, so the
+    // later one wins rather than the pair being an error.
+    const byId = new Map<string, UpsertResult>();
+    for (const row of input) byId.set(row.sourceResultId, row);
+    const rows = [...byId.values()];
 
     // Chunked. PostgREST filters travel in the URL, and a 638-entrant board
     // makes an `in` list long enough to be rejected outright as a 400 — which

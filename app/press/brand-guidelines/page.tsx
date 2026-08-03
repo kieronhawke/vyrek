@@ -9,7 +9,7 @@ import { SplitHeading } from "@/components/shared/split-heading";
 export const metadata: Metadata = {
   title: "Brand guidelines",
   description:
-    "Suth Performance brand guidelines, wordmark, monogram, palette, typography, tone of voice.",
+    "Suth Performance brand guidelines for press and partners: the wordmark and monogram, the colour palette with hex values, typography, and how we write.",
   robots: { index: true, follow: true },
 };
 

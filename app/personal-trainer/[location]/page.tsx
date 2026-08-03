@@ -111,6 +111,7 @@ export default async function PersonalTrainerLocationPage({
         loc={loc}
         seo={seo}
         nearby={nearby}
+        parentPath={parent.path("/personal-trainer")}
         headingName={headingName}
         afterLocalContext={
           <>
