@@ -23,6 +23,7 @@ import { StatTile, MicroLabel, Nationality, Time } from "@/components/results/ui
 import { CoachingCta } from "@/components/results/coaching-cta";
 import { Reveal } from "@/components/results/ui/reveal";
 import { getDataMode } from "@/lib/results";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 
 /**
  * `/result/{id}` — the crown jewel.
@@ -45,7 +46,7 @@ export async function generateMetadata({
 
   const division = result.divisionLabel.replace("HYROX ", "");
   return {
-    title: `${result.athleteName}: ${result.eventName} ${division} Result & Splits`,
+    title: `${result.athleteName}: ${result.eventName} Splits`,
     description:
       `${result.athleteName} finished ${formatOrdinal(result.rank)} of `
       + `${formatCount(result.fieldSize)} in ${division} at ${result.eventName}. `
@@ -334,6 +335,17 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
     {/* Screen-hidden. `results-print.css` hides the page above and reveals
         this instead, so Save as PDF produces a document rather than a
         screenshot of an interactive page. */}
+    <div className="mx-auto max-w-[1100px] px-5" data-print-hide>
+      <RelatedLinks
+        links={[
+          { href: `/report/${result.id}`, label: "The full race report" },
+          { href: `/athlete/${result.athleteSlug}`, label: `${result.athleteName}'s profile` },
+          { href: `/ranking/${result.eventSlug}-${result.division}`, label: "Full division ranking" },
+          { href: "/rankings/records", label: "The record book" },
+        ]}
+      />
+    </div>
+
     <RaceReportSheet
       athleteName={result.athleteName}
       eventName={result.eventName}

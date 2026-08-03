@@ -42,7 +42,9 @@ export async function generateMetadata({
   const event = await getResultsSource().getEvent(slug);
   if (!event) return { title: "Event not found" };
 
-  const title = `HYROX ${event.city} ${event.year}: Results, Rankings & Start Lists`;
+  // Kept near 40 characters: the layout appends " · Suth Performance", and
+  // Google renders about 60 in total before it truncates.
+  const title = `HYROX ${event.city} ${event.year} Results`;
   const description = event.status === "finished"
     ? `Full HYROX ${event.city} ${event.year} results — ${formatCount(event.totalAthletes)} athletes `
       + `across ${event.divisions.length} divisions, with splits, rankings and an automated race report.`

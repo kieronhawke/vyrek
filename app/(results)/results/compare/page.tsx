@@ -8,6 +8,8 @@ import { MicroLabel, Delta, Nationality, EmptyState } from "@/components/results
 import { ComparePicker } from "@/components/results/compare/compare-picker";
 import { CumulativeGap } from "@/components/results/compare/cumulative-gap";
 import type { ResultDetail } from "@/lib/results/source";
+import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 
 /**
  * `/compare` — two athletes, side by side.
@@ -54,6 +56,8 @@ export default async function ComparePage({
 
   return (
     <div className="mx-auto max-w-[1100px] px-5 py-6 md:py-10">
+      <Breadcrumbs trail={[{ name: "Results", path: "/results" }, { name: "Compare", path: "/results/compare" }]} />
+
       <header>
         <MicroLabel>[ COMPARE ]</MicroLabel>
         <h1 className="mt-2 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-4xl">
@@ -71,6 +75,7 @@ export default async function ComparePage({
       {!left || !right ? (
         <div className="mt-8">
           <EmptyState
+            headingLevel={2}
             title={a || b ? "Pick a second athlete" : "Pick two athletes"}
             body="Search above, or open any athlete profile and press Compare."
             action={
@@ -83,6 +88,14 @@ export default async function ComparePage({
       ) : (
         <Comparison left={left} right={right} />
       )}
+      <RelatedLinks
+        links={[
+          { href: "/tools/good-hyrox-time", label: "Is my time good?" },
+          { href: "/simulator", label: "Model your next race" },
+          { href: "/rankings/records", label: "The record book" },
+        ]}
+      />
+
     </div>
   );
 }

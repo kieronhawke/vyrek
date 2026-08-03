@@ -5,6 +5,8 @@ import { listDivisionReferences, SIMULATOR_DIVISIONS } from "@/lib/results/refer
 import { Simulator, type SimulatorReference } from "@/components/results/simulator/simulator";
 import { MicroLabel, SkeletonRows } from "@/components/results/ui/primitives";
 import { CoachingCta } from "@/components/results/coaching-cta";
+import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 
 /**
  * `/simulator` — race time calculator.
@@ -30,6 +32,8 @@ export default async function SimulatorPage() {
 
   return (
     <div className="mx-auto max-w-[1100px] px-5 py-6 md:py-10">
+      <Breadcrumbs trail={[{ name: "Results", path: "/results" }, { name: "Simulator", path: "/simulator" }]} />
+
       <header>
         <MicroLabel>[ SIMULATOR ]</MicroLabel>
         <h1 className="mt-2 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-4xl">
@@ -58,6 +62,14 @@ export default async function SimulatorPage() {
         headline="A target is not a plan"
         body="The splits above tell you what the race has to look like. Training that produces them is the other half."
       />
+      <RelatedLinks
+        links={[
+          { href: "/tools/good-hyrox-time", label: "Is my time good?" },
+          { href: "/results/course-index", label: "Which courses run slowest" },
+          { href: "/hyrox/stations", label: "Station guides" },
+        ]}
+      />
+
     </div>
   );
 }

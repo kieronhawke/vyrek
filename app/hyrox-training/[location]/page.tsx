@@ -45,9 +45,10 @@ export async function generateMetadata({
   const title = `Hyrox training in ${displayName}`;
   // A race city can say something no UK town page can: the race is here. That
   // belongs in the snippet, because it is the reason someone in Osaka clicks.
+  // See the personal-trainer sibling: three Hamiltons, one description.
   const description = city
-    ? `Hyrox training in ${loc.name}, where the race is actually held, from a HYROX Elite 15 athlete. A personalised 12-week programme dated backwards from race day and built around the gym you already use.`
-    : `Hyrox training in ${loc.name} from a HYROX Elite 15 athlete. A personalised 12-week programme dated to your race, calibrated to your kit. See your Week 1, then talk it through with Ben on a free consultation.`;
+    ? `Hyrox training in ${displayName}, where the race is actually held, from a HYROX Elite 15 athlete. A personalised 12-week programme dated backwards from race day and built around the gym you already use.`
+    : `Hyrox training in ${displayName} from a HYROX Elite 15 athlete. A personalised 12-week programme dated to your race, calibrated to your kit. See your Week 1, then talk it through with Ben on a free consultation.`;
   return {
     title,
     description,

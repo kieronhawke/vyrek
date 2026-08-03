@@ -104,7 +104,7 @@ export async function generateMetadata({
   // "HYROX location LON: London", which puts a machine identifier in the
   // highest-weighted position on the page.
   // No brand suffix: app/layout.tsx appends "· Suth Performance" already.
-  const title = `HYROX ${profile.city} Results: Every Race, Time & Ranking`;
+  const title = `HYROX ${profile.city} Results`;
   const description =
     `All HYROX ${profile.city} results — ${profile.editions} `
     + `${profile.editions === 1 ? "edition" : "editions"}`

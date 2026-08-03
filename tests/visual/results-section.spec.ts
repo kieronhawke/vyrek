@@ -464,9 +464,13 @@ test.describe("race report", () => {
 
   test("the report is linked from the result it describes", async ({ page }) => {
     await open(page, "/result/s9-2026-london-hyrox-men-1600");
-    const link = page.getByRole("link", { name: /full race report/i });
-    await expect(link).toBeVisible();
-    await expect(link).toHaveAttribute("href", REPORT);
+    // Two links point at the report by design: the CTA at the top, and the
+    // onward nav at the foot of a long page. Both must resolve to it.
+    const links = page.getByRole("link", { name: /full race report/i });
+    expect(await links.count()).toBeGreaterThanOrEqual(1);
+    for (let i = 0; i < await links.count(); i++) {
+      await expect(links.nth(i)).toHaveAttribute("href", REPORT);
+    }
   });
 });
 

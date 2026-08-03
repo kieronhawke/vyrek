@@ -7,9 +7,10 @@ import {
   courseBaseline, rateCourses, describeRating,
   type EditionSample, type CourseRating,
 } from "@/lib/results/course-index";
-import { breadcrumbList, jsonLd } from "@/lib/results/structured-data";
+import { jsonLd } from "@/lib/results/structured-data";
 import { formatTime, formatCount } from "@/lib/results/format";
 import { FaqSection } from "@/components/results/ui/faq-section";
+import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
 import { MicroLabel, StatTile, Nationality, EmptyState } from "@/components/results/ui/primitives";
 import { cn } from "@/lib/utils";
@@ -77,11 +78,10 @@ async function loadSamples(): Promise<EditionSample[]> {
 }
 
 export const metadata: Metadata = {
-  title: "HYROX Course Speed Index: Which Races Run Slowest",
+  title: "HYROX Course Speed Index",
   description:
-    "Every HYROX venue ranked by how fast its field actually ran. Median and "
-    + "winning finish times measured against the global pool, so you can see "
-    + "which courses cost time and which are quick. Free race analytics.",
+    "Every HYROX venue ranked by how fast its field actually ran — median and "
+    + "winning times against the global pool, so you can see which courses cost time.",
   alternates: { canonical: "/results/course-index" },
   openGraph: { url: `${siteUrl()}/results/course-index`, type: "website" },
 };
@@ -136,10 +136,6 @@ export default async function CourseIndexPage() {
       + "likelier explanation. When only the median moves, the entry list is.",
   });
 
-  const crumbsLd = breadcrumbList(siteUrl(), [
-    { name: "Results", path: "/results" },
-    { name: "Course speed index", path: "/results/course-index" },
-  ]);
 
   // A ranked table of measurements is a dataset, and saying so is a rich-result
   // route the competitor leaves entirely unused.
@@ -164,15 +160,8 @@ export default async function CourseIndexPage() {
   return (
     <div className="mx-auto max-w-[1400px] px-5 py-8 md:py-12">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(datasetLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(crumbsLd) }} />
 
-      <nav aria-label="Breadcrumb">
-        <ol className="flex flex-wrap items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
-          <li><Link href="/results" className="hover:text-suth-accent">Results</Link></li>
-          <li aria-hidden>/</li>
-          <li aria-current="page" className="text-suth-text-secondary">Course speed index</li>
-        </ol>
-      </nav>
+      <Breadcrumbs trail={[{ name: "Results", path: "/results" }, { name: "Course speed index", path: "/results/course-index" }]} />
 
       <header className="mt-3">
         <MicroLabel>[ ANALYTICS ]</MicroLabel>

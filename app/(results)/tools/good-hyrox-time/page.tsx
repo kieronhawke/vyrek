@@ -6,6 +6,8 @@ import { formatTime } from "@/lib/results/format";
 import { PercentileTool } from "@/components/results/tools/percentile-tool";
 import { MicroLabel } from "@/components/results/ui/primitives";
 import { CoachingCta } from "@/components/results/coaching-cta";
+import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 
 /**
  * `/tools/good-hyrox-time` — the percentile tool with an editorial wrapper.
@@ -19,7 +21,7 @@ import { CoachingCta } from "@/components/results/coaching-cta";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "What Is a Good HYROX Time? Percentiles by Division",
+  title: "What Is a Good HYROX Time?",
   description:
     "A good HYROX time depends entirely on your division. Enter yours and see the exact "
     + "percentile it places you in, against real finish distributions.",
@@ -82,11 +84,14 @@ export default async function GoodTimePage({
   };
 
   return (
-    <div className="mx-auto max-w-[900px] px-5 py-6 md:py-10">
+    <div className="mx-auto max-w-[1100px] px-5 py-6 md:py-10">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+
+      <Breadcrumbs trail={[{ name: "Results", path: "/results" }, { name: "Is my time good?", path: "/tools/good-hyrox-time" }]} />
+
 
       <header>
         <MicroLabel>[ PERCENTILE ]</MicroLabel>
@@ -154,6 +159,14 @@ export default async function GoodTimePage({
         headline="Know where you sit. Now change it."
         body="A percentile is a starting position, not a verdict."
       />
+      <RelatedLinks
+        links={[
+          { href: "/simulator", label: "Model your next race" },
+          { href: "/rankings/records", label: "The record book" },
+          { href: "/results/city", label: "Results by city" },
+        ]}
+      />
+
     </div>
   );
 }

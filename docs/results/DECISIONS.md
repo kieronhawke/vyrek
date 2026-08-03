@@ -1129,3 +1129,41 @@ page. Numbers are counted as sections render now.
 improvement in the race — the row a reader looks at first — "Wall Balls" and
 "−0:42" printed on top of each other. The value now sits inside the bar when
 there is no room outside it.
+
+### D102 — A polish pass, run as an audit rather than by eye
+"Polish the pages" is not a checklist you can eyeball across twenty-two routes,
+so it was measured: title length, description length, breadcrumb presence, an
+onward link, `h1` count, heading-level skips and container width, on every page
+in the section. The audit found the section was inconsistent in ways no single
+page review would have surfaced.
+
+**Fourteen pages dead-ended.** No onward link of any kind — a reader finished a
+ranking, a record board, the simulator, and had nowhere to go but the back
+button. Every page now offers three or four next steps, chosen for that page.
+
+**Half the section had no breadcrumb**, and the ten pages that did each carried
+their own copy of the markup — several of which emitted no matching
+`BreadcrumbList`, so the visible trail and the structured data disagreed. One
+`Breadcrumbs` component now drives both from a single array, and owns its own
+bottom spacing, because the eight pages it was added to at once all sat flush
+against their heading.
+
+**Container widths ran 900, 1000, 1100, 1400 with no rule** — `/rankings` at
+1100 and its own child `/rankings/world-records` at 900, which reads as two
+different sites. Three tiers now, by what the page is for: 1400 to browse a
+grid, 1100 to read one subject, 1000 for the report, which is a document.
+
+**Eight titles were too long to display.** The layout appends
+" · Suth Performance", so a page title has about 40 characters before Google
+truncates it; several were at 70–83. All trimmed to the phrase people search.
+
+Two things it caught that a structural audit is not supposed to: `/rankings`
+showed three cards in a two-column grid, so the third sat stranded, and two of
+them used the same trophy icon and read as the same link at a glance.
+
+### D103 — `EmptyState` had a hardcoded `h3`
+Which is correct inside a section under an `h2` and wrong on `/results/compare`,
+where it sits directly under the `h1` and skipped a level. It takes a
+`headingLevel` now, defaulting to 3 so every existing usage is unchanged.
+
+A component that renders a heading cannot know its own depth; the page does.

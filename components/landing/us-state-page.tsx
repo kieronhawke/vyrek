@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
@@ -11,7 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { getRaceCityBySlug } from "@/lib/race-cities";
+import { coachingSlugForRace } from "@/lib/geo-page";
 import { venueLabel, venueStreet } from "@/lib/hyrox/races";
 import {
   metroGyms,
@@ -164,10 +165,31 @@ export function UsStatePage({
     <>
       <MarketingNav />
       <main>
+        {/* The state pages shipped with no hero image while every other page
+            family has one, so they read as unfinished next to a town page.
+            Same treatment as GeoLanding: scrim left-to-right, near-opaque
+            behind the text, open on the right where the photograph is. */}
         <section
           aria-labelledby="state-hero-heading"
-          className="border-b border-suth-border-subtle"
+          className="relative isolate overflow-hidden border-b border-suth-border-subtle"
         >
+          <div aria-hidden className="absolute inset-0 -z-10">
+            <Image
+              src={
+                variant === "hyrox"
+                  ? "/media/images/track/pair-frontal-bw.jpg"
+                  : "/media/images/track/gym-coach-row-colour.jpg"
+              }
+              alt=""
+              fill
+              priority
+              fetchPriority="high"
+              sizes="100vw"
+              className="object-cover opacity-55 grayscale"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-suth-base from-0% via-suth-base/90 via-35% to-suth-base/30 to-100%" />
+            <div className="absolute inset-0 bg-gradient-to-b from-suth-base/50 via-transparent via-35% to-suth-base" />
+          </div>
           <Container>
             <div className="mx-auto max-w-3xl pb-14 pt-32 md:pb-20 md:pt-36">
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
@@ -219,12 +241,27 @@ export function UsStatePage({
                         key={r.slug}
                         className="rounded-lg border border-suth-border bg-suth-elevated p-5"
                       >
+                        {/* The city is the heading, not the venue. Two Houston
+                            races both headed "Venue to be announced" told a
+                            reader nothing and repeated each other; Dallas read
+                            "Dallas" above "DALLAS · 18 NOVEMBER 2026", saying
+                            the same word twice in adjacent lines. The city is
+                            what identifies a race to somebody scanning. */}
                         <p className="text-lg font-black tracking-[-0.02em] text-suth-text">
-                          {r.venueAnnounced ? venueLabel(r) : "Venue to be announced"}
+                          {r.city}
                         </p>
                         <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-                          {r.city} · {fmtDate(r.startDate)}
+                          {fmtDate(r.startDate)}
                         </p>
+                        {r.venueAnnounced && venueLabel(r) !== r.city ? (
+                          <p className="mt-2 text-sm text-suth-text-secondary">
+                            {venueLabel(r)}
+                          </p>
+                        ) : !r.venueAnnounced ? (
+                          <p className="mt-2 text-sm text-suth-text-tertiary">
+                            Venue not yet announced by HYROX
+                          </p>
+                        ) : null}
                         {/* The street, where HYROX gave one. Shown under the
                             city rather than as the heading, because on most US
                             races the "venue name" IS the street. */}
@@ -240,9 +277,14 @@ export function UsStatePage({
                           >
                             Dates, venue and when to start →
                           </Link>
-                          {getRaceCityBySlug(r.citySlug) ? (
+                          {/* citySlug holds the unqualified name — "houston"
+                              — while the page is /houston-usa, so a slug lookup
+                              silently dropped the link on every collision city.
+                              coachingSlugForRace matches on name AND country,
+                              which is what the qualification exists for. */}
+                          {coachingSlugForRace({ city: r.city, country: "United States" }) ? (
                             <Link
-                              href={`${base}/${r.citySlug}`}
+                              href={`${base}/${coachingSlugForRace({ city: r.city, country: "United States" })}`}
                               className="text-sm font-medium text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
                             >
                               Training in {r.city} →

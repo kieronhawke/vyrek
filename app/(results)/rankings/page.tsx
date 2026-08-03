@@ -4,13 +4,15 @@ import { siteUrl } from "@/lib/blog/urls";
 import { getResultsSource } from "@/lib/results";
 import { formatTime, formatCount } from "@/lib/results/format";
 import { MicroLabel } from "@/components/results/ui/primitives";
-import { Trophy, CalendarRange } from "lucide-react";
+import { Trophy, CalendarRange, Medal } from "lucide-react";
+import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 
 /** `/rankings` — index of the global boards. */
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "HYROX Rankings: Records, Season Bests & Division Boards",
+  title: "HYROX Rankings & Records",
   description:
     "Global HYROX rankings — all-time records and current season bests by division, "
     + "with every result linked to its full splits.",
@@ -24,6 +26,8 @@ export default async function RankingsIndex() {
 
   return (
     <div className="mx-auto max-w-[1100px] px-5 py-6 md:py-10">
+      <Breadcrumbs trail={[{ name: "Results", path: "/results" }, { name: "Rankings", path: "/rankings" }]} />
+
       <header>
         <MicroLabel>[ RANKINGS ]</MicroLabel>
         <h1 className="mt-2 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-4xl">
@@ -34,10 +38,10 @@ export default async function RankingsIndex() {
         </p>
       </header>
 
-      <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <BoardLink
           href="/rankings/records"
-          icon={<Trophy className="size-5" aria-hidden />}
+          icon={<Medal className="size-5" aria-hidden />}
           title="The record book"
           detail="World, national and age-group records — every single one"
         />
@@ -83,6 +87,14 @@ export default async function RankingsIndex() {
           ))}
         </ul>
       </section>
+      <RelatedLinks
+        links={[
+          { href: "/results/city", label: "Results by city" },
+          { href: "/events", label: "Full race calendar" },
+          { href: "/tools/good-hyrox-time", label: "Is my time good?" },
+        ]}
+      />
+
     </div>
   );
 }

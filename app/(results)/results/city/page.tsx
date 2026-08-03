@@ -3,10 +3,12 @@ import Link from "next/link";
 import { getResultsSource } from "@/lib/results";
 import { siteUrl } from "@/lib/blog/urls";
 import { groupEventsByCity } from "@/lib/results/city";
-import { breadcrumbList, jsonLd } from "@/lib/results/structured-data";
+import { jsonLd } from "@/lib/results/structured-data";
 import { formatCount } from "@/lib/results/format";
+import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { FaqSection } from "@/components/results/ui/faq-section";
 import { MicroLabel, Nationality, EmptyState } from "@/components/results/ui/primitives";
+import { RelatedLinks } from "@/components/results/ui/related-links";
 
 /**
  * `/results/city` — the index of every city HYROX has raced in.
@@ -24,11 +26,10 @@ import { MicroLabel, Nationality, EmptyState } from "@/components/results/ui/pri
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "HYROX Results by City: Every Race Location Worldwide",
+  title: "HYROX Results by City",
   description:
     "Every city HYROX has raced in, with full results, finish times and "
-    + "division rankings for each. Browse by country or jump straight to your "
-    + "race — free and without an account.",
+    + "division rankings. Browse by country or jump straight to your race.",
   alternates: { canonical: "/results/city" },
   openGraph: { url: `${siteUrl()}/results/city`, type: "website" },
 };
@@ -77,10 +78,6 @@ export default async function CityIndexPage() {
     (a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]),
   );
 
-  const crumbsLd = breadcrumbList(siteUrl(), [
-    { name: "Results", path: "/results" },
-    { name: "Cities", path: "/results/city" },
-  ]);
 
   const listLd = {
     "@context": "https://schema.org",
@@ -103,15 +100,8 @@ export default async function CityIndexPage() {
   return (
     <div className="mx-auto max-w-[1400px] px-5 py-8 md:py-12">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(listLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(crumbsLd) }} />
 
-      <nav aria-label="Breadcrumb">
-        <ol className="flex flex-wrap items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
-          <li><Link href="/results" className="hover:text-suth-accent">Results</Link></li>
-          <li aria-hidden>/</li>
-          <li aria-current="page" className="text-suth-text-secondary">Cities</li>
-        </ol>
-      </nav>
+      <Breadcrumbs trail={[{ name: "Results", path: "/results" }, { name: "Cities", path: "/results/city" }]} />
 
       <header className="mt-3">
         <MicroLabel>[ WORLDWIDE ]</MicroLabel>
@@ -178,6 +168,14 @@ export default async function CityIndexPage() {
       )}
 
       <FaqSection faqs={FAQS} title="Finding your race" />
+      <RelatedLinks
+        links={[
+          { href: "/events", label: "Full race calendar" },
+          { href: "/results/course-index", label: "Which courses run slowest" },
+          { href: "/rankings/records", label: "The record book" },
+        ]}
+      />
+
     </div>
   );
 }

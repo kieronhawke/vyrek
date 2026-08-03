@@ -59,11 +59,15 @@ export async function generateMetadata({
   // identical across 1,973 places gives a searcher no reason to click ours.
   // The international cities lead on the race instead of the gym count: it is
   // the more specific fact, and the reason the page exists.
+  /* displayName, not loc.name: Hamilton in Ontario, Hamilton in Waikato and
+     Hamilton in Lanarkshire had one description between them. The title and
+     the H1 were disambiguated and the description was not, which is the same
+     bug one field over. */
   const description = city
-    ? `Online personal training for ${loc.name}, from a HYROX Elite 15 athlete. ${loc.name} is on the HYROX calendar${seo.gyms.length ? `, and the programme is built around any of the ${seo.gyms.length} gyms near the centre` : ""}. Free consultation, no commitment.`
+    ? `Online personal training for ${displayName}, from a HYROX Elite 15 athlete. ${loc.name} is on the HYROX calendar${seo.gyms.length ? `, and the programme is built around any of the ${seo.gyms.length} gyms near the centre` : ""}. Free consultation, no commitment.`
     : seo.gyms.length
-      ? `Personal training in ${loc.name}, online, from a HYROX Elite 15 athlete. Built around any of the ${seo.gyms.length} gyms and sports centres near you, or your kit at home. Free consultation, no commitment.`
-      : `Looking for a personal trainer in ${loc.name}? Get online personal training from a HYROX Elite 15 athlete, at a fraction of local PT rates. Free consultation, no commitment.`;
+      ? `Personal training in ${displayName}, online, from a HYROX Elite 15 athlete. Built around any of the ${seo.gyms.length} gyms and sports centres near you, or your kit at home. Free consultation, no commitment.`
+      : `Looking for a personal trainer in ${displayName}? Get online personal training from a HYROX Elite 15 athlete, at a fraction of local PT rates. Free consultation, no commitment.`;
   return {
     title,
     description,

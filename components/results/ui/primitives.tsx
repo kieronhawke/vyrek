@@ -197,18 +197,26 @@ export function SkeletonRows({ rows = 8, className }: { rows?: number; className
 /* ─── Empty and error ─────────────────────────────────────────────── */
 
 export function EmptyState({
-  title, body, action,
+  title, body, action, headingLevel = 3,
 }: {
   title: string;
   body: string;
   action?: React.ReactNode;
+  /**
+   * The empty state sits at different depths on different pages — inside a
+   * section under an `h2` on most, but directly under the `h1` on the compare
+   * page, where a hardcoded `h3` skipped a level. The default preserves the
+   * common case; pass 2 where it is a top-level state.
+   */
+  headingLevel?: 2 | 3 | 4;
 }) {
+  const Heading = `h${headingLevel}` as "h2" | "h3" | "h4";
   return (
     <div className="rounded-md border border-dashed border-suth-border px-6 py-14 text-center">
       <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
         [ NOTHING HERE ]
       </p>
-      <h3 className="mt-3 text-lg font-semibold text-suth-text">{title}</h3>
+      <Heading className="mt-3 text-lg font-semibold text-suth-text">{title}</Heading>
       <p className="mx-auto mt-2 max-w-sm text-sm text-suth-text-secondary">{body}</p>
       {action ? <div className="mt-5">{action}</div> : null}
     </div>

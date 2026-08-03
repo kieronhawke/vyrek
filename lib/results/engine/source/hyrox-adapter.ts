@@ -35,6 +35,7 @@ import type {
 import type { SourceAdapter } from "./adapter";
 import { FallbackChain } from "./adapter";
 import {
+  parseAgeClasses,
   parseDetailSplits,
   parseDivisionRows,
   parseEventGroups,
@@ -67,6 +68,54 @@ abstract class MikaAdapter implements SourceAdapter {
   abstract readonly name: string;
   /** Extra query parameters this method adds to the list request. */
   protected abstract listParams(sex: string | null): Record<string, string>;
+
+  /**
+   * Walk one filtered view of a board, page by page, collecting distinct rows.
+   *
+   * Returns the last page's HTML too, because the caller needs the age-group
+   * options and the published count off it.
+   */
+  private async collect(
+    seasonPath: string,
+    code: string,
+    sourceEventId: string,
+    sourceDivisionId: string,
+    params: Record<string, string>,
+    into: Map<string, RawDivisionPage["rows"][number]>,
+    merged: ParseDiagnostics,
+  ): Promise<{ published?: number; firstBody: string }> {
+    let published: number | undefined;
+    let firstBody = "";
+
+    for (let page = 1; page <= MAX_PAGES; page += 1) {
+      const { body } = await this.fetcher.fetchText(
+        seasonUrl(seasonPath, {
+          pid: "list",
+          event: code,
+          page: String(page),
+          num_results: String(PAGE_SIZE),
+          ...params,
+        }),
+      );
+      if (page === 1) firstBody = body;
+
+      const parsed = parseDivisionRows(body, sourceEventId, sourceDivisionId);
+      if (published === undefined) published = parsed.publishedEntrantCount;
+
+      const before = into.size;
+      for (const row of parsed.rows) into.set(row.sourceResultId, row);
+
+      if (merged.headerFields.length === 0) merged.headerFields = parsed.diagnostics.headerFields;
+      merged.candidateRows += parsed.diagnostics.candidateRows;
+      merged.parsedRows += parsed.diagnostics.parsedRows;
+      merged.emptyShell = merged.emptyShell && parsed.diagnostics.emptyShell;
+
+      // Nothing new means the pager has run out, whatever it served.
+      if (into.size === before) break;
+    }
+
+    return { published, firstBody };
+  }
 
   constructor(protected fetcher: SourceFetcher) {}
 
@@ -125,7 +174,10 @@ abstract class MikaAdapter implements SourceAdapter {
   ): Promise<RawDivisionPage> {
     const { code, sex } = splitDivisionRef(sourceDivisionId);
     const sourceEventId = weekendIdOf(code) ?? code;
-    const rows: RawDivisionPage["rows"] = [];
+    // Accumulated by id, because the source renders each athlete two to four
+    // times on a page — the same rank, name and entry id repeated — and the
+    // duplication factor varies from row to row.
+    const byId = new Map<string, RawDivisionPage["rows"][number]>();
     let publishedEntrantCount: number | undefined;
     const merged: ParseDiagnostics = {
       headerFields: [],
@@ -134,39 +186,39 @@ abstract class MikaAdapter implements SourceAdapter {
       emptyShell: true,
     };
 
-    for (let page = 1; page <= MAX_PAGES; page += 1) {
-      const { body } = await this.fetcher.fetchText(
-        seasonUrl(seasonPath, {
-          pid: "list",
-          event: code,
-          page: String(page),
-          num_results: String(PAGE_SIZE),
-          ...this.listParams(sex),
-        }),
-      );
+    const first = await this.collect(
+      seasonPath, code, sourceEventId, sourceDivisionId,
+      this.listParams(sex), byId, merged,
+    );
+    publishedEntrantCount = first.published;
 
-      const parsed = parseDivisionRows(body, sourceEventId, sourceDivisionId);
-      if (publishedEntrantCount === undefined) {
-        publishedEntrantCount = parsed.publishedEntrantCount;
+    // ⚠️ The pager is capped, and the cap is well below what a big board holds.
+    //
+    // Measured: a 686-entrant division served new rows for seven pages, reached
+    // 282, and returned empty pages from page eight onward. No page parameter
+    // reaches the other 404. The engine was correct and the source's pagination
+    // simply stops.
+    //
+    // Narrowing by age group splits the field into slices that each fit under
+    // that ceiling. It costs more requests, so it only happens when the board
+    // says there is more to get than we managed to collect.
+    if (publishedEntrantCount !== undefined && byId.size < publishedEntrantCount) {
+      for (const ageClass of parseAgeClasses(first.firstBody)) {
+        const before = byId.size;
+        await this.collect(
+          seasonPath, code, sourceEventId, sourceDivisionId,
+          { ...this.listParams(sex), "search[age_class]": ageClass }, byId, merged,
+        );
+        void before;
+        if (byId.size >= publishedEntrantCount) break;
+        if (opts.maxRows && byId.size >= opts.maxRows) break;
       }
-      rows.push(...parsed.rows);
-
-      // Merged across pages: the header is read once, counts accumulate, and
-      // "empty shell" only survives if every page was one.
-      if (merged.headerFields.length === 0) merged.headerFields = parsed.diagnostics.headerFields;
-      merged.candidateRows += parsed.diagnostics.candidateRows;
-      merged.parsedRows += parsed.diagnostics.parsedRows;
-      merged.emptyShell = merged.emptyShell && parsed.diagnostics.emptyShell;
-
-      // A short page is the last page. Belt and braces against a pager that
-      // happily serves page 999 of a three-page list.
-      if (parsed.rows.length < PAGE_SIZE) break;
-      if (opts.maxRows && rows.length >= opts.maxRows) break;
     }
 
     // A method that returns nothing where the board itself says there are
     // entrants has not succeeded, it has failed quietly. Throwing hands over to
     // the next method in the chain rather than storing an empty division.
+    const rows = [...byId.values()];
     if (rows.length === 0 && (publishedEntrantCount ?? 0) > 0) {
       throw new Error(
         `${this.name}: board reports ${publishedEntrantCount} entrants but rendered no rows ` +

@@ -30,11 +30,10 @@ export const revalidate = 1800;
 const FEATURED_NATIONS = ["gb", "ie"];
 
 export const metadata: Metadata = {
-  title: "HYROX Records: Every World, National and Age-Group Record",
+  title: "HYROX Records: World, National, Age Group",
   description:
     "The complete HYROX record book — world records in every division, national "
-    + "records by country, and every age-group mark, with what each one beat. "
-    + "Updated automatically as races finish. Free, no account.",
+    + "records by country and every age-group mark, with what each one beat.",
   alternates: { canonical: "/rankings/records" },
   openGraph: { url: `${siteUrl()}/rankings/records`, type: "website" },
 };
@@ -123,7 +122,7 @@ export default async function RecordsPage({
   ];
 
   return (
-    <div className="mx-auto max-w-[1000px] px-5 py-8 md:py-12">
+    <div className="mx-auto max-w-[1100px] px-5 py-8 md:py-12">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(datasetLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(crumbsLd) }} />
 
@@ -155,7 +154,7 @@ export default async function RecordsPage({
         </div>
       ) : null}
 
-      <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatTile label="World records" value={String(world.length)} sub="one per division" />
         <StatTile label="Age-group records" value={String(ageGroups.length)} />
         <StatTile label="Countries holding records" value={String(nations.length)} />
