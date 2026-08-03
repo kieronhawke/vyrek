@@ -21,6 +21,7 @@ import { SourceFetcher } from "../fetch/fetcher";
 import { OutboundBudget } from "../fetch/guard";
 import { ResultsService } from "../serve/service";
 import { recomputeDistributionsForEvent } from "./distributions";
+import { runSplitsBackfill } from "./splits";
 
 const LIVE = process.env.HYROX_LIVE_SMOKE === "1";
 const suite = LIVE ? describe : describe.skip;
@@ -124,5 +125,33 @@ suite("live ingestion, end to end", () => {
     });
     expect(again.inserted).toBe(0);
     console.log(`[live] re-sync: inserted=${again.inserted} unchanged=${again.unchanged}`);
-  }, 180_000);
+
+    // Splits: the part the result page is actually for. Three athletes only —
+    // this is one request each and the smoke test must stay cheap.
+    const splits = await runSplitsBackfill(engine, { limit: 3, triggerSource: "smoke" });
+    console.log(
+      `[live] splits: attempted=${splits.attempted} filled=${splits.filled} ` +
+        `quarantined=${splits.quarantined} failed=${splits.failed} remaining=${splits.remaining}`,
+    );
+    expect(splits.filled).toBe(3);
+    expect(splits.quarantined).toBe(0);
+
+    const detail = await service.getResult(page!.rows[0].id);
+    expect(detail).not.toBeNull();
+    expect(detail!.runs.filter((r) => r > 0)).toHaveLength(8);
+    expect(Object.values(detail!.stations).filter((s) => s > 0)).toHaveLength(8);
+    expect(detail!.roxzoneSeconds).toBeGreaterThan(0);
+
+    // The splits must actually account for the race, not merely exist.
+    const summed =
+      detail!.runs.reduce((a, b) => a + b, 0) +
+      Object.values(detail!.stations).reduce((a, b) => a + b, 0) +
+      detail!.roxzoneSeconds;
+    const drift = Math.abs(summed - detail!.finishSeconds) / detail!.finishSeconds;
+    console.log(
+      `[live] ${detail!.athleteName}: splits sum ${summed}s vs finish ${detail!.finishSeconds}s ` +
+        `(${(drift * 100).toFixed(1)}% drift)`,
+    );
+    expect(drift).toBeLessThan(0.05);
+  }, 240_000);
 });

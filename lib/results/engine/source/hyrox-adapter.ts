@@ -26,10 +26,20 @@
  */
 
 import { SourceFetcher } from "../fetch/fetcher";
-import type { ParseDiagnostics, RawDivisionPage, RawEventGroup } from "../types";
+import type {
+  ParseDiagnostics,
+  RawDivisionPage,
+  RawEventGroup,
+  RawResultDetail,
+} from "../types";
 import type { SourceAdapter } from "./adapter";
 import { FallbackChain } from "./adapter";
-import { parseDivisionRows, parseEventGroups, weekendIdOf } from "./mika-parse";
+import {
+  parseDetailSplits,
+  parseDivisionRows,
+  parseEventGroups,
+  weekendIdOf,
+} from "./mika-parse";
 
 const SOURCE_ORIGIN = process.env.HYROX_SOURCE_ORIGIN ?? "https://results.hyrox.com";
 /** Their pager serves 100 comfortably. */
@@ -158,6 +168,31 @@ abstract class MikaAdapter implements SourceAdapter {
       rows: parsed.rows,
       diagnostics: parsed.diagnostics,
       via: "html",
+    };
+  }
+
+  async fetchResultDetail(
+    seasonPath: string,
+    opts: { idp: string; sourceDivisionId: string },
+  ): Promise<RawResultDetail> {
+    const { code } = splitDivisionRef(opts.sourceDivisionId);
+    const { body } = await this.fetcher.fetchText(
+      seasonUrl(seasonPath, {
+        content: "detail",
+        fpid: "list",
+        pid: "list",
+        idp: opts.idp,
+        event: code,
+      }),
+    );
+    const splits = parseDetailSplits(body);
+    if (splits.runs.length === 0 && splits.stations.length === 0) {
+      throw new Error(`No splits parsed from detail view for ${opts.idp}`);
+    }
+    return {
+      sourceResultId: `${opts.sourceDivisionId}:${opts.idp}`,
+      idp: opts.idp,
+      ...splits,
     };
   }
 }

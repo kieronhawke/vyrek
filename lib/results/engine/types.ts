@@ -235,6 +235,17 @@ export type RawResultRow = {
   partnerNames?: string[];
 };
 
+/** One athlete's splits, as the detail view prints them. */
+export type RawResultDetail = {
+  sourceResultId: string;
+  idp: string;
+  runs: { key: string; time: string }[];
+  stations: { key: string; time: string }[];
+  roxzone?: string;
+  finish?: string;
+  bib?: string;
+};
+
 /** What the parser saw, for the shape sentinel. Carried, never reconstructed. */
 export type ParseDiagnostics = {
   /** Distinct `field-*` names seen in the header row. */

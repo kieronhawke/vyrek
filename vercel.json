@@ -20,6 +20,10 @@
     {
       "path": "/api/cron/results-backfill",
       "schedule": "*/20 * * * *"
+    },
+    {
+      "path": "/api/cron/results-splits",
+      "schedule": "*/5 * * * *"
     }
   ]
 }

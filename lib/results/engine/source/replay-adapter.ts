@@ -14,9 +14,9 @@
  * written and that exactly one realtime event fired per change.
  */
 
-import type { RawDivisionPage, RawEventGroup } from "../types";
+import type { RawDivisionPage, RawEventGroup, RawResultDetail } from "../types";
 import type { SourceAdapter } from "./adapter";
-import { parseDivisionRows, parseEventGroups } from "./mika-parse";
+import { parseDetailSplits, parseDivisionRows, parseEventGroups } from "./mika-parse";
 
 export type ReplayFixtures = {
   /** seasonPath → season index HTML */
@@ -27,6 +27,8 @@ export type ReplayFixtures = {
    */
   divisions: Record<string, string[]>;
   startLists?: Record<string, string>;
+  /** idp → detail-view HTML. */
+  details?: Record<string, string>;
 };
 
 export class ReplayAdapter implements SourceAdapter {
@@ -96,6 +98,20 @@ export class ReplayAdapter implements SourceAdapter {
       via: "replay",
     };
   }
+
+  async fetchResultDetail(
+    _seasonPath: string,
+    opts: { idp: string; sourceDivisionId: string },
+  ): Promise<RawResultDetail> {
+    this.requests += 1;
+    const html = this.fixtures.details?.[opts.idp];
+    if (!html) throw new Error(`No replay detail for ${opts.idp}`);
+    return {
+      sourceResultId: `${opts.sourceDivisionId}:${opts.idp}`,
+      idp: opts.idp,
+      ...parseDetailSplits(html),
+    };
+  }
 }
 
 /** An adapter that always fails, for the fallback-chain and freeze tests. */
@@ -114,6 +130,9 @@ export class FailingAdapter implements SourceAdapter {
     throw new Error(this.message);
   }
   async fetchStartList(): Promise<RawDivisionPage> {
+    throw new Error(this.message);
+  }
+  async fetchResultDetail(): Promise<RawResultDetail> {
     throw new Error(this.message);
   }
 }

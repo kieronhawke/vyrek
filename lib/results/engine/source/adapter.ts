@@ -12,7 +12,7 @@
  * something we are not sure about.
  */
 
-import type { RawDivisionPage, RawEventGroup } from "../types";
+import type { RawDivisionPage, RawEventGroup, RawResultDetail } from "../types";
 
 export interface SourceAdapter {
   readonly name: string;
@@ -26,6 +26,18 @@ export interface SourceAdapter {
   ): Promise<RawDivisionPage>;
   /** Start list for an upcoming event. */
   fetchStartList(seasonPath: string, sourceDivisionId: string): Promise<RawDivisionPage>;
+  /**
+   * One athlete's full splits, from the per-result detail view.
+   *
+   * Separate from `fetchDivision` because it costs one request *per athlete* —
+   * the list carries finish times only. A 3,000-entrant event is 3,000 requests,
+   * which is why splits are filled in by their own paced worker rather than
+   * during the division sync.
+   */
+  fetchResultDetail(
+    seasonPath: string,
+    opts: { idp: string; sourceDivisionId: string },
+  ): Promise<RawResultDetail>;
   /** How many requests this adapter has made, for run accounting. */
   requestCount(): number;
 }
@@ -87,6 +99,10 @@ export class FallbackChain implements SourceAdapter {
 
   fetchStartList(seasonPath: string, sourceDivisionId: string) {
     return this.run((a) => a.fetchStartList(seasonPath, sourceDivisionId));
+  }
+
+  fetchResultDetail(seasonPath: string, opts: { idp: string; sourceDivisionId: string }) {
+    return this.run((a) => a.fetchResultDetail(seasonPath, opts));
   }
 }
 

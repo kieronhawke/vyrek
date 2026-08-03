@@ -372,48 +372,84 @@ function slugForId(name: string): string {
 /**
  * The per-result detail view into ordered splits.
  *
- * The detail page prints one row per segment with a label and a time. Labels
- * vary in wording between seasons, so they are matched loosely against the
- * canonical station names rather than compared exactly.
+ * Real markup, one row per segment:
+ *
+ *     <tr class="f-time_01">
+ *       <th class="desc">Running 1</th>
+ *       <td class="f-time_01">00:02:48</td>
+ *       <td class="last"><span class="text-muted">&ndash;</span></td>
+ *     </tr>
+ *
+ * ⚠️ Matched strictly, against an explicit label list. The table also contains
+ * `Run Total`, `Best Run Lap`, `Rox In`, `Rox Out` and per-station `In`/`Out`
+ * timing-mat rows. A loose `/run/` match turns "Run Total" into a ninth run and
+ * "Best Run Lap" into a tenth, and the splits then never sum to the finish —
+ * which the validator would correctly quarantine, for entirely the wrong
+ * reason. Station labels carry their distance ("1000m SkiErg", "50m Sled
+ * Push"), so the distance is stripped before matching.
  */
 export function parseDetailSplits(html: string): {
   runs: { key: string; time: string }[];
   stations: { key: string; time: string }[];
   roxzone?: string;
+  finish?: string;
+  bib?: string;
 } {
   const runs: { key: string; time: string }[] = [];
   const stations: { key: string; time: string }[] = [];
   let roxzone: string | undefined;
+  let finish: string | undefined;
+  let bib: string | undefined;
 
-  const rowRe = /<tr[^>]*>([\s\S]*?)<\/tr>|<li[^>]*>([\s\S]*?)<\/li>/gi;
+  const rowRe = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
   let match: RegExpExecArray | null;
-  let runIndex = 0;
 
   while ((match = rowRe.exec(html)) !== null) {
-    const text = stripTags(match[1] ?? match[2] ?? "");
-    if (!text) continue;
-    const time = /(\d{1,2}:\d{2}(?::\d{2})?)/.exec(text)?.[1];
-    if (!time) continue;
-    const label = text.replace(time, "").trim().toLowerCase();
+    const cells = [...match[1].matchAll(/<(?:th|td)[^>]*>([\s\S]*?)<\/(?:th|td)>/gi)].map((c) =>
+      stripTags(c[1]),
+    );
+    if (cells.length < 2) continue;
 
-    if (/roxzone/.test(label)) {
-      roxzone = time;
+    const label = cells[0].trim();
+    const value = cells[1].trim();
+
+    if (/^bib\s*number$/i.test(label)) {
+      bib = value;
       continue;
     }
-    if (/^running|^run\b|lauf/.test(label)) {
-      runIndex += 1;
-      runs.push({ key: `run-${runIndex}`, time });
+    if (/^overall\s*time$/i.test(label)) {
+      finish = value;
       continue;
     }
+    if (/^roxzone\s*time$/i.test(label)) {
+      roxzone = value;
+      continue;
+    }
+
+    // "Running 3" and nothing else. Not "Run Total", not "Best Run Lap".
+    const run = /^running\s+(\d+)$/i.exec(label);
+    if (run) {
+      runs.push({ key: `run-${run[1]}`, time: value });
+      continue;
+    }
+
+    // Timing-mat rows: "1000m SkiErg In", "Rox Out". Segment totals only.
+    if (/\b(in|out)$/i.test(label)) continue;
+
     const station = matchStationLabel(label);
-    if (station) stations.push({ key: station, time });
+    if (station) stations.push({ key: station, time: value });
   }
 
-  return { runs, stations, roxzone };
+  runs.sort((a, b) => Number(/(\d+)/.exec(a.key)?.[1] ?? 0) - Number(/(\d+)/.exec(b.key)?.[1] ?? 0));
+  return { runs, stations, roxzone, finish, bib };
 }
 
+/**
+ * A station label to our key. The distance prefix is stripped first, so
+ * "1000m SkiErg" and "SkiErg" both resolve.
+ */
 export function matchStationLabel(label: string): string | null {
-  const l = label.toLowerCase();
+  const l = label.toLowerCase().replace(/^\d+\s*m\s*/, "").trim();
   if (/ski/.test(l)) return "ski-erg";
   if (/sled.*push|push.*sled/.test(l)) return "sled-push";
   if (/sled.*pull|pull.*sled/.test(l)) return "sled-pull";

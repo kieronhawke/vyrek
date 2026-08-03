@@ -23,6 +23,7 @@ import { runReconcile, isReconcileDue } from "./reconcile";
 import { orderForBackfill } from "./backfill";
 import { recomputeDistributionsForEvent } from "./distributions";
 import { channelForEvent, deliveryModeFor } from "./publisher";
+import { runSplitsBackfill, idpFromSourceResultId, hasSplits } from "./splits";
 
 describe("idempotency (§14)", () => {
   it("running the same sync twice creates no duplicates", async () => {
@@ -314,6 +315,57 @@ describe("backfill ordering (§5)", () => {
       "hk",
       "berlin",
     ]);
+  });
+});
+
+describe("splits backfill (§4)", () => {
+  it("fills splits from the detail view and validates them against the finish", async () => {
+    const detail = fixture("detail-splits.html");
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        // Every athlete on the board resolves to the same detail fixture; only
+        // the number filled matters here, not whose race it is.
+        details: Object.fromEntries(
+          ["LRAA0000001", "LRAA0000002", "LRAA0000003"].map((idp) => [idp, detail]),
+        ),
+      }),
+    });
+
+    await syncOnce(h);
+    const before = [...h.repo.results.values()];
+    expect(before.every((r) => !hasSplits(r))).toBe(true);
+
+    const outcome = await runSplitsBackfill(h.engine, { limit: 3 });
+
+    expect(outcome.filled).toBe(3);
+    expect(outcome.quarantined).toBe(0);
+    // Eight athletes on the board, three filled: the rest are still waiting.
+    expect(outcome.remaining).toBe(5);
+
+    const filled = [...h.repo.results.values()].filter(hasSplits);
+    expect(filled).toHaveLength(3);
+    expect(filled[0].splits.runs).toHaveLength(8);
+    expect(filled[0].splits.stations).toHaveLength(8);
+    expect(filled[0].splits.roxzoneMs).toBeGreaterThan(0);
+  });
+
+  it("takes the top of the board first, because that is what people open", async () => {
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        details: { LRAA0000001: fixture("detail-splits.html") },
+      }),
+    });
+    await syncOnce(h);
+
+    const outcome = await runSplitsBackfill(h.engine, { limit: 1 });
+    expect(outcome.filled).toBe(1);
+
+    const filled = [...h.repo.results.values()].find(hasSplits);
+    expect(filled?.rankOverall).toBe(1);
+  });
+
+  it("recovers the source id from the stored result id", () => {
+    expect(idpFromSourceResultId("H_LR3MS4JI163A#men:LRAA0000001")).toBe("LRAA0000001");
   });
 });
 

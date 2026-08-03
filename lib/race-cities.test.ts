@@ -83,7 +83,10 @@ describe("resolveGeo routes a slug to the right catalogue", () => {
   });
 
   it("returns undefined for a slug in neither catalogue", () => {
-    expect(resolveGeo("atlantis")).toBeUndefined();
+    // Was "atlantis" until the South African cities landed — Atlantis is a real
+    // town near Cape Town and duly resolved. A placeholder for "no such place"
+    // has to be a string that cannot become a place.
+    expect(resolveGeo("zzz-not-a-real-place-slug")).toBeUndefined();
   });
 
   it("points every parent directory at a country that actually has a page", () => {

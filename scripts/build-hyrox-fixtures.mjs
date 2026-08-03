@@ -206,16 +206,41 @@ ${HEADER}
 
 // The per-result detail view: eight runs, eight stations, Roxzone.
 const STATIONS = [
-  ["SkiErg", "04:12"], ["Sled Push", "02:48"], ["Sled Pull", "03:31"],
-  ["Burpee Broad Jump", "04:55"], ["Rowing", "04:38"], ["Farmers Carry", "02:07"],
-  ["Sandbag Lunges", "04:41"], ["Wall Balls", "05:26"],
+  ["1000m SkiErg", "04:12"], ["50m Sled Push", "02:48"], ["50m Sled Pull", "03:31"],
+  ["80m Burpee Broad Jump", "04:55"], ["1000m Row", "04:38"], ["200m Farmers Carry", "02:07"],
+  ["100m Sandbag Lunges", "04:41"], ["Wall Balls", "05:26"],
 ];
-const detailRows = [];
+// Labelled exactly as the real detail view labels them: stations carry their
+// distance, the Roxzone row is "Roxzone Time", and the table also contains the
+// summary and timing-mat rows that a loose parser turns into extra runs.
+const detailRows = [
+  `<tr><th class="desc">Bib Number</th><td>163522</td></tr>`,
+  // Consistent with the leader's time on the list fixtures (01:02:41), so the
+  // splits reconcile with the finish and the validator passes. A fixture whose
+  // splits cannot sum to its own finish tests the quarantine path, not the
+  // happy one.
+  `<tr><th class="desc">Overall Time</th><td class="f-time_finish_netto">01:02:41</td></tr>`,
+];
 for (let i = 0; i < 8; i += 1) {
-  detailRows.push(`<tr><td class="desc">Running ${i + 1}</td><td class="time">00:04:${String(20 + i).padStart(2, "0")}</td></tr>`);
-  detailRows.push(`<tr><td class="desc">${STATIONS[i][0]}</td><td class="time">00:${STATIONS[i][1]}</td></tr>`);
+  detailRows.push(`<tr class=" f-time_0${i + 1}">
+<th class="desc">Running ${i + 1}</th>
+<td class="f-time_0${i + 1}">00:03:${String(0 + i).padStart(2, "0")}</td>
+<td class=" last"><span class="text-muted">&ndash;</span></td>
+</tr>`);
+  detailRows.push(`<tr class=" f-station_0${i + 1}">
+<th class="desc">${STATIONS[i][0]}</th>
+<td class="f-station_0${i + 1}">00:${STATIONS[i][1]}</td>
+<td class=" last">${i + 3}</td>
+</tr>`);
 }
-detailRows.push(`<tr><td class="desc">Roxzone</td><td class="time">00:06:14</td></tr>`);
+detailRows.push(`<tr><th class="desc">Roxzone Time</th><td>00:06:14</td><td class="last">1</td></tr>`);
+// The traps: summary rows and timing-mat rows. "Run Total" must not become a
+// ninth run, and "1000m SkiErg In" must not become a second SkiErg split.
+detailRows.push(`<tr><th class="desc">Run Total</th><td>00:24:28</td><td class="last">4</td></tr>`);
+detailRows.push(`<tr><th class="desc">Best Run Lap</th><td>00:03:00</td><td class="last">13</td></tr>`);
+detailRows.push(`<tr><th class="desc">Rox In</th><td>16:37:49</td><td>00:02:48</td></tr>`);
+detailRows.push(`<tr><th class="desc">1000m SkiErg In</th><td>16:38:04</td><td>00:03:03</td></tr>`);
+detailRows.push(`<tr><th class="desc">1000m SkiErg Out</th><td>16:42:15</td><td>00:07:13</td></tr>`);
 writeFileSync(
   join(OUT, "detail-splits.html"),
   `<!-- SYNTHETIC IDENTITIES, REAL STRUCTURE. -->

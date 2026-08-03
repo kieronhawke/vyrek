@@ -189,5 +189,12 @@ describe("detail splits", () => {
       "wall-balls",
     ]);
     expect(splits.roxzone).toBe("00:06:14");
+    expect(splits.finish).toBe("01:02:41");
+    expect(splits.bib).toBe("163522");
+    // "Run Total" and "Best Run Lap" are summary rows, and "1000m SkiErg In" is
+    // a timing mat. A loose match turns them into a ninth run and a second
+    // SkiErg split, and the splits then never sum to the finish.
+    expect(splits.runs).toHaveLength(8);
+    expect(splits.stations.filter((s) => s.key === "ski-erg")).toHaveLength(1);
   });
 });
