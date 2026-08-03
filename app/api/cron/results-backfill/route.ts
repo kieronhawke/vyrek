@@ -7,7 +7,8 @@
  */
 import { NextResponse } from "next/server";
 import { assertCron, UnauthorisedError } from "@/lib/results/engine/ops/auth";
-import { getSyncEngine, ingestionStatus } from "@/lib/results/engine";
+import { getResultsRepository, getSyncEngine, ingestionStatus } from "@/lib/results/engine";
+import { sharedBudgetAllows } from "@/lib/results/engine/ops/run-hygiene";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
@@ -20,6 +21,13 @@ export async function GET(request: Request) {
     if (blocked) return blocked;
     // Deliberately small per run. This is a marathon against a source we want
     // to keep access to, not a sprint.
+    const budget = await sharedBudgetAllows(getResultsRepository(), { need: 2 });
+    if (!budget.allowed) {
+      // Another worker is already using the minute's allowance. Deferring is
+      // free: the next tick picks this up, and the source sees one steady rate
+      // rather than three workers arriving together.
+      return NextResponse.json({ deferred: true, reason: budget.reason }, { status: 200 });
+    }
     const result = await runBackfill(getSyncEngine(), {
       triggerSource: "cron",
       maxEvents: Number(process.env.HYROX_BACKFILL_EVENTS_PER_RUN ?? 2),

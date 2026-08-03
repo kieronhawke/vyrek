@@ -31,6 +31,7 @@ import {
   type LiveUpdate,
   type RealtimePublisher,
 } from "./publisher";
+import { reapStaleRuns, recordSharedRequests } from "../ops/run-hygiene";
 
 export type EngineDeps = {
   repo: ResultsRepository;
@@ -359,25 +360,47 @@ export class SyncEngine {
     });
   }
 
-  /** Wraps a run so a crash still closes the `ingestion_runs` row. */
+  /**
+   * Wraps a run so a crash still closes the `ingestion_runs` row.
+   *
+   * Also tidies up after runs that were *killed* rather than thrown — a
+   * function timeout or an instance recycle leaves a row saying `running` for
+   * ever, and the console reads the newest run to decide whether a job is
+   * working. Reaping on the way in means whichever worker next wakes up clears
+   * the wreckage, without needing a janitor of its own.
+   */
   async withRun<T>(
     mode: IngestionMode,
     triggerSource: string,
     fn: (runId: string) => Promise<T & { detail?: Record<string, unknown> }>,
   ): Promise<T> {
+    await reapStaleRuns(this.deps.repo, this.now()).catch(() => {
+      // Housekeeping must never stop the work it is housekeeping for.
+    });
+
+    const before = this.deps.adapter.requestCount();
     const run = await this.deps.repo.startRun({ mode, triggerSource });
+
+    const settle = async (patch: Record<string, unknown>) => {
+      const made = this.deps.adapter.requestCount() - before;
+      // Recorded against the budget every instance shares, so the cap holds
+      // however many workers are running at once.
+      if (made > 0) {
+        await recordSharedRequests(this.deps.repo, made, this.now()).catch(() => {});
+      }
+      await this.deps.repo.finishRun(run.id, {
+        requestsMade: this.deps.adapter.requestCount(),
+        ...patch,
+      });
+    };
+
     try {
       const result = await fn(run.id);
-      await this.deps.repo.finishRun(run.id, {
-        status: "ok",
-        requestsMade: this.deps.adapter.requestCount(),
-        ...(result as Record<string, unknown>),
-      });
+      await settle({ status: "ok", ...(result as Record<string, unknown>) });
       return result;
     } catch (error) {
-      await this.deps.repo.finishRun(run.id, {
+      await settle({
         status: "error",
-        requestsMade: this.deps.adapter.requestCount(),
         errors: [{ message: error instanceof Error ? error.message : String(error) }],
       });
       throw error;
