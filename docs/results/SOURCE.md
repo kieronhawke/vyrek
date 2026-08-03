@@ -191,6 +191,26 @@ Read it from that span, not by sweeping the page for a number near the word
 "Results" — a loose match read a 153-row division as 19 entrants, which would
 have passed the completeness checksum as a false OK.
 
+### ⚠️ Doubles and relay boards are a different board
+
+Not an individual board with two names in it:
+
+| | Individual | Doubles / relay |
+|---|---|---|
+| Name column | `type-fullname` | `type-relay_member` |
+| Nationality | `type-nation_flag` | **absent** |
+| Comma in the name means | surname, forename | athlete, partner |
+
+That last row is the trap. "Benzio, Sergio" is one person written surname-first;
+"Kevin Marshall, Danny Wood" is two people. Applying the surname-first
+normaliser to a team row produces a single athlete called "Danny Wood Kevin
+Marshall".
+
+A parser keyed only on `fullname` returns zero rows for every doubles and relay
+division in the season, and a shape sentinel requiring `fullname` alarms on all
+of them — which trains the operator to ignore the alert. Both name columns
+count.
+
 ### The detail view — where the splits are
 
 `?content=detail&idp=…&event=…` returns one row per segment:

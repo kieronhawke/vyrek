@@ -482,3 +482,11 @@ event-level hash was overwritten by each division in turn: the unchanged check
 never matched and every poll rewrote every row. `syncDivision` re-reads the
 division rather than trusting the caller's copy, because a stale object disables
 the optimisation with no visible symptom beyond churn.
+
+### D62 — Both name columns count, and the comma is column-dependent
+Doubles and relay boards use `type-relay_member` and omit nationality entirely.
+The sentinel accepts either name column, because requiring `fullname` alarms on
+every doubles division in the season and an alert that always fires is an alert
+nobody reads. The comma separates surname from forename in `fullname` and one
+athlete from their partner in `relay_member`, so only individual rows are
+name-normalised.
