@@ -10,6 +10,10 @@ import { PaymentFailedEmail } from "@/lib/email/templates/payment-failed";
 import { CancellationEmail } from "@/lib/email/templates/cancellation";
 import { CLUB } from "@/lib/pricing";
 import {
+  OnboardingInviteEmail,
+  onboardingInviteSubject,
+} from "@/lib/email/templates/onboarding-invite";
+import {
   LeadConfirmationEmail,
   leadConfirmationSubject,
   CallBookedEmail,
@@ -134,6 +138,32 @@ async function send(args: {
       reason: err instanceof Error ? err.message: "unknown",
     };
   }
+}
+
+/**
+ * The invite Ben sends when he adds a client.
+ *
+ * Goes through the same `send` as everything else, so it inherits the
+ * plain-text alternative and the not-configured behaviour rather than
+ * reimplementing them.
+ */
+export async function sendOnboardingInvite(args: {
+  to: string;
+  firstName: string;
+  link: string;
+  kind: "full" | "payment";
+  planName?: string;
+}): Promise<Result> {
+  return send({
+    to: args.to,
+    subject: onboardingInviteSubject(args.firstName, args.kind),
+    react: OnboardingInviteEmail({
+      firstName: args.firstName,
+      link: args.link,
+      kind: args.kind,
+      planName: args.planName,
+    }),
+  });
 }
 
 export async function sendWelcomeEmail(args: {
