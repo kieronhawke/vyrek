@@ -299,10 +299,9 @@ export function UsStatePage({
                   [ Where you can train in {state.name} ]
                 </h2>
                 <p className="mt-4 text-base leading-relaxed text-suth-text-secondary">
-                  What to look for is not a HYROX sticker on the door. It is a
-                  sled lane long enough to push on, a spare wall for wall balls,
-                  and a rower nobody queues for at 6pm. These are the named
-                  sites in the state&apos;s largest metros.
+                  {variant === "hyrox"
+                    ? `What to look for is not a HYROX sticker on the door. It is a sled lane long enough to push on, a spare wall for wall balls, and a rower nobody queues for at 6pm. These are the named sites in the state's largest metros.`
+                    : `Across a state this size the gym that gets used is the one you pass anyway, not the best-equipped one two towns over. These are the named sites in the largest metros, and the programme is written around whichever you land on.`}
                 </p>
                 <div className="mt-8 space-y-7">
                   {gyms.map((m) => (
@@ -353,8 +352,9 @@ export function UsStatePage({
                   [ {state.citiesTracked} cities and towns in {state.name} ]
                 </h2>
                 <p className="mt-4 text-base leading-relaxed text-suth-text-secondary">
-                  Coaching is online, so where you are in the state changes what
-                  you can get to rather than whether this works. The largest:
+                  {variant === "hyrox"
+                    ? `Coaching is online, so where you are in the state changes the travel to a start line rather than whether the programme works. The largest:`
+                    : `Coaching is online, so where you are in the state changes what equipment you can reach rather than whether this works. The largest:`}
                 </p>
                 <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2.5">
                   {state.cities.map((city) => (
@@ -367,6 +367,58 @@ export function UsStatePage({
             </Container>
           </section>
         )}
+
+        {/* One section per family that the other does not carry. Without this
+            the personal-trainer state page was a near-copy of the Hyrox one —
+            measured at 88.6% shared eight-word sequences for Texas. */}
+        <section
+          aria-labelledby="state-angle-heading"
+          className="border-b border-suth-border-subtle py-14 md:py-20"
+        >
+          <Container>
+            <div className="mx-auto max-w-3xl">
+              <h2
+                id="state-angle-heading"
+                className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary"
+              >
+                [ {variant === "hyrox" ? `Racing out of ${state.name}` : `Training around a ${state.name} week`} ]
+              </h2>
+              {variant === "hyrox" ? (
+                <>
+                  <p className="mt-4 text-base leading-relaxed text-suth-text-secondary">
+                    {state.races.length
+                      ? `Racing at home changes the taper more than it changes the training. No flight, no unfamiliar bed, and you can walk the floor the day before — which is worth more than any session you could have done instead.`
+                      : `Every race is a trip from ${state.name}, so the calendar matters as much as the training. Enter early, book the room at the same time, and give yourself a day on the ground before you race rather than arriving off a flight.`}
+                  </p>
+                  <p className="mt-4 text-base leading-relaxed text-suth-text-secondary">
+                    The eight stations are identical worldwide — same order,
+                    same distances, same loads by division. What differs between
+                    venues is floor surface, laps per kilometre and how long the
+                    Roxzone runs, which is why comparing your time to a
+                    friend&apos;s from another city is not comparing like with
+                    like.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="mt-4 text-base leading-relaxed text-suth-text-secondary">
+                    Commutes across {state.name} are long enough that the
+                    training which survives is the training that fits the day
+                    you actually have. A programme that assumes ninety free
+                    minutes gets abandoned in week three; one that knows you
+                    have forty on a Tuesday does not.
+                  </p>
+                  <p className="mt-4 text-base leading-relaxed text-suth-text-secondary">
+                    That is the part an hourly trainer cannot do. They can write
+                    you a good session; they cannot rewrite the week when work
+                    moves, and rewriting the week is most of what keeps people
+                    training past the point where motivation runs out.
+                  </p>
+                </>
+              )}
+            </div>
+          </Container>
+        </section>
 
         {/* ── FAQ ── */}
         <section
