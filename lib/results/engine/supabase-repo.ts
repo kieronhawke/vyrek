@@ -128,18 +128,49 @@ const fromResult = (r: UpsertResult) => ({
   is_demo: r.isDemo,
 });
 
+/**
+ * Supabase rejects with a `PostgrestError`-shaped **object**, not an `Error`.
+ *
+ * Thrown as-is it fails `instanceof Error`, stringifies to "[object Object]",
+ * and every layer above reports a useless message — which is exactly what
+ * production showed: a 500 reading `{"error":"[object Object]"}` for what was
+ * really a paused database. Every error out of this file is a real `Error`
+ * carrying the message, code, details and hint.
+ */
+export function toRepositoryError(error: unknown, context: string): Error {
+  if (error instanceof Error) {
+    error.message = `${context}: ${error.message}`;
+    return error;
+  }
+  const e = (error ?? {}) as {
+    message?: string;
+    code?: string;
+    details?: string;
+    hint?: string;
+  };
+  const parts = [
+    e.message ?? "unknown database error",
+    e.code ? `code=${e.code}` : null,
+    e.details ?? null,
+    e.hint ?? null,
+  ].filter(Boolean);
+  const wrapped = new Error(`${context}: ${parts.join(" · ")}`);
+  wrapped.name = "RepositoryError";
+  return wrapped;
+}
+
 export class SupabaseResultsRepository implements ResultsRepository {
   constructor(private db: SupabaseClient = supabaseAdmin()) {}
 
   private async one<T>(query: PromiseLike<{ data: unknown; error: unknown }>): Promise<T | null> {
     const { data, error } = await query;
-    if (error) throw error;
+    if (error) throw toRepositoryError(error, "results query failed");
     return (data as T) ?? null;
   }
 
   private async many<T>(query: PromiseLike<{ data: unknown; error: unknown }>): Promise<T[]> {
     const { data, error } = await query;
-    if (error) throw error;
+    if (error) throw toRepositoryError(error, "results query failed");
     return (data as T[]) ?? [];
   }
 
@@ -184,7 +215,7 @@ export class SupabaseResultsRepository implements ResultsRepository {
       .from("results_events")
       .update({ status })
       .eq("id", eventId);
-    if (error) throw error;
+    if (error) throw toRepositoryError(error, "results write failed");
   }
 
   async upsertDivision(division: UpsertDivision): Promise<EngineDivision> {
@@ -292,7 +323,7 @@ export class SupabaseResultsRepository implements ResultsRepository {
     // The SQL function, not an update here: erasure logic lives in one place
     // and is auditable as a single migration.
     const { error } = await this.db.rpc("results_anonymise_athlete", { target: athleteId });
-    if (error) throw error;
+    if (error) throw toRepositoryError(error, "results write failed");
   }
 
   async claimAthlete(athleteId: string, userId: string) {
@@ -300,7 +331,7 @@ export class SupabaseResultsRepository implements ResultsRepository {
       .from("results_athletes")
       .update({ claimed_by_user_id: userId })
       .eq("id", athleteId);
-    if (error) throw error;
+    if (error) throw toRepositoryError(error, "results write failed");
   }
 
   async recordMergeReview(review: Omit<AthleteMergeReview, "id" | "createdAt">) {
@@ -389,7 +420,7 @@ export class SupabaseResultsRepository implements ResultsRepository {
       const { error } = await this.db
         .from("results_results")
         .upsert(changed.map(fromResult), { onConflict: "source_result_id" });
-      if (error) throw error;
+      if (error) throw toRepositoryError(error, "results write failed");
     }
 
     return { inserted, updated, unchanged };
@@ -435,7 +466,7 @@ export class SupabaseResultsRepository implements ResultsRepository {
     if (query.q) q = q.ilike("results_athletes.name", `%${query.q}%`);
 
     const { data, error, count } = await q;
-    if (error) throw error;
+    if (error) throw toRepositoryError(error, "results write failed");
 
     const rows = ((data ?? []) as (ResultRow & { athlete: AthleteRow })[]).map((r) => ({
       ...toResult(r),
@@ -471,7 +502,7 @@ export class SupabaseResultsRepository implements ResultsRepository {
       .from("results_results")
       .select("id", { count: "exact", head: true })
       .eq("division_id", divisionId);
-    if (error) throw error;
+    if (error) throw toRepositoryError(error, "results write failed");
     return count ?? 0;
   }
 
@@ -536,7 +567,7 @@ export class SupabaseResultsRepository implements ResultsRepository {
       })),
       { onConflict: "scope,event_id,division_key,station_key,age_group,sex" },
     );
-    if (error) throw error;
+    if (error) throw toRepositoryError(error, "results write failed");
   }
 
   async getStationDistribution(query: {
@@ -710,7 +741,7 @@ export class SupabaseResultsRepository implements ResultsRepository {
       .from("results_quarantine")
       .update({ reprocessed_at: new Date().toISOString() })
       .eq("id", id);
-    if (error) throw error;
+    if (error) throw toRepositoryError(error, "results write failed");
   }
 
   async raiseAlert(alert: Omit<EngineAlert, "id" | "createdAt">) {
@@ -746,7 +777,7 @@ export class SupabaseResultsRepository implements ResultsRepository {
       .from("results_alerts")
       .update({ acknowledged_at: new Date().toISOString() })
       .eq("id", id);
-    if (error) throw error;
+    if (error) throw toRepositoryError(error, "results write failed");
   }
 
   async getSetting<T>(key: string) {
@@ -761,7 +792,7 @@ export class SupabaseResultsRepository implements ResultsRepository {
       { key, value, updated_by: updatedBy ?? null, updated_at: new Date().toISOString() },
       { onConflict: "key" },
     );
-    if (error) throw error;
+    if (error) throw toRepositoryError(error, "results write failed");
   }
 }
 

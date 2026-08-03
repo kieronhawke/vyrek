@@ -78,7 +78,7 @@ export function apiNotFound(what: string): NextResponse {
  * retry the wrong one.
  */
 export function apiError(error: unknown, status = 500): NextResponse {
-  const message = error instanceof Error ? error.message : String(error);
+  const message = describeError(error);
 
   if (isStoreUnreachable(message)) {
     return NextResponse.json(
@@ -99,5 +99,29 @@ export function apiError(error: unknown, status = 500): NextResponse {
 
 /** DNS failure, refused connection, or a paused Supabase project. */
 function isStoreUnreachable(message: string): boolean {
-  return /ENOTFOUND|EAI_AGAIN|ECONNREFUSED|ETIMEDOUT|fetch failed|getaddrinfo/i.test(message);
+  return /ENOTFOUND|EAI_AGAIN|ECONNREFUSED|ETIMEDOUT|fetch failed|getaddrinfo|TypeError: fetch/i.test(
+    message,
+  );
+}
+
+/**
+ * `String(error)` on a plain object gives "[object Object]", which is what a
+ * caller then sees instead of a cause. Anything that is not an Error is
+ * inspected for a message before being stringified.
+ */
+export function describeError(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  if (typeof error === "string") return error;
+  if (error && typeof error === "object") {
+    const e = error as { message?: unknown; code?: unknown };
+    if (typeof e.message === "string") {
+      return e.code ? `${e.message} (code=${String(e.code)})` : e.message;
+    }
+    try {
+      return JSON.stringify(error);
+    } catch {
+      return "unserialisable error";
+    }
+  }
+  return String(error);
 }

@@ -11,7 +11,7 @@
 
 import { NextResponse } from "next/server";
 import { getResultsRepository, hasSupabaseConfig, ingestionStatus } from "@/lib/results/engine";
-import { ATTRIBUTION } from "@/lib/results/engine/serve/http";
+import { ATTRIBUTION, describeError } from "@/lib/results/engine/serve/http";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -33,7 +33,7 @@ export async function GET() {
     store = {
       reachable: false,
       events: null,
-      error: error instanceof Error ? error.message : String(error),
+      error: describeError(error),
     };
   }
 
