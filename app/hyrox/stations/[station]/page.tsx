@@ -80,7 +80,10 @@ export async function generateMetadata({
   const s = getStation(station);
   if (!s) return { title: "Not found" };
   const url = `${siteUrl()}/hyrox/stations/${s.slug}`;
-  const title = `Hyrox ${s.name}: technique, splits, and training drills`;
+  /* "technique, splits, and training drills" put all eight station pages
+     between 71 and 83 characters once the brand suffix was added. The
+     shorter phrase keeps the two terms people actually search for. */
+  const title = `Hyrox ${s.name}: technique and drills`;
   const description = `${s.summary} Coaching cues, common faults, goal splits, and training drills for the Hyrox ${s.name} station.`;
   return {
     title,

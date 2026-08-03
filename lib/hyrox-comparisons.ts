@@ -6,6 +6,10 @@ export type ComparisonDef = {
   eyebrow: string;
   /** Title H1. */
   title: string;
+  /** Optional shorter title for the <title> tag only, when the H1 is too
+   *  long once the root layout appends " · Suth Performance" (19 chars,
+   *  leaving 46). The H1 keeps the full wording. */
+  seoTitle?: string;
   /** Meta description. */
   hook: string;
   /** Intro paragraphs. */
@@ -24,6 +28,7 @@ export const COMPARISONS: ComparisonDef[] = [
     opposite: "CrossFit",
     eyebrow: "Hyrox vs CrossFit",
     title: "Hyrox vs CrossFit: which is harder, and which is right for you?",
+    seoTitle: "Hyrox vs CrossFit: which is harder?",
     hook: "Hyrox and CrossFit look similar from the outside. They're built on different principles. The honest comparison.",
     intro: [
       "Hyrox is a fixed-format hybrid race: 8 stations, 8 × 1 km runs, in the same order every time. CrossFit is open-format functional fitness, workouts change daily, the movements span everything from Olympic lifting to gymnastics.",
@@ -82,6 +87,7 @@ export const COMPARISONS: ComparisonDef[] = [
     opposite: "Marathon",
     eyebrow: "Hyrox vs Marathon",
     title: "Hyrox vs Marathon: two endurance events, different sports",
+    seoTitle: "Hyrox vs Marathon: how they differ",
     hook: "Both are 60-180 minutes of effort. The training is almost nothing alike.",
     intro: [
       "A marathon is 42.2 km of running. The training is 4-5 months of progressive running volume, typically 50-100 km per week, with race pace dialed into the body.",
@@ -109,6 +115,7 @@ export const COMPARISONS: ComparisonDef[] = [
     opposite: "Triathlon",
     eyebrow: "Hyrox vs Triathlon",
     title: "Hyrox vs Triathlon: hybrid sport, different muscles",
+    seoTitle: "Hyrox vs Triathlon: how they differ",
     hook: "Both are hybrid endurance. Triathlon spreads across swim-bike-run. Hyrox stays on the floor.",
     intro: [
       "Triathlon trains three disciplines plus transitions. Hyrox trains running, station strength endurance, and pacing under fatigue. Different muscle groups, different scheduling demands.",
@@ -135,6 +142,7 @@ export const COMPARISONS: ComparisonDef[] = [
     opposite: "F45",
     eyebrow: "Hyrox vs F45",
     title: "Hyrox vs F45: class-based training vs race-specific programming",
+    seoTitle: "Hyrox vs F45: which should you do?",
     hook: "F45 is a class. Hyrox is a race. The training needed for each is fundamentally different.",
     intro: [
       "F45 is a structured 45-minute group class, varied workouts, group atmosphere, designed for general fitness. Hyrox is a competitive race with a fixed format you train backwards from.",

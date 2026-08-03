@@ -12,6 +12,10 @@ export type GearGuide = {
   slug: string;
   /** Display name, e.g. "Best Hyrox shoes for the open division". */
   title: string;
+  /** Optional shorter title for the <title> tag only, when the H1 is too
+   *  long once the root layout appends " · Suth Performance" (19 chars,
+   *  leaving 46). The H1 keeps the full wording. */
+  seoTitle?: string;
   /** Short eyebrow. */
   eyebrow: string;
   /** Meta hook. */
@@ -32,6 +36,7 @@ export const GEAR_GUIDES: GearGuide[] = [
   {
     slug: "best-hyrox-shoes",
     title: "Best Hyrox shoes: what to look for and what to avoid",
+    seoTitle: "Best Hyrox shoes: what to look for",
     eyebrow: "Shoes",
     hook: "Hyrox runs across 8 km of indoor flooring plus station-based lateral movement. The right shoe is a flat-ish hybrid trainer, not a marathon racer.",
     intro: [
@@ -72,6 +77,7 @@ export const GEAR_GUIDES: GearGuide[] = [
   {
     slug: "best-hyrox-gloves",
     title: "Hyrox gloves: when you need them, when you don't",
+    seoTitle: "Hyrox gloves: do you need them?",
     eyebrow: "Gloves",
     hook: "Gloves help on sled pull and farmers carry. They hurt on wall balls and rowing. The honest verdict on whether to wear them.",
     intro: [
@@ -140,6 +146,7 @@ export const GEAR_GUIDES: GearGuide[] = [
   {
     slug: "best-hyrox-belt",
     title: "Hyrox lifting belt: when it's useful and when it's not",
+    seoTitle: "Hyrox lifting belt: do you need one?",
     eyebrow: "Belt",
     hook: "Belts help on heavy sled pulls and sandbag lunges. They restrict on running and burpee broad jumps. The trade-off.",
     intro: [

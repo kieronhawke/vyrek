@@ -18,6 +18,7 @@ import {
   formatDates,
   racesInCountry,
 } from "@/lib/hyrox/races";
+import type { Race } from "@/lib/hyrox/races";
 import { siteUrl } from "@/lib/blog/urls";
 
 /**
@@ -41,6 +42,21 @@ export function generateStaticParams() {
   return RACES.map((r) => ({ slug: r.slug }));
 }
 
+/** Drop any sponsor prefix so the title leads with "HYROX <place>". */
+function titleName(name: string): string {
+  const i = name.toUpperCase().indexOf("HYROX");
+  return i > 0 ? name.slice(i) : name;
+}
+
+/** "Apr 2027". The full range is still shown on the page itself. */
+function monthAndYear(race: Race): string {
+  return new Intl.DateTimeFormat("en-GB", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${race.startDate}T00:00:00Z`));
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -52,7 +68,14 @@ export async function generateMetadata({
 
   const where = [race.city, race.country].filter(Boolean).join(", ");
   return {
-    title: `${race.name}: ${formatDates(race)}`,
+    /* Race names carry a sponsor prefix ("all inclusive Fitness HYROX
+       Cologne", "MAYBELLINE HYROX PARIS GRAND-PALAIS"), which buried the
+       part people actually search for and pushed roughly forty of these
+       pages past 65 characters once the brand suffix was added. Lead with
+       "HYROX <place>" and give the month rather than the full range; the
+       exact dates stay in the description, the H1 and the page body, and
+       the full official name stays in the description. */
+    title: `${titleName(race.name)}: ${monthAndYear(race)}`,
     description:
       `${race.name} takes place ${formatDates(race)} at ${race.venueName ?? where}. ` +
       `Dates, venue, and when a twelve-week HYROX build needs to start to land on race day.`,
