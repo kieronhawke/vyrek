@@ -53,6 +53,22 @@ suite("contamination repair", () => {
       }),
     );
 
+    /** Athlete ids in one division, one column, paged. */
+    const athleteIdsForDivision = async (divisionId: string): Promise<string[]> => {
+      const out: string[] = [];
+      for (let from = 0; ; from += 1000) {
+        const { data, error } = await db
+          .from("results_results")
+          .select("athlete_id")
+          .eq("division_id", divisionId)
+          .range(from, from + 999);
+        if (error) throw new Error(error.message);
+        const rows = (data ?? []) as { athlete_id: string }[];
+        out.push(...rows.map((r) => r.athlete_id));
+        if (rows.length < 1000) return out;
+      }
+    };
+
     const [events, divisions] = await Promise.all([repo.listEvents(), repo.listAllDivisions()]);
     const eventById = new Map(events.map((e) => [e.id, e]));
 
@@ -71,10 +87,15 @@ suite("contamination repair", () => {
       const women = divs.filter((d) => d.divisionKey.endsWith("-women"));
       if (men.length === 0 || women.length === 0) continue;
 
+      // ⚠️ Detection reads one column, not whole rows.
+      //
+      // The first version called `listResultsForDivision` per division to
+      // collect athlete ids — every column of 515,370 rows, `splits` included,
+      // to build a set of uuids. It had not finished after ten minutes.
       const athletesIn = async (list: typeof divs) => {
         const out = new Set<string>();
         for (const d of list) {
-          for (const r of await repo.listResultsForDivision(d.id)) out.add(r.athleteId);
+          for (const id of await athleteIdsForDivision(d.id)) out.add(id);
         }
         return out;
       };
