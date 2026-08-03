@@ -28,7 +28,7 @@ test("nav: primary links navigate (desktop)", async ({ page }, testInfo) => {
   expect(page.url()).toContain("/blog");
 });
 
-test("nav: primary CTA goes to quiz (desktop)", async ({
+test("nav: primary CTA books a call (desktop)", async ({
   page,
 }, testInfo) => {
   // The desktop CTA pill in the header is `hidden sm:inline-flex`.
@@ -36,10 +36,15 @@ test("nav: primary CTA goes to quiz (desktop)", async ({
   // separately).
   test.skip(testInfo.project.name.startsWith("mobile"), "desktop CTA only");
 
+  /* The primary path is the free consultation, not the quiz. Both routes
+     exist, but only one can be the button in the nav, and they ask for very
+     different things: a call costs half an hour and nothing else, the quiz
+     starts a fifteen-screen questionnaire that ends in a price. Changed
+     deliberately; this test moved with it. */
   await page.goto("/");
-  await page.getByRole("link", { name: /build my plan/i }).first().click();
-  await page.waitForURL("**/quiz**");
-  expect(page.url()).toContain("/quiz");
+  await page.getByRole("link", { name: /book a free call/i }).first().click();
+  await page.waitForURL("**/book**");
+  expect(page.url()).toContain("/book");
 });
 
 test("mobile hamburger: primary CTA reachable", async ({
