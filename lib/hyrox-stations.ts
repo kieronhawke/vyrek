@@ -14,6 +14,16 @@ export type StationDef = {
   spec: {
     mensOpen: string;
     womensOpen: string;
+    /**
+     * Pro loads, rendered only when present.
+     *
+     * Left unset deliberately. They are real published standards, but the open
+     * figures held here disagree with some public sources on the sled stations,
+     * and a guide that quotes a race weight wrong is worse than one that says
+     * nothing. Fill these in from the official rules and the table row appears.
+     */
+    mensPro?: string;
+    womensPro?: string;
     distance?: string;
     reps?: string;
   };

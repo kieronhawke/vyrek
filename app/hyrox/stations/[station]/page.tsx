@@ -22,6 +22,27 @@ import { siteUrl } from "@/lib/blog/urls";
 import { listPostMeta } from "@/lib/blog/posts";
 import { STATION_READING } from "@/lib/hyrox/station-reading";
 import { clampDescription } from "@/lib/seo/description";
+import { getResultsSource } from "@/lib/results";
+import type { StationId } from "@/lib/results/model";
+import { StationHistogram } from "@/components/results/tools/station-histogram";
+
+/** Guide slug to the results engine's station id. Differs for two plurals. */
+const STATION_ID_BY_GUIDE_SLUG: Record<string, StationId | undefined> = {
+  "ski-erg": "ski-erg",
+  "sled-push": "sled-push",
+  "sled-pull": "sled-pull",
+  "burpee-broad-jumps": "burpee-broad-jump",
+  rowing: "row",
+  "farmers-carry": "farmers-carry",
+  "sandbag-lunges": "sandbag-lunges",
+  "wall-balls": "wall-balls",
+};
+
+/** The two boards deep enough for a distribution to mean anything. */
+const DISTRIBUTION_DIVISIONS = [
+  { division: "open-men", label: "open men's" },
+  { division: "open-women", label: "open women's" },
+] as const;
 
 // Real photography from the July 2026 intake (docs/photo-library-2026-07.md),
 // except sled pull, which nothing in the set covers and so keeps its AI
@@ -117,6 +138,23 @@ export default async function StationPage({
   if (!s) notFound();
 
   const url = `${siteUrl()}/hyrox/stations/${s.slug}`;
+
+  // The guide slugs and the results engine's station ids agree on six of eight;
+  // "burpee-broad-jumps" and "rowing" are the guide's plurals.
+  const stationId = STATION_ID_BY_GUIDE_SLUG[s.slug];
+  const distributions = stationId
+    ? await Promise.all(
+        DISTRIBUTION_DIVISIONS.map(async (d) => ({
+          ...d,
+          // A station with no splits stored yet is normal early in a season, and
+          // a guide page must not 500 because of it.
+          distribution: await getResultsSource()
+            .getStationDistribution(stationId, d.division)
+            .catch(() => null),
+        })),
+      )
+    : [];
+  const withData = distributions.filter((d) => (d.distribution?.count ?? 0) > 0);
 
   // Resolve this station's reading list against what is actually published.
   const allPosts = await listPostMeta();
@@ -284,6 +322,95 @@ export default async function StationPage({
               ))}
             </dl>
           </section>
+
+          {/* Race spec, as a table rather than prose: it is reference material,
+              and people arrive at these pages to look one number up. */}
+          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
+            <Eyebrow>Race spec</Eyebrow>
+            <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
+              What you actually face.
+            </h2>
+            <div className="mt-6 overflow-x-auto">
+              <table className="w-full min-w-[26rem] border-collapse text-left text-sm">
+                <caption className="sr-only">
+                  {s.name} distances, reps and loads by division
+                </caption>
+                <thead>
+                  <tr className="border-b border-suth-border">
+                    <th scope="col" className="py-2 pr-4 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                      Division
+                    </th>
+                    <th scope="col" className="py-2 pr-4 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                      {s.spec.reps ? "Reps" : "Distance"}
+                    </th>
+                    <th scope="col" className="py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                      Load
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ["Men's Open", s.spec.mensOpen],
+                    ["Women's Open", s.spec.womensOpen],
+                    // ⚠️ Pro loads are not in the station data. They are real
+                    // published standards, but the ones held here disagree with
+                    // some public sources, and a guide that quotes a weight
+                    // wrong is worse than one that stays quiet. The row appears
+                    // the moment `spec.mensPro` is filled in — see REPORT.md.
+                    ...(s.spec.mensPro ? [["Men's Pro", s.spec.mensPro]] : []),
+                    ...(s.spec.womensPro ? [["Women's Pro", s.spec.womensPro]] : []),
+                  ].map(([division, load]) => (
+                    <tr key={division} className="border-b border-suth-border-subtle">
+                      <th scope="row" className="py-3 pr-4 font-medium text-suth-text">
+                        {division}
+                      </th>
+                      <td className="py-3 pr-4 text-suth-text-secondary">
+                        {s.spec.reps ?? s.spec.distance ?? "—"}
+                      </td>
+                      <td className="py-3 font-mono text-suth-text">{load}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          {/* The distribution behind the goal splits above. Renders only when
+              there are splits stored — an empty axis reads as breakage. */}
+          {withData.length > 0 ? (
+            <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
+              <Eyebrow>The field</Eyebrow>
+              <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
+                How long it takes everyone else.
+              </h2>
+              <p className="mt-3 text-sm text-suth-text-secondary">
+                A goal split means nothing without the shape behind it. This is every
+                stored {s.name.toLowerCase()} time, so you can see where yours sits rather
+                than guess.
+              </p>
+              {withData.map((d) => (
+                <div key={d.division} className="mt-8">
+                  <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                    {d.label}
+                  </h3>
+                  <StationHistogram
+                    distribution={d.distribution!}
+                    stationName={s.name}
+                    divisionLabel={d.label}
+                  />
+                </div>
+              ))}
+              <p className="mt-6 text-sm text-suth-text-secondary">
+                <Link href="/tools/good-hyrox-time" className="text-suth-accent underline">
+                  Work out what percentile your time is
+                </Link>
+                {" · "}
+                <Link href="/simulator" className="text-suth-accent underline">
+                  Model a full race around it
+                </Link>
+              </p>
+            </section>
+          ) : null}
 
           {/* Cues */}
           <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
