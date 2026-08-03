@@ -3,6 +3,12 @@ import { getLocationBySlug, listLocationSlugs } from "@/lib/uk-locations";
 import type { GeoSeo } from "@/lib/locations/seo";
 import { getGeoSeo, geoRobots } from "@/lib/locations/seo";
 import {
+  getFocusCity,
+  getFocusCityGeo,
+  focusCityAsLocation,
+  listFocusCitySlugs,
+} from "@/lib/focus-cities";
+import {
   RACE_CITIES,
   getRaceCityBySlug,
   getRaceCityGeo,
@@ -34,6 +40,8 @@ export type ResolvedGeo = {
   seo: GeoSeo;
   /** Present only for the international race cities. */
   city?: RaceCity;
+  /** Set on a focus city that carries the in-person VIP offer. */
+  vip?: { city: string; country: string };
   robots: { index: boolean; follow: boolean };
   /** The directory this page sits under, for breadcrumbs and cross-links. */
   parent: { name: string; path: (base: string) => string };
@@ -41,7 +49,7 @@ export type ResolvedGeo = {
 };
 
 export function listAllGeoSlugs(): string[] {
-  return [...listLocationSlugs(), ...listRaceCitySlugs()];
+  return [...listLocationSlugs(), ...listRaceCitySlugs(), ...listFocusCitySlugs()];
 }
 
 export function resolveGeo(slug: string): ResolvedGeo | undefined {
@@ -54,6 +62,22 @@ export function resolveGeo(slug: string): ResolvedGeo | undefined {
       parent: {
         name: uk.region,
         path: (base) => `${base}/in/${regionSlugOf(uk.region)}`,
+      },
+    };
+  }
+
+  /* Focus cities: markets we target that carry no race, so they cannot come
+     from the race-city catalogue. Dubai is the first. */
+  const focus = getFocusCity(slug);
+  if (focus) {
+    return {
+      loc: focusCityAsLocation(focus),
+      seo: getFocusCityGeo(slug),
+      robots: { index: true, follow: true },
+      vip: focus.vip ? { city: focus.name, country: focus.country } : undefined,
+      parent: {
+        name: focus.country,
+        path: (base) => `${base}/country/${focus.countrySlug}`,
       },
     };
   }

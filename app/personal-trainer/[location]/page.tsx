@@ -9,6 +9,7 @@ import {
 import { JsonLd } from "@/lib/blog/jsonld";
 import { siteUrl } from "@/lib/blog/urls";
 import { listAllGeoSlugs, resolveGeo } from "@/lib/geo-page";
+import { VipInPerson } from "@/components/landing/vip-in-person";
 
 export const revalidate = 86400;
 export const dynamicParams = false;
@@ -84,7 +85,7 @@ export default async function PersonalTrainerLocationPage({
   const { location } = await params;
   const r = resolveGeo(location);
   if (!r) notFound();
-  const { loc, seo, parent, nearby, city } = r;
+  const { loc, seo, parent, nearby, city, vip } = r;
   // See the metadata above: the four names both catalogues claim need the
   // country in the heading, or two live pages carry the same H1.
   const headingName = city?.bareSlug ? `${loc.name}, ${city.country}` : undefined;
@@ -104,6 +105,7 @@ export default async function PersonalTrainerLocationPage({
         seo={seo}
         nearby={nearby}
         headingName={headingName}
+        afterLocalContext={vip ? <VipInPerson city={vip.city} country={vip.country} /> : null}
       />
     </>
   );

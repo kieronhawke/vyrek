@@ -6,6 +6,7 @@ import { UK_LOCATIONS, listRegionSlugs, listCountySlugs } from "@/lib/uk-locatio
 import { getGeoSeo, geoPriority, isRaceCity } from "@/lib/locations/seo";
 import { RACE_CITIES, listCountrySlugs } from "@/lib/race-cities";
 import { US_STATES } from "@/lib/us-states";
+import { FOCUS_CITIES } from "@/lib/focus-cities";
 import { STATIONS } from "@/lib/hyrox-stations";
 import { PLAN_TEMPLATES } from "@/lib/plan-templates";
 import { COMPARISONS } from "@/lib/hyrox-comparisons";
@@ -175,6 +176,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...listCountrySlugs().flatMap((c) => [
       { url: `${SITE_URL}/hyrox-training/country/${c}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
       { url: `${SITE_URL}/personal-trainer/country/${c}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
+    ]),
+    /* Focus cities: markets we target that carry no race. Dubai is the first,
+       and it carries the in-person offer, which is why it sits at hub priority
+       rather than town priority. */
+    ...FOCUS_CITIES.flatMap((c) => [
+      { url: `${SITE_URL}/hyrox-training/${c.slug}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.8, changeFrequency: "weekly" as const },
+      { url: `${SITE_URL}/personal-trainer/${c.slug}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.8, changeFrequency: "weekly" as const },
     ]),
     /* The 51 US state pages. Priority sits with the UK towns rather than the
        race cities: a state is a broader query than a city, and the ones that

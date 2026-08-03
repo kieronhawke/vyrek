@@ -345,6 +345,7 @@ export function GeoLanding({
   seo: seoOverride,
   nearby,
   headingName,
+  afterLocalContext,
 }: {
   variant: GeoVariant;
   loc: UkLocation;
@@ -358,6 +359,8 @@ export function GeoLanding({
   seo?: GeoSeo;
   /** Cross-links to render instead of the UK "towns next door" list. */
   nearby?: { items: { slug: string; name: string; km: number }[]; heading: string };
+  /** Slotted under the local-context block. Dubai uses it for the VIP offer. */
+  afterLocalContext?: React.ReactNode;
 }) {
   const seo = seoOverride ?? getGeoSeo(loc.slug);
   const c = variantCopy(variant, loc, seo, headingName);
@@ -498,6 +501,8 @@ export function GeoLanding({
           context={loc.context}
           guideLink={c.guideLink}
         />
+
+        {afterLocalContext}
 
         {/* The named local gyms. The one section only this town's page can
             carry, and the reason the page is worth indexing. */}
