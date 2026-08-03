@@ -311,6 +311,34 @@ function QuizV3Inner() {
     mergeAnswers,
   ]);
 
+  /* A resumed session can carry a race date that has since passed. Found on
+     3 August 2026 by opening the quiz on a session started on 29 July: it
+     restored "race day 30 July" and offered a twelve-week build starting
+     4 August, a plan for a race that had already happened.
+
+     Rewinding to the race-date screen rather than clearing the session,
+     because the other answers are still good and making somebody retake the
+     whole quiz to change one date is worse than the bug. */
+  const staleRaceDateRef = useRef(false);
+  useEffect(() => {
+    if (!hydrated || !state || staleRaceDateRef.current) return;
+    const rd = state.answers.raceDate;
+    if (!rd) return;
+    const when = rd instanceof Date ? rd : new Date(rd as unknown as string);
+    if (Number.isNaN(when.getTime())) return;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (when >= today) return;
+
+    staleRaceDateRef.current = true;
+    const visible = visibleScreens(state.answers);
+    const raceDateIdx = visible.findIndex((sc) => sc.kind === "race-date");
+    mergeAnswers({ ...state.answers, raceDate: undefined });
+    if (raceDateIdx >= 0 && state.screenIndex > raceDateIdx) {
+      setScreenIndex(raceDateIdx);
+    }
+  }, [hydrated, state, mergeAnswers, setScreenIndex]);
+
   const answers = useMemo<QuizAnswers>(
     () => state?.answers ?? { intent: [] },
     [state?.answers],

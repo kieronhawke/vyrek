@@ -15,7 +15,9 @@ import {
 } from "@/components/ui/accordion";
 
 export const metadata: Metadata = {
-  title: "Partner Programme. Recurring revenue with Suth Performance",
+  /* The root layout appends " \u00b7 Suth Performance" to every child title.
+     Naming the brand here printed it twice. */
+  title: "Partner programme: recurring revenue",
   description:
     "Earn 30% to 50% lifetime recurring commission referring athletes to Suth Performance. Flat tiered rates, monthly BACS payouts, no spammy gimmicks.",
   robots: { index: true, follow: true },

@@ -26,7 +26,9 @@ import { BEN } from "@/lib/ben";
  */
 
 export const metadata: Metadata = {
-  title: "Suth Club. Elite structure, without the elite price tag",
+  /* The root layout appends " \u00b7 Suth Performance" to every child title.
+     Naming the brand here printed it twice. */
+  title: "Suth Club: elite structure, no elite price",
   description:
     "A personalised 12-week programme that rebuilds around what you actually train. Seven days free, no card needed, cancel any time.",
   alternates: { canonical: "/club" },

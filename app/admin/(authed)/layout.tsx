@@ -4,7 +4,7 @@ import { assertAdmin } from "@/lib/admin/auth";
 import { AdminSignOut } from "@/components/admin/sign-out";
 
 export const metadata: Metadata = {
-  title: "Mission control. Suth Performance",
+  title: "Mission control",
   description: "Suth Performance admin console.",
   robots: { index: false, follow: false },
 };

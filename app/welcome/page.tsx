@@ -6,7 +6,9 @@ import { determineStartDate } from "@/lib/quiz-flow";
 import { WelcomeContent } from "@/components/welcome/welcome-content";
 
 export const metadata: Metadata = {
-  title: "Welcome. Suth Performance",
+  /* The root layout appends " \u00b7 Suth Performance" to every child title.
+     Naming the brand here printed it twice. */
+  title: "Welcome, your trial is live",
   description: "Your Suth Performance trial is live. Day 1 starts tomorrow.",
   robots: { index: false, follow: false },
 };

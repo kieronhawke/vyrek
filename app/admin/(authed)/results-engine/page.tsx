@@ -4,7 +4,7 @@ import { buildConsoleModel, copyForFix } from "@/lib/results/engine/ops/console"
 import { ResultsEngineConsole } from "@/components/admin/results-engine/console";
 
 export const metadata: Metadata = {
-  title: "Results engine. Suth Performance",
+  title: "Results engine",
   robots: { index: false, follow: false },
 };
 

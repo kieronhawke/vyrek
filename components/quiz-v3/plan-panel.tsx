@@ -61,14 +61,34 @@ const SUPPORT_LABEL: Record<string, string> = {
   unsure: "We'll recommend",
 };
 
+/**
+ * Whole weeks between the start date and the race. Falls back to the
+ * standard twelve-week block when there is no race date to count back from.
+ */
+function planWeeks(startDate: Date, raceDate?: Date): number {
+  if (!raceDate) return 12;
+  const days = Math.round(
+    (raceDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
+  );
+  const weeks = Math.floor(days / 7);
+  return Math.max(1, Math.min(weeks, 12));
+}
+
 function planRows(answers: QuizAnswers, startDate: Date): PlanRow[] {
   const label = programmeLabel(answers);
   const beginner = isBeginnerRail(answers);
 
   return [
     {
+      /* The length was hardcoded to "12 weeks" whatever the race date said,
+         so a race four weeks out produced "First Race, 12 weeks. Starts
+         Tuesday 4 August. Race day 30 August 2026", which does not add up
+         on the screen where the user is deciding whether to trust us.
+         Show the runway they actually have. */
       label: "Programme",
-      value: label ? `${label}, 12 weeks` : null,
+      value: label
+        ? `${label}, ${planWeeks(startDate, answers.raceDate)} weeks`
+        : null,
     },
     { label: "Starts", value: format(startDate, "EEEE d MMMM") },
     // A race row on the beginner rail is a row that can only ever show a
