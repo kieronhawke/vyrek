@@ -172,10 +172,23 @@ export class SyncEngine {
     const before = publish ? await this.snapshotRanks(division.id) : null;
     const counts = await this.deps.repo.upsertResults(outcome.rows);
 
-    // Completeness: what the source said it had, against what we stored.
+    // Completeness, measured two ways, because they catch different failures.
+    //
+    //   stored  < published — we hold less than the source says exists. The
+    //                         under-collection case: a page was missed.
+    //   fetched < published — *this fetch* came back short, even if what we
+    //                         already hold is complete. The source is having a
+    //                         moment, or our pagination stopped early.
+    //
+    // Only checking `stored` misses the second entirely: a division that serves
+    // three rows where it claims eight looks perfectly healthy as long as eight
+    // are already in the table. That is the fetch quietly degrading, and it is
+    // exactly what you want to hear about before it becomes under-collection.
     let completenessMismatch: DivisionSyncOutcome["completenessMismatch"];
     if (page.publishedEntrantCount !== undefined && page.publishedEntrantCount > 0) {
       const stored = await this.deps.repo.countResultsForDivision(division.id);
+      const fetched = page.rows.length;
+
       if (stored < page.publishedEntrantCount) {
         completenessMismatch = { published: page.publishedEntrantCount, stored };
         await this.deps.repo.raiseAlert({
@@ -184,7 +197,23 @@ export class SyncEngine {
           message:
             `${division.displayName} at ${event.name}: stored ${stored} rows against a ` +
             `published ${page.publishedEntrantCount}. A page of results may have been missed.`,
-          detail: { ...completenessMismatch, sourceDivisionId },
+          detail: { ...completenessMismatch, sourceDivisionId, fetched },
+          sourceEventId: event.sourceEventId ?? null,
+          acknowledgedAt: null,
+        });
+      } else if (fetched < page.publishedEntrantCount) {
+        // Rows are never deleted on a short fetch: eight athletes vanishing
+        // from history is far less likely than one bad page, so what we hold
+        // stands and the discrepancy is reported instead.
+        completenessMismatch = { published: page.publishedEntrantCount, stored: fetched };
+        await this.deps.repo.raiseAlert({
+          kind: "completeness",
+          severity: "info",
+          message:
+            `${division.displayName} at ${event.name}: this fetch returned ${fetched} rows ` +
+            `against a published ${page.publishedEntrantCount}. Stored data (${stored}) is ` +
+            `unchanged; the source served a short page.`,
+          detail: { published: page.publishedEntrantCount, fetched, stored, sourceDivisionId },
           sourceEventId: event.sourceEventId ?? null,
           acknowledgedAt: null,
         });
