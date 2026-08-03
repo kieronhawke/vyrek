@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "@/app/onboarding.css";
-import { readInvite } from "@/lib/onboarding/token";
+import { resolveInvite } from "@/lib/onboarding/resolve";
 import { OnboardingFlow } from "@/components/onboarding/flow";
 import { InviteProblem } from "@/components/onboarding/invite-problem";
 
@@ -29,7 +29,8 @@ export default async function ShortOnboardingPage({
   const { token } = await params;
   const { step, cancelled } = await searchParams;
 
-  const read = readInvite(token);
+  // Accepts a short id or a signed token — see lib/onboarding/resolve.ts.
+  const read = await resolveInvite(token);
   if (!read.ok) return <InviteProblem reason={read.reason} />;
 
   return (

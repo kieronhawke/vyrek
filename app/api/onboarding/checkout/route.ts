@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { readInvite } from "@/lib/onboarding/token";
+import { resolveInvite } from "@/lib/onboarding/resolve";
 import { planByKey } from "@/lib/onboarding/model";
 import { siteUrl } from "@/lib/site-url";
 
@@ -34,7 +34,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "BAD_REQUEST" }, { status: 400 });
   }
 
-  const read = readInvite(body.token ?? "");
+  // Accepts a short id or a signed token. Using readInvite here would reject
+  // every short link at the moment of payment, which is the worst place in the
+  // whole flow to break.
+  const read = await resolveInvite(body.token ?? "");
   if (!read.ok) {
     // The reason travels so the screen can say "this link has expired, ask
     // Ben for a new one" rather than a generic refusal.

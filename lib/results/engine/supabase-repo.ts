@@ -818,77 +818,34 @@ export class SupabaseResultsRepository implements ResultsRepository {
   }
 
   async getDivisionRecords() {
-    // Every division, grouped by key. Read from the table rather than a
-    // hardcoded list, so a new format appears on the board by itself.
+    // ⚠️ One database call, not thirty-six.
     //
-    // `manyAll`, because there are 2,692 of them and a single request returns
-    // 1,000 — which would have silently dropped whole formats off the board.
-    const keyRows = await this.manyAll<{
-      id: string; division_key: string; display_name: string; event_id: string;
-    }>((from, to) =>
-      this.db
-        .from("results_divisions")
-        .select("id,division_key,display_name,event_id")
-        .range(from, to),
-    );
+    // "the fastest finish in each division" is a `DISTINCT ON`, and the database
+    // is the only thing that can plan it. Assembling it from the application —
+    // per division key, `division_id IN (…) ORDER BY finish_time_ms LIMIT 1` —
+    // cannot use an index without merging ~75 divisions each time, and it hit
+    // PostgREST's statement timeout whenever the backfill was writing. The page
+    // then degraded to the demo tier, which has no records at all, so the record
+    // board rendered "No records yet" against half a million results.
+    //
+    // The function carries its own statement timeout, because the honest cost of
+    // sorting 515,370 rows is around twenty seconds and that is fine for the
+    // worker that calls it. See migration 0104.
+    const rows = await this.many<{
+      division_key: string;
+      division_label: string;
+      athlete_id: string;
+      finish_time_ms: number;
+      event_id: string;
+    }>(this.db.rpc("results_division_records"));
 
-    const labels = new Map<string, string>();
-    const idsByKey = new Map<string, string[]>();
-    const eventIdByDivisionId = new Map<string, string>();
-    for (const row of keyRows) {
-      if (!labels.has(row.division_key)) labels.set(row.division_key, row.display_name);
-      idsByKey.set(row.division_key, [...(idsByKey.get(row.division_key) ?? []), row.id]);
-      eventIdByDivisionId.set(row.id, row.event_id);
-    }
-
-    const found = await Promise.all(
-      [...idsByKey.entries()].map(async ([divisionKey, divisionIds]) => {
-        // ⚠️ Filtered on `division_id`, not on the joined `division_key`.
-        //
-        // Filtering the embedded resource cannot use the partial index on
-        // (division_id, finish_time_ms), so the planner sorted the division out
-        // by hand and the query hit the statement timeout under write load.
-        // Division ids are already in hand from the row above, so the filter can
-        // be expressed against the indexed column instead.
-        //
-        // Chunked: an `in` list of every division id in a popular key is long
-        // enough for PostgREST to reject the URL outright.
-        const winners = await Promise.all(
-          chunk(divisionIds, 150).map(async (ids) => {
-            const rows = await this.many<{
-              finish_time_ms: number;
-              athlete_id: string;
-              division_id: string;
-            }>(
-              this.db
-                .from("results_results")
-                .select("finish_time_ms,athlete_id,division_id")
-                .in("division_id", ids)
-                .eq("status", "finished")
-                .not("finish_time_ms", "is", null)
-                .order("finish_time_ms", { ascending: true })
-                .limit(1),
-            );
-            return rows[0] ?? null;
-          }),
-        );
-
-        const best = winners
-          .filter((w): w is NonNullable<typeof w> => w !== null)
-          .sort((a, b) => a.finish_time_ms - b.finish_time_ms)[0];
-        if (!best) return null;
-
-        return {
-          divisionKey,
-          divisionLabel: labels.get(divisionKey) ?? divisionKey,
-          athleteId: best.athlete_id,
-          finishTimeMs: best.finish_time_ms,
-          eventId: eventIdByDivisionId.get(best.division_id) ?? "",
-        };
-      }),
-    );
-
-    return found.filter((r): r is NonNullable<typeof r> => r !== null);
+    return rows.map((r) => ({
+      divisionKey: r.division_key,
+      divisionLabel: r.division_label,
+      athleteId: r.athlete_id,
+      finishTimeMs: r.finish_time_ms,
+      eventId: r.event_id,
+    }));
   }
 
   async listResultsWithSplitsForDivision(divisionId: string) {

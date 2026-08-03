@@ -1,4 +1,196 @@
-# REPORT.md — Results build
+# REPORT.md — Results
+
+Two halves. **Part 1** is the state of the live data engine, rewritten after
+running it against the real source and a real database. **Part 2** is the
+frontend build report, which still stands as written.
+
+---
+
+# Part 1 — The data engine, live
+
+Last updated 2026-08-03.
+
+The engine was built and tested against fixtures and an in-memory store; it has
+now been run at full scale, and that is where most of what follows was found.
+
+## Where it stands
+
+**The API works and serves real HYROX data.** 223 events, 2,692 divisions,
+515,370 results. Every serving surface — calendar, event pages, division
+rankings, individual results, athlete profiles, start lists, search and the
+record board — reads from the ingested database and returns correct data.
+
+**The site is still on demo data.** `NEXT_PUBLIC_DATA_MODE` is not set in
+production. Flipping it is the last step, described under *What is left*. I
+have not flipped it: the backfill is still running and half the archive would
+show partial fields.
+
+**The backfill is still going.** Roughly 1,250 of 2,692 divisions checkpointed.
+Resumable and safe to stop; progress is per division.
+
+## What running it for real found
+
+Fixtures proved the logic. None of the following would have been visible
+without a full-size database behind the code.
+
+### Live mode did not work, and said nothing
+
+`DirectLiveDataSource` reached the engine through `require("./engine")`, which
+resolves under webpack and throws under ESM. `ResilientDataSource` wraps it and
+treats any throw as "the store is down", so **every call fell through to the
+demo tier**. Live mode looked healthy and served synthetic data.
+
+That is the resilience layer working exactly as designed, against a bug it
+could not distinguish from an outage. Fixed with a cached `await import()`.
+
+### The board's entrant counter counts rows, not people
+
+`N Results` counts **rendered rows**, and each athlete renders two to four
+times. Manchester 2023's open women reads "686 Results" for a field of 281.
+
+Read literally, the completeness check declared 405 athletes missing, and the
+adapter grew an age-class partitioning fallback to find them: fifteen extra
+requests per division, no new rows, because every one was already held. The age
+partition settled it — the slices are exhaustive and mutually exclusive, and
+sum to 280 distinct athletes against 281 stored, their counters summing to 684
+against the published 686.
+
+The duplication factor is not constant (2.00 relay, 2.20 doubles, 2.44 open,
+2.89 pro), so it is measured on the page rather than assumed.
+
+### Every read stopped at 1,000 rows
+
+PostgREST caps an unbounded response at `max-rows` — 1,000 on Supabase — and
+says nothing about it. A truncated read is indistinguishable from a small
+table.
+
+Rotterdam's open men holds 2,721 results and returned 1,000, so `entrantCount`
+was stored as exactly 1,000; the same for 71 divisions. Finish times, start
+lists and split reads stopped at the same place, so distributions were computed
+from at most 1,000 finishers of a larger field.
+
+The completeness alerts had been reporting this accurately all along — "stored
+1000 rows against a published 1620" — and I had been reading them as a scraper
+problem. They were describing our own read.
+
+### Divisions were filled with other divisions' athletes
+
+Barcelona 2023's **women's** board held Lee Tuck, Thomas Fry and Diego
+Caballero Nistal ranked 1, 2 and 3. The source is not wrong: `search[sex]=W`
+returns Aoife Fay and Victoria Cartmell.
+
+The unfiltered fallback adapter sends no sex filter, so it returns the whole
+event, and whatever came back was stored under the division requested. A
+fallback that fails is recoverable; one that silently changes what the data
+*means* is not.
+
+Rows are now checked against their own parsed sex. **Existing damage: 4,875
+athletes appear in both the men's and women's board of the same event, across
+38 of 223 events** — mostly Asian events plus Stockholm, Barcelona, St Gallen,
+Mumbai and Birmingham. Repair tool below.
+
+### Every event claimed a field of zero
+
+The catalogue writes `athleteCount: 0` because it runs before results exist,
+and nothing revised it — on the tiles, city pages, FAQ, race reports and
+`SportsEvent` markup. The divisions held the truth all along. 179 repaired.
+
+### The serving layer read whole divisions to print single integers
+
+`results_results` carries a `splits` JSONB blob of eighteen segments per
+athlete, and `select()` takes all of it. Measured against the real store:
+
+| Call | Before | After |
+| --- | --- | --- |
+| `getRecords` | 365s | ~9–11s |
+| `getStarters` (12,366 entrants) | 573s | 10.5s |
+| `getEvent` (15 divisions) | 12.3s | 2.2s |
+| `getRanking` | minutes | 1.8s |
+| `searchAll` | 7.7s | 3.8s |
+
+`getRecords` at 365 seconds is past any serverless timeout, so
+`/rankings/world-records` **could never have rendered in production** — the
+resilient wrapper would have caught the timeout and served demo records.
+
+Migration `0103` adds what the schema lacked at this size: trigram GIN indexes,
+because `name ILIKE '%smith%'` cannot use a btree and was scanning 883,167 rows
+per keystroke, plus partial indexes for the top-1-per-division reads.
+
+### Smaller correctness fixes
+
+- **The Elite boards print `MM:SS.hh`.** "60:08.73" is a sixty-minute race, and
+  rejecting minutes over 59 quarantined 516 real elite results.
+- **A name must contain a letter.** "- -" is the source's placeholder for an
+  unnamed entry, and one reached the world-record board as the fastest women's
+  HYROX ever recorded. 35 flagged for review and held off that board.
+- **The division average was drawn from mostly nothing.** 99.5% of rows have no
+  splits, so averaging segment times across the whole field reported an average
+  race far faster than anybody ran.
+- **The event page printed a bare "· first wave "** with nothing after it. Wave
+  start times are not on the source at all.
+
+## Built alongside
+
+- **The archive has a place.** Only 15 of 223 events had a country: the
+  published calendar lists upcoming races only. A city resolver handles
+  championship decoration ("World Championships Manchester") and German
+  exonyms ("München", "Wien") against an archive table of host cities. **218 of
+  223 events now have a country and region.** The five that do not name no city
+  at all ("Elite 12", "Belgium") and stay null, with tests asserting that.
+- **`/events/{place}`** — twelve regional calendars with their own titles and
+  copy, replacing `/events?region=…` in the sitemap.
+- **Station guides** gained a race-spec table, links to the percentile tool and
+  simulator, and `StationHistogram` — `Distribution.histogram` had been computed
+  all along with a comment saying it was for these pages, and no chart existed.
+
+## Tests
+
+**995 passing, 9 skipped** (skipped are operator tools: backfill, contamination
+repair, live smoke). `tsc --noEmit` clean, ESLint clean, `next build` clean at
+8,175 static pages.
+
+## What is left
+
+### Mine, in progress
+
+1. **Finish the backfill.** ~1,250 of 2,692 divisions checkpointed.
+2. **Run the contamination repair.**
+   `HYROX_REPAIR=1 HYROX_REPAIR_APPLY=1 HYROX_SOURCE_ACCESS=authorised npx vitest run repair-contamination`
+   Report-only by default. Re-fetches each suspect division and deletes only
+   rows the source no longer returns, skipping any where the fetch fails or
+   would remove more than nine tenths of what is held.
+3. **Re-measure the serving timings** once the backfill stops writing — several
+   figures above were taken while it contended for the same database.
+
+### Yours
+
+1. **Decide when to go live.** Set `NEXT_PUBLIC_DATA_MODE=live` in Vercel
+   production. ⚠️ `RESULTS_SOURCE` outranks it — if that is ever set to `api`,
+   `feed` or `file`, the mode flag is ignored entirely.
+2. **Pro loads on the station guides.** `spec.mensPro` / `spec.womensPro` are
+   optional and unset, so the table renders Open only. They are real published
+   standards, but the Open figures held here disagree with public sources on the
+   sled stations, and I would rather the page say nothing than quote a race
+   weight wrong. Fill them from the official rules and the rows appear.
+
+### Known and accepted
+
+- **Splits are ~0.5% filled.** One request per athlete: 515,370 results is not
+  a backfill, it is a permanent background process. The worker runs every five
+  minutes, prioritising claimed athletes, then podiums, then the long tail
+  oldest-first, so the results people actually open fill first. Pages render
+  their summary without splits, and `StationHistogram` renders nothing rather
+  than an empty axis. Full coverage is months away; that is the design.
+- **A 34:20 women's open result at Incheon** survives validation because the
+  floor is 30 minutes, and that floor exists because Adaptive and Youngstars
+  genuinely run a shorter course. A division-aware floor would fix it properly;
+  I have not written one because I am not confident of those course lengths.
+- **The demo record board is empty**, so the `demo` fallback tier for
+  `/rankings/world-records` shows nothing rather than sample records.
+
+---
+
+# Part 2 — The frontend build
 
 Branch `lane/results` · worktree `~/code/vyrek-results` · dev port 3005
 Brief `docs/suv-results-build-prompt.md` · Plan `PLAN.md` · Decisions `DECISIONS.md`

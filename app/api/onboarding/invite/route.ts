@@ -4,7 +4,10 @@ import {
   inviteUrl,
   inviteUrlForSms,
   signingConfigured,
+  INVITE_DAYS,
+  type InviteKind,
 } from "@/lib/onboarding/token";
+import { storeInvite } from "@/lib/onboarding/invite-store";
 import { planByKey } from "@/lib/onboarding/model";
 import { sendOnboardingInvite } from "@/lib/email/send";
 import { onboardingInviteSms } from "@/lib/email/templates/onboarding-invite";
@@ -65,14 +68,38 @@ export async function POST(request: Request) {
   }
 
   const plan = planByKey(body.plan);
-  const token = createInvite({ name, email, phone, kind, plan: plan?.key });
-  const link = inviteUrl(token, siteUrl());
+
+  /*
+   * Short link first, signed token as the fallback.
+   *
+   * The signed token carries the whole invite in the URL and comes out at 225
+   * characters. That wraps four times in a text message, looks like phishing,
+   * and costs Ben extra SMS segments on every invite he sends. Storing the
+   * payload and sending a ten-character id instead gives a 44-character link.
+   *
+   * When there is nowhere to store it — no Redis configured, or Redis
+   * unreachable — the token is still a working invite, and a long link beats
+   * no link. The response says which form was used so the admin can report it
+   * rather than quietly shipping the long one for ever.
+   */
+  const fields = { name, email, phone, kind: kind as InviteKind, plan: plan?.key };
+  const stored = await storeInvite({
+    ...fields,
+    iat: Math.floor(Date.now() / 1000),
+    exp: Math.floor(Date.now() / 1000) + INVITE_DAYS * 86400,
+  });
+
+  const short = stored.ok && stored.durable;
+  // One value feeds both URL builders: the short id when we have somewhere to
+  // store it, otherwise the signed token.
+  const key = short && stored.ok ? stored.id : createInvite(fields);
+  const link = inviteUrl(key, siteUrl());
   const firstName = name.split(/\s+/)[0];
 
   // The text gets the bare-domain link; the email keeps the full one so it
   // renders as a proper anchor.
   const smsText = phone
-    ? onboardingInviteSms(firstName, inviteUrlForSms(token, siteUrl()), kind)
+    ? onboardingInviteSms(firstName, inviteUrlForSms(key, siteUrl()), kind)
     : null;
 
   // Both at once. Sequentially, a slow email delays the text for no reason,
@@ -95,6 +122,10 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     link,
+    /** How many characters Ben is actually sending. */
+    linkLength: link.length,
+    /** True when the short form was used; false means the long signed token. */
+    shortLink: short,
     /** False when the link is signed with the development fallback secret. */
     secured: signingConfigured(),
     email: {
