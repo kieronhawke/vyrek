@@ -135,6 +135,14 @@ const nextConfig: NextConfig = {
         destination: "/blog/what-to-wear-for-hyrox",
         permanent: true,
       },
+      /* "24/7 FITNESS HYROX Sanya" is at hyrox.com/event/30454/, so our
+         mirrored slug was /hyrox/events/30454. See readableSlug in
+         lib/hyrox/races.ts. */
+      {
+        source: "/hyrox/events/30454",
+        destination: "/hyrox/events/hyrox-sanya",
+        permanent: true,
+      },
     ];
   },
 };
