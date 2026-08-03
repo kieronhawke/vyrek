@@ -16,19 +16,38 @@
 
 import type { ResultsDataSource } from "./source";
 import { demoDataSource } from "./demo-source";
+import { apiDataSource } from "./api-source";
 import { liveDataSource as liveFeedStub } from "./live-source.stub";
 import { liveDataSource as engineDataSource } from "./live-source";
 import { getDataMode } from "./source";
 
 /**
- * `RESULTS_SOURCE=feed` wins when set, because it is an explicit instruction
- * about *this deployment* and outranks a mode flag. Otherwise `live` means the
- * ingested database, and everything else means demo — so local dev and CI keep
- * working with no database, which is the point of keeping demo around at all
- * (engine brief §7).
+ * Which source serves the section.
+ *
+ * | Condition                       | Source   | Data from                        |
+ * |---------------------------------|----------|----------------------------------|
+ * | `RESULTS_SOURCE=api`            | REST API | `RESULTS_API_URL`                |
+ * | `RESULTS_SOURCE=feed`           | stub     | not implemented                  |
+ * | `RESULTS_SOURCE=file`           | files    | `data/results-live` (CSV import) |
+ * | `NEXT_PUBLIC_DATA_MODE=live`    | engine   | the ingested database            |
+ * | otherwise                       | demo     | `data/results-demo`              |
+ *
+ * An explicit `RESULTS_SOURCE` always wins: it is an instruction about *this
+ * deployment* and outranks a mode flag. Below that, `live` means the ingested
+ * database (engine brief §7) and everything else means demo, so local dev and
+ * CI keep working with no database at all.
+ *
+ * `file` exists because there are two ways real data arrives: the HYROX
+ * ingestion engine, and `scripts/import-results.ts` writing a CSV export to
+ * `data/results-live`. Both are legitimate; this makes the choice explicit
+ * rather than letting one silently shadow the other.
  */
 export function getResultsSource(): ResultsDataSource {
-  if (process.env.RESULTS_SOURCE === "feed") return liveFeedStub;
+  switch (process.env.RESULTS_SOURCE) {
+    case "api": return apiDataSource;
+    case "feed": return liveFeedStub;
+    case "file": return demoDataSource;
+  }
   if (getDataMode() === "live") return engineDataSource;
   return demoDataSource;
 }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Time, Delta, MicroLabel, Nationality } from "../ui/primitives";
+import { RankMark } from "../ui/rank-mark";
 import type { RankingRow } from "@/lib/results/source";
 
 /**
@@ -27,15 +28,7 @@ export function PodiumCard({
       <ol className="mt-3 space-y-2.5">
         {rows.slice(0, 3).map((row, i) => (
           <li key={row.id} className="flex items-baseline gap-2.5">
-            <span
-              className={
-                i === 0
-                  ? "results-num w-4 shrink-0 text-suth-accent"
-                  : "results-num w-4 shrink-0 text-suth-text-tertiary"
-              }
-            >
-              {row.rank}
-            </span>
+            <RankMark rank={row.rank} />
             <Nationality iso={row.countryIso} />
             <Link
               href={`/result/${row.id}`}

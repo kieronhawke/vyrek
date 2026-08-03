@@ -168,6 +168,28 @@ describe("finish time distributions", () => {
   });
 });
 
+describe("age and ability are correlated", () => {
+  it("keeps the sharp end of a big open field young", () => {
+    const shard = read<{ results: Record<string, { ageGroup: string; status: string }[]> }>(
+      "event-s9-2026-london.json",
+    );
+    const top = shard.results["hyrox-men"].filter((r) => r.status === "finished").slice(0, 50);
+    const veterans = top.filter((r) => Number(r.ageGroup.split("-")[0]) >= 50);
+    // Sampling age independently of ability put a 60-64 athlete third of 3,221.
+    expect(veterans.length).toBe(0);
+  });
+
+  it("still spans every bracket across the whole field", () => {
+    const shard = read<{ results: Record<string, { ageGroup: string; status: string }[]> }>(
+      "event-s9-2026-london.json",
+    );
+    const brackets = new Set(
+      shard.results["hyrox-men"].filter((r) => r.status === "finished").map((r) => r.ageGroup),
+    );
+    expect(brackets.size).toBeGreaterThanOrEqual(8);
+  });
+});
+
 describe("athletes", () => {
   it("profiles a 4,000-strong returning pool", () => {
     expect(athletes.length).toBe(4000);

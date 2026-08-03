@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { DatedDay } from "@/lib/member/week";
 import { SessionFeedback } from "@/components/member/session-feedback";
+import { FormVideo } from "@/components/member/form-video";
 import {
   Card,
   Chip,
@@ -189,10 +190,18 @@ export function SessionScreen({
       ) : null}
 
       {!rest ? (
-        <section>
-          <Eyebrow>Feedback</Eyebrow>
-          <SessionFeedback sessionTitle={day.title} />
-        </section>
+        <>
+          <section style={{ marginBottom: "var(--space-4)" }}>
+            <Eyebrow>Feedback</Eyebrow>
+            <SessionFeedback sessionTitle={day.title} />
+          </section>
+
+          {/* The thing an online coach otherwise cannot do: see you move. */}
+          <section>
+            <Eyebrow right="Ben reviews it">Film your form</Eyebrow>
+            <FormVideo subject={day.slug} label={`${day.day} — ${day.title}`} />
+          </section>
+        </>
       ) : null}
     </>
   );

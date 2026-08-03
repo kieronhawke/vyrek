@@ -7,6 +7,7 @@ import { formatCount, formatRelativeDate } from "@/lib/results/format";
 import {
   Time, StatusBadge, MicroLabel, Nationality, StatTile, EmptyState,
 } from "@/components/results/ui/primitives";
+import { CityMark } from "@/components/results/ui/city-mark";
 import { LiveStrip } from "@/components/results/live/live-strip";
 import { PodiumCard } from "@/components/results/event/podium";
 import { EventCountdown } from "@/components/results/event/countdown";
@@ -127,6 +128,14 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           <li aria-current="page" className="text-suth-text-secondary">{event.city}</li>
         </ol>
       </nav>
+
+      <CityMark
+        iata={event.iata}
+        city={event.city}
+        countryIso={event.countryIso}
+        size="banner"
+        className="mb-5 rounded-md border border-suth-border-subtle"
+      />
 
       <header className="flex flex-wrap items-start justify-between gap-4">
         <div>
