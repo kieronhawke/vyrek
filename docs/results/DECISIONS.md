@@ -249,3 +249,125 @@ finish column is still an error.
 It is inlined during `next build`, not read at runtime. Passing it to `pnpm start` does
 nothing — verified. It has to be set in the Vercel project environment and the deploy rebuilt.
 Documented in `docs/results/DATA-IMPORT.md`.
+
+---
+
+# PART 2 — THE DATA ENGINE (3 August 2026)
+
+Against `docs/suv-results-data-engine-prompt.md`. Numbering continues from the
+frontend build; D31 and D32 above belong to the CSV-import work by another
+terminal and are untouched.
+
+### D33 — The HYROX adapter ships gated off, and that is the headline
+`results.hyrox.com/robots.txt` is `Disallow: /` for every agent, and the edge
+403s any non-browser User-Agent — including the honest one the brief mandates.
+Ingesting would mean overriding an explicit refusal *and* disguising ourselves
+to defeat a deliberate block. Both, together, silently, by default.
+
+So the adapter is complete and tested, and refuses to make a single request
+unless `HYROX_SOURCE_ACCESS=authorised`. The brief says the owner has HYROX's
+permission; that may well be true, but it is invisible to their servers and
+unverifiable by me, and the fix is cheap (allowlist the UA, or a feed, or
+written permission). Everything else in the Definition of Done is built and
+proven regardless. **Not a reduction in scope — one environment variable.**
+See `SOURCE.md` §1, `ACTION-REQUIRED.md` item 1.
+
+### D34 — The store is an interface, not an import
+Supabase was paused throughout (the subdomain does not resolve), and the brief
+requires every behaviour proven deterministically in CI. Both are answered by
+`ResultsRepository` with two real implementations: Supabase for production, in
+memory for tests and local dev. No worker or endpoint may import a Supabase
+client. This is why idempotency, quarantine, fan-out, freezing and circuit
+breaking are provable today with no database at all.
+
+### D35 — ajax2 is the primary access method, the page is the fallback
+A plain `?pid=list` server-renders **zero rows**; the data arrives via mika's
+own XHR. A parser aimed at the page would parse a valid, permanently empty
+document forever and never error. Discovered by actually reading a response
+rather than assuming one.
+
+### D36 — Fixtures reproduce real markup with invented people
+Real rows are third-party personal data. Committing a sample creates a
+permanent replicated copy in git with no lawful basis and no erasure path, to
+test a regex. Structure is faithful field-for-field;
+`scripts/capture-hyrox-fixture.mjs` records genuine samples once access is
+authorised.
+
+### D37 — Parser diagnostics are carried, never reconstructed
+First implementation rebuilt them from the returned rows inside the engine. A
+renamed column yields zero rows, which reconstructs to "empty shell" and reads
+as a quiet event — the exact failure the parser-shape sentinel exists to catch
+was invisible to the sentinel. Caught by its own test. Diagnostics now travel on
+`RawDivisionPage`, merged across pages.
+
+### D38 — Change detection is a content hash, because there is no ETag
+The brief assumes conditional requests. The source sends
+`cache-control: no-cache` and no `ETag` or `Last-Modified`. Hashing was already
+the schema's design, so no change — but every poll transfers a full body, and
+the rate budget is sized for that.
+
+### D39 — One weekend maps to many source event codes
+`H_LR3MS4JI1738` is one division on one day. A race weekend has eight or more
+such codes. `events.source_event_id` stores the weekend; `divisions` store the
+full code. Sex is a query filter on the source and a separate division for us,
+because that is what a leaderboard URL means to a visitor.
+
+### D40 — Identity resolution is deliberately asymmetric
+Fragmenting one person into two profiles is a poor experience. Merging two
+people publishes a stranger's times under someone's name — a data protection
+incident. So: merge only on a stable source id or overwhelming evidence;
+otherwise create a second profile and file it for human review. Same name, same
+nationality, same age group scores into *review*, not *merge*. There are a lot
+of James Smiths.
+
+### D41 — Arming compares instants, never calendar dates
+Vercel cron is UTC. A Sydney event starting 08:00 local on 4 August starts at
+22:00 UTC on the 3rd; "is it today?" arms it fourteen hours late or never.
+`start_datetime` is a real UTC moment and `tz_offset_minutes` exists only to
+print local time in the console.
+
+### D42 — Total source failure freezes; it never writes
+Every access method failing means we write nothing, keep the last-good hash,
+mark live events `updates_paused`, and push that state to subscribers. A board
+that stops updating and says so beats one quietly showing five-minute-old
+positions as current.
+
+### D43 — `updates_paused` presents to the public as `live`
+It is a live event whose feed has stalled, and the board carries its own paused
+notice. Demoting it to "finished" would be a lie with a podium on it.
+
+### D44 — Amber means "not running, for a stated reason"; red means broken
+Ingestion being deliberately gated off is not a fault. Painting it red trains
+the operator to ignore red, which is how a real red gets missed.
+
+### D45 — Erasure and claim record intent; they do not act
+An endpoint that erases on an unverified POST lets a stranger wipe someone's
+race history. An operator verifies, then anonymises: identifying fields go, the
+row stays, so field sizes and everyone else's rank stay correct. Tested.
+
+### D46 — A missing `CRON_SECRET` is closed, not open
+The most common way a protected endpoint becomes unprotected is a default that
+fails open. An unset secret rejects everything.
+
+### D47 — `LiveDataSource` has two implementations
+Server callers reach the service in-process; browsers fetch `/api/results/v1`.
+An HTTP hop from our own server to our own endpoint to reach code already in the
+process is pure cost. Both satisfy one interface and the contract test covers
+both, so "works on the server, not the client" is caught rather than discovered.
+
+### D48 — The engine was added alongside `RESULTS_SOURCE=feed`, not over it
+Another terminal changed `getResultsSource()` mid-build to route on
+`RESULTS_SOURCE=feed`. Their branch is preserved: `feed` wins when explicitly
+set, `NEXT_PUBLIC_DATA_MODE=live` means the ingested database, everything else
+stays demo. Neither piece of work was reverted.
+
+### D49 — `getDivisionFinishTimes` gets its own repository method
+It appeared on the contract mid-build with a docstring saying a live feed must
+serve it from a precomputed column and never by materialising rows (5.5s LCP).
+Honoured literally: the Supabase implementation selects one column.
+
+### D50 — Station distributions are precomputed, but the histogram is not
+Percentile lookups run on every result page and read the precomputed table. The
+frontend's `Distribution` needs samples and buckets, which percentile
+breakpoints cannot reconstruct, so `getStationDistribution` builds from stored
+splits and is edge-cached instead. Two paths because there are two questions.

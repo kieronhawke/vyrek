@@ -32,6 +32,7 @@ export type ModuleLink = {
 export const MODULES: ModuleLink[] = [
   { href: "", label: "Dashboard", group: "Work" },
   { href: "/leads", label: "Leads", count: 4, group: "Work" },
+  { href: "/tracker", label: "Coach tracker", count: 27, group: "Work" },
   { href: "/clients", label: "Clients", count: 6, group: "Work" },
   { href: "/plans", label: "Plans", count: 2, group: "Work" },
   { href: "/diary", label: "Diary", group: "Work" },

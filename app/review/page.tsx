@@ -164,6 +164,7 @@ export default function ReviewIndex() {
 
   const admin: Row[] = [
     { href: `${D}`, name: "Dashboard", note: "The operator overview", state: "mock" },
+    { href: `${D}/tracker`, name: "Coach tracker", note: "Ben's spreadsheet, replaced: who is programmed until when, and who is due", state: "mock" },
     { href: `${D}/clients`, name: "Clients", note: "Who needs a plan, who has paid, who is in trouble", state: "mock" },
     { href: `${D}/clients/c_01`, name: "A client record", note: "One person: flags, the four numbers, actions, their feedback, coach notes", state: "mock" },
     { href: `${D}/plans`, name: "Plans", note: "Who is due a plan, and whether the coach's note is written", state: "mock" },
