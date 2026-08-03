@@ -1,6 +1,4 @@
 import "server-only";
-import { readFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
 import type { StationId } from "./model";
 import type { DivisionCode } from "./types";
 
@@ -28,17 +26,21 @@ export type DivisionReference = {
   sampleSize: number;
 };
 
-const FILE = join(
+const FILE = [
   process.cwd(),
   "data",
   process.env.NEXT_PUBLIC_DATA_MODE === "live" ? "results-live" : "results-demo",
   "references.json",
-);
+].join("/");
 
 let cache: DivisionReference[] | null = null;
 
 function all(): DivisionReference[] {
   if (cache) return cache;
+  // Lazy require: see the note in demo-source.ts. A static `node:fs` import
+  // here reaches client bundles through the engine and breaks the build.
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { existsSync, readFileSync } = require("node:fs") as typeof import("node:fs");
   cache = existsSync(FILE)
     ? (JSON.parse(readFileSync(FILE, "utf8")) as DivisionReference[])
     : [];
