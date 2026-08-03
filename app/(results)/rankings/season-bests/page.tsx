@@ -8,7 +8,7 @@ import type { RecordEntry } from "@/lib/results/source";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Fastest HYROX Times This Season | Suth Performance",
+  title: "Fastest HYROX Times This Season",
   description:
     "The quickest HYROX time in every division this season, with the event and athlete "
     + "behind each one.",

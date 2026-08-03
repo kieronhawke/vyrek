@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Search, CalendarDays, Trophy, SlidersHorizontal, Dumbbell } from "lucide-react";
+import { Search, CalendarDays, Trophy, SlidersHorizontal, Dumbbell, MapPin } from "lucide-react";
 
 /**
  * Results sub-navigation.
@@ -16,9 +16,12 @@ import { Search, CalendarDays, Trophy, SlidersHorizontal, Dumbbell } from "lucid
  * On mobile it is replaced by the bottom tab bar, in the thumb zone.
  */
 
+// Desktop only — the mobile bar below keeps its own five, because a sixth tab
+// in the thumb zone makes every tap target too narrow to hit reliably.
 const LINKS = [
   { href: "/results", label: "Results", icon: Trophy, exact: true },
   { href: "/events", label: "Events", icon: CalendarDays },
+  { href: "/results/city", label: "Cities", icon: MapPin },
   { href: "/rankings", label: "Rankings", icon: Trophy },
   { href: "/simulator", label: "Simulator", icon: SlidersHorizontal },
   { href: "/hyrox/stations", label: "Stations", icon: Dumbbell },

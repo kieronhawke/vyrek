@@ -21,7 +21,7 @@ import type { ResultDetail } from "@/lib/results/source";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Compare HYROX Athletes & Races | Suth Performance",
+  title: "Compare HYROX Athletes & Races",
   description:
     "Put two HYROX races side by side — segment by segment, with a cumulative gap chart "
     + "showing exactly where the race was won.",

@@ -29,14 +29,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const parsed = parseRankingSlug(slug);
-  if (!parsed) return { title: "Ranking not found | Suth Performance" };
+  if (!parsed) return { title: "Ranking not found" };
 
   const source = getResultsSource();
   const [event, page] = await Promise.all([
     source.getEvent(parsed.eventSlug),
     source.getRanking(parsed.eventSlug, parsed.division, { limit: 1 }),
   ]);
-  if (!event || !page) return { title: "Ranking not found | Suth Performance" };
+  if (!event || !page) return { title: "Ranking not found" };
 
   const division = page.divisionLabel.replace("HYROX ", "");
   return {

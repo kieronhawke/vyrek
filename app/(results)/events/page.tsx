@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "HYROX Events & Race Calendar: Every Season | Suth Performance",
+  title: "HYROX Events & Race Calendar: Every Season",
   description:
     "The full HYROX race calendar — every event by season, region and country, "
     + "with results, start lists and entrant counts.",

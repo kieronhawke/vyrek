@@ -30,6 +30,9 @@ const ROUTES = [
   { name: "starters", path: "/starters/s9-2026-dublin" },
   { name: "reports index", path: "/reports" },
   { name: "report", path: "/reports/s9-2026-london" },
+  { name: "city index", path: "/results/city" },
+  { name: "city hub", path: "/results/city/london" },
+  { name: "course index", path: "/results/course-index" },
 ];
 
 /** Fails the test if the page logged an error or threw during hydration. */
@@ -198,6 +201,54 @@ test.describe("search", () => {
 
     await box.fill("qqqzzz");
     await expect(page.getByText(/No athletes or events match/)).toBeVisible();
+  });
+
+  /**
+   * The focus ring must follow the sheet's rounded corners.
+   *
+   * Reported twice. The ring started on the input and was clipped on three
+   * sides by the sheet's overflow-hidden; moving it to the input's row fixed
+   * the sides but not the corners, because a square-cornered child flush
+   * inside a rounded, clipping parent gets its corners sliced off — a straight
+   * green line with black notches bitten out of each end.
+   *
+   * The fix is that the accent is painted on the element that owns the radius.
+   * This asserts that structurally: no descendant may carry its own focus ring,
+   * and the sheet's must be a border plus box-shadow, both of which inherit
+   * border-radius by definition.
+   */
+  test("the focus ring follows the palette's rounded corners", async ({ page }) => {
+    await open(page, "/results");
+    await openSearch(page);
+
+    const sheet = page.locator('[role="dialog"] > div').first();
+
+    const style = await sheet.evaluate((el) => {
+      const computed = getComputedStyle(el);
+      return {
+        radius: parseFloat(computed.borderTopLeftRadius),
+        borderColor: computed.borderTopColor,
+        shadow: computed.boxShadow,
+      };
+    });
+
+    // A radius to follow, and an accent edge drawn on that same element.
+    expect(style.radius).toBeGreaterThan(4);
+    expect(style.shadow).not.toBe("none");
+    // The chartreuse accent is #A3E635 — a green channel well above the others.
+    const rgb = style.borderColor.match(/\d+/g)!.map(Number);
+    expect(rgb[1]).toBeGreaterThan(rgb[0] + 40);
+    expect(rgb[1]).toBeGreaterThan(rgb[2] + 40);
+
+    // Nothing inside may draw its own ring: an inner square ring is exactly
+    // the bug, and it is invisible to every other assertion here.
+    const innerRings = await sheet.evaluate((el) =>
+      [...el.querySelectorAll("*")].filter((child) => {
+        const computed = getComputedStyle(child);
+        return computed.boxShadow !== "none" && !computed.boxShadow.includes("rgba(0, 0, 0");
+      }).length,
+    );
+    expect(innerRings).toBe(0);
   });
 
   test("escape closes it", async ({ page }) => {

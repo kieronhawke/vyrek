@@ -1,5 +1,6 @@
 import { getResultsSource, getDataMode } from "@/lib/results";
 import { buildRankingSlug } from "@/lib/results/slugs";
+import { groupEventsByCity } from "@/lib/results/city";
 import { siteUrl } from "@/lib/site-url";
 import { STATIONS } from "@/lib/hyrox-stations";
 
@@ -61,6 +62,20 @@ export async function GET() {
   entries.push(urlEntry(`${base}/simulator`, "monthly", "0.8"));
   entries.push(urlEntry(`${base}/results/compare`, "monthly", "0.6"));
   entries.push(urlEntry(`${base}/tools/good-hyrox-time`, "monthly", "0.8"));
+  entries.push(urlEntry(`${base}/results/city`, "weekly", "0.8"));
+  entries.push(urlEntry(`${base}/results/course-index`, "weekly", "0.8"));
+
+  // City hubs. These carry a higher priority than the individual editions
+  // beneath them: "hyrox london results" is the query with the volume, and the
+  // hub is what should hold that position rather than twelve editions
+  // competing with each other for it.
+  for (const city of groupEventsByCity(events)) {
+    entries.push(urlEntry(
+      `${base}/results/city/${city.slug}`,
+      city.nextEvent ? "weekly" : "monthly",
+      city.editions >= 3 ? "0.8" : "0.6",
+    ));
+  }
 
   // Regional calendars — real URLs that server-render.
   for (const region of ["Europe", "Asia"]) {
