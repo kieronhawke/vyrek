@@ -93,9 +93,188 @@
 
   /* A footer line on every page, so a printed report is attributable. */
   .results-print-footer { display: block !important; }
+
+  /* ─── The report sheet ───────────────────────────────────────────────
+     Printing the web page produced a poor document: interactive controls
+     became dead ink, viewport-sized charts wasted a third of the paper, and
+     the reader lost the summary the screen hides behind a tap. So the page
+     is hidden and a document designed for A4 is revealed instead. */
+
+  .results-print-sheet {
+    display: block !important;
+    font-size: 9.5pt;
+    line-height: 1.45;
+    color: #101010;
+  }
+
+  /* Everything else on the page. `main > div > *` covers the page content
+     without touching the sheet, which is appended after it. */
+  .results-print-hide-on-paper { display: none !important; }
+
+  .print-masthead {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12mm;
+    border-bottom: 1.5pt solid #101010;
+    padding-bottom: 3mm;
+  }
+
+  .print-eyebrow {
+    font-family: var(--font-mono), monospace;
+    font-size: 7pt;
+    letter-spacing: 0.22em;
+    color: #5C5C5A;
+    margin: 0;
+  }
+
+  .print-name {
+    font-size: 22pt;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin: 1mm 0 0;
+  }
+
+  .print-sub { font-size: 9.5pt; color: #3A3A38; margin: 1mm 0 0; }
+
+  .print-brand { text-align: right; }
+  .print-brand-name {
+    font-size: 10pt;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin: 0;
+  }
+  .print-brand-url {
+    font-family: var(--font-mono), monospace;
+    font-size: 7.5pt;
+    color: #5C5C5A;
+    margin: 0.5mm 0 0;
+  }
+
+  /* Headline figures */
+  .print-figures {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 3mm;
+    margin-top: 5mm;
+  }
+  .print-figure {
+    border: 0.75pt solid #C8C8C4;
+    border-radius: 2px;
+    padding: 2.5mm 3mm;
+  }
+  .print-figure-big { background: #F4F4F2; }
+  .print-figure-label {
+    font-family: var(--font-mono), monospace;
+    font-size: 6.5pt;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #5C5C5A;
+    margin: 0;
+  }
+  .print-figure-value {
+    font-family: var(--font-mono), monospace;
+    font-variant-numeric: tabular-nums;
+    font-size: 17pt;
+    line-height: 1.1;
+    margin: 1mm 0 0;
+  }
+  .print-figure-big .print-figure-value { font-size: 24pt; }
+  .print-figure-note { font-size: 7.5pt; color: #5C5C5A; margin: 0.5mm 0 0; }
+
+  .print-block { margin-top: 6mm; break-inside: avoid; }
+
+  .print-h2 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    margin: 0 0 2mm;
+    padding-bottom: 1mm;
+    border-bottom: 0.5pt solid #DDDDD9;
+  }
+
+  /* Tables. Values are what a reader wants on paper, so these are dense and
+     right-aligned on every numeral. */
+  .print-table, .print-split-summary {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .print-table th, .print-table td,
+  .print-split-summary th, .print-split-summary td {
+    padding: 1.1mm 2mm;
+    border-bottom: 0.4pt solid #E6E6E2;
+    text-align: left;
+    font-weight: 400;
+  }
+  .print-table thead th, .print-split-summary thead th {
+    font-family: var(--font-mono), monospace;
+    font-size: 6.5pt;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #5C5C5A;
+    border-bottom: 0.75pt solid #C8C8C4;
+  }
+  /* The summary's header is written after the body so it prints above it
+     without needing a second table; restore visual order. */
+  .print-split-summary { display: table; }
+  .print-split-summary thead { display: table-header-group; }
+  .print-split-summary tbody { display: table-row-group; }
+
+  .print-table tbody th, .print-split-summary tbody th { font-weight: 600; }
+  .print-table td, .print-split-summary td {
+    font-family: var(--font-mono), monospace;
+  }
+  .print-right { text-align: right !important; }
+  .print-dim { color: #5C5C5A; }
+  .print-fast { color: #3F6212; font-weight: 600; }
+  .print-slow { color: #9A3412; font-weight: 600; }
+  .print-total th, .print-total td {
+    border-top: 0.75pt solid #101010;
+    border-bottom: none;
+    font-weight: 700;
+    padding-top: 1.6mm;
+  }
+
+  /* Analysis */
+  .print-analysis { margin: 0; }
+  .print-analysis > div {
+    margin-top: 2.5mm;
+    break-inside: avoid;
+  }
+  .print-analysis dt {
+    font-family: var(--font-mono), monospace;
+    font-size: 6.5pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #5C5C5A;
+  }
+  .print-analysis dd {
+    margin: 0.8mm 0 0;
+    font-size: 9pt;
+    max-width: 165mm;
+  }
+
+  .print-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 8mm;
+    margin-top: 7mm;
+    padding-top: 2mm;
+    border-top: 0.5pt solid #C8C8C4;
+    font-family: var(--font-mono), monospace;
+    font-size: 6.5pt;
+    letter-spacing: 0.06em;
+    color: #5C5C5A;
+  }
 }
 
 /* Hidden on screen, shown only in print. */
 .results-print-footer {
+  display: none;
+}
+
+/* The purpose-built report sheet is screen-hidden; print reveals it. */
+.results-print-sheet {
   display: none;
 }

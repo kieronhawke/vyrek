@@ -124,3 +124,20 @@
   }
   .results-skeleton { background: var(--suth-bg-elevated); }
 }
+
+/* ─── Search field focus ────────────────────────────────────────────────────
+   globals.css paints a box-shadow ring *outside* every focused input, and it
+   is written unlayered — so no Tailwind utility can override it, whatever the
+   specificity. On the full-bleed field inside the command palette that ring
+   was clipped on three sides by the sheet's overflow-hidden and sat directly
+   against the caret.
+
+   A class selector (0,2,0) beats the element selector (0,1,1) in the same
+   unlayered origin, so this wins. The focus state moves to the row, drawn
+   inset, where nothing can clip it. */
+.results-search-field:focus-visible,
+.results-search-field:focus {
+  box-shadow: none;
+  outline: none;
+  border-color: transparent;
+}
