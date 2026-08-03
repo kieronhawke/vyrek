@@ -18,14 +18,52 @@ import { ingestionStatus } from "../index";
 import { isSourceAuthorised } from "../fetch/fetcher";
 import { hasResultsSupabaseConfig, resultsProjectRef } from "../supabase-client";
 import { DEFAULT_LIVE_INTERVAL_SECONDS, clampLiveInterval, localStartLabel } from "../sync/live";
+import { relative } from "./relative";
+export { relative };
 
-export type {
-  Health, ComponentHealth, JobStatus, LivePanelRow, ConsoleModel,
-} from "./console-view";
-export { relative } from "./console-view";
-import { relative } from "./console-view";
-import type { ComponentHealth, ConsoleModel, JobStatus, LivePanelRow } from "./console-view";
+export type Health = "green" | "amber" | "red";
 
+export type ComponentHealth = {
+  key: "catalog" | "live" | "source" | "database" | "realtime";
+  label: string;
+  health: Health;
+  detail: string;
+};
+
+export type JobStatus = {
+  mode: IngestionRun["mode"];
+  label: string;
+  state: "idle" | "running" | "live-polling" | "error" | "paused";
+  lastSuccessAt: string | null;
+  lastRunAt: string | null;
+  nextRunHint: string;
+  rowsLastRun: number;
+  requestsLastRun: number;
+};
+
+export type LivePanelRow = {
+  eventSlug: string;
+  eventName: string;
+  localStart: string | null;
+  lastUpdateAt: string | null;
+  intervalSeconds: number;
+  updatesPaused: boolean;
+  consecutiveFailures: number;
+};
+
+export type ConsoleModel = {
+  dataMode: "demo" | "live";
+  ingestion: { canIngest: boolean; reason: string | null };
+  components: ComponentHealth[];
+  jobs: JobStatus[];
+  liveEvents: LivePanelRow[];
+  alerts: EngineAlert[];
+  quarantine: QuarantineRow[];
+  liveIntervalSeconds: number;
+  identityReviews: number;
+};
+
+/** How stale a catalog sync may be before it counts as a problem. */
 /** A catalogue older than this is stale enough to flag red. */
 const CATALOG_STALE_MS = 3 * 3_600_000;
 

@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useTransition } from "react";
-// Import from console-view, not console: the latter is a server module and
-// pulls the engine (and node:fs) into the client bundle.
-import type { ConsoleModel } from "@/lib/results/engine/ops/console-view";
-import { relative } from "@/lib/results/engine/ops/console-view";
+import type { ConsoleModel } from "@/lib/results/engine/ops/console";
+import { relative } from "@/lib/results/engine/ops/relative";
 import { MIN_LIVE_INTERVAL_SECONDS } from "@/lib/results/engine/sync/live";
 
 /**
