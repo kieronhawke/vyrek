@@ -268,6 +268,11 @@ export type ParseDiagnostics = {
   candidateRows: number;
   /** Rows that yielded a usable name and time. */
   parsedRows: number;
+  /**
+   * Distinct athletes behind those rows. Lower than `parsedRows` because the
+   * board renders each athlete more than once — see `rowsPerEntrant`.
+   */
+  distinctRows: number;
   /** True when the page rendered but contained no data rows at all. */
   emptyShell: boolean;
 };

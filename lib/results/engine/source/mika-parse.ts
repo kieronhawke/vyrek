@@ -62,13 +62,22 @@ function stripTags(value: string): string {
     .trim();
 }
 
-/** Options of one named `<select>`, in document order. */
+/**
+ * Options of one named `<select>`, in document order.
+ *
+ * ⚠️ The name is escaped before it becomes a pattern. Mika names its filter
+ * selects `search[age_class]` and `search[sex]`, and square brackets are a
+ * character class in a regular expression — so the unescaped version matched
+ * nothing at all, silently, and the age-group partitioning it fed simply never
+ * ran.
+ */
 export function parseSelectOptions(
   html: string,
   selectName: string,
 ): { value: string; label: string }[] {
+  const escaped = selectName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const selectRe = new RegExp(
-    `<select[^>]*name=["']${selectName}["'][^>]*>([\\s\\S]*?)</select>`,
+    `<select[^>]*name=["']${escaped}["'][^>]*>([\\s\\S]*?)</select>`,
     "i",
   );
   const block = selectRe.exec(html);
@@ -160,7 +169,12 @@ export type RowParseDiagnostics = ParseDiagnostics;
 export type ParsedRows = {
   rows: RawResultRow[];
   diagnostics: RowParseDiagnostics;
+  /** Real headcount: the rendered-row counter divided by `rowsPerEntrant`. */
   publishedEntrantCount?: number;
+  /** The raw "N Results" counter, which counts rendered rows, not people. */
+  publishedRowCount?: number;
+  /** Rows the board emits per athlete, measured on this page. 2.0–2.9 observed. */
+  rowsPerEntrant?: number;
 };
 
 /**
@@ -356,15 +370,42 @@ export function parseDivisionRows(
   // straight into the completeness checksum as a false pass.
   const counter = /class="[^"]*str_num[^"]*"[^>]*>([^<]*)</i.exec(html);
   const countMatch = counter ? /(\d+)/.exec(decodeEntities(counter[1])) : null;
-  const publishedEntrantCount = countMatch ? Number(countMatch[1]) : undefined;
+  const publishedRowCount = countMatch ? Number(countMatch[1]) : undefined;
+
+  // ⚠️ That counter counts *rendered rows*, not entrants.
+  //
+  // mika emits several `list-group-item` blocks per athlete — a wide one and a
+  // narrow one, plus extras on some divisions — and "N Results" counts all of
+  // them. It is not a headcount, and reading it as one is a trap that cost a
+  // long investigation: Manchester 2023 open women reads "686 Results" for a
+  // field of 281, and the missing 405 do not exist. Measured on the relay
+  // boards, where the ratio is a clean 2.00: 15 teams, "30 Results".
+  //
+  // The ratio is not a constant (2.0 on relay, 2.44 on open women, 2.89 on pro)
+  // so it cannot be hard-coded — but it is directly observable on the very page
+  // being parsed, as rows-emitted over distinct-entrants. Dividing by it
+  // recovers the real headcount, which is what the completeness check needs.
+  //
+  // Verified against the age-class partition, which is exhaustive and mutually
+  // exclusive: the 15 slices of that division sum to 280 distinct athletes
+  // against a stored 281, and their counters sum to 684 against a published 686.
+  const distinctOnPage = new Set(rows.map((r) => r.sourceResultId)).size;
+  const rowsPerEntrant = distinctOnPage > 0 ? rows.length / distinctOnPage : 1;
+  const publishedEntrantCount =
+    publishedRowCount === undefined
+      ? undefined
+      : Math.round(publishedRowCount / rowsPerEntrant);
 
   return {
     rows,
     publishedEntrantCount,
+    publishedRowCount,
+    rowsPerEntrant,
     diagnostics: {
       headerFields,
       candidateRows,
       parsedRows: rows.length,
+      distinctRows: distinctOnPage,
       emptyShell: candidateRows === 0 && headerFields.length > 0,
     },
   };

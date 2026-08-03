@@ -83,9 +83,18 @@ abstract class MikaAdapter implements SourceAdapter {
     params: Record<string, string>,
     into: Map<string, RawDivisionPage["rows"][number]>,
     merged: ParseDiagnostics,
-  ): Promise<{ published?: number; firstBody: string }> {
+  ): Promise<{ published?: number; publishedRows?: number; firstBody: string }> {
     let published: number | undefined;
+    let publishedRows: number | undefined;
     let firstBody = "";
+    // ⚠️ Novelty is judged against *this walk*, not the global set.
+    //
+    // Each filtered view is paginated independently. Judging "is there more?"
+    // against everything collected so far means an age slice whose first page
+    // happens to be rows the unfiltered walk already found stops immediately —
+    // and the rest of that slice is never fetched. That is how age-group
+    // partitioning ran, cost 30 extra requests, and gathered nothing.
+    const seenHere = new Set<string>();
 
     for (let page = 1; page <= MAX_PAGES; page += 1) {
       const { body } = await this.fetcher.fetchText(
@@ -101,20 +110,26 @@ abstract class MikaAdapter implements SourceAdapter {
 
       const parsed = parseDivisionRows(body, sourceEventId, sourceDivisionId);
       if (published === undefined) published = parsed.publishedEntrantCount;
+      if (publishedRows === undefined) publishedRows = parsed.publishedRowCount;
 
-      const before = into.size;
-      for (const row of parsed.rows) into.set(row.sourceResultId, row);
+      const before = seenHere.size;
+      for (const row of parsed.rows) {
+        seenHere.add(row.sourceResultId);
+        into.set(row.sourceResultId, row);
+      }
 
       if (merged.headerFields.length === 0) merged.headerFields = parsed.diagnostics.headerFields;
       merged.candidateRows += parsed.diagnostics.candidateRows;
       merged.parsedRows += parsed.diagnostics.parsedRows;
       merged.emptyShell = merged.emptyShell && parsed.diagnostics.emptyShell;
 
-      // Nothing new means the pager has run out, whatever it served.
-      if (into.size === before) break;
+      // Nothing new *in this view* means its pager has run out, whatever it
+      // served — the source's page parameter stops yielding new rows well
+      // before it stops returning pages.
+      if (seenHere.size === before) break;
     }
 
-    return { published, firstBody };
+    return { published, publishedRows, firstBody };
   }
 
   constructor(protected fetcher: SourceFetcher) {}
@@ -183,6 +198,7 @@ abstract class MikaAdapter implements SourceAdapter {
       headerFields: [],
       candidateRows: 0,
       parsedRows: 0,
+      distinctRows: 0,
       emptyShell: true,
     };
 
@@ -190,30 +206,35 @@ abstract class MikaAdapter implements SourceAdapter {
       seasonPath, code, sourceEventId, sourceDivisionId,
       this.listParams(sex), byId, merged,
     );
-    publishedEntrantCount = first.published;
+    merged.distinctRows = byId.size;
 
-    // ⚠️ The pager is capped, and the cap is well below what a big board holds.
+    // The headcount, recomputed over the whole walk rather than the first page.
     //
-    // Measured: a 686-entrant division served new rows for seven pages, reached
-    // 282, and returned empty pages from page eight onward. No page parameter
-    // reaches the other 404. The engine was correct and the source's pagination
-    // simply stops.
+    // `parseDivisionRows` can only measure the duplication factor on the page in
+    // front of it, and a full first page duplicates slightly more than the
+    // partial last one — enough to report 254 for a field of 281 and turn a
+    // complete division into a false shortfall. Rows-parsed over distinct-people
+    // across every page is the true ratio, and on a complete walk the rows we
+    // parsed and the rows the board counted are the same quantity: 686 and 686.
+    publishedEntrantCount =
+      first.publishedRows !== undefined && merged.parsedRows > 0 && byId.size > 0
+        ? Math.round(first.publishedRows / (merged.parsedRows / byId.size))
+        : first.published;
+
+    // ⚠️ There is no missing tail here, however much the counter suggests one.
     //
-    // Narrowing by age group splits the field into slices that each fit under
-    // that ceiling. It costs more requests, so it only happens when the board
-    // says there is more to get than we managed to collect.
-    if (publishedEntrantCount !== undefined && byId.size < publishedEntrantCount) {
-      for (const ageClass of parseAgeClasses(first.firstBody)) {
-        const before = byId.size;
-        await this.collect(
-          seasonPath, code, sourceEventId, sourceDivisionId,
-          { ...this.listParams(sex), "search[age_class]": ageClass }, byId, merged,
-        );
-        void before;
-        if (byId.size >= publishedEntrantCount) break;
-        if (opts.maxRows && byId.size >= opts.maxRows) break;
-      }
-    }
+    // The board's "N Results" counts rendered rows, and mika renders each
+    // athlete two to four times, so a field of 281 advertises itself as 686.
+    // `parseDivisionRows` now divides that counter by the duplication factor it
+    // measures on the page, so `publishedEntrantCount` is a real headcount and
+    // the walk above genuinely exhausts the division.
+    //
+    // An earlier version read the counter literally, concluded 405 entrants were
+    // missing, and partitioned the board by age class to go and find them. Every
+    // slice was already held: 15 extra requests per division, no new rows. The
+    // partition survives in `parseAgeClasses` because it is what proved the
+    // point — the slices are exhaustive and sum to 280 of 281 — but it has no
+    // place on the hot path. See SOURCE.md §7.
 
     // A method that returns nothing where the board itself says there are
     // entrants has not succeeded, it has failed quietly. Throwing hands over to
