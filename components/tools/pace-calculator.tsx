@@ -50,6 +50,12 @@ export function PaceCalculator() {
     () => DEFAULT_STATIONS.map((s) => ({ ...s })),
   );
   const [fadePct, setFadePct] = useState(5);
+  /* Roxzone. The tool projected running + stations and called the result a
+     "Hyrox finish time", which it is not: the eight transitions are timed and
+     count towards your finish. Omitting them under-predicted every result by
+     several minutes, on the page where somebody is deciding whether sub-75
+     is realistic. 30 seconds each is a reasonable age-group default. */
+  const [roxzoneSeconds, setRoxzoneSeconds] = useState(30);
 
   const paceSecondsPerKm = parsePace(paceInput);
 
@@ -61,7 +67,8 @@ export function PaceCalculator() {
     // Apply progressive fade: km 1 = 0%, km 8 = full fade.
     const fadeFactor = 1 + (fadePct / 100) * 0.5; // avg multiplier across 8 km
     const adjustedRunTotal = baseRunTotal * fadeFactor;
-    const total = stationTotal + adjustedRunTotal;
+    const roxzoneTotal = roxzoneSeconds * 8;
+    const total = stationTotal + adjustedRunTotal + roxzoneTotal;
     const perKm: number[] = [];
     for (let i = 0; i < 8; i++) {
       const f = 1 + (fadePct / 100) * (i / 7);
@@ -73,9 +80,10 @@ export function PaceCalculator() {
       baseRunTotal,
       adjustedRunTotal,
       stationTotal,
+      roxzoneTotal,
       perKm,
     };
-  }, [paceSecondsPerKm, stations, fadePct]);
+  }, [paceSecondsPerKm, stations, fadePct, roxzoneSeconds]);
 
   const updateStation = (i: number, value: number) => {
     setStations((prev) => {
@@ -132,6 +140,31 @@ export function PaceCalculator() {
               5-10%.
             </span>
           </label>
+
+          <label className="block">
+            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+              Roxzone per transition
+            </span>
+            <div className="flex items-center gap-3">
+              <input
+                type="range"
+                min={0}
+                max={90}
+                step={5}
+                value={roxzoneSeconds}
+                onChange={(e) => setRoxzoneSeconds(parseInt(e.target.value))}
+                className="flex-1 accent-suth-accent"
+                aria-label="Roxzone seconds per transition"
+              />
+              <span className="w-16 text-right font-mono text-sm font-medium text-suth-text">
+                {roxzoneSeconds}s
+              </span>
+            </div>
+            <span className="mt-1 block text-xs text-suth-text-tertiary">
+              Transition time is on the clock and there are eight of them.
+              30-45 seconds each is typical.
+            </span>
+          </label>
         </div>
       </div>
 
@@ -171,7 +204,8 @@ export function PaceCalculator() {
           </p>
           <p className="mt-2 text-sm text-suth-text-secondary">
             Running time: {formatHMMSS(projection.adjustedRunTotal)} ·
-            Stations: {formatHMMSS(projection.stationTotal)}
+            Stations: {formatHMMSS(projection.stationTotal)} ·
+            Roxzone: {formatHMMSS(projection.roxzoneTotal)}
           </p>
 
           <div className="mt-6">

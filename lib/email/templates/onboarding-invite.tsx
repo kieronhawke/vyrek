@@ -217,15 +217,22 @@ export function onboardingInviteSubject(firstName: string, kind: "full" | "payme
     : `${firstName}, let's get you set up`;
 }
 
-/** The SMS that goes with it. One segment, plain GSM, no link shortener. */
+/**
+ * The SMS that goes with it.
+ *
+ * Written short because it is billed by the character. The first live invite
+ * ran to three segments and 12.7p; the wording below and a shorter path bring
+ * it to two. Plain GSM throughout — one curly apostrophe would halve the
+ * segment size and undo all of it, which is why these are typewriter quotes.
+ */
 export function onboardingInviteSms(
   firstName: string,
   link: string,
   kind: "full" | "payment",
 ): string {
   return kind === "payment"
-    ? `${firstName}, it's Ben. Pick your plan and you're away: ${link}`
-    : `${firstName}, it's Ben at Suth Performance. Here's your setup link, takes 5 mins: ${link}`;
+    ? `${firstName}, Ben here. Pick your plan: ${link}`
+    : `${firstName}, Ben at Suth Performance. Your setup link, 5 mins: ${link}`;
 }
 
 export { BG };

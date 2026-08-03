@@ -64,6 +64,32 @@ export function signingConfigured(): boolean {
   return secret() !== FALLBACK;
 }
 
+/**
+ * THE TOKEN IS IN A TEXT MESSAGE, SO ITS LENGTH IS MONEY.
+ *
+ * The first live invite went out as THREE segments and cost 12.7p, because a
+ * readable JSON payload plus a full-length signature is 215 characters before
+ * the domain is even added. Worse, lib/sms/send.ts refuses anything over three
+ * segments — so a client with a longer name than Kieron's would have received
+ * no text at all, silently, and nobody would have known why.
+ *
+ * Two changes, both safe:
+ *
+ * 1. SINGLE-LETTER KEYS. `{"name":…,"email":…}` becomes `{"n":…,"e":…}`. No
+ *    information is lost; it is a wire format, not something a human reads.
+ *
+ * 2. A 128-BIT SIGNATURE instead of 256. Truncating an HMAC is explicitly
+ *    sanctioned (RFC 2104 §5, NIST SP 800-107), and 128 bits is far beyond
+ *    forgeable for a link that expires in thirty days. It saves 22 characters.
+ *
+ * Together with a shorter path and tighter copy that is two segments rather
+ * than three — a third off every invite Ben ever sends.
+ *
+ * OLD TOKENS STILL WORK. `readInvite` accepts both the long and short field
+ * names and both signature lengths, so links already sent do not break.
+ */
+const SIG_BYTES = 16;
+
 function b64url(input: Buffer | string): string {
   return Buffer.from(input)
     .toString("base64")
@@ -78,6 +104,11 @@ function unb64url(input: string): Buffer {
 }
 
 function sign(body: string): string {
+  return b64url(createHmac("sha256", secret()).update(body).digest().subarray(0, SIG_BYTES));
+}
+
+/** The pre-shortening signature, so links already sent still verify. */
+function signLegacy(body: string): string {
   return b64url(createHmac("sha256", secret()).update(body).digest());
 }
 
@@ -94,7 +125,17 @@ export function createInvite(
     iat,
     exp: iat + INVITE_DAYS * 86400,
   };
-  const body = b64url(JSON.stringify(payload));
+  // Single letters on the wire. Nobody reads this; it rides in an SMS.
+  const compact = {
+    n: payload.name,
+    e: payload.email,
+    p: payload.phone,
+    k: payload.kind,
+    ...(payload.plan ? { l: payload.plan } : {}),
+    i: payload.iat,
+    x: payload.exp,
+  };
+  const body = b64url(JSON.stringify(compact));
   return `${body}.${sign(body)}`;
 }
 
@@ -117,18 +158,32 @@ export function readInvite(token: string, now = Date.now()): InviteResult {
   }
 
   const [body, signature] = parts;
-  const expected = sign(body);
   // Compared in constant time. A byte-by-byte comparison leaks how much of a
   // forged signature was right, which is enough to build one.
-  const a = Buffer.from(signature);
-  const b = Buffer.from(expected);
-  if (a.length !== b.length || !timingSafeEqual(a, b)) {
+  const matches = (expected: string) => {
+    const a = Buffer.from(signature);
+    const b = Buffer.from(expected);
+    return a.length === b.length && timingSafeEqual(a, b);
+  };
+  // Both lengths accepted, so links sent before the token was shortened do
+  // not suddenly stop working in somebody's messages.
+  if (!matches(sign(body)) && !matches(signLegacy(body))) {
     return { ok: false, reason: "tampered" };
   }
 
   let invite: InvitePayload;
   try {
-    invite = JSON.parse(unb64url(body).toString("utf8")) as InvitePayload;
+    const raw = JSON.parse(unb64url(body).toString("utf8")) as Record<string, unknown>;
+    // Accepts both the compact keys and the original long ones.
+    invite = {
+      name: String(raw.n ?? raw.name ?? ""),
+      email: String(raw.e ?? raw.email ?? ""),
+      phone: String(raw.p ?? raw.phone ?? ""),
+      kind: (raw.k ?? raw.kind) as InviteKind,
+      ...(raw.l || raw.plan ? { plan: String(raw.l ?? raw.plan) } : {}),
+      iat: Number(raw.i ?? raw.iat ?? 0),
+      exp: Number(raw.x ?? raw.exp ?? 0),
+    };
   } catch {
     return { ok: false, reason: "malformed" };
   }
@@ -148,7 +203,13 @@ export function readInvite(token: string, now = Date.now()): InviteResult {
   return { ok: true, invite };
 }
 
-/** The link Ben sends. */
+/**
+ * The link Ben sends.
+ *
+ * `/o/` rather than `/onboarding/`: eleven characters he pays for on every
+ * single invite, and inside an SMS those characters are money. The long path
+ * still serves the same screen for links already sent.
+ */
 export function inviteUrl(token: string, base: string): string {
-  return `${base.replace(/\/$/, "")}/onboarding/${token}`;
+  return `${base.replace(/\/$/, "")}/o/${token}`;
 }
