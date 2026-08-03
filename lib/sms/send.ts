@@ -15,10 +15,29 @@ import { isGsm7, segments, smsLength } from "@/lib/sms/messages";
  * IT NEVER THROWS ON A FAILED SEND. An SMS that does not go out must not take
  * down the onboarding request it was attached to — the client still needs the
  * email, and Ben still needs the link. Every failure is a returned reason.
+ *
+ * WHO IT COMES FROM IS A DECISION PER MESSAGE
+ * -------------------------------------------
+ * The service holds two senders: the brand name SUTH, and the UK number.
+ *
+ *   SUTH    looks like a company rather than a stranger, costs no rental, and
+ *           CANNOT RECEIVE A REPLY. A text from it is a dead end.
+ *   NUMBER  looks like a mobile, and can be replied to.
+ *
+ * So it depends entirely on whether the message expects an answer. "Your plan
+ * is ready, here is the link" does not. "Haven't seen anything ticked off this
+ * week, everything alright?" absolutely does — sending that from a name nobody
+ * can reply to asks a question and then hangs up.
+ *
+ * MARKETING IS ALWAYS SENT FROM THE NUMBER, and the type system does not let
+ * you choose otherwise. STOP only works on a sender that can receive it, and
+ * marketing without a working opt-out is a PECR problem, not a preference.
+ * Same rule as lib/control/messaging.ts, enforced at the other end of the
+ * pipe.
  */
 
 export type SmsResult =
-  | { ok: true; sid: string; segments: number }
+  | { ok: true; sid: string; segments: number; sentAs: string }
   | { ok: false; reason: string };
 
 function config() {
@@ -51,9 +70,28 @@ export function toE164(input: string): string | null {
   return null;
 }
 
+export type Sender =
+  /** From "SUTH". Branded, free, and a dead end — nobody can reply. */
+  | "brand"
+  /** From the UK number. Replies reach the inbound webhook. */
+  | "number";
+
 export async function sendSms(args: {
   to: string;
   body: string;
+  /**
+   * Defaults to "number", deliberately.
+   *
+   * The safe failure is a text somebody can reply to when they did not need
+   * to. The unsafe one is a question they cannot answer, so the branded
+   * sender is opt-in per message rather than the default.
+   */
+  sender?: Sender;
+  /**
+   * Marketing is pinned to the number regardless of `sender`, because STOP
+   * has to reach something.
+   */
+  marketing?: boolean;
 }): Promise<SmsResult> {
   const cfg = config();
   if (!cfg) {
@@ -87,6 +125,14 @@ export async function sendSms(args: {
     Body: body,
   });
 
+  // Named explicitly rather than left to the service to choose: with both a
+  // name and a number in the pool Twilio picks the number every time, so the
+  // brand would never be used without saying so.
+  const brand = process.env.TWILIO_ALPHA_SENDER;
+  if (args.sender === "brand" && brand && !args.marketing) {
+    params.set("From", brand);
+  }
+
   try {
     const res = await fetch(
       `https://api.twilio.com/2010-04-01/Accounts/${cfg.sid}/Messages.json`,
@@ -116,7 +162,12 @@ export async function sendSms(args: {
       };
     }
 
-    return { ok: true, sid: data.sid, segments: count };
+    return {
+      ok: true,
+      sid: data.sid,
+      segments: count,
+      sentAs: params.get("From") ?? "number",
+    };
   } catch (error) {
     return {
       ok: false,
