@@ -287,7 +287,9 @@ function Controls({
           placeholder="Find an athlete"
           className="min-h-[40px] w-full rounded-sm border border-suth-border bg-suth-elevated
                      pl-9 pr-8 text-sm text-suth-text outline-none
-                     placeholder:text-suth-text-tertiary focus-visible:border-suth-accent"
+                     placeholder:text-suth-text-tertiary
+                     focus-visible:border-suth-accent focus-visible:ring-2
+                     focus-visible:ring-inset focus-visible:ring-suth-accent/40"
         />
         {query ? (
           <button

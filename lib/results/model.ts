@@ -154,6 +154,24 @@ export const STATION_WEIGHTS: Record<StationId, number> = {
 };
 
 /**
+ * Short codes for the race strip.
+ *
+ * Explicit, not derived from initials: Sled Push and Sled Pull both reduce to
+ * "SP", and Row reduces to "R" which reads as a run. An ambiguous label on a
+ * chart is worse than none.
+ */
+export const STATION_SHORT: Record<StationId, string> = {
+  "ski-erg": "SKI",
+  "sled-push": "PUSH",
+  "sled-pull": "PULL",
+  "burpee-broad-jump": "BBJ",
+  "row": "ROW",
+  "farmers-carry": "CARRY",
+  "sandbag-lunges": "LUNGE",
+  "wall-balls": "WALL",
+};
+
+/**
  * Station id → the slug of its existing guide page.
  *
  * These are NOT the same strings: the guides predate this section and use

@@ -209,6 +209,7 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
           roxzoneSeconds={result.roxzoneSeconds}
           averageRuns={result.divisionAverage.runs}
           averageStations={result.divisionAverage.stations}
+          averageRoxzone={result.divisionAverage.roxzone}
         />
       </Reveal>
 
