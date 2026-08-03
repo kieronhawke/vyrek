@@ -8,8 +8,11 @@ import {
 } from "@/components/landing/geo-landing";
 import { JsonLd } from "@/lib/blog/jsonld";
 import { siteUrl } from "@/lib/blog/urls";
+import { localesForCountry } from "@/lib/i18n/config";
+import { localisedCities } from "@/lib/i18n/cities";
 import { listAllGeoSlugs, resolveGeo } from "@/lib/geo-page";
 import { VipInPerson } from "@/components/landing/vip-in-person";
+import { ChampionshipBanner } from "@/components/landing/championship-banner";
 
 export const revalidate = 86400;
 export const dynamicParams = false;
@@ -46,7 +49,23 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: { canonical: url },
+    /* hreflang has to be declared on both sides or Google treats the German
+       page as a competing duplicate of the English one rather than its
+       alternate. x-default points at English, which is the version to serve a
+       reader whose language we do not publish. */
+    alternates: {
+      canonical: url,
+      languages: (() => {
+        const country = city?.country ?? loc.region;
+        const locales = localesForCountry(country).filter((l) =>
+          localisedCities(l).some((c) => c.slug === loc.slug),
+        );
+        if (!locales.length) return undefined;
+        const langs: Record<string, string> = { en: url, "x-default": url };
+        for (const l of locales) langs[l] = `${siteUrl()}/${l}/hyrox-training/${loc.slug}`;
+        return langs;
+      })(),
+    },
     openGraph: {
       title,
       description,
@@ -71,7 +90,7 @@ export default async function HyroxTrainingLocationPage({
   const { location } = await params;
   const r = resolveGeo(location);
   if (!r) notFound();
-  const { loc, seo, parent, nearby, city, vip } = r;
+  const { loc, seo, parent, nearby, city, vip, championship } = r;
   // See the metadata above: the four names both catalogues claim need the
   // country in the heading, or two live pages carry the same H1.
   const headingName = city?.bareSlug ? `${loc.name}, ${city.country}` : undefined;
@@ -91,7 +110,12 @@ export default async function HyroxTrainingLocationPage({
         seo={seo}
         nearby={nearby}
         headingName={headingName}
-        afterLocalContext={vip ? <VipInPerson city={vip.city} country={vip.country} /> : null}
+        afterLocalContext={
+          <>
+            {championship ? <ChampionshipBanner {...championship} /> : null}
+            {vip ? <VipInPerson city={vip.city} country={vip.country} /> : null}
+          </>
+        }
       />
     </>
   );

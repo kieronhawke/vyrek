@@ -1,0 +1,73 @@
+import { LOCALE_CONFIG, type Locale } from "@/lib/i18n/config";
+import { RACE_CITIES } from "@/lib/race-cities";
+import { INTL_CITIES } from "@/lib/intl-cities";
+
+/**
+ * Which cities a locale serves.
+ *
+ * Drawn from the catalogues we already have rather than a second list, so a
+ * city cannot exist in German and not in English, and adding cities to a
+ * market localises them automatically.
+ */
+
+/**
+ * Cities in a locale's countries where that locale is not the local language.
+ *
+ * Switzerland is the reason this exists: Basel reads German, Geneva reads
+ * French, and serving a German page for Geneva would be worse than serving the
+ * English one. Listed explicitly because there is no language field in the
+ * city data to derive it from, and guessing from coordinates would be worse.
+ */
+const WRONG_LANGUAGE: Record<Locale, string[]> = {
+  de: ["geneva"],
+};
+
+export type LocalisedCity = { slug: string; name: string; country: string };
+
+export function localisedCities(locale: Locale): LocalisedCity[] {
+  const { countries } = LOCALE_CONFIG[locale];
+  const excluded = new Set(WRONG_LANGUAGE[locale] ?? []);
+  const out: LocalisedCity[] = [];
+  for (const c of RACE_CITIES) {
+    if (!countries.includes(c.country) || excluded.has(c.slug)) continue;
+    out.push({ slug: c.slug, name: c.name, country: c.country });
+  }
+  for (const c of INTL_CITIES) {
+    if (!countries.includes(c.country) || excluded.has(c.slug)) continue;
+    out.push({ slug: c.slug, name: c.name, country: c.country });
+  }
+  return out;
+}
+
+/** Nearest other cities in the same locale, for cross-linking. */
+export function localisedNearby(
+  locale: Locale,
+  slug: string,
+  count = 6,
+): { slug: string; name: string; km: number }[] {
+  const all = localisedCities(locale);
+  const coords = (s: string) =>
+    RACE_CITIES.find((c) => c.slug === s) ?? INTL_CITIES.find((c) => c.slug === s);
+  const here = coords(slug);
+  if (!here) return [];
+  const R = 6371;
+  const km = (a: { lat: number; lng: number }, b: { lat: number; lng: number }) => {
+    const dLat = ((b.lat - a.lat) * Math.PI) / 180;
+    const dLng = ((b.lng - a.lng) * Math.PI) / 180;
+    const la1 = (a.lat * Math.PI) / 180;
+    const la2 = (b.lat * Math.PI) / 180;
+    const h =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(la1) * Math.cos(la2) * Math.sin(dLng / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(h));
+  };
+  return all
+    .filter((c) => c.slug !== slug)
+    .map((c) => {
+      const t = coords(c.slug);
+      return t ? { slug: c.slug, name: c.name, km: Math.round(km(here, t)) } : null;
+    })
+    .filter((x): x is { slug: string; name: string; km: number } => x !== null)
+    .sort((a, b) => a.km - b.km)
+    .slice(0, count);
+}

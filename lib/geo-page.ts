@@ -1,7 +1,15 @@
 import type { UkLocation } from "@/lib/uk-locations";
 import { getLocationBySlug, listLocationSlugs } from "@/lib/uk-locations";
 import type { GeoSeo } from "@/lib/locations/seo";
+import { venueLabel } from "@/lib/hyrox/races";
 import { getGeoSeo, geoRobots } from "@/lib/locations/seo";
+import {
+  getIntlCity,
+  getIntlCityGeo,
+  intlCityAsLocation,
+  listIntlCitySlugs,
+  nearbyIntlCities,
+} from "@/lib/intl-cities";
 import {
   getFocusCity,
   getFocusCityGeo,
@@ -42,6 +50,14 @@ export type ResolvedGeo = {
   city?: RaceCity;
   /** Set on a focus city that carries the in-person VIP offer. */
   vip?: { city: string; country: string };
+  /** Set where the city hosts a World Championship, whatever the year. */
+  championship?: {
+    city: string;
+    raceSlug: string;
+    raceName: string;
+    startDate: string;
+    venue?: string | null;
+  };
   robots: { index: boolean; follow: boolean };
   /** The directory this page sits under, for breadcrumbs and cross-links. */
   parent: { name: string; path: (base: string) => string };
@@ -49,7 +65,12 @@ export type ResolvedGeo = {
 };
 
 export function listAllGeoSlugs(): string[] {
-  return [...listLocationSlugs(), ...listRaceCitySlugs(), ...listFocusCitySlugs()];
+  return [
+    ...listLocationSlugs(),
+    ...listRaceCitySlugs(),
+    ...listFocusCitySlugs(),
+    ...listIntlCitySlugs(),
+  ];
 }
 
 export function resolveGeo(slug: string): ResolvedGeo | undefined {
@@ -63,6 +84,27 @@ export function resolveGeo(slug: string): ResolvedGeo | undefined {
         name: uk.region,
         path: (base) => `${base}/in/${regionSlugOf(uk.region)}`,
       },
+    };
+  }
+
+  /* The expanded English-language markets: whole countries at town depth. */
+  const intl = getIntlCity(slug);
+  if (intl) {
+    const near = nearbyIntlCities(slug, 6);
+    return {
+      loc: intlCityAsLocation(intl),
+      seo: getIntlCityGeo(slug),
+      robots: geoRobotsFor(getIntlCityGeo(slug)),
+      parent: {
+        name: intl.country,
+        path: (base) => `${base}/country/${intl.countrySlug}`,
+      },
+      nearby: near.length
+        ? {
+            items: near,
+            heading: `Other places we cover in ${intl.country}. Plenty of people train in the next town over, whether that is a better gym or simply the one on the way home.`,
+          }
+        : undefined,
     };
   }
 
@@ -86,8 +128,21 @@ export function resolveGeo(slug: string): ResolvedGeo | undefined {
   if (!city) return undefined;
 
   const nearby = nearbyRaceCities(slug, 6);
+  /* A championship is not always the soonest race in its city — Hong Kong's is
+     five months after a regular event — so it is found explicitly rather than
+     left to the date sort that drives everything else. */
+  const wc = city.races.find((r) => r.isWorldChampionship);
   return {
     loc: raceCityAsLocation(city),
+    championship: wc
+      ? {
+          city: city.name,
+          raceSlug: wc.slug,
+          raceName: wc.name,
+          startDate: wc.startDate,
+          venue: wc.venueAnnounced ? venueLabel({ ...wc, city: city.name }) : null,
+        }
+      : undefined,
     seo: getRaceCityGeo(slug),
     city,
     /* Every city in this set hosts a race, which is the local substance the
@@ -105,6 +160,15 @@ export function resolveGeo(slug: string): ResolvedGeo | undefined {
         }
       : undefined,
   };
+}
+
+/**
+ * A page indexes when it has something local to say — the same rule
+ * lib/locations/seo.ts applies to the UK towns, restated here for the
+ * catalogues that build their own GeoSeo.
+ */
+function geoRobotsFor(seo: GeoSeo): { index: boolean; follow: boolean } {
+  return { index: seo.indexable, follow: true };
 }
 
 /** Local copy so this module does not pull the whole UK catalogue in. */

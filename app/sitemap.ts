@@ -7,6 +7,9 @@ import { getGeoSeo, geoPriority, isRaceCity } from "@/lib/locations/seo";
 import { RACE_CITIES, listCountrySlugs } from "@/lib/race-cities";
 import { US_STATES } from "@/lib/us-states";
 import { FOCUS_CITIES } from "@/lib/focus-cities";
+import { INTL_CITIES } from "@/lib/intl-cities";
+import { LOCALES } from "@/lib/i18n/config";
+import { localisedCities } from "@/lib/i18n/cities";
 import { STATIONS } from "@/lib/hyrox-stations";
 import { PLAN_TEMPLATES } from "@/lib/plan-templates";
 import { COMPARISONS } from "@/lib/hyrox-comparisons";
@@ -176,6 +179,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...listCountrySlugs().flatMap((c) => [
       { url: `${SITE_URL}/hyrox-training/country/${c}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
       { url: `${SITE_URL}/personal-trainer/country/${c}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
+    ]),
+    /* The localised pages. Listed like any other URL: hreflang on the pages
+       themselves is what pairs them with their English equivalents. */
+    ...LOCALES.flatMap((lang) =>
+      localisedCities(lang).map((c) => ({
+        url: `${SITE_URL}/${lang}/hyrox-training/${c.slug}`,
+        lastModified: GEO_CONTENT_UPDATED,
+        priority: 0.7,
+        changeFrequency: "weekly" as const,
+      })),
+    ),
+    /* The expanded English-language markets. Same priority as a UK town:
+       they are the same kind of page, built from the same kind of data. */
+    ...INTL_CITIES.flatMap((c) => [
+      { url: `${SITE_URL}/hyrox-training/${c.slug}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
+      { url: `${SITE_URL}/personal-trainer/${c.slug}`, lastModified: GEO_CONTENT_UPDATED, priority: 0.7, changeFrequency: "weekly" as const },
     ]),
     /* Focus cities: markets we target that carry no race. Dubai is the first,
        and it carries the in-person offer, which is why it sits at hub priority

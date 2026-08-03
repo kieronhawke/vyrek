@@ -147,6 +147,38 @@ export function homeRaces(now?: Date): Race[] {
   );
 }
 
+/**
+ * Countries an athlete in the key column would realistically travel to for a
+ * race, including their own.
+ *
+ * Scoring a city against the whole calendar produces technically true and
+ * practically useless answers: the nearest race to Perth becomes Singapore,
+ * and the nearest to Halifax becomes somewhere in Europe if the maths falls
+ * that way. These are the pairs where crossing the border for a race weekend
+ * is a normal thing people do.
+ */
+const TRAVEL_NEIGHBOURS: Record<string, string[]> = {
+  Ireland: ["Ireland", "United Kingdom"],
+  "United Kingdom": ["United Kingdom", "Ireland"],
+  Australia: ["Australia", "New Zealand"],
+  "New Zealand": ["New Zealand", "Australia"],
+  Canada: ["Canada", "United States"],
+  "United States": ["United States", "Canada"],
+  "South Africa": ["South Africa"],
+};
+
+/**
+ * Upcoming races a reader in `country` would plausibly enter.
+ *
+ * Falls back to that country alone, which is the honest answer where we have
+ * no basis for claiming a travel pattern — better a shorter list than a
+ * confident recommendation to fly to another continent.
+ */
+export function homeRacesFor(country: string, now?: Date): Race[] {
+  const allowed = TRAVEL_NEIGHBOURS[country] ?? [country];
+  return upcoming(now).filter((r) => r.country && allowed.includes(r.country));
+}
+
 /** Whole days between now and the start. Negative once it has begun. */
 export function daysUntil(race: Race, now: Date = new Date()): number {
   const start = new Date(`${race.startDate}T00:00:00Z`).getTime();

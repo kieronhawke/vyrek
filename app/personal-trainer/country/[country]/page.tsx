@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { siteUrl } from "@/lib/blog/urls";
 import { US_STATES } from "@/lib/us-states";
+import { intlCitiesInCountry, intlCityAsLocation } from "@/lib/intl-cities";
 
 /**
  * A country directory for the international race cities.
@@ -71,7 +72,13 @@ export default async function PersonalTrainerCountryPage({
   return (
     <GeoRegionDirectory
       region={data.country}
-      locations={data.cities.map(raceCityAsLocation)}
+      /* Ireland, Australia, Canada, New Zealand and South Africa were
+         expanded to town depth, so their directory lists the whole catalogue
+         rather than only the cities that happen to host a race. */
+      locations={[
+        ...data.cities.map(raceCityAsLocation),
+        ...intlCitiesInCountry(country).map(intlCityAsLocation),
+      ]}
       base="/personal-trainer"
       title={`Personal trainer in ${data.country}`}
       intro={`${data.cities.length} ${data.cities.length === 1 ? "city in" : "cities in"} ${data.country} ${data.cities.length === 1 ? "has" : "have"} hosted a HYROX, ${races} ${races === 1 ? "race" : "races"} between them. Every one has its own page with the gyms actually near the centre and the venue the race is held at. Coaching is online and in English, wherever you train.`}
