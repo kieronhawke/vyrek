@@ -589,6 +589,46 @@ describe("a batch that repeats a key", () => {
   });
 });
 
+describe("rows the source gives no id for", () => {
+  /**
+   * Not every row carries an `idp`. On one real board only 41% did, and in the
+   * batched rewrite a person with no id was created but never findable again —
+   * so the row that owned them was dropped as "owner unresolved". 405 of 686
+   * results vanished from one division, and the completeness check reported it
+   * as a missing page rather than as rows we had thrown away.
+   */
+  it("keeps rows whose athletes have no source id", async () => {
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-no-idp.html")] },
+      }),
+    });
+
+    const outcome = await syncOnce(h);
+    expect(outcome.inserted).toBe(4);
+    expect(h.repo.results.size).toBe(4);
+    expect(h.repo.athletes.size).toBe(4);
+
+    // And every one of them is attached to its row.
+    const results = [...h.repo.results.values()];
+    for (const athlete of h.repo.athletes.values()) {
+      expect(results.some((r) => r.athleteId === athlete.id)).toBe(true);
+    }
+  });
+
+  it("quarantines a count when it does drop rows, rather than losing them silently", async () => {
+    // The invariant that matters: dropping is allowed, dropping quietly is not.
+    const h = await makeHarness({
+      fixtures: defaultFixtures({
+        divisions: { [DIVISION_CODE]: [fixture("list-rows-no-idp.html")] },
+      }),
+    });
+    const outcome = await syncOnce(h);
+    expect(outcome.quarantined).toBe(0);
+    expect(outcome.inserted).toBe(4);
+  });
+});
+
 describe("a division resolves its athletes in bulk", () => {
   /**
    * Resolving one athlete at a time cost up to three round trips each — around
