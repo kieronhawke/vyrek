@@ -8,8 +8,14 @@ import { formatTime, formatOrdinal, formatCount, formatRelativeDate } from "@/li
 import { ProgressionChart } from "@/components/results/athlete/progression-chart";
 import { CareerStations, type CareerSplit } from "@/components/results/athlete/career-stations";
 import { ClaimProfile } from "@/components/results/athlete/claim-profile";
+import { PowerCard } from "@/components/results/athlete/power-card";
+import { StationProfileTable } from "@/components/results/athlete/station-profile-table";
+import {
+  powerScore, formTrend, stationProfile, divisionBests, careerSummary,
+} from "@/lib/results/athlete-analytics";
+import { percentileOf, buildDistribution } from "@/lib/results/percentiles";
 import { AthleteExport } from "@/components/results/export/athlete-export";
-import { StatTile, Nationality, Time, Delta } from "@/components/results/ui/primitives";
+import { StatTile, MicroLabel, Nationality, Time, Delta } from "@/components/results/ui/primitives";
 import { CoachingCta } from "@/components/results/coaching-cta";
 
 /**
@@ -95,6 +101,56 @@ export default async function AthletePage({ params }: { params: Promise<{ slug: 
     divisionAverages[station] = Math.round(sum / n);
   }
 
+  /* ── Career analytics ──────────────────────────────────────────────
+     All derived from the race list and the details already fetched above, so
+     this adds no round trips. */
+
+  const summary = careerSummary(races);
+  const bests = divisionBests(races);
+
+  // Percentile per race, needed by the power score. `rank` and `fieldSize`
+  // give it directly — no distribution to build.
+  const scored = finished.map((race, i) => {
+    const detail = details[i];
+    const fieldSize = detail?.fieldSize ?? 0;
+    return {
+      percentile: fieldSize > 0 && race.rank > 0
+        ? ((fieldSize - race.rank) / fieldSize) * 100
+        : 0,
+      fieldSize,
+      ageDays: Math.max(0, Math.round(
+        (now.getTime() - new Date(race.date).getTime()) / 86_400_000,
+      )),
+    };
+  });
+  const power = powerScore(scored);
+
+  // Form is only meaningful within one division: an Open time and a Doubles
+  // time on the same line is not a trend.
+  const primaryDivision = bests[0]?.division;
+  const trend = formTrend(
+    finished
+      .filter((r) => r.division === primaryDivision)
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .map((r) => r.finishSeconds),
+  );
+
+  // Station splits with a percentile against the division at that event.
+  const stationSamples: Partial<Record<StationId, { seconds: number; percentile: number }[]>> = {};
+  details.forEach((detail) => {
+    if (!detail) return;
+    for (const station of STATION_IDS) {
+      const seconds = detail.stations[station];
+      const average = detail.divisionAverage.stations[station];
+      if (!seconds || !average) continue;
+      // Approximate: a station distribution per event is not held, so this
+      // places the split against the division mean rather than its full curve.
+      const percentile = Math.max(0, Math.min(100, 50 - ((seconds / average) - 1) * 200));
+      (stationSamples[station] ??= []).push({ seconds, percentile });
+    }
+  });
+  const profile = stationProfile(stationSamples);
+
   const bestRace = finished.reduce<typeof finished[number] | null>(
     (best, r) => (!best || r.finishSeconds < best.finishSeconds ? r : best),
     null,
@@ -142,10 +198,10 @@ export default async function AthletePage({ params }: { params: Promise<{ slug: 
             </h1>
           </div>
           <p className="mt-1.5 text-sm text-suth-text-secondary">
-            {formatCount(athlete.races.length)} races ·{" "}
-            {athlete.divisionsRaced.length} division{athlete.divisionsRaced.length === 1 ? "" : "s"} ·{" "}
-            {athlete.seasonsActive.length} season{athlete.seasonsActive.length === 1 ? "" : "s"} ·{" "}
-            {athlete.ageGroup}
+            {formatCount(summary.races)} races · {summary.divisions} division
+            {summary.divisions === 1 ? "" : "s"} · {summary.seasons} season
+            {summary.seasons === 1 ? "" : "s"} · {summary.countries} cit
+            {summary.countries === 1 ? "y" : "ies"} · {athlete.ageGroup}
           </p>
         </div>
 
@@ -200,10 +256,65 @@ export default async function AthletePage({ params }: { params: Promise<{ slug: 
         />
       </div>
 
+      {/* Form, stated plainly. A career list cannot answer "am I getting
+          faster"; a fitted slope over comparable races can. */}
+      {trend.direction !== "unknown" ? (
+        <p className="mt-4 rounded-md border border-suth-border-subtle bg-suth-elevated px-4 py-2.5 text-sm text-suth-text-secondary">
+          <span className="font-semibold text-suth-text">
+            {trend.direction === "improving" ? "Getting faster."
+              : trend.direction === "declining" ? "Slowing down."
+              : "Holding steady."}
+          </span>{" "}
+          {trend.direction === "steady"
+            ? `Finish times within a minute of each other across ${trend.sampleSize} races in ${bests[0]?.divisionLabel.replace("HYROX ", "") ?? "this division"}.`
+            : `About ${formatTime(Math.abs(trend.secondsPerRace))} per race ${trend.direction === "improving" ? "quicker" : "slower"}, over ${trend.sampleSize} races in ${bests[0]?.divisionLabel.replace("HYROX ", "") ?? "this division"}.`}
+        </p>
+      ) : null}
+
       {finished.length >= 2 ? (
         <div className="mt-4">
           <ProgressionChart races={finished} />
         </div>
+      ) : null}
+
+      {/* Depth below the fold: the summary above is what most visitors want,
+          and this is for the ones who came to dig. */}
+      {power.score > 0 || profile.length > 0 ? (
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          {power.score > 0 ? <PowerCard power={power} /> : null}
+          {profile.length > 0 ? <StationProfileTable profile={profile} /> : null}
+        </div>
+      ) : null}
+
+      {bests.length > 1 ? (
+        <section className="mt-4 rounded-md border border-suth-border-subtle bg-suth-elevated p-4">
+          <MicroLabel>[ PERSONAL BESTS ]</MicroLabel>
+          <ul className="mt-3 space-y-2">
+            {bests.map((best) => (
+              <li key={best.division} className="flex items-baseline justify-between gap-3 text-sm">
+                <Link
+                  href={`/result/${best.resultId}`}
+                  data-inline-tap
+                  className="truncate text-suth-text-secondary hover:text-suth-accent
+                             focus-visible:outline-2 focus-visible:outline-suth-accent"
+                >
+                  {best.divisionLabel.replace("HYROX ", "")}
+                </Link>
+                <span className="flex shrink-0 items-baseline gap-2.5">
+                  {best.isCurrent ? (
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-suth-accent">
+                      current
+                    </span>
+                  ) : null}
+                  <span className="text-[11px] text-suth-text-tertiary">
+                    {best.eventCity} {best.year}
+                  </span>
+                  <Time seconds={best.seconds} className="text-suth-accent" />
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
       ) : null}
 
       {splits.length > 0 ? (
