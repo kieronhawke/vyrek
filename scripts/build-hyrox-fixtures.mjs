@@ -175,16 +175,58 @@ writeFileSync(
   ),
 );
 
-// Doubles: one row per team, both names in the name field.
+/**
+ * Doubles: a genuinely different board.
+ *
+ * The name column is `type-relay_member`, not `type-fullname`; there is no
+ * nationality column at all; and the comma inside the name separates the two
+ * athletes rather than surname from forename.
+ */
+function teamRow({ place, placeAge, names, ageGroup, time, idp }) {
+  return `<li class=" list-active list-group-item row">
+<div class="col-xs-12 col-sm-12 col-md-5 list-field-wrap">
+  <div class="row">
+  <div class=" list-field type-place place-primary numeric" style="width: 60px">${place}</div>
+  <div class=" list-field type-place place-secondary hidden-xs numeric" style="width: 60px">${placeAge}</div>
+  <h4 class=" list-field type-relay_member"><a href="?content=detail&amp;fpid=list&amp;pid=list&amp;idp=${idp}&amp;lang=EN_CAP&amp;event=${EVENT}">${names}</a></h4>
+  </div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-7 list-field-wrap">
+<div class="pull-left">
+  <div class="row">
+  <div class=" list-field type-age_class" style="width: 80px"><div class="visible-xs-block visible-sm-block list-label">Age Group</div>${ageGroup}</div>
+  </div>
+</div>
+<div class="pull-right">
+  <div class="row">
+  <div class=" list-field type-actual_ranking_time" style="width: 130px"><div class="visible-xs-block visible-sm-block list-label">Time</div><span class="text-muted">&ndash;</span></div>
+  <div class="right list-field type-time" style="width: 70px"><div class="visible-xs-block visible-sm-block list-label">Total</div>${time}</div>
+  </div>
+</div>
+</div>
+</li>`;
+}
+
+const DOUBLES_HEADER = HEADER
+  .replace('type-fullname field-__fullname">Name', 'type-relay_member field-__relay_member">Name')
+  .replace(/<div class=" list-field type-nation_flag[\s\S]*?<\/div>\n/, "");
+
 writeFileSync(
   join(OUT, "list-rows-doubles.html"),
-  page(
-    [
-      row({ place: "1", placeAge: "1", name: "Alaric Fenwick / Caius Marlowe", nation: "GBR", ageGroup: "30-34", idp: "LRAA0000301", time: "00:58:14" }),
-      row({ place: "2", placeAge: "2", name: "Bram Oosterhuis / Gustav Lindqvist", nation: "NED", ageGroup: "35-39", idp: "LRAA0000302", time: "01:01:37" }),
-    ],
-    2,
-  ),
+  `<!-- SYNTHETIC IDENTITIES, REAL STRUCTURE (doubles board). -->
+<!DOCTYPE html><html><body>
+<ul class="list-group list-info row-xs">
+<li class="list-group-item"><span class="list-info__text str_num">2 Results</span></li>
+</ul>
+<div class='col-sm-12 row-xs' data-sex='M'>
+<ul class="list-group list-group-multicolumn">
+${DOUBLES_HEADER}
+${teamRow({ place: "1", placeAge: "1", names: "Alaric Fenwick, Caius Marlowe", ageGroup: "30-34", idp: "LRAA0000301", time: "00:58:14" })}
+${teamRow({ place: "2", placeAge: "2", names: "Bram Oosterhuis, Gustav Lindqvist", ageGroup: "35-39", idp: "LRAA0000302", time: "01:01:37" })}
+</ul>
+</div>
+</body></html>
+`,
 );
 
 // The unfiltered board: it refuses to render and says so.

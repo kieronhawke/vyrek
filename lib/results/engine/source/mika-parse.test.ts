@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
+import { checkParseShape } from "../validate/sentinel";
 import { join } from "node:path";
 import {
   parseDetailSplits,
@@ -192,9 +193,33 @@ describe("doubles", () => {
     expect(splitPartnerNames("Alaric Fenwick")).toBeUndefined();
   });
 
-  it("carries partner names off a doubles board", () => {
+  it("reads a doubles board, which uses a different name column entirely", () => {
     const parsed = parseDivisionRows(fixture("list-rows-doubles.html"), "EVT", "HD_EVT#men");
-    expect(parsed.rows[0].partnerNames).toHaveLength(2);
+    expect(parsed.rows).toHaveLength(2);
+    expect(parsed.rows[0].isTeam).toBe(true);
+    expect(parsed.rows[0].partnerNames).toEqual(["Alaric Fenwick", "Caius Marlowe"]);
+    expect(parsed.rows[0].finishTime).toBe("00:58:14");
+  });
+
+  /**
+   * The comma means opposite things in the two name columns. `fullname` is
+   * "Benzio, Sergio" — surname first. `relay_member` is "Kevin Marshall, Danny
+   * Wood" — two people. Normalising a team row merges the pair into one athlete
+   * with their names swapped.
+   */
+  it("does not swap a doubles pair as if it were one surname-first name", () => {
+    const parsed = parseDivisionRows(fixture("list-rows-doubles.html"), "EVT", "HD_EVT#men");
+    expect(parsed.rows[0].name).toBe("Alaric Fenwick, Caius Marlowe");
+    expect(parsed.rows[0].name).not.toBe("Caius Marlowe Alaric Fenwick");
+  });
+
+  it("does not raise a parser alert just because a board is doubles", () => {
+    const parsed = parseDivisionRows(fixture("list-rows-doubles.html"), "EVT", "HD_EVT#men");
+    const verdict = checkParseShape(parsed.diagnostics, {
+      sourceDivisionId: "HD_EVT#men",
+      via: "html",
+    });
+    expect(verdict.ok).toBe(true);
   });
 });
 

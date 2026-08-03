@@ -273,13 +273,23 @@ export function parseDivisionRows(
   while ((match = rowRe.exec(html)) !== null) {
     const block = match[0];
     if (/list-group-header/i.test(block)) continue;
-    if (!/type-fullname/.test(block)) continue;
+    if (!/type-(fullname|relay_member)/.test(block)) continue;
     candidateRows += 1;
 
     const fields = parseRowFields(match[1]);
-    const rawName = fields.fullname ?? fields.name;
+
+    // Doubles and relay boards name the column `relay_member`, not `fullname`,
+    // and drop the nationality column entirely.
+    const isTeamRow = typeof fields.relay_member === "string";
+    const rawName = fields.fullname ?? fields.relay_member ?? fields.name;
     if (!rawName) continue;
-    const name = normalisePersonName(rawName);
+
+    // ⚠️ The comma means opposite things in the two columns. In `fullname` it
+    // separates surname from forename ("Benzio, Sergio"); in `relay_member` it
+    // separates one athlete from their partner ("Kevin Marshall, Danny Wood").
+    // Normalising a team row would turn that pair into "Danny Wood Kevin
+    // Marshall" — one athlete with both their names swapped and merged.
+    const name = isTeamRow ? rawName.trim() : normalisePersonName(rawName);
 
     // `type-time` is the net total; `type-actual_ranking_time` is often a dash.
     const finishTime = fields.time ?? fields.time_finish_netto ?? fields.actual_ranking_time;
@@ -301,6 +311,7 @@ export function parseDivisionRows(
       bib: fields.startnumber || fields.bib || undefined,
       status: fields.status || undefined,
       partnerNames: splitPartnerNames(name),
+      isTeam: isTeamRow || undefined,
     });
   }
 

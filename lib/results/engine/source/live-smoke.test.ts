@@ -27,7 +27,9 @@ function smokeChain() {
   return createHyroxChain(
     new SourceFetcher({
       authorised: true,
-      budget: new OutboundBudget({ maxRequests: 8, windowMs: 60_000 }),
+      // The catalogue is N+1 (one GET, one POST per weekend), so a budget of 8
+      // meant the smoke test spent a minute in backpressure rather than failing.
+      budget: new OutboundBudget({ maxRequests: 60, windowMs: 60_000 }),
       maxAttempts: 2,
     }),
   );

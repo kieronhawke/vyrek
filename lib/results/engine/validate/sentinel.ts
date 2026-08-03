@@ -18,8 +18,17 @@
 
 import type { RowParseDiagnostics } from "../source/mika-parse";
 
-/** Fields every results row must carry for the row to be worth anything. */
-export const REQUIRED_FIELDS = ["fullname", "place_all"] as const;
+/**
+ * Fields every results row must carry to be worth anything.
+ *
+ * The name column has two possible names: individual boards call it
+ * `fullname`, doubles and relay boards call it `relay_member`. Requiring
+ * `fullname` outright raises "parser may be broken" on every doubles division
+ * in the season, which is the fastest way to teach an operator to ignore the
+ * alert that matters.
+ */
+export const REQUIRED_FIELDS = ["place_all"] as const;
+export const NAME_FIELDS = ["fullname", "relay_member"] as const;
 
 /** Below this parse rate across a non-trivial batch, assume the parser broke. */
 export const MIN_PARSE_RATE = 0.5;
@@ -45,7 +54,10 @@ export function checkParseShape(
   // emptyShell first meant the loudest possible signal — the schema changed —
   // was swallowed as "quiet event". The header is the thing that tells the two
   // apart, so it has to be read before anything is excused.
-  const missing = REQUIRED_FIELDS.filter((field) => !headerFields.includes(field));
+  const missing: string[] = REQUIRED_FIELDS.filter((field) => !headerFields.includes(field));
+  if (headerFields.length > 0 && !NAME_FIELDS.some((f) => headerFields.includes(f))) {
+    missing.push(`a name column (one of ${NAME_FIELDS.join(", ")})`);
+  }
   if (headerFields.length > 0 && missing.length > 0) {
     return {
       ok: false,

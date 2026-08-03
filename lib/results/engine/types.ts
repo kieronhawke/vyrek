@@ -236,6 +236,8 @@ export type RawResultRow = {
   /** Raw split labels to times, exactly as the source printed them. */
   splits?: Record<string, string>;
   partnerNames?: string[];
+  /** Doubles/relay: the row is a team, so its name holds several athletes. */
+  isTeam?: boolean;
 };
 
 /** One athlete's splits, as the detail view prints them. */
