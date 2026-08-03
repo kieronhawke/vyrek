@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import type { ConsoleModel } from "@/lib/results/engine/ops/console";
-import { relative } from "@/lib/results/engine/ops/console";
+import { relative } from "@/lib/results/engine/ops/relative";
 import { MIN_LIVE_INTERVAL_SECONDS } from "@/lib/results/engine/sync/live";
 
 /**

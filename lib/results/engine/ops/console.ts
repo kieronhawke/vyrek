@@ -18,6 +18,8 @@ import { ingestionStatus } from "../index";
 import { isSourceAuthorised } from "../fetch/fetcher";
 import { hasResultsSupabaseConfig, resultsProjectRef } from "../supabase-client";
 import { DEFAULT_LIVE_INTERVAL_SECONDS, clampLiveInterval, localStartLabel } from "../sync/live";
+import { relative } from "./relative";
+export { relative };
 
 export type Health = "green" | "amber" | "red";
 
@@ -227,18 +229,6 @@ function livePanelRow(
 }
 
 /** "14s ago". The console's only unit of time. */
-export function relative(iso: string | null | undefined, now: Date = new Date()): string {
-  if (!iso) return "never";
-  const deltaMs = now.getTime() - new Date(iso).getTime();
-  if (deltaMs < 0) return "just now";
-  const seconds = Math.floor(deltaMs / 1000);
-  if (seconds < 60) return `${seconds}s ago`;
-  const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes}m ago`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 48) return `${hours}h ago`;
-  return `${Math.floor(hours / 24)}d ago`;
-}
 
 /**
  * Copy-for-fix.
