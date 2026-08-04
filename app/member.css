@@ -136,7 +136,12 @@
   }
 }
 
-/* ── Desktop: left rail ───────────────────────────────────────────────── */
+/* ── Desktop: the rail ────────────────────────────────────────────────
+   One fixed column, laid out as flow. It used to be three separately fixed
+   elements — wordmark, week ring, links — held apart by hand-tuned `top`
+   offsets and a padding-top. That is why they crowded each other: nothing was
+   spacing them, three magic numbers were, and the moment the logo grew they
+   overlapped. A flex column spaces itself. */
 
 .member-rail {
   display: none;
@@ -148,11 +153,52 @@
     inset-block: 0;
     inset-inline-start: 0;
     z-index: 30;
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: var(--rail-w);
-    padding: var(--space-6) var(--space-2);
+    padding: var(--space-4) var(--space-2) var(--space-3);
     background: var(--surface);
     border-inline-end: 1px solid var(--border);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .member-rail__brand {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .member-rail__progress {
+    display: flex;
+    padding: 0 var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .member-rail__groups {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* Pushes Account to the bottom of the column without a fixed height or a
+     magic offset — the whole point of making this one flow container. */
+  .member-rail__foot {
+    margin-top: auto;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border);
+  }
+
+  .member-rail__grouplabel {
+    margin: 0 0 6px;
+    padding: 0 var(--space-2);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
   }
 
   .member-rail__list {
@@ -164,7 +210,6 @@
     list-style: none;
   }
 
-
   .member-rail__link:hover {
     color: var(--text);
     background: var(--surface-raised);
@@ -174,74 +219,84 @@
     color: var(--accent-text);
     background: var(--accent-faint);
   }
+
+  /* The active row gets a marker as well as a tint: on the light surface the
+     tint alone is a very small contrast step, and colour is not something to
+     rely on alone for "which page am I on". */
+  .member-rail__link[data-active]::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block: 8px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: var(--accent);
+  }
 }
 
 /* The rail is hidden below 768px, so its links need no breakpoint. Keeping
    them out of the media query also keeps them out of its cascade order. */
 .member-rail__link {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: 44px;
-  padding: 0 var(--space-2);
+  min-height: 46px;
+  padding: 6px var(--space-2);
   border-radius: var(--radius-button);
   color: var(--text-muted);
-  font-size: var(--text-sm);
-  font-weight: 600;
   text-decoration: none;
   transition: color var(--dur-fast) var(--ease),
     background var(--dur-fast) var(--ease);
 }
 
-.member-railhead a,
+.member-rail__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.member-rail__label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+/* One line saying what the section is for. The rail has the room and a
+   one-word link list makes the reader guess — "Fuel" and "Connections" in
+   particular were not self-explanatory to anybody who had not been told. */
+.member-rail__hint {
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.member-rail__link[data-active] .member-rail__hint {
+  color: color-mix(in srgb, var(--accent-text) 65%, var(--text-muted));
+}
+
+.member-rail__brand a,
 .member-topbar a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
 }
 
-/* ── Rail header ──────────────────────────────────────────────────────── */
-
-.member-railhead {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .member-railhead {
-    position: fixed;
-    inset-inline-start: 0;
-    top: 0;
-    z-index: 31;
-    display: flex;
-    align-items: center;
-    width: var(--rail-w);
-    height: var(--space-6);
-    padding: var(--space-2) var(--space-3) 0;
-    align-items: flex-start;
-  }
-}
-
-/* ── Rail block progress ──────────────────────────────────────────────── */
-
-.member-railprogress {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .member-railprogress {
-    position: fixed;
-    inset-inline-start: 0;
-    top: calc(var(--space-6) + var(--space-1));
-    z-index: 31;
-    display: flex;
-    width: var(--rail-w);
-    padding: 0 var(--space-3);
-  }
-
-  /* The rail's own items start below the wordmark and the progress ring. */
-  .member-rail {
-    padding-top: var(--space-10);
-  }
+/* The mobile account avatar. Was a 12-property inline style object rebuilt on
+   every render of every member page. */
+.member-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
 }
 
 /* ── Mobile top bar ───────────────────────────────────────────────────── */
@@ -1239,3 +1294,20 @@
 }
 .fuel__session-time { flex: none; font-size: var(--text-xs); color: var(--text-muted); }
 .fuel__session-body { min-width: 0; }
+
+/* A button that has to sit in a row of links and read as one of them. Used
+   for actions that cannot be an anchor because they change local state
+   rather than navigate — replaying the first-run tour, for one. */
+.member-linkbtn {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--accent-text);
+  cursor: pointer;
+}
+.member-linkbtn:disabled {
+  color: var(--text-muted);
+  cursor: default;
+}

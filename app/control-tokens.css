@@ -188,7 +188,10 @@
    */
   --member-max: 760px;
   --member-prose: 68ch;
-  --rail-w: 232px;
+  /* Widened with the rail rebuild: it now carries a larger wordmark, a
+     group label above each set of links, and a one-line hint under each
+     link. 232px clipped the hints. */
+  --rail-w: 264px;
 }
 
 /**

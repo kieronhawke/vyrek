@@ -3,7 +3,7 @@ import { TodayScreen } from "@/components/member/screens/today-screen";
 export default function TodayPreview() {
   return (
     <TodayScreen
-      firstName="Sample"
+      firstName="Amelia"
       programme="Sub-90"
       base="/control-preview/app"
     />

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MemberSignOut } from "@/components/member/sign-out";
+import { ReplayTour } from "@/components/member/replay-tour";
 import {
   Card,
   Chip,
@@ -124,11 +125,13 @@ export function AccountScreen({
             </div>
           </div>
         </div>
+        {/* This pointed at Today, which is not where the thread is. Somebody
+            following it landed on their session and had to go looking. */}
         <Row
           label="Message Ben"
           value="Open →"
           tone="var(--accent-text)"
-          href={`${base}/today`}
+          href={`${base}/coach`}
         />
       </Card>
 
@@ -231,8 +234,18 @@ export function AccountScreen({
         <RowGroup>
           <Row label="Personal records" value="View →" href={`${base}/account/pr`} />
           <Row label="Connections" value="Manage →" href={`${base}/connections`} />
-          <Row label="Download everything" value="Request →" tone="var(--accent-text)" />
           <Row label="Privacy policy" value="Read →" href="/legal/privacy" />
+        </RowGroup>
+      </section>
+
+      <section style={{ marginBottom: "var(--space-4)" }}>
+        <Eyebrow>Help</Eyebrow>
+        <RowGroup>
+          {/* The tour's own last card promises this is here. */}
+          <Row
+            label="Guided tour"
+            value={<ReplayTour className="member-linkbtn" />}
+          />
         </RowGroup>
       </section>
 
