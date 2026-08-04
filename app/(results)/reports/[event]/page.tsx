@@ -28,9 +28,22 @@ export const revalidate = 3600;
 /** Human-written takes, keyed by event slug. Empty by design. */
 const HUMAN_TAKES: Record<string, string> = {};
 
+/**
+ * Capped for the same reason `/event/[slug]` is: a report is built from the
+ * same per-division reads, and 208 of them at build time is most of a
+ * deploy. The recent ones are the ones anybody reads; an older report still
+ * renders on first request and caches from then on.
+ */
+const PREBUILT_REPORTS = 6;
+
 export async function generateStaticParams() {
-  const events = await getResultsSource().listEvents({ status: "finished" });
-  return events.map((e) => ({ event: e.slug }));
+  const events = await getResultsSource()
+    .listEvents({ status: "finished" })
+    .catch(() => []);
+  return [...events]
+    .sort((a, b) => b.year - a.year || (b.totalAthletes ?? 0) - (a.totalAthletes ?? 0))
+    .slice(0, PREBUILT_REPORTS)
+    .map((e) => ({ event: e.slug }));
 }
 
 export async function generateMetadata({

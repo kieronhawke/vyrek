@@ -28,9 +28,58 @@ import { CoachingCta } from "@/components/results/coaching-cta";
 
 export const revalidate = 300;
 
+/**
+ * PREBUILD THE EVENTS PEOPLE ARRIVE ON. THE REST RENDER ON FIRST REQUEST.
+ *
+ * This used to return all 223 events, and it is what killed the deploy.
+ * Each page fans out one ranking query per headline division against a
+ * results database that gained 629k athletes in "reclaim the 629k orphaned
+ * athletes"; several individual pages then took longer than the 240-second
+ * per-page ceiling. The build reached 6,043 of 8,635 pages and was killed at
+ * Vercel's 45-minute limit — which is reported as `Command "pnpm run build"
+ * exited with 1`, so it reads like a compile error and is not one. Six
+ * production deployments failed this way in a row.
+ *
+ * Nothing is lost by capping it. `dynamicParams` is left at its default, so
+ * an event outside this list still renders on first request and is cached
+ * from then on under the same five-minute revalidate as everything else.
+ * What changes is that the deploy no longer pays for 223 of them up front,
+ * for pages nobody has asked for yet.
+ *
+ * The list is chosen the way a visitor arrives: anything not yet finished
+ * (people check those before race day), then the most recent finished
+ * events, biggest first. `/results/city/[slug]` already reasons exactly this
+ * way and caps at 60; this is the same principle applied to the family that
+ * actually costs the time.
+ */
+/* Twelve, not forty. The per-page cost cannot be measured from here — the
+   results database is a separate project this worktree has no keys for, and
+   locally the source falls back to fourteen demo events, which is why the
+   build passes on my machine and dies on Vercel. So the number is set where
+   the deploy is safe rather than where it is optimal: twelve pages cannot
+   consume a 45-minute budget even at the worst per-page time seen in the
+   logs. Raise it once a green build shows what a page actually costs. */
+const PREBUILT_EVENTS = 12;
+
 export async function generateStaticParams() {
-  const events = await getResultsSource().listEvents();
-  return events.map((e) => ({ slug: e.slug }));
+  // A failure here must not fail the build: with no params every event
+  // simply renders on demand, which is the fallback anyway.
+  const events = await getResultsSource().listEvents().catch(() => []);
+
+  const rank = (e: (typeof events)[number]) => {
+    // Upcoming and live first — they are what somebody checks this week.
+    if (e.status !== "finished") return [0, -e.year, 0] as const;
+    return [1, -e.year, -(e.totalAthletes ?? 0)] as const;
+  };
+
+  return [...events]
+    .sort((a, b) => {
+      const [ax, ay, az] = rank(a);
+      const [bx, by, bz] = rank(b);
+      return ax - bx || ay - by || az - bz;
+    })
+    .slice(0, PREBUILT_EVENTS)
+    .map((e) => ({ slug: e.slug }));
 }
 
 export async function generateMetadata({
