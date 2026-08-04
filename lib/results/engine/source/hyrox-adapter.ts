@@ -277,24 +277,73 @@ abstract class MikaAdapter implements SourceAdapter {
     };
   }
 
+  /**
+   * The entrants for a race that has not happened yet.
+   *
+   * ⚠️ POST, not GET, and to `startlist_list` rather than `startlist`.
+   *
+   * `?pid=startlist` is the *form*. Fetching it returns a complete, valid page
+   * with a race picker and a division picker and no entrants, whatever query
+   * parameters are attached — which is exactly what this used to do, so it
+   * returned zero rows for every upcoming event and nothing said otherwise. Our
+   * Chiba page read "0 athletes" two days before the race while the source held
+   * over a thousand.
+   *
+   * The results live behind a form submission to `startlist_list`. Verified
+   * against 2026 Chiba: `H_LR3MS4JI1738` (Saturday singles) returns 100 rows a
+   * page and pages past 1,000; the adaptive divisions return their smaller real
+   * fields; the doubles and relay divisions return nothing, because the source
+   * has not published team entries for them yet.
+   *
+   * `event_main_group` is on the form and is not required — the division code
+   * identifies the board on its own.
+   */
   async fetchStartList(seasonPath: string, sourceDivisionId: string): Promise<RawDivisionPage> {
     const { code, sex } = splitDivisionRef(sourceDivisionId);
     const sourceEventId = weekendIdOf(code) ?? code;
-    const { body } = await this.fetcher.fetchText(
-      seasonUrl(seasonPath, {
-        pid: "startlist",
+    const url = `${SOURCE_ORIGIN}/${seasonPath.replace(/^\/|\/$/g, "")}/?pid=startlist_list&pidp=upcoming_nav`;
+
+    const rows = new Map<string, RawDivisionPage["rows"][number]>();
+    let published: number | undefined;
+    let diagnostics: ParseDiagnostics | undefined;
+
+    // Paged like a results board, because it is one — 100 a page, and Chiba's
+    // Saturday singles alone has 996 entrants. Fetching only the first page
+    // would trade "no athletes" for "a tenth of them", which is harder to spot.
+    for (let page = 1; page <= MAX_PAGES; page += 1) {
+      const { body } = await this.fetcher.fetchText(url, {
+        lang: "EN_CAP",
+        startpage: "startlist_responsive",
+        startpage_type: "search",
         event: code,
+        page: String(page),
         num_results: String(PAGE_SIZE),
         ...this.listParams(sex),
-      }),
-    );
-    const parsed = parseDivisionRows(body, sourceEventId, sourceDivisionId);
+      });
+
+      const parsed = parseDivisionRows(body, sourceEventId, sourceDivisionId);
+      if (published === undefined) published = parsed.publishedEntrantCount;
+      diagnostics ??= parsed.diagnostics;
+
+      const before = rows.size;
+      for (const row of parsed.rows) rows.set(row.sourceResultId, row);
+      // The pager keeps serving the last page rather than an empty one, so a
+      // page that adds nobody new is the end of the list.
+      if (rows.size === before) break;
+    }
+
     return {
       sourceEventId,
       sourceDivisionId,
-      publishedEntrantCount: parsed.publishedEntrantCount,
-      rows: parsed.rows,
-      diagnostics: parsed.diagnostics,
+      publishedEntrantCount: published,
+      rows: [...rows.values()],
+      diagnostics: diagnostics ?? {
+        headerFields: [],
+        candidateRows: 0,
+        parsedRows: 0,
+        distinctRows: 0,
+        emptyShell: true,
+      },
       via: "html",
     };
   }

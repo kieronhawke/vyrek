@@ -309,6 +309,26 @@ export const demoDataSource: ResultsDataSource = {
       .sort((a, b) => a - b);
   },
 
+  /**
+   * The names worth having in the browser before anybody types.
+   *
+   * The live source precomputes this into a table; here it is cheap enough to
+   * rank on demand. Ordered the same way for the same reason — someone typing
+   * three letters wants the person who appears most often, not the first
+   * alphabetically.
+   */
+  async listPopularAthletes(limit = 5000) {
+    return [...allAthletes()]
+      .sort((a, b) => b.races.length - a.races.length || a.name.localeCompare(b.name))
+      .slice(0, limit)
+      .map((a) => ({
+        slug: a.slug,
+        name: a.name,
+        countryIso: a.countryIso,
+        raceCount: a.races.length,
+      }));
+  },
+
   async getStationDistribution(station, division) {
     const times: number[] = [];
     for (const event of allEvents()) {

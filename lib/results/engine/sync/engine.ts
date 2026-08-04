@@ -99,6 +99,17 @@ export class SyncEngine {
     publish?: boolean;
     /** Force a write even when the hash is unchanged (operator "force sync"). */
     force?: boolean;
+    /**
+     * Which board to read.
+     *
+     * A race that has not happened has no results and a full start list, and the
+     * two are the same shape — an entrant is a result without a finish time. So
+     * this picks the source page and everything downstream is unchanged:
+     * identical normalising, identical identity resolution, identical
+     * per-division checkpointing, and `getStarters` reads the stored rows it
+     * already expected to find.
+     */
+    source?: "results" | "start-list";
   }): Promise<DivisionSyncOutcome> {
     const {
       seasonPath,
@@ -108,9 +119,13 @@ export class SyncEngine {
       ingestionRunId,
       publish = false,
       force = false,
+      source = "results",
     } = opts;
 
-    const page = await this.deps.adapter.fetchDivision(seasonPath, sourceDivisionId);
+    const page =
+      source === "start-list"
+        ? await this.deps.adapter.fetchStartList(seasonPath, sourceDivisionId)
+        : await this.deps.adapter.fetchDivision(seasonPath, sourceDivisionId);
     const hash = hashRows(page);
     const state = await this.deps.repo.getSyncState(event.sourceEventId ?? event.slug);
 

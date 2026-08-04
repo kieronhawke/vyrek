@@ -188,6 +188,16 @@ export interface ResultsDataSource {
    * precomputed column, never by materialising rows.
    */
   getDivisionFinishTimes(eventSlug: string, division: string): Promise<number[]>;
+  /**
+   * The names to hold in the browser before anybody types, best first.
+   *
+   * Optional, because it is an optimisation rather than a capability: a source
+   * that cannot answer it just leaves the palette to ask the server per query,
+   * which is what every source did before instant search existed.
+   */
+  listPopularAthletes?(
+    limit?: number,
+  ): Promise<Array<{ slug: string; name: string; countryIso: string; raceCount: number }>>;
 }
 
 /** `demo` shows the Demo data pill; `live` hides it. */

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { resultsSupabase, hasResultsSupabaseConfig } from "@/lib/results/engine/supabase-client";
+import { getDataMode } from "@/lib/results";
 
 /**
  * The suggestion list the browser holds *before* anybody types.
@@ -29,6 +30,18 @@ export const revalidate = 86400;
 type Row = { slug: string; name: string; nationality: string; races: number };
 
 export async function GET() {
+  // ⚠️ This is the one search path that does not go through `getResultsSource`.
+  //
+  // It reads the precomputed table directly, which is right in live mode and
+  // silently wrong in demo mode: the palette would suggest real athletes from
+  // the ingested database, none of whom exist in the demo dataset, so every
+  // suggestion led to a 404. The mode has to be honoured here as everywhere
+  // else — the whole point of the switch is that one variable changes the
+  // section's data, with nothing reaching past it.
+  if (getDataMode() !== "live") {
+    return NextResponse.json({ athletes: await popularFromDemo() }, { headers: CACHE });
+  }
+
   if (!hasResultsSupabaseConfig()) {
     return NextResponse.json({ athletes: [] }, { headers: CACHE });
   }
@@ -52,6 +65,30 @@ export async function GET() {
     // live search for everything, which is exactly how it behaved before.
     return NextResponse.json({ athletes: [] }, { headers: CACHE });
   }
+}
+
+/**
+ * The same list, built from the demo dataset.
+ *
+ * Ranked by race count for the same reason the live one is: the names worth
+ * offering instantly are the ones that appear most often.
+ */
+async function popularFromDemo(): Promise<Array<readonly [string, string, string, number]>> {
+  const { demoDataSource } = await import("@/lib/results/demo-source");
+  if (!demoDataSource.listPopularAthletes) return [];
+  const seen = new Map<string, readonly [string, string, string, number]>();
+
+  // One entry per person, keeping their busiest profile — the same collapse the
+  // live query does in SQL.
+  for (const a of await demoDataSource.listPopularAthletes(5000)) {
+    const key = a.name.toLowerCase();
+    const existing = seen.get(key);
+    if (!existing || existing[3] < a.raceCount) {
+      seen.set(key, [a.name, a.slug, a.countryIso ?? "", a.raceCount] as const);
+    }
+  }
+
+  return [...seen.values()].sort((x, y) => y[3] - x[3]).slice(0, 5000);
 }
 
 const CACHE = {
