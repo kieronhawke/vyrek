@@ -48,7 +48,10 @@ export async function POST(request: Request) {
   const text = coachAlertText({
     firstName,
     topic: topic?.id ?? "plan",
-    link: `${site}/admin/messaging`,
+    /* Coach Mode, not /admin/messaging — that page previews marketing
+       templates and has no reply box on it, so the alert was sending Ben
+       somewhere he could not answer from. */
+    link: `${site}/coach/messages`,
   });
 
   /* Same variable the booking notifications already use (lib/booking/notify),

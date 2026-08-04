@@ -54,6 +54,32 @@ test.describe("SMS", () => {
     }
   });
 
+  test("messages to athletes identify the sender", async () => {
+    // Same reason as the leads. A member has Ben's app, not his number.
+    const toMembers = SMS_SAMPLES.filter(
+      (s) => s.audience === "Coached athlete",
+    );
+    expect(toMembers.length).toBeGreaterThan(0);
+
+    for (const s of toMembers) {
+      expect(
+        /ben|suth/i.test(s.text),
+        `${s.id} never says who it is from: ${s.text}`,
+      ).toBe(true);
+    }
+  });
+
+  test("service messages do not carry an opt-out", async () => {
+    // The inverse of the rule below, and it matters as much. Offering to
+    // unsubscribe somebody from "your coach answered you" invites them to
+    // opt out of the thing they are paying for.
+    for (const s of SMS_SAMPLES.filter((s) => s.audience === "Coached athlete")) {
+      expect(/STOP/i.test(s.text), `${s.id} offers an opt-out it should not`).toBe(
+        false,
+      );
+    }
+  });
+
   test("marketing messages carry an opt-out", async () => {
     const marketing = SMS_SAMPLES.filter(
       (s) => s.audience === "Club member",

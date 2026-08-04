@@ -137,6 +137,38 @@ export const benSms = {
     `${name} (Suth Club member) asked about coaching. Worth a call.`,
 } as const;
 
+/* ─── To a coached athlete ──────────────────────────────────────────── */
+
+export const memberSms = {
+  /**
+   * Ben has answered a question in the app.
+   *
+   * The one message that closes the loop. An athlete asks something on
+   * Tuesday, Ben answers on Wednesday, and without this they find out on
+   * Friday when they next happen to open the app — by which point the answer
+   * is about a session they have already done.
+   *
+   * WHAT IT DOES NOT CONTAIN
+   * The reply itself. Same rule as the alert going the other way: these
+   * questions are frequently about an injury, and an answer about somebody's
+   * knee on a lock screen is read by whoever is holding the phone. The text
+   * says there is a reply and where to read it.
+   *
+   * No STOP line. This is a direct response to something they did, which is
+   * what PECR calls a service message — and adding an opt-out to "your coach
+   * answered you" invites somebody to opt out of the thing they are paying
+   * for. The blanket opt-out lives in the account settings.
+   */
+  coachReplied: ({
+    firstName,
+    link,
+  }: {
+    firstName: string;
+    link: string;
+  }) =>
+    `${firstName}, Ben has replied to your message. Read it here: ${link}`,
+} as const;
+
 /* ─── Club lifecycle ────────────────────────────────────────────────── */
 
 export const clubSms = {
@@ -155,7 +187,7 @@ export const clubSms = {
 
 export type SmsSample = {
   id: string;
-  audience: "Lead" | "Ben" | "Club member";
+  audience: "Lead" | "Ben" | "Club member" | "Coached athlete";
   when: string;
   text: string;
 };
@@ -263,5 +295,14 @@ export const SMS_SAMPLES: SmsSample[] = [
     audience: "Club member",
     when: "A card payment fails",
     text: clubSms.paymentFailed(),
+  },
+  {
+    id: "member-coach-replied",
+    audience: "Coached athlete",
+    when: "When Ben answers a question in the app",
+    text: memberSms.coachReplied({
+      firstName: "Jamie",
+      link: "suthperformance.com/app/coach",
+    }),
   },
 ];
