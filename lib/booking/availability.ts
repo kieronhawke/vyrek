@@ -92,17 +92,53 @@ export const DEFAULT_AVAILABILITY: Availability = {
  * Done with Intl rather than a library because the alternative is shipping
  * a tz database to do one subtraction.
  */
+/**
+ * Formatters, built once each.
+ *
+ * `new Intl.DateTimeFormat(...)` is one of the most expensive constructors in
+ * the language — it loads and compiles locale data — and the two functions
+ * below were each building a fresh one on every single call.
+ *
+ * `GET /api/booking` walks 28 days, and for each day every slot in every
+ * window, and every slot calls `wallClockToInstant`, which calls
+ * `zoneOffsetMinutes` twice. That is roughly nine hundred constructions per
+ * request where one would do.
+ *
+ * HONEST ABOUT WHAT THIS DID AND DID NOT FIX. It was found while chasing a
+ * fifteen-second response on the dev server, and it did not fix that — the
+ * cause there was a dead Supabase URL in a local .env.local, so every query
+ * was burning a DNS timeout. Production answers this endpoint in under a
+ * second, with or without this change.
+ *
+ * It is kept because it is strictly less work for the same answer, and
+ * because that headroom is worth having on the endpoint behind the booking
+ * form. It is a tidy-up, not a bug fix, and should not be remembered as one.
+ *
+ * Formatter instances are immutable and safe to reuse, so one per timezone is
+ * all that is ever needed.
+ */
+const offsetFormatters = new Map<string, Intl.DateTimeFormat>();
+
+function offsetFormatter(tz: string): Intl.DateTimeFormat {
+  let f = offsetFormatters.get(tz);
+  if (!f) {
+    f = new Intl.DateTimeFormat("en-GB", {
+      timeZone: tz,
+      hour12: false,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+    offsetFormatters.set(tz, f);
+  }
+  return f;
+}
+
 export function zoneOffsetMinutes(at: Date, tz = TZ): number {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: tz,
-    hour12: false,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  }).formatToParts(at);
+  const parts = offsetFormatter(tz).formatToParts(at);
 
   const get = (t: string) => Number(parts.find((p) => p.type === t)?.value ?? 0);
   // hour comes back as 24 for midnight under hour12:false in some engines.
@@ -137,14 +173,25 @@ export function wallClockToInstant(
 }
 
 /** The local calendar date of an instant, as YYYY-MM-DD. */
+/** Same reasoning as `offsetFormatter` — built once, reused for every date. */
+const dateFormatters = new Map<string, Intl.DateTimeFormat>();
+
+function dateFormatter(tz: string): Intl.DateTimeFormat {
+  let f = dateFormatters.get(tz);
+  if (!f) {
+    f = new Intl.DateTimeFormat("en-CA", {
+      timeZone: tz,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    dateFormatters.set(tz, f);
+  }
+  return f;
+}
+
 export function localDateISO(at: Date, tz = TZ): string {
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: tz,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(at);
-  return parts; // en-CA formats as YYYY-MM-DD
+  return dateFormatter(tz).format(at); // en-CA formats as YYYY-MM-DD
 }
 
 /** The local weekday of a calendar date. */

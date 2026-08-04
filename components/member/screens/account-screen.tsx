@@ -1,6 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MemberSignOut } from "@/components/member/sign-out";
+import { ReplayTour } from "@/components/member/replay-tour";
+import { ProfileEditor } from "@/components/member/profile-editor";
+import { DataExport } from "@/components/member/data-export";
+import { AccountBilling } from "@/components/member/account-billing";
 import {
   Card,
   Chip,
@@ -73,6 +77,20 @@ export function AccountScreen({
         {email}
       </p>
 
+      {/* Two columns on a monitor. Account was a single stack of label-left /
+          value-right rows at every width, which on a wide screen is a column
+          of text with a metre of nothing beside it. */}
+      <div className="account-grid">
+        <div className="account-main">
+
+      <section style={{ marginBottom: "var(--space-4)" }}>
+        <Eyebrow>Your details</Eyebrow>
+        {/* Account was entirely read-only: no way to fix a name typed wrong
+            during onboarding, no photo, no way to add the number reminders
+            are sent to. */}
+        <ProfileEditor firstName={firstName} email={email} />
+      </section>
+
       {/* The member is paying for access to a person, so the person appears on
           the screen where they manage that. */}
       <Card
@@ -124,11 +142,13 @@ export function AccountScreen({
             </div>
           </div>
         </div>
+        {/* This pointed at Today, which is not where the thread is. Somebody
+            following it landed on their session and had to go looking. */}
         <Row
           label="Message Ben"
           value="Open →"
           tone="var(--accent-text)"
-          href={`${base}/today`}
+          href={`${base}/coach`}
         />
       </Card>
 
@@ -171,13 +191,12 @@ export function AccountScreen({
             value={formatDate(sub?.current_period_end) ?? "—"}
             tone={sub ? undefined : "var(--text-muted)"}
           />
-          <Row
-            label="Manage billing"
-            value="Open →"
-            tone="var(--accent-text)"
-            href="/account"
-          />
         </RowGroup>
+        {/* "Manage billing" was a link to /account — a marketing route that
+            has nothing to do with billing. A working portal button and the
+            portal route it posts to both already existed and were mounted
+            nowhere. */}
+        <AccountBilling firstName={firstName} hasSubscription={Boolean(sub)} />
         {!sub ? (
           <p
             style={{
@@ -231,10 +250,26 @@ export function AccountScreen({
         <RowGroup>
           <Row label="Personal records" value="View →" href={`${base}/account/pr`} />
           <Row label="Connections" value="Manage →" href={`${base}/connections`} />
-          <Row label="Download everything" value="Request →" tone="var(--accent-text)" />
+          {/* This said "Request →" and had no handler on it at all — a control
+              that exists to satisfy a legal right, doing nothing. */}
+          <Row label="Download everything" value={<DataExport email={email} />} />
           <Row label="Privacy policy" value="Read →" href="/legal/privacy" />
         </RowGroup>
       </section>
+
+      <section style={{ marginBottom: "var(--space-4)" }}>
+        <Eyebrow>Help</Eyebrow>
+        <RowGroup>
+          {/* The tour's own last card promises this is here. */}
+          <Row
+            label="Guided tour"
+            value={<ReplayTour className="member-linkbtn" />}
+          />
+        </RowGroup>
+      </section>
+
+        </div>
+      </div>
 
       <MemberSignOut />
 

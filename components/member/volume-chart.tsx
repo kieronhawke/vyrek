@@ -20,11 +20,20 @@ export function VolumeChart({ data }: { data: WeekVolume[] }) {
 
   return (
     <figure className="rounded-2xl border border-[color:var(--border)] bg-[var(--surface)]/60 p-4">
-      <figcaption className="flex items-baseline justify-between">
-        <p className="font-mono text-[12px] uppercase tracking-[0.22em] text-[color:var(--text-muted)]">
+      {/*
+        `flex-wrap` and `whitespace-nowrap` together, not `justify-between`
+        alone. In a narrow column — which is what the right-hand column on
+        Today is — the first line wrapped, the second baseline-aligned into
+        the gap it left, and the two read as one sentence:
+        "WEEKLY LOAD · LAST 8 RUN · STRENGTH · WEEKS STATIONS".
+        Now they sit side by side when there is room and stack when there
+        is not.
+      */}
+      <figcaption className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+        <p className="whitespace-nowrap font-mono text-[12px] uppercase tracking-[0.22em] text-[color:var(--text-muted)]">
           Weekly load · last {data.length} weeks
         </p>
-        <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
+        <p className="whitespace-nowrap font-mono text-[12px] uppercase tracking-[0.18em] text-[color:var(--text-muted)]">
           Run · Strength · Stations
         </p>
       </figcaption>
