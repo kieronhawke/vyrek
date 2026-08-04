@@ -35,7 +35,7 @@ export default function FreeConsultationPage() {
       <main className="pb-24 pt-28 md:pt-36">
         <Container>
           <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-5">
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
                 [ Free consultation ]
               </p>
@@ -82,8 +82,14 @@ export default function FreeConsultationPage() {
               </ol>
             </div>
 
-            <div className="lg:col-span-6">
-              <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-6 md:p-8 lg:sticky lg:top-28">
+            {/* Seven columns to the booking, five to the reading.
+                The split was even, which sounds fair and is not: the left
+                column is prose that reads fine at any width, and the right
+                one holds a calendar with a hard minimum. Giving the calendar
+                the extra column is what lets it open into two panes at all
+                on a laptop. */}
+            <div className="lg:col-span-7">
+              <div className="rounded-lg border border-suth-border-subtle bg-suth-elevated p-5 md:p-6 lg:sticky lg:top-28">
                 <BookingForm />
               </div>
             </div>

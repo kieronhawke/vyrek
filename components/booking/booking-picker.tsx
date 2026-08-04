@@ -117,14 +117,24 @@ export function BookingPicker({
   const canGoBack = y > today.getFullYear() || m > today.getMonth();
 
   return (
-    /* THE CALENDAR HAS A MAXIMUM WIDTH, AND THAT IS THE WHOLE FIX.
+    /* TWO FIXES, AND THE SECOND IS WHY THE FIRST WAS NOT ENOUGH.
        The day cells are square and were sized by whatever space the column
        happened to have. Inside a max-w-5xl page that is about 700px across
        seven columns, so every date became a hundred-pixel tile and the month
-       looked like a wall of blocks rather than a calendar. Capping the grid
-       at 21rem puts a cell at about 44px — a comfortable tap target and the
-       size every calendar anybody has used is drawn at. */
-    <div className="grid gap-8 lg:grid-cols-[21rem_minmax(0,1fr)] lg:items-start lg:gap-12">
+       read as a wall of blocks. Capping the grid at 21rem puts a cell at
+       about 44px — a real tap target and the size every calendar anybody has
+       used is drawn at.
+
+       AND THE BREAKPOINTS ARE THE CONTAINER'S, NOT THE WINDOW'S. This picker
+       is used full-width on /book and inside a half-width sticky card on
+       /free-consultation. A `lg:` breakpoint asks how wide the *window* is,
+       so on a desktop both got the two-pane layout and the one in the card
+       had 450px to fit 21rem of calendar beside a column of times. That is
+       the page Kieron called awful. A container query asks how much room
+       this component actually has, which is the question that was always
+       being asked. */
+    <div className="@container">
+    <div className="grid gap-8 @2xl:grid-cols-[21rem_minmax(0,1fr)] @2xl:items-start @2xl:gap-12">
       <div className="w-full max-w-[21rem]">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-suth-text-tertiary">
@@ -270,7 +280,7 @@ export function BookingPicker({
             Nothing left on that day. Try another.
           </p>
         ) : (
-          <ul role="list" className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          <ul role="list" className="grid grid-cols-2 gap-2 @sm:grid-cols-3">
             {slots?.map((s) => (
               <li key={s.startISO}>
                 <button
@@ -300,6 +310,7 @@ export function BookingPicker({
           </p>
         ) : null}
       </div>
+    </div>
     </div>
   );
 }
