@@ -176,6 +176,15 @@ export type Automation = {
   /** ISO instant it fires. */
   dueISO: string;
   kind: "sms" | "email";
+  /**
+   * The template whose wording actually goes out, in lib/comms/templates.ts.
+   *
+   * Not decoration. The one-hour call reminder shipped as an automation with
+   * no editable template behind it, which is the worst combination there is:
+   * it sends itself and Ben cannot change a word of it. Naming the template
+   * here means a test can assert every automation has one.
+   */
+  templateId: string;
 };
 
 /**
@@ -203,6 +212,7 @@ export function pendingAutomations(lead: LeadRecord, now: Date): Automation[] {
         label: "Reminder text an hour before the call",
         dueISO: new Date(remindAt).toISOString(),
         kind: "sms",
+        templateId: "sms.reminder-1h",
       });
     }
   }
@@ -221,6 +231,7 @@ export function pendingAutomations(lead: LeadRecord, now: Date): Automation[] {
           label,
           dueISO: new Date(at).toISOString(),
           kind: "sms",
+          templateId: "sms.follow-up",
         });
       }
     }

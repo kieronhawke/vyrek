@@ -20,6 +20,7 @@ import {
 import { STAGE_LABEL, STAGE_ORDER, isFork, otherActions, primaryAction } from "./lead-workflow";
 import { seedLeads } from "./lead-seed";
 import { LEADS } from "./fixtures";
+import { TEMPLATES } from "@/lib/comms/templates";
 
 /** A fixed now, so nothing here drifts with the clock. */
 const NOW = new Date("2026-08-04T12:00:00Z");
@@ -398,5 +399,40 @@ describe("the send queue", () => {
   it("leaves out anyone Ben has switched off", () => {
     const off = lead({ stage: "onboarding_sent", stageSinceISO: at(1), automation: false });
     expect(sendQueue([off], NOW)).toHaveLength(0);
+  });
+});
+
+describe("automations and the words they send", () => {
+  /**
+   * Every automatic message must have a template Ben can edit.
+   *
+   * The one-hour call reminder shipped without one: it sent itself and there
+   * was no way to change a word of it. That is the worst combination an
+   * automation can have, and this is the assertion that stops it recurring —
+   * a new automation with no template, or one naming a template that has been
+   * renamed or deleted, fails here.
+   */
+  it("never fires a message with no editable wording behind it", () => {
+    const ids = new Set(TEMPLATES.map((t) => t.id));
+    const seen = new Set<string>();
+
+    // Every lead in the seed, plus the states the seed does not happen to
+    // contain, so this covers the engine rather than the fixture.
+    const leads = [
+      ...seedLeads(NOW),
+      lead({ id: "x1", stage: "onboarding_sent", stageSinceISO: at(1) }),
+      lead({
+        id: "x2",
+        stage: "call_booked",
+        booking: { ref: "R", startISO: new Date(NOW.getTime() + 5 * HOUR).toISOString(), minutes: 20 },
+      }),
+    ];
+    for (const l of leads) {
+      for (const a of pendingAutomations(l, NOW)) {
+        seen.add(a.templateId);
+        expect(ids.has(a.templateId), `${a.label} names a template that does not exist`).toBe(true);
+      }
+    }
+    expect(seen.size).toBeGreaterThan(0);
   });
 });

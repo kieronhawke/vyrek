@@ -33,8 +33,11 @@ import {
  */
 
 export function CommsEditor() {
+  /* Starts empty, which is the original wording — exactly what the server
+     can render. Ben's edits live in this browser and replace it after mount,
+     the same swap the rest of the console makes. Returning a "Loading"
+     placeholder instead meant the server sent nothing at all. */
   const [overrides, setOverrides] = useState<OverrideMap>({});
-  const [hydrated, setHydrated] = useState(false);
   const [openId, setOpenId] = useState<string | null>(null);
   const [saved, setSaved] = useState<string | null>(null);
 
@@ -44,7 +47,6 @@ export function CommsEditor() {
     } catch {
       setOverrides({});
     }
-    setHydrated(true);
   }, []);
 
   const persist = (next: OverrideMap) => {
@@ -61,8 +63,6 @@ export function CommsEditor() {
     }
     return [...m.entries()];
   }, []);
-
-  if (!hydrated) return <p className="ce-hint">Loading messages…</p>;
 
   const editedCount = Object.keys(overrides).length;
 

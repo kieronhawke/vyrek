@@ -8,6 +8,7 @@ import { DataTable, type Column } from "@/components/control/data-table";
 import { MESSAGE_ROWS, type MessageRow } from "@/lib/control/admin-fixtures";
 import { Messaging } from "@/components/control/messaging";
 import { SEED_TEMPLATES } from "@/lib/control/messaging";
+import { TEMPLATES } from "@/lib/comms/templates";
 import { ModuleNote, StatStrip } from "@/components/control/stat-strip";
 
 const BASE = "/control-preview/admin";
@@ -88,7 +89,14 @@ export default async function AdminMessages() {
             tone: "accent",
           },
           { label: "Threads today", value: String(MESSAGE_ROWS.length) },
-          { label: "Templates", value: String(SEED_TEMPLATES.length) },
+          /* Counted across everything above, not just the per-client rules
+             below. "Templates 9" against a page listing forty-eight messages
+             is a number that makes the reader distrust the other three. */
+          {
+            label: "Messages in total",
+            value: String(EMAIL_SAMPLES.length + SMS_SAMPLES.length),
+            note: `${TEMPLATES.length} with editable wording`,
+          },
           {
             label: "Marketing class",
             value: String(
