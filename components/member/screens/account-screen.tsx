@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MemberSignOut } from "@/components/member/sign-out";
 import { ReplayTour } from "@/components/member/replay-tour";
+import { NotificationSettings } from "@/components/member/notification-settings";
 import { ProfileEditor } from "@/components/member/profile-editor";
 import { DataExport } from "@/components/member/data-export";
 import { AccountBilling } from "@/components/member/account-billing";
@@ -218,21 +219,10 @@ export function AccountScreen({
 
       <section style={{ marginBottom: "var(--space-4)" }}>
         <Eyebrow>Notifications</Eyebrow>
-        <RowGroup>
-          <Row label="Session reminders" value="On" tone="var(--ok)" />
-          <Row label="Plan ready each Sunday" value="On" tone="var(--ok)" />
-          <Row label="Ben's weekly email" value="On" tone="var(--ok)" />
-          <Row label="Offers and news" value="Off" tone="var(--text-muted)" />
-        </RowGroup>
-        <p
-          style={{
-            margin: "var(--space-1) 0 0",
-            fontSize: "var(--text-xs)",
-            color: "var(--text-muted)",
-          }}
-        >
-          Reminders start sending once email and SMS are connected.
-        </p>
+        {/* Four rows of static text reading "On, On, On, Off" — a settings
+            screen that displayed settings and changed none of them, which is
+            worse than a missing feature because it looks like a working one. */}
+        <NotificationSettings />
       </section>
 
       <section style={{ marginBottom: "var(--space-4)" }}>

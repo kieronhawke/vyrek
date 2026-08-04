@@ -3,6 +3,8 @@
 import { useRef, useState } from "react";
 import { useHydrated } from "@/hooks/use-hydrated";
 import { useRecord } from "@/lib/control/store";
+import { PhoneField } from "@/components/member/phone-field";
+import { PhotoCropper } from "@/components/member/photo-cropper";
 
 /**
  * THE BITS OF AN ACCOUNT AN ATHLETE CAN ACTUALLY CHANGE.
@@ -52,6 +54,10 @@ export function ProfileEditor({ firstName, email }: { firstName: string; email: 
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const file = useRef<HTMLInputElement | null>(null);
+  /* Held until the crop is confirmed. Centre-cropping whatever was picked is
+     what this replaces: a phone photo is portrait and the face is rarely in
+     the middle, so the usual result was a square of somebody's chest. */
+  const [cropping, setCropping] = useState<File | null>(null);
 
   /* The form edits a copy. Writing every keystroke to the store would make an
      abandoned edit permanent, and there would be no way to cancel out of it. */
@@ -63,13 +69,9 @@ export function ProfileEditor({ firstName, email }: { firstName: string; email: 
     setSaved(false);
   }
 
-  async function pickAvatar(f: File) {
+  function pickAvatar(f: File) {
     setError(null);
-    try {
-      set("avatar", await squareDataUrl(f));
-    } catch {
-      setError("That image could not be read. Try another.");
-    }
+    setCropping(f);
   }
 
   if (!mounted) {
@@ -105,7 +107,7 @@ export function ProfileEditor({ firstName, email }: { firstName: string; email: 
             className="sr-only"
             onChange={(e) => {
               const f = e.target.files?.[0];
-              if (f) void pickAvatar(f);
+              if (f) pickAvatar(f);
               e.target.value = "";
             }}
           />
@@ -134,19 +136,13 @@ export function ProfileEditor({ firstName, email }: { firstName: string; email: 
           <small>This is your login. Message Ben to change it.</small>
         </label>
 
-        <label className="pe__field">
-          <span>Mobile</span>
-          <input
-            className="pe__input"
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel"
-            placeholder="07…"
-            value={value.phone}
-            onChange={(e) => set("phone", e.target.value)}
-          />
-          <small>Used for session reminders and to confirm a booked call.</small>
-        </label>
+        <PhoneField
+          id="pe-phone"
+          label="Mobile"
+          hint="Used for session reminders and to confirm a booked call."
+          value={value.phone}
+          onChange={(next) => set("phone", next)}
+        />
 
         <label className="pe__field">
           <span>Emergency contact</span>
@@ -158,17 +154,12 @@ export function ProfileEditor({ firstName, email }: { firstName: string; email: 
           />
         </label>
 
-        <label className="pe__field">
-          <span>Their number</span>
-          <input
-            className="pe__input"
-            type="tel"
-            inputMode="tel"
-            placeholder="07…"
-            value={value.emergencyPhone}
-            onChange={(e) => set("emergencyPhone", e.target.value)}
-          />
-        </label>
+        <PhoneField
+          id="pe-emergency"
+          label="Their number"
+          value={value.emergencyPhone}
+          onChange={(next) => set("emergencyPhone", next)}
+        />
       </div>
 
       <div className="pe__actions">
@@ -191,6 +182,17 @@ export function ProfileEditor({ firstName, email }: { firstName: string; email: 
         ) : null}
       </div>
 
+      {cropping ? (
+        <PhotoCropper
+          file={cropping}
+          onCancel={() => setCropping(null)}
+          onDone={(dataUrl) => {
+            set("avatar", dataUrl);
+            setCropping(null);
+          }}
+        />
+      ) : null}
+
       <p className="pe__note">
         Saved on this device. It will move to your account, and follow you
         between devices, once the database is connected.
@@ -211,24 +213,3 @@ function initials(name: string): string {
   );
 }
 
-/**
- * Square, small, JPEG.
- *
- * Centre-cropped rather than squashed: an avatar frame is a circle and a
- * stretched face in one is worse than a tight crop of the same face.
- */
-async function squareDataUrl(file: File): Promise<string> {
-  const bitmap = await createImageBitmap(file);
-  const edge = Math.min(bitmap.width, bitmap.height);
-  const sx = (bitmap.width - edge) / 2;
-  const sy = (bitmap.height - edge) / 2;
-
-  const canvas = document.createElement("canvas");
-  canvas.width = AVATAR_EDGE;
-  canvas.height = AVATAR_EDGE;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("no 2d context");
-  ctx.drawImage(bitmap, sx, sy, edge, edge, 0, 0, AVATAR_EDGE, AVATAR_EDGE);
-  bitmap.close?.();
-  return canvas.toDataURL("image/jpeg", 0.82);
-}

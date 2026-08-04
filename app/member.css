@@ -2067,3 +2067,175 @@
   font-size: var(--text-xs);
   color: var(--text-faint);
 }
+
+/* ── Notification switches ────────────────────────────────────────────
+   Were four rows of text reading "On". Marketing is in its own group
+   because it is consent rather than a service message, and grouping it with
+   the others implies they are the same kind of thing. */
+.notif { display: grid; gap: var(--space-2); }
+.notif__group {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  overflow: hidden;
+}
+.notif__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 12px var(--space-2);
+  border-bottom: 1px solid var(--border);
+}
+.notif__group > .notif__row:last-child { border-bottom: 0; }
+.notif__text { display: grid; gap: 2px; min-width: 0; }
+.notif__label { font-size: var(--text-sm); font-weight: 600; color: var(--text); }
+.notif__hint { font-size: var(--text-xs); color: var(--text-faint); line-height: 1.45; }
+/* The button is the tap target — globals.css puts a 48px minimum on every
+   button and the visual suite checks it — so the visible pill is an inner
+   element. Styling the button as a 28px pill gave a 48x48 circle. */
+.notif__switch {
+  flex: 0 0 auto;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.notif__switch:disabled { opacity: 0.5; cursor: default; }
+
+.notif__track {
+  position: relative;
+  display: block;
+  width: 48px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  transition: background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+.notif__switch[aria-checked="true"] .notif__track {
+  background: var(--accent);
+  border-color: transparent;
+}
+.notif__knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--text-muted);
+  transition: transform var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
+}
+.notif__switch[aria-checked="true"] .notif__knob {
+  transform: translateX(20px);
+  background: var(--accent-ink, #0a0a0a);
+}
+.notif__note { margin: 0; font-size: var(--text-xs); color: var(--text-faint); }
+
+@media (prefers-reduced-motion: reduce) {
+  .notif__track, .notif__knob { transition: none; }
+}
+
+/* ── Phone field ─────────────────────────────────────────────────────
+   The old field was a text box placeholdered "07…", which assumes everybody
+   is in Britain. Ben coaches remotely. */
+.phone { display: grid; gap: 4px; }
+.phone__label { font-size: var(--text-xs); color: var(--text-muted); }
+.phone__row { display: flex; gap: 8px; }
+.phone__country {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  min-height: 44px;
+  border-radius: var(--radius-input, 10px);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  flex: 0 0 auto;
+}
+.phone__flag { font-size: 18px; line-height: 1; }
+.phone__dial { font-size: var(--text-sm); color: var(--text-muted); }
+/* The native select sits invisibly over the whole control, so the flag and
+   the code are what you see and the platform picker is what you get. */
+.phone__select {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px; /* iOS zooms a focused control below 16px. */
+}
+.phone__input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: var(--radius-input, 10px);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-sm);
+}
+.phone__input[aria-invalid="true"] { border-color: var(--warn, #f5b83c); }
+.phone__hint { margin: 0; font-size: 11px; color: var(--text-faint); }
+.phone__error { margin: 0; font-size: 11px; color: var(--warn, #f5b83c); }
+
+/* ── Photo cropper ───────────────────────────────────────────────────── */
+.crop {
+  position: fixed; inset: 0; z-index: 70;
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--space-2);
+  background: color-mix(in srgb, #000 66%, transparent);
+}
+.crop__card {
+  display: grid; gap: var(--space-2); justify-items: center;
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background: var(--bg); border: 1px solid var(--border);
+}
+.crop__title { margin: 0; font-weight: 700; font-size: var(--text-base); }
+.crop__stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #000;
+  touch-action: none;
+  cursor: grab;
+}
+.crop__stage:active { cursor: grabbing; }
+.crop__img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: none;
+  user-select: none;
+  pointer-events: none;
+}
+.crop__ring {
+  position: absolute; inset: 0;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 2px var(--accent);
+  pointer-events: none;
+}
+.crop__zoom { width: 240px; }
+.crop__zoom input { width: 100%; }
+.crop__hint { margin: 0; font-size: var(--text-xs); color: var(--text-faint); }
+.crop__actions { display: grid; gap: 8px; width: 240px; }
+.crop__save {
+  min-height: 44px; border-radius: 999px; border: 0; cursor: pointer;
+  background: var(--accent); color: var(--accent-ink, #0a0a0a);
+  font-size: var(--text-sm); font-weight: 700;
+}
+.crop__cancel {
+  min-height: 44px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text); font-size: var(--text-sm); font-weight: 600;
+}
