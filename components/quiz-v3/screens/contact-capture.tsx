@@ -4,7 +4,8 @@ import { QuestionHeader } from "@/components/quiz-v3/question-header";
 import {
   DIAL_CODES,
   dialCodeFor,
-  flagFor,
+  placeholderFor,
+  optionLabel,
   isPhoneValid,
 } from "@/lib/dial-codes";
 
@@ -109,19 +110,23 @@ export function ContactCaptureScreen({
           hint={`Ben calls this number. ${country.name} format.`}
           error={phoneBad ? "That number doesn't look right for that country." : undefined}
         >
-          <div className="flex gap-2">
-            <div className="relative shrink-0">
+          {/* Stacked on a phone, side by side from sm.
+              The option text is "flag, country, code" now that the list is
+              every country rather than thirty — a bare "+1" is not findable
+              among two hundred, and a native select shows the chosen option's
+              full text, which will not fit beside a phone box at 390px. */}
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <div className="relative sm:shrink-0">
               <select
                 aria-label="Country dialling code"
                 value={phoneIso}
                 onChange={(e) => onIso(e.target.value)}
-                className="h-12 w-[7.5rem] appearance-none rounded-lg border border-suth-border bg-suth-base pl-3 pr-7 text-base text-suth-text outline-none transition-colors focus:border-suth-accent"
+                className="h-12 w-full appearance-none rounded-lg border border-suth-border bg-suth-base pl-3 pr-8 text-base text-suth-text outline-none transition-colors focus:border-suth-accent sm:w-[13rem]"
               >
                 {DIAL_CODES.map((c) => (
-                  // The name is in the option so the list is searchable by
-                  // typing "Spain"; the flag and code are what shows closed.
+                  // Name in the option text so typing "Spain" jumps to it.
                   <option key={c.iso} value={c.iso}>
-                    {flagFor(c.iso)} {c.dial}
+                    {optionLabel(c)}
                   </option>
                 ))}
               </select>
@@ -138,7 +143,7 @@ export function ContactCaptureScreen({
               autoComplete="tel-national"
               value={phone}
               onChange={(e) => onPhone(e.target.value)}
-              placeholder={country.example}
+              placeholder={placeholderFor(phoneIso)}
               className="h-12 min-w-0 flex-1 rounded-lg border border-suth-border bg-suth-base px-4 text-base text-suth-text outline-none transition-colors focus:border-suth-accent"
             />
           </div>

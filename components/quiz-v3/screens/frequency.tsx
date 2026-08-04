@@ -18,7 +18,19 @@ const OPTIONS: Array<{
   detail: string;
   beginnerDetail?: string;
   recommended?: boolean;
+  /** Offered only where it helps: an athlete asking for a race plan is not
+      served by being told one day a week is fine, and a beginner is not
+      served by a scale that starts above what they can commit to. */
+  beginnerOnly?: boolean;
+  recommendedForBeginner?: boolean;
 }> = [
+  {
+    value: 1,
+    label: "1 day",
+    detail: "A single quality session while life is busy.",
+    beginnerDetail: "One a week, kept every week, beats four for a fortnight.",
+    beginnerOnly: true,
+  },
   {
     value: 2,
     label: "2 days",
@@ -30,6 +42,7 @@ const OPTIONS: Array<{
     label: "3 days",
     detail: "Solid foundation. Race-ready in 16 weeks.",
     beginnerDetail: "Enough to see real change in twelve weeks.",
+    recommendedForBeginner: true,
   },
   {
     value: 4,
@@ -66,15 +79,23 @@ export function FrequencyScreen({
     <div>
       <QuestionHeader
         question="How many days a week can you train?"
-        helper="Be honest about what you can stick to."
+        helper={
+          beginner
+            ? "Whatever you pick is enough to start. Ben builds the week around it."
+            : "Be honest about what you can stick to."
+        }
       />
       <ul role="list" className="space-y-3 lg:space-y-2.5">
-        {OPTIONS.map((opt) => (
+        {OPTIONS.filter((opt) => beginner || !opt.beginnerOnly).map((opt) => (
           <li key={opt.value}>
             <OptionCard
               label={opt.label}
               detail={beginner ? (opt.beginnerDetail ?? opt.detail) : opt.detail}
-              badge={opt.recommended ? "Recommended" : undefined}
+              badge={
+                (beginner ? opt.recommendedForBeginner : opt.recommended)
+                  ? "Most people"
+                  : undefined
+              }
               selected={value === opt.value}
               onClick={() => onChange(opt.value)}
             />

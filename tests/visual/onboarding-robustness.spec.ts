@@ -399,7 +399,14 @@ async function runBeginnerToSlots(page: Page) {
   throw new Error("never reached the slot picker in 24 screens");
 }
 
-/** Pick the first day Ben has free, then the first time on it. */
+/**
+ * Pick the first day Ben has free, then the first time on it, then confirm.
+ *
+ * The confirm step is new and is the point. Choosing a time used to book it
+ * outright, which left nowhere to check the day and — when the draft had no
+ * name in it — surfaced the server's "Please enter your name" on a screen
+ * with no name field. A time is now a selection; the booking is a button.
+ */
 async function chooseFirstSlot(page: Page) {
   const day = page
     .locator('[aria-label^="Choose a day"] button:not([disabled])')
@@ -407,13 +414,19 @@ async function chooseFirstSlot(page: Page) {
   await expect(day).toBeVisible({ timeout: 12_000 });
   await day.click();
   await page.waitForTimeout(500);
-  // Times appear under the calendar once a day is chosen. Choosing one
-  // books it — there is no confirm step, deliberately.
   const time = page
     .getByRole("button", { name: /\d{1,2}[:.]\d{2}\s*(am|pm)?/i })
     .filter({ hasNot: page.locator("svg") })
     .first();
   await expect(time).toBeVisible({ timeout: 10_000 });
   await time.click();
-  await page.waitForTimeout(600);
+  await page.waitForTimeout(400);
+
+  const confirm = page.getByRole("button", { name: /confirm this time/i });
+  await expect(confirm, "no confirm step after choosing a time").toBeVisible({
+    timeout: 10_000,
+  });
+  await expect(confirm, "confirm is dead with every detail filled in").toBeEnabled();
+  await confirm.click();
+  await page.waitForTimeout(700);
 }

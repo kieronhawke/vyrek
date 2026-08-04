@@ -82,7 +82,13 @@ export function MarketingNav() {
   // The quiz stays as the secondary route for people who would rather not
   // talk to anybody yet.
   const ctaHref = onPartnerRoute ? "/partners/apply" : "/book";
-  const ctaLabel = onPartnerRoute ? "Apply to join" : "Book a free call";
+  /* ONE CTA, AND IT NAMES THE THING.
+     "Book a free call" describes the mechanism; "Free assessment" describes
+     what they get, which is what the rest of the funnel now promises end to
+     end — the quiz opens on it, the booking page confirms it, and the top
+     right of every page should say the same words rather than a third
+     variation of them. */
+  const ctaLabel = onPartnerRoute ? "Apply to join" : "Free assessment";
 
   return (
     <header

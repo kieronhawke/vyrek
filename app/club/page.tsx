@@ -203,7 +203,7 @@ export default function ClubPage() {
                   href="/free-consultation"
                   className="mt-5 inline-block text-sm font-medium text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
                 >
-                  Book a free call with Ben →
+                  Free assessment with Ben →
                 </Link>
               </div>
             </div>

@@ -28,7 +28,7 @@ test("nav: primary links navigate (desktop)", async ({ page }, testInfo) => {
   expect(page.url()).toContain("/blog");
 });
 
-test("nav: primary CTA books a call (desktop)", async ({
+test("nav: primary CTA reaches the booking page (desktop)", async ({
   page,
 }, testInfo) => {
   // The desktop CTA pill in the header is `hidden sm:inline-flex`.
@@ -39,10 +39,18 @@ test("nav: primary CTA books a call (desktop)", async ({
   /* The primary path is the free consultation, not the quiz. Both routes
      exist, but only one can be the button in the nav, and they ask for very
      different things: a call costs half an hour and nothing else, the quiz
-     starts a fifteen-screen questionnaire that ends in a price. Changed
-     deliberately; this test moved with it. */
+     starts a fifteen-screen questionnaire.
+
+     The label is "Free assessment" now — it names what somebody gets rather
+     than the mechanism, and matches what the quiz and the booking page both
+     promise. The destination is what this test is actually about, so the
+     name matcher accepts the previous wording too rather than failing the
+     next time it is tuned. */
   await page.goto("/");
-  await page.getByRole("link", { name: /book a free call/i }).first().click();
+  await page
+    .getByRole("link", { name: /free assessment|book a free call/i })
+    .first()
+    .click();
   await page.waitForURL("**/book**");
   expect(page.url()).toContain("/book");
 });
@@ -69,13 +77,16 @@ test("mobile hamburger: primary CTA reachable", async ({
   const drawer = page.locator(`#${drawerId}`);
   await expect(drawer).toBeVisible();
 
-  /* The CTA is "Book a free call", not "Build my plan".
-     That is deliberate and current: under the no-pricing policy every coached
+  /* The CTA is "Free assessment" now, having been "Book a free call" and
+     "Build my plan" before that. Under the no-pricing policy every coached
      path ends at a free consultation with Ben, so that is the primary action
-     everywhere. The point of this test is that a mobile visitor can reach a
-     conversion page from the drawer at all, so it asserts that rather than the
-     wording — which is what left it failing after a copy change. */
-  const cta = drawer.getByRole("link", { name: /free call|build my plan|get started/i });
+     everywhere; only the words have moved. The point of this test is that a
+     mobile visitor can reach a conversion page from the drawer at all, so it
+     asserts that rather than the wording — which is what left it failing
+     after the last copy change. */
+  const cta = drawer.getByRole("link", {
+    name: /free assessment|free call|build my plan|get started/i,
+  });
   await expect(cta, "the mobile drawer has no primary CTA").toBeVisible();
   await cta.click();
 

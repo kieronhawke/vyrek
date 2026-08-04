@@ -69,14 +69,32 @@ export function QuizAside({ answers }: { answers?: QuizAnswers }) {
       aria-hidden
       className="relative isolate hidden shrink-0 overflow-hidden bg-suth-elevated lg:block lg:w-[40%] xl:w-[44%]"
     >
+      {/* WHY THIS IMAGE FLASHED ON EVERY SCREEN CHANGE.
+          The quiz alternates between shell screens and full-bleed
+          interstitials, and those are different element trees — so React
+          unmounts this panel on the way into an interstitial and mounts it
+          again on the way out. A fresh <img> decodes before it paints, which
+          on a 400kB photograph is long enough to see as a blink.
+
+          Two fixes, because one alone is not enough. `key` on the src keeps
+          React from reusing the element across a rail change, which is what
+          made the beginner photo appear inside the athlete one mid-fade. And
+          decoding="sync" on an image that is certainly in cache tells the
+          browser to finish before it paints rather than showing the frame
+          without it, which is exactly the blink being complained about.
+
+          The preload in the page head is what makes "certainly in cache"
+          true; without it this would trade a flash for a stall. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        key={panel.src}
         src={panel.src}
         alt=""
         className="absolute inset-0 h-full w-full object-cover"
         style={{ objectPosition: panel.position }}
         loading="eager"
-        decoding="async"
+        fetchPriority="high"
+        decoding="sync"
       />
       {/* Two washes, not one. The vertical keeps the foot of the panel dark
           enough for body copy; the horizontal stops the seam against the

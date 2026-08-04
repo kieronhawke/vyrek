@@ -295,7 +295,7 @@ function questionScreenIndex(
   return [idx + 1, visibleQuestions.length];
 }
 
-function QuizV3Inner() {
+function QuizV3Inner({ country }: { country?: string }) {
   const router = useRouter();
   const params = useSearchParams();
   const haptic = useHaptics();
@@ -1390,7 +1390,10 @@ function QuizV3Inner() {
        that call happen, and the phone carries a real dialling code. */
     const nameValue = state.answers.name ?? "";
     const emailValue = state.answers.email ?? "";
-    const isoValue = state.answers.phoneIso ?? DEFAULT_ISO;
+    /* Their own country first, the UK only as a last resort. An explicit
+       choice always wins — once they have touched the dropdown, the answer
+       is theirs and the header stops mattering. */
+    const isoValue = state.answers.phoneIso ?? country ?? DEFAULT_ISO;
     const phoneValue = state.answers.phone ?? "";
     const ready = isContactValid(nameValue, emailValue, isoValue, phoneValue);
     return (
@@ -1606,14 +1609,17 @@ function QuizColdLoadFallback() {
 
 export default function QuizV3({
   copy = {},
+  country,
 }: {
   /** Ben's edits, read on the server. Empty means "as shipped". */
   copy?: Record<string, string>;
+  /** ISO country from the visitor's IP, for the phone field's default. */
+  country?: string;
 }) {
   return (
     <QuizCopyProvider overrides={copy}>
       <Suspense fallback={<QuizColdLoadFallback />}>
-        <QuizV3Inner />
+        <QuizV3Inner country={country} />
       </Suspense>
     </QuizCopyProvider>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BookingPicker } from "@/components/booking/booking-picker";
 
 /**
@@ -63,6 +63,18 @@ export function BookingForm({
   const [done, setDone] = useState<{ ref: string; startISO: string } | null>(
     null,
   );
+
+  /* BRING THE FORM TO THEM.
+     On a phone the calendar fills the screen, so the form that appears when
+     a time is chosen is entirely below the fold — the reported symptom was
+     "there's no proceed button", and there was one, a scroll away with
+     nothing to suggest it had arrived. Scrolling to it is the whole fix.
+     Honoured only after a choice, so it can never yank the page on load. */
+  const formRef = useRef<HTMLFormElement | null>(null);
+  useEffect(() => {
+    if (!slot || !formRef.current) return;
+    formRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [slot]);
 
   if (done) {
     return (
@@ -152,12 +164,23 @@ export function BookingForm({
 
       {slot ? (
         <form
+          ref={formRef}
           onSubmit={submit}
-          className="rounded-2xl border border-suth-border bg-suth-elevated p-6 md:p-8"
+          className="scroll-mt-24 rounded-2xl border border-suth-accent/40 bg-suth-elevated p-6 md:p-8"
         >
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
-            [ {formatChosen(slot.startISO)} ]
-          </p>
+          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
+              [ {formatChosen(slot.startISO)} ]
+            </p>
+            {/* A chosen time must be changeable without starting again. */}
+            <button
+              type="button"
+              onClick={() => setSlot(null)}
+              className="text-sm text-suth-text-secondary underline underline-offset-4 transition-colors hover:text-suth-text"
+            >
+              Change time
+            </button>
+          </div>
           <h2 className="mt-3 text-xl font-bold tracking-[-0.02em] text-suth-text md:text-2xl">
             Where should Ben call you?
           </h2>

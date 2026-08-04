@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import QuizV3 from "@/components/quiz-v3/quiz-flow";
 import { loadQuizCopy } from "@/lib/quiz-copy/store";
+import { headers } from "next/headers";
+import { isoFromCountryHeader } from "@/lib/dial-codes";
 
 export const metadata: Metadata = {
   /* The root layout appends " \u00b7 Suth Performance" to every child title.
@@ -41,5 +43,29 @@ export const dynamic = "force-dynamic";
 
 export default async function QuizPage() {
   const copy = await loadQuizCopy();
-  return <QuizV3 copy={copy} />;
+
+  /* Open the phone field on the country they are actually in.
+     Vercel puts an ISO country on every request. A UK default is right for
+     most people here and silently wrong for the rest: 612 34 56 78 typed
+     under an assumed +44 produces a number nobody can ring, and they never
+     find out it failed. */
+  const h = await headers();
+  const country = isoFromCountryHeader(h.get("x-vercel-ip-country"));
+
+  return (
+    <>
+      {/* Both aside photographs, fetched before the first question renders.
+          The panel swaps when the rail is decided on screen one, and a
+          remount happens on the way out of every interstitial — neither
+          should ever wait on a network round trip. */}
+      <link
+        rel="preload"
+        as="image"
+        href="/media/images/ben/ben-steps.jpg"
+        fetchPriority="high"
+      />
+      <link rel="preload" as="image" href="/media/images/ben/ben-race-portrait.jpg" />
+      <QuizV3 copy={copy} country={country} />
+    </>
+  );
 }

@@ -45,7 +45,12 @@ export type ActivityValue =
 export type SexValue = "men" | "women";
 export type WeightUnit = "kg" | "lb";
 
-export type DaysValue = 2 | 3 | 4 | 5 | 6;
+/* One day is a real answer, and on the beginner rail it is the honest one
+   for a lot of people. The scale used to start at two, which quietly told
+   somebody who has not trained in years that the minimum acceptable effort
+   was already more than they had — on the route whose whole job is to be
+   supportive rather than intimidating. */
+export type DaysValue = 1 | 2 | 3 | 4 | 5 | 6;
 export type SessionLengthValue = "30" | "45" | "60" | "90";
 export type LocationValue = "gym-full" | "gym-standard" | "home";
 export type PartnerValue = "solo" | "doubles" | "solo-partner-later";
