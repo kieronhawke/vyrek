@@ -1798,6 +1798,103 @@
 }
 .acctbill__cancel:hover { color: var(--danger); }
 .acctbill__note { margin: 0; font-size: var(--text-xs); color: var(--text-muted); }
+.acctbill__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* The two questions anybody opens a billing page to answer, on the page. */
+.acctbill__summary {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+}
+.acctbill__top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.acctbill__status {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.acctbill__status[data-tone="ok"] {
+  color: var(--accent-text);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.acctbill__status[data-tone="warn"] {
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 14%, transparent);
+}
+.acctbill__status[data-tone="off"] {
+  color: var(--text-muted);
+  background: var(--surface-2);
+}
+.acctbill__plan { font-size: var(--text-sm); font-weight: 700; }
+
+.acctbill__facts {
+  margin: 0;
+  display: grid;
+  gap: 8px 16px;
+  /* Wraps to one column on a phone and sits in a row on anything wider,
+     without a media query per breakpoint. */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.acctbill__facts dt {
+  margin: 0;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.acctbill__facts dd {
+  margin: 2px 0 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.acctbill__alert {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent);
+  background: color-mix(in srgb, var(--danger) 10%, transparent);
+  font-size: var(--text-xs);
+  color: var(--text);
+}
+.acctbill__invoices { font-size: var(--text-xs); }
+.acctbill__invoices summary {
+  cursor: pointer;
+  color: var(--text-muted);
+  /* The global 48px minimum applies to anything with a button role; a
+     disclosure triangle is not one, and 48px here would be a huge gap. */
+  padding: 4px 0;
+}
+.acctbill__invoices ul {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 4px;
+}
+.acctbill__invoices li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 5px 0;
+  border-top: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+.acctbill__invoices a { color: var(--accent-text); }
 
 /* ── Cancellation ────────────────────────────────────────────────────── */
 .cx {
@@ -1863,6 +1960,60 @@
   text-decoration: underline; text-underline-offset: 2px;
 }
 .cx__note { margin: 0; font-size: var(--text-xs); line-height: 1.5; color: var(--text-faint); }
+.cx__body { display: grid; gap: var(--space-2); align-content: start; }
+
+/* ── Leaving, on a desktop ────────────────────────────────────────────
+   It was a 460px column with a 72px thumbnail of Ben at the top, which on a
+   monitor is a phone screen floating in the middle of nothing — and the
+   whole premise of this screen is that a person is asking, which a
+   thumbnail does not carry.
+
+   So on a wide screen he is a column: a real portrait beside the question,
+   at the size a photograph of somebody has to be before it reads as a
+   photograph of somebody. Nothing else changes. The exit is still one tap
+   from every stage, still never disabled, still never hidden — the balance
+   the flow is built on does not move because the window got bigger. */
+@media (min-width: 900px) {
+  .cx__card {
+    max-width: 860px;
+    padding: var(--space-4);
+    gap: var(--space-4);
+    grid-template-columns: 240px minmax(0, 1fr);
+    align-items: start;
+  }
+  .cx__ben {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .cx__portrait {
+    width: 240px;
+    height: 300px;
+    /* A portrait, not a badge. Round at this size reads as an avatar and
+       loses the face to the crop. */
+    border-radius: var(--radius-card);
+  }
+  .cx__x {
+    /* Out of the column and back into the corner of the card, where a close
+       control belongs and where it does not push Ben's name sideways. */
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    margin-left: 0;
+  }
+  .cx__card { position: relative; }
+  .cx__title { font-size: var(--text-xl); }
+  .cx__lede { font-size: var(--text-base); }
+  /* Room for the buttons to sit side by side, with the quiet one second. */
+  .cx__actions {
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    justify-content: start;
+    gap: var(--space-2);
+  }
+  .cx__reasons { grid-template-columns: 1fr 1fr; }
+  .cx__skip { justify-self: start; padding-left: 0; }
+}
 
 /* ── The remaining screens on a desktop ───────────────────────────────
    Plan, Fuel, Progress and Connections were all single columns that simply

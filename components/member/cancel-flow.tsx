@@ -10,7 +10,7 @@ import {
   type ReasonId,
   type StageId,
 } from "@/lib/member/cancel";
-import { BEN_PHOTOS, pickPhoto } from "@/lib/photo-library";
+import { BEN_PORTRAIT } from "@/lib/photo-library";
 
 /**
  * THE OFFBOARDING FLOW.
@@ -50,7 +50,10 @@ export function CancelFlow({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const portrait = pickPhoto(BEN_PHOTOS, "cancel-flow");
+  /* Named, not picked. The pool is mostly action frames, and the one the
+     hash landed on was the back of somebody on a rower — which at 240px is
+     an empty black box on the one screen whose point is a face. */
+  const portrait = BEN_PORTRAIT;
   const offer = reason ? reasonById(reason)?.offer : null;
 
   /** The last step hands over to Stripe, which is the record of truth. */
@@ -89,7 +92,7 @@ export function CancelFlow({
               src={portrait.src}
               alt="Ben Sutherland"
               fill
-              sizes="72px"
+              sizes="(min-width: 900px) 240px, 72px"
               /* Not greyscaled here, unlike everywhere else in the app. This
                  is the one screen whose whole point is that a person is
                  asking — and a dark portrait, desaturated, at 56px on a dark
@@ -105,6 +108,11 @@ export function CancelFlow({
             ✕
           </button>
         </div>
+
+        {/* Everything that changes per stage. Split out from Ben so that on a
+            wide screen he can sit beside it as a column rather than as a
+            72px thumbnail on a strip above it — see .cx__card in member.css. */}
+        <div className="cx__body">
 
         {/* ── Why ──────────────────────────────────────────────────────── */}
         {stage === "why" ? (
@@ -256,6 +264,7 @@ export function CancelFlow({
             </div>
           </>
         ) : null}
+        </div>
       </div>
     </div>
   );
