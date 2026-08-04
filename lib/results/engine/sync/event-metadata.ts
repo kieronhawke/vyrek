@@ -189,9 +189,10 @@ export type EnrichResult = {
  */
 export async function enrichEventMetadata(
   repo: ResultsRepository,
-  opts: { races?: Race[] } = {},
+  opts: { races?: Race[]; now?: Date } = {},
 ): Promise<EnrichResult> {
   const races = opts.races ?? RACES;
+  const now = opts.now ?? new Date();
   const result: EnrichResult = {
     enriched: [], unmatched: [], ambiguous: [], closedBySeason: [], placed: [],
   };
@@ -202,6 +203,33 @@ export async function enrichEventMetadata(
     if (event.startDatetime) continue;
 
     const metadata = metadataFor(event.city, event.year, races);
+
+    // ⚠️ A calendar date in the future cannot belong to a race we hold results
+    // for.
+    //
+    // The calendar lists *upcoming* races, and the join is on city and year —
+    // so an event that raced in early 2026 matches the same city's later 2026
+    // fixture and inherits its date. Eleven events carrying 47,901 athletes
+    // were dated months ahead and therefore filed as `upcoming`: their results
+    // existed, were correct, and appeared nowhere, because a finished-events
+    // list quite reasonably excludes races that have not happened.
+    //
+    // Holding results is the stronger evidence. The bad date is dropped rather
+    // than replaced with a guess, and the event sorts by year.
+    if (metadata && event.athleteCount > 0 && metadata.startDatetime) {
+      if (new Date(metadata.startDatetime).getTime() > now.getTime()) {
+        await repo.upsertEvent({
+          ...(event as EngineEvent),
+          status: "final",
+          country: event.country || metadata.country,
+          countryIso: event.countryIso || countryIsoFor(metadata.country),
+          region: event.region || metadata.region,
+        });
+        result.ambiguous.push(event.slug);
+        continue;
+      }
+    }
+
     if (!metadata) {
       result.unmatched.push({ slug: event.slug, city: event.city, year: event.year });
 
