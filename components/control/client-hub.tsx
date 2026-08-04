@@ -19,6 +19,7 @@ import {
 } from "@/lib/control/pending-clients";
 import type { LeadRecord } from "@/lib/control/lead-record";
 import type { CoachClient } from "@/lib/control/fixtures";
+import { useHydrated, readStored } from "@/hooks/use-hydrated";
 
 /** The key the lead pipeline persists to. Read, never written, from here. */
 const LEADS_KEY = "control.leads.v2";
@@ -74,16 +75,18 @@ export function ClientHub({
    * Read-only on purpose. Two screens writing one list is how they end up
    * disagreeing, and the pipeline is where a lead is worked.
    */
-  const [leads, setLeads] = useState<LeadRecord[]>(seeded);
-  useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(LEADS_KEY);
-      const stored = raw ? (JSON.parse(raw) as LeadRecord[]) : null;
-      if (stored?.length) setLeads(stored);
-    } catch {
-      /* storage blocked; the server's seed still rendered */
-    }
-  }, []);
+  /*
+   * Seeded from storage up front instead of via an effect. The effect version
+   * re-rendered the whole client list on mount, and the seed flashed before
+   * the real records replaced it.
+   */
+  const hydrated = useHydrated();
+  const [storedLeads, setLeads] = useState<LeadRecord[]>(() => {
+    const v = readStored<LeadRecord[]>(LEADS_KEY, []);
+    return Array.isArray(v) && v.length ? v : seeded;
+  });
+  // Server value until hydration, so the markup matches what was sent.
+  const leads = hydrated ? storedLeads : seeded;
 
   const pending = useMemo(
     () => pendingClients(leads, new Date(nowISO)),

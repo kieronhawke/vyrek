@@ -12,6 +12,7 @@ import {
   type Problem,
 } from "@/lib/comms/custom";
 import { TOKENS, preview, type TokenId } from "@/lib/comms/templates";
+import { useHydrated, readStored } from "@/hooks/use-hydrated";
 
 /**
  * THE COMMUNICATIONS HUB.
@@ -217,22 +218,23 @@ function TextList({ texts }: { texts: SmsPreview[] }) {
 /* ── Ben's own ──────────────────────────────────────────────────────────*/
 
 function CustomTemplates() {
-  const [items, setItems] = useState<CustomTemplate[]>([]);
-  const [hydrated, setHydrated] = useState(false);
+  /*
+   * Seeded from storage rather than patched in by an effect that called both
+   * `setItems` and `setHydrated` — two synchronous state updates on mount,
+   * re-rendering the whole send queue. `useHydrated` reads the same flag
+   * through a store, so the value still flips after hydration but costs no
+   * extra render, and `items` shows the server's empty list until it does.
+   */
+  const hydrated = useHydrated();
+  const [storedItems, setItems] = useState<CustomTemplate[]>(() =>
+    readStored<CustomTemplate[]>(CUSTOM_KEY, []),
+  );
+  const items: CustomTemplate[] = hydrated ? storedItems : [];
   const [name, setName] = useState("");
   const [body, setBody] = useState("");
   const [subject, setSubject] = useState("");
   const [channel, setChannel] = useState<"sms" | "email">("sms");
   const [problems, setProblems] = useState<Problem[]>([]);
-
-  useEffect(() => {
-    try {
-      setItems(JSON.parse(window.localStorage.getItem(CUSTOM_KEY) ?? "[]"));
-    } catch {
-      setItems([]);
-    }
-    setHydrated(true);
-  }, []);
 
   const persist = (next: CustomTemplate[]) => {
     setItems(next);

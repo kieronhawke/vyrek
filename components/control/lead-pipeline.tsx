@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useCelebration } from "@/components/control/celebrate";
 import { formatBookingTime } from "@/lib/booking/model";
 import { seedLeads } from "@/lib/control/lead-seed";
+import { useHydrated, readStored } from "@/hooks/use-hydrated";
 import {
   CLOSE_REASONS,
   CLOSE_REASON_LABEL,
@@ -113,21 +114,24 @@ export function LeadPipeline({ nowISO }: { nowISO: string }) {
   const now = useMemo(() => new Date(nowISO), [nowISO]);
   /* The seed renders on the server; anything saved in this browser replaces
      it after mount, which is the same swap the rest of the console makes. */
-  const [leads, setLeads] = useState<LeadRecord[]>(() => seedLeads(new Date(nowISO)));
+  /*
+   * Seeded from storage rather than patched in by an effect, which
+   * re-rendered the whole pipeline on mount and showed the seed for a frame
+   * before the real leads replaced it.
+   */
+  const hydrated = useHydrated();
+  // Computed once: the seed is the server's view and the fallback when storage
+  // is empty or blocked, so both branches below need the same array.
+  const seed = useMemo(() => seedLeads(new Date(nowISO)), [nowISO]);
+  const [storedLeads, setLeads] = useState<LeadRecord[]>(() => {
+    const v = readStored<LeadRecord[]>(STORAGE_KEY, []);
+    return Array.isArray(v) && v.length ? v : seed;
+  });
+  const leads = hydrated ? storedLeads : seed;
   const [openId, setOpenId] = useState<string | null>(null);
   const [receipts, setReceipts] = useState<{ id: string; text: string }[]>([]);
   const [showClosed, setShowClosed] = useState(false);
   const { celebrate, Canvas } = useCelebration();
-
-  useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      const stored = raw ? (JSON.parse(raw) as LeadRecord[]) : null;
-      if (stored?.length) setLeads(stored);
-    } catch {
-      /* storage blocked; the seed already rendered */
-    }
-  }, []);
 
   const persist = useCallback((next: LeadRecord[]) => {
     setLeads(next);

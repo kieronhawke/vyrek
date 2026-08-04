@@ -35,6 +35,7 @@ import type { ResultsRepository } from "../repository";
 import type { EngineEvent, EngineEventStatus, EngineResult } from "../types";
 import { toDivisionCode, toDivisionKey } from "./divisions";
 import { readStoredRecords } from "../sync/records";
+import { dedupePeople, samePerson } from "./identity-group";
 import { isFinish, normaliseStatus } from "@/lib/results/status";
 
 const msToSeconds = (ms: number | null | undefined): number =>
@@ -261,16 +262,40 @@ export class ResultsService implements ResultsDataSource {
     // that leaves a page behind has not really erased anything.
     if (!athlete || athlete.isAnonymised) return null;
 
-    const results = await this.repo.listResultsForAthlete(athlete.id);
+    // ⚠️ Every profile that is this same person, not just this row's id.
+    //
+    // The source has no stable athlete id across events, so one career is
+    // stored as many profiles. Reading only `athlete.id` shows a page with a
+    // single race on it and no history — which is the opposite of what an
+    // athlete profile is for.
+    const namesakes = await this.repo.findAthletesByName(athlete.name);
+    const identities = samePerson(athlete, namesakes.length ? namesakes : [athlete]);
+
+    const resultSets = await Promise.all(
+      identities.map((a) => this.repo.listResultsForAthlete(a.id)),
+    );
+    // Deduped by result id: a doubles row lists both partners, so the same row
+    // can arrive from two of this person's profiles.
+    const results = [...new Map(resultSets.flat().map((r) => [r.id, r])).values()];
     const races: AthleteRace[] = [];
 
+    // ⚠️ Events and divisions read once, not once per race.
+    //
+    // This loop used to await an event slug, an event, and that event's whole
+    // division list *inside* the loop — three round trips per race, in series.
+    // A seventeen-race career was fifty-one sequential queries and took five
+    // seconds. Two reads cover every race.
+    const [allEvents, allDivisions] = await Promise.all([
+      this.repo.listEvents(),
+      this.repo.listAllDivisions(),
+    ]);
+    const eventById = new Map(allEvents.map((e) => [e.id, e]));
+    const divisionById = new Map(allDivisions.map((d) => [d.id, d]));
+
     for (const result of results) {
-      const eventSlug = await this.eventSlugFor(result.eventId);
-      const event = eventSlug ? await this.repo.getEventBySlug(eventSlug) : null;
+      const event = eventById.get(result.eventId);
       if (!event) continue;
-      const division = (await this.repo.listDivisions(event.id)).find(
-        (d) => d.id === result.divisionId,
-      );
+      const division = divisionById.get(result.divisionId);
       if (!division) continue;
 
       races.push({
@@ -288,7 +313,35 @@ export class ResultsService implements ResultsDataSource {
       });
     }
 
-    races.sort((a, b) => b.date.localeCompare(a.date));
+    // ⚠️ One race per event, per finish time.
+    //
+    // A division filled with another division's athletes puts the same result
+    // on the profile twice — Glasgow appears as both "Pro Doubles Men" and "Pro
+    // Doubles Women", same rank, same time, because one row is contamination.
+    // Nobody races two divisions at one event in the same time, so the
+    // duplicate is dropped rather than shown as two races.
+    const seenRace = new Set<string>();
+    const unique = races.filter((r) => {
+      const key = `${r.eventSlug}|${r.finishSeconds}`;
+      if (seenRace.has(key)) return false;
+      seenRace.add(key);
+      return true;
+    });
+    races.length = 0;
+    races.push(...unique);
+
+    // ⚠️ Ordered by date where we have one, by year where we do not.
+    //
+    // Only the events matching HYROX's published calendar carry a real date —
+    // that calendar lists upcoming races, so most of the archive has none. A
+    // plain date sort therefore put every undated race in one undifferentiated
+    // clump, and "your latest races" showed 2019 above 2026. Year is known for
+    // every event, so it is the fallback.
+    races.sort((a, b) => {
+      const byDate = (b.date || `${b.year}-00-00`).localeCompare(a.date || `${a.year}-00-00`);
+      if (byDate !== 0) return byDate;
+      return b.year - a.year;
+    });
     const finishes = races.map((r) => r.finishSeconds).filter((s) => s > 0);
 
     return {
@@ -368,7 +421,11 @@ export class ResultsService implements ResultsDataSource {
       })),
     );
     return {
-      athletes: withCounts,
+      // ⚠️ One entry per person, not per stored profile. The source issues a
+      // new athlete id at every event, so a real athlete appears once per race
+      // — searching "Ben Sutherland" returned five profiles of one and two
+      // races each. See `identity-group.ts`.
+      athletes: dedupePeople(withCounts),
       events: events.map((e) => ({
         slug: e.slug,
         name: e.name,

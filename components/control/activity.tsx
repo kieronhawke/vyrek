@@ -38,6 +38,7 @@ import {
   type SortKey,
 } from "@/lib/control/activity";
 import { loadActivity } from "@/lib/control/activity-sample";
+import { useHydrated, readStored } from "@/hooks/use-hydrated";
 
 /**
  * ACTIVITY — who came, what they did, and where they stopped.
@@ -83,11 +84,21 @@ export function Activity({ today, now }: { today: string; now: string }) {
   /* Kieron liked the dark map and asked to be able to switch. Persisted,
      because a map that forgets its theme on every navigation is worse than
      one that never had a switch. */
-  const [mapTheme, setMapTheme] = useState<MapTheme>("dark");
-  useEffect(() => {
-    const saved = window.localStorage.getItem("activity.mapTheme") as MapTheme | null;
-    if (saved && MAP_THEMES.some((t) => t.key === saved)) setMapTheme(saved);
-  }, []);
+  /*
+   * Read as the initial value rather than through an effect that then calls
+   * `setMapTheme`. The effect version re-rendered the whole activity view on
+   * mount and, for anyone with a saved theme, redrew the map twice — once in
+   * dark, once in theirs.
+   *
+   * `hydrated` below keeps the first client render identical to the server's,
+   * which is what makes seeding from storage safe.
+   */
+  const hydrated = useHydrated();
+  const [savedTheme, setMapTheme] = useState<MapTheme>(() => {
+    const v = readStored<string>("activity.mapTheme", "dark");
+    return MAP_THEMES.some((t) => t.key === v) ? (v as MapTheme) : "dark";
+  });
+  const mapTheme: MapTheme = hydrated ? savedTheme : "dark";
   useEffect(() => {
     window.localStorage.setItem("activity.mapTheme", mapTheme);
   }, [mapTheme]);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useHydrated, readStored } from "@/hooks/use-hydrated";
 import {
   TEMPLATES,
   TOKENS,
@@ -37,17 +38,18 @@ export function CommsEditor() {
      can render. Ben's edits live in this browser and replace it after mount,
      the same swap the rest of the console makes. Returning a "Loading"
      placeholder instead meant the server sent nothing at all. */
-  const [overrides, setOverrides] = useState<OverrideMap>({});
+  // Read up front rather than through an effect that then calls `setOverrides`
+  // — that re-rendered every message card on mount. `hydrated` keeps the first
+  // client render identical to the server's, which is what makes seeding from
+  // storage safe.
+  const hydrated = useHydrated();
+  const [storedOverrides, setOverrides] = useState<OverrideMap>(() =>
+    readStored<OverrideMap>(OVERRIDES_KEY, {}),
+  );
+  const overrides = hydrated ? storedOverrides : ({} as OverrideMap);
   const [openId, setOpenId] = useState<string | null>(null);
   const [saved, setSaved] = useState<string | null>(null);
 
-  useEffect(() => {
-    try {
-      setOverrides(JSON.parse(window.localStorage.getItem(OVERRIDES_KEY) ?? "{}"));
-    } catch {
-      setOverrides({});
-    }
-  }, []);
 
   const persist = (next: OverrideMap) => {
     setOverrides(next);
@@ -141,12 +143,28 @@ function TemplateCard({
   /** Which field the cursor was last in, so a token lands in the right one. */
   const lastFocused = useRef<"body" | "subject">("body");
 
-  useEffect(() => {
+  /*
+   * Re-sync when an override is reset from outside this card.
+   *
+   * Adjusted DURING RENDER rather than in an effect. This is React's own
+   * documented pattern for "reset state when a prop changes": the update is
+   * queued before anything commits, so React re-runs this component
+   * immediately and the browser never paints the stale value. The effect
+   * version painted the old wording first, then replaced it — a visible flicker
+   * in the textarea every time Ben reset a message, and a second render of the
+   * whole card each time.
+   *
+   * The two `prev` values are the change detector. Comparing against `body`
+   * directly would fight the user's own typing.
+   */
+  const [prevBody, setPrevBody] = useState(current.body);
+  const [prevSubject, setPrevSubject] = useState(current.subject ?? "");
+  if (prevBody !== current.body || prevSubject !== (current.subject ?? "")) {
+    setPrevBody(current.body);
+    setPrevSubject(current.subject ?? "");
     setBody(current.body);
     setSubject(current.subject ?? "");
-    // Re-sync when an override is reset from outside this card.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current.body, current.subject]);
+  }
 
   const dirty = body !== current.body || (subject || undefined) !== current.subject;
 

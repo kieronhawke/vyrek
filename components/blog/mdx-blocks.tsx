@@ -350,6 +350,20 @@ export function WorkoutDemoVideo({
             className="group absolute inset-0 flex items-center justify-center overflow-hidden"
           >
             {computedPoster ? (
+              /*
+                Deliberately a raw `<img>`, not `next/image`.
+
+                This is a YouTube thumbnail on i.ytimg.com, and the `onError`
+                below rewrites `src` at runtime when `maxresdefault` 404s —
+                which it does for plenty of videos. `next/image` neither
+                permits that mutation nor accepts an unconfigured remote host,
+                so converting it would mean adding an external domain to the
+                image config AND losing the fallback, to optimise a file
+                YouTube already serves optimised.
+
+                Not every raw `<img>` is a mistake; this one is the right call.
+              */
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={computedPoster}
                 alt=""
