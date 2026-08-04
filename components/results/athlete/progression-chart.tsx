@@ -18,7 +18,11 @@ export function ProgressionChart({ races }: { races: AthleteRace[] }) {
   const finished = races.filter((r) => r.finishSeconds > 0);
   if (finished.length < 2) return null;
 
-  const ordered = [...finished].sort((a, b) => a.date.localeCompare(b.date));
+  // Year is the tiebreak, because most races carry no date at all.
+  const ordered = [...finished].sort((a, b) => {
+    const byDate = (a.date || `${a.year}-00-00`).localeCompare(b.date || `${b.year}-00-00`);
+    return byDate !== 0 ? byDate : a.year - b.year;
+  });
   const byDivision = new Map<string, AthleteRace[]>();
   for (const race of ordered) {
     if (!byDivision.has(race.division)) byDivision.set(race.division, []);
@@ -41,13 +45,29 @@ export function ProgressionChart({ races }: { races: AthleteRace[] }) {
   const lo = min - span * 0.15;
   const hi = max + span * 0.15;
 
-  const firstDate = new Date(ordered[0].date).getTime();
-  const lastDate = new Date(ordered[ordered.length - 1].date).getTime();
-  const dateSpan = lastDate - firstDate || 1;
+  // ⚠️ Placed by position, not by date, unless every race has one.
+  //
+  // `new Date("")` is Invalid Date and every sum from it is NaN, so an `x` of
+  // NaN put every point at the same place: the chart rendered as two dots
+  // stacked against the left edge. Most races have no date — the published
+  // calendar covers upcoming events only — so this was the normal case.
+  //
+  // Even spacing loses the gap between races, which is a real loss. It is a
+  // smaller one than a chart that does not draw.
+  const stamps = ordered.map((r) => new Date(r.date).getTime());
+  const datedThroughout = stamps.every((t) => Number.isFinite(t));
+  const firstDate = datedThroughout ? stamps[0] : 0;
+  const dateSpan = datedThroughout ? stamps[stamps.length - 1] - firstDate || 1 : 1;
+
+  const positionOf = new Map(ordered.map((r, i) => [r.resultId, i]));
+  const lastIndex = Math.max(1, ordered.length - 1);
 
   const W = 100;
   const H = 42;
-  const x = (date: string) => ((new Date(date).getTime() - firstDate) / dateSpan) * W;
+  const x = (race: AthleteRace) =>
+    datedThroughout
+      ? ((new Date(race.date).getTime() - firstDate) / dateSpan) * W
+      : ((positionOf.get(race.resultId) ?? 0) / lastIndex) * W;
   // Lower time is better, so faster sits higher on the chart.
   const y = (seconds: number) => H - ((hi - seconds) / (hi - lo)) * H;
 
@@ -81,7 +101,7 @@ export function ProgressionChart({ races }: { races: AthleteRace[] }) {
             <path
               key={division}
               d={list
-                .map((r, i) => `${i === 0 ? "M" : "L"}${x(r.date).toFixed(2)},${y(r.finishSeconds).toFixed(2)}`)
+                .map((r, i) => `${i === 0 ? "M" : "L"}${x(r).toFixed(2)},${y(r.finishSeconds).toFixed(2)}`)
                 .join(" ")}
               fill="none"
               strokeWidth={1.2}
@@ -98,7 +118,7 @@ export function ProgressionChart({ races }: { races: AthleteRace[] }) {
               key={`${division}-${race.resultId}`}
               className={`absolute size-2 -translate-x-1/2 -translate-y-1/2 rounded-full ${DOTS[si]}`}
               style={{
-                left: `${(x(race.date) / W) * 100}%`,
+                left: `${(x(race) / W) * 100}%`,
                 top: `${(y(race.finishSeconds) / H) * 100}%`,
               }}
               title={`${race.eventCity} ${race.year}: ${formatTime(race.finishSeconds)}`}

@@ -82,7 +82,17 @@ export default async function AthletePage({ params }: { params: Promise<{ slug: 
   if (!athlete) notFound();
 
   const now = new Date();
-  const races = [...athlete.races].sort((a, b) => b.date.localeCompare(a.date));
+  // ⚠️ Year is the tiebreak, because most races have no date.
+  //
+  // Sorting on the date string alone put an undated 2025 race above a dated
+  // 2026 one — a career listed London 2025, Phoenix 2026, World Championships
+  // 2025, Miami 2025, EMEA London 2026 in that order, which reads as broken.
+  // The published HYROX calendar carries upcoming races only, so most of the
+  // archive arrives here with an empty date and this is the normal case.
+  const races = [...athlete.races].sort((a, b) => {
+    const byDate = (b.date || `${b.year}-00-00`).localeCompare(a.date || `${a.year}-00-00`);
+    return byDate !== 0 ? byDate : b.year - a.year;
+  });
   const finished = races.filter((r) => r.finishSeconds > 0);
 
   // Career splits, for the per-station axes.

@@ -42,7 +42,12 @@ async function latestResult(slug: string): Promise<ResultDetail | null> {
   if (!athlete) return null;
   const finished = athlete.races
     .filter((r) => r.finishSeconds > 0)
-    .sort((a, b) => b.date.localeCompare(a.date));
+    // Year is the tiebreak: most races carry no date, so a plain date sort
+    // interleaves seasons. Same rule as the athlete profile.
+    .sort((a, b) => {
+      const byDate = (b.date || `${b.year}-00-00`).localeCompare(a.date || `${a.year}-00-00`);
+      return byDate !== 0 ? byDate : b.year - a.year;
+    });
   if (finished.length === 0) return null;
   return source.getResult(finished[0].resultId);
 }
