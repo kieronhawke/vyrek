@@ -1,3 +1,5 @@
+import { existsSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   byCountry,
@@ -312,6 +314,72 @@ describe("the sample set", () => {
   it("totals its own durations consistently", () => {
     for (const s of data.sessions) {
       expect(totalSeconds(s)).toBe(s.pages.reduce((n, p) => n + p.seconds, 0));
+    }
+  });
+});
+
+describe("the sampled pages are pages that exist", () => {
+  /**
+   * The sample referenced /journal, /journal/first-hyrox,
+   * /journal/what-to-wear-for-hyrox and /results/rankings. All four were
+   * 404s: the blog lives at /blog and the rankings route was never built.
+   *
+   * Analytics that name a page nobody can open is worse than analytics with
+   * no page names in it. Ben reads "most-read pages", clicks one, and gets a
+   * 404 — at which point the honest "sample data" banner above it stops being
+   * the reason to distrust the screen and the numbers start looking made up
+   * too.
+   *
+   * This walks the app directory rather than hitting a server, so it runs in
+   * the same suite as everything else. Dynamic segments are matched by shape,
+   * because /blog/[slug] cannot be resolved without reading every post.
+   */
+  const APP = join(process.cwd(), "app");
+
+  /** Every static route the app directory defines. */
+  function staticRoutes(dir: string, prefix = ""): string[] {
+    const out: string[] = [];
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+      const name = entry.name;
+      // Route groups "(x)" and private folders "_x" do not appear in the URL.
+      if (name.startsWith("_") || name.startsWith(".")) continue;
+      const next = join(dir, name);
+      const path = name.startsWith("(") ? prefix : `${prefix}/${name}`;
+      if (existsSync(join(next, "page.tsx")) || existsSync(join(next, "page.ts"))) {
+        out.push(path);
+      }
+      out.push(...staticRoutes(next, path));
+    }
+    return out;
+  }
+
+  it("every page in the sample resolves to a route", () => {
+    const routes = new Set(staticRoutes(APP));
+    routes.add("/"); // app/page.tsx is the root, which the walk cannot name
+    const dynamic = [...routes].filter((r) => r.includes("["));
+
+    /* Every path in the sample comes from a session's page list; the
+       "most-read pages" table is derived from exactly these. */
+    const sampled = new Set<string>();
+    for (const session of sampleActivity("2026-08-04").sessions) {
+      for (const hit of session.pages) sampled.add(hit.path);
+      sampled.add(session.landing);
+    }
+
+    expect(sampled.size).toBeGreaterThan(0);
+    for (const path of sampled) {
+      if (routes.has(path)) continue;
+      // Fall back to a dynamic segment: /blog/anything matches /blog/[slug].
+      const matched = dynamic.some((r) => {
+        const parts = r.split("/");
+        const got = path.split("/");
+        return (
+          parts.length === got.length &&
+          parts.every((seg, i) => seg.startsWith("[") || seg === got[i])
+        );
+      });
+      expect(matched, `${path} is not a route this app serves`).toBe(true);
     }
   });
 });

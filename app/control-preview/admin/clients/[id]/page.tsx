@@ -8,9 +8,9 @@ const BASE = "/control-preview/admin";
 /**
  * ONE CLIENT — everything about them, in the order Ben needs it.
  *
- * The id is the tracker's, not a fixture's: the tracker is the list he
- * actually types into and the one that persists, so a profile keyed to
- * anything else would be a profile of somebody who does not exist.
+ * The id is the roster's. The tracker and the client hub are two views of one
+ * list now, so there is only one id space and a card on either screen resolves
+ * here.
  *
  * Rendered per request so "programmed until" is measured against today rather
  * than against whenever the site was last built.
@@ -31,8 +31,8 @@ export default async function ClientPage({
   return (
     <AdminShell base={BASE} title="Client">
       <p style={{ marginTop: 0, marginBottom: "var(--space-2)" }}>
-        <Link href={`${BASE}/tracker`} className="cp-back">
-          ← Coach tracker
+        <Link href={`${BASE}/clients`} className="cp-back">
+          ← All clients
         </Link>
       </p>
       <ClientProfile id={id} base={BASE} today={today} />

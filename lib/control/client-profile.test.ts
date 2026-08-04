@@ -84,16 +84,30 @@ describe("seed", () => {
   it("leaves most profiles empty, because that is the real state", () => {
     // A console where every row is filled in looks finished and hides exactly
     // the state Ben will be in.
+    //
+    // The seed covers the whole roster now, so counting records no longer
+    // measures this. What it was ever a proxy for is that most profiles are
+    // still incomplete, which is what this asserts directly.
     const seeded = seedProfiles(TODAY);
-    expect(seeded.length).toBeLessThan(5);
-    expect(seeded.some((p) => completeness(p) < 1)).toBe(true);
+    const incomplete = seeded.filter((p) => completeness(p) < 1);
+    expect(incomplete.length).toBeGreaterThan(seeded.length / 2);
   });
 
-  it("carries no real people", () => {
-    // This repository is public.
+  it("carries no real people other than Kieron himself", () => {
+    /*
+     * This repository is public, so a stranger's address or number must never
+     * end up in the seed.
+     *
+     * Kieron asked for every demo record to point at his own inbox and handset
+     * precisely so a send wired to this data by accident reaches him and nobody
+     * else. That is the one real contact allowed here, and it is allowed by
+     * name rather than by loosening the check — anything else still fails.
+     */
+    const ALLOWED_EMAIL = /^(kieronhawke@gmail\.com|.+@example\.com)$/;
+    const ALLOWED_PHONE = /^(07398790378|\+44 7700 900\d{3})$/; // his, or Ofcom's drama range
     for (const p of seedProfiles(TODAY)) {
-      if (p.email) expect(p.email).toMatch(/@example\.com$/);
-      if (p.phone) expect(p.phone).toMatch(/^\+44 7700 900/); // Ofcom drama range
+      if (p.email) expect(p.email).toMatch(ALLOWED_EMAIL);
+      if (p.phone) expect(p.phone).toMatch(ALLOWED_PHONE);
     }
   });
 

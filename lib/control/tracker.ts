@@ -1,16 +1,15 @@
 /**
  * The coach tracker — what Ben opens every day.
  *
- * Modelled on "Coaching Tracker.xlsx": four groups across the sheet — 121,
- * Tier 2, Non-Hyrox and VIP — each with two columns, Athlete and Programmed
- * Until, and an occasional loose note in the next cell over ("call", "Share
- * doc", "Next week down week"). About 27 athletes.
+ * Modelled on "Coaching Tracker.xlsx": groups across the sheet, each with two
+ * columns, Athlete and Programmed Until, and an occasional loose note in the
+ * next cell over ("call", "Share doc", "Next week down week").
  *
  * Its entire job is: who is programmed until when, and who is due now. Half
  * the dates in the real sheet are Excel serials and half are typed
  * ("Due 03/08/2026", "Return date TBC", "Ankle"), which is exactly what a
  * spreadsheet lets you get away with and exactly what makes it impossible to
- * answer "who is due this week" without reading all 27 rows.
+ * answer "who is due this week" without reading every row.
  *
  * PRIVACY: THE REAL NAMES ARE DELIBERATELY NOT HERE
  * -------------------------------------------------
@@ -18,19 +17,33 @@
  * the actual sheet would publish Ben's client list — names, tiers, and who is
  * behind on payment. The structure below is his; the names are not. He types
  * his own in and they persist to his browser, never to the repo.
+ *
+ * ONE ROSTER, NOT TWO
+ * -------------------
+ * This file used to carry its own seed — twenty-seven rows named "Athlete A"
+ * through "Athlete Z" with ids `a_01`… — while `fixtures.CLIENTS` carried a
+ * second roster of the same people under ids `c_01`…. Two lists of the same
+ * clients is why nobody could say what the difference between the tracker and
+ * the clients page was: there wasn't one, except that the ids disagreed, so a
+ * card on one screen linked to a profile of nobody on the other.
+ *
+ * So the seed is now derived from `CLIENTS`. Same people, same ids, same
+ * names, same tier vocabulary. The tracker is a view of the client list, which
+ * is what it always was.
  */
 
-export type Tier = "121" | "tier2" | "non-hyrox" | "vip";
+import { CLIENTS, type CoachClient } from "@/lib/control/fixtures";
+import { TIER_LABEL, TIER_ORDER } from "@/lib/control/client-hub";
 
-export const TIER_LABEL: Record<Tier, string> = {
-  "121": "1:1",
-  tier2: "Tier 2",
-  "non-hyrox": "Non-HYROX",
-  vip: "VIP",
-};
+/**
+ * The sheet's four columns were 121 / Tier 2 / Non-HYROX / VIP; the product
+ * sells Hub / Programming / Coaching / 1-to-1 VIP. Two vocabularies for one
+ * thing, so the one the business actually sells wins and the sheet's wording
+ * is retired.
+ */
+export type Tier = CoachClient["tier"];
 
-/** The order Ben reads them in on the sheet, left to right. */
-export const TIER_ORDER: Tier[] = ["121", "tier2", "non-hyrox", "vip"];
+export { TIER_LABEL, TIER_ORDER };
 
 export type TrackedAthlete = {
   id: string;
@@ -52,39 +65,70 @@ export type TrackedAthlete = {
   paymentSet: boolean;
 };
 
-export const SEED_ATHLETES: TrackedAthlete[] = [
-  // 1:1 — the sheet has nine, several already due.
-  { id: "a_01", name: "Athlete A", tier: "121", programmedUntil: "2026-08-11", note: "", monthly: 220, paymentSet: true },
-  { id: "a_02", name: "Athlete B", tier: "121", programmedUntil: "2026-07-22", note: "", monthly: 220, paymentSet: true },
-  { id: "a_03", name: "Athlete C", tier: "121", programmedUntil: "2026-08-25", note: "", monthly: 220, paymentSet: true },
-  { id: "a_04", name: "Athlete D", tier: "121", programmedUntil: "2026-08-12", note: "Call", monthly: 220, paymentSet: true },
-  { id: "a_05", name: "Athlete E", tier: "121", programmedUntil: "2026-08-03", note: "", monthly: 220, paymentSet: false },
-  { id: "a_06", name: "Athlete F", tier: "121", programmedUntil: "2026-08-03", note: "", monthly: 220, paymentSet: true },
-  { id: "a_07", name: "Athlete G", tier: "121", programmedUntil: "2026-08-17", note: "", monthly: 220, paymentSet: true },
-  { id: "a_08", name: "Athlete H", tier: "121", programmedUntil: "2026-08-03", note: "", monthly: 220, paymentSet: true },
-  { id: "a_09", name: "Athlete I", tier: "121", programmedUntil: null, note: "Checking in", monthly: 220, paymentSet: false },
+/**
+ * What each tier bills a month, in pounds. The Hub figure is the real Club
+ * subscription (lib/pricing.ts); the coached tiers are the sheet's numbers.
+ */
+const MONTHLY: Record<Tier, number> = {
+  elite: 400,
+  coaching: 220,
+  programming: 95,
+  hub: 8.99,
+};
 
-  // Tier 2 — the largest group.
-  { id: "a_10", name: "Athlete J", tier: "tier2", programmedUntil: "2026-08-11", note: "Next week down week", monthly: 95, paymentSet: true },
-  { id: "a_11", name: "Haseeb", tier: "tier2", programmedUntil: "2026-08-09", note: "", monthly: 95, paymentSet: true },
-  { id: "a_12", name: "Athlete K", tier: "tier2", programmedUntil: null, note: "Return date TBC", monthly: 95, paymentSet: true },
-  { id: "a_13", name: "Athlete L", tier: "tier2", programmedUntil: "2026-08-11", note: "", monthly: 95, paymentSet: true },
-  { id: "a_14", name: "Athlete M", tier: "tier2", programmedUntil: "2026-09-01", note: "", monthly: 95, paymentSet: true },
-  { id: "a_15", name: "Athlete N", tier: "tier2", programmedUntil: "2026-08-25", note: "", monthly: 95, paymentSet: true },
-  { id: "a_16", name: "Athlete O", tier: "tier2", programmedUntil: "2026-09-01", note: "", monthly: 95, paymentSet: false },
-  { id: "a_17", name: "Athlete P", tier: "tier2", programmedUntil: "2026-08-25", note: "", monthly: 95, paymentSet: true },
-  { id: "a_18", name: "Athlete Q", tier: "tier2", programmedUntil: "2026-09-01", note: "Share doc", monthly: 95, paymentSet: true },
-  { id: "a_19", name: "Athlete R", tier: "tier2", programmedUntil: "2026-08-11", note: "", monthly: 95, paymentSet: true },
-  { id: "a_20", name: "Athlete S", tier: "tier2", programmedUntil: "2026-08-11", note: "", monthly: 95, paymentSet: true },
-  { id: "a_21", name: "Athlete T", tier: "tier2", programmedUntil: null, note: "Ankle", monthly: 95, paymentSet: true },
-  { id: "a_22", name: "Athlete U", tier: "tier2", programmedUntil: "2026-08-18", note: "", monthly: 95, paymentSet: true },
-  { id: "a_23", name: "Athlete V", tier: "tier2", programmedUntil: "2026-08-18", note: "", monthly: 95, paymentSet: false },
-  { id: "a_24", name: "Athlete W", tier: "tier2", programmedUntil: "2026-08-24", note: "", monthly: 95, paymentSet: true },
-  { id: "a_25", name: "Athlete X", tier: "tier2", programmedUntil: "2026-08-24", note: "", monthly: 95, paymentSet: true },
+/** UTC midnight today, as the anchor the seed's dates are measured from. */
+function todayUTC(): number {
+  const n = new Date();
+  return Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), n.getUTCDate());
+}
 
-  { id: "a_26", name: "Athlete Y", tier: "non-hyrox", programmedUntil: "2026-08-11", note: "", monthly: 120, paymentSet: true },
-  { id: "a_27", name: "Athlete Z", tier: "vip", programmedUntil: null, note: "Date to confirm", monthly: 400, paymentSet: true },
-];
+/**
+ * `CLIENTS` stores "programmed until" as days from today, not as a date, so
+ * the demo never goes stale the way a hardcoded 2026-08-11 does. The tracker
+ * needs a real date to sort and count on, so it is resolved here.
+ *
+ * `awaiting_race_debrief` resolves to null: that client genuinely has no end
+ * date set, which is the sheet's "Return date TBC" case and the reason the
+ * field is nullable at all.
+ */
+function untilFrom(c: CoachClient): string | null {
+  if (c.programmingStatus === "awaiting_race_debrief") return null;
+  return new Date(todayUTC() + c.programmedUntilDays * 86_400_000)
+    .toISOString()
+    .slice(0, 10);
+}
+
+/**
+ * The store key.
+ *
+ * Bumped to v2 when the seed stopped being its own roster of `a_01`… and
+ * became a view of `CLIENTS`. Anyone who had already opened the tracker has
+ * twenty-seven "Athlete A" rows saved in their browser, and those rows would
+ * have outlived the change and shadowed the real names forever. A new key
+ * retires them.
+ */
+export const TRACKER_KEY = "tracker.v2";
+
+/**
+ * The seed, derived rather than duplicated.
+ *
+ * `flags` is the client list's plain-English column and `note` is the sheet's
+ * loose cell next to a name. Same thing, so the first flag becomes the note
+ * instead of inventing a second one that would immediately disagree with it.
+ */
+export const SEED_ATHLETES: TrackedAthlete[] = CLIENTS.map((c) => ({
+  id: c.id,
+  name: c.name,
+  tier: c.tier,
+  programmedUntil: untilFrom(c),
+  note: c.flags[0] ?? "",
+  monthly: MONTHLY[c.tier],
+  // A declined card is technically on file and cannot be charged, and this
+  // field renders as "On file" in green. Showing that against somebody whose
+  // payment just bounced is the wrong signal on a screen built to prompt
+  // action, so a failed card reads as not set.
+  paymentSet: c.payment !== "failed",
+}));
 
 /** Whole days from `now` until a plan runs out. Null when it is not set. */
 export function daysLeft(a: TrackedAthlete, now: Date = new Date()): number | null {
