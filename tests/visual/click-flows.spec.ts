@@ -146,11 +146,21 @@ test("programmes: each programme has a Start CTA going to quiz", async ({
   expect(page.url()).toMatch(/\/quiz\?program=(first-race|sub-90|doubles|pro)/);
 });
 
-test("how-it-works: Find your plan CTA reaches quiz", async ({ page }) => {
+test("how-it-works: the primary CTA reaches a conversion route", async ({
+  page,
+}) => {
+  /* The page used to end on "Find your plan" into the quiz, back when the
+     quiz ended in a plan. It describes a free assessment now and its CTAs
+     say so, which is the point of the rewrite — so this asserts that the
+     page still hands somebody onward, not which of the two wordings it
+     happens to use this month. */
   await page.goto("/how-it-works");
-  const cta = page.getByRole("link", { name: /find your plan/i }).first();
+  const cta = page
+    .getByRole("link", { name: /free assessment|find your plan/i })
+    .first();
+  await expect(cta, "how-it-works has no primary CTA").toBeVisible();
   await cta.click();
-  await page.waitForURL("**/quiz**");
+  await page.waitForURL(/\/(quiz|book)/);
 });
 
 test("about: Find your plan CTA reaches quiz", async ({ page }) => {
