@@ -35,6 +35,7 @@ import {
   type LeadEffect,
   type LeadStage,
 } from "@/lib/control/lead-workflow";
+import { OnboardingCompose } from "@/components/control/onboarding-compose";
 
 /**
  * THE LEAD PIPELINE.
@@ -273,6 +274,9 @@ export function LeadPipeline({ nowISO }: { nowISO: string }) {
   );
 }
 
+/** Actions that create a real invite, so they compose rather than fire. */
+const SENDS_INVITE = new Set(["send-onboarding", "resend"]);
+
 function LeadCard({
   lead,
   now,
@@ -288,6 +292,16 @@ function LeadCard({
   onAct: (actionId: string) => void;
   onPatch: (next: LeadRecord) => void;
 }) {
+  /*
+   * Sending the setup link opens a compose panel rather than firing.
+   *
+   * It is the one action in the pipeline that produces something outside this
+   * browser — a real invite, with a real price on it — and it is the moment
+   * the call's outcome has to be recorded. Every other action here is a state
+   * change and rightly a single tap.
+   */
+  const [composing, setComposing] = useState<string | null>(null);
+
   const call = callState(lead, now);
   const unrecorded = awaitingOutcome(lead, now);
   const quiet = isAbandoned(lead, now);
@@ -366,7 +380,9 @@ function LeadCard({
             className="lp-btn"
             data-primary={i === 0 && !a.muted}
             data-muted={a.muted ? "" : undefined}
-            onClick={() => onAct(a.id)}
+            onClick={() =>
+              SENDS_INVITE.has(a.id) ? setComposing(a.id) : onAct(a.id)
+            }
           >
             {a.label}
           </button>
@@ -381,6 +397,29 @@ function LeadCard({
           Edit
         </button>
       </div>
+      {composing ? (
+        <OnboardingCompose
+          name={lead.name}
+          email={lead.email}
+          phone={lead.phone}
+          /* The segment is what the funnel recorded about which route they
+             came down. Without it a "getting fit" client's setup link opens
+             by asking about their HYROX races. */
+          rail={
+            /getting fit|beginner|unsure|weight/i.test(lead.segment ?? "")
+              ? "beginner"
+              : undefined
+          }
+          onSent={() => {
+            /* The stage moves once the invite exists, not when the button was
+               pressed — a lead marked "onboarding sent" after a failed send is
+               a lead nobody ever looks at again. */
+            onAct(composing);
+          }}
+          onCancel={() => setComposing(null)}
+        />
+      ) : null}
+
       {!actions.length && (
         <p className="lp-hint">
           {lead.stage === "client"

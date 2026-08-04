@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { resolveInvite } from "@/lib/onboarding/resolve";
-import { planByKey } from "@/lib/onboarding/model";
+import { CUSTOM_PLAN_KEY, planFor } from "@/lib/onboarding/model";
 import { siteUrl } from "@/lib/site-url";
 
 /**
@@ -44,9 +44,33 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "INVITE_INVALID", reason: read.reason }, { status: 403 });
   }
 
-  const plan = planByKey(body.plan);
+  /*
+   * THE PRICE COMES FROM THE VERIFIED INVITE, NEVER FROM THE REQUEST.
+   *
+   * The body says which plan they picked. It does not, and must never, say
+   * what that plan costs. For the standard tiers the amount is looked up from
+   * the model; for a price Ben agreed with this person it is read out of the
+   * signed token, where editing it breaks the signature.
+   *
+   * Reversing that — trusting an amount posted by the page — is how somebody
+   * pays £1 a month for the £220 plan, and it would look completely normal in
+   * Stripe afterwards.
+   */
+  const custom = read.invite.customPence
+    ? { pence: read.invite.customPence, name: read.invite.customName }
+    : null;
+  const plan = planFor(body.plan, custom);
   if (!plan) {
-    return NextResponse.json({ error: "PLAN_UNKNOWN" }, { status: 400 });
+    /* Asking for the agreed plan on an invite that carries no agreed price
+       is the one case worth naming separately: it means a link was edited or
+       a stale page was left open, and "unknown plan" would send Ben looking
+       for a bug in the plan list. */
+    return NextResponse.json(
+      {
+        error: body.plan === CUSTOM_PLAN_KEY ? "NO_AGREED_PRICE" : "PLAN_UNKNOWN",
+      },
+      { status: 400 },
+    );
   }
 
   let client: ReturnType<typeof stripe>;
@@ -84,12 +108,21 @@ export async function POST(request: Request) {
           plan: plan.key,
           onboarding: read.invite.kind,
           client_name: read.invite.name,
+          /* Stamped on the subscription so a bespoke price is identifiable in
+             Stripe a year later. Without it, an amount that matches no
+             published tier looks like a mistake to whoever finds it. */
+          ...(plan.key === CUSTOM_PLAN_KEY
+            ? { agreed_price_pence: String(plan.pence) }
+            : {}),
         },
       },
       metadata: {
         plan: plan.key,
         onboarding: read.invite.kind,
         client_name: read.invite.name,
+        ...(plan.key === CUSTOM_PLAN_KEY
+          ? { agreed_price_pence: String(plan.pence) }
+          : {}),
       },
       allow_promotion_codes: true,
       // Back to the step they were on, not to the top of the funnel: somebody

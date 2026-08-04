@@ -74,6 +74,12 @@ import {
   ReferralEmail,
   referralSubject,
 } from "@/lib/email/templates/funnel-engagement";
+import {
+  PaymentReceivedEmail,
+  SubscriptionStartedEmail,
+  paymentReceivedSubject,
+  subscriptionStartedSubject,
+} from "@/lib/email/templates/internal-subscription";
 import { CLUB } from "@/lib/pricing";
 
 /**
@@ -120,6 +126,40 @@ export const EMAIL_SAMPLES: EmailSample[] = [
         firstName={NAME}
         programme="Weight loss, 12 weeks"
         hasPhone
+      />
+    ),
+  },
+  {
+    id: "internal-subscription-started",
+    audience: "Ben",
+    when: "The moment a setup link is paid",
+    subject: subscriptionStartedSubject({ name: NAME, amount: "£150" }),
+    element: (
+      <SubscriptionStartedEmail
+        name={NAME}
+        email="jamie@example.com"
+        planName="Suth Performance — Your agreed plan"
+        amount="£150"
+        agreed
+        trialDays={null}
+        startedOn="4 August 2026"
+      />
+    ),
+  },
+  {
+    id: "internal-payment-received",
+    audience: "Ben",
+    when: "Every successful payment",
+    subject: paymentReceivedSubject({ name: NAME, amount: "£150" }),
+    element: (
+      <PaymentReceivedEmail
+        name={NAME}
+        amount="£150"
+        planName="Suth Performance — Your agreed plan"
+        agreed
+        paidOn="4 August 2026"
+        invoiceUrl="https://invoice.stripe.com/i/example"
+        first
       />
     ),
   },

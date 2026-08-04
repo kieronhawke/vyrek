@@ -4,10 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { useRecord } from "@/lib/control/store";
 import {
   DAYS,
+  CUSTOM_PLAN_KEY,
   PLANS,
   blocker,
   emptyAnswers,
   planByKey,
+  planFor,
+  plansFor,
   progress,
   stepsFor,
   summarise,
@@ -69,11 +72,18 @@ export function OnboardingFlow({ token, invite, startStep, cancelled }: Props) {
   // A plan Ben already agreed comes in on the invite, so they confirm rather
   // than choose.
   useEffect(() => {
+    /* An agreed price is itself a pre-selection: he quoted them a number, so
+       it is already ticked when they arrive rather than sitting there as one
+       of four things to weigh up. */
+    if (!answers.plan && invite.customPence) {
+      save({ ...answers, plan: CUSTOM_PLAN_KEY });
+      return;
+    }
     if (invite.plan && !answers.plan && planByKey(invite.plan)) {
       save({ ...answers, plan: invite.plan as PlanKey });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [invite.plan]);
+  }, [invite.plan, invite.customPence]);
 
   /**
    * Moving between steps moves focus to the new heading.
@@ -225,9 +235,9 @@ function StepBody({
     case "photo":
       return <Photo answers={answers} set={set} />;
     case "plan":
-      return <Plans answers={answers} set={set} />;
+      return <Plans answers={answers} set={set} invite={invite} />;
     case "pay":
-      return <Pay answers={answers} beginner={invite.rail === "beginner"} />;
+      return <Pay answers={answers} beginner={invite.rail === "beginner"} invite={invite} />;
     default:
       return null;
   }
@@ -581,10 +591,29 @@ function Photo({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) 
   );
 }
 
-function Plans({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) => void }) {
+function Plans({
+  answers,
+  set,
+  invite,
+}: {
+  answers: Answers;
+  set: (p: Partial<Answers>) => void;
+  invite: InvitePayload;
+}) {
+  /*
+   * A price Ben agreed with this person appears first, and only on their
+   * link. It comes out of the signed invite rather than from anything this
+   * page was told, so it cannot be edited into existence or edited down.
+   */
+  const plans = plansFor(
+    invite.customPence
+      ? { pence: invite.customPence, name: invite.customName }
+      : null,
+  );
+
   return (
     <div className="ob-plans">
-      {PLANS.map((p) => (
+      {plans.map((p) => (
         <button
           key={p.key}
           type="button"
@@ -594,7 +623,14 @@ function Plans({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) 
           onClick={() => set({ plan: p.key })}
           aria-pressed={answers.plan === p.key}
         >
-          {p.featured ? <span className="ob-plan__flag">Most popular</span> : null}
+          {/* "Agreed with Ben" rather than "Most popular" on a bespoke price:
+              claiming a plan built for one person is popular is a fabricated
+              social proof, and it is also plainly silly to them. */}
+          {p.featured ? (
+            <span className="ob-plan__flag">
+              {p.key === CUSTOM_PLAN_KEY ? "Agreed with Ben" : "Most popular"}
+            </span>
+          ) : null}
           <span className="ob-plan__head">
             <span className="ob-plan__name">{p.name}</span>
             <span className="ob-plan__price">
@@ -617,8 +653,23 @@ function Plans({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) 
   );
 }
 
-function Pay({ answers, beginner }: { answers: Answers; beginner?: boolean }) {
-  const plan = planByKey(answers.plan);
+function Pay({
+  answers,
+  beginner,
+  invite,
+}: {
+  answers: Answers;
+  beginner?: boolean;
+  invite: InvitePayload;
+}) {
+  /* Resolved against the invite, so the total on the last screen is the
+     agreed price and not a blank where a standard plan key would have been. */
+  const plan = planFor(
+    answers.plan,
+    invite.customPence
+      ? { pence: invite.customPence, name: invite.customName }
+      : null,
+  );
   const rows = summarise(answers, beginner);
 
   return (

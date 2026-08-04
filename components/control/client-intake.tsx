@@ -2,7 +2,16 @@
 
 import { useState } from "react";
 import { useCollection } from "@/lib/control/store";
-import { PLANS } from "@/lib/onboarding/model";
+import { PLANS, parsePrice } from "@/lib/onboarding/model";
+import {
+  deliveryLine,
+  sendSetupInvite,
+  setupBlocker,
+  type SetupResult,
+} from "@/lib/control/setup-invite";
+
+/** The plan-select value meaning "a price Ben agreed on the call". */
+const AGREED = "__agreed";
 import { SEED_ATHLETES, TIER_LABEL, TIER_ORDER, TRACKER_KEY, type Tier, type TrackedAthlete } from "@/lib/control/tracker";
 
 /**
@@ -26,13 +35,6 @@ import { SEED_ATHLETES, TIER_LABEL, TIER_ORDER, TRACKER_KEY, type Tier, type Tra
  * could do — he would stop chasing.
  */
 
-type SendResult = {
-  link: string;
-  secured: boolean;
-  email: { attempted: boolean; ok: boolean; reason: string | null; sandbox: boolean };
-  sms: { attempted: boolean; ok: boolean; reason: string; text: string | null };
-};
-
 export function ClientIntake() {
   const athletes = useCollection<TrackedAthlete>(TRACKER_KEY, SEED_ATHLETES);
 
@@ -41,62 +43,79 @@ export function ClientIntake() {
   const [phone, setPhone] = useState("");
   const [tier, setTier] = useState<Tier>("coaching");
   const [plan, setPlan] = useState("");
+  const [agreed, setAgreed] = useState("");
+  const [agreedName, setAgreedName] = useState("");
   const [busy, setBusy] = useState<"full" | "payment" | null>(null);
-  const [result, setResult] = useState<SendResult | null>(null);
+  const [result, setResult] = useState<SetupResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  const ready = name.trim().length > 0 && (email.trim().length > 0 || phone.trim().length > 0);
+  function request(kind: "full" | "payment") {
+    return {
+      name,
+      email,
+      phone,
+      kind,
+      plan: plan === AGREED ? undefined : plan || undefined,
+      agreedPrice: plan === AGREED ? agreed : undefined,
+      agreedName: plan === AGREED ? agreedName : undefined,
+    };
+  }
+
+  /* Why the buttons are not lit, rather than two dead controls. The blocker
+     is the same one the API enforces, so the screen and the server cannot
+     disagree about what is missing. */
+  const blocked = setupBlocker(request("full"));
 
   async function send(kind: "full" | "payment") {
-    if (!ready) return;
+    if (blocked) return;
     setBusy(kind);
     setError(null);
     setResult(null);
     setCopied(false);
 
-    try {
-      const res = await fetch("/api/onboarding/invite", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, kind, plan: plan || undefined }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(
-          data?.error === "CONTACT_REQUIRED"
-            ? "Give an email address or a mobile number — otherwise there is nowhere to send it."
-            : data?.error === "EMAIL_INVALID"
-              ? "That email address does not look right."
-              : "Could not create the invite. Try again.",
-        );
-        return;
-      }
-
-      // The client goes into the tracker at the same moment. A client who
-      // exists but was never invited, or an invite with nobody behind it, is a
-      // reconciliation job Ben would have to do by hand.
-      const monthly = PLANS.find((p) => p.key === plan);
-      athletes.add({
-        id: `a_${Date.now().toString(36)}`,
-        name: name.trim(),
-        tier,
-        programmedUntil: null,
-        note: kind === "payment" ? "Payment link sent" : "Onboarding sent",
-        monthly: monthly ? Math.round(monthly.pence / 100) : 0,
-        paymentSet: false,
-      });
-
-      setResult(data as SendResult);
-      setName("");
-      setEmail("");
-      setPhone("");
-      setPlan("");
-    } catch {
-      setError("No connection. Nothing was sent.");
-    } finally {
-      setBusy(null);
+    const out = await sendSetupInvite(request(kind));
+    setBusy(null);
+    if (!out.ok) {
+      setError(out.message);
+      return;
     }
+
+    // The client goes into the tracker at the same moment. A client who
+    // exists but was never invited, or an invite with nobody behind it, is a
+    // reconciliation job Ben would have to do by hand.
+    const standard = PLANS.find((p) => p.key === plan);
+    const agreedPence = plan === AGREED ? parsePrice(agreed) : null;
+    athletes.add({
+      id: `a_${Date.now().toString(36)}`,
+      name: name.trim(),
+      tier,
+      programmedUntil: null,
+      note:
+        agreedPence !== null
+          ? `Agreed price sent`
+          : kind === "payment"
+            ? "Payment link sent"
+            : "Onboarding sent",
+      /* The agreed figure goes on the tracker row too, so the monthly total
+         is right the moment they pay rather than after somebody remembers to
+         correct it. */
+      monthly:
+        agreedPence !== null
+          ? Math.round(agreedPence / 100)
+          : standard
+            ? Math.round(standard.pence / 100)
+            : 0,
+      paymentSet: false,
+    });
+
+    setResult(out.result);
+    setName("");
+    setEmail("");
+    setPhone("");
+    setPlan("");
+    setAgreed("");
+    setAgreedName("");
   }
 
   async function copy(text: string) {
@@ -172,8 +191,43 @@ export function ClientIntake() {
                 {p.name} — {p.display} {p.cadence}
               </option>
             ))}
+            <option value={AGREED}>A price you agreed on the call…</option>
           </select>
         </label>
+
+        {/* Only once he says there is one. A money field open on every
+            intake is a money field somebody eventually fills in by accident. */}
+        {plan === AGREED ? (
+          <>
+            <label className="ci-field">
+              <span className="eyebrow">Agreed monthly price</span>
+              <input
+                value={agreed}
+                onChange={(e) => setAgreed(e.target.value)}
+                inputMode="decimal"
+                placeholder="150"
+                className="ci-input"
+                autoComplete="off"
+              />
+            </label>
+            <label className="ci-field">
+              <span className="eyebrow">Call it (optional)</span>
+              <input
+                value={agreedName}
+                onChange={(e) => setAgreedName(e.target.value)}
+                placeholder="Your agreed plan"
+                maxLength={40}
+                className="ci-input"
+                autoComplete="off"
+              />
+            </label>
+            <p className="ci-hint ci-field--wide">
+              It appears first on their link, only on theirs, and it is what
+              Stripe charges. The price is signed into the link, so they
+              cannot change it.
+            </p>
+          </>
+        ) : null}
       </div>
 
       <div className="ci-actions">
@@ -181,7 +235,7 @@ export function ClientIntake() {
           type="button"
           className="ci-send"
           onClick={() => send("full")}
-          disabled={!ready || busy !== null}
+          disabled={Boolean(blocked) || busy !== null}
         >
           {busy === "full" ? "Sending…" : "Send onboarding"}
         </button>
@@ -189,13 +243,11 @@ export function ClientIntake() {
           type="button"
           className="ci-send ci-send--quiet"
           onClick={() => send("payment")}
-          disabled={!ready || busy !== null}
+          disabled={Boolean(blocked) || busy !== null}
         >
           {busy === "payment" ? "Sending…" : "Send payment link only"}
         </button>
-        {!ready ? (
-          <span className="ci-hint">A name, and either an email or a mobile.</span>
-        ) : null}
+        {blocked ? <span className="ci-hint">{blocked}</span> : null}
       </div>
 
       {error ? (
@@ -208,22 +260,14 @@ export function ClientIntake() {
         <div className="ci-result" role="status">
           <p className="ci-result__head">Invite created.</p>
 
-          <ul className="ci-channels">
-            <li data-state={result.email.ok ? "ok" : result.email.attempted ? "failed" : "skipped"}>
-              <strong>Email</strong>
-              {result.email.ok
-                ? result.email.sandbox
-                  ? " sent — but the sending domain is not verified yet, so it only reaches your own address. Copy the link below and send it yourself until that is set up."
-                  : " sent."
-                : result.email.attempted
-                  ? ` did not send: ${result.email.reason}. Copy the link below.`
-                  : " not sent — no address given."}
-            </li>
-            <li data-state="failed">
-              <strong>SMS</strong> not sent — there is no text provider connected
-              yet. The message is below; send it from your phone.
-            </li>
-          </ul>
+          <p className="ci-delivery">
+            {deliveryLine(result)}
+            {result.agreedPence
+              ? ` Agreed price £${(result.agreedPence / 100)
+                  .toFixed(2)
+                  .replace(/\.00$/, "")} a month.`
+              : ""}
+          </p>
 
           <label className="ci-field">
             <span className="eyebrow">The link</span>

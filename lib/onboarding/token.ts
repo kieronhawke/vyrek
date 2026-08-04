@@ -1,4 +1,5 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
+import { CUSTOM_MAX_PENCE, CUSTOM_MIN_PENCE } from "./model";
 
 /**
  * THE INVITE, CARRIED IN THE LINK.
@@ -36,6 +37,19 @@ export type InvitePayload = {
   kind: InviteKind;
   /** Suggested plan, when Ben has already agreed one. */
   plan?: string;
+  /**
+   * A monthly price agreed with this person, in pence.
+   *
+   * THIS IS WHY THE TOKEN IS SIGNED. Everything else in here is a
+   * convenience — a name to greet them with, which step to start on. This is
+   * money. An athlete who could edit it would set their own price, so it
+   * travels inside the signed body and any change to it breaks the
+   * signature and the link stops resolving. Checkout reads the amount from
+   * the verified invite and never from the request that asked for it.
+   */
+  customPence?: number;
+  /** What Ben calls the agreed plan on their screen. */
+  customName?: string;
   /**
    * Which route they came in on, so onboarding can ask the right questions.
    *
@@ -157,10 +171,35 @@ export function createInvite(
     // Only ever "b": athlete is the default, so spending a character to say
     // so would make every racing link longer for nothing.
     ...(payload.rail === "beginner" ? { r: "b" } : {}),
+    /* Only present when Ben agreed a price, so every ordinary invite stays
+       exactly the length it was — these links go out by SMS and characters
+       are money. */
+    ...(payload.customPence ? { c: payload.customPence } : {}),
+    ...(payload.customPence && payload.customName
+      ? { cn: payload.customName.slice(0, 40) }
+      : {}),
     x: Math.floor(payload.exp / 86400),
   };
   const body = b64url(JSON.stringify(compact));
   return `${body}.${sign(body)}`;
+}
+
+/**
+ * An agreed price, or nothing.
+ *
+ * Bounded rather than merely parsed. A signature proves nobody edited the
+ * number in transit; it does not prove the number was sensible when Ben
+ * typed it, and a token minted with a stray extra digit would otherwise
+ * present somebody with a £15,000 monthly plan.
+ */
+function readPence(value: unknown): number | null {
+  const n = Number(value);
+  if (!Number.isFinite(n) || !Number.isInteger(n)) return null;
+  /* The same bounds the admin form enforces, imported rather than repeated —
+     two copies of a money limit drift, and the half that drifts is whichever
+     one nobody remembered was there. */
+  if (n < CUSTOM_MIN_PENCE || n > CUSTOM_MAX_PENCE) return null;
+  return n;
 }
 
 export type InviteResult =
@@ -219,6 +258,15 @@ export function readInvite(token: string, now = Date.now()): InviteResult {
       ...(raw.l || raw.plan ? { plan: String(raw.l ?? raw.plan) } : {}),
       ...(raw.r === "b" || raw.rail === "beginner"
         ? { rail: "beginner" as const }
+        : {}),
+      /* Coerced and bounds-checked on the way out, not trusted because it
+         was signed. A signature proves nobody changed the value; it does not
+         prove the value was sane when it was written. */
+      ...(readPence(raw.c ?? raw.customPence)
+        ? { customPence: readPence(raw.c ?? raw.customPence)! }
+        : {}),
+      ...(raw.cn || raw.customName
+        ? { customName: String(raw.cn ?? raw.customName).slice(0, 40) }
         : {}),
       iat: Number(raw.i ?? raw.iat ?? 0),
       exp,

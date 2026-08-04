@@ -2868,6 +2868,17 @@
 
 [data-surface="control"] .ci-result__head { margin: 0; font-weight: 700; }
 
+/* One sentence saying what actually transmitted. It replaced a list of
+   channel rows with tick and cross marks: the ticks were the problem, since
+   a tick over an email that reached only the sandbox is a tick over a message
+   nobody received, and Ben would stop chasing. */
+[data-surface="control"] .ci-delivery {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
 [data-surface="control"] .ci-channels {
   list-style: none;
   margin: 0;
@@ -3636,4 +3647,110 @@
 [data-surface="control"] .ch-pcard__call { font-size: var(--text-xs); color: var(--text-faint); }
 [data-surface="control"] .ch-pcard__stuck {
   font-size: var(--text-xs); color: var(--warn, #f5b83c); margin-top: 2px;
+}
+
+/* ── Composing the setup link ─────────────────────────────────────────
+   Opens inside the lead card rather than in a modal. The card carries the
+   context — who they are, what they asked for, how long they have waited —
+   and a dialog over the top of it hides exactly the information Ben is
+   deciding the price against. */
+[data-surface="control"] .obc {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--bg);
+}
+[data-surface="control"] .obc__title {
+  margin: 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+[data-surface="control"] .obc__grid {
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+[data-surface="control"] .obc__field { display: grid; gap: 4px; min-width: 0; }
+[data-surface="control"] .obc__label {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+[data-surface="control"] .obc__input {
+  width: 100%;
+  min-height: 38px;
+  padding: 7px 10px;
+  border-radius: var(--radius-input, 8px);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-sm);
+}
+[data-surface="control"] .obc__input--link {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-xs);
+}
+[data-surface="control"] .obc__linkrow {
+  display: flex;
+  gap: var(--space-1);
+  align-items: center;
+}
+[data-surface="control"] .obc__note,
+[data-surface="control"] .obc__hint {
+  margin: 0;
+  grid-column: 1 / -1;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--text-faint);
+}
+[data-surface="control"] .obc__error {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--danger);
+}
+[data-surface="control"] .obc__warn {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--danger);
+}
+[data-surface="control"] .obc__done {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+[data-surface="control"] .obc__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+[data-surface="control"] .obc__send,
+[data-surface="control"] .obc__copy {
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  background: var(--accent);
+  color: var(--accent-ink, #0a0a0a);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+[data-surface="control"] .obc__send:disabled { opacity: 0.5; cursor: not-allowed; }
+[data-surface="control"] .obc__cancel,
+[data-surface="control"] .obc__close {
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: var(--text-sm);
 }

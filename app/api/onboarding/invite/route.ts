@@ -8,7 +8,7 @@ import {
   type InviteKind,
 } from "@/lib/onboarding/token";
 import { storeInvite } from "@/lib/onboarding/invite-store";
-import { planByKey } from "@/lib/onboarding/model";
+import { parsePrice, planByKey } from "@/lib/onboarding/model";
 import { sendOnboardingInvite } from "@/lib/email/send";
 import { onboardingInviteSms } from "@/lib/email/templates/onboarding-invite";
 import { sendSms, smsConfigured } from "@/lib/sms/send";
@@ -43,6 +43,14 @@ type Body = {
   plan?: string;
   /** "beginner" keeps racing language out of their onboarding. */
   rail?: string;
+  /**
+   * A monthly price agreed with this person, as Ben typed it — "150", "£150".
+   * Parsed here rather than on the client, because the client is not where a
+   * money value gets to be decided.
+   */
+  agreedPrice?: string;
+  /** What to call it on their screen. */
+  agreedName?: string;
 };
 
 export async function POST(request: Request) {
@@ -72,6 +80,21 @@ export async function POST(request: Request) {
   const plan = planByKey(body.plan);
 
   /*
+   * The agreed price, if there is one.
+   *
+   * Refused rather than ignored when it will not parse. Silently dropping it
+   * would send somebody a link offering the two published tiers after Ben
+   * told them on the phone it would be £150 — and he would have no idea until
+   * they rang back.
+   */
+  const agreedRaw = (body.agreedPrice ?? "").trim();
+  const customPence = agreedRaw ? parsePrice(agreedRaw) : null;
+  if (agreedRaw && customPence === null) {
+    return NextResponse.json({ error: "PRICE_INVALID" }, { status: 400 });
+  }
+  const customName = (body.agreedName ?? "").trim().slice(0, 40);
+
+  /*
    * Short link first, signed token as the fallback.
    *
    * The signed token carries the whole invite in the URL and comes out at 225
@@ -94,6 +117,8 @@ export async function POST(request: Request) {
     kind: kind as InviteKind,
     plan: plan?.key,
     ...(rail ? { rail } : {}),
+    ...(customPence ? { customPence } : {}),
+    ...(customPence && customName ? { customName } : {}),
   };
   const stored = await storeInvite({
     ...fields,
@@ -140,6 +165,8 @@ export async function POST(request: Request) {
     shortLink: short,
     /** False when the link is signed with the development fallback secret. */
     secured: signingConfigured(),
+    /** Echoed back so the admin can show what was actually agreed, in pence. */
+    agreedPence: customPence ?? null,
     email: {
       attempted: Boolean(email),
       ok: emailResult.ok,

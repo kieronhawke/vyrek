@@ -8,8 +8,12 @@ import {
 import {
   PLANS,
   blocker,
+  displayPrice,
   emptyAnswers,
+  parsePrice,
   planByKey,
+  planFor,
+  plansFor,
   progress,
   stepsFor,
   summarise,
@@ -243,5 +247,138 @@ describe("the summary before paying", () => {
 
   it("leaves out what they did not answer", () => {
     expect(summarise(emptyAnswers("Sam", "s@e.com", ""))).toEqual([]);
+  });
+});
+
+/* ── A price agreed with one person ──────────────────────────────────── */
+
+describe("a bespoke monthly price", () => {
+  it("reads the ways a coach types a number", () => {
+    expect(parsePrice("150")).toBe(15000);
+    expect(parsePrice("£150")).toBe(15000);
+    expect(parsePrice("149.50")).toBe(14950);
+    expect(parsePrice("1,500")).toBe(150000);
+    expect(parsePrice(" 99 ")).toBe(9900);
+  });
+
+  /**
+   * Null, never zero. Zero is a real amount that sails through a truthiness
+   * check and sets up a free subscription nobody agreed to.
+   */
+  it("returns null for anything it cannot read", () => {
+    for (const bad of ["", "free", "-40", "40.999", "0", "£"]) {
+      expect(parsePrice(bad), bad).toBeNull();
+    }
+  });
+
+  /* A guard against the extra digit, not a policy about what Ben may
+     charge: £1,500 typed as £15,000 is the mistake that actually happens. */
+  it("refuses a figure outside the plausible range", () => {
+    expect(parsePrice("0.50")).toBeNull();
+    expect(parsePrice("2000")).toBe(200000);
+    expect(parsePrice("2000.01")).toBeNull();
+    expect(parsePrice("15000")).toBeNull();
+  });
+
+  it("writes a round price without a pointless .00", () => {
+    expect(displayPrice(15000)).toBe("£150");
+    expect(displayPrice(14950)).toBe("£149.50");
+  });
+
+  /* His agreed price leads, and nothing else keeps a star: two recommended
+     options is no recommendation, and they came here for the one he quoted. */
+  it("puts the agreed plan first and unfeatures the rest", () => {
+    const list = plansFor({ pence: 15000 });
+    expect(list[0].key).toBe("custom");
+    expect(list[0].display).toBe("£150");
+    expect(list.filter((p) => p.featured)).toHaveLength(1);
+    expect(list).toHaveLength(PLANS.length + 1);
+  });
+
+  it("shows the standard plans untouched when nothing was agreed", () => {
+    expect(plansFor(null)).toEqual(PLANS);
+  });
+
+  it("resolves the custom key only when there is a price behind it", () => {
+    expect(planFor("custom", { pence: 15000 })?.pence).toBe(15000);
+    expect(planFor("custom", null)).toBeUndefined();
+    expect(planFor("club", { pence: 15000 })?.key).toBe("club");
+  });
+});
+
+describe("carrying an agreed price in the link", () => {
+  it("survives a round trip", () => {
+    const token = createInvite({
+      name: "Sam Reeves",
+      email: "",
+      phone: "",
+      kind: "payment",
+      customPence: 15000,
+      customName: "Sam's plan",
+    });
+    const read = readInvite(token);
+    expect(read.ok).toBe(true);
+    if (!read.ok) return;
+    expect(read.invite.customPence).toBe(15000);
+    expect(read.invite.customName).toBe("Sam's plan");
+  });
+
+  /**
+   * The point of signing the thing. Editing the price has to break the
+   * link, or an athlete sets their own.
+   */
+  it("refuses a token whose price has been edited", () => {
+    const token = createInvite({
+      name: "Sam",
+      email: "",
+      phone: "",
+      kind: "payment",
+      customPence: 15000,
+    });
+    const [body, sig] = token.split(".");
+    const json = JSON.parse(
+      Buffer.from(body.replace(/-/g, "+").replace(/_/g, "/"), "base64").toString(),
+    );
+    json.c = 100;
+    const forged = Buffer.from(JSON.stringify(json))
+      .toString("base64")
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+    const read = readInvite(`${forged}.${sig}`);
+    expect(read.ok).toBe(false);
+    if (read.ok) return;
+    expect(read.reason).toBe("tampered");
+  });
+
+  /* Signed is not the same as sane. A token minted with a stray extra digit
+     would otherwise offer somebody a £15,000 a month plan. */
+  it("drops a price outside the plausible range even though it verifies", () => {
+    const token = createInvite({
+      name: "Sam",
+      email: "",
+      phone: "",
+      kind: "payment",
+      customPence: 9_999_999,
+    });
+    const read = readInvite(token);
+    expect(read.ok).toBe(true);
+    if (!read.ok) return;
+    expect(read.invite.customPence).toBeUndefined();
+  });
+
+  /* These go out by SMS and characters are money. An ordinary invite must
+     not grow because the feature exists. */
+  it("does not lengthen an invite that has no agreed price", () => {
+    const plain = createInvite({ name: "Sam", email: "", phone: "", kind: "full" });
+    const withPrice = createInvite({
+      name: "Sam",
+      email: "",
+      phone: "",
+      kind: "full",
+      customPence: 15000,
+    });
+    expect(plain.length).toBeLessThan(withPrice.length);
+    expect(plain.length).toBeLessThan(120);
   });
 });

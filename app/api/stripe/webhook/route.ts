@@ -6,7 +6,10 @@ import {
 } from "@/lib/stripe";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import {
+  adminRecipient,
   sendCancellationEmail,
+  sendPaymentReceived,
+  sendSubscriptionStarted,
   sendWelcomeEmail,
 } from "@/lib/email/send";
 import {
@@ -114,6 +117,24 @@ export async function POST(req: Request) {
         const subscriptionId =
           typeof session.subscription === "string"
             ? session.subscription: session.subscription?.id;
+
+        /*
+         * TELL BEN FIRST, AND TELL HIM WHETHER OR NOT WE HAVE A ROW.
+         *
+         * This handler used to return immediately without a `client_reference_id`,
+         * which is precisely the case for anybody who came through one of Ben's
+         * own setup links — that route has no Supabase session to attach, since
+         * being set up is the whole point of it. So the one flow he uses most
+         * completed a payment and produced no notification at all, and he found
+         * out by opening Stripe days later. A client whose first week does not
+         * arrive in the first few days is a client wondering what they paid for.
+         *
+         * Everything this needs is on the session itself, so it runs before any
+         * database lookup and does not depend on one succeeding.
+         */
+        await notifyClientStarted(session).catch((err) => {
+          console.error("[stripe/webhook] client-started email failed", err);
+        });
 
         if (!customerId || !subscriptionId) break;
 
@@ -287,6 +308,19 @@ export async function POST(req: Request) {
         const amountPence = invoice.amount_paid ?? 0;
         if (!subscriptionId || amountPence <= 0) break;
 
+        /*
+         * The receipt, before the partner accounting.
+         *
+         * Everything below this line is commission handling and it exits early
+         * for anybody who was not referred by a partner — which is most people.
+         * So a payment from an ordinary client used to pass through this
+         * handler and produce nothing at all: no email, and not even a log
+         * line. Notifying first means the common case is the one that works.
+         */
+        await notifyPaymentReceived(invoice).catch((err) => {
+          console.error("[stripe/webhook] payment email failed", err);
+        });
+
         // Resolve our customer id from the subscription.
         const { data: subRow } = await admin
           .from("subscriptions")
@@ -437,4 +471,124 @@ export async function POST(req: Request) {
   }
 
   return NextResponse.json({ received: true });
+}
+
+/* ── Telling Ben ─────────────────────────────────────────────────────────
+   Both of these read only what Stripe sent, so neither depends on a database
+   row existing. That is deliberate: the flow Ben uses most — his own setup
+   link — has no Supabase session to attach at checkout, and a notification
+   that only fires for the self-serve funnel is a notification that misses the
+   clients he actually onboards.
+
+   Both swallow their own failures at the call site. An email that will not
+   send must never make Stripe retry a webhook it already delivered. */
+
+/** "£150", "£149.50", or null. Never "£0.00" standing in for "unknown". */
+function money(minor: number | null | undefined, currency: string | null | undefined): string | null {
+  if (minor === null || minor === undefined || !Number.isFinite(minor)) return null;
+  if (minor <= 0) return null;
+  return new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: (currency ?? "gbp").toUpperCase(),
+    minimumFractionDigits: minor % 100 === 0 ? 0 : 2,
+  }).format(minor / 100);
+}
+
+function onDate(unix: number | null | undefined): string {
+  const d = unix ? new Date(unix * 1000) : new Date();
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Europe/London",
+  }).format(d);
+}
+
+async function notifyClientStarted(session: Stripe.Checkout.Session) {
+  const to = adminRecipient();
+  if (!to) return;
+
+  const meta = session.metadata ?? {};
+  /* The name Ben typed on the invite beats the one Stripe collected: he knows
+     who this is, and "client_name" is what his own records are keyed to. */
+  const name =
+    (meta.client_name as string | undefined)?.trim() ||
+    session.customer_details?.name?.trim() ||
+    session.customer_details?.email?.trim() ||
+    "A new client";
+
+  let planName: string | null = (meta.plan as string | undefined) ?? null;
+  let trialDays: number | null = null;
+  let amount: number | null = session.amount_total ?? null;
+  const currency = session.currency ?? "gbp";
+
+  /* The session's amount_total is 0 on a trial, which would report a free
+     subscription. The recurring price is on the subscription. */
+  const subscriptionId =
+    typeof session.subscription === "string"
+      ? session.subscription
+      : session.subscription?.id;
+  if (subscriptionId) {
+    try {
+      const sub = await stripe().subscriptions.retrieve(subscriptionId);
+      const price = sub.items.data[0]?.price;
+      if (price?.unit_amount) amount = price.unit_amount;
+      const product = price?.product;
+      if (typeof product === "object" && product && !("deleted" in product && product.deleted)) {
+        planName = (product as Stripe.Product).name ?? planName;
+      }
+      if (sub.trial_end && sub.trial_start) {
+        trialDays = Math.round((sub.trial_end - sub.trial_start) / 86400);
+      }
+    } catch (err) {
+      /* Report what the session knows rather than nothing. An email missing
+         the plan name is still the email that tells him he has a client. */
+      console.error("[stripe/webhook] could not read subscription for email", err);
+    }
+  }
+
+  await sendSubscriptionStarted({
+    to,
+    name,
+    email: session.customer_details?.email ?? null,
+    planName,
+    amount: money(amount, currency),
+    /* Stamped by the onboarding checkout when the price was one Ben agreed
+       rather than a published tier — so an amount matching no tier reads as
+       deliberate a year later instead of as a mistake. */
+    agreed: Boolean(meta.agreed_price_pence),
+    trialDays,
+    startedOn: onDate(session.created),
+  });
+}
+
+async function notifyPaymentReceived(invoice: Stripe.Invoice) {
+  const to = adminRecipient();
+  if (!to) return;
+
+  const line = invoice.lines?.data?.[0];
+  /* `subscription_details.metadata` carries what the subscription was created
+     with, and it moved between SDK versions — read defensively rather than
+     losing the client name every time the pin moves. */
+  const subMeta =
+    (invoice as unknown as { subscription_details?: { metadata?: Record<string, string> } })
+      .subscription_details?.metadata ?? {};
+  const meta = { ...subMeta, ...(invoice.metadata ?? {}) };
+
+  await sendPaymentReceived({
+    to,
+    name:
+      (meta.client_name as string | undefined)?.trim() ||
+      invoice.customer_name?.trim() ||
+      invoice.customer_email?.trim() ||
+      "A client",
+    amount: money(invoice.amount_paid, invoice.currency),
+    planName: line?.description ?? (meta.plan as string | undefined) ?? null,
+    agreed: Boolean(meta.agreed_price_pence),
+    paidOn: onDate(invoice.created),
+    invoiceUrl: invoice.hosted_invoice_url ?? null,
+    /* billing_reason distinguishes the first invoice from every renewal, and
+       the first one is the only one worth reading twice. */
+    first: invoice.billing_reason === "subscription_create",
+  });
 }
