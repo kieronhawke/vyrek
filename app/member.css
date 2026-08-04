@@ -455,6 +455,15 @@
 
 .week__date { font-size: var(--text-xs); color: var(--text-muted); }
 
+/* On a phone this is just the stack the day already was. It earns its
+   keep at 1024px, where it becomes the right-hand half of a row. */
+.week__sessions {
+  display: grid;
+  gap: var(--space-1);
+  align-content: start;
+  min-width: 0;
+}
+
 .week__rest {
   margin: 0;
   font-size: var(--text-sm);
@@ -557,20 +566,110 @@
  * carried by the block bar above and the strip on Today, so readability wins
  * here — each day gets room enough to read a session and tick it off.
  */
+/*
+ * A WEEK IS A LIST OF DAYS, NOT A NOTICEBOARD OF CARDS.
+ *
+ * This was a four-column card grid, and the arithmetic was against it from
+ * the start: seven days into four columns is two rows with a hole in the
+ * corner, and the days themselves are wildly different sizes — a rest day is
+ * one word, a Saturday brick is sixteen lines. Stretched to match, the rest
+ * day became a card-sized box with "Rest" floating at the top of it. Left to
+ * their own heights, the row became a staircase from 108px to 616px with
+ * dead space under the short ones. Both readings were correct and both
+ * looked broken, because the layout was fighting the shape of the content.
+ *
+ * So on anything wider than a phone each day is a row: a fixed label gutter
+ * on the left, the session blocks beside it. Rows are allowed to be
+ * different heights — that is what a row is for — and a rest day is
+ * legitimately one line rather than a hole where a card should be.
+ *
+ * THE SESSION BLOCKS ARE A FIXED WIDTH, and that is the part that fixes what
+ * this looked like. Every block is the same size everywhere in the week, so
+ * two sessions on a Saturday sit beside each other at the same width as the
+ * single one on a Monday. Letting them stretch to fill the row would put a
+ * thousand pixels of card around "20 mins ski".
+ */
 @media (min-width: 700px) {
   .week__grid {
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+
+  .week__day {
+    grid-template-columns: 100px minmax(0, 1fr);
+    align-items: stretch;
     gap: var(--space-2);
-    /* Each day is as tall as its own session, not as tall as the longest one
-       in its row. Stretched, a rest day became a card-sized box with the word
-       "Rest" at the top and nothing under it, and Tuesday looked like it was
-       missing something Monday had. */
+    padding: var(--space-2);
+  }
+
+  /* The date becomes a gutter: a rule down the side rather than under it,
+     because it now labels what is next to it rather than what is below. */
+  .week__dayhead {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 2px;
+    padding-bottom: 0;
+    padding-right: var(--space-2);
+    border-bottom: 0;
+    border-right: 1px solid var(--border);
+  }
+
+  .week__sessions {
+    /* Fixed-width tracks, left-aligned. `auto-fill` rather than `auto-fit`
+       so a single session stays one block wide instead of stretching to
+       swallow the row. */
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fill, minmax(0, 268px));
+    gap: var(--space-2);
     align-items: start;
+  }
+
+  .week__rest {
+    /* Sits on the label rather than at the top of an empty box. */
+    align-self: center;
   }
 }
 
-@media (min-width: 1024px) {
-  .week__day { padding: var(--space-2); }
+/*
+ * TWO DAYS ABREAST ON A MONITOR.
+ *
+ * One day per full-width row is tidy and wastes two thirds of it: a session
+ * block is 268px because that is how wide "8x1km off 90" wants to be, and a
+ * thousand-pixel row around one of them is a lot of nothing. Stretching the
+ * block to fill instead just moves the nothing inside the box.
+ *
+ * Two columns halves the empty space and still reads as a week — left to
+ * right, then down, the way a calendar is read.
+ *
+ * A pair does stretch to match, which is the opposite of what the old grid
+ * had to stop doing, and the difference is how many cards are being matched.
+ * Stretching to the tallest of four turned a rest day into a card-sized box
+ * with one word at the top of it. Matching one neighbour puts a little
+ * padding under the shorter of two, which reads as a card rather than as a
+ * hole — and it gives the row a straight bottom edge, which is most of what
+ * "tidy" means here. A day with two sessions is exempt anyway: it takes the
+ * whole row, so it never sets a height for anything else.
+ */
+/* 1480px, not 1180. Below it a half-row is too narrow to hold a whole
+   session block, so the blocks in the paired days shrank to 236px while the
+   ones in a full-width day stayed 268px — two sizes of the same thing on one
+   screen, which is the fault this whole layout was rebuilt to fix. The
+   breakpoint is set where a half-row fits a block at full width, not where
+   two columns first look plausible. */
+@media (min-width: 1480px) {
+  .week__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+    align-items: stretch;
+  }
+  .week__dow { font-size: var(--text-lg); }
+
+  /* A day with two sessions takes the whole row so both fit beside each
+     other. Squeezed into half a row they stack, and the day becomes twice
+     the height of the one next to it — which is the raggedness this layout
+     exists to remove, reappearing one level up. */
+  .week__day[data-sessions="2"] { grid-column: 1 / -1; }
 }
 
 /* ── First-run walkthrough ────────────────────────────────────────────────
