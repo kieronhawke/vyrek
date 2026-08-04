@@ -56,6 +56,10 @@ import {
   clubWinbackSubject,
 } from "@/lib/email/templates/funnel-club";
 import {
+  AccountReadyEmail,
+  accountReadySubject,
+} from "@/lib/email/templates/account-ready";
+import {
   InternalLeadEmail,
   internalLeadSubject,
 } from "@/lib/email/templates/internal-lead";
@@ -283,16 +287,40 @@ export function sendInternalLeadBrief(args: {
   injury?: string;
   sourcePath?: string | null;
   brief: string;
+  /** Context added 3 Aug 2026: where they are, and how they got here. */
+  place?: string | null;
+  mapUrl?: string | null;
+  mapImageUrl?: string | null;
+  landingPath?: string | null;
+  referrer?: string | null;
+  timeOnSite?: string | null;
+  pageViews?: number | null;
+  leadUrl?: string | null;
 }): Promise<Result> {
   const { to, ...rest } = args;
   return send({
     to,
     subject: internalLeadSubject({
       name: rest.name,
-      rail: rest.rail,
+      place: rest.place,
       readiness: rest.readiness,
     }),
     react: InternalLeadEmail(rest),
+  });
+}
+
+/** The way in, sent the moment a checkout completes. */
+export function sendAccountReady(args: {
+  to: string;
+  firstName: string;
+  signInUrl: string;
+  planName?: string;
+}): Promise<Result> {
+  const { to, ...rest } = args;
+  return send({
+    to,
+    subject: accountReadySubject(rest.firstName),
+    react: AccountReadyEmail(rest),
   });
 }
 

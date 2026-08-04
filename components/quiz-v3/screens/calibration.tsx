@@ -56,7 +56,7 @@ export function CalibrationScreen({
         helper="These set the sled, wall ball and farmers carry loads on race day. Pick the open division you'd race in."
       />
 
-      <ul role="list" className="space-y-3">
+      <ul role="list" className="space-y-3 lg:space-y-2.5">
         <li>
           <OptionCard
             label="Men's open standards"

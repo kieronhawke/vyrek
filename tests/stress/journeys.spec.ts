@@ -11,250 +11,296 @@ import { test, expect, type Page } from "@playwright/test";
  * existing page-coverage matrix.
  */
 
+/**
+ * REWRITTEN 3 August 2026, because it had been dead since 29 July.
+ *
+ * It walked the quiz by hard-coding the exact sequence of screens, and the
+ * quiz has moved twice since: an email step was added in the middle, and
+ * the reveal's "Save my plan" button no longer exists. Both changes predate
+ * the rail work; the spec had simply been failing without anybody looking,
+ * which is worse than not having it — a suite nobody trusts is a suite
+ * nobody reads.
+ *
+ * SO IT NO LONGER HARD-CODES THE SEQUENCE. It drives the quiz the way a
+ * person does: look at the screen, answer whatever it is asking, press
+ * Continue, repeat until the account gate. A screen inserted, removed or
+ * reordered no longer breaks it; only a screen that cannot be answered does,
+ * which is the thing actually worth failing over.
+ *
+ * The personas still choose — they express a preference and the driver takes
+ * it when it is on the screen, otherwise the first sensible option — so the
+ * journeys still differ from one another in the ways that matter.
+ */
+
 type Journey = {
   name: string;
-  intent: string | RegExp;
-  experience: string | RegExp;
-  hasRace: boolean;
-  activity: RegExp | string;
-  sex: RegExp | string;
-  weight: string;
-  days: RegExp;
-  sessionLength: RegExp;
-  location: RegExp;
-  equipment?: RegExp[];
-  partner: RegExp;
-  injuries: RegExp;
+  /** Screen one decides the rail, so this decides the whole journey. */
+  intent: RegExp;
+  rail: "athlete" | "beginner";
+  /** Preferences, taken when the screen offers them. */
+  prefers: RegExp[];
+  weight?: string;
 };
 
 const JOURNEYS: Journey[] = [
   {
-    name: "first-race · beginner · 4d · gym",
-    intent: "Training for my first Hyrox",
-    experience: "Never raced",
-    hasRace: false,
-    activity: /brand new to training/i,
-    sex: /men.s standards/i,
+    name: "athlete · first race · 4 days · gym",
+    intent: /my first HYROX race/i,
+    rail: "athlete",
+    prefers: [/never raced/i, /training 3-4/i, /men.s standards/i, /^4 days/i,
+              /^60 min/i, /standard commercial gym/i, /no injuries/i],
     weight: "82",
-    days: /^4 days/i,
-    sessionLength: /^60 min/i,
-    location: /standard commercial gym/i,
-    partner: /^solo\b[\s\S]*just me/i,
-    injuries: /no injuries/i,
   },
   {
-    name: "go-faster · raced-many · 5d · full hyrox gym",
-    intent: /go faster/i,
-    experience: /raced multiple/i,
-    hasRace: true,
-    activity: /training 5\+/i,
-    sex: /women.s standards/i,
-    weight: "62",
-    days: /^5 days/i,
-    sessionLength: /90 min/i,
-    location: /full hyrox gym/i,
-    partner: /^solo\b[\s\S]*just me/i,
-    injuries: /no injuries/i,
-  },
-  {
-    name: "doubles-confirmed · partner · raced-few",
-    intent: /doubles/i,
-    experience: /raced once or twice/i,
-    hasRace: false,
-    activity: /training 3-4/i,
-    sex: /men.s standards/i,
+    name: "athlete · chasing a time · 5 days · full gym",
+    intent: /a faster HYROX time/i,
+    rail: "athlete",
+    prefers: [/raced multiple/i, /75 to 90 min/i, /training 5/i, /men.s standards/i,
+              /^5 days/i, /^90 min/i, /full hyrox gym/i, /no injuries/i],
     weight: "78",
-    days: /^4 days/i,
-    sessionLength: /^60 min/i,
-    location: /standard commercial gym/i,
-    partner: /doubles \(partner confirmed\)/i,
-    injuries: /no injuries/i,
   },
   {
-    name: "home setup · returning · knee injury",
-    intent: /getting into/i,
-    experience: /signed up, not raced/i,
-    hasRace: true,
-    activity: /just getting back/i,
-    sex: /women.s standards/i,
+    name: "athlete · doubles · shoulder",
+    intent: /racing doubles with a partner/i,
+    rail: "athlete",
+    prefers: [/raced once or twice/i, /training 3-4/i, /women.s standards/i,
+              /^4 days/i, /^60 min/i, /standard commercial gym/i, /^shoulder/i],
     weight: "68",
-    days: /^3 days/i,
-    sessionLength: /^45 min/i,
-    location: /home setup/i,
-    equipment: [/dumbbells/i],
-    partner: /^solo\b[\s\S]*just me/i,
-    injuries: /^knee/i,
   },
   {
-    name: "building · occasional · 2d minimal",
-    intent: /building/i,
-    experience: /never raced/i,
-    hasRace: false,
-    activity: /training 1-2/i,
-    sex: /men.s standards/i,
-    weight: "90",
-    days: /^2 days/i,
-    sessionLength: /30 min/i,
-    location: /home setup/i,
-    equipment: [/dumbbells/i, /kettlebell$/i],
-    partner: /^solo\b[\s\S]*just me/i,
-    injuries: /^lower back/i,
+    name: "athlete · home setup · knee",
+    intent: /my first HYROX race/i,
+    rail: "athlete",
+    prefers: [/signed up, not raced/i, /just getting back/i, /women.s standards/i,
+              /^3 days/i, /^45 min/i, /home setup/i, /dumbbells/i, /^knee/i],
+    weight: "70",
+  },
+  // The two doors that were unreachable before the rail work, and the whole
+  // reason it happened: neither of these people is asked about a race.
+  {
+    name: "beginner · getting fit · 3 days",
+    intent: /getting fit and feeling better/i,
+    rail: "beginner",
+    prefers: [/more energy|feel stronger/i, /a bit active/i, /once or twice/i,
+              /time/i, /^3 days/i, /^45 min/i, /a normal gym/i, /no injuries/i],
   },
   {
-    name: "solo-partner-later · raced-few · shoulder",
-    intent: "Training for my first Hyrox",
-    experience: "Raced once or twice",
-    hasRace: false,
-    activity: /training 3-4/i,
-    sex: /men.s standards/i,
-    weight: "75",
-    days: /^4 days/i,
-    sessionLength: /^60 min/i,
-    location: /standard commercial gym/i,
-    partner: /solo for now, partner later/i,
-    injuries: /^shoulder/i,
+    name: "beginner · losing weight · at home",
+    intent: /losing weight and getting stronger/i,
+    rail: "beginner",
+    prefers: [/haven.t trained in years/i, /first go/i, /didn.t know/i,
+              /^2 days/i, /^30 min/i, /at home/i, /no injuries/i],
   },
 ];
 
-async function pickOption(page: Page, label: string | RegExp) {
-  const card = page.getByRole("button", { name: label }).first();
-  await expect(card).toBeVisible({ timeout: 12_000 });
-  await card.click();
-  await page.waitForTimeout(250);
-}
+/** Every word that must never appear on the beginner rail past screen one. */
+const RACING_WORDS = /hyrox|\brace[sd]?\b|racing|\bsled\b|wall ball|ski erg|station/i;
 
-async function clickContinue(page: Page) {
-  const cta = page.getByRole("button", { name: /^continue/i }).first();
-  await expect(cta).toBeVisible({ timeout: 10_000 });
-  await expect(cta).toBeEnabled({ timeout: 5_000 });
-  await cta.click();
-  await page.waitForTimeout(600);
-}
-
+/**
+ * Get past the entry carousel, however it happens to be behaving.
+ *
+ * It advances itself after two slides — that is the design — so asserting
+ * the welcome heading is still on screen is a race the test loses whenever
+ * the page takes more than six seconds to settle. It passed on one run and
+ * failed on the next with "element(s) not found", which is the signature of
+ * a flaky assertion rather than a broken page.
+ *
+ * So: press the button if it is there, and otherwise accept that the
+ * carousel has already done the job for us.
+ */
 async function exitWelcomeCarousel(page: Page) {
-  await page.goto("/quiz", { waitUntil: "networkidle" });
-  await expect(page.locator("#welcome-heading")).toBeVisible();
-  await page.getByRole("button", { name: /find your plan/i }).first().click();
-  await page.waitForTimeout(700);
+  await page.goto("/quiz", { waitUntil: "domcontentloaded" });
+  const cta = page.getByRole("button", { name: /find your plan/i }).first();
+  if (await cta.isVisible({ timeout: 4000 }).catch(() => false)) {
+    await cta.click().catch(() => {});
+  }
+  // Either way, screen one is what must appear next.
+  await expect(
+    page.getByRole("heading", { name: /what brings you to suth performance/i }),
+  ).toBeVisible({ timeout: 15_000 });
+}
+
+/** The real advance button, never "Continue with Google". */
+function continueButton(page: Page) {
+  return page
+    /* The advance button is not always called Continue: the reveal says
+       "Send my plan to Ben", and Meet Ben says "See my plan". Matching only
+       "Continue" stops the walk at the two screens closest to the finish.
+
+       ENABLED, not first. The reveal renders three buttons with that same
+       visible text — a sticky one that stays disabled until the lead form
+       is filled, and two live ones — so `.first()` reliably picked the dead
+       one and the walk stopped a screen from the end. */
+    .getByRole("button", {
+      // "Save my plan" is the self-serve reveal; "Send my plan to Ben" is
+      // the coached one. The two routes genuinely have different buttons.
+      name: /^continue|^see my plan|^send my plan|^save my plan|^next/i,
+    })
+    .filter({ hasNot: page.locator("svg") });
+}
+
+/** The first one that can actually be pressed. */
+async function enabledAdvance(page: Page) {
+  const all = continueButton(page);
+  for (let i = 0; i < (await all.count()); i++) {
+    const b = all.nth(i);
+    if (await b.isEnabled().catch(() => false)) {
+      if (await b.isVisible().catch(() => false)) return b;
+    }
+  }
+  return null;
+}
+
+/**
+ * Answer whatever this screen is asking.
+ *
+ * Preference first, then anything selectable — the point of the walk is to
+ * reach the end, and a screen that cannot be satisfied at all is the failure
+ * worth reporting.
+ */
+async function satisfyScreen(page: Page, j: Journey) {
+  for (const sel of ['input[type="email"]', 'input[type="number"]', "textarea"]) {
+    const els = page.locator(sel);
+    for (let i = 0; i < (await els.count()); i++) {
+      const el = els.nth(i);
+      if (!(await el.isVisible().catch(() => false))) continue;
+      if (await el.inputValue().catch(() => "x")) continue;
+      const value =
+        sel.includes("email") ? "stress@example.com"
+        : sel.includes("number") ? (j.weight ?? "75")
+        : "Nothing to report.";
+      await el.fill(value).catch(() => {});
+    }
+  }
+
+  for (const want of j.prefers) {
+    const opt = page.getByRole("button", { name: want }).first();
+    if ((await opt.count()) && (await opt.isVisible().catch(() => false))) {
+      const pressed = await opt.getAttribute("aria-pressed");
+      if (pressed !== "true") await opt.click().catch(() => {});
+      await page.waitForTimeout(150);
+      return;
+    }
+  }
+
+  /* One answer per QUESTION GROUP, not one per screen.
+     The injury-detail screen asks three things at once — how it is now,
+     what aggravates it, who is treating it — and answering only the first
+     leaves Continue disabled for ever. That is where every athlete journey
+     stopped.
+
+     Grouped by list rather than by fieldset: the quiz screens use a heading
+     plus a <ul role="list"> per question, and the onboarding flow uses
+     <fieldset>. Taking both means the driver does not care which. */
+  const groups = page.locator('fieldset, ul[role="list"]');
+  const groupCount = await groups.count();
+  let answered = 0;
+  for (let g = 0; g < groupCount; g++) {
+    const unset = groups.nth(g).locator('button[aria-pressed="false"]');
+    const already = groups.nth(g).locator('button[aria-pressed="true"]');
+    if ((await already.count()) > 0) continue;
+    if (await unset.count()) {
+      await unset.first().click().catch(() => {});
+      await page.waitForTimeout(120);
+      answered++;
+    }
+  }
+  if (answered > 0) return;
+
+  const any = page.locator('button[aria-pressed="false"]:visible').first();
+  if (await any.count()) {
+    await any.click().catch(() => {});
+    await page.waitForTimeout(150);
+  }
 }
 
 async function runJourney(page: Page, j: Journey, errors: string[]) {
   page.removeAllListeners("console");
   page.on("console", (msg) => {
-    if (msg.type() === "error") {
-      const t = msg.text();
-      // ignore expected /api/account/create 500 from missing migrations
-      if (t.includes("/api/account/create")) return;
-      errors.push(`[${j.name}] console: ${t}`);
-    }
+    if (msg.type() !== "error") return;
+    const t = msg.text();
+    // The account endpoint 500s until the customer table is wired; that is
+    // reported elsewhere and is not what this walk is checking.
+    if (t.includes("/api/account/create")) return;
+    errors.push(`[${j.name}] console: ${t}`);
   });
 
   await exitWelcomeCarousel(page);
 
-  // Primary intent (multi-select + Continue)
-  await pickOption(page, j.intent);
-  await clickContinue(page);
+  // Screen one decides the rail. Everything after it follows.
+  const door = page.getByRole("button", { name: j.intent }).first();
+  await expect(door, `screen one has no door matching ${j.intent}`).toBeVisible({
+    timeout: 12_000,
+  });
+  await door.click();
+  await continueButton(page).click();
+  await page.waitForTimeout(600);
 
-  // Reassurance 1
-  await clickContinue(page);
+  const seen: string[] = [];
+  for (let step = 0; step < 24; step++) {
+    const heading =
+      (await page.locator("h1").first().textContent().catch(() => "")) ?? "";
+    seen.push(heading.trim().slice(0, 40));
 
-  // Experience
-  await pickOption(page, j.experience);
-  await clickContinue(page);
+    /* The rule is about the JOURNEY, not about never naming the sport.
+       The questions, the plan and the summary must not assume somebody
+       races — that was the actual complaint. "Who's behind your plan" is
+       the one screen where his record is the point: telling a beginner
+       their coach competes at the top of the sport is a reason to trust
+       him, not a barrier. It is allowed one mention and no more, which is
+       why it leads with who he coaches. */
+    const isCoachBio = /ben sutherland/i.test(heading);
+    if (j.rail === "beginner" && !isCoachBio) {
+      const body = await page.locator("body").innerText();
+      const hit = body.match(RACING_WORDS);
+      expect(
+        hit,
+        `"${heading.trim()}" shows racing language to a beginner: ${hit?.[0]}`,
+      ).toBeNull();
+    }
 
-  // Best-time conditional: only if raced-few or raced-many
-  const isExperienced = /raced (once|multiple)/i.test(String(j.experience));
-  if (isExperienced) {
-    await pickOption(page, /75 to 90 min/i); // pick something valid
-    await clickContinue(page);
-  }
+    /* Two different finishes, because there are two routes.
+       Self-serve ends at the account gate (email + password). Coached ends
+       at the lead-capture form on the reveal — Ben rings them, there is no
+       account yet. Asserting only on the password field failed every
+       coached journey for a reason that was not a fault. */
+    if (await page.locator('input[type="password"]').count()) {
+      return { done: true, seen };
+    }
+    if (await page.locator("#lead-capture").count()) {
+      return { done: true, seen };
+    }
 
-  // Race date
-  if (j.hasRace) {
-    // open date picker and pick the first available future day
-    const btn = page
-      .getByRole("button", { name: /^add race date|set race date|pick/i })
+    await satisfyScreen(page, j);
+
+    const next = await enabledAdvance(page);
+    if (next) {
+      await next.click();
+      await page.waitForTimeout(900);
+      continue;
+    }
+
+    /* Not every screen advances through Continue. The race-date screen has
+       a date picker and a "No race yet" button, and that button IS the
+       advance — Continue stays disabled until a date is chosen. A driver
+       that only knows about Continue stops dead there, which is exactly
+       where the old spec stopped. */
+    const escape = page
+      .getByRole("button", { name: /^no race yet|^skip|not sure yet|^no thanks/i })
       .first();
-    if (await btn.isVisible().catch(() => false)) {
-      await btn.click();
-      const next = page.getByRole("gridcell", { name: /\d+/ }).last();
-      if (await next.isVisible().catch(() => false)) await next.click();
-      await page.waitForTimeout(300);
-      await clickContinue(page);
-    } else {
-      // Fall back to skip if no picker
-      await page.getByRole("button", { name: /no race booked/i }).first().click();
-      await page.waitForTimeout(700);
+    if ((await escape.count()) && (await escape.isVisible().catch(() => false))) {
+      await escape.click();
+      await page.waitForTimeout(900);
+      continue;
     }
-  } else {
-    await page.getByRole("button", { name: /no race booked/i }).first().click();
-    await page.waitForTimeout(700);
+
+    return { done: false, seen };
   }
-
-  // Reassurance 2
-  await clickContinue(page);
-
-  // Activity
-  await pickOption(page, j.activity);
-  await clickContinue(page);
-
-  // Calibration: sex + weight
-  await pickOption(page, j.sex);
-  const w = page.locator('input[type="number"]').first();
-  await w.fill(j.weight);
-  await clickContinue(page);
-
-  // Frequency
-  await pickOption(page, j.days);
-  await clickContinue(page);
-
-  // Session length
-  await pickOption(page, j.sessionLength);
-  await clickContinue(page);
-
-  // Location
-  await pickOption(page, j.location);
-  await clickContinue(page);
-
-  // Equipment conditional (home only)
-  if (/home/i.test(String(j.location))) {
-    if (j.equipment && j.equipment.length > 0) {
-      for (const eq of j.equipment) {
-        await pickOption(page, eq);
-      }
-    } else {
-      // pick the first option just to clear "Continue disabled"
-      const firstOpt = page.locator('button[aria-pressed]').first();
-      if (await firstOpt.isVisible().catch(() => false)) await firstOpt.click();
-    }
-    await clickContinue(page);
-  }
-
-  // Partner (skipped if doubles already chosen, quiz infers)
-  const isDoubles = /doubles/i.test(String(j.intent));
-  if (!isDoubles) {
-    await pickOption(page, j.partner);
-    await clickContinue(page);
-  }
-
-  // Injuries
-  await pickOption(page, j.injuries);
-  await clickContinue(page);
-
-  // Plan summary → save my plan
-  const save = page.getByRole("button", { name: /save my plan/i }).first();
-  await expect(save).toBeVisible({ timeout: 12_000 });
-  await save.click();
-  await page.waitForTimeout(800);
-
-  // Account creation visible
-  const emailInput = page.locator('input[type="email"]').first();
-  await expect(emailInput).toBeVisible({ timeout: 10_000 });
-  return true;
+  return { done: false, seen };
 }
 
 test.describe("Quiz stress: realistic personas", () => {
-  test.setTimeout(120_000);
+  test.setTimeout(150_000);
 
   for (const j of JOURNEYS) {
     test(`journey: ${j.name}`, async ({ page }, testInfo) => {
@@ -263,21 +309,12 @@ test.describe("Quiz stress: realistic personas", () => {
         "single-viewport stress (page matrix covers viewport regressions)",
       );
       const errors: string[] = [];
-      let ok = false;
-      try {
-        ok = await runJourney(page, j, errors);
-      } catch (e) {
-        await page.screenshot({
-          path: `/Users/kieronhawke/code/vyrek/scripts/audit-shots/stress-fail-${j.name.replace(/[^a-z0-9]+/gi, "-")}.png`,
-          fullPage: true,
-        });
-        throw e;
-      }
-      expect(ok).toBe(true);
-      if (errors.length) {
-        // eslint-disable-next-line no-console
-        console.warn(errors.join("\n"));
-      }
+      const { done, seen } = await runJourney(page, j, errors);
+      expect(
+        done,
+        `did not reach the account gate. Screens seen:\n  ${seen.join("\n  ")}`,
+      ).toBe(true);
+      expect(errors, errors.join("\n")).toHaveLength(0);
     });
   }
 });

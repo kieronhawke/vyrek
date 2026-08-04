@@ -49,7 +49,7 @@ export function ActivityBaselineScreen({
         question="How active are you right now?"
         helper="Be honest. We'll start where you are."
       />
-      <ul role="list" className="space-y-3">
+      <ul role="list" className="space-y-3 lg:space-y-2.5">
         {OPTIONS.map((opt) => (
           <li key={opt.value}>
             <OptionCard

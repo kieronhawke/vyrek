@@ -30,22 +30,53 @@ export function OnboardingWelcome({
   confirmed,
   trialing,
   hadSession,
+  sessionId,
 }: {
   name: string;
   planKey: string;
   confirmed: boolean;
   trialing: boolean;
   hadSession: boolean;
+  /** The Stripe session. Creating the account is authorised by it, not by us. */
+  sessionId?: string;
 }) {
   const plan = planByKey(planKey);
   const first = name.split(/\s+/)[0];
   const [lit, setLit] = useState(false);
+  const [emailedTo, setEmailedTo] = useState<string | null>(null);
 
   // One frame later, so the transition has a start state to move from.
   useEffect(() => {
     const id = requestAnimationFrame(() => setLit(true));
     return () => cancelAnimationFrame(id);
   }, []);
+
+  /* CREATE THE ACCOUNT THEY HAVE JUST BEEN TOLD THEY HAVE.
+     This page has said "your account is set up" since it was written, and
+     nothing created one — the journey stopped at Stripe. The endpoint is
+     idempotent and authorised by the Stripe session, so a refresh, a shared
+     link or a double mount all produce the same account and the same email
+     rather than duplicates. */
+  useEffect(() => {
+    if (!sessionId || !confirmed) return;
+    let live = true;
+    fetch("/api/onboarding/activate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sessionId }),
+    })
+      .then((r) => r.json())
+      .then((d: { ok?: boolean; email?: string }) => {
+        if (live && d.ok && d.email) setEmailedTo(d.email);
+      })
+      .catch(() => {
+        /* They have paid and are looking at the confirmation. A failure here
+           is for the logs and for Ben, not for this screen. */
+      });
+    return () => {
+      live = false;
+    };
+  }, [sessionId, confirmed]);
 
   return (
     <div className="ob obw" data-lit={lit || undefined}>
@@ -101,12 +132,23 @@ export function OnboardingWelcome({
           </li>
         </ol>
 
+        {/* "Go to my account" sent them to /app, where the gate bounced them
+            to a login they had no password for — the flow deliberately never
+            asks for one. The way in is the link in the email, so that is
+            what this says. */}
+        {emailedTo ? (
+          <p className="obw-note" aria-live="polite">
+            Check <strong>{emailedTo}</strong> — I&apos;ve sent you a link
+            that signs you straight in. No password to remember.
+          </p>
+        ) : null}
+
         <div className="obw-actions">
-          <Link href="/app" className="obw-go">
-            Go to my account
+          <Link href="/login" className="obw-go">
+            {emailedTo ? "Sign in" : "Go to my account"}
           </Link>
-          <Link href="/app/plan" className="obw-second">
-            See what&apos;s there
+          <Link href="/" className="obw-second">
+            Back to the site
           </Link>
         </div>
 

@@ -13,7 +13,13 @@ export type IntentValue =
   | "go-faster"
   | "doubles"
   | "getting-into"
-  | "building";
+  | "building"
+  /* The two doors that are not about racing. Added 3 August 2026: before
+     this, every option on screen one named HYROX, so somebody who had come
+     to get fit had no honest answer and the quiz put them on the racing
+     rail by default. See railForIntent below. */
+  | "get-fit"
+  | "lose-weight";
 
 export type ExperienceValue =
   | "never"
@@ -103,6 +109,16 @@ export type ReadinessValue = "this-week" | "this-month" | "just-looking";
 export type QuizAnswers = {
   intent: IntentValue[];
   rail?: QuizRail;
+  /**
+   * Set only when the rail came from the entry surface (a ?rail= link from
+   * a personal-training page), never when it came from screen one.
+   *
+   * Screen one is what sets the rail now, so "has a rail" can no longer
+   * mean "skip screen one" — that would make the screen delete itself the
+   * instant somebody answered it, throwing them onto screen two mid-tap.
+   * Same shape as supportLocked, for the same reason.
+   */
+  railLocked?: boolean;
   goal?: GoalValue;
   startingPoint?: StartingPointValue;
   triedBefore?: TriedBeforeValue;
@@ -274,13 +290,79 @@ export function applyRailPreSelect(
   rail: string | null,
 ): QuizAnswers {
   if (rail !== "beginner" && rail !== "athlete") return current;
-  if (current.rail === rail) return current;
-  return { ...current, rail };
+  if (current.rail === rail && current.railLocked) return current;
+  return { ...current, rail, railLocked: true };
 }
 
 /** True only for an explicit beginner rail, never for the undefined default. */
 export function isBeginnerRail(a: QuizAnswers): boolean {
   return a.rail === "beginner";
+}
+
+/**
+ * Which rail a screen-one answer puts somebody on.
+ *
+ * THIS IS THE ROUTING DECISION, and until 3 August 2026 nothing made it.
+ * The rail could only be set from the URL, so anybody who arrived at /quiz
+ * directly — the overwhelming majority — was handed the racing questions
+ * whatever they said they wanted. Somebody who came to lose weight got
+ * asked their best HYROX time.
+ *
+ * Screen one is single-select for the same reason. It used to allow two
+ * answers, which on a screen that now decides the route could mean picking
+ * "my first race" and "just get fit" together and leaving the quiz to
+ * guess which person it was talking to.
+ */
+export function railForIntent(intent: IntentValue): QuizRail {
+  return intent === "get-fit" || intent === "lose-weight"
+    ? "beginner"
+    : "athlete";
+}
+
+/**
+ * The beginner doors that already answer the goal question, so it is not
+ * asked twice. "Get fit" stays open because it spans several goals, and
+ * the goal screen is where that gets pinned down.
+ */
+const INTENT_GOAL: Partial<Record<IntentValue, GoalValue>> = {
+  "lose-weight": "lose-weight",
+};
+
+/**
+ * Apply a screen-one answer: sets the intent, the rail it implies, and any
+ * goal that answer already gave us.
+ *
+ * Switching rails clears the answers belonging to the rail being left.
+ * Without that, somebody who picked "my first race", answered two racing
+ * questions, went back and switched to "get fit" would carry a race date
+ * into a plan that must never mention racing — and `summarise` would print
+ * it back to them.
+ */
+export function applyIntent(
+  current: QuizAnswers,
+  intent: IntentValue,
+): QuizAnswers {
+  const rail = railForIntent(intent);
+  const next: QuizAnswers = { ...current, intent: [intent], rail };
+
+  const goal = INTENT_GOAL[intent];
+  if (goal) next.goal = goal;
+
+  if (rail === "beginner") {
+    delete next.experience;
+    delete next.bestTime;
+    delete next.raceDate;
+    delete next.sex;
+    delete next.weight;
+    delete next.partner;
+  } else {
+    delete next.goal;
+    delete next.startingPoint;
+    delete next.triedBefore;
+    delete next.barriers;
+  }
+
+  return next;
 }
 
 /**

@@ -22,11 +22,13 @@ type Step = {
   cta?: { label: string; href: string };
 };
 
+/* Step 3 talks about Ben monitoring your progress, so it shows Ben.
+   These were three frames from the generic track shoot. */
 const STEPS: Step[] = [
   {
     number: "01",
     label: "Take the quiz",
-    image: "/media/images/track/solo-watch-bw.jpg",
+    image: "/media/images/camp/camp-portrait-dawn-hr-strap-wide.jpg",
     body: [
       "Around 3 minutes. We ask about your race, your experience, the time you can commit, the kit you can train with, and any injuries to plan around.",
       "Single-select questions auto-advance. Multi-select uses a Continue button. Your answers save as you go, so a refresh, a phone call, or a closed tab doesn't cost you anything.",
@@ -35,7 +37,7 @@ const STEPS: Step[] = [
   {
     number: "02",
     label: "See your Week 1",
-    image: "/media/images/track/straight-elevated-colour.jpg",
+    image: "/media/images/camp/camp-trail-run-pair-sky-wide.jpg",
     body: [
       "Real workouts, dated, for free. Day-by-day for the next seven days, structured to fit the time you have and the kit you have access to.",
       "Tap any day to open the full session: warm-up, main block, cool-down. Total time, intensity zone, every block listed. No demo screens. This is your actual first week.",
@@ -44,7 +46,7 @@ const STEPS: Step[] = [
   {
     number: "03",
     label: "Start your trial",
-    image: "/media/images/track/pair-frontal-colour.jpg",
+    image: "/media/images/camp/camp-portrait-forders-banner-wide.jpg",
     body: [
       "It starts with a free consultation. No commitment.",
       "From day 1, Ben Sutherland, your Elite 15 coach, is monitoring your progress, ready to answer questions about your training, your form, your race strategy.",

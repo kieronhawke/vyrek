@@ -26,7 +26,7 @@ export function BestTimeScreen({
         question="What's your best Hyrox time?"
         helper="We'll calibrate your plan to match."
       />
-      <ul role="list" className="space-y-3">
+      <ul role="list" className="space-y-3 lg:space-y-2.5">
         {OPTIONS.map((opt) => (
           <li key={opt.value}>
             <OptionCard

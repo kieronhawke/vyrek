@@ -1,11 +1,6 @@
 import {
-  Body,
   Button,
-  Container,
-  Head,
   Heading,
-  Html,
-  Preview,
   Text,
 } from "@react-email/components";
 import {
@@ -20,14 +15,11 @@ import {
   TEXT_DIM,
   TECH_MARK,
 } from "@/lib/email/templates/_styles";
+import { EmailLayout } from "@/lib/email/templates/_layout";
 
 export function Day3Email() {
   return (
-    <Html>
-      <Head />
-      <Preview>Three days in. Most members say day 3 is the hardest.</Preview>
-      <Body style={bodyStyle}>
-        <Container style={containerStyle}>
+    <EmailLayout preview={`Three days in. Most members say day 3 is the hardest.`} campaign="day-3">
           <Text style={monoEyebrow}>[ DAY 03 ]</Text>
           <Heading
             style={{
@@ -79,8 +71,6 @@ export function Day3Email() {
           <hr style={hrRule} />
 
           <Text style={techMarkStyle}>{TECH_MARK}</Text>
-        </Container>
-      </Body>
-    </Html>
+        </EmailLayout>
   );
 }

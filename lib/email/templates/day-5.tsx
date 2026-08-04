@@ -1,11 +1,6 @@
 import {
-  Body,
   Button,
-  Container,
-  Head,
   Heading,
-  Html,
-  Preview,
   Text,
 } from "@react-email/components";
 import {
@@ -20,6 +15,7 @@ import {
   TEXT_DIM,
   TECH_MARK,
 } from "@/lib/email/templates/_styles";
+import { EmailLayout } from "@/lib/email/templates/_layout";
 
 export function Day5Email({
   sessionsLogged,
@@ -27,11 +23,7 @@ export function Day5Email({
   sessionsLogged?: number;
 } = {}) {
   return (
-    <Html>
-      <Head />
-      <Preview>Two days left in your trial. Week 2 lands tomorrow.</Preview>
-      <Body style={bodyStyle}>
-        <Container style={containerStyle}>
+    <EmailLayout preview={`Two days left in your trial. Week 2 lands tomorrow.`} campaign="day-5">
           <Text style={monoEyebrow}>[ DAY 05 · 2 DAYS LEFT ]</Text>
           <Heading
             style={{
@@ -85,8 +77,6 @@ export function Day5Email({
           <hr style={hrRule} />
 
           <Text style={techMarkStyle}>{TECH_MARK}</Text>
-        </Container>
-      </Body>
-    </Html>
+        </EmailLayout>
   );
 }

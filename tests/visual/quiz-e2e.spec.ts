@@ -100,7 +100,8 @@ test.describe("Quiz V3, happy path UI walk", () => {
     await tapWelcomeCarouselThrough(page);
 
     // === Screen 2: Primary intent (multi-select + Continue) ===
-    await pickSingle(page, "Training for my first Hyrox");
+    // Screen one was relabelled when it became the rail chooser.
+    await pickSingle(page, /my first HYROX race/i);
     await clickContinue(page);
 
     // === Screen 3: Reassurance 1 ===
@@ -156,7 +157,7 @@ test.describe("Quiz V3, happy path UI walk", () => {
     await clickContinue(page);
 
     // === Screen 12: Location ===
-    await pickSingle(page, /standard commercial gym/i);
+    await pickSingle(page, /a normal gym|standard commercial gym/i);
     await clickContinue(page);
 
     // Equipment screen only shows if location = home; skipped here.
@@ -280,12 +281,15 @@ test.describe("Quiz V3, happy path UI walk", () => {
     await clickContinue(page);
     await pickSingle(page, /^30 min/i);
     await clickContinue(page);
-    await pickSingle(page, /home setup/i);
+    // "At home" on the beginner rail, "Home setup" on the athlete one.
+    await pickSingle(page, /^at home|home setup/i);
     await clickContinue(page);
     // Home training opens the equipment screen, which does require an
     // answer: "Bodyweight only" is the honest floor rather than an empty
     // selection we'd have to guess at.
-    await pickSingle(page, /bodyweight only/i);
+    // The beginner kit list says "Nothing yet" rather than "Bodyweight only",
+    // and offers no sled, ski erg or wall ball.
+    await pickSingle(page, /nothing yet|bodyweight only/i);
     await clickContinue(page);
     await pickSingle(page, /no injuries/i);
     await clickContinue(page);
@@ -354,7 +358,7 @@ test.describe("Quiz V3, happy path UI walk", () => {
     await clickContinue(page);
     await pickSingle(page, /^45 min/i);
     await clickContinue(page);
-    await pickSingle(page, /standard commercial gym/i);
+    await pickSingle(page, /a normal gym|standard commercial gym/i);
     await clickContinue(page);
     await pickSingle(page, /no injuries/i);
     await clickContinue(page);

@@ -72,7 +72,7 @@ export function GoalScreen({
         question="What matters most right now?"
         helper="Pick the one that would mean the most to you."
       />
-      <ul role="list" className="space-y-3">
+      <ul role="list" className="space-y-3 lg:space-y-2.5">
         {GOALS.map((opt) => (
           <li key={opt.value}>
             <OptionCard
@@ -130,7 +130,7 @@ export function StartingPointScreen({
         question="Where are you starting from?"
         helper="Be honest. It only changes where week one begins."
       />
-      <ul role="list" className="space-y-3">
+      <ul role="list" className="space-y-3 lg:space-y-2.5">
         {STARTING_POINTS.map((opt) => (
           <li key={opt.value}>
             <OptionCard
@@ -179,7 +179,7 @@ export function TriedBeforeScreen({
         question="Have you tried to get fit before?"
         helper="No judgement here. Most people have, and it matters for how we build this."
       />
-      <ul role="list" className="space-y-3">
+      <ul role="list" className="space-y-3 lg:space-y-2.5">
         {TRIED_BEFORE.map((opt) => (
           <li key={opt.value}>
             <OptionCard
@@ -287,7 +287,7 @@ export function ReadinessScreen({
         question="When could you realistically start?"
         helper="So Ben knows whether to ring you this week or leave you be."
       />
-      <ul role="list" className="space-y-3">
+      <ul role="list" className="space-y-3 lg:space-y-2.5">
         {READINESS.map((opt) => (
           <li key={opt.value}>
             <OptionCard

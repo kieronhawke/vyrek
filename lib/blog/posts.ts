@@ -165,8 +165,20 @@ export function listPosts(): Promise<Post[]> {
     const posts = (
       await Promise.all(files.map((f) => parseFile(f)))
     ).filter((p): p is Post => p !== null);
-    // Newest first
-    posts.sort((a, b) => (a.publishedAt > b.publishedAt ? -1: 1));
+    /* Newest first, then slug, so the order is deterministic.
+       The old comparator never returned 0, so for the hundred-odd posts
+       sharing a publish date the result was whatever the sort happened to
+       do with an inconsistent comparator. That matters more than it sounds:
+       hero images are assigned so that no two neighbouring cards share one,
+       and a listing order that can move invalidates that the moment anything
+       is re-parsed in a different order. */
+    posts.sort((a, b) =>
+      a.publishedAt === b.publishedAt
+        ? a.slug.localeCompare(b.slug)
+        : a.publishedAt > b.publishedAt
+          ? -1
+          : 1,
+    );
     return posts;
   })();
   return cached;
@@ -212,8 +224,38 @@ export async function listRelatedPosts(
     score += sharedTags * 2;
     return { p, score };
   });
-  scored.sort((a, b) => b.score - a.score || (a.p.publishedAt < b.p.publishedAt ? 1: -1));
-  return scored.slice(0, limit).map((s) => s.p);
+  scored.sort(
+    (a, b) =>
+      b.score - a.score ||
+      (a.p.publishedAt === b.p.publishedAt
+        ? a.p.slug.localeCompare(b.p.slug)
+        : a.p.publishedAt < b.p.publishedAt
+          ? 1
+          : -1),
+  );
+
+  /* Never put the same photograph in two cards of one strip.
+     Hero images are assigned so that no two neighbouring cards on the index
+     or a category page share one, but related posts are ordered by relevance,
+     which is a different order per post and cannot be pre-solved for all 120.
+     So the rule is enforced here, where the list is actually built: take the
+     highest-scoring post whose hero is not already in this strip, and only
+     fall back to a repeat if the pool genuinely runs out. */
+  const picked: PostMeta[] = [];
+  const usedImages = new Set<string>();
+  for (const { p } of scored) {
+    if (picked.length >= limit) break;
+    if (p.heroImage && usedImages.has(p.heroImage)) continue;
+    picked.push(p);
+    if (p.heroImage) usedImages.add(p.heroImage);
+  }
+  if (picked.length < limit) {
+    for (const { p } of scored) {
+      if (picked.length >= limit) break;
+      if (!picked.includes(p)) picked.push(p);
+    }
+  }
+  return picked;
 }
 
 export async function listFeaturedPosts(limit = 1): Promise<PostMeta[]> {

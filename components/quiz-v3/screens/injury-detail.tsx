@@ -24,7 +24,7 @@ const CARE_ORDER: InjuryCareValue[] = ["physio", "self-managed", "not-assessed"]
 
 function GroupLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mb-3 mt-8 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary first:mt-0">
+    <p className="mb-3 mt-8 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary first:mt-0 lg:mb-2 lg:mt-5">
       {children}
     </p>
   );
@@ -57,21 +57,45 @@ export function InjuryDetailScreen({
         helper="A clearer picture means safer swaps and smarter loading, not a watered-down plan."
       />
 
-      <GroupLabel>How is it right now?</GroupLabel>
-      <ul role="list" className="space-y-3">
-        {RECENCY_ORDER.map((v) => (
-          <li key={v}>
-            <OptionCard
-              label={INJURY_RECENCY_LABEL[v]}
-              selected={recency === v}
-              onClick={() => onRecency(v)}
-            />
-          </li>
-        ))}
-      </ul>
+      {/* Three question groups on one screen makes this the tallest in the
+          funnel — on a 1280x800 laptop the button ended up 75px under the
+          fold. The two single-select groups sit side by side from lg, which
+          is enough on its own; the multi-select pills keep the full width
+          because they wrap. */}
+      <div className="lg:grid lg:grid-cols-2 lg:gap-x-5">
+        <div>
+          <GroupLabel>How is it right now?</GroupLabel>
+          <ul role="list" className="space-y-3 lg:space-y-2">
+            {RECENCY_ORDER.map((v) => (
+              <li key={v}>
+                <OptionCard
+                  label={INJURY_RECENCY_LABEL[v]}
+                  selected={recency === v}
+                  onClick={() => onRecency(v)}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <GroupLabel>Anyone helping you with it?</GroupLabel>
+          <ul role="list" className="space-y-3 lg:space-y-2">
+            {CARE_ORDER.map((v) => (
+              <li key={v}>
+                <OptionCard
+                  label={INJURY_CARE_LABEL[v]}
+                  selected={care === v}
+                  onClick={() => onCare(v)}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
 
       <GroupLabel>What tends to aggravate it? Pick any.</GroupLabel>
-      <ul role="list" className="flex flex-wrap gap-2.5">
+      <ul role="list" className="flex flex-wrap gap-2.5 lg:gap-2">
         {triggerOptions.map((opt) => {
           const on = triggers.includes(opt.value);
           return (
@@ -94,18 +118,6 @@ export function InjuryDetailScreen({
         })}
       </ul>
 
-      <GroupLabel>Anyone helping you with it?</GroupLabel>
-      <ul role="list" className="space-y-3">
-        {CARE_ORDER.map((v) => (
-          <li key={v}>
-            <OptionCard
-              label={INJURY_CARE_LABEL[v]}
-              selected={care === v}
-              onClick={() => onCare(v)}
-            />
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }

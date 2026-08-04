@@ -1,11 +1,6 @@
 import {
-  Body,
   Button,
-  Container,
-  Head,
   Heading,
-  Html,
-  Preview,
   Text,
 } from "@react-email/components";
 import {
@@ -20,14 +15,11 @@ import {
   TEXT_DIM,
   TECH_MARK,
 } from "@/lib/email/templates/_styles";
+import { EmailLayout } from "@/lib/email/templates/_layout";
 
 export function CancellationEmail() {
   return (
-    <Html>
-      <Head />
-      <Preview>You&apos;re cancelled. Doors are open if you&apos;re back.</Preview>
-      <Body style={bodyStyle}>
-        <Container style={containerStyle}>
+    <EmailLayout preview={`You&apos;re cancelled. Doors are open if you&apos;re back.`} campaign="cancellation">
           <Text style={monoEyebrow}>[ MEMBERSHIP CANCELLED ]</Text>
           <Heading
             style={{
@@ -65,8 +57,6 @@ export function CancellationEmail() {
 
           <hr style={hrRule} />
           <Text style={techMarkStyle}>{TECH_MARK}</Text>
-        </Container>
-      </Body>
-    </Html>
+        </EmailLayout>
   );
 }

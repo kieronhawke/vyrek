@@ -1,12 +1,7 @@
 import {
-  Body,
   Button,
-  Container,
-  Head,
   Heading,
-  Html,
   Link,
-  Preview,
   Section,
   Text,
 } from "@react-email/components";
@@ -26,6 +21,7 @@ import {
   BORDER,
   TECH_MARK,
 } from "@/lib/email/templates/_styles";
+import { EmailLayout } from "@/lib/email/templates/_layout";
 
 export function Day6Email({
   week2Teasers = [
@@ -37,11 +33,7 @@ export function Day6Email({
   week2Teasers?: string[];
 } = {}) {
   return (
-    <Html>
-      <Head />
-      <Preview>Tomorrow: £8.99. Cancel anytime.</Preview>
-      <Body style={bodyStyle}>
-        <Container style={containerStyle}>
+    <EmailLayout preview={`Tomorrow: £8.99. Cancel anytime.`} campaign="day-6">
           <Text style={monoEyebrow}>[ DAY 06 · TOMORROW: £8.99 ]</Text>
           <Heading
             style={{
@@ -141,8 +133,6 @@ export function Day6Email({
           <hr style={hrRule} />
 
           <Text style={techMarkStyle}>{TECH_MARK}</Text>
-        </Container>
-      </Body>
-    </Html>
+        </EmailLayout>
   );
 }

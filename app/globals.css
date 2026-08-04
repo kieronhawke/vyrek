@@ -260,6 +260,22 @@ body {
   min-height: 100svh;
 }
 
+/* A full screen, for the screens that must be exactly one.
+ *
+ * `h-svh` is wrong anywhere inside this body, and the quiz is the place it
+ * showed. While the cookie decision is outstanding — which is every
+ * first-time visitor, so most people entering the funnel — `body` carries
+ * `padding-top: 48px`. A child asking for 100svh then measures 48px taller
+ * than the space it has, and the bottom 48px goes under the fold: on the
+ * quiz that was the Continue button on any screen tall enough to fill the
+ * viewport, on the entry screen it was the last line of the headline.
+ *
+ * Subtracting the strip is the whole fix, and it self-corrects when the
+ * banner clears the variable on a decision. */
+.quiz-viewport {
+  height: calc(100svh - var(--suth-consent-h, 0px));
+}
+
 /* Headings default to the Oswald display family — the brief's "athletic
  * editorial" voice. Per-component classes (font-bold, tracking-*, etc.)
  * layer on top normally. */

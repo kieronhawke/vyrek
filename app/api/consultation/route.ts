@@ -2,6 +2,18 @@ import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { limiters, requestIp } from "@/lib/rate-limit";
 import {
+  cleanSessionContext,
+  describeDuration,
+  googleMapsUrl,
+  requestLocation,
+} from "@/lib/geo/request-location";
+import { siteUrl } from "@/lib/site-url";
+import { newLeadId, shortPlace, type Lead } from "@/lib/leads/model";
+import { saveLead } from "@/lib/leads/store";
+import { leadAlertSms } from "@/lib/leads/alert";
+import { mapImagePath } from "@/lib/geo/static-map";
+import { sendSms } from "@/lib/sms/send";
+import {
   sendInternalLeadBrief,
   sendLeadConfirmation,
 } from "@/lib/email/send";
@@ -38,6 +50,8 @@ type Body = {
   readiness?: string;
   programme?: string;
   injury?: string;
+  /** How they got here, sent by the browser. Sanitised before use. */
+  session?: unknown;
 };
 
 /** Trim and cap a free-text field coming from the client. */
@@ -47,14 +61,22 @@ function short(v: string | undefined, max = 80): string | undefined {
 }
 
 const EMAIL_RE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,24}$/;
-const GOALS = [
-  "get-fit",
-  "lose-weight",
-  "first-hyrox",
-  "improve-hyrox-time",
-  "elite-ambitions",
-  "not-sure",
-];
+/**
+ * The values the form posts, and what they are called in front of a person.
+ *
+ * The slug was going straight into Ben's email and onto the lead page —
+ * "GOAL: get-fit" — which is the form's internal vocabulary leaking into
+ * the one place a human reads it.
+ */
+const GOAL_LABELS: Record<string, string> = {
+  "get-fit": "Get fit",
+  "lose-weight": "Lose weight",
+  "first-hyrox": "First HYROX race",
+  "improve-hyrox-time": "A faster HYROX time",
+  "elite-ambitions": "Elite ambitions",
+  "not-sure": "Not sure yet",
+};
+const GOALS = Object.keys(GOAL_LABELS);
 
 function validate(b: Body): string | null {
   if (b.company) return "Something went wrong."; // honeypot tripped
@@ -119,6 +141,48 @@ export async function POST(req: Request) {
   const inbox = process.env.CONSULTATION_INBOX ?? "kieron.hawke@gmail.com";
   const firstName = lead.name.split(" ")[0];
 
+  // City-level, off the Vercel edge headers. Null everywhere else, which
+  // the template is written to handle.
+  const loc = requestLocation(req);
+  const session = cleanSessionContext(body.session);
+
+  // Stored first, so the email and the text both have a link to point at.
+  // A storage failure is survivable — the alerts still carry everything —
+  // so the id is dropped rather than the enquiry.
+  const record: Lead = {
+    id: newLeadId(),
+    createdISO: new Date().toISOString(),
+    name: lead.name,
+    email: lead.email,
+    phone: lead.phone,
+    rail: short(body.rail) ?? null,
+    wants: short(body.wants) ?? "A free consultation",
+    readiness: short(body.readiness) ?? null,
+    goal: GOAL_LABELS[lead.goal] ?? lead.goal,
+    programme: short(body.programme) ?? null,
+    injury: short(body.injury) ?? null,
+    brief: lead.message ?? "No quiz answers: came from the consultation form.",
+    city: loc.city,
+    region: loc.region,
+    country: loc.country,
+    latitude: loc.latitude,
+    longitude: loc.longitude,
+    landingPath: session.landingPath ?? null,
+    referrer: session.referrer ?? null,
+    secondsOnSite: session.secondsOnSite ?? null,
+    pageViews: session.pageViews ?? null,
+    sourcePath: lead.source_path,
+  };
+  const leadStored = await saveLead(record);
+  // Server-side only, and worth having: when Ben says "the link in the text
+  // 404s", this is the difference between diagnosing it and guessing. The
+  // id is the capability, so it goes to the log and never to the browser.
+  console.info(
+    `[consultation] lead ${record.id} ${leadStored ? "stored" : "NOT STORED"} · ${lead.name}`,
+  );
+  const leadUrl = leadStored ? `${siteUrl()}/l/${record.id}` : null;
+  const place = shortPlace(record);
+
   const internal = await sendInternalLeadBrief({
     to: inbox,
     name: lead.name,
@@ -127,12 +191,40 @@ export async function POST(req: Request) {
     rail: short(body.rail) ?? "Direct enquiry",
     wants: short(body.wants) ?? "A free consultation",
     readiness: short(body.readiness),
-    goal: lead.goal,
+    goal: GOAL_LABELS[lead.goal] ?? lead.goal,
     programme: short(body.programme),
     injury: short(body.injury),
     sourcePath: lead.source_path,
     brief: lead.message ?? "No quiz answers: came from the consultation form.",
+    place,
+    mapUrl: googleMapsUrl(loc),
+    // Our own endpoint, composed from OSM tiles. The keyless third-party
+    // static-map host does not resolve any more; see lib/geo/static-map.ts.
+    mapImageUrl:
+      loc.latitude !== null && loc.longitude !== null
+        ? `${siteUrl()}${mapImagePath(loc.latitude, loc.longitude)}`
+        : null,
+    landingPath: session.landingPath ?? null,
+    referrer: session.referrer ?? null,
+    timeOnSite: describeDuration(session.secondsOnSite),
+    pageViews: session.pageViews ?? null,
+    leadUrl,
   });
+
+  // The text. Short on purpose — it fires on every enquiry and every
+  // segment is billed, so it carries the four facts Ben needs to decide
+  // whether to ring now and puts everything else one tap away.
+  if (leadUrl) {
+    void sendSms({
+      to: process.env.BEN_MOBILE ?? "",
+      body: leadAlertSms(record, siteUrl()),
+      sender: "brand",
+    }).then((r) => {
+      if (!r.ok && r.reason !== "NOT_A_PHONE_NUMBER") {
+        console.warn("[consultation] lead text failed", r.reason);
+      }
+    });
+  }
   emailed = internal.ok;
   if (!internal.ok) {
     console.error("[consultation] internal brief failed", internal.reason);
@@ -163,7 +255,18 @@ export async function POST(req: Request) {
     console.error("[consultation] lead confirmation threw", e);
   }
 
-  if (!stored && !emailed) {
+  /* THREE CHANNELS NOW, NOT TWO. The lead record in Redis is a real
+     delivery channel: it is what the text message links to and what Ben
+     opens on his phone, and it is currently the most reliable of the
+     three, because the Supabase project this app points at has been
+     deleted and every insert fails.
+
+     Before this, an enquiry was rejected unless Supabase or Resend
+     accepted it. With Supabase gone that made Resend a single point of
+     failure for the entire funnel: one transient email error and a real
+     person got "we couldn't submit your request" for a lead we had in
+     fact captured. */
+  if (!stored && !emailed && !leadStored) {
     return NextResponse.json(
       {
         ok: false,

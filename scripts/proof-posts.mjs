@@ -103,6 +103,7 @@ const files = readdirSync(DIR)
 
 let totalIssues = 0;
 const summary = [];
+const heroes = [];
 
 for (const file of files) {
   const raw = readFileSync(path.join(DIR, file), "utf8");
@@ -224,10 +225,59 @@ for (const file of files) {
     issues.push("opening paragraph is long — lead with the answer");
   }
 
+  heroes.push({
+    file,
+    slug: (fm.match(/^slug:\s*"(.*?)"/m) || [])[1] ?? file.replace(/\.mdx$/, ""),
+    date: (fm.match(/^publishedAt:\s*"(.*?)"/m) || [])[1] ?? "",
+    cat: (fm.match(/^category:\s*"(.*?)"/m) || [])[1] ?? "",
+    hero: (fm.match(/^heroImage:\s*"(.*?)"/m) || [])[1] ?? "",
+  });
+
   if (issues.length) {
     totalIssues += issues.length;
     summary.push({ file, issues });
   }
+}
+
+/* Hero adjacency.
+   The listings are a 3-up grid on desktop and 2-up on tablet, so a card's
+   neighbours are up to three positions away, and every post appears on the
+   index and on its category page. Two posts sharing a photograph in that
+   window looks like a mistake, which is what it usually is. Enforced here
+   because the assignment is per-post and nothing else would catch post 121
+   duplicating its neighbour.
+
+   Only runs on a full proof: a single-file run has no neighbours to check. */
+const adjacency = [];
+if (!only && heroes.length > 1) {
+  const byDateThenSlug = [...heroes].sort((a, b) =>
+    a.date === b.date ? a.slug.localeCompare(b.slug) : a.date < b.date ? 1 : -1,
+  );
+  const seqs = { index: byDateThenSlug };
+  for (const c of new Set(heroes.map((h) => h.cat).filter(Boolean))) {
+    seqs[`category/${c}`] = byDateThenSlug.filter((h) => h.cat === c);
+  }
+  const WINDOW = 3;
+  const seen = new Set();
+  for (const [name, seq] of Object.entries(seqs)) {
+    for (let i = 0; i < seq.length; i++) {
+      for (let j = i + 1; j < Math.min(i + 1 + WINDOW, seq.length); j++) {
+        if (!seq[i].hero || seq[i].hero !== seq[j].hero) continue;
+        const key = `${seq[i].slug}|${seq[j].slug}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        adjacency.push(
+          `${name}: ${seq[i].slug} and ${seq[j].slug} both use ${seq[i].hero.split("/").pop()}`,
+        );
+      }
+    }
+  }
+}
+
+if (adjacency.length) {
+  console.log(`\n  Hero images repeat within three cards of each other (${adjacency.length}):`);
+  for (const a of adjacency) console.log(`    · ${a}`);
+  console.log("");
 }
 
 if (!summary.length) {

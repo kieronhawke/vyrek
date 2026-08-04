@@ -61,29 +61,29 @@ export function variantCopy(
         </>
       ),
       sub: localSub(seo, name, "hyrox"),
-      heroImage: "/media/images/track/pair-frontal-bw.jpg",
-      heroAlt: "Two athletes running side by side on a sunlit track",
+      heroImage: "/media/images/race/race-start-smoke-wide.jpg",
+      heroAlt: "The pack surging off the start line through smoke cannons",
       cta: "Start the 3-minute quiz",
       benefits: [
         {
           title: "Built backwards from race day",
           body: "Eight stations, eight 1-km runs. Sled push and pull with explicit progression, wall balls scaled to your bodyweight, run intervals that match the race.",
-          image: "/media/images/track/straight-elevated-colour.jpg",
-          alt: "Elevated view of two athletes striding down the track straight",
+          image: "/media/images/race/race-sled-push-wide.jpg",
+          alt: "A deep sled push at full effort, side on",
         },
         {
           title: "Dated to your race, not week numbers",
           body: seo.nearestRace
             ? `Your programme counts back from ${seo.nearestRace.city}. Miss a week and Sunday's rebuild absorbs it — the plan bends, the race date doesn't.`
             : "Tell us your race date and every session lands on a calendar day. Miss a week and Sunday's rebuild absorbs it. The plan bends, the race date doesn't.",
-          image: "/media/images/track/bend-lanes-bw.jpg",
-          alt: "Numbered lanes on the track bend with two runners holding form",
+          image: "/media/images/camp/camp-trail-run-pair-sky-wide.jpg",
+          alt: "Two athletes running uphill under a wide open sky",
         },
         {
           title: "An Elite 15 athlete behind the programming",
           body: "Ben races in the HYROX Elite 15 Doubles with his brother Harry. The programming you follow is the structure he uses, scaled to your level.",
-          image: "/media/images/track/gym-coach-row-colour.jpg",
-          alt: "Coach standing over an athlete mid rowing interval in the gym",
+          image: "/media/images/camp/camp-portrait-forders-banner-wide.jpg",
+          alt: "Ben Sutherland front on after an effort at a training camp",
         },
       ] as Benefit[],
       priceHeading: `What Hyrox coaching costs in ${name}`,
@@ -113,38 +113,35 @@ export function variantCopy(
       </>
     ),
     sub: localSub(seo, name, "pt"),
-    /* Was gym-coach-row-colour.jpg, the darkest image in the library at a mean
-       luminance of 62. Under the scrim it rendered as a black rectangle while
-       the Hyrox variant's shot (85) read fine — the hero was invisible on
-       every personal-trainer page and nobody could see why.
-
-       solo-watch-bw.jpg is the brightest at 154 and suits the copy better: an
-       athlete checking their own watch between reps is what self-directed
-       training looks like, where a coach standing over a rower is the thing
-       these pages argue you do not need. */
-    heroImage: "/media/images/track/solo-watch-bw.jpg",
-    heroAlt: "Athlete checking a training watch on the track between reps",
+    /* Both lanes independently found this: gym-coach-row-colour.jpg had a mean
+       luminance of 62, the darkest image in the library, and rendered as a
+       black rectangle under the scrim while the Hyrox variant's shot at 85
+       read fine. Theirs is the better fix — this camp photograph is part of a
+       set the rest of the page now uses, where my solo-watch-bw.jpg would have
+       been brighter but visually orphaned. */
+    heroImage: "/media/images/camp/camp-turf-run-pair-wide.jpg",
+    heroAlt: "Two athletes running on turf in bright daylight",
     cta: "Start the 3-minute quiz",
     benefits: [
       {
         title: "A programme written for you",
         body: "Your level, your equipment, your available days. The quiz takes three minutes and your first week appears before you decide anything.",
-        image: "/media/images/track/solo-watch-bw.jpg",
-        alt: "Athlete checking a training watch on the track between reps",
+        image: "/media/images/camp/camp-portrait-dawn-hr-strap-wide.jpg",
+        alt: "Ben Sutherland under a rig arch at dawn, heart rate strap on",
       },
       {
         title: "It adapts every single week",
         body: seo.gyms.length
           ? `Log your sessions and the plan recalibrates each Sunday, around whichever of the ${seo.gyms.length} places near ${name} you actually got to. Strong week, it pushes harder. Missed sessions, it rebuilds with more recovery.`
           : "Log your sessions and the plan recalibrates each Sunday. Strong week, next week pushes harder. Missed sessions, next week rebuilds with more recovery.",
-        image: "/media/images/track/straight-elevated-colour.jpg",
-        alt: "Elevated view of two athletes striding down the track straight",
+        image: "/media/images/camp/camp-row-erg-front-wide.jpg",
+        alt: "Rowing front on, seen across the flywheel",
       },
       {
         title: "A real athlete behind it",
         body: "Ben Sutherland competes in the HYROX Elite 15 and coaches athletes from their first session to professional level. Your questions get answered in the app.",
-        image: "/media/images/track/pair-frontal-colour.jpg",
-        alt: "Two athletes running side by side on a sunlit track",
+        image: "/media/images/camp/camp-portrait-profile-wide.jpg",
+        alt: "Ben Sutherland in profile in evening light",
       },
     ] as Benefit[],
     priceHeading: `What personal training costs in ${name}`,

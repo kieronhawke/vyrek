@@ -213,6 +213,20 @@ describe("the summary before paying", () => {
     expect(rows.find((r) => r.label === "Training days")!.value).toBe("Mon, Wed, Sat");
   });
 
+  it("reads the experience back the way it was asked", () => {
+    // The row was hardcoded to racing labels whatever route the client came
+    // down, so somebody asked "starting from scratch / a bit active / I
+    // train regularly" was shown "A few races in" on the screen where they
+    // hand over a card.
+    const a = { ...emptyAnswers("Sam", "s@e.com", ""), experience: "some" as const };
+    expect(summarise(a).find((r) => r.label === "Experience")!.value).toBe(
+      "A few races in",
+    );
+    expect(
+      summarise(a, true).find((r) => r.label === "Experience")!.value,
+    ).toBe("A bit active");
+  });
+
   it("never prints health answers back on the screen", () => {
     // They are Article 9 data and the summary is shown on a phone in public.
     const a = {

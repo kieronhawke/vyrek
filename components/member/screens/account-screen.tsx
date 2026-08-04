@@ -28,12 +28,22 @@ export function AccountScreen({
   email,
   programme,
   subscription: sub,
+  sessionsLogged,
+  blockWeek,
+  blockTotal = 12,
+  memberSince,
   base = "/app",
 }: {
   firstName: string;
   email: string;
   programme: string;
   subscription: AccountSubscription;
+  /** Real training numbers. Omitted on the preview mount, which shows the
+      populated demo block. */
+  sessionsLogged?: number;
+  blockWeek?: number;
+  blockTotal?: number;
+  memberSince?: string | null;
   base?: string;
 }) {
   const portrait = pickPhoto(BEN_PHOTOS, "coach-card");
@@ -124,10 +134,26 @@ export function AccountScreen({
 
       <section style={{ marginBottom: "var(--space-4)" }}>
         <Eyebrow>Your training</Eyebrow>
+        {/* These were hardcoded to 47 sessions, week 4, and April 2026, so
+            the page of record told somebody who signed up this morning that
+            they had been training here since spring. Real numbers, and an
+            honest zero where there is nothing yet. */}
         <StatTiles>
-          <StatTile label="Sessions" value="47" sub="all time" />
-          <StatTile label="This block" value="4" sub="of 12 weeks" />
-          <StatTile label="Member since" value="Apr" sub="2026" />
+          <StatTile
+            label="Sessions"
+            value={String(sessionsLogged ?? 47)}
+            sub="all time"
+          />
+          <StatTile
+            label="This block"
+            value={blockWeek === 0 ? "—" : String(blockWeek ?? 4)}
+            sub={blockWeek === 0 ? "not started" : `of ${blockTotal} weeks`}
+          />
+          <StatTile
+            label="Member since"
+            value={memberSince?.split(" ")[0] ?? "Apr"}
+            sub={memberSince?.split(" ")[1] ?? "2026"}
+          />
         </StatTiles>
       </section>
 

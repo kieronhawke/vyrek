@@ -1,11 +1,6 @@
 import {
-  Body,
   Button,
-  Container,
-  Head,
   Heading,
-  Html,
-  Preview,
   Text,
 } from "@react-email/components";
 import {
@@ -20,6 +15,7 @@ import {
   TEXT_DIM,
   TECH_MARK,
 } from "@/lib/email/templates/_styles";
+import { EmailLayout } from "@/lib/email/templates/_layout";
 
 export function Day1Email({
   workoutTitle,
@@ -31,11 +27,7 @@ export function Day1Email({
   intensity: string;
 }) {
   return (
-    <Html>
-      <Head />
-      <Preview>{`Day 1. ${workoutTitle}, ${durationMin} min.`}</Preview>
-      <Body style={bodyStyle}>
-        <Container style={containerStyle}>
+    <EmailLayout preview={`Day 1. ${workoutTitle}, ${durationMin} min.`} campaign="day-1">
           <Text style={monoEyebrow}>[ DAY 01 ]</Text>
           <Heading
             style={{
@@ -98,8 +90,6 @@ export function Day1Email({
           <hr style={hrRule} />
 
           <Text style={techMarkStyle}>{TECH_MARK}</Text>
-        </Container>
-      </Body>
-    </Html>
+        </EmailLayout>
   );
 }

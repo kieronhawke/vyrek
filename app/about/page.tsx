@@ -13,7 +13,7 @@ import { CtaButton } from "@/components/shared/cta-button";
 export const metadata: Metadata = {
   title: "About Ben Sutherland, HYROX Elite 15 athlete",
   description:
-    "The coaching platform of Ben Sutherland, HYROX Elite 15 athlete and Pro Doubles race winner. Personalised 12-week programmes, first race to professional.",
+    "Suth Performance is the coaching platform of Ben Sutherland, a HYROX Elite 15 athlete with Pro Doubles wins in Rotterdam and Glasgow. Personalised 12-week programmes for every level, from first race to professional.",
   alternates: { canonical: "/about" },
 };
 
@@ -62,7 +62,7 @@ export default function AboutPage() {
           >
             {/* Own shoot footage (see docs/assets/asset-database.md). */}
             <Image
-              src="/media/images/track/sunflare-stride-bw.jpg"
+              src="/media/images/race/race-start-smoke-wide.jpg"
               alt=""
               fill
               priority
@@ -111,16 +111,13 @@ export default function AboutPage() {
                   Doubles alongside his brother Harry.
                 </p>
                 <figure className="-mx-4 my-8 overflow-hidden rounded-2xl md:mx-0">
-                  { }
-                  {/* 328 KB raw before; the optimiser was being bypassed
-                      entirely by the plain `<img>`. */}
-                  <Image
-                    src="/media/images/track/pair-frontal-colour.jpg"
-                    alt="Ben and Harry Sutherland running side by side on the track"
-                    width={1600}
-                    height={1000}
-                    sizes="(min-width: 768px) 768px, 100vw"
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/media/images/camp/camp-trail-run-pair-close-wide.jpg"
+                    alt="Two athletes running together at dawn"
                     className="aspect-[16/10] w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </figure>
                 <p>
@@ -196,15 +193,13 @@ export default function AboutPage() {
                   does not make sense, you ask him in the app and he answers.
                 </p>
                 <figure className="-mx-4 mt-10 overflow-hidden rounded-2xl md:mx-0">
-                  { }
-                  {/* 258 KB raw, shown at 768x329 from a 2200x1238 source. */}
-                  <Image
-                    src="/media/images/track/gym-coach-row-colour.jpg"
-                    alt="Coaching an athlete through a rowing interval in the gym"
-                    width={2100}
-                    height={900}
-                    sizes="(min-width: 768px) 768px, 100vw"
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/media/images/camp/camp-portrait-gym-marquee-wide.jpg"
+                    alt="Ben Sutherland hands on hips inside the training marquee"
                     className="aspect-[21/9] w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </figure>
               </div>

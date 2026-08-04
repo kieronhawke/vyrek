@@ -178,7 +178,7 @@ export function UsStatePage({
               src={
                 variant === "hyrox"
                   ? "/media/images/track/pair-frontal-bw.jpg"
-                  : "/media/images/track/solo-watch-bw.jpg"
+                  : "/media/images/camp/camp-turf-run-pair-wide.jpg"
               }
               alt=""
               fill

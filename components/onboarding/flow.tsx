@@ -215,7 +215,9 @@ function StepBody({
     case "about":
       return <About answers={answers} set={set} />;
     case "training":
-      return <Training answers={answers} set={set} />;
+      return (
+        <Training answers={answers} set={set} beginner={invite.rail === "beginner"} />
+      );
     case "health":
       return <Health answers={answers} set={set} />;
     case "availability":
@@ -225,7 +227,7 @@ function StepBody({
     case "plan":
       return <Plans answers={answers} set={set} />;
     case "pay":
-      return <Pay answers={answers} />;
+      return <Pay answers={answers} beginner={invite.rail === "beginner"} />;
     default:
       return null;
   }
@@ -351,20 +353,49 @@ function About({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) 
   );
 }
 
-function Training({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) => void }) {
+/**
+ * Where they are now, asked two different ways.
+ *
+ * The racing version was being shown to everybody, including clients who
+ * came down the "getting fit" quiz — a flow built specifically so that it
+ * never mentions HYROX — and were then sent a setup link opening with "My
+ * first HYROX / A few races in / Experienced". Every bit of care taken on
+ * the way in, undone at the moment they became a client.
+ *
+ * The stored value is the same either way; only the reading changes.
+ */
+const EXPERIENCE_OPTIONS = {
+  athlete: [
+    { key: "first", label: "My first HYROX", note: "Not raced one yet" },
+    { key: "some", label: "A few races in", note: "Know the stations" },
+    { key: "experienced", label: "Experienced", note: "Chasing a time" },
+  ],
+  beginner: [
+    { key: "first", label: "Starting from scratch", note: "Not training at the moment" },
+    { key: "some", label: "A bit active", note: "Some weeks more than others" },
+    { key: "experienced", label: "I train regularly", note: "Just want it to add up to something" },
+  ],
+} as const;
+
+function Training({
+  answers,
+  set,
+  beginner,
+}: {
+  answers: Answers;
+  set: (p: Partial<Answers>) => void;
+  beginner?: boolean;
+}) {
   return (
     <div className="ob-fields">
       <fieldset className="ob-choices">
         <legend className="ob-label">Where are you now?</legend>
-        {[
-          { key: "first", label: "My first HYROX", note: "Not raced one yet" },
-          { key: "some", label: "A few races in", note: "Know the stations" },
-          { key: "experienced", label: "Experienced", note: "Chasing a time" },
-        ].map((o) => (
+        {(beginner ? EXPERIENCE_OPTIONS.beginner : EXPERIENCE_OPTIONS.athlete).map((o) => (
           <button
             key={o.key}
             type="button"
             className="ob-choice"
+            aria-pressed={answers.experience === o.key}
             data-on={answers.experience === o.key || undefined}
             onClick={() => set({ experience: o.key as Answers["experience"] })}
           >
@@ -382,6 +413,7 @@ function Training({ answers, set }: { answers: Answers; set: (p: Partial<Answers
               key={n}
               type="button"
               className="ob-number"
+              aria-pressed={answers.trainingDays === n}
               data-on={answers.trainingDays === n || undefined}
               onClick={() => set({ trainingDays: n })}
               aria-label={`${n} days a week`}
@@ -476,6 +508,7 @@ function Availability({ answers, set }: { answers: Answers; set: (p: Partial<Ans
             key={o.key}
             type="button"
             className="ob-choice"
+            aria-pressed={answers.preferredTime === o.key}
             data-on={answers.preferredTime === o.key || undefined}
             onClick={() => set({ preferredTime: o.key as Answers["preferredTime"] })}
           >
@@ -584,9 +617,9 @@ function Plans({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) 
   );
 }
 
-function Pay({ answers }: { answers: Answers }) {
+function Pay({ answers, beginner }: { answers: Answers; beginner?: boolean }) {
   const plan = planByKey(answers.plan);
-  const rows = summarise(answers);
+  const rows = summarise(answers, beginner);
 
   return (
     <div className="ob-pay">

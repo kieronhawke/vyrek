@@ -96,14 +96,16 @@ test.describe("Onboarding funnel robustness", () => {
       page.getByRole("button", { name: /a bit active/i }).first(),
     ).toHaveAttribute("aria-pressed", "true");
 
-    // Below `md` the live plan panel is collapsed into a strip and its rows
-    // aren't rendered until it's opened, so expand it before looking.
-    const strip = page.getByRole("button", { name: /your plan so far/i });
-    if (await strip.isVisible().catch(() => false)) {
-      await strip.click();
-      await page.waitForTimeout(300);
-    }
-    await expect(page.getByText(/weight loss, 12 weeks/i).first()).toBeVisible();
+    /* The live plan panel this used to read from is gone.
+       On screen one it showed eight rows, seven of them a dash, and it was
+       the largest thing on a desktop — an inventory of what the visitor had
+       not told us yet. The assertion above is the one that actually proves
+       persistence: the answer given before the refresh is still selected.
+       The programme name now appears on the reveal, which the happy-path
+       walks already cover. */
+    await expect(
+      page.getByRole("button", { name: /a bit active/i }).first(),
+    ).toHaveAttribute("aria-pressed", "true");
   });
 
   test("the quiz is operable by keyboard alone", async ({ page }) => {
@@ -302,7 +304,10 @@ async function runBeginnerToReveal(page: Page) {
   await clickContinue(page);
   await page.getByRole("button", { name: /^45 min/i }).first().click();
   await clickContinue(page);
-  await page.getByRole("button", { name: /standard commercial gym/i }).first().click();
+  await page
+    .getByRole("button", { name: /a normal gym|standard commercial gym/i })
+    .first()
+    .click();
   await clickContinue(page);
   // An injury, so the brief has something Ben genuinely needs before a call.
   await page.getByRole("button", { name: /^knee/i }).first().click();

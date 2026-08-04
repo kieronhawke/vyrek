@@ -1,56 +1,43 @@
 "use client";
 
-import { ContinueButton } from "@/components/quiz-v3/continue-button";
-import { InterstitialBack } from "@/components/quiz-v3/interstitial-back";
+import { Interstitial } from "@/components/quiz-v3/interstitial";
 
 /**
- * Screen 3. Reassurance interstitial #1. Full-bleed portrait, testimonial,
- * stat, then Continue. Marchon-verified pattern, Suth Performance-themed.
+ * Reassurance interstitial #1, shown on both rails.
+ *
+ * Rail-aware copy. The athlete version leans on training history, because
+ * that is the honesty an athlete tends to shade. The beginner version has
+ * to do something harder: the reason people round their answers up here is
+ * embarrassment, so the screen has to say plainly that the least fit
+ * answer is the useful one.
+ *
+ * Layout now comes from components/quiz-v3/interstitial.tsx — this used to
+ * be a full-bleed photo with a window-width button, which was the single
+ * worst desktop screen in the funnel.
  */
 export function ReassuranceScreen1({
+  beginner,
   onContinue,
   onBack,
 }: {
+  beginner?: boolean;
   onContinue: () => void;
   onBack?: () => void;
 }) {
   return (
-    <section
-      aria-label="Reassurance"
-      className="relative isolate flex min-h-svh flex-col bg-suth-base"
-    >
-      <InterstitialBack onBack={onBack} />
-      <div className="absolute inset-0 z-0">
-        <img
-          src="/media/images/track/palms-sunflare-pair-bw.jpg"
-          alt=""
-          className="h-full w-full object-cover"
-          loading="eager"
-          decoding="async"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-suth-base via-suth-base/80 to-suth-base/20"
-        />
-      </div>
-
-      <div className="relative z-10 flex min-h-svh flex-col justify-end px-6 pb-[max(1.5rem,var(--safe-bottom))] pt-[var(--safe-top)]">
-        <div className="mb-8 max-w-md">
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
-            [ NEXT FEW QUESTIONS ]
-          </p>
-          <p className="mt-4 text-balance text-2xl font-bold leading-snug tracking-[-0.02em] text-suth-text md:text-3xl">
-            Half the work is honest answers.
-          </p>
-          <p className="mt-4 text-base leading-relaxed text-suth-text-secondary">
-            What you train at home is not what you train at the gym. What you
-            did at 25 is not what you do now. Tell us where you are, not
-            where you wish you were. We adapt every Sunday.
-          </p>
-        </div>
-
-        <ContinueButton onClick={onContinue} />
-      </div>
-    </section>
+    <Interstitial
+      label="Reassurance"
+      image="/media/images/track/palms-sunflare-pair-bw.jpg"
+      imagePosition="55% 50%"
+      eyebrow="Next few questions"
+      title="Half the work is honest answers."
+      body={
+        beginner
+          ? "There is no answer here that puts you at the back. The plan is built from where you actually are, so rounding up only gets you a week that is too hard to finish. Tell us the truth and it will fit."
+          : "What you train at home is not what you train at the gym. What you did at 25 is not what you do now. Tell us where you are, not where you wish you were. We adapt every Sunday."
+      }
+      onContinue={onContinue}
+      onBack={onBack}
+    />
   );
 }

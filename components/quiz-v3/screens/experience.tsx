@@ -24,7 +24,7 @@ export function ExperienceScreen({
         question="Have you raced a Hyrox before?"
         helper="Pick one"
       />
-      <ul role="list" className="space-y-3">
+      <ul role="list" className="space-y-3 lg:space-y-2.5">
         {OPTIONS.map((opt) => (
           <li key={opt.value}>
             <OptionCard
