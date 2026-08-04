@@ -1311,3 +1311,64 @@
   color: var(--text-muted);
   cursor: default;
 }
+
+/* ── Today: two columns on a desktop ──────────────────────────────────
+   Today was one stack at every width, so on a monitor the session card —
+   the thing the whole screen exists for — was a narrow ribbon, with the
+   training chart and the recent list a scroll below it and half the viewport
+   empty to the right. That is a mobile page stretched, not a desktop page.
+
+   The split starts at 1024px rather than 768px on purpose: between those two
+   the rail has already taken 264px, and splitting what is left again gives
+   two columns too narrow to be worth having. */
+.today-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 1024px) {
+  .today-grid {
+    /* The session leads; the context beside it is deliberately narrower and
+       does not need to grow past a readable width. */
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  /* Sticky, so the week's load and the recent sessions stay in view while
+     the session's block list is scrolled. */
+  .today-side {
+    position: sticky;
+    top: var(--space-4);
+  }
+}
+
+/* The last section in either column should not push a gap onto the page
+   bottom; the grid gap already spaces them. */
+.today-main > section:last-child,
+.today-side > section:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* ── Start session: a focus mode, not a full-bleed page ───────────────
+   The player filled the viewport at every width, so on a monitor the set
+   counter, the rep target and the controls were flung to opposite edges with
+   a metre of nothing between them. A session is one thing at a time; the
+   layout should keep the eye's travel short whatever the screen. */
+.wp-root {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  padding-inline: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .wp-root { padding-inline: var(--space-4); }
+
+  /* The action bar is fixed to the viewport, so it needs the same cap
+     applied to its contents rather than to the bar itself — a full-width
+     border along the bottom of the screen is right, controls stretched
+     across it are not. */
+  .wp-actions {
+    padding-inline: max(var(--space-2), calc((100vw - 720px) / 2)) !important;
+  }
+}
