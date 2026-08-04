@@ -507,53 +507,29 @@ function QuizV3Inner() {
     }
 
     try {
-      // 1. Create the Supabase Auth user from the browser.
+      /* THE ACCOUNT IS CREATED ON THE SERVER, THEN SIGNED IN HERE.
+       *
+       * This used to call supabase.auth.signUp() from the browser and it
+       * silently did not work. The project requires email confirmation, so
+       * signUp returned a user with no session and no confirmation mail
+       * anybody had set up: people finished the quiz, were told they had an
+       * account, and were neither signed in nor able to sign in. The account
+       * existed and was unusable, which is worse than failing outright,
+       * because nothing on screen said so.
+       *
+       * The server mints it confirmed with the service key; the password
+       * they just typed then gets them a real session on the next line.
+       */
       const supabase = supabaseBrowser();
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: emailValue.trim().toLowerCase(),
-        password: passwordDraft,
-      });
+      const emailNormalised = emailValue.trim().toLowerCase();
 
-      if (authError) {
-        const msg = authError.message ?? "";
-        const low = msg.toLowerCase();
-        if (low.includes("already") || low.includes("registered")) {
-          setAccountError(
-            "An account already exists with this email. Log in instead.",
-          );
-        } else if (
-          // Supabase Auth rate-limit (HTTP 429 from signUp). Default cap is
-          // 4 signups per IP per hour. Don't surface the raw message; tell
-          // the user what to do.
-          authError.status === 429 ||
-          low.includes("rate limit") ||
-          low.includes("too many")
-        ) {
-          setAccountError(
-            "Too many sign-ups from your network in the last hour. Wait a few minutes and try again, or sign in if you already have an account.",
-          );
-        } else {
-          setAccountError(msg || "Couldn't save. Try again in a moment.");
-        }
-        setCreating(false);
-        haptic("warning");
-        return;
-      }
-
-      const authUserId = authData.user?.id;
-      if (!authUserId) {
-        setAccountError("Couldn't save. Try again in a moment.");
-        setCreating(false);
-        return;
-      }
-
-      // 2. Persist customer + quiz response via the server endpoint.
+      // Creates the confirmed auth user AND the customer + quiz rows.
       const res = await fetch("/api/account/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          authUserId,
-          email: emailValue.trim().toLowerCase(),
+          password: passwordDraft,
+          email: emailNormalised,
           marketingOptIn: marketingValue,
           quizState: {
             uuid: state.uuid,
@@ -566,6 +542,15 @@ function QuizV3Inner() {
           },
         }),
       });
+
+      if (res.status === 409) {
+        setAccountError(
+          "An account already exists with this email. Sign in instead.",
+        );
+        setCreating(false);
+        haptic("warning");
+        return;
+      }
 
       if (!res.ok) {
         const detail = await res.text().catch(() => "");
@@ -586,6 +571,23 @@ function QuizV3Inner() {
         } catch {
           /* non-fatal */
         }
+      }
+
+      /* Sign them in for real. Without this they land on their plan with no
+         session, and /app bounces them to a login they cannot pass. */
+      const signIn = await supabase.auth.signInWithPassword({
+        email: emailNormalised,
+        password: passwordDraft,
+      });
+      if (signIn.error) {
+        // The account exists either way, so this is not a dead end — say what
+        // to do rather than pretending it worked.
+        setAccountError(
+          "Your account is set up, but signing you in failed. Try signing in from the login page.",
+        );
+        setCreating(false);
+        haptic("warning");
+        return;
       }
 
       capture("quiz_completed", {

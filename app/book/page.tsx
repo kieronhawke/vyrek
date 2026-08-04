@@ -49,7 +49,9 @@ export default function BookPage() {
                 (item) => (
                   <li
                     key={item}
-                    className="rounded-pill border border-suth-border bg-suth-elevated px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-secondary"
+                    // 11px, not 10. The email tests hold an 11px floor and there is no
+                    // reason the site should be softer than the inbox.
+                    className="rounded-pill border border-suth-border bg-suth-elevated px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-suth-text-secondary"
                   >
                     {item}
                   </li>

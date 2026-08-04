@@ -57,7 +57,10 @@ function LinkRow({
         <li key={i.href}>
           <Link
             href={i.href}
-            className="text-sm text-suth-text-secondary transition-colors hover:text-suth-text"
+            // py-1 lifts each link from 17px to 26px tall. WCAG 2.5.8 asks for a
+            // 24px minimum target, and these are the densest links on the site —
+            // on a phone the old size put four towns inside one thumb.
+            className="inline-block py-1 text-sm text-suth-text-secondary transition-colors hover:text-suth-text"
           >
             {i.label}
           </Link>
