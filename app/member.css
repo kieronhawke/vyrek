@@ -1372,3 +1372,127 @@
     padding-inline: max(var(--space-2), calc((100vw - 720px) / 2)) !important;
   }
 }
+
+/* ── Add food: three ways in ──────────────────────────────────────────
+   Search, scan, photo. The sheet used to be a search box over forty-three
+   hardcoded foods, so typing a brand name found nothing at all. */
+.addfood__modes {
+  display: flex;
+  gap: 6px;
+  margin-bottom: var(--space-2);
+}
+.addfood__mode {
+  flex: 1;
+  min-height: 40px;
+  padding: 0 10px;
+  border-radius: var(--radius-button);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+.addfood__mode[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent-faint);
+  color: var(--accent-text);
+}
+
+.addfood__notice,
+.addfood__photonote {
+  margin: 0 0 var(--space-2);
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* ── Barcode scanner ─────────────────────────────────────────────────── */
+.scanner { display: grid; gap: var(--space-2); }
+.scanner__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.scanner__title { margin: 0; font-weight: 700; font-size: var(--text-base); }
+.scanner__stage {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: #000;
+  aspect-ratio: 4 / 3;
+}
+.scanner__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Guidance, not a crop — the detector reads the whole frame. */
+.scanner__reticle {
+  position: absolute;
+  inset: 28% 12%;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.35);
+}
+.scanner__hint {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 8px;
+  margin: 0;
+  text-align: center;
+  font-size: var(--text-xs);
+  color: #fff;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 0.8);
+}
+.scanner__note {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.scanner__manual { display: grid; gap: 8px; }
+
+/* ── Meal photo ──────────────────────────────────────────────────────── */
+.mealphoto { display: grid; gap: var(--space-2); }
+.mealphoto__take,
+.mealphoto__remove {
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-button);
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+.mealphoto__preview { display: grid; gap: 8px; justify-items: start; }
+.mealphoto__preview img {
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+}
+.mealphoto__note,
+.mealphoto__error {
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.mealphoto__error { color: var(--danger); }
+
+/* ── Fuel on a desktop ───────────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  /* The sheet was a phone-width column centred in a monitor with the day's
+     log pushed below the fold. Side by side, the log stays readable while
+     something is being added to it. */
+  .addfood { max-width: 560px; }
+}
