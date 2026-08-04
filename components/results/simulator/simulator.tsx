@@ -283,7 +283,7 @@ export function Simulator({
 
       <p className="mt-4 text-xs text-suth-text-tertiary">
         Reference splits are the median of {reference.sampleSize.toLocaleString("en-GB")}{" "}
-        {reference.label.replace("HYROX ", "")} races in the demo dataset.
+        {reference.label.replace("HYROX ", "")} races in the archive.
         {mode === "target"
           ? " Target splits scale that profile to your goal, so they stay in realistic proportion."
           : " Drag any segment to model a change."}

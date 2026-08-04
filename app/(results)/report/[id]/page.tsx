@@ -35,6 +35,7 @@ import {
 import { MicroLabel } from "@/components/results/ui/primitives";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { showDemoLabels } from "@/lib/results/demo-labels";
 
 /**
  * `/report/{resultId}` — the full race report.
@@ -205,7 +206,7 @@ export default async function RaceReportPage({
     racesLogged: history.length,
   };
 
-  const isDemo = getDataMode() === "demo";
+  const isDemo = showDemoLabels();
 
   /**
    * Section numbers are counted as sections render, not hardcoded.

@@ -1,4 +1,4 @@
-import { getDataMode } from "@/lib/results";
+import { showDemoLabels } from "@/lib/results/demo-labels";
 
 /**
  * The "Demo data" pill, brief §2.
@@ -11,7 +11,7 @@ import { getDataMode } from "@/lib/results";
  * anyone reading a leaderboard deserves to know that without hunting.
  */
 export function DemoDataPill() {
-  if (getDataMode() === "live") return null;
+  if (!showDemoLabels()) return null;
 
   return (
     <div

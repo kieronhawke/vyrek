@@ -143,7 +143,7 @@ export function PercentileTool({
               })}
             </ul>
             <p className="mt-3 text-[11px] text-suth-text-tertiary">
-              Based on {reference.sampleSize.toLocaleString("en-GB")} finishes in the demo dataset.
+              Based on {reference.sampleSize.toLocaleString("en-GB")} finishes in the archive.
             </p>
           </div>
         ) : null}

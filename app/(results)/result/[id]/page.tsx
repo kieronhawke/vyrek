@@ -24,6 +24,7 @@ import { CoachingCta } from "@/components/results/coaching-cta";
 import { Reveal } from "@/components/results/ui/reveal";
 import { getDataMode } from "@/lib/results";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { showDemoLabels } from "@/lib/results/demo-labels";
 
 /**
  * `/result/{id}` — the crown jewel.
@@ -208,7 +209,7 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
 
       <p className="results-print-footer mt-6 border-t border-suth-border-subtle pt-2 text-[10px] text-suth-text-tertiary">
         {result.athleteName} · {result.eventName} · {division} · suthperformance.com/results
-        {getDataMode() === "demo" ? " · DEMO DATA, not a record of a real race" : ""}
+        {showDemoLabels() ? " · DEMO DATA, not a record of a real race" : ""}
       </p>
 
       {flags.length > 0 ? (
@@ -371,7 +372,7 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
       roxzone={roxzone}
       whatIf={whatIf}
       generatedOn={new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
-      isDemo={getDataMode() === "demo"}
+      isDemo={showDemoLabels()}
     />
     </>
   );
