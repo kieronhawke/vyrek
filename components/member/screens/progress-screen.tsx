@@ -59,7 +59,7 @@ export function ProgressScreen() {
   const weakest = [...BENCHMARKS].sort((a, b) => a.percentile - b.percentile)[0];
 
   return (
-    <>
+    <div className="progress-grid">
       <PhotoHeader
         photo={hero}
         eyebrow="Progress"
@@ -248,7 +248,7 @@ export function ProgressScreen() {
       </section>
 
       {/* ── Volume ───────────────────────────────────────────────────── */}
-      <section style={{ marginBottom: "var(--space-4)" }}>
+      <section style={{ marginBottom: "var(--space-4)" }} data-wide>
         <Eyebrow right="8 weeks">Training load</Eyebrow>
         <VolumeChart data={DEMO_VOLUME} />
       </section>
@@ -260,6 +260,6 @@ export function ProgressScreen() {
         </Eyebrow>
         <RecentSessionList sessions={DEMO_RECENT_SESSIONS} />
       </section>
-    </>
+    </div>
   );
 }

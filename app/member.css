@@ -1898,3 +1898,17 @@
     grid-template-columns: repeat(auto-fit, minmax(160px, 220px));
   }
 }
+
+/* Progress: five stacked sections became five stacked sections on a monitor
+   too. Same treatment as Account — the sections flow down one column and
+   then the next, so the mobile reading order survives and the width gets
+   used. The volume chart is the exception: it wants to be wide. */
+@media (min-width: 1024px) {
+  .progress-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0 var(--space-4);
+    align-items: start;
+  }
+  .progress-grid > section[data-wide] { grid-column: 1 / -1; }
+}
