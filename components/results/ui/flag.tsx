@@ -259,6 +259,15 @@ export function Flag({ iso, className }: { iso: string; className?: string }) {
   const code = toIso2(iso);
   const Draw = FLAGS[code];
 
+  // ⚠️ No nationality at all is not the same as one we cannot draw.
+  //
+  // Only a quarter of stored athletes carry a nationality — the source
+  // publishes it on some boards and not others — so the fallback below was
+  // rendering an empty bordered box beside three names in four. A row of blank
+  // grey rectangles reads as a broken image, which is worse than the honest
+  // absence of a flag, and it was reported as "there are no country flags".
+  if (!iso || !nationCode(code)) return null;
+
   if (!Draw) {
     // Unmapped nation: the code itself, which is more use than a blank box.
     return (
