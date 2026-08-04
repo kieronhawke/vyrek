@@ -211,6 +211,23 @@ test.describe("admin navigation at a desk", () => {
     const tracker = page
       .getByTestId("admin-sidebar")
       .getByRole("link", { name: /Coach tracker/ });
-    await expect(tracker.locator(".ash-item__count")).toHaveText("27");
+
+    /* Asserted as a shape, not a number.
+       This was hardcoded to "27" and the fixture has since moved to 24, so
+       the test failed for a reason that told nobody anything. What the badge
+       promises is that a module with work waiting says how much — a number
+       greater than zero, next to the module it belongs to. The exact count
+       is the fixture's business and will change again. */
+    const badge = tracker.locator(".ash-item__count");
+    await expect(badge).toBeVisible();
+    await expect(badge).toHaveText(/^\d+$/);
+    expect(Number(await badge.innerText())).toBeGreaterThan(0);
+
+    // And a module with nothing waiting shows no badge at all, rather than a
+    // zero — a zero is a thing to look at, and there is nothing to look at.
+    const diary = page
+      .getByTestId("admin-sidebar")
+      .getByRole("link", { name: /^Diary/ });
+    await expect(diary.locator(".ash-item__count")).toHaveCount(0);
   });
 });

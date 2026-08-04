@@ -1,3 +1,4 @@
+import { isFictionalPerson } from "./fictional-people";
 import { describe, expect, it } from "vitest";
 import {
   addDays,
@@ -176,11 +177,16 @@ describe("seed", () => {
 
   it("carries no real client names", () => {
     // This repository is public. A real client's name against a real session
-    // time is precisely what must never be committed.
+    // time is precisely what must never be committed. The seed uses realistic
+    // names now, so the check is that each one is on the fictional roster
+    // rather than that it carries a placeholder prefix.
     const names = seedAppointments("2026-08-13")
       .map((a) => a.client)
-      .filter(Boolean);
-    expect(names.every((n) => n.startsWith("Sample "))).toBe(true);
+      .filter(Boolean) as string[];
+    expect(names.length).toBeGreaterThan(0);
+    for (const n of names) {
+      expect(isFictionalPerson(n), `${n} is not on the fictional roster`).toBe(true);
+    }
   });
 
   it("has a pair that overlap, so the week view proves it can show them", () => {

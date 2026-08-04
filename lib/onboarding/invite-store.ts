@@ -1,5 +1,5 @@
 import { randomBytes } from "node:crypto";
-import { Redis } from "@upstash/redis";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 import type { InvitePayload } from "./token";
 
 /**
@@ -59,13 +59,11 @@ export function looksLikeInviteId(value: string): boolean {
   return value.length === ID_LENGTH && [...value].every((c) => ALPHABET.includes(c));
 }
 
-const KEY_PREFIX = "invite:";
 
-function redisOrNull(): Redis | null {
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !token) return null;
-  return new Redis({ url, token });
+function dbConfigured(): boolean {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SECRET_KEY,
+  );
 }
 
 /**
@@ -87,18 +85,25 @@ export async function storeInvite(payload: InvitePayload): Promise<StoreResult> 
   // skew between the browser that made it and the server that reads it.
   const ttlSeconds = Math.max(60, payload.exp - Math.floor(Date.now() / 1000) + 3600);
 
-  const redis = redisOrNull();
-  if (!redis) {
+  if (!dbConfigured()) {
     devStore.set(id, { payload, expiresAt: Date.now() + ttlSeconds * 1000 });
     return { ok: true, id, durable: false };
   }
 
   try {
-    await redis.set(KEY_PREFIX + id, JSON.stringify(payload), { ex: ttlSeconds });
+    const { error } = await supabaseAdmin().from("onboarding_invites").insert({
+      id,
+      expires_at: new Date(Date.now() + ttlSeconds * 1000).toISOString(),
+      payload,
+    });
+    if (error) {
+      console.error("[invite-store] insert failed", error.message);
+      return { ok: false, reason: "STORE_FAILED" };
+    }
     return { ok: true, id, durable: true };
   } catch {
-    // Redis is configured but unreachable. Say so rather than handing back an
-    // id that resolves to nothing when the athlete opens it.
+    // Configured but unreachable. Say so rather than handing back an id that
+    // resolves to nothing when the athlete opens it.
     return { ok: false, reason: "STORE_FAILED" };
   }
 }
@@ -107,8 +112,7 @@ export async function storeInvite(payload: InvitePayload): Promise<StoreResult> 
 export async function loadInvite(id: string): Promise<InvitePayload | null> {
   if (!looksLikeInviteId(id)) return null;
 
-  const redis = redisOrNull();
-  if (!redis) {
+  if (!dbConfigured()) {
     const hit = devStore.get(id);
     if (!hit) return null;
     if (hit.expiresAt < Date.now()) { devStore.delete(id); return null; }
@@ -116,19 +120,45 @@ export async function loadInvite(id: string): Promise<InvitePayload | null> {
   }
 
   try {
-    const raw = await redis.get<string | InvitePayload>(KEY_PREFIX + id);
-    if (!raw) return null;
-    // Upstash parses JSON automatically when it can, so accept either shape
-    // rather than assuming — a double-parse throws and loses the invite.
-    return typeof raw === "string" ? (JSON.parse(raw) as InvitePayload) : raw;
+    const { data, error } = await supabaseAdmin()
+      .from("onboarding_invites")
+      .select("payload, expires_at")
+      .eq("id", id)
+      .maybeSingle();
+    if (error || !data) return null;
+    // Expiry is checked here, not only by the sweep. Redis deleted the row
+    // itself; Postgres does not, so an unswept row must still be refused
+    // rather than merely untidy.
+    if (new Date(data.expires_at).getTime() < Date.now()) return null;
+    return data.payload as InvitePayload;
   } catch {
     return null;
   }
 }
 
+/**
+ * Delete invites past their expiry.
+ *
+ * Redis did this for us. Called by the nightly cron in
+ * app/api/cron/housekeeping.
+ */
+export async function expireOldInvites(): Promise<number> {
+  if (!dbConfigured()) return 0;
+  try {
+    const { data, error } = await supabaseAdmin()
+      .from("onboarding_invites")
+      .delete()
+      .lt("expires_at", new Date().toISOString())
+      .select("id");
+    return error || !data ? 0 : data.length;
+  } catch {
+    return 0;
+  }
+}
+
 /** True when invites will survive a deploy, for the admin to report honestly. */
 export function inviteStoreDurable(): boolean {
-  return redisOrNull() !== null;
+  return dbConfigured();
 }
 
 /** Exposed for tests, which must not leak state between cases. */

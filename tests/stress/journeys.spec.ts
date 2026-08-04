@@ -326,7 +326,10 @@ test.describe("Form edge cases", () => {
     page,
   }, testInfo) => {
     test.skip(testInfo.project.name !== "desktop-1440", "single-viewport");
-    await page.goto("/partners/apply", { waitUntil: "networkidle" });
+    await page.goto("/partners/apply", { waitUntil: "domcontentloaded" });
+    await expect(
+      page.getByRole("button", { name: /submit application/i }),
+    ).toBeVisible({ timeout: 20_000 });
     await page.getByRole("button", { name: /submit application/i }).click();
     const name = page.getByLabel(/your name/i);
     const valid = await name.evaluate(
@@ -339,7 +342,10 @@ test.describe("Form edge cases", () => {
     page,
   }, testInfo) => {
     test.skip(testInfo.project.name !== "desktop-1440", "single-viewport");
-    await page.goto("/partners/apply", { waitUntil: "networkidle" });
+    await page.goto("/partners/apply", { waitUntil: "domcontentloaded" });
+    await expect(
+      page.getByRole("button", { name: /submit application/i }),
+    ).toBeVisible({ timeout: 20_000 });
     await page.fill('input[name="name"]', "Ñoël “The Coach” Müller-O'Brien");
     await page.fill(
       'input[name="email"]',

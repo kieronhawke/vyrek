@@ -60,7 +60,7 @@ export type Lead = {
 export const CLIENTS: CoachClient[] = [
   {
     id: "c_01",
-    name: "Sample A",
+    name: "Amelia Fraser",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 2,
@@ -74,7 +74,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_02",
-    name: "Sample B",
+    name: "Marcus Bell",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 18,
@@ -87,7 +87,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_03",
-    name: "Sample C",
+    name: "Priya Raman",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: -3,
@@ -101,7 +101,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_04",
-    name: "Sample D",
+    name: "Tom Whitaker",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 26,
@@ -114,7 +114,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_05",
-    name: "Sample E",
+    name: "Sofia Nowak",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 0,
@@ -128,7 +128,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_06",
-    name: "Sample F",
+    name: "Daniel Osei",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 11,
@@ -141,7 +141,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_07",
-    name: "Sample G",
+    name: "Hannah Blythe",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: -3,
@@ -155,7 +155,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_08",
-    name: "Sample H",
+    name: "Callum Reid",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 11,
@@ -169,7 +169,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_09",
-    name: "Sample I",
+    name: "Nadia Haddad",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 1,
@@ -182,7 +182,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_10",
-    name: "Sample J",
+    name: "Owen Pritchard",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 25,
@@ -196,7 +196,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_11",
-    name: "Sample K",
+    name: "Grace Okonkwo",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: -8,
@@ -209,7 +209,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_12",
-    name: "Sample L",
+    name: "Ryan Doherty",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 6,
@@ -223,7 +223,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_13",
-    name: "Sample M",
+    name: "Elena Vasquez",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 30,
@@ -236,7 +236,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_14",
-    name: "Sample N",
+    name: "Josh Ferrand",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 0,
@@ -250,7 +250,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_15",
-    name: "Sample O",
+    name: "Maya Lindqvist",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 4,
@@ -263,7 +263,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_16",
-    name: "Sample P",
+    name: "Adam Sinclair",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 17,
@@ -277,7 +277,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_17",
-    name: "Sample Q",
+    name: "Chloe Bennett",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: -1,
@@ -290,7 +290,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_18",
-    name: "Sample R",
+    name: "Ismail Karim",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 9,
@@ -304,7 +304,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_19",
-    name: "Sample S",
+    name: "Freya Donnelly",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 22,
@@ -317,7 +317,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_20",
-    name: "Sample T",
+    name: "Nathan Cole",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 3,
@@ -331,7 +331,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_21",
-    name: "Sample U",
+    name: "Aisha Rahman",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 14,
@@ -344,7 +344,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_22",
-    name: "Sample V",
+    name: "Liam Gallagher-Hume",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: -5,
@@ -357,7 +357,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_23",
-    name: "Sample W",
+    name: "Rosa Delgado",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 8,
@@ -371,7 +371,7 @@ export const CLIENTS: CoachClient[] = [
   },
   {
     id: "c_24",
-    name: "Sample X",
+    name: "Ben Ashworth",
     email: "kieronhawke@gmail.com",
     phone: "07398790378",
     programmedUntilDays: 19,
@@ -385,18 +385,18 @@ export const CLIENTS: CoachClient[] = [
 ];
 
 export const LEADS: Lead[] = [
-  { id: "l_01", name: "Sample Lead A", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "beginner", status: "new", ageHours: 2 },
-  { id: "l_02", name: "Sample Lead B", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "hyrox", status: "new", ageHours: 31 },
-  { id: "l_03", name: "Sample Lead C", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "faster", status: "contacted", ageHours: 76 },
-  { id: "l_04", name: "Sample Lead D", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "unsure", status: "call_booked", ageHours: 120 },
-  { id: "l_05", name: "Sample Lead E", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "beginner", status: "new", ageHours: 1 },
-  { id: "l_06", name: "Sample Lead F", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "hyrox", status: "new", ageHours: 4 },
-  { id: "l_07", name: "Sample Lead G", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "faster", status: "new", ageHours: 9 },
-  { id: "l_08", name: "Sample Lead H", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "unsure", status: "contacted", ageHours: 28 },
-  { id: "l_09", name: "Sample Lead I", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "hyrox", status: "qualified", ageHours: 52 },
-  { id: "l_10", name: "Sample Lead J", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "beginner", status: "call_booked", ageHours: 71 },
-  { id: "l_11", name: "Sample Lead K", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "faster", status: "trial", ageHours: 96 },
-  { id: "l_12", name: "Sample Lead L", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "hyrox", status: "new", ageHours: 15 },
+  { id: "l_01", name: "Jess Moreau", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "beginner", status: "new", ageHours: 2 },
+  { id: "l_02", name: "Alex Trant", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "hyrox", status: "new", ageHours: 31 },
+  { id: "l_03", name: "Simon Ayodele", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "faster", status: "contacted", ageHours: 76 },
+  { id: "l_04", name: "Katie Vaughan", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "unsure", status: "call_booked", ageHours: 120 },
+  { id: "l_05", name: "Ravi Sethi", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "beginner", status: "new", ageHours: 1 },
+  { id: "l_06", name: "Molly Crawford", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "hyrox", status: "new", ageHours: 4 },
+  { id: "l_07", name: "Dean Fitzgerald", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "faster", status: "new", ageHours: 9 },
+  { id: "l_08", name: "Yasmin Choudhury", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "unsure", status: "contacted", ageHours: 28 },
+  { id: "l_09", name: "Patrick Byrne", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "hyrox", status: "qualified", ageHours: 52 },
+  { id: "l_10", name: "Erin Solberg", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "beginner", status: "call_booked", ageHours: 71 },
+  { id: "l_11", name: "George Mensah", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "faster", status: "trial", ageHours: 96 },
+  { id: "l_12", name: "Lucy Hartmann", email: "kieronhawke@gmail.com", phone: "07398790378", segment: "hyrox", status: "new", ageHours: 15 },
 ];
 
 /**
