@@ -6,6 +6,7 @@ import {
   attachmentProblem,
   coachAlertText,
   topicById,
+  assembleQuestion,
 } from "./coach-actions";
 
 describe("what an athlete can ask about", () => {
@@ -78,20 +79,77 @@ describe("the text that reaches Ben", () => {
 describe("attachments", () => {
   it("takes photos and videos and nothing else", () => {
     expect(attachmentProblem({ type: "image/jpeg", size: 1000 })).toBeNull();
+    /* The normal output of a current phone camera. It used to be refused. */
+    expect(attachmentProblem({ type: "image/jpeg", size: 6 * 1024 * 1024 })).toBeNull();
     expect(attachmentProblem({ type: "video/mp4", size: 1000 })).toBeNull();
     expect(attachmentProblem({ type: "application/pdf", size: 10 })).toBe(
       "Send a photo or a video.",
     );
   });
 
-  /* The thread persists to this browser. A file past these sizes would blow
-     the storage quota and take the whole conversation with it. */
+  /* Photos are downscaled on the way in, so the image ceiling only catches
+     a file too big to decode. Video cannot be re-encoded in the browser, so
+     its limit is still about what the thread can hold. */
   it("refuses what it cannot hold", () => {
     expect(attachmentProblem({ type: "image/jpeg", size: MAX_IMAGE_BYTES + 1 })).toContain(
-      "too large",
+      "too big",
     );
     expect(attachmentProblem({ type: "video/mp4", size: MAX_VIDEO_BYTES + 1 })).toContain(
       "too long",
     );
+  });
+});
+
+describe("building the question with them", () => {
+  /**
+   * Why this exists.
+   *
+   * "How should I pace it?" is a question Ben cannot answer without knowing
+   * which race, how far out, and what the athlete has done before — so he
+   * replies asking for exactly that, and they wait a day to be asked
+   * something the app could have asked in three taps.
+   */
+  it("assembles the answers into one readable sentence", () => {
+    const out = assembleQuestion("About race day —", [
+      "my next race",
+      "is two to four weeks away.",
+      "How should I pace it?",
+    ]);
+    expect(out).toBe(
+      "About race day — my next race is two to four weeks away. How should I pace it?",
+    );
+  });
+
+  it("does not double up punctuation, and always ends as a question", () => {
+    expect(assembleQuestion("Something hurts —", ["my knee."])).toBe(
+      "Something hurts — my knee.",
+    );
+    expect(assembleQuestion("About the plan", ["is it working"])).toBe(
+      "About the plan is it working?",
+    );
+  });
+
+  it("survives an athlete skipping every follow-up", () => {
+    expect(assembleQuestion("About race day —", [])).toBe("About race day —?");
+    expect(assembleQuestion("About race day —", ["", "  "])).toBe("About race day —?");
+  });
+
+  /* The two topics where the answer genuinely depends on facts Ben would
+     otherwise have to go and ask for. The rest are answerable as asked. */
+  it("guides the topics that need it and leaves the others alone", () => {
+    expect(topicById("race")?.build?.followUps.length).toBeGreaterThanOrEqual(2);
+    expect(topicById("injury")?.build?.followUps.length).toBeGreaterThanOrEqual(2);
+    expect(topicById("plan")?.build).toBeUndefined();
+  });
+
+  it("gives every follow-up something to tap", () => {
+    for (const t of TOPICS) {
+      if (!t.build) continue;
+      expect(t.build.opener.length, t.id).toBeGreaterThan(0);
+      for (const f of t.build.followUps) {
+        expect(f.options.length, `${t.id}/${f.id}`).toBeGreaterThanOrEqual(2);
+        for (const o of f.options) expect(o.text.trim().length).toBeGreaterThan(0);
+      }
+    }
   });
 });

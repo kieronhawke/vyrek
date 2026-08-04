@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { formatBookingTime } from "@/lib/booking/model";
+import { monthsFor } from "@/lib/member/booking-calendar";
 
 /**
  * BOOK A REVIEW CALL, WITHOUT LEAVING THE THREAD.
@@ -61,13 +62,20 @@ export function CoachBooking({
   const [stage, setStage] = useState<Stage>("dates");
   const [open, setOpen] = useState<string[]>([]);
   const [date, setDate] = useState<string | null>(null);
+  const [monthIndex, setMonthIndex] = useState(0);
   const [slots, setSlots] = useState<Slot[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  /* A consultation is a phone call, so the endpoint requires a number and we
-     do not store one against a member yet. Asking here beats letting them
-     pick a time and then bounce off a validation error they cannot fix. */
-  const [number, setNumber] = useState(phone);
+  /*
+   * The number comes from the account, not from a field here.
+   *
+   * Asking for it again in the middle of a conversation is friction on the
+   * one flow that should be frictionless, and they have already given it to
+   * us. Where the account has none, the booking still goes through and the
+   * confirmation email carries the detail — better than blocking a booking
+   * over a field they can fill in later.
+   */
+  const number = phone;
 
   /* Which days have anything free at all. Asking for slots day by day would
      mean the athlete tapping through empty dates to find one. */
@@ -137,10 +145,6 @@ export function CoachBooking({
   }
 
   async function book(slot: Slot) {
-    if (!existing && number.trim().length < 7) {
-      setError("Ben needs a number to call you on.");
-      return;
-    }
     setStage("confirming");
     setBusy(true);
     setError(null);
@@ -160,7 +164,7 @@ export function CoachBooking({
         body: JSON.stringify({
           name: firstName,
           email,
-          phone: number.trim(),
+          phone: number.trim() || "not given",
           startISO: slot.startISO,
           note: "Review call booked from the member app",
           rail: "athlete",
@@ -188,16 +192,41 @@ export function CoachBooking({
     }
   }
 
+  const months = useMemo(() => monthsFor(open), [open]);
+  const month = months[monthIndex] ?? months[0] ?? null;
+
   return (
     <div className="cbook">
       <div className="cbook__head">
         <p className="cbook__title">
-          {existing ? "Move your call with Ben" : "Book a review call with Ben"}
+          {existing ? "Move your call" : "Book a review call with Ben"}
         </p>
         <button type="button" className="cbook__close" onClick={onCancel} aria-label="Close">
           ✕
         </button>
       </div>
+
+      {/*
+        Moving a call starts by showing the one they already have.
+        The old sheet opened straight onto a picker with a "cancel this
+        instead" link underneath, so the first thing on screen was a decision
+        without the fact it applies to. Say what is booked, then offer the two
+        things they can do about it.
+      */}
+      {existing && stage !== "done" ? (
+        <div className="cbook__current">
+          <span className="cbook__currentwhen">{formatBookingTime(existing.startISO)}</span>
+          <span className="cbook__currentnote">Your call with Ben</span>
+          <button
+            type="button"
+            className="cbook__drop"
+            onClick={() => void dropCall()}
+            disabled={busy}
+          >
+            Cancel it
+          </button>
+        </div>
+      ) : null}
 
       {error ? (
         <p className="cbook__error" role="status">
@@ -205,92 +234,119 @@ export function CoachBooking({
         </p>
       ) : null}
 
-      {/* Giving up the slot sits alongside moving it, not behind it. Somebody
-          who cannot make a call should not have to book a different one to
-          get out of the first. */}
-      {existing && stage !== "done" ? (
-        <button type="button" className="cbook__drop" onClick={() => void dropCall()} disabled={busy}>
-          Cancel this call instead
-        </button>
-      ) : null}
-
-      {stage === "dates" ? (
-        busy ? (
+      {stage === "dates" || stage === "slots" ? (
+        busy && stage === "dates" ? (
           <p className="cbook__note">Checking Ben&apos;s diary…</p>
         ) : open.length === 0 ? (
           <p className="cbook__note">
             Nothing free at the moment. Send him a message and he will find you
             a time.
           </p>
-        ) : (
+        ) : month ? (
           <>
-            <p className="cbook__note">Pick a day.</p>
-            <div className="cbook__grid">
-              {open.slice(0, 14).map((d) => (
+            {/*
+              A real calendar rather than a row of chips.
+
+              Chips listed the next fourteen open days with no sense of where
+              they sat in the week or the month, so "a Saturday in three weeks"
+              meant counting. A month grid answers that at a glance, and the
+              days Ben has nothing free are visibly greyed rather than absent —
+              which is the difference between "he is busy then" and "the list
+              stopped".
+            */}
+            {/* Calendar and times sit side by side where there is room, so
+                picking a day does not push its times off the bottom. */}
+            <div className="cbook__pick">
+            <div className="cal">
+              <div className="cal__head">
                 <button
-                  key={d}
                   type="button"
-                  className="cbook__chip"
-                  onClick={() => pickDate(d)}
+                  className="cal__nav"
+                  onClick={() => setMonthIndex((i) => i - 1)}
+                  disabled={monthIndex === 0}
+                  aria-label="Previous month"
                 >
-                  {dayLabel(d)}
+                  ‹
                 </button>
-              ))}
+                <span className="cal__month">{month.label}</span>
+                <button
+                  type="button"
+                  className="cal__nav"
+                  onClick={() => setMonthIndex((i) => i + 1)}
+                  disabled={monthIndex >= months.length - 1}
+                  aria-label="Next month"
+                >
+                  ›
+                </button>
+              </div>
+
+              <div className="cal__dow" aria-hidden>
+                {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
+                  <span key={i}>{d}</span>
+                ))}
+              </div>
+
+              <div className="cal__grid" role="group" aria-label="Available days">
+                {month.cells.map((cell, i) =>
+                  cell === null ? (
+                    <span key={`pad-${i}`} className="cal__pad" />
+                  ) : (
+                    <button
+                      key={cell.iso}
+                      type="button"
+                      className={`cal__day${cell.free ? " is-free" : ""}${
+                        cell.iso === date ? " is-picked" : ""
+                      }`}
+                      disabled={!cell.free}
+                      aria-pressed={cell.iso === date}
+                      onClick={() => pickDate(cell.iso)}
+                    >
+                      {cell.day}
+                    </button>
+                  ),
+                )}
+              </div>
+            </div>
+
+            {/* The times sit under the calendar rather than replacing it, so
+                changing your mind about the day is one tap and not a Back. */}
+            {stage === "slots" ? (
+              <div className="cbook__times">
+                <p className="cbook__when">{date ? dayLabel(date) : ""}</p>
+                {busy ? (
+                  <p className="cbook__note">Loading times…</p>
+                ) : slots.length === 0 ? (
+                  <p className="cbook__note">Nothing left on that day.</p>
+                ) : (
+                  <div className="cbook__grid">
+                    {slots.map((s) => (
+                      <button
+                        key={s.startISO}
+                        type="button"
+                        className="cbook__chip"
+                        onClick={() => book(s)}
+                      >
+                        {s.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="cbook__note">Pick a day to see Ben&apos;s free times.</p>
+            )}
             </div>
           </>
-        )
-      ) : null}
-
-      {stage === "slots" ? (
-        <>
-          <button type="button" className="cbook__back" onClick={() => setStage("dates")}>
-            ← Another day
-          </button>
-          {existing ? null : (
-          <label className="cbook__field">
-            <span>Number for Ben to call</span>
-            <input
-              type="tel"
-              inputMode="tel"
-              autoComplete="tel"
-              className="addfood__search"
-              value={number}
-              onChange={(e) => setNumber(e.target.value)}
-              placeholder="07…"
-            />
-          </label>
-          )}
-          {busy ? (
-            <p className="cbook__note">Loading times…</p>
-          ) : slots.length === 0 ? (
-            <p className="cbook__note">Nothing left on that day. Try another.</p>
-          ) : (
-            <div className="cbook__grid">
-              {slots.map((s) => (
-                <button
-                  key={s.startISO}
-                  type="button"
-                  className="cbook__chip"
-                  onClick={() => book(s)}
-                >
-                  {s.label}
-                </button>
-              ))}
-            </div>
-          )}
-        </>
+        ) : null
       ) : null}
 
       {stage === "confirming" ? <p className="cbook__note">Booking it…</p> : null}
 
-      {stage === "done" && date ? (
-        <p className="cbook__note">Booked. The confirmation is on its way.</p>
+      {stage !== "done" ? (
+        <p className="cbook__foot">
+          You can move or cancel it later from this chat.
+        </p>
       ) : null}
-
-      <p className="cbook__foot">
-        You will get an email and a text confirming it, both with a link to
-        move or cancel.
-      </p>
     </div>
   );
 }

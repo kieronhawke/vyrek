@@ -1950,7 +1950,125 @@
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+/* ── The booking calendar ──────────────────────────────────────────────
+   A month grid, because "a Saturday in three weeks" is a question about a
+   calendar and a row of chips made you count. Days Ben has nothing free stay
+   visible and dimmed rather than vanishing, so the gaps read as him being
+   busy rather than as the list running out. */
+.cal {
+  /* Capped and centred. The cells are square, so left to fill a desktop
+     sheet a month becomes 700px tall and the times fall off the screen. */
+  max-width: 340px;
+  margin-inline: auto;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  background: var(--surface-1);
+}
+.cal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.cal__month {
+  font-weight: 700;
+  font-size: var(--text-sm);
+  letter-spacing: -0.01em;
+}
+.cal__nav {
+  width: 32px;
+  min-height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1;
+}
+.cal__nav:disabled { opacity: 0.3; }
+.cal__nav:not(:disabled):hover { color: var(--text); border-color: var(--accent); }
+.cal__dow,
+.cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.cal__dow {
+  margin-bottom: 4px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  text-align: center;
+}
+.cal__pad { aspect-ratio: 1; }
+.cal__day {
+  aspect-ratio: 1;
+  /* Overrides the global 48px button minimum: a calendar cell is sized by
+     the grid, and 48px would make a month taller than the sheet. The whole
+     square is the target, which is what the rule is protecting. */
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-faint);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+.cal__day:disabled { opacity: 0.45; }
+.cal__day.is-free {
+  color: var(--text);
+  background: var(--surface-2);
+  border-color: var(--line);
+  font-weight: 600;
+}
+.cal__day.is-free:hover { border-color: var(--accent); color: var(--accent-text); }
+.cal__day.is-picked {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-on);
+}
+.cbook__times {
+  display: grid;
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px solid var(--line);
+}
+.cbook__when {
+  margin: 0;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* The call they already have, stated before they are asked what to do with
+   it. Cancelling is a quiet link beside it, not the loudest thing here. */
+.cbook__current {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+.cbook__currentwhen { font-weight: 700; font-size: var(--text-sm); }
+.cbook__currentnote {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-right: auto;
+}
 .cbook__drop {
+
   justify-self: start;
   background: none;
   border: 0;
@@ -2216,4 +2334,106 @@
   min-height: 44px; border-radius: 999px; cursor: pointer;
   border: 1px solid var(--border); background: transparent;
   color: var(--text); font-size: var(--text-sm); font-weight: 600;
+}
+
+/* The step counter on a guided question. */
+.ct__sheetstep {
+  margin-left: 8px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-weight: 500;
+}
+
+/* ── Ask Ben on a desktop ─────────────────────────────────────────────
+   The thread was capped narrow and left-aligned, so on a monitor it sat in
+   the corner with two thirds of the screen empty beside it, and the whole
+   page scrolled — which meant opening the booking sheet pushed the composer
+   below the fold and you had to scroll to find the thing you had just asked
+   for.
+
+   Every chat app that works solves this the same way: the page does not
+   scroll, the conversation does, and the composer stays put at the bottom.
+   That is what this does. Phones keep the simple document scroll, where the
+   browser chrome collapsing on scroll is the expected behaviour. */
+@media (min-width: 1024px) {
+  .member-main:has(.coachpage) {
+    /* The frame stops scrolling so the thread can. */
+    height: 100svh;
+    max-width: 900px;
+    padding-bottom: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .coachpage {
+    flex: 1;
+    min-height: 0;
+  }
+  .ct {
+    flex: 1;
+    min-height: 0;
+  }
+  .ct__scroll {
+    /* flex:1 + min-height:0 is what lets a scroll region shrink inside a
+       flex column. Without the min-height it grows to fit its content and
+       the composer goes back off the bottom of the screen. */
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: var(--space-1);
+    scrollbar-width: thin;
+  }
+  /* A sheet is a panel above the composer, not another thing to scroll past.
+     Cap it and let its own contents scroll if a month plus times is tall. */
+  .ct > .cbook,
+  .ct > .ct__sheet {
+    max-height: 54svh;
+    overflow-y: auto;
+  }
+  .ct__bubblewrap { max-width: 68%; }
+
+  /* Times beside the month rather than under it. Underneath, picking a day
+     pushed its own times below the fold of the sheet — one tap forward, one
+     scroll back. */
+  .cbook__pick {
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: start;
+  }
+  .cbook__times {
+    border-top: 0;
+    border-left: 1px solid var(--line);
+    padding-top: 0;
+    padding-left: var(--space-3);
+  }
+  .cbook__pick > .cbook__note { align-self: center; }
+}
+
+.ct__sound {
+  margin-left: auto;
+  padding: 0;
+  width: 40px;
+  min-height: 40px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 15px;
+  line-height: 1;
+  opacity: 0.6;
+}
+.ct__sound:hover { opacity: 1; border-color: var(--line); }
+.ct__sound[aria-pressed="false"] { opacity: 0.35; }
+
+/* Drag a file anywhere over the thread. The whole panel lights up rather
+   than a small target, because on a laptop the pointer is wherever the file
+   came from and hunting for a drop zone is the friction this removes. */
+.ct.is-dragging {
+  outline: 2px dashed var(--accent);
+  outline-offset: 6px;
+  border-radius: var(--radius-md);
 }

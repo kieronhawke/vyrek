@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { shrinkImage } from "@/lib/images";
 
 /**
  * A photo of the meal, attached to the entry.
@@ -25,6 +26,8 @@ import { useRef, useState } from "react";
  * through the storage quota and take the whole food log with it.
  */
 
+/* Smaller than the coach thread's: a plate does not need the resolution a
+   knee angle does, and a week of meals adds up in the same browser store. */
 const MAX_EDGE = 900;
 const QUALITY = 0.72;
 
@@ -43,7 +46,7 @@ export function MealPhoto({
     setBusy(true);
     setError(null);
     try {
-      onPhoto(await downscale(file));
+      onPhoto(await shrinkImage(file, { maxEdge: MAX_EDGE, quality: QUALITY }));
     } catch {
       setError("That image could not be read. Try another.");
     } finally {
@@ -102,27 +105,4 @@ export function MealPhoto({
       </p>
     </div>
   );
-}
-
-/**
- * Shrink to something a browser store can hold.
- *
- * Canvas rather than a library: it is built in, and the only operations
- * needed are "fit inside a box" and "re-encode as JPEG".
- */
-async function downscale(file: File): Promise<string> {
-  const bitmap = await createImageBitmap(file);
-  const scale = Math.min(1, MAX_EDGE / Math.max(bitmap.width, bitmap.height));
-  const w = Math.round(bitmap.width * scale);
-  const h = Math.round(bitmap.height * scale);
-
-  const canvas = document.createElement("canvas");
-  canvas.width = w;
-  canvas.height = h;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("no 2d context");
-  ctx.drawImage(bitmap, 0, 0, w, h);
-  bitmap.close?.();
-
-  return canvas.toDataURL("image/jpeg", QUALITY);
 }

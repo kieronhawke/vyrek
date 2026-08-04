@@ -42,6 +42,14 @@ export type Topic = {
   urgent?: boolean;
   /** Openers. Editable before sending — they are a starting point, not a form. */
   questions: string[];
+  /**
+   * The guided route, where one helps.
+   *
+   * Present on the topics whose answer depends on things Ben would otherwise
+   * have to ask for — which race, how long it has hurt, what you actually
+   * ate. Absent where a plain question is already answerable.
+   */
+  build?: Assembly;
 };
 
 export const TOPICS: Topic[] = [
@@ -56,6 +64,43 @@ export const TOPICS: Topic[] = [
       "I felt something go during ",
       "How should I change this week around an injury?",
     ],
+    build: {
+      opener: "Something hurts —",
+      followUps: [
+        {
+          id: "where",
+          ask: "Where is it?",
+          options: [
+            { label: "Knee", text: "my knee." },
+            { label: "Back", text: "my back." },
+            { label: "Shoulder", text: "my shoulder." },
+            { label: "Hip or groin", text: "my hip." },
+            { label: "Calf or achilles", text: "my calf." },
+            { label: "Foot", text: "my foot." },
+          ],
+          freeform: "Somewhere else",
+        },
+        {
+          id: "since",
+          ask: "How long has it been like that?",
+          options: [
+            { label: "Today", text: "It started today." },
+            { label: "A few days", text: "It has been a few days." },
+            { label: "A couple of weeks", text: "It has been a couple of weeks." },
+            { label: "Longer", text: "It has been going on longer than a month." },
+          ],
+        },
+        {
+          id: "when",
+          ask: "When does it hurt?",
+          options: [
+            { label: "Only during training", text: "It only hurts while I train." },
+            { label: "After training", text: "It hurts afterwards rather than during." },
+            { label: "All the time", text: "It hurts all the time." },
+          ],
+        },
+      ],
+    },
   },
   {
     id: "session",
@@ -100,6 +145,42 @@ export const TOPICS: Topic[] = [
       "What's a realistic target time for me now?",
       "How do I warm up for it?",
     ],
+    build: {
+      opener: "About race day —",
+      followUps: [
+        {
+          id: "which",
+          ask: "Which race?",
+          options: [
+            { label: "My next one", text: "my next race" },
+            { label: "One I am deciding on", text: "a race I am deciding whether to enter" },
+          ],
+          freeform: "Name the race",
+        },
+        {
+          id: "when",
+          ask: "How far away is it?",
+          options: [
+            { label: "This week", text: "is this week." },
+            { label: "2–4 weeks", text: "is two to four weeks away." },
+            { label: "1–3 months", text: "is one to three months away." },
+            { label: "Further out", text: "is further out than three months." },
+          ],
+        },
+        {
+          id: "what",
+          ask: "What do you want to know?",
+          options: [
+            { label: "How to pace it", text: "How should I pace it?" },
+            { label: "What to take", text: "What should I take with me?" },
+            { label: "A realistic target", text: "What is a realistic target time for me now?" },
+            { label: "How to warm up", text: "How should I warm up?" },
+            { label: "What to eat", text: "What should I eat on the morning?" },
+          ],
+          freeform: "Something else",
+        },
+      ],
+    },
   },
   {
     id: "plan",
@@ -139,6 +220,47 @@ export function coachAlertText(args: {
   }. ${urgency}Reply here: ${args.link}`;
 }
 
+/* ── Building the question with them ────────────────────────────────────
+   A list of openers still leaves the athlete to write the useful half. "How
+   should I pace it?" is a question Ben cannot answer without knowing which
+   race, how far out, and what they have run before — so he replies asking
+   for exactly that, and the athlete waits a day to be asked something the
+   app could have asked instantly.
+
+   So a topic can carry follow-ups: two or three taps that gather the things
+   the answer depends on, and assemble a question that can actually be
+   answered first time. Every one is optional and the result lands in the
+   composer for editing — it is a draft, not a submission. */
+
+export type FollowUp = {
+  id: string;
+  /** What the sheet asks. */
+  ask: string;
+  /** The taps. `text` is what gets woven into the sentence. */
+  options: { label: string; text: string }[];
+  /** Somebody can always type instead of tapping. */
+  freeform?: string;
+};
+
+export type Assembly = {
+  /** How the sentence starts once the follow-ups are answered. */
+  opener: string;
+  followUps: FollowUp[];
+};
+
+/**
+ * Weave the answers into one sentence.
+ *
+ * Joined with spaces and tidied rather than templated per topic: a template
+ * per combination is a combinatorial mess, and the answers are written to
+ * read as clauses so they simply run on.
+ */
+export function assembleQuestion(opener: string, answers: string[]): string {
+  const parts = [opener, ...answers.map((a) => a.trim()).filter(Boolean)];
+  const joined = parts.join(" ").replace(/\s+/g, " ").replace(/\s+([,.?])/g, "$1").trim();
+  return /[?.]$/.test(joined) ? joined : `${joined}?`;
+}
+
 /** Attachments an athlete can send. Video is the one that changes coaching. */
 export type AttachmentKind = "image" | "video";
 
@@ -160,7 +282,13 @@ export type Attachment = {
  * that it uploads when Ben's side is connected. Better to say that than to
  * silently lose it.
  */
-export const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
+/*
+ * Photos are downscaled on the way in — see `shrinkImage` — so the ceiling
+ * here is not about storage any more, it is about a file so large that
+ * decoding it would hang the tab. 8 MB used to be the limit and rejected the
+ * normal output of a current phone camera.
+ */
+export const MAX_IMAGE_BYTES = 64 * 1024 * 1024;
 export const MAX_VIDEO_BYTES = 200 * 1024 * 1024;
 
 export function attachmentProblem(file: {
@@ -170,7 +298,7 @@ export function attachmentProblem(file: {
   const isImage = file.type.startsWith("image/");
   const isVideo = file.type.startsWith("video/");
   if (!isImage && !isVideo) return "Send a photo or a video.";
-  if (isImage && file.size > MAX_IMAGE_BYTES) return "That photo is too large.";
+  if (isImage && file.size > MAX_IMAGE_BYTES) return "That photo is too big to open. Try one from your camera roll.";
   if (isVideo && file.size > MAX_VIDEO_BYTES) return "That video is too long.";
   return null;
 }

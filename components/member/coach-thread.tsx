@@ -11,6 +11,7 @@ import {
 } from "@/lib/member/messages";
 import {
   TOPICS,
+  assembleQuestion,
   attachmentProblem,
   topicById,
   type Attachment,
@@ -21,6 +22,8 @@ import { useRecord } from "@/lib/control/store";
 import { useHydrated } from "@/hooks/use-hydrated";
 import { formatBookingTime } from "@/lib/booking/model";
 import type { Photo } from "@/lib/photo-library";
+import { dataUrlBytes, shrinkImage } from "@/lib/images";
+import { SOUND_KEY, play, shouldPlay } from "@/lib/member/sounds";
 
 /**
  * ASK BEN — the athlete's half of the coach thread.
@@ -56,7 +59,7 @@ import type { Photo } from "@/lib/photo-library";
  */
 
 type Draft = { topic: TopicId | null; body: string };
-type Sheet = "none" | "topics" | "questions" | "booking";
+type Sheet = "none" | "topics" | "build" | "questions" | "booking";
 
 export function CoachThread({
   coachPhoto,
@@ -82,20 +85,83 @@ export function CoachThread({
   const thread = hydrated ? [...DEMO_THREAD, ...mine] : DEMO_THREAD;
   /** Which booking the manage sheet is pointed at, if any. */
   const [managing, setManaging] = useState<ExistingBooking | null>(null);
+  /** Which follow-up we are on, and what has been tapped so far. */
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<string[]>([]);
   const [draft, setDraft] = useState<Draft>({ topic: null, body: "" });
   const [sheet, setSheet] = useState<Sheet>("none");
   const [attachment, setAttachment] = useState<Attachment | null>(null);
+  const [dragging, setDragging] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const file = useRef<HTMLInputElement | null>(null);
+  /*
+   * Sound is a preference and it is off until the page has been touched.
+   * Browsers block audio before a gesture anyway, but the reason to track it
+   * ourselves is different: a training app should never make a noise in a
+   * quiet room nobody asked it to.
+   */
+  const { value: sound, save: saveSound } = useRecord<{ on: boolean }>(SOUND_KEY, {
+    on: true,
+  });
+  const interacted = useRef(false);
+  const reduced = useRef(false);
   const foot = useRef<HTMLDivElement | null>(null);
   const composer = useRef<HTMLTextAreaElement | null>(null);
+
+  useEffect(() => {
+    reduced.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const mark = () => {
+      interacted.current = true;
+    };
+    window.addEventListener("pointerdown", mark, { once: true });
+    window.addEventListener("keydown", mark, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", mark);
+      window.removeEventListener("keydown", mark);
+    };
+  }, []);
+
+  function cue(which: "send" | "receive") {
+    if (
+      shouldPlay({
+        enabled: sound?.on ?? true,
+        interacted: interacted.current,
+        reducedMotion: reduced.current,
+      })
+    ) {
+      play(which);
+    }
+  }
 
   /* A thread that does not open at the bottom is one nobody can find the
      latest message in. */
   useEffect(() => {
     foot.current?.scrollIntoView({ block: "end" });
   }, [thread.length]);
+
+  /*
+   * The arrival sound, for a message from Ben that was not already there.
+   *
+   * Keyed on the last coach message rather than on the thread length, so
+   * sending does not trigger it and a re-render does not repeat it. The ref
+   * starts at whatever is on screen at mount, which is why opening the page
+   * is silent — the sound means "this just came in", not "there is a
+   * conversation here".
+   */
+  const heard = useRef<string | null>(null);
+  useEffect(() => {
+    const last = [...thread].reverse().find((m) => m.author === "coach");
+    if (!last) return;
+    if (heard.current === null) {
+      heard.current = last.id;
+      return;
+    }
+    if (heard.current !== last.id) {
+      heard.current = last.id;
+      cue("receive");
+    }
+  });
 
   /* Object URLs outlive the component unless they are revoked, and a session
      spent sending videos would leak every one of them. */
@@ -131,6 +197,7 @@ export function CoachThread({
     });
     setDraft({ topic: null, body: "" });
     setAttachment(null);
+    cue("send");
 
     try {
       const res = await fetch("/api/member/coach/ask", {
@@ -153,27 +220,83 @@ export function CoachThread({
     }
   }
 
-  function attach(f: File) {
+  /**
+   * Take a photo or a video and put it on the message.
+   *
+   * A phone camera produces three to six megabytes a shot, and the old rule
+   * met that with "That photo is too large" — telling somebody off for owning
+   * a good camera, on the one feature that is the whole reason to have a
+   * coach rather than a spreadsheet. Photos are shrunk instead. Only video,
+   * which cannot be re-encoded in a browser without a great deal of work,
+   * still has a limit worth stating.
+   *
+   * The preview appears before the shrink finishes, because a picture that
+   * shows up instantly and sharpens a moment later feels quick, and the same
+   * work behind a spinner feels slow.
+   */
+  async function attach(f: File) {
     const problem = attachmentProblem(f);
     if (problem) {
       setNotice(problem);
       return;
     }
-    setAttachment({
-      kind: f.type.startsWith("video/") ? "video" : "image",
-      src: URL.createObjectURL(f),
-      name: f.name,
-      size: f.size,
-    });
+
+    const kind = f.type.startsWith("video/") ? "video" : "image";
+    const preview = URL.createObjectURL(f);
+    setAttachment({ kind, src: preview, name: f.name, size: f.size });
     setNotice(null);
     composer.current?.focus();
+
+    if (kind !== "image") return;
+    try {
+      const shrunk = await shrinkImage(f);
+      URL.revokeObjectURL(preview);
+      setAttachment((a) =>
+        /* Only if they have not swapped it for another one in the meantime —
+           otherwise a slow shrink overwrites the picture they just chose. */
+        a?.src === preview
+          ? { ...a, src: shrunk, size: dataUrlBytes(shrunk) }
+          : a,
+      );
+    } catch {
+      /* Keep the original. A photo Ben can see beats an error message. */
+    }
+  }
+
+  /**
+   * Drop a file on the thread, or paste one into it.
+   *
+   * On a laptop the file picker is the slow way to do this and everybody
+   * knows it — a screenshot is already on the clipboard and a video is
+   * already in a folder. Neither needs a dialog.
+   */
+  function onDrop(e: React.DragEvent) {
+    e.preventDefault();
+    setDragging(false);
+    const f = e.dataTransfer.files?.[0];
+    if (f) void attach(f);
+  }
+
+  function onPaste(e: React.ClipboardEvent) {
+    const item = [...e.clipboardData.items].find((i) => i.kind === "file");
+    const f = item?.getAsFile();
+    if (f) void attach(f);
   }
 
   const groups = groupByDay(thread);
   const canSend = Boolean(draft.body.trim() || attachment);
 
   return (
-    <div className="ct">
+    <div
+      className={`ct${dragging ? " is-dragging" : ""}`}
+      onDragOver={(e) => {
+        e.preventDefault();
+        setDragging(true);
+      }}
+      onDragLeave={() => setDragging(false)}
+      onDrop={onDrop}
+      onPaste={onPaste}
+    >
       <div className="ct__scroll">
         {groups.map((group) => (
           <div key={group.day} className="ct__day">
@@ -212,7 +335,12 @@ export function CoachThread({
                 className="ct__topic"
                 onClick={() => {
                   setDraft({ topic: t.id, body: "" });
-                  setSheet("questions");
+                  setAnswers([]);
+                  setStep(0);
+                  /* Guided where the answer depends on facts Ben would
+                     otherwise have to write back and ask for; straight to
+                     the openers where the question is already answerable. */
+                  setSheet(t.build ? "build" : "questions");
                 }}
               >
                 <span className="ct__topiclabel">{t.label}</span>
@@ -224,6 +352,70 @@ export function CoachThread({
             Cancel
           </button>
         </div>
+      ) : null}
+
+      {sheet === "build" && draft.topic && topicById(draft.topic)?.build ? (
+        (() => {
+          const build = topicById(draft.topic)!.build!;
+          const current = build.followUps[step];
+          const finish = (all: string[]) => {
+            setDraft((d) => ({ ...d, body: assembleQuestion(build.opener, all) }));
+            setSheet("none");
+            requestAnimationFrame(() => composer.current?.focus());
+          };
+          const choose = (text: string) => {
+            const all = [...answers.slice(0, step), text];
+            if (step + 1 < build.followUps.length) {
+              setAnswers(all);
+              setStep(step + 1);
+            } else {
+              finish(all);
+            }
+          };
+          return (
+            <div className="ct__sheet">
+              <p className="ct__sheettitle">
+                {current.ask}
+                <span className="ct__sheetstep">
+                  {step + 1} of {build.followUps.length}
+                </span>
+              </p>
+              <div className="ct__questions">
+                {current.options.map((o) => (
+                  <button
+                    key={o.label}
+                    type="button"
+                    className="ct__question"
+                    onClick={() => choose(o.text)}
+                  >
+                    {o.label}
+                  </button>
+                ))}
+              </div>
+              <div className="ct__sheetrow">
+                <button
+                  type="button"
+                  className="ct__sheetclose"
+                  onClick={() =>
+                    step === 0 ? setSheet("topics") : setStep(step - 1)
+                  }
+                >
+                  ← Back
+                </button>
+                {/* Every step is skippable. A guided flow that cannot be
+                    escaped is a form, and somebody who just wants to type
+                    should not have to answer three questions first. */}
+                <button
+                  type="button"
+                  className="ct__sheetclose"
+                  onClick={() => finish(answers.slice(0, step))}
+                >
+                  Skip and write my own
+                </button>
+              </div>
+            </div>
+          );
+        })()
       ) : null}
 
       {sheet === "questions" && draft.topic ? (
@@ -285,7 +477,7 @@ export function CoachThread({
               body: "Review call cancelled.",
               booking: undefined,
             });
-            setNotice("Cancelled. Ben has been told and you have an email confirming it.");
+            setNotice("Call cancelled.");
           }}
           onBooked={({ ref, startISO }) => {
             const moving = Boolean(managing);
@@ -299,7 +491,7 @@ export function CoachThread({
                 body: `Review call moved to ${formatBookingTime(startISO)}. Reference ${ref}.`,
                 booking: { ref, startISO },
               });
-              setNotice("Moved. Ben has been told and the new time is confirmed by email and text.");
+              setNotice(`Moved to ${formatBookingTime(startISO)}.`);
               return;
             }
             append({
@@ -307,7 +499,7 @@ export function CoachThread({
               body: `Review call booked for ${formatBookingTime(startISO)}. Reference ${ref}.`,
               booking: { ref, startISO },
             });
-            setNotice("Booked. The confirmation email and text are on their way.");
+            setNotice(`Booked for ${formatBookingTime(startISO)}.`);
           }}
         />
       ) : null}
@@ -324,6 +516,24 @@ export function CoachThread({
           <button type="button" className="ct__action" onClick={() => file.current?.click()}>
             Photo or video
           </button>
+          {/* Small, quiet, and on the right. A mute control belongs with the
+              thing it mutes, and anybody who wants it will look here first. */}
+          <button
+            type="button"
+            className="ct__sound"
+            aria-pressed={sound?.on ?? true}
+            aria-label={(sound?.on ?? true) ? "Turn chat sounds off" : "Turn chat sounds on"}
+            title={(sound?.on ?? true) ? "Sounds on" : "Sounds off"}
+            onClick={() => {
+              const next = !(sound?.on ?? true);
+              saveSound({ on: next });
+              /* Play the cue when switching on, so the choice has an answer
+                 rather than being a claim about the future. */
+              if (next) play("receive");
+            }}
+          >
+            {(sound?.on ?? true) ? "🔊" : "🔇"}
+          </button>
           <input
             ref={file}
             type="file"
@@ -331,7 +541,7 @@ export function CoachThread({
             className="sr-only"
             onChange={(e) => {
               const f = e.target.files?.[0];
-              if (f) attach(f);
+              if (f) void attach(f);
               e.target.value = "";
             }}
           />
