@@ -24,10 +24,25 @@ export async function GET(request: Request) {
     { foods, partial },
     {
       headers: {
-        /* Food figures do not change hour to hour. A day at the edge with a
-           week of stale-while-revalidate keeps the box instant and keeps us
-           well inside what OFF asks of API users. */
-        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=604800",
+        /*
+         * NEVER CACHE A FAILURE.
+         *
+         * This header used to be unconditional, and it was the actual bug
+         * behind "the food search does not find anything". Open Food Facts
+         * rate-limits occasionally; one refused request got cached at the
+         * edge for a day, so a search that failed once kept failing for
+         * twenty-four hours while an identical search under a different key
+         * worked. Proved on production: "weetabix" returned nothing and
+         * "Weetabix" returned seventeen results, at the same moment.
+         *
+         * A successful answer is worth a day — food figures do not change
+         * hour to hour, and it keeps us well inside what OFF asks of API
+         * users. A failed one is worth nothing and must be retried by the
+         * next person who asks.
+         */
+        "Cache-Control": partial
+          ? "no-store"
+          : "public, s-maxage=86400, stale-while-revalidate=604800",
       },
     },
   );

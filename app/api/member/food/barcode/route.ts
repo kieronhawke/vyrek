@@ -27,8 +27,17 @@ export async function GET(request: Request) {
     { food, reason: food ? null : "unknown" },
     {
       headers: {
-        // A barcode maps to the same product effectively forever.
-        "Cache-Control": "public, s-maxage=604800, stale-while-revalidate=2592000",
+        /*
+         * A barcode maps to the same product effectively forever, so a hit is
+         * worth a week. A miss is not: "unknown" can mean the product is
+         * genuinely absent from Open Food Facts, or that the lookup was
+         * refused this once — and caching the second for a week would make a
+         * scannable product permanently unscannable. Same fault as the search
+         * route had, so the same rule.
+         */
+        "Cache-Control": food
+          ? "public, s-maxage=604800, stale-while-revalidate=2592000"
+          : "no-store",
       },
     },
   );
