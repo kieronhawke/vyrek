@@ -350,9 +350,60 @@ export default function ProgrammesPage() {
                 Four programmes. One pathway.
               </SplitHeading>
               <p className="mt-5 text-base text-suth-text-secondary md:text-lg">
-                Pick where you are. We&apos;ll meet you there.
+                Pick where you are and we&apos;ll meet you there. Not sure
+                which? The one below that describes you is usually right, and
+                Ben will confirm it on the call.
               </p>
             </div>
+
+            {/* WHICH ONE AM I?
+                The page answered that four full sections down, one programme
+                at a time, so the hero was a heading and eight words above a
+                lot of nothing — the "bare" Kieron saw. This is the same four
+                programmes as a chooser: the entry condition and the weekly
+                commitment, which are the two things that actually decide it,
+                and a jump to the detail for whichever one lands. Nothing new
+                is invented here; it is the data the sections already carry,
+                surfaced where the question gets asked. */}
+            <ul
+              role="list"
+              className="mx-auto mt-12 grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
+            >
+              {PROGRAMMES.map((p) => {
+                const commitment = p.who.find((w) => /commit/i.test(w));
+                return (
+                  <li key={p.slug}>
+                    <a
+                      href={`#${p.slug}`}
+                      className="flex h-full flex-col rounded-lg border border-suth-border bg-suth-elevated p-5 transition-colors hover:border-suth-border-strong"
+                    >
+                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                        {p.tag}
+                      </p>
+                      {/* A <p>, not a heading. Each of these names a section
+                          further down that already carries it as an h2, and
+                          announcing every programme twice is how a screen
+                          reader user loses the outline of a page. */}
+                      <p className="mt-2 text-lg font-black tracking-[-0.03em] text-suth-text">
+                        {p.name}
+                      </p>
+                      <p className="mt-2 text-sm leading-relaxed text-suth-text-secondary">
+                        {p.who[0]}
+                      </p>
+                      {commitment ? (
+                        <p className="mt-3 border-t border-suth-border-subtle pt-3 text-xs text-suth-text-tertiary">
+                          {commitment}
+                        </p>
+                      ) : null}
+                      <span className="grow" />
+                      <span className="mt-4 text-sm font-medium text-suth-accent">
+                        See the detail →
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
           </Container>
         </section>
 
