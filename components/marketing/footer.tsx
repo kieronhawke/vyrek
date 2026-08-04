@@ -81,7 +81,10 @@ export function MarketingFooter() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-base text-suth-text-secondary transition-colors hover:text-suth-text"
+                      /* py-1 takes each link from 20px to 28px tall. WCAG 2.5.8 asks
+                         for 24px minimum, and the inline-in-a-sentence exception
+                         does not apply to a stacked list of navigation links. */
+                      className="inline-block py-1 text-base text-suth-text-secondary transition-colors hover:text-suth-text"
                     >
                       {link.label}
                     </Link>

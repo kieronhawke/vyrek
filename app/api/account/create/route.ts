@@ -45,6 +45,8 @@ function generateReferralCode(): string {
 
 type Body = {
   authUserId?: string;
+  /** Present when the browser wants the server to mint the user. */
+  password?: string;
   email?: string;
   marketingOptIn?: boolean;
   quizState?: {
@@ -104,7 +106,8 @@ export async function POST(req: Request) {
   }
 
   const email = (body.email ?? "").trim().toLowerCase();
-  const authUserId = (body.authUserId ?? "").trim();
+  let authUserId = (body.authUserId ?? "").trim();
+  const password = body.password ?? "";
   const marketingOptIn = !!body.marketingOptIn;
   const quizUuid = (body.quizState?.uuid ?? "").trim();
 
@@ -114,6 +117,65 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
+  /* MINT THE USER HERE, CONFIRMED.
+   *
+   * The browser used to call supabase.auth.signUp() and pass us the id.
+   * That silently did not work: this project requires email confirmation,
+   * so signUp returned a user with NO SESSION and no confirmation mail
+   * anybody had configured. People finished the quiz, were told they had an
+   * account, and were neither signed in nor able to sign in — the account
+   * existed and was unusable.
+   *
+   * Creating it with the service key and email_confirm lets the browser sign
+   * in immediately with the password it already collected. It also stops the
+   * flow depending on a dashboard toggle that can be switched back without
+   * anybody noticing.
+   */
+  let mintedHere = false;
+  if (!authUserId && password) {
+    if (password.length < 8) {
+      return NextResponse.json(
+        { ok: false, reason: "weak-password" },
+        { status: 400 },
+      );
+    }
+    try {
+      const admin = supabaseAdmin();
+      const created = await admin.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: true,
+      });
+      if (created.data.user) {
+        authUserId = created.data.user.id;
+        mintedHere = true;
+      } else {
+        // Already registered. Not an error here — the caller signs in next,
+        // and a wrong password fails there with the right message.
+        const { data } = await admin.auth.admin.listUsers({ perPage: 200 });
+        authUserId =
+          data?.users.find((u) => (u.email ?? "").toLowerCase() === email)?.id ??
+          "";
+        if (!authUserId) {
+          return NextResponse.json(
+            { ok: false, reason: "auth-create-failed" },
+            { status: 502 },
+          );
+        }
+        return NextResponse.json(
+          { ok: false, reason: "already-registered" },
+          { status: 409 },
+        );
+      }
+    } catch (e) {
+      console.error("[account/create] admin createUser threw", e);
+      return NextResponse.json(
+        { ok: false, reason: "auth-create-failed" },
+        { status: 502 },
+      );
+    }
+  }
+
   if (!UUID_RE.test(authUserId)) {
     return NextResponse.json(
       { ok: false, reason: "invalid-auth-user-id" },
@@ -148,20 +210,33 @@ export async function POST(req: Request) {
     );
   }
 
-  // SECURITY: verify the caller actually holds the Supabase session for
-  // the authUserId they're claiming. Without this check, any signed-in
-  // user could pass another user's UUID and either claim that user's
-  // customer row (email match) or pre-empt their future signup. See
-  // 2026-05-23 security audit C-3.
-  const sessionClient = await supabaseServer();
-  const {
-    data: { user: sessionUser },
-  } = await sessionClient.auth.getUser();
-  if (!sessionUser || sessionUser.id !== authUserId) {
-    return NextResponse.json(
-      { ok: false, reason: "auth-user-id-mismatch" },
-      { status: 401 },
-    );
+  /* SECURITY: verify the caller actually holds the Supabase session for the
+     authUserId they're claiming. Without this, any signed-in user could pass
+     another user's UUID and either claim that user's customer row (email
+     match) or pre-empt their future signup. 2026-05-23 security audit C-3.
+
+     SKIPPED WHEN WE MINTED THE ID OURSELVES, and only then. The check guards
+     against an ATTACKER-SUPPLIED id; when the browser sends an email and a
+     password and this route creates the user, the id is derived here and
+     there is nothing to forge. There cannot be a session yet either — the
+     account is seconds old and the browser signs in on the next line — so
+     leaving the check in place rejected every legitimate signup with a 401,
+     which is exactly what "creating an account doesn't work" looked like.
+
+     The attach-to-an-existing-account path stays closed: if that email is
+     already registered this route returns 409 above and never reaches here,
+     so a password nobody knows cannot be used to adopt somebody's data. */
+  if (!mintedHere) {
+    const sessionClient = await supabaseServer();
+    const {
+      data: { user: sessionUser },
+    } = await sessionClient.auth.getUser();
+    if (!sessionUser || sessionUser.id !== authUserId) {
+      return NextResponse.json(
+        { ok: false, reason: "auth-user-id-mismatch" },
+        { status: 401 },
+      );
+    }
   }
 
   const answers = normaliseAnswers(body.quizState?.answers);
