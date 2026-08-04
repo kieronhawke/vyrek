@@ -22,6 +22,20 @@ import { STATIONS } from "@/lib/hyrox-stations";
 
 export const revalidate = 3600;
 
+/**
+ * Generated on demand, not at build.
+ *
+ * ⚠️ This route reads every division of every event, and once the section went
+ * live that became thousands of queries against a real database. Prerendering
+ * it exceeded a 240-second budget three times and failed the whole deployment —
+ * a sitemap, which no visitor waits for, blocking the release of the site it
+ * describes.
+ *
+ * `revalidate` still caches it for an hour, so crawlers get a cached copy and
+ * the work happens once per hour rather than once per build.
+ */
+export const dynamic = "force-dynamic";
+
 const MAX_ATHLETES = 2000;
 
 function urlEntry(loc: string, changefreq: string, priority: string, lastmod?: string): string {
@@ -118,7 +132,16 @@ export async function GET() {
 
   // Athletes, most-raced first. Capped: a profile with one race is a thin page
   // and does not deserve crawl budget.
-  const athletes = await collectAthletes(events.map((e) => e.slug));
+  // ⚠️ Bounded to recent events. Walking all 223 is thousands of ranking reads,
+  // and the cap below keeps only the most-raced 2,000 athletes anyway — so the
+  // rest of that work was discarded. Athletes from older events still reach the
+  // index through their event and ranking pages, which are listed in full.
+  const athletes = await collectAthletes(
+    [...events]
+      .sort((a, b) => (b.startDate ?? "").localeCompare(a.startDate ?? ""))
+      .slice(0, 40)
+      .map((e) => e.slug),
+  );
   for (const slug of athletes.slice(0, MAX_ATHLETES)) {
     entries.push(urlEntry(`${base}/athlete/${slug}`, "monthly", "0.5"));
   }

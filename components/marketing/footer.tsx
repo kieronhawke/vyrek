@@ -52,11 +52,17 @@ const COLUMNS = [
       { label: "Privacy", href: "/legal/privacy" },
       { label: "Terms", href: "/legal/terms" },
       { label: "Cookies", href: "/legal/cookies" },
-      /* The refunds page existed and nothing linked to it. On a site that
-         takes a recurring payment, the cancellation and refund terms are
-         the ones a customer goes looking for under pressure, and a page
-         only reachable by typing the URL is not published in any sense
-         that helps them. */
+      /*
+       * Restored. Commit 40b2027 ("footer: the location pages were not linked
+       * from anywhere on the site") dropped this line while adding the location
+       * links — almost certainly collateral rather than intent, since
+       * /legal/refunds stayed live and reachable by URL the whole time.
+       *
+       * It is not optional. A UK subscription business has to make its
+       * cancellation and refund terms findable, and Stripe requires a linked
+       * refund policy before it will approve an account. An orphaned page
+       * satisfies neither.
+       */
       { label: "Refunds", href: "/legal/refunds" },
     ],
   },

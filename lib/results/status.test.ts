@@ -109,3 +109,49 @@ describe("presentation", () => {
     expect(isListable("dsq")).toBe(true);
   });
 });
+
+describe("wording real timing providers publish", () => {
+  /*
+   * Added after the demo-only implementation went in. Race results come from a
+   * dozen different timing companies and the status column is free text: the
+   * same outcome arrives as "DSQ", "DQ", "Disqualified", "did_not_start" or
+   * "DID-NOT-START" depending on who exported it.
+   *
+   * The failure mode being guarded is always the same: anything we do not
+   * recognise must not become a finish.
+   */
+  it("normalises separators and casing", () => {
+    for (const raw of ["DID-NOT-START", "did_not_start", "Did Not Start", "DID   NOT   START"]) {
+      expect(normaliseStatus(raw), raw).toBe("dns");
+    }
+  });
+
+  it("recognises the disqualification spellings", () => {
+    for (const raw of ["DSQ", "DQ", "Disq", "Disqualified", "DISQUALIFICATION"]) {
+      expect(normaliseStatus(raw), raw).toBe("dsq");
+    }
+  });
+
+  it("prefers the more specific fact when a feed gives two", () => {
+    // "disqualified, did not finish" occurs in real exports. The
+    // disqualification is the thing that actually happened to the result.
+    expect(normaliseStatus("disqualified, did not finish")).toBe("dsq");
+  });
+
+  it("recognises the ways a finish is spelled", () => {
+    for (const raw of ["finished", "Finisher", "OK", "Confirmed", "Official", "Completed", "Ranked"]) {
+      expect(normaliseStatus(raw), raw).toBe("finished");
+    }
+  });
+
+  it("treats a withdrawal as a non-start, not a finish", () => {
+    expect(normaliseStatus("withdrawn")).toBe("dns");
+    expect(normaliseStatus("withdrew")).toBe("dns");
+  });
+
+  it("still fails closed on anything unfamiliar", () => {
+    for (const raw of ["provisional", "under review", "pending", "???", "0", "null"]) {
+      expect(normaliseStatus(raw), raw).not.toBe("finished");
+    }
+  });
+});

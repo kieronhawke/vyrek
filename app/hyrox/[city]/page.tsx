@@ -24,6 +24,7 @@ import { RACE_CITY_SLUGS } from "@/lib/locations/seo";
 import { HYROX_EVENTS } from "@/lib/hyrox-events";
 import { upcoming as upcomingRaces, formatDates } from "@/lib/hyrox/races";
 import { getGeoSeo } from "@/lib/locations/seo";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 // Only the slugs we know are valid render; everything else 404s cleanly.
@@ -65,6 +66,9 @@ export async function generateMetadata({
     description,
     alternates: { canonical: url },
     openGraph: {
+      // A child `openGraph` replaces the root layout's entirely rather
+      // than merging, so without this the page inherits no social card.
+      images: ogImages(),
       title,
       description,
       url,

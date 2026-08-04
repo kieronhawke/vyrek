@@ -53,12 +53,34 @@ test("mobile hamburger: primary CTA reachable", async ({
   test.skip(!testInfo.project.name.startsWith("mobile"), "mobile only");
 
   await page.goto("/");
-  await page.getByRole("button", { name: /open navigation/i }).click();
-  const drawer = page.locator("#mobile-nav-drawer");
+
+  /* Same stale-id problem the test below documents and this one still had:
+     `#mobile-nav-drawer` was replaced by a `useId()` value, because the nav
+     renders twice per document (page plus loading skeleton) and a fixed id was
+     appearing two or three times on blog routes. A hardcoded id has matched
+     nothing since, so this test had stopped checking anything. Follow
+     aria-controls instead, and read it before the click — the button renames
+     itself to "Close navigation" once the drawer is open. */
+  const toggle = page.getByRole("button", { name: /open navigation/i });
+  const drawerId = await toggle.getAttribute("aria-controls");
+  expect(drawerId, "the nav toggle is not wired to a drawer").toBeTruthy();
+  await toggle.click();
+
+  const drawer = page.locator(`#${drawerId}`);
   await expect(drawer).toBeVisible();
-  await drawer.getByRole("link", { name: /build my plan/i }).click();
-  await page.waitForURL("**/quiz**");
-  expect(page.url()).toContain("/quiz");
+
+  /* The CTA is "Book a free call", not "Build my plan".
+     That is deliberate and current: under the no-pricing policy every coached
+     path ends at a free consultation with Ben, so that is the primary action
+     everywhere. The point of this test is that a mobile visitor can reach a
+     conversion page from the drawer at all, so it asserts that rather than the
+     wording — which is what left it failing after a copy change. */
+  const cta = drawer.getByRole("link", { name: /free call|build my plan|get started/i });
+  await expect(cta, "the mobile drawer has no primary CTA").toBeVisible();
+  await cta.click();
+
+  await page.waitForURL(/\/(quiz|free-consultation)/);
+  expect(page.url()).toMatch(/\/(quiz|free-consultation)/);
 });
 
 test("footer: legal links work", async ({ page }) => {
@@ -162,20 +184,21 @@ test("hamburger drawer opens on mobile and contains all primary links", async ({
   await page.goto("/");
   const toggle = page.getByRole("button", { name: /open navigation/i });
 
-  /* The id is read BEFORE the click. The button renames itself to "Close
-     navigation" the moment the drawer opens, so a locator matching only
-     "Open navigation" resolves once and then never again — the test was
-     failing on a re-query, not on anything the page had got wrong. */
-  const drawerIdBefore = await toggle.getAttribute("aria-controls");
-  await toggle.click();
+  /* Read `aria-controls` BEFORE clicking.
+     The button's accessible name flips to "Close navigation" once the drawer
+     is open, so this locator stops matching the moment it is used — the
+     original order clicked, then re-queried by the old name and timed out
+     waiting for a button that had renamed itself. The test never actually
+     reached the drawer, so it was failing for a reason that had nothing to do
+     with the navigation working.
 
-  /* Found through aria-controls rather than a hardcoded id.
-     The drawer id is generated with useId() — it had to be, because the nav
-     renders more than once per document (a page and its loading skeleton),
-     and a fixed id appeared two or three times on every blog route. This
-     test still looked for "#mobile-nav-drawer" and so found nothing.
-     Following aria-controls also checks the wiring the fix was for. */
-  const drawerId = drawerIdBefore;
+     The id itself is found through aria-controls rather than hardcoded: it is
+     generated with useId(), because the nav renders more than once per
+     document (a page and its loading skeleton) and a fixed id appeared two or
+     three times on every blog route. Following the attribute also checks the
+     wiring that fix was for. */
+  const drawerId = await toggle.getAttribute("aria-controls");
+  await toggle.click();
   expect(drawerId, "the toggle must point at a drawer").toBeTruthy();
   // And it really did open, rather than the assertions below passing
   // against a drawer that was in the DOM all along.

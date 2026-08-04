@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { capture } from "@/lib/posthog";
+import { useHydrated, readStored } from "@/hooks/use-hydrated";
 
 /**
  * Stripe checkout cancellation feedback prompt.
@@ -31,22 +32,24 @@ const STORAGE_KEY = "suth:plan:cancel-prompt:dismissed";
 export function StripeCancellationCapture() {
   const params = useSearchParams();
   const cancelled = params.get("cancelled") === "true";
-  const [step, setStep] = useState<"choose" | "thanks" | "dismissed">("choose");
+  /*
+   * The dismissal flag is read straight out of sessionStorage as the initial
+   * value rather than via an effect that then calls `setStep`.
+   *
+   * The effect version re-rendered the prompt on mount for everybody, and for
+   * somebody who had already dismissed it there was a frame where the whole
+   * cancellation sheet was in the DOM before being torn out again. Reading it
+   * up front is both cheaper and correct: `readStored` returns the fallback on
+   * the server, and rendering is gated on `hydrated` below so the first client
+   * render still matches the server HTML.
+   */
+  const hydrated = useHydrated();
+  const [step, setStep] = useState<"choose" | "thanks" | "dismissed">(() =>
+    readStored<string | null>(STORAGE_KEY, null, "session") === null ? "choose" : "dismissed",
+  );
   const [reason, setReason] = useState<string | null>(null);
   const [note, setNote] = useState("");
   const fired = useRef(false);
-
-  // Suppress on subsequent visits within the same session.
-  useEffect(() => {
-    if (!cancelled) return;
-    if (typeof window === "undefined") return;
-    try {
-      const dismissed = sessionStorage.getItem(STORAGE_KEY);
-      if (dismissed) setStep("dismissed");
-    } catch {
-      /* no storage = render the prompt */
-    }
-  }, [cancelled]);
 
   // Fire a single analytics event on first render with the cancel flag.
   useEffect(() => {
@@ -57,7 +60,9 @@ export function StripeCancellationCapture() {
     });
   }, [cancelled]);
 
-  if (!cancelled || step === "dismissed") return null;
+  // Nothing renders until hydration, so the initial client render matches
+  // the server HTML even though `step` was seeded from storage.
+  if (!hydrated || !cancelled || step === "dismissed") return null;
 
   function dismiss() {
     try {

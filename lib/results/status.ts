@@ -75,12 +75,30 @@ export function isFinish(
  * rather than `finished`, for the reason in the header.
  */
 export function normaliseStatus(raw: string | null | undefined): ResultStatus {
-  const v = (raw ?? "").trim().toLowerCase();
+  // Punctuation and separators vary between providers: "DID-NOT-START",
+  // "did_not_start", "Did Not Start" are all the same outcome.
+  const v = (raw ?? "").trim().toLowerCase().replace(/[_\-.]+/g, " ").replace(/\s+/g, " ");
 
-  if (v === "finished" || v === "finisher" || v === "ok") return "finished";
-  if (v === "dsq" || v === "dq" || v === "disqualified") return "dsq";
-  if (v === "dns" || v === "did not start" || v === "no show") return "dns";
-  // `dnf` and everything else, including the empty string.
+  if (
+    v === "finished" || v === "finisher" || v === "finish"
+    || v === "ok" || v === "confirmed" || v === "official" || v === "complete"
+    || v === "completed" || v === "ranked"
+  ) return "finished";
+
+  /*
+   * DSQ before DNS before DNF, because the checks are not mutually exclusive
+   * once you accept free text: "disqualified, did not finish" appears in real
+   * exports and the disqualification is the more specific fact.
+   */
+  if (/^(dsq|dq|disq|disqualified|disqualification)$/.test(v) || v.startsWith("disqualif")) {
+    return "dsq";
+  }
+  if (
+    /^(dns|did not start|no show|noshow|not started|withdrawn|withdrew)$/.test(v)
+  ) return "dns";
+
+  // `dnf` and everything else, including the empty string. See the header:
+  // unrecognised has to fail closed, never towards a finish.
   return "dnf";
 }
 

@@ -11,6 +11,7 @@ import Link from "next/link";
 import { siteUrl } from "@/lib/blog/urls";
 import { US_STATES } from "@/lib/us-states";
 import { intlCitiesInCountry, intlCityAsLocation } from "@/lib/intl-cities";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * A country directory for the international race cities. The Hyrox-training
@@ -47,7 +48,10 @@ export async function generateMetadata({
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: "Suth Performance", type: "website", locale: "en_GB" },
+    openGraph: {
+      // A child `openGraph` replaces the root layout's entirely rather
+      // than merging, so without this the page inherits no social card.
+      images: ogImages(), title, description, url, siteName: "Suth Performance", type: "website", locale: "en_GB" },
     twitter: { card: "summary_large_image", title, description },
     robots: { index: true, follow: true },
   };

@@ -14,6 +14,7 @@ import { EventTile } from "@/components/results/event-tiles";
 import { FaqSection } from "@/components/results/ui/faq-section";
 import { RelatedLinks } from "@/components/results/ui/related-links";
 import { MicroLabel, StatTile, Nationality } from "@/components/results/ui/primitives";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * `/results/city/[slug]` — every HYROX edition a city has hosted.
@@ -117,6 +118,9 @@ export async function generateMetadata({
     description,
     alternates: { canonical: `/results/city/${profile.slug}` },
     openGraph: {
+      // A child `openGraph` replaces the root layout's entirely rather
+      // than merging, so without this the page inherits no social card.
+      images: ogImages(),
       title: `HYROX ${profile.city} — every result`,
       description,
       url: `${siteUrl()}/results/city/${profile.slug}`,

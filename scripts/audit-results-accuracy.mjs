@@ -78,10 +78,15 @@ const divisions = await all(
   "results_divisions",
   "id,event_id,division_key,display_name,entrant_count,published_entrant_count,source_division_id",
 );
+// ⚠️ Without `splits`. It is a JSONB blob of eighteen segments per athlete and
+// dwarfs every other column combined; pulling it for all 630,000 rows put this
+// read past the statement timeout and the audit died before reporting anything.
+// Only check 5 needs it, and only for rows that actually have any — which is
+// well under 1%, fetched separately below.
 const results = await all(
   "results_results",
   "id,event_id,division_id,athlete_id,partner_athlete_ids,source_result_id,rank_overall," +
-    "finish_time_ms,roxzone_time_ms,status,splits",
+    "finish_time_ms,roxzone_time_ms,status",
 );
 const athletes = await all("results_athletes", "id,slug,name,nationality,is_anonymised");
 
@@ -215,6 +220,15 @@ for (const r of results) {
 log(`  4. finish times        ${implausible} outside human range`);
 
 /* 5 ── Splits reconcile with the finish ────────────────────────────────── */
+
+// The populated minority, read on its own.
+const splitRows = await all(
+  "results_results",
+  "id,finish_time_ms,splits",
+  (q) => q.neq("splits", "{}"),
+);
+const splitsById = new Map(splitRows.map((r) => [r.id, r.splits]));
+for (const r of results) r.splits = splitsById.get(r.id) ?? { runs: [], stations: [] };
 
 let withSplits = 0;
 let drifted = 0;

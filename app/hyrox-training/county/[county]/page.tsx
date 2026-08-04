@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { GeoRegionDirectory } from "@/components/landing/geo-region-directory";
 import { getCountyBySlug, listCountySlugs } from "@/lib/uk-locations";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * A county directory.
@@ -42,7 +43,10 @@ export async function generateMetadata({
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, siteName: "Suth Performance", type: "website", locale: "en_GB" },
+    openGraph: {
+      // A child `openGraph` replaces the root layout's entirely rather
+      // than merging, so without this the page inherits no social card.
+      images: ogImages(), title, description, url, siteName: "Suth Performance", type: "website", locale: "en_GB" },
     twitter: { card: "summary_large_image", title, description },
     robots: { index: true, follow: true },
   };

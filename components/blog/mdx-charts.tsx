@@ -23,6 +23,10 @@
  */
 
 import { useCallback, useEffect, useId, useMemo, useState } from "react";
+import { useHydrated, readStored } from "@/hooks/use-hydrated";
+
+/** Referentially stable so it never invalidates a memo downstream. */
+const EMPTY_TICKS: Record<string, boolean> = Object.freeze({});
 
 // Validated categorical slots. Assign in fixed order, never cycle.
 export const SERIES = ["#65A30D", "#0284C7", "#EA580C", "#7C3AED"] as const;
@@ -324,19 +328,35 @@ export function Checklist({
 }) {
   const rows = Array.isArray(items) ? items : [];
   const key = storageKey ? `suth:checklist:${storageKey}` : null;
-  const [done, setDone] = useState<Record<string, boolean>>({});
-  const [ready, setReady] = useState(false);
+  /*
+   * Ticked items are read out of storage as the initial state rather than
+   * through an effect that then calls `setDone` and `setReady`.
+   *
+   * The effect version cost two synchronous state updates on mount, and a long
+   * post can carry several of these lists — so a reader paid a re-render of
+   * every checklist on the page immediately after hydration, and watched their
+   * own ticks appear a frame late.
+   *
+   * `useHydrated` covers the SSR half: `readStored` returns `{}` on the server,
+   * and nothing renders as ticked until hydration, so the first client render
+   * still matches the server HTML.
+   */
+  const ready = useHydrated();
+  const [doneState, setDone] = useState<Record<string, boolean>>(() =>
+    key ? readStored<Record<string, boolean>>(key, {}) : {},
+  );
 
-  useEffect(() => {
-    if (!key) return void setReady(true);
-    try {
-      const raw = window.localStorage.getItem(key);
-      if (raw) setDone(JSON.parse(raw) as Record<string, boolean>);
-    } catch {
-      /* private mode or corrupt value — fall back to unchecked */
-    }
-    setReady(true);
-  }, [key]);
+  /*
+   * ⚠️ Nothing is ticked until hydration is finished.
+   *
+   * The state initialiser runs during the hydration render as well, so a
+   * stored tick would have rendered a checked box against server HTML that
+   * said unchecked — a React #418 mismatch. Rendering the server's view for
+   * that one pass and the real ticks straight after avoids it, and still
+   * costs no extra render because `useHydrated` is a store read rather than
+   * a state update.
+   */
+  const done = ready ? doneState : EMPTY_TICKS;
 
   const toggle = useCallback(
     (item: string) => {

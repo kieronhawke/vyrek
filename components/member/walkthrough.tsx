@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { useRecord } from "@/lib/control/store";
 
 /**
@@ -52,13 +53,15 @@ const STEPS: Step[] = [
 export function Walkthrough() {
   const { value: seen, save } = useRecord<boolean>("walkthrough.seen", false);
   const [step, setStep] = useState(0);
-  /**
+  /*
    * The server renders `seen` as false, so showing immediately would flash the
-   * sheet for a returning athlete before hydration corrects it. Waiting a tick
-   * costs nothing and avoids that.
+   * sheet at a returning athlete before hydration corrects it.
+   *
+   * `useHydrated` rather than `useState` + an effect: the effect version set
+   * state synchronously on mount, which re-rendered this whole full-screen
+   * dialog a second time for every member on every page load.
    */
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const mounted = useHydrated();
 
   if (!mounted || seen) return null;
 

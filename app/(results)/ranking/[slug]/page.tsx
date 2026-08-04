@@ -12,6 +12,7 @@ import { StatusBadge, MicroLabel, StatTile } from "@/components/results/ui/primi
 import { CoachingCta } from "@/components/results/coaching-cta";
 import type { CompactRow } from "@/app/api/results/ranking/[slug]/route";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * `/ranking/{event}-{division}` — the full division leaderboard.
@@ -46,7 +47,10 @@ export async function generateMetadata({
       `Every ${division} result from HYROX ${event.city} ${event.year} — `
       + `${formatCount(page.fieldSize)} finishers with full splits, gaps and age-group ranks.`,
     alternates: { canonical: `/ranking/${slug}` },
-    openGraph: { url: `${siteUrl()}/ranking/${slug}`, type: "website" },
+    openGraph: {
+      // A child `openGraph` replaces the root layout's entirely rather
+      // than merging, so without this the page inherits no social card.
+      images: ogImages(), url: `${siteUrl()}/ranking/${slug}`, type: "website" },
   };
 }
 
