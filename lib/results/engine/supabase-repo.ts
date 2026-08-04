@@ -347,7 +347,19 @@ export class SupabaseResultsRepository implements ResultsRepository {
   }
 
   async listEvents(filter: { season?: string; region?: string; status?: EngineEventStatus } = {}) {
-    let query = this.db.from("results_events").select().order("start_date", { ascending: false });
+    // ⚠️ Nulls last, then by year.
+    //
+    // Postgres sorts NULLs *first* in a descending order, and most events have
+    // no date — the published calendar covers upcoming races only. So every
+    // undated event in the archive sorted above every dated one, and "latest
+    // results" led with Malaga 2024 while this weekend's races sat below the
+    // fold. Year is known for all of them and is the honest tiebreak.
+    let query = this.db
+      .from("results_events")
+      .select()
+      .order("start_date", { ascending: false, nullsFirst: false })
+      .order("year", { ascending: false })
+      .order("season", { ascending: false });
     if (filter.season) query = query.eq("season", filter.season);
     if (filter.region) query = query.eq("region", filter.region);
     if (filter.status) query = query.eq("status", filter.status);

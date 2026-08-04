@@ -193,6 +193,8 @@ export type EnrichResult = {
   placed: string[];
   /** Events closed because they hold results, whatever their date said. */
   closedByResults: string[];
+  /** Future events reopened because they were closed holding nothing. */
+  reopened: string[];
 };
 
 /**
@@ -209,7 +211,7 @@ export async function enrichEventMetadata(
   const now = opts.now ?? new Date();
   const result: EnrichResult = {
     enriched: [], unmatched: [], ambiguous: [], closedBySeason: [], placed: [],
-    closedByResults: [],
+    closedByResults: [], reopened: [],
   };
 
   for (const event of await repo.listEvents()) {
@@ -235,6 +237,24 @@ export async function enrichEventMetadata(
     ) {
       await repo.upsertEvent({ ...(event as EngineEvent), status: "final" });
       result.closedByResults.push(event.slug);
+      continue;
+    }
+
+    // ⚠️ And the other direction, for the same reason.
+    //
+    // HYROX publishes next season's calendar early, so an event months away
+    // gets closed by the season rule with nothing in it — and then leads
+    // "latest finished races", because it has the newest date of anything
+    // marked final. A race with no results that has not reached its date has
+    // not happened.
+    if (
+      event.status === "final"
+      && event.athleteCount === 0
+      && event.startDatetime
+      && new Date(event.startDatetime).getTime() > now.getTime()
+    ) {
+      await repo.upsertEvent({ ...(event as EngineEvent), status: "upcoming" });
+      result.reopened.push(event.slug);
       continue;
     }
 

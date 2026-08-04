@@ -66,7 +66,7 @@ export default async function ReportsIndex() {
                     <span className="block truncate text-sm text-suth-text">{event.name}</span>
                     <span className="block text-[11px] text-suth-text-tertiary">
                       {formatCount(event.totalAthletes)} athletes ·{" "}
-                      {formatRelativeDate(event.startDate, now)}
+                      {formatRelativeDate(event.startDate, now, String(event.year))}
                     </span>
                   </span>
                   <span aria-hidden className="shrink-0 text-suth-accent">→</span>

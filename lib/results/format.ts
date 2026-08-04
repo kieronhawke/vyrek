@@ -64,8 +64,16 @@ export function formatCount(n: number): string {
 }
 
 /** "3 days ago" / "in 6 weeks" — relative to a caller-supplied now, so it is testable. */
-export function formatRelativeDate(iso: string, now: Date): string {
+export function formatRelativeDate(iso: string, now: Date, fallback = ""): string {
+  // ⚠️ Most events have no date, and `new Date("")` is Invalid Date.
+  //
+  // Every arithmetic step then yields NaN and the template renders it happily:
+  // every card on the results landing page read "in NaN years". The published
+  // HYROX calendar lists upcoming races only, so the whole archive reaches here
+  // with an empty string — this is the common path, not the edge case.
   const then = new Date(iso).getTime();
+  if (!iso || Number.isNaN(then)) return fallback;
+
   const days = Math.round((then - now.getTime()) / 86_400_000);
   const abs = Math.abs(days);
   if (abs === 0) return "today";

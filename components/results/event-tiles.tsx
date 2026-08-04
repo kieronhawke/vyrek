@@ -42,7 +42,7 @@ export function EventTile({
           <p className="mt-0.5 flex items-center gap-1.5 text-xs text-suth-text-secondary">
             <span className="truncate">{event.city}</span>
             <span aria-hidden className="text-suth-text-disabled">·</span>
-            <span className="whitespace-nowrap">{formatRelativeDate(event.startDate, now)}</span>
+            <span className="whitespace-nowrap">{formatRelativeDate(event.startDate, now, String(event.year))}</span>
           </p>
         </div>
         <StatusBadge status={event.status} />

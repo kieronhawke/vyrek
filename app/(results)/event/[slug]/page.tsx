@@ -166,7 +166,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             <span aria-hidden className="text-suth-text-disabled">·</span>
             <span>{event.venue}</span>
             <span aria-hidden className="text-suth-text-disabled">·</span>
-            <time dateTime={event.startDate}>{formatRelativeDate(event.startDate, now)}</time>
+            <time dateTime={event.startDate}>{formatRelativeDate(event.startDate, now, String(event.year))}</time>
           </p>
         </div>
 
