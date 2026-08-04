@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import QuizV3 from "@/components/quiz-v3/quiz-flow";
+import { loadQuizCopy } from "@/lib/quiz-copy/store";
 
 export const metadata: Metadata = {
   /* The root layout appends " \u00b7 Suth Performance" to every child title.
@@ -32,6 +33,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function QuizPage() {
-  return <QuizV3 />;
+/* Read on the server so the edited words are in the first HTML, not
+   swapped in after paint. A read failure returns {} rather than throwing —
+   the quiz opens with its shipped copy, which is the right answer to a
+   database that is having a bad day. */
+export const dynamic = "force-dynamic";
+
+export default async function QuizPage() {
+  const copy = await loadQuizCopy();
+  return <QuizV3 copy={copy} />;
 }

@@ -11,6 +11,7 @@ import {
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { QuizShell, withViewTransition } from "@/components/quiz-v3/quiz-shell";
+import { QuizCopyProvider, ScreenCopyScope } from "@/components/quiz-v3/copy-context";
 import { ContinueButton } from "@/components/quiz-v3/continue-button";
 import { PrimaryIntentScreen } from "@/components/quiz-v3/screens/primary-intent";
 import { ExperienceScreen } from "@/components/quiz-v3/screens/experience";
@@ -112,6 +113,7 @@ import {
   applySupportPreSelect,
   determineProgramme,
   injuryNeedsDetail,
+  INJURY_LABEL,
   isBeginnerRail,
   type BarrierValue,
   type IntentValue,
@@ -702,6 +704,22 @@ function QuizV3Inner() {
     );
   }
 
+  /* EVERYTHING BELOW RENDERS ONE SCREEN, AND THE SCOPE TELLS THE HEADER
+     AND BUTTON WHICH ONE IT IS.
+     Wrapping the whole chain once rather than every branch is deliberate:
+     there are twenty-odd early returns and a new screen added tomorrow
+     would otherwise be the one nobody remembered to wrap. Hooks all run
+     above this line, so an inline function here is safe.
+     Named tokens rather than baked-in text — an edited question may say
+     "{first}" or "{area}", and those are per-person words that must never
+     end up stored in the copy table. */
+  const screenTokens = {
+    first: (state.answers.name ?? "").trim().split(/\s+/)[0] || undefined,
+    area: state.answers.injuries
+      ? INJURY_LABEL[state.answers.injuries]?.toLowerCase()
+      : undefined,
+  };
+  const rendered = (() => {
   const hasAnswers = Object.keys(state.answers).some((k) => {
     const v = state.answers[k as keyof QuizAnswers];
     if (Array.isArray(v)) return v.length > 0;
@@ -1539,6 +1557,13 @@ function QuizV3Inner() {
   // Avoid blank screen
   router.push("/");
   return null;
+  })();
+
+  return (
+    <ScreenCopyScope kind={current.kind} tokens={screenTokens}>
+      {rendered}
+    </ScreenCopyScope>
+  );
 }
 
 function QuizColdLoadFallback() {
@@ -1579,10 +1604,17 @@ function QuizColdLoadFallback() {
   );
 }
 
-export default function QuizV3() {
+export default function QuizV3({
+  copy = {},
+}: {
+  /** Ben's edits, read on the server. Empty means "as shipped". */
+  copy?: Record<string, string>;
+}) {
   return (
-    <Suspense fallback={<QuizColdLoadFallback />}>
-      <QuizV3Inner />
-    </Suspense>
+    <QuizCopyProvider overrides={copy}>
+      <Suspense fallback={<QuizColdLoadFallback />}>
+        <QuizV3Inner />
+      </Suspense>
+    </QuizCopyProvider>
   );
 }

@@ -216,7 +216,7 @@ test.describe("Quiz V3, happy path UI walk", () => {
     ).toBeVisible({ timeout: 12_000 });
     // A real calendar with real days on it, not an empty month.
     await expect(
-      page.locator('div[role="group"] button:not([disabled])').first(),
+      page.locator('[aria-label^="Choose a day"] button:not([disabled])').first(),
     ).toBeVisible({ timeout: 12_000 });
 
     // The sticky footer must not compete with the lead form. On a phone it
@@ -238,13 +238,14 @@ test.describe("Quiz V3, happy path UI walk", () => {
       // Readiness is skipped on this branch, so Meet Ben comes next.
       await clickSeeMyPlan(page);
 
+      /* Both sift answers now end in the same place: the times Ben has
+         free. The reveal used to split — coached went to a lead form,
+         self-serve to the Club trial — because the funnel sold a product.
+         This route promises a free conversation and ends on one, so the
+         sift's answer is information for Ben rather than a fork in the UI. */
       await expect(
-        page.getByRole("link", { name: /start 7 days free/i }),
-      ).toBeVisible({ timeout: 8000 });
-      await expect(page.getByText(/nobody will call you/i)).toBeVisible();
-      await expect(
-        page.getByRole("button", { name: /send my plan to ben/i }),
-      ).toHaveCount(0);
+        page.getByRole("heading", { name: /when shall ben call/i }),
+      ).toBeVisible({ timeout: 12_000 });
 
       // Stay on the self-serve route to finish the walk. On the coached
       // route the sticky button deliberately scrolls to the lead form
@@ -252,25 +253,18 @@ test.describe("Quiz V3, happy path UI walk", () => {
       // way, which is the intended behaviour rather than a limitation.
     }
 
-    {
-      const save = page.getByRole("button", { name: /save my plan/i }).first();
-      await expect(save).toBeVisible({ timeout: 8000 });
-      await save.click();
-      await page.waitForTimeout(400);
-    }
-
-    // === Screen 17: Account creation (email + password) ===
+    /* THE ACCOUNT GATE IS NOT ON THIS ROUTE ANY MORE.
+       It ends on the times Ben has free — no password, no plan, no price,
+       because nothing before it promised any of those. Account creation
+       still exists and is still tested: it is reached from the paid
+       onboarding link, which is where somebody who has agreed to be
+       coached actually signs up. */
     await expect(
-      page.getByRole("heading", { name: /save your plan|create your account/i }),
-    ).toBeVisible();
+      page.locator('[aria-label^="Choose a day"] button:not([disabled])').first(),
+    ).toBeVisible({ timeout: 12_000 });
+    await expect(page.locator('input[type="password"]')).toHaveCount(0);
 
-    const emailInput = page.locator('input[type="email"]').first();
-    await expect(emailInput).toBeVisible();
-    const passwordInput = page.locator('input[type="password"]').first();
-    await expect(passwordInput).toBeVisible();
-
-    // We've walked every visible screen. No console errors thrown along
-    // the way (auth-related errors are filtered above).
+    // No console errors on the whole walk.
     expect(errors).toEqual([]);
   });
 
@@ -332,7 +326,7 @@ test.describe("Quiz V3, happy path UI walk", () => {
     ).toBeVisible({ timeout: 12_000 });
     // A real calendar with real days on it, not an empty month.
     await expect(
-      page.locator('div[role="group"] button:not([disabled])').first(),
+      page.locator('[aria-label^="Choose a day"] button:not([disabled])').first(),
     ).toBeVisible({ timeout: 12_000 });
   });
 
@@ -411,13 +405,10 @@ test.describe("Quiz V3, happy path UI walk", () => {
     await expect(page.getByText(/2 world records/i)).toHaveCount(0);
     await clickSeeMyPlan(page);
 
-    // Reveal routes to the lead form, and the recommendation is not shown
-    // because the user chose outright.
-    // Two buttons carry this label by design: the sticky footer mirrors the
-    // inline form and scrolls to it.
+    // Same ending for every route: a time in Ben's diary.
     await expect(
-      page.getByRole("button", { name: /send my plan to ben/i }).first(),
-    ).toBeVisible({ timeout: 8000 });
+      page.getByRole("heading", { name: /when shall ben call/i }),
+    ).toBeVisible({ timeout: 12_000 });
 
     // The whole point of the rail: nothing HYROX reached a beginner, on the
     // questions OR on the reveal. The reveal is the easy one to get wrong,
@@ -429,10 +420,11 @@ test.describe("Quiz V3, happy path UI walk", () => {
     expect(body).not.toMatch(/wall ball|sled|farmers carry/i);
     expect(body).not.toMatch(/start line|race-ready|weeks to your race/i);
 
-    // And it is framed around the twelve weeks instead. The block length is
-    // measured start to finish, not from today, or a 12-week plan starting
-    // next week reads as 13.
-    await expect(page.getByText(/twelve weeks, starting/i)).toBeVisible();
-    await expect(page.getByText(/12 weeks of training/i)).toBeVisible();
+    /* The twelve-week framing went with the plan reveal. What replaced it
+       is the thing this route actually promises — a free half hour on the
+       phone — so that is what the last screen has to say, and it must say
+       it without naming a race. */
+    await expect(page.getByText(/free/i).first()).toBeVisible();
+    await expect(page.getByText(/30 minutes|half an hour/i).first()).toBeVisible();
   });
 });

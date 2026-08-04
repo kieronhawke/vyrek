@@ -9,17 +9,23 @@ import { test, expect } from "@playwright/test";
  * provisioning + email gate handling).
  */
 
-test("quiz entry: welcome carousel renders + Find your plan CTA is reachable", async ({
+test("quiz entry: opens on the first question, not an animation", async ({
   page,
 }) => {
   await page.goto("/quiz", { waitUntil: "networkidle" });
 
-  // The quiz is a client component that mounts the welcome carousel
-  // immediately. The primary CTA is a <button>Find your plan</button>.
-  const findYourPlan = page
-    .getByRole("button", { name: /find your plan/i })
-    .first();
-  await expect(findYourPlan).toBeVisible();
+  /* There was a welcome carousel here with a "Find your plan" button. It
+     held two full-bleed slides on a timer, so somebody who had just clicked
+     "free fitness assessment" waited six seconds watching an animation
+     before being asked anything — the only screen in the funnel that took
+     time without giving anything back. What has to be true now is simpler
+     and stricter: the first thing they see is the first question. */
+  await expect(
+    page.getByRole("heading", { name: /what brings you to suth performance/i }),
+  ).toBeVisible({ timeout: 15_000 });
+  await expect(
+    page.getByRole("button", { name: /find your plan/i }),
+  ).toHaveCount(0);
 });
 
 test("partners apply: form renders + required fields present", async ({

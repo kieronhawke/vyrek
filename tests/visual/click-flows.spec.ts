@@ -161,6 +161,12 @@ test("hamburger drawer opens on mobile and contains all primary links", async ({
   await page.setViewportSize({ width: 375, height: 700 });
   await page.goto("/");
   const toggle = page.getByRole("button", { name: /open navigation/i });
+
+  /* The id is read BEFORE the click. The button renames itself to "Close
+     navigation" the moment the drawer opens, so a locator matching only
+     "Open navigation" resolves once and then never again — the test was
+     failing on a re-query, not on anything the page had got wrong. */
+  const drawerIdBefore = await toggle.getAttribute("aria-controls");
   await toggle.click();
 
   /* Found through aria-controls rather than a hardcoded id.
@@ -169,8 +175,13 @@ test("hamburger drawer opens on mobile and contains all primary links", async ({
      and a fixed id appeared two or three times on every blog route. This
      test still looked for "#mobile-nav-drawer" and so found nothing.
      Following aria-controls also checks the wiring the fix was for. */
-  const drawerId = await toggle.getAttribute("aria-controls");
+  const drawerId = drawerIdBefore;
   expect(drawerId, "the toggle must point at a drawer").toBeTruthy();
+  // And it really did open, rather than the assertions below passing
+  // against a drawer that was in the DOM all along.
+  await expect(
+    page.getByRole("button", { name: /close navigation/i }),
+  ).toBeVisible();
   // An attribute selector, because useId() ids contain characters
   // (colons) that are not valid unescaped in a CSS id selector.
   const drawer = page.locator(`[id="${drawerId}"]`);
@@ -205,21 +216,21 @@ test("partner application: an empty step cannot be advanced", async ({
   ).toBeDisabled();
 });
 
-test("quiz welcome: tapping next slide advances the carousel", async ({
-  page,
-}) => {
+test("quiz entry: the first tap answers a question", async ({ page }) => {
+  /* This used to tap through a welcome carousel and assert the headline
+     changed. The carousel is gone — it cost six seconds and asked nothing —
+     so what replaces it is the behaviour that actually matters: the first
+     thing on screen is answerable, and answering it moves the quiz on. */
   await page.goto("/quiz");
-  // The carousel renders a heading per slide. After tapping the
-  // background-overlay button, the headline should change.
-  const firstHeadline = await page
-    .locator("h1#welcome-heading")
-    .textContent();
+  const first = page.getByRole("heading", {
+    name: /what brings you to suth performance/i,
+  });
+  await expect(first).toBeVisible({ timeout: 15_000 });
 
-  await page.getByRole("button", { name: /next slide/i }).click();
-  await page.waitForTimeout(400);
+  await page.getByRole("button", { name: /my first HYROX race/i }).first().click();
+  await page.getByRole("button", { name: /^continue/i }).first().click();
+  await page.waitForTimeout(700);
 
-  const secondHeadline = await page
-    .locator("h1#welcome-heading")
-    .textContent();
-  expect(secondHeadline).not.toEqual(firstHeadline);
+  await expect(first).toHaveCount(0);
+  await expect(page.locator("h1").first()).toBeVisible();
 });

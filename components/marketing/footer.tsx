@@ -52,6 +52,12 @@ const COLUMNS = [
       { label: "Privacy", href: "/legal/privacy" },
       { label: "Terms", href: "/legal/terms" },
       { label: "Cookies", href: "/legal/cookies" },
+      /* The refunds page existed and nothing linked to it. On a site that
+         takes a recurring payment, the cancellation and refund terms are
+         the ones a customer goes looking for under pressure, and a page
+         only reachable by typing the URL is not published in any sense
+         that helps them. */
+      { label: "Refunds", href: "/legal/refunds" },
     ],
   },
 ];

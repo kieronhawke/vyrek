@@ -26,6 +26,7 @@ const NAV: { href: string; label: string; group: string }[] = [
   { href: "/admin/waitlist", label: "Waitlist", group: "Marketing" },
   { href: "/admin/messaging", label: "Emails & texts", group: "Marketing" },
   { href: "/admin/quiz", label: "Quiz responses", group: "Marketing" },
+  { href: "/admin/quiz-copy", label: "Quiz wording", group: "Marketing" },
 ];
 
 export default async function AdminLayout({
