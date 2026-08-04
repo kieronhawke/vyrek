@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { formatTime, flagEmoji, nationCode } from "@/lib/results/format";
+import { formatTime, nationCode } from "@/lib/results/format";
+import { Flag } from "../ui/flag";
 import type { RecordRow } from "@/lib/results/records";
 
 /**
@@ -97,7 +98,13 @@ function BlueRibandCard({ row, now }: { row: RecordRow; now: Date }) {
 
         <p className="mt-4 text-xl font-black tracking-[-0.03em] text-suth-text">
           {holder.athleteName}{" "}
-          <span aria-hidden>{flagEmoji(holder.countryIso)}</span>
+          {/* ⚠️ The drawn flag, not the emoji one.
+              `flagEmoji` returns its input unchanged for anything that is not
+              exactly two letters, and the results source speaks IOC — so this
+              rendered the literal text "GBR" beside the record holder. Emoji
+              flags are also blank on Windows, which is why every other surface
+              already uses this component. */}
+          <Flag iso={holder.countryIso} className="ml-1 inline-block align-[-2px]" />
           <span className="sr-only">({nationCode(holder.countryIso)})</span>
         </p>
 

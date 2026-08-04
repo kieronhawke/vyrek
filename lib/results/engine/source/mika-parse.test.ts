@@ -272,3 +272,32 @@ describe("detail splits", () => {
     expect(splits.stations.filter((s) => s.key === "ski-erg")).toHaveLength(1);
   });
 });
+
+describe("⚠️ a doubles pair is two people", () => {
+  it("does not repeat an athlete who was rendered twice", () => {
+    // The board renders each athlete two to four times, and the name cell picks
+    // up every rendering — so a pair arrived as five partners: "Alexander
+    // Roncevic & Tiago Lousa & Alexander Roncevic & Tiago Lousa & Alexander
+    // Roncevic". Stored faithfully that is a five-person doubles team. It
+    // inflated every team division's headcount, made a duplicate athlete
+    // profile per repeat, and put the same person on one result twice.
+    expect(splitPartnerNames("Alaric Fenwick, Caius Marlowe, Alaric Fenwick"))
+      .toEqual(["Alaric Fenwick", "Caius Marlowe"]);
+  });
+
+  it("keeps the order, because position identifies the person", () => {
+    expect(splitPartnerNames("Bram Oosterhuis, Alaric Fenwick"))
+      .toEqual(["Bram Oosterhuis", "Alaric Fenwick"]);
+  });
+
+  it("is case-insensitive about the repeat", () => {
+    expect(splitPartnerNames("Joe Smith, joe smith, Ann Jones"))
+      .toEqual(["Joe Smith", "Ann Jones"]);
+  });
+
+  it("still returns nothing for a solo entry", () => {
+    expect(splitPartnerNames("Alaric Fenwick")).toBeUndefined();
+    // A name repeated to itself is one person, not a team.
+    expect(splitPartnerNames("Alaric Fenwick & Alaric Fenwick")).toBeUndefined();
+  });
+});

@@ -420,7 +420,27 @@ export function splitPartnerNames(name: string): string[] | undefined {
     .split(/\s*(?:\/|&|\+|,)\s*/)
     .map((p) => p.trim())
     .filter(Boolean);
-  return parts.length > 1 ? parts : undefined;
+
+  // ⚠️ Deduplicated, because the board repeats each athlete.
+  //
+  // mika renders every athlete two to four times per row (SOURCE.md §4), and
+  // the name cell picks up each rendering — so a doubles pair arrived as
+  // "Roncevic & Lousa & Roncevic & Lousa & Roncevic". Stored faithfully that
+  // is a five-person doubles team: it inflated every team division's headcount,
+  // created a duplicate athlete profile per repeat, and put the same person on
+  // a result twice.
+  //
+  // Order is preserved, because position identifies the person on the entry
+  // and re-ordering would move who is who.
+  const seen = new Set<string>();
+  const unique = parts.filter((part) => {
+    const key = part.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
+  return unique.length > 1 ? unique : undefined;
 }
 
 /**
