@@ -19,6 +19,15 @@ import type { ReportInput, ReportPodiumEntry } from "./report-generator";
 
 const SCAN_DEPTH = 60;
 
+/**
+ * How deep to pull full results for the station and pacing highlights.
+ *
+ * Deliberately far shallower than `SCAN_DEPTH`: every one of these is a
+ * multi-query read, and a station record is set at the front of the race, not
+ * in the fortieth row.
+ */
+const DETAIL_DEPTH = 10;
+
 export async function buildReportInput(eventSlug: string): Promise<ReportInput | null> {
   const source = getResultsSource();
   const event = await source.getEvent(eventSlug);
@@ -29,8 +38,21 @@ export async function buildReportInput(eventSlug: string): Promise<ReportInput |
   let biggestNegative: ReportInput["biggestNegativeSplit"];
   const standouts: ReportInput["ageGroupStandouts"] = [];
 
-  for (const division of event.divisions) {
-    const page = await source.getRanking(eventSlug, division.divisionCode, { limit: SCAN_DEPTH });
+  // ⚠️ Every division's board fetched at once, not one after another.
+  //
+  // A twelve-division event meant twelve sequential ranking reads before any
+  // work started, and a report took the best part of a minute. They do not
+  // depend on each other.
+  const pages = await Promise.all(
+    event.divisions.map((division) =>
+      source
+        .getRanking(eventSlug, division.divisionCode, { limit: SCAN_DEPTH })
+        .then((page) => ({ division, page }))
+        .catch(() => ({ division, page: null })),
+    ),
+  );
+
+  for (const { division, page } of pages) {
     if (!page || page.rows.length === 0) continue;
 
     const podium: ReportPodiumEntry[] = page.rows.slice(0, 3).map((row) => ({
@@ -68,9 +90,26 @@ export async function buildReportInput(eventSlug: string): Promise<ReportInput |
 
     if (!division.headline) continue;
 
-    for (const row of page.rows) {
-      const detail = await source.getResult(row.id);
-      if (!detail) continue;
+    // ⚠️ The podium, in parallel — not sixty rows one after another.
+    //
+    // This walked every one of `SCAN_DEPTH` rows calling `getResult`, and each
+    // of those is about six queries: more than seven hundred sequential round
+    // trips per event. Report generation did not finish inside ten minutes.
+    //
+    // What the loop is looking for is the fastest time at each station and the
+    // best negative split, and both come from splits — which 21 of 630,287
+    // results have. Scanning sixty rows to find them was speculative even when
+    // it was fast. The top of the board is where a station record actually
+    // lives, so it reads that and says so.
+    const details = (
+      await Promise.all(
+        page.rows.slice(0, DETAIL_DEPTH).map((row) =>
+          source.getResult(row.id).then((d) => (d ? { row, detail: d } : null)).catch(() => null),
+        ),
+      )
+    ).filter((x): x is { row: (typeof page.rows)[number]; detail: NonNullable<Awaited<ReturnType<typeof source.getResult>>> } => x !== null);
+
+    for (const { row, detail } of details) {
 
       for (const station of STATION_IDS) {
         const seconds = detail.stations[station];
