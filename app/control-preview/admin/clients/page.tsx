@@ -3,6 +3,7 @@ import { ClientIntake } from "@/components/control/client-intake";
 import { ClientHub } from "@/components/control/client-hub";
 import { ClientsManager } from "@/components/control/clients-manager";
 import { isLens, type Lens } from "@/lib/control/client-hub";
+import { seedLeads } from "@/lib/control/lead-seed";
 
 const BASE = "/control-preview/admin";
 
@@ -13,6 +14,9 @@ const BASE = "/control-preview/admin";
  * editing and removing a client now persists across reloads through
  * lib/control/store.ts, whose driver swaps for a real database in one file.
  */
+/* Per request, so "invited 4 days ago" is measured from now. */
+export const dynamic = "force-dynamic";
+
 export default async function AdminClients({
   searchParams,
 }: {
@@ -31,12 +35,17 @@ export default async function AdminClients({
   const raw = Array.isArray(params.lens) ? params.lens[0] : params.lens;
   const lens: Lens = isLens(raw) ? raw : "all";
 
+  /* The pipeline as the server sees it, so the people mid-signup are on the
+     page at first paint rather than appearing a moment later. */
+  const nowISO = new Date().toISOString();
+  const leads = seedLeads(new Date(nowISO));
+
   return (
     <AdminShell base={BASE} title="Clients">
       {/* The hub is the screen. Adding a client is a thing you do
           occasionally, so it sits at the bottom rather than being the first
           thing between you and the list. */}
-      <ClientHub base={BASE} lens={lens} />
+      <ClientHub base={BASE} lens={lens} seedLeads={leads} nowISO={nowISO} />
 
       <details className="ch-more">
         <summary>Add a client, or edit the list directly</summary>

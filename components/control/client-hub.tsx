@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { listCoachClients } from "@/lib/control/fixtures";
 import {
@@ -12,7 +12,16 @@ import {
   paymentTone,
   type Lens,
 } from "@/lib/control/client-hub";
+import {
+  pendingClients,
+  waitingLabel,
+  type PendingClient,
+} from "@/lib/control/pending-clients";
+import type { LeadRecord } from "@/lib/control/lead-record";
 import type { CoachClient } from "@/lib/control/fixtures";
+
+/** The key the lead pipeline persists to. Read, never written, from here. */
+const LEADS_KEY = "control.leads.v2";
 
 /**
  * One client hub, replacing two screens that read the same data.
@@ -32,7 +41,18 @@ import type { CoachClient } from "@/lib/control/fixtures";
  * when you want to sort or export the lot, but the default answers the
  * question Ben actually opens this with, which is "who needs me today".
  */
-export function ClientHub({ base, lens: initialLens = "all" }: { base: string; lens?: Lens }) {
+export function ClientHub({
+  base,
+  lens: initialLens = "all",
+  seedLeads: seeded = [],
+  nowISO,
+}: {
+  base: string;
+  lens?: Lens;
+  /** The pipeline as the server sees it, so the pending list renders there. */
+  seedLeads?: LeadRecord[];
+  nowISO: string;
+}) {
   /*
    * The roster is a plain import, so it renders on the server. It used to be
    * loaded in an effect, which meant the first paint was an empty board even
@@ -45,6 +65,30 @@ export function ClientHub({ base, lens: initialLens = "all" }: { base: string; l
   const [lens, setLens] = useState<Lens>(initialLens);
   const [view, setView] = useState<"board" | "table">("board");
   const [q, setQ] = useState("");
+
+  /*
+   * The people mid-signup come from the lead pipeline, which persists to the
+   * browser. The server renders the seed so the section is there on first
+   * paint; anything Ben has actually done to a lead replaces it after mount.
+   *
+   * Read-only on purpose. Two screens writing one list is how they end up
+   * disagreeing, and the pipeline is where a lead is worked.
+   */
+  const [leads, setLeads] = useState<LeadRecord[]>(seeded);
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(LEADS_KEY);
+      const stored = raw ? (JSON.parse(raw) as LeadRecord[]) : null;
+      if (stored?.length) setLeads(stored);
+    } catch {
+      /* storage blocked; the server's seed still rendered */
+    }
+  }, []);
+
+  const pending = useMemo(
+    () => pendingClients(leads, new Date(nowISO)),
+    [leads, nowISO],
+  );
 
   const lenses = useMemo(() => clientLenses(clients), [clients]);
 
@@ -104,6 +148,22 @@ export function ClientHub({ base, lens: initialLens = "all" }: { base: string; l
           </div>
         </div>
       </div>
+
+      {/* The handover, made visible. These are not clients yet — no tier, no
+          plan, no payment — so they sit above the roster rather than inside
+          it, and none of the counts that mean money include them. */}
+      {pending.length > 0 && lens === "all" && !q && (
+        <section className="ch-pending" aria-label="Signing up">
+          <h3 className="ch-pending__title">
+            {pending.length} signing up
+          </h3>
+          <ul className="ch-pending__list" role="list">
+            {pending.map((p) => (
+              <PendingCard key={p.id} pending={p} base={base} />
+            ))}
+          </ul>
+        </section>
+      )}
 
       {shown.length === 0 ? (
         <p className="ch-empty">
@@ -196,3 +256,28 @@ function ClientTable({ clients, base }: { clients: CoachClient[]; base: string }
 }
 
 export { TIER_ORDER };
+
+/**
+ * Somebody who has been invited and not finished.
+ *
+ * Deliberately plainer than a client card: there is nothing to report about
+ * them except how long it has been, because nothing else exists yet. The one
+ * number is the one that matters — past five days the automatic chasing has
+ * run out and it is Ben's turn.
+ */
+function PendingCard({ pending: p, base }: { pending: PendingClient; base: string }) {
+  return (
+    <li className="ch-pcard" data-stuck={p.stuck || undefined}>
+      <Link href={`${base}/leads`} className="ch-pcard__link">
+        <span className="ch-pcard__name">{p.name}</span>
+        <span className="ch-pcard__wait">{waitingLabel(p)}</span>
+        {p.calledOn && <span className="ch-pcard__call">Spoke {p.calledOn}</span>}
+        {p.stuck && (
+          <span className="ch-pcard__stuck">
+            Chasing has run out. Worth a line from you.
+          </span>
+        )}
+      </Link>
+    </li>
+  );
+}

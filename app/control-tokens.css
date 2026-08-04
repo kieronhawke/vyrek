@@ -3551,3 +3551,40 @@
 @media (max-width: 520px) {
   [data-surface="control"] .lp-queue__item { grid-template-columns: 1fr; gap: 2px; }
 }
+
+/* ── Signing up ─────────────────────────────────────────────────────────
+   The handover between a lead and a client, made visible. Above the roster
+   rather than inside it: these people have no tier, no plan and no payment,
+   and none of the counts that mean money include them. */
+[data-surface="control"] .ch-pending {
+  display: grid; gap: 8px; padding: 12px; border-radius: var(--radius-card);
+  border: 1px dashed var(--border); background: var(--surface);
+}
+[data-surface="control"] .ch-pending__title {
+  margin: 0; font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-faint); font-weight: 600;
+}
+[data-surface="control"] .ch-pending__list {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: 6px;
+}
+@media (min-width: 720px) {
+  [data-surface="control"] .ch-pending__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+[data-surface="control"] .ch-pcard {
+  border-radius: 8px; background: var(--surface-raised);
+  border: 1px solid transparent;
+}
+[data-surface="control"] .ch-pcard[data-stuck] { border-color: var(--warn, #f5b83c); }
+[data-surface="control"] .ch-pcard__link {
+  display: grid; gap: 2px; padding: 10px 12px;
+  text-decoration: none; color: inherit;
+}
+[data-surface="control"] .ch-pcard__link:hover { background: var(--surface); border-radius: 8px; }
+[data-surface="control"] .ch-pcard__name { font-weight: 620; color: var(--text); font-size: var(--text-sm); }
+[data-surface="control"] .ch-pcard__wait,
+[data-surface="control"] .ch-pcard__call { font-size: var(--text-xs); color: var(--text-faint); }
+[data-surface="control"] .ch-pcard__stuck {
+  font-size: var(--text-xs); color: var(--warn, #f5b83c); margin-top: 2px;
+}
