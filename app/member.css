@@ -1496,3 +1496,239 @@
      something is being added to it. */
   .addfood { max-width: 560px; }
 }
+
+/* ── Ask Ben ──────────────────────────────────────────────────────────
+   A messaging app. It was a heading, a card about other people failing to
+   stick at things, a second heading, then the conversation — so the actual
+   messages started below the fold on a phone. */
+.coachpage { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.coachpage__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border);
+}
+.coachpage__avatar {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #14100f;
+}
+.coachpage__avatar img {
+  width: 100%; height: 100%; object-fit: cover; filter: grayscale(1);
+}
+.coachpage__who { display: flex; flex-direction: column; min-width: 0; }
+.coachpage__name { font-weight: 700; font-size: var(--text-base); }
+.coachpage__sub { font-size: var(--text-xs); color: var(--text-muted); }
+
+/* Shown until dismissed, then gone. Aimed at the moment before somebody
+   sends their first message, not at every morning for a year. */
+.coachintro {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.coachintro__body {
+  margin: 0; font-size: var(--text-sm); line-height: 1.55; color: var(--text-muted);
+}
+.coachintro__dismiss {
+  min-height: 36px; padding: 0 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface-raised);
+  color: var(--text); font-size: var(--text-xs); font-weight: 600;
+}
+
+.ct { display: flex; flex-direction: column; gap: var(--space-2); }
+.ct__scroll { display: grid; gap: var(--space-3); }
+.ct__day { display: grid; gap: var(--space-1); }
+.ct__daylabel {
+  margin: 0; text-align: center;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.ct__row { display: flex; gap: var(--space-1); align-items: flex-end; justify-content: flex-end; }
+.ct__row[data-coach] { justify-content: flex-start; }
+.ct__avatar {
+  position: relative; flex: 0 0 auto; width: 32px; height: 32px;
+  border-radius: 999px; overflow: hidden; background: #14100f;
+}
+.ct__bubblewrap { max-width: 82%; }
+.ct__about {
+  margin: 0 0 3px; text-align: right;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+.ct__row[data-coach] .ct__about { text-align: left; }
+.ct__bubble {
+  padding: 10px 14px;
+  border-radius: 16px 16px 4px 16px;
+  background: var(--accent-faint);
+  border: 1px solid transparent;
+  color: var(--text);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.ct__bubble[data-coach] {
+  border-radius: 16px 16px 16px 4px;
+  background: var(--surface);
+  border-color: var(--border);
+}
+.ct__media {
+  display: block; width: 100%; max-height: 300px; object-fit: cover;
+  border-radius: 10px; margin-bottom: 8px;
+}
+.ct__meta {
+  margin: 3px 0 0; text-align: right;
+  font-size: var(--text-2xs, 11px); color: var(--text-muted);
+}
+.ct__row[data-coach] .ct__meta { text-align: left; }
+
+/* A booked call is a thing that happened, not somebody talking. */
+.ct__system { display: flex; justify-content: center; }
+.ct__system p {
+  margin: 0; padding: 6px 12px; border-radius: 999px;
+  background: var(--surface-raised); border: 1px dashed var(--border);
+  font-size: var(--text-xs); color: var(--text-muted); text-align: center;
+}
+
+.ct__notice {
+  margin: 0; padding: 8px 10px; border-radius: 8px;
+  background: var(--surface-raised); border: 1px solid var(--border);
+  font-size: var(--text-xs); line-height: 1.5; color: var(--text-muted);
+}
+
+/* ── Sheets, in place, so the thread is never left ────────────────────── */
+.ct__sheet {
+  display: grid; gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.ct__sheettitle { margin: 0; font-weight: 700; font-size: var(--text-sm); }
+.ct__topics { display: grid; gap: 6px; }
+@media (min-width: 640px) { .ct__topics { grid-template-columns: 1fr 1fr; } }
+.ct__topic {
+  display: grid; gap: 2px; text-align: left;
+  min-height: 56px; padding: 8px 12px;
+  border-radius: var(--radius-button);
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  cursor: pointer; color: inherit;
+}
+.ct__topic:hover { border-color: var(--accent); }
+.ct__topiclabel { font-weight: 650; font-size: var(--text-sm); color: var(--text); }
+.ct__topichint { font-size: var(--text-xs); color: var(--text-muted); }
+
+.ct__questions { display: grid; gap: 6px; }
+.ct__question {
+  text-align: left; min-height: 44px; padding: 10px 12px;
+  border-radius: var(--radius-button);
+  border: 1px solid var(--border); background: var(--surface-raised);
+  color: var(--text); font-size: var(--text-sm); cursor: pointer;
+}
+.ct__question:hover { border-color: var(--accent); }
+.ct__sheetrow { display: flex; gap: 8px; }
+.ct__sheetclose {
+  min-height: 40px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); font-size: var(--text-sm); cursor: pointer;
+}
+
+/* ── Composer ─────────────────────────────────────────────────────────── */
+.ct__composer {
+  display: grid; gap: 8px;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border);
+}
+.ct__actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.ct__action {
+  min-height: 40px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font-size: var(--text-sm); font-weight: 600;
+  cursor: pointer;
+}
+.ct__action:hover { border-color: var(--accent); color: var(--accent-text); }
+
+.ct__attachment {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px; border-radius: 10px;
+  background: var(--surface-raised); border: 1px solid var(--border);
+}
+.ct__thumb {
+  width: 44px; height: 44px; object-fit: cover; border-radius: 8px; flex: 0 0 auto;
+}
+.ct__attachname {
+  flex: 1; min-width: 0; font-size: var(--text-xs); color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ct__remove {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--accent-text); font-size: var(--text-xs); font-weight: 600;
+}
+
+.ct__inputrow { display: flex; gap: 8px; align-items: flex-end; }
+.ct__input {
+  flex: 1; min-height: 44px; max-height: 160px;
+  padding: 11px 14px; border-radius: 20px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font: inherit; font-size: var(--text-sm);
+  resize: vertical;
+}
+.ct__send {
+  flex: 0 0 auto; min-height: 44px; padding: 0 20px; border-radius: 999px;
+  border: 0; background: var(--accent); color: var(--accent-ink, #0a0a0a);
+  font-size: var(--text-sm); font-weight: 700; cursor: pointer;
+}
+.ct__send:disabled {
+  background: var(--surface-raised); color: var(--text-faint); cursor: not-allowed;
+}
+.ct__foot { margin: 0; font-size: var(--text-xs); color: var(--text-muted); }
+
+/* ── Booking, inside the thread ───────────────────────────────────────── */
+.cbook {
+  display: grid; gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--accent);
+  background: var(--surface);
+}
+.cbook__head { display: flex; align-items: center; justify-content: space-between; }
+.cbook__title { margin: 0; font-weight: 700; font-size: var(--text-sm); }
+.cbook__close {
+  background: none; border: 0; cursor: pointer; color: var(--text-muted);
+  font-size: var(--text-base); min-height: 32px; min-width: 32px;
+}
+.cbook__note, .cbook__foot {
+  margin: 0; font-size: var(--text-xs); line-height: 1.5; color: var(--text-muted);
+}
+.cbook__error { margin: 0; font-size: var(--text-sm); color: var(--danger); }
+.cbook__grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.cbook__chip {
+  min-height: 40px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface-raised);
+  color: var(--text); font-size: var(--text-sm); font-weight: 600; cursor: pointer;
+}
+.cbook__chip:hover { border-color: var(--accent); color: var(--accent-text); }
+.cbook__back {
+  justify-self: start; background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--accent-text); font-size: var(--text-xs); font-weight: 600;
+}
+.cbook__field { display: grid; gap: 4px; font-size: var(--text-xs); color: var(--text-muted); }
+
+/* On a desktop the thread is a column, not a page-wide sprawl: a chat bubble
+   stretched across a monitor is unreadable. */
+@media (min-width: 1024px) {
+  .coachpage { max-width: 760px; }
+}
