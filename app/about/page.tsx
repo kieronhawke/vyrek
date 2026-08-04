@@ -111,13 +111,16 @@ export default function AboutPage() {
                   Doubles alongside his brother Harry.
                 </p>
                 <figure className="-mx-4 my-8 overflow-hidden rounded-2xl md:mx-0">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  {/* Below the fold, so this one was missed on a first pass:
+                      profiling only sees what actually loads. The perf-budget
+                      test caught it by reading the DOM instead. */}
+                  <Image
                     src="/media/images/camp/camp-trail-run-pair-close-wide.jpg"
                     alt="Two athletes running together at dawn"
+                    width={1600}
+                    height={1000}
+                    sizes="(min-width: 768px) 768px, 100vw"
                     className="aspect-[16/10] w-full object-cover"
-                    loading="lazy"
-                    decoding="async"
                   />
                 </figure>
                 <p>
@@ -193,13 +196,13 @@ export default function AboutPage() {
                   does not make sense, you ask him in the app and he answers.
                 </p>
                 <figure className="-mx-4 mt-10 overflow-hidden rounded-2xl md:mx-0">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src="/media/images/camp/camp-portrait-gym-marquee-wide.jpg"
                     alt="Ben Sutherland hands on hips inside the training marquee"
+                    width={2100}
+                    height={900}
+                    sizes="(min-width: 768px) 768px, 100vw"
                     className="aspect-[21/9] w-full object-cover"
-                    loading="lazy"
-                    decoding="async"
                   />
                 </figure>
               </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useShouldServeHeavyAssets } from "@/hooks/use-network-information";
 
@@ -62,23 +63,32 @@ export function LoopingVideo({
   return (
     <div ref={wrapRef} className={cn("relative overflow-hidden", className)}>
       {poster && (
-        <img
+        /*
+          MEASURED: as a raw `<img>` this bypassed the Next optimiser and
+          shipped the full-size original — 147 KB on /club where the optimiser
+          serves about a third of that. `sizes` is what makes the optimiser
+          pick a smaller file; without it Next assumes 100vw.
+        */
+        <Image
           src={poster}
           alt=""
           aria-hidden
-          className={cn(
-            "absolute inset-0 h-full w-full object-cover",
-            grayscale && "grayscale",
-          )}
-          loading="lazy"
-          decoding="async"
+          fill
+          sizes="(min-width: 1024px) 66vw, 100vw"
+          className={cn("object-cover", grayscale && "grayscale")}
         />
       )}
       {serveHeavy && mountVideo && (
         <video
           ref={videoRef}
           src={src}
-          poster={poster}
+          /*
+            No `poster` attribute. The still is already painted by the `<Image>`
+            directly beneath this element, and the video's own poster does not
+            go through the optimiser — so setting it fetched the same photograph
+            a second time, at full size, for a frame nobody ever sees. The same
+            duplication was costing the home page 247 KB.
+          */
           muted
           loop
           playsInline

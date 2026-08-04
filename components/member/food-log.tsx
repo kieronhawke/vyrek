@@ -53,7 +53,12 @@ function Bar({ value, target, colour }: { value: number; target: number; colour:
   );
 }
 
-export function FoodLog() {
+export function FoodLog({
+  session,
+}: {
+  /** Today's training session, shown alongside the meals. */
+  session?: { title: string; durationMin: number; time: string };
+} = {}) {
   const { entries, all, add, remove } = useFoodLog();
   const { fire, node } = useCelebration();
   const [open, setOpen] = useState(false);
@@ -120,6 +125,28 @@ export function FoodLog() {
           ))}
         </div>
       </section>
+
+      {/*
+        ── Today's session, in the day ────────────────────────────────
+        Carried over from the screen this replaced, because it was the best
+        idea in it: putting the workout in the same column as the meals makes
+        "eat before this, recover after this" positional rather than something
+        the athlete has to work out. Dropping it when the demo timeline was
+        replaced lost that for nothing.
+
+        It sits above the meals rather than sorted into them: the meals are
+        grouped by name now, not laid out against a clock, so there is no
+        timeline to slot it into. Stating the time keeps the relationship
+        legible.
+      */}
+      {session ? (
+        <section className="fuel__session" aria-label="Today's session">
+          <span className="fuel__session-time num">{session.time}</span>
+          <span className="fuel__session-body">
+            {session.title} · {session.durationMin} min
+          </span>
+        </section>
+      ) : null}
 
       {/* ── The day, by meal ─────────────────────────────────────────── */}
       {MEALS.map((m) => {

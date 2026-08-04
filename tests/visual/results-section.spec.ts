@@ -335,8 +335,23 @@ test.describe("search", () => {
 test.describe("tools directory", () => {
   test("lists every headline feature", async ({ page }) => {
     await open(page, "/results/tools");
+
+    /*
+     * The race report is no longer one link in the grid. As a card among nine
+     * it was indistinguishable from "Race calendar", so it was promoted into a
+     * hero block with its contents listed and its own call to action.
+     *
+     * This asserts it is still reachable and still the most prominent thing on
+     * the page, rather than pinning the old link text — which is what made this
+     * test fail on a deliberate improvement.
+     */
+    const hero = page.locator("section[aria-labelledby='flagship-heading']");
+    await expect(hero, "the race report is no longer featured").toBeVisible();
+    await expect(hero).toContainText(/race report/i);
+    await expect(hero.getByRole("link").first()).toBeVisible();
+
     for (const name of [
-      /full race report/i, /record book/i, /course speed index/i,
+      /record book/i, /course speed index/i,
       /race simulator/i, /is my time any good/i, /compare two races/i,
     ]) {
       await expect(page.getByRole("link", { name }).first(), `missing: ${name}`).toBeVisible();
@@ -381,7 +396,14 @@ test.describe("tools directory", () => {
 test.describe("the record book", () => {
   test("lists world, national and age-group records", async ({ page }) => {
     await open(page, "/rankings/records");
-    await expect(page.getByRole("heading", { name: "World records" })).toBeVisible();
+    /*
+     * "World records" was one flat list of sixteen identical cards in
+     * alphabetical order, so the book opened on Adaptive Men and the fastest
+     * HYROX ever run sat in the middle looking like everything else. It is now
+     * split: the two outright bests, then every division in significance order.
+     */
+    await expect(page.getByRole("heading", { name: /outright world bests/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Every division" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "National records" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Age-group records" })).toBeVisible();
 
@@ -488,7 +510,14 @@ test.describe("race report", () => {
     await page.emulateMedia({ media: "print" });
 
     const layout = await page.evaluate(() => ({
-      sectionBreak: getComputedStyle(document.querySelector(".report-section")!).breakBefore,
+      /*
+       * The SECOND section, not the first. The cover page now carries
+       * `break-after: page`, so a `break-before` on section 01 would be a
+       * second break against the same boundary — which stranded the demo-data
+       * notice alone on a sheet of its own. Section 01 is deliberately `auto`;
+       * every section after it still starts a page.
+       */
+      sectionBreak: getComputedStyle(document.querySelectorAll(".report-section")[1]!).breakBefore,
       toolbar: getComputedStyle(document.querySelector(".report-toolbar")!).display,
       coverMinHeight: getComputedStyle(document.querySelector(".report-cover")!).minHeight,
     }));

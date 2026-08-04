@@ -35,6 +35,7 @@ import type { ResultsRepository } from "../repository";
 import type { EngineEvent, EngineEventStatus, EngineResult } from "../types";
 import { toDivisionCode, toDivisionKey } from "./divisions";
 import { readStoredRecords } from "../sync/records";
+import { isFinish, normaliseStatus } from "@/lib/results/status";
 
 const msToSeconds = (ms: number | null | undefined): number =>
   ms === null || ms === undefined ? 0 : Math.round(ms / 1000);
@@ -169,7 +170,14 @@ export class ResultsService implements ResultsDataSource {
       gapToLeaderSeconds: r.finishTimeMs
         ? msToSeconds(r.finishTimeMs) - leaderTimeSeconds
         : 0,
-      status: r.status === "finished" ? "finished" : "dnf",
+      /*
+        `normaliseStatus` rather than a two-way ternary. The ternary was safe —
+        an unknown value became `dnf`, never a finish — but it also flattened
+        every disqualification and no-show into "did not finish", which are
+        different things and are published as different things. An athlete
+        would not thank us for recording a DSQ as a DNF.
+      */
+      status: normaliseStatus(r.status),
     }));
 
     return {
@@ -232,12 +240,14 @@ export class ResultsService implements ResultsDataSource {
       runs: runsOf(result),
       stations: stationsOf(result),
       roxzoneSeconds: msToSeconds(result.roxzoneTimeMs),
-      status: result.status === "finished" ? "finished" : "dnf",
+      status: normaliseStatus(result.status),
       fieldSize,
       // Already ascending and filtered to finishers.
       leaderTimeSeconds: finishSeconds[0] ?? 0,
       divisionAverage: averageOf(
-        withSplits.filter((r) => r.status === "finished" && r.finishTimeMs),
+        // One gate for "does this count towards an average", shared with the
+        // record book so the two can never drift apart.
+        withSplits.filter((r) => isFinish(r.status, msToSeconds(r.finishTimeMs))),
         finishSeconds,
       ),
     };
@@ -459,7 +469,7 @@ export class ResultsService implements ResultsDataSource {
       divisions.map(async (d) => {
         const rows = await this.repo.listResultsWithSplitsForDivision(d.id);
         return rows.flatMap((row) => {
-          if (row.status !== "finished") return [];
+          if (!isFinish(row.status)) return [];
           const segment = row.splits.stations.find((s) => s.key === station);
           return segment ? [Math.round(segment.timeMs / 1000)] : [];
         });

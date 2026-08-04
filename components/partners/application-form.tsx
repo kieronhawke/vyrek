@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useHydrated, readStored } from "@/hooks/use-hydrated";
 
 const DRAFT_KEY = "suth:partners:apply:draft:v1";
 
@@ -90,37 +91,49 @@ const PROMOTION = [
 const TOTAL_SCREENS = 11;
 
 export function PartnerApplicationForm() {
-  const [screen, setScreen] = useState(1);
-  const [answers, setAnswers] = useState<Answers>(INITIAL);
+  /*
+   * Any in-flight draft is restored as the initial state rather than through an
+   * effect that then calls `setAnswers` and `setScreen`.
+   *
+   * This form is nine screens long and the effect version re-rendered all of it
+   * on mount. Worse, somebody returning to a part-finished application saw
+   * screen 1 with empty fields for a frame before it jumped to screen 9 with
+   * their answers in — which reads as the draft having been lost, on the one
+   * screen where that is most alarming.
+   *
+   * `readStored` handles the parse, the private-mode failure and a corrupt
+   * value; rendering is gated on `hydrated` so the first client render still
+   * matches the server HTML.
+   */
+  const draft = useMemo(
+    () => readStored<{ answers?: Partial<Answers>; screen?: number }>(DRAFT_KEY, {}),
+    [],
+  );
+  const [screenState, setScreen] = useState(() =>
+    typeof draft.screen === "number"
+      ? Math.max(1, Math.min(TOTAL_SCREENS, draft.screen))
+      : 1,
+  );
+  const [answersState, setAnswers] = useState<Answers>(() => ({ ...INITIAL, ...draft.answers }));
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [hydrated, setHydrated] = useState(false);
+  const hydrated = useHydrated();
 
-  // Restore any in-flight draft on mount. The partner application was
-  // previously component-state only; refreshing the tab on step 9 dropped
-  // everything. Now we mirror the quiz pattern and persist as the user
-  // progresses.
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      const raw = window.localStorage.getItem(DRAFT_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as {
-          answers?: Partial<Answers>;
-          screen?: number;
-        };
-        if (parsed.answers) {
-          setAnswers((prev) => ({ ...prev, ...parsed.answers }));
-        }
-        if (typeof parsed.screen === "number") {
-          setScreen(Math.max(1, Math.min(TOTAL_SCREENS, parsed.screen)));
-        }
-      }
-    } catch {
-      // bad / non-JSON draft, ignore
-    }
-    setHydrated(true);
-  }, []);
+  /*
+   * ⚠️ RENDER THE SERVER'S VALUES UNTIL HYDRATION IS DONE.
+   *
+   * Seeding state from localStorage is only half the job. The initialiser runs
+   * during the hydration render too, so the markup React produced did not match
+   * the server HTML and it threw React error #418 — caught by actually filling
+   * the form, reloading, and reading the console, not by any type or lint check.
+   *
+   * Rendering the server values for the hydration pass and the draft
+   * immediately after fixes it without going back to `useEffect` + `setState`:
+   * `useHydrated` flips via `useSyncExternalStore`, so there is still no
+   * cascading render.
+   */
+  const screen = hydrated ? screenState : 1;
+  const answers = hydrated ? answersState : INITIAL;
 
   // Persist after every change once hydrated. Skipped before hydration so
   // we don't overwrite the stored draft with the INITIAL defaults.

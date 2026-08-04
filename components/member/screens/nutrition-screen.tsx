@@ -1,3 +1,4 @@
+import { DEMO_TODAY } from "@/lib/member/demo";
 import { weekFor } from "@/lib/member/week";
 import { WeekStrip } from "@/components/member/week-strip";
 import { FoodLog } from "@/components/member/food-log";
@@ -38,7 +39,15 @@ export function NutritionScreen({ base = "/app" }: { base?: string } = {}) {
         <WeekStrip days={week} base={base} />
       </section>
 
-      <FoodLog />
+      {/* The session comes from the plan, so the fuel page can show it beside
+          the meals — see the note in FoodLog. */}
+      <FoodLog
+        session={{
+          title: DEMO_TODAY.title,
+          durationMin: DEMO_TODAY.durationMin,
+          time: "17:30",
+        }}
+      />
     </>
   );
 }

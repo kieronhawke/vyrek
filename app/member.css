@@ -1219,3 +1219,23 @@
   font-weight: 650;
   color: var(--text-muted);
 }
+
+/* Today's session, sitting with the meals on the fuel page. Hatched and
+   accent-edged so it reads as a different kind of thing from a meal row. */
+.fuel__session {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-card);
+  color: var(--accent-text);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  background-image: repeating-linear-gradient(
+    135deg, var(--accent-faint) 0 6px, transparent 6px 12px
+  );
+}
+.fuel__session-time { flex: none; font-size: var(--text-xs); color: var(--text-muted); }
+.fuel__session-body { min-width: 0; }

@@ -216,7 +216,7 @@
 
   .results-report .report-print-cover__title { margin-top: 26mm; }
 
-  .results-report .report-print-cover__title h1 {
+  .results-report .report-print-cover__h1 {
     margin: 0;
     font-size: 54pt;
     line-height: 0.95;

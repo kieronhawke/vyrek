@@ -63,14 +63,28 @@ export function PrintCover({
         <span className="report-print-cover__kicker">HYROX Race Report</span>
       </div>
 
+      {/*
+        A `<p>`, not an `<h1>`.
+
+        It looks like a title and it is set like one, but the page already has
+        a real `<h1>` — the athlete's name in the screen header — and this cover
+        is `display: none` on screen. Two `<h1>`s is an SEO problem on its own,
+        and because this one comes first in the DOM it also became the first
+        match for `h1` in every test and assistive-technology heading list, all
+        of them pointing at an element nobody can see. It broke ten existing
+        tests, each timing out waiting for a hidden heading to become visible.
+
+        `aria-hidden` on the wrapper already keeps it out of the accessibility
+        tree; the element just should not have claimed to be a heading.
+      */}
       <div className="report-print-cover__title">
-        <h1>
+        <p className="report-print-cover__h1">
           Race
           <br />
           Performance
           <br />
           Report
-        </h1>
+        </p>
       </div>
 
       {/*
