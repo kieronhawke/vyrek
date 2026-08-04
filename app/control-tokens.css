@@ -2979,3 +2979,100 @@
 @media (max-width: 640px) {
   [data-surface="control"] .ac-geomap { max-height: 58svh; }
 }
+
+/* ── Lead pipeline ───────────────────────────────────────────────────────
+   One card per lead, each asking a single question: what next. */
+[data-surface="control"] .lp-summary {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2);
+  margin: 0 0 var(--space-2); font-size: var(--text-sm); color: var(--text-muted);
+}
+[data-surface="control"] .lp-summary strong { color: var(--text); font-size: var(--text-lg); }
+[data-surface="control"] .lp-reset {
+  margin-left: auto; min-height: 32px; padding: 0 12px; border-radius: 999px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); font-size: var(--text-xs); cursor: pointer;
+}
+
+[data-surface="control"] .lp-list {
+  display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none;
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 900px) {
+  [data-surface="control"] .lp-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1400px) {
+  [data-surface="control"] .lp-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+[data-surface="control"] .lp-card {
+  display: grid; gap: 10px; padding: var(--space-2);
+  border: 1px solid var(--border); border-radius: 10px; background: var(--surface);
+}
+[data-surface="control"] .lp-card[data-stage="client"] { border-color: var(--accent); }
+[data-surface="control"] .lp-card[data-stage="lost"] { opacity: 0.6; }
+
+[data-surface="control"] .lp-card__head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+}
+[data-surface="control"] .lp-card__name { margin: 0; font-weight: 650; }
+[data-surface="control"] .lp-card__meta {
+  margin: 2px 0 0; font-size: var(--text-xs); color: var(--text-muted);
+}
+[data-surface="control"] .lp-stage {
+  flex: none; padding: 3px 9px; border-radius: 999px; font-size: var(--text-2xs);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  border: 1px solid var(--border); color: var(--text-muted);
+}
+[data-surface="control"] .lp-stage[data-terminal="true"] {
+  border-color: var(--accent); color: var(--accent-text, var(--accent));
+}
+
+[data-surface="control"] .lp-rail {
+  height: 4px; border-radius: 999px; background: var(--border); overflow: hidden;
+}
+[data-surface="control"] .lp-rail__fill {
+  height: 100%; background: var(--accent);
+  transition: width 420ms cubic-bezier(.22,.61,.36,1);
+}
+[data-surface="control"] .lp-rail[data-lost="true"] .lp-rail__fill { background: var(--text-muted); }
+
+[data-surface="control"] .lp-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+[data-surface="control"] .lp-btn {
+  min-height: 44px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface-raised);
+  color: var(--text); font-size: var(--text-sm); font-weight: 600; cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease;
+}
+[data-surface="control"] .lp-btn:hover { background: var(--surface); }
+[data-surface="control"] .lp-btn:active { transform: scale(0.97); }
+[data-surface="control"] .lp-btn[data-primary="true"] {
+  background: var(--accent); border-color: var(--accent); color: var(--accent-ink, #0a0a0a);
+}
+[data-surface="control"] .lp-btn[data-muted] {
+  background: transparent; color: var(--text-muted); font-weight: 500;
+}
+@media (pointer: fine) {
+  [data-surface="control"] .lp-btn { min-height: 36px; }
+}
+
+[data-surface="control"] .lp-hint {
+  margin: 0; font-size: var(--text-xs); color: var(--text-muted); line-height: 1.5;
+  flex-basis: 100%;
+}
+
+/* Receipts: bottom-right, stacked, self-dismissing. */
+[data-surface="control"] .lp-receipts {
+  position: fixed; right: var(--space-2); bottom: var(--space-2);
+  z-index: 80; display: grid; gap: 8px; justify-items: end; pointer-events: none;
+}
+[data-surface="control"] .lp-receipt {
+  margin: 0; padding: 10px 14px; border-radius: 999px;
+  background: var(--surface-raised); border: 1px solid var(--accent);
+  color: var(--text); font-size: var(--text-sm);
+  animation: lp-in 260ms cubic-bezier(.22,.61,.36,1) both;
+}
+@keyframes lp-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  [data-surface="control"] .lp-receipt { animation: none; }
+  [data-surface="control"] .lp-rail__fill { transition: none; }
+}
