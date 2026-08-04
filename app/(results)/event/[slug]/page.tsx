@@ -29,69 +29,39 @@ import { CoachingCta } from "@/components/results/coaching-cta";
 export const revalidate = 300;
 
 /**
- * PREBUILD THE EVENTS PEOPLE ARRIVE ON. THE REST RENDER ON FIRST REQUEST.
+ * ONLY THE EVENTS THAT HAVE NOT HAPPENED YET.
  *
- * This used to return all 223 events, and it is what killed the deploy.
- * Each page fans out one ranking query per headline division against a
- * results database that gained 629k athletes in "reclaim the 629k orphaned
- * athletes"; several individual pages then took longer than the 240-second
- * per-page ceiling. The build reached 6,043 of 8,635 pages and was killed at
- * Vercel's 45-minute limit — which is reported as `Command "pnpm run build"
- * exited with 1`, so it reads like a compile error and is not one. Six
- * production deployments failed this way in a row.
+ * Not a count, and not a size threshold — both of those were wrong, and the
+ * build logs are what corrected them. Pages from 2,638 athletes to 16,023
+ * all exceeded the 240-second per-page ceiling, so there is no field size
+ * below which prebuilding is safe.
  *
- * Nothing is lost by capping it. `dynamicParams` is left at its default, so
- * an event outside this list still renders on first request and is cached
- * from then on under the same five-minute revalidate as everything else.
- * What changes is that the deploy no longer pays for 223 of them up front,
- * for pages nobody has asked for yet.
+ * What separates a cheap page from an expensive one here is not how big the
+ * field is but whether there is a field at all. Look at the body below: the
+ * podium fan-out — one ranking read per headline division — runs only when
+ * `isFinal`. An event that has not been raced yet has no results to rank, so
+ * its page does no per-division reads whatever and cannot be slow for this
+ * reason. That is a property of the code rather than a guess about the data,
+ * which is what the last two attempts were missing.
  *
- * The list is chosen the way a visitor arrives: anything not yet finished
- * (people check those before race day), then the most recent finished ones.
- * `/results/city/[slug]` already reasons exactly this way and caps at 60;
- * this is the same principle applied to the family that costs the time.
+ * It is also the right list on its own merits: an upcoming race is what
+ * somebody checks in the week before it, and it is the page most likely to
+ * be hit cold by a crowd at once.
  *
- * BUT NOT THE GIANTS, AND THAT CORRECTION IS THE POINT. The first version of
- * this ordered by field size after recency — "most recent, biggest first" —
- * which reads sensibly and is exactly wrong for a build-time cap: it hand-
- * picked the six largest fields in the whole dataset, and /reports/s8-2026-
- * lyon (16,023 athletes) then blew the 240-second per-page ceiling on the
- * very deploy meant to fix the timeouts.
- *
- * A page that cannot render in 240 seconds with 29 build workers cannot
- * render inside a request either, so prebuilding it was never going to make
- * it work — it only decided whether one broken page took the whole deploy
- * with it. Anything over the threshold is left to render on demand, and the
- * real repair is making the page cheaper, which is a results-lane job and is
- * not done here.
+ * Everything finished renders on first request and caches from then on. The
+ * 223 finished events were what pushed six consecutive deploys past the
+ * 45-minute limit.
  */
-
-/* Lyon at 16,023 is measured — it timed out. Nothing below that is measured
-   at all, so this sits well under it rather than close to it: it covers 183
-   of the 208 finished events and leaves the 25 largest out. */
-const MAX_PREBUILT_FIELD = 5_000;
-/* Twelve, not forty. The per-page cost cannot be measured from here — the
-   results database is a separate project this worktree has no keys for, and
-   locally the source falls back to fourteen demo events, which is why the
-   build passes on my machine and dies on Vercel. So the number is set where
-   the deploy is safe rather than where it is optimal: twelve pages cannot
-   consume a 45-minute budget even at the worst per-page time seen in the
-   logs. Raise it once a green build shows what a page actually costs. */
-const PREBUILT_EVENTS = 12;
+const PREBUILT_EVENTS = 20;
 
 export async function generateStaticParams() {
   // A failure here must not fail the build: with no params every event
   // simply renders on demand, which is the fallback anyway.
   const events = await getResultsSource().listEvents().catch(() => []);
 
-  return [...events]
-    .filter((e) => (e.totalAthletes ?? 0) <= MAX_PREBUILT_FIELD)
-    .sort((a, b) => {
-      // Upcoming and live first — they are what somebody checks this week.
-      const af = a.status === "finished" ? 1 : 0;
-      const bf = b.status === "finished" ? 1 : 0;
-      return af - bf || b.year - a.year || a.slug.localeCompare(b.slug);
-    })
+  return events
+    .filter((e) => e.status !== "finished")
+    .sort((a, b) => a.year - b.year || a.slug.localeCompare(b.slug))
     .slice(0, PREBUILT_EVENTS)
     .map((e) => ({ slug: e.slug }));
 }

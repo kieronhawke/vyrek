@@ -29,30 +29,35 @@ export const revalidate = 3600;
 const HUMAN_TAKES: Record<string, string> = {};
 
 /**
- * Capped for the same reason `/event/[slug]` is: a report is built from the
- * same per-division reads, and 208 of them at build time is most of a
- * deploy. The recent ones are the ones anybody reads; an older report still
- * renders on first request and caches from then on.
+ * NO REPORT IS PREBUILT, AND THE REASON IS THE THIRD ATTEMPT AT THIS.
  *
- * The field-size limit is not a nicety. This file's first version sorted by
- * size after recency and so prebuilt /reports/s8-2026-lyon — the single
- * largest field in the dataset — which took longer than the 240-second
- * per-page ceiling and started retrying. Sorting by "biggest first" reads
- * like it favours the pages that matter and in fact selects the ones the
- * build cannot afford.
+ * First I capped the count. Then I capped it by field size, after the largest
+ * event in the dataset blew the 240-second per-page ceiling. Both were built
+ * on the assumption that big fields are the slow ones. The build logs say
+ * otherwise: /reports/s8-2026-katowice has 2,638 athletes and still timed out
+ * three times, and so did washington-dc at 3,772 and warsaw at 4,261. There
+ * is no threshold here that is safe, because size is not what predicts it.
+ *
+ * What does predict it is load. Four lanes push to main, every push starts a
+ * production build, and several were running at once — each with 29 workers,
+ * all reading the same results Supabase project. The same event data serves
+ * in about four seconds when nothing else is asking for it. The pages are not
+ * inherently four-minute pages; they are starved.
+ *
+ * A REPORT IS NEVER WORTH A FAILED DEPLOYMENT. Next.js exits the build when a
+ * page fails three times — /reports/s8-2026-lisboa is what actually printed
+ * `Command "pnpm run build" exited with 1` — so a page that is merely slow
+ * takes the whole site down with it. A report that nobody has requested has
+ * no claim on that.
+ *
+ * So: nothing here is prebuilt. Every report renders on first request under
+ * the same hourly revalidate and is cached from then on, where being slow
+ * costs one reader some seconds instead of costing everybody the deploy.
+ * Making the page cheap enough to prebuild is the real repair and belongs
+ * with whoever owns the results queries.
  */
-const PREBUILT_REPORTS = 6;
-const MAX_PREBUILT_FIELD = 5_000;
-
-export async function generateStaticParams() {
-  const events = await getResultsSource()
-    .listEvents({ status: "finished" })
-    .catch(() => []);
-  return [...events]
-    .filter((e) => (e.totalAthletes ?? 0) <= MAX_PREBUILT_FIELD)
-    .sort((a, b) => b.year - a.year || a.slug.localeCompare(b.slug))
-    .slice(0, PREBUILT_REPORTS)
-    .map((e) => ({ event: e.slug }));
+export function generateStaticParams(): { event: string }[] {
+  return [];
 }
 
 export async function generateMetadata({
