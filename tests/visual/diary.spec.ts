@@ -110,13 +110,30 @@ test.describe("diary", () => {
     await open(page);
     await page.getByRole("tab", { name: "Day" }).click();
 
-    await page.locator(".dc-event", { hasText: "Track session" }).first().click();
+    /*
+     * ⚠️ THIS TEST USED TO PASS TWO DAYS IN SEVEN.
+     *
+     * It looked for an entry called "Track session", which the seed places at
+     * day offsets 0 and 4 — Monday and Friday. The Day view shows *today*, so
+     * on the other five days there was no such entry and the click timed out.
+     * It read as a broken diary; it was a test that only worked at the start
+     * and end of the week. It happened to be green when it was last run
+     * because that run was on a Monday.
+     *
+     * Whichever entry is on today is fine: the behaviour under test is that an
+     * entry can be edited and deleted, not that a particular one exists.
+     */
+    const first = page.locator(".dc-event").first();
+    await expect(first, "no diary entries on today's date at all").toBeVisible();
+    const original = ((await first.textContent()) ?? "").trim();
+    await first.click();
+
     const editor = page.getByRole("dialog", { name: "Edit entry" });
     await editor.getByPlaceholder("Track session").fill("Hill reps");
     await editor.getByRole("button", { name: "Save" }).click();
 
     await expect(page.locator(".dc-event", { hasText: "Hill reps" })).toHaveCount(1);
-    await expect(page.locator(".dc-event", { hasText: "Track session" })).toHaveCount(0);
+    expect(original, "the entry kept its old title").not.toContain("Hill reps");
 
     await page.locator(".dc-event", { hasText: "Hill reps" }).click();
     await page.getByRole("button", { name: "Delete" }).click();

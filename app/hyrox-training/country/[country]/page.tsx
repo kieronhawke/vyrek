@@ -43,7 +43,9 @@ export async function generateMetadata({
      a comma, which reads as a directory just as well and fits. */
   const across = `Hyrox training across ${data.country}`;
   const title = across.length + 20 <= 65 ? across : `Hyrox training, ${data.country}`;
-  const description = `Hyrox training across ${data.country}: ${data.cities.length} ${data.cities.length === 1 ? "host city" : "host cities"} and ${races} ${races === 1 ? "race" : "races"} on the calendar. A 12-week programme dated backwards from race day, from HYROX Elite 15 athlete Ben Sutherland.`;
+  // Kept under ~160 so it is not truncated in results. See the note in the
+  // [location] template — the same budget applies to every geo page.
+  const description = `Hyrox training across ${data.country}: ${data.cities.length} ${data.cities.length === 1 ? "host city" : "host cities"}, ${races} ${races === 1 ? "race" : "races"}. A 12-week programme from Elite 15 athlete Ben Sutherland.`;
   return {
     title,
     description,

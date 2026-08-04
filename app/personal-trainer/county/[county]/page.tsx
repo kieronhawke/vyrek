@@ -38,7 +38,7 @@ export async function generateMetadata({
      a comma, which reads as a directory just as well and fits. */
   const across = `Personal trainer across ${data.county}`;
   const title = across.length + 20 <= 65 ? across : `Personal trainer, ${data.county}`;
-  const description = `Personal training across ${data.county}: ${data.locations.length} towns and cities, each with its local gyms, nearest measured 5 km and closest race. Online coaching from HYROX Elite 15 athlete Ben Sutherland.`;
+  const description = `Personal training across ${data.county}: ${data.locations.length} towns and cities, each with local gyms and a measured 5 km. Online coaching from Elite 15 athlete Ben Sutherland.`;
   return {
     title,
     description,

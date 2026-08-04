@@ -187,10 +187,22 @@ test.describe("activity", () => {
 
   test("the map plots a pin per location", async ({ page }) => {
     await open(page);
+
+    /*
+     * Web-first assertions, not bare `.count()`.
+     *
+     * The map is Leaflet and draws after hydration, so counting immediately
+     * raced it and returned zero. `.count()` is one of the few Playwright APIs
+     * that does not auto-wait, which is what made this look like a broken map
+     * rather than a test that asked too early.
+     */
     const pins = page.locator(".ac-map__pin");
-    expect(await pins.count()).toBeGreaterThan(3);
+    await expect.poll(() => pins.count(), { timeout: 10_000 }).toBeGreaterThan(3);
+
     // Enquiries are the ones worth seeing, so they are the accent pins.
-    expect(await page.locator(".ac-map__pin[data-enquiry]").count()).toBeGreaterThan(0);
+    await expect
+      .poll(() => page.locator(".ac-map__pin[data-enquiry]").count(), { timeout: 10_000 })
+      .toBeGreaterThan(0);
   });
 
   test("nothing overflows the page sideways", async ({ page }) => {

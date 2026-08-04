@@ -133,8 +133,28 @@ test.describe("the flow", () => {
     await hydrated(page);
 
     await page.locator(".ob-next").click(); // welcome
-    await page.locator(".ob-next").click(); // account (prefilled)
-    await page.locator(".ob-next").click(); // about (name prefilled)
+
+    /*
+     * The email is typed, not prefilled, and that is correct on this path.
+     *
+     * The invite link comes in two forms. When a Redis store is configured the
+     * link carries a ten-character id, the full payload lives server-side, and
+     * every field is prefilled. Without one — which is the case here and in
+     * any environment where UPSTASH_REDIS_REST_URL is unset — the link falls
+     * back to a signed token that deliberately carries only the first name,
+     * because `lib/sms/send.ts` refuses any invite text over three segments
+     * and the contact fields push it past that limit.
+     *
+     * So this test types the email, exactly as the recipient would. It used to
+     * assume prefill, so it sat on a disabled Continue button until it timed
+     * out — the invite flow looked broken when it was the test that was.
+     */
+    const email = page.locator("input[type='email']");
+    if (!(await email.inputValue())) await email.fill("sam@example.com");
+    await page.locator(".ob-next").click(); // account
+
+    // The name IS prefilled on both paths — that much the token always carries.
+    await page.locator(".ob-next").click(); // about
 
     await page.locator(".ob-choice").first().click();
     await page.locator(".ob-number").nth(2).click();

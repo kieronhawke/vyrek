@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { authorUrl } from "@/lib/blog/urls";
 import type { Author } from "@/lib/blog/authors";
+import Image from "next/image";
 
 export function AuthorCard({
   author,
@@ -12,12 +13,14 @@ export function AuthorCard({
   return (
     <div className="flex items-start gap-4 rounded-lg border border-suth-border-subtle bg-suth-elevated p-5">
       <div className="size-16 shrink-0 overflow-hidden rounded-full bg-suth-overlay">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        {/* Rendered at 64px. As a raw `<img>` it shipped the full-size
+            portrait to fill a thumbnail, on every article and author page. */}
+        <Image
           src={author.photo}
           alt={`Portrait of ${author.name}`}
-          loading="lazy"
-          decoding="async"
+          width={128}
+          height={128}
+          sizes="64px"
           className="h-full w-full object-cover"
         />
       </div>

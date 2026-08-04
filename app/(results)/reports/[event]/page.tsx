@@ -28,9 +28,21 @@ export const revalidate = 3600;
 /** Human-written takes, keyed by event slug. Empty by design. */
 const HUMAN_TAKES: Record<string, string> = {};
 
-export async function generateStaticParams() {
-  const events = await getResultsSource().listEvents({ status: "finished" });
-  return events.map((e) => ({ event: e.slug }));
+/**
+ * ⚠️ Not prerendered at build.
+ *
+ * This page reads the results database, and there are hundreds of it. Building
+ * them all meant thousands of queries against the store while three build
+ * workers hammered it in parallel — pages that answer in two seconds on an idle
+ * database took past four minutes, and three deployments failed on it in a row.
+ * Raising the budget only moved which page died.
+ *
+ * `revalidate` above already caches each page once rendered, so returning no
+ * params costs a slower first request and nothing else. Prerendering thousands
+ * of database-backed pages at build time is the thing that does not scale.
+ */
+export function generateStaticParams() {
+  return [];
 }
 
 export async function generateMetadata({

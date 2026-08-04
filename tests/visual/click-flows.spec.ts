@@ -79,8 +79,11 @@ test("mobile hamburger: primary CTA reachable", async ({
   await expect(cta, "the mobile drawer has no primary CTA").toBeVisible();
   await cta.click();
 
-  await page.waitForURL(/\/(quiz|free-consultation)/);
-  expect(page.url()).toMatch(/\/(quiz|free-consultation)/);
+  /* `/book` is where "Book a free call" actually goes — checked, not guessed.
+     An earlier version of this assertion listed /quiz and /free-consultation
+     from memory and failed on a CTA that was working perfectly. */
+  await page.waitForURL(/\/(book|quiz|free-consultation)/);
+  expect(page.url()).toMatch(/\/(book|quiz|free-consultation)/);
 });
 
 test("footer: legal links work", async ({ page }) => {

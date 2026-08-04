@@ -80,15 +80,21 @@ async function loadCityStats(profile: CityProfile): Promise<CityStats | null> {
   };
 }
 
-export async function generateStaticParams() {
-  // Only the hubs with real depth are prebuilt. The tail renders on first
-  // request and is cached from then on; prebuilding two hundred thin cities
-  // would lengthen every deploy to serve pages nobody has asked for yet.
-  const events = await getResultsSource().listEvents().catch(() => []);
-  return groupEventsByCity(events)
-    .filter((c) => c.editions >= 2)
-    .slice(0, 60)
-    .map((c) => ({ slug: c.slug }));
+/**
+ * ⚠️ Not prerendered at build.
+ *
+ * This page reads the results database, and there are hundreds of it. Building
+ * them all meant thousands of queries against the store while three build
+ * workers hammered it in parallel — pages that answer in two seconds on an idle
+ * database took past four minutes, and three deployments failed on it in a row.
+ * Raising the budget only moved which page died.
+ *
+ * `revalidate` above already caches each page once rendered, so returning no
+ * params costs a slower first request and nothing else. Prerendering thousands
+ * of database-backed pages at build time is the thing that does not scale.
+ */
+export function generateStaticParams() {
+  return [];
 }
 
 export async function generateMetadata({

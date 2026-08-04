@@ -267,9 +267,29 @@ export function WorkoutPlayer() {
 
   if (!ready || !exercise) {
     return (
-      <p style={{ color: "var(--text-muted)" }} aria-live="polite">
-        Loading your session…
-      </p>
+      /*
+       * The heading matters even here.
+       *
+       * This is what the page renders on the server and before hydration, so
+       * it is the only state a crawler ever sees — and it had no `<h1>` at
+       * all. Every other branch of this player has one; this branch is the one
+       * that ships in the HTML.
+       *
+       * It also matters for anybody using a screen reader on a slow
+       * connection: without it there is nothing to announce and no way to tell
+       * which page you have landed on while it loads.
+       */
+      <div style={{ padding: "var(--space-3)" }}>
+        <h1 style={{ margin: 0, fontSize: "var(--text-2xl)", fontWeight: 800 }}>
+          {SESSION.title}
+        </h1>
+        <p
+          style={{ color: "var(--text-muted)", marginTop: "var(--space-1)" }}
+          aria-live="polite"
+        >
+          Loading your session…
+        </p>
+      </div>
     );
   }
 

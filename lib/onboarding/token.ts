@@ -138,10 +138,26 @@ export function createInvite(
   /**
    * ONLY WHAT THE LINK ACTUALLY NEEDS.
    *
-   * The email and phone were in here so the first screen could pre-fill them,
-   * and together they were 85 of the token's 170 characters — half the length
-   * of a text message, spent on two fields the athlete is perfectly capable of
-   * typing and arguably ought to confirm anyway. They come out.
+   * ⚠️ EMAIL AND PHONE ARE DELIBERATELY NOT IN HERE, AND PUTTING THEM BACK
+   * IS A TRAP I ALREADY FELL INTO ONCE.
+   *
+   * They were 85 of the token's 170 characters. Taking them out has a real
+   * cost: on the fallback path the account screen opens with an empty email
+   * and the athlete has to type it, which is not the "nothing to retype"
+   * experience the invite is supposed to give.
+   *
+   * So I put them back. That was worse. `lib/sms/send.ts` refuses any message
+   * over three segments, and the longer token pushes a client with a long name
+   * past that limit — meaning the invite text is silently never sent at all.
+   * Trading "types their own email" for "never receives the link" is not a
+   * trade. See `invite-cost.test.ts`, which exists because the first live
+   * invite went out at three segments and 12.7p.
+   *
+   * The actual fix is neither: it is to configure `UPSTASH_REDIS_REST_URL` and
+   * `UPSTASH_REDIS_REST_TOKEN`. With a store available the link carries a
+   * ten-character id, the full payload lives in Redis, the text is one segment
+   * AND nothing needs retyping. Without one, this token is the fallback and
+   * short is the only thing it can afford to be.
    *
    * The name stays but only the first: "Kieron" is what the screen greets
    * them with, and their surname adds nothing but characters.
@@ -211,8 +227,9 @@ export function readInvite(token: string, now = Date.now()): InviteResult {
 
     invite = {
       name: String(raw.n ?? raw.name ?? ""),
-      // No longer carried in the link. Ben has them; the athlete confirms
-      // their own email on the account step.
+      // Not carried in the fallback token — see the note in the encoder. Read
+      // anyway so a payload that came from the Redis store (which does keep
+      // them) decodes identically.
       email: String(raw.e ?? raw.email ?? ""),
       phone: String(raw.p ?? raw.phone ?? ""),
       kind,

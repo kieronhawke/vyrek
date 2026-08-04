@@ -63,11 +63,16 @@ export async function generateMetadata({
      Hamilton in Lanarkshire had one description between them. The title and
      the H1 were disambiguated and the description was not, which is the same
      bug one field over. */
+  /*
+   * All three branches ran past 180 characters and were truncated in results.
+   * Trimmed to sit inside ~160 while keeping the local signal, which is the
+   * whole point of a geo page — thousands of pages share this template.
+   */
   const description = city
-    ? `Online personal training for ${displayName}, from a HYROX Elite 15 athlete. ${loc.name} is on the HYROX calendar${seo.gyms.length ? `, and the programme is built around any of the ${seo.gyms.length} gyms near the centre` : ""}. Free consultation, no commitment.`
+    ? `Online personal training for ${displayName}, from a HYROX Elite 15 athlete. ${loc.name} is on the HYROX calendar. Free consultation, no commitment.`
     : seo.gyms.length
-      ? `Personal training in ${displayName}, online, from a HYROX Elite 15 athlete. Built around any of the ${seo.gyms.length} gyms and sports centres near you, or your kit at home. Free consultation, no commitment.`
-      : `Looking for a personal trainer in ${displayName}? Get online personal training from a HYROX Elite 15 athlete, at a fraction of local PT rates. Free consultation, no commitment.`;
+      ? `Personal training in ${displayName}, online, from a HYROX Elite 15 athlete. Built around the ${seo.gyms.length} gyms near you, or your kit at home.`
+      : `Online personal training in ${displayName} from a HYROX Elite 15 athlete, at a fraction of local PT rates. Free consultation, no commitment.`;
   return {
     title,
     description,

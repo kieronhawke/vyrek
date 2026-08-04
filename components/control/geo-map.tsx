@@ -179,6 +179,11 @@ export function GeoMap({
       for (const layer of layers.current) layer.remove();
       layers.current = [];
 
+      // Enquiry pins, flagged once the renderer has drawn them.
+
+      const accented: L.CircleMarker[] = [];
+
+
       for (const p of points) {
         const accent = p.accent ?? false;
         const colour = accent ? "#c3f53c" : "#9aa0a6";
@@ -195,13 +200,26 @@ export function GeoMap({
           interactive: false,
         }).addTo(m);
 
+        /*
+         * `className` gives the marker a stable hook that does not depend on
+         * Leaflet internals.
+         *
+         * This map replaced a hand-rolled SVG one that rendered `.ac-map__pin`
+         * elements. Leaflet draws `<path>` instead, so the class vanished and
+         * the test asserting "a pin per location" has been failing ever since —
+         * against a selector that could never match again. Restoring the class
+         * is cheaper and more honest than rewriting the test to reach into
+         * Leaflet's DOM, which would break on any upgrade.
+         */
         const dot = L.circleMarker([p.lat, p.lng], {
           radius: 4 + ((p.weight ?? 1) / maxWeight) * 7,
           color: colour,
           weight: 2,
           fillColor: colour,
           fillOpacity: 0.85,
+          className: "ac-map__pin",
         }).addTo(m);
+
 
         dot.bindTooltip(
           `${p.label}${p.weight && p.weight > 1 ? ` · ${p.weight} sessions` : ""}`,
@@ -210,7 +228,22 @@ export function GeoMap({
         if (onSelect) dot.on("click", () => onSelect(p.id));
 
         layers.current.push(ring, dot);
+        if (p.accent) accented.push(dot);
       }
+
+      /*
+       * Marked after the loop, not inside it.
+       *
+       * `getElement()` returns null immediately after `addTo`: Leaflet's SVG
+       * renderer has not drawn the path yet, so setting the attribute there
+       * silently did nothing — the pins appeared but none was ever flagged as
+       * an enquiry. Deferring to the next frame gives the renderer its chance.
+       */
+      requestAnimationFrame(() => {
+        for (const dot of accented) {
+          (dot.getElement() as SVGElement | null)?.setAttribute("data-enquiry", "");
+        }
+      });
 
       if (focus) {
         m.setView([focus.lat, focus.lng], focus.zoom ?? 9);

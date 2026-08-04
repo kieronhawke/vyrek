@@ -8,6 +8,7 @@ import { MicroLabel, EmptyState } from "@/components/results/ui/primitives";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
 import { PLACES, eventsAtPlace, placeBySlug } from "@/lib/results/places";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * `/events/uk`, `/events/germany`, `/events/india` — the regional calendars.
@@ -35,7 +36,13 @@ export async function generateMetadata({
     title: place.title,
     description: place.description,
     alternates: { canonical: `/events/${place.slug}` },
-    openGraph: { url: `${siteUrl()}/events/${place.slug}`, type: "website" },
+    openGraph: {
+      url: `${siteUrl()}/events/${place.slug}`,
+      type: "website",
+      // A child `openGraph` replaces the root layout's entirely rather than
+      // merging, so without this the page inherits no social card.
+      images: ogImages(),
+    },
   };
 }
 

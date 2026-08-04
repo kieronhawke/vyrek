@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarketingNav } from "@/components/marketing/nav";
@@ -323,18 +324,16 @@ export default async function StationPage({
 
             {STATION_IMAGES[s.slug] ? (
               <figure className="-mx-4 mt-8 overflow-hidden rounded-2xl md:mx-0">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                {/* The optimiser was being bypassed entirely: a full-resolution
+                    original into a 16:9 band. `sizes` reflects the two-column
+                    desktop layout, where this sits in the reading column. */}
+                <Image
                   src={STATION_IMAGES[s.slug].src}
                   alt={STATION_IMAGES[s.slug].alt}
+                  width={1600}
+                  height={900}
+                  sizes="(min-width: 1024px) 800px, 100vw"
                   className="aspect-[16/9] w-full object-cover"
-                  /* Below the fold: this sits under the spec list, so eager
-                     loading only delays what is above it. It also leaked —
-                     every page linking to a station guide preloaded this image
-                     via route prefetch, putting 436KB of never-rendered
-                     photography on the simulator and every result page. */
-                  loading="lazy"
-                  decoding="async"
                 />
                 <figcaption className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                   {STATION_IMAGES[s.slug].illustration

@@ -191,8 +191,25 @@ describe("age and ability are correlated", () => {
 });
 
 describe("athletes", () => {
-  it("profiles a 4,000-strong returning pool", () => {
-    expect(athletes.length).toBe(4000);
+  it("indexes every athlete who has a result, not just the returning pool", () => {
+    /*
+     * ⚠️ THIS USED TO ASSERT EXACTLY 4,000, AND THAT WAS THE BUG.
+     *
+     * The index was built from `pool` — the recurring athletes who appear
+     * across several events. But most entrants are minted inline, one per
+     * race, with a slug like `samuel-johnson-s8-2025-stockholm-158`. Those
+     * never reached the index, so `/athlete/[slug]` 404'd for them while the
+     * ranking pages went on linking to them: 6 of the 16 athlete links on
+     * /rankings were dead.
+     *
+     * The number is no longer the point. The invariant is that anybody with a
+     * result has a page, so the pool is now a floor rather than an equality.
+     */
+    expect(athletes.length).toBeGreaterThan(4000);
+
+    // The recurring pool is still in there, and still recurring.
+    const returning = athletes.filter((a) => a.races.length > 1);
+    expect(returning.length).toBeGreaterThan(300);
   });
 
   it("gives a meaningful share of them multi-race histories", () => {

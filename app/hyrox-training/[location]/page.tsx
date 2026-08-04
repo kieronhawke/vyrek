@@ -46,9 +46,14 @@ export async function generateMetadata({
   // A race city can say something no UK town page can: the race is here. That
   // belongs in the snippet, because it is the reason someone in Osaka clicks.
   // See the personal-trainer sibling: three Hamiltons, one description.
+  /*
+   * Both branches ran past 180 characters, so Google truncated roughly the last
+   * third on every one of these pages — and there are thousands of them. The
+   * template is the fix: shortening it here shortens all of them.
+   */
   const description = city
-    ? `Hyrox training in ${displayName}, where the race is actually held, from a HYROX Elite 15 athlete. A personalised 12-week programme dated backwards from race day and built around the gym you already use.`
-    : `Hyrox training in ${displayName} from a HYROX Elite 15 athlete. A personalised 12-week programme dated to your race, calibrated to your kit. See your Week 1, then talk it through with Ben on a free consultation.`;
+    ? `Hyrox training in ${displayName}, where the race is actually held. A personalised 12-week programme from a HYROX Elite 15 athlete, dated backwards from race day.`
+    : `Hyrox training in ${displayName} from a HYROX Elite 15 athlete. A personalised 12-week programme, dated to your race and calibrated to your kit.`;
   return {
     title,
     description,
