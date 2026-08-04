@@ -33,16 +33,21 @@ export default function GearIndex() {
               Hyrox gear, honestly.
             </SplitHeading>
             <p className="mt-5 text-base leading-relaxed text-suth-text-secondary md:text-lg">
-              No affiliate-stuffed listicles. What helps, what doesn&apos;t, and
-              what experienced racers actually wear.
+              No affiliate-stuffed listicles and nothing to buy through us.
+              What helps, what doesn&apos;t, and what experienced racers
+              actually wear — with the answer at the top of each one, so you
+              can stop reading whenever you like.
             </p>
           </div>
-          <ul role="list" className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-2">
+          {/* Three across from lg. Five cards in two columns leaves a
+              half-empty last row on every desktop; three makes the set read
+              as a set. */}
+          <ul role="list" className="mx-auto mt-12 grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {GEAR_GUIDES.map((g) => (
               <li key={g.slug}>
                 <Link
                   href={`/hyrox/gear/${g.slug}`}
-                  className="lift-on-hover shimmer block rounded-lg border border-suth-border bg-suth-elevated p-6"
+                  className="lift-on-hover shimmer flex h-full flex-col rounded-lg border border-suth-border bg-suth-elevated p-6"
                 >
                   <Eyebrow>{g.eyebrow}</Eyebrow>
                   <h2 className="mt-3 text-xl font-black tracking-[-0.04em] text-suth-text">
@@ -51,6 +56,7 @@ export default function GearIndex() {
                   <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
                     {g.summary}
                   </p>
+                  <span className="grow" />
                   <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-suth-accent">
                     Read the guide →
                   </span>
