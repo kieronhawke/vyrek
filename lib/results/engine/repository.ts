@@ -116,6 +116,15 @@ export interface ResultsRepository {
   listResultsForAthlete(athleteId: string): Promise<EngineResult[]>;
   /** How many races an athlete has, without materialising any of them. */
   countResultsForAthlete(athleteId: string): Promise<number>;
+  /**
+   * Race counts for many athletes at once.
+   *
+   * ⚠️ The search box shows a count beside each name and asked for them one at
+   * a time — sixteen round trips for eight results. Each query runs in under a
+   * millisecond and each trip costs the better part of a second, so search took
+   * 35 seconds on "ben sut" while the query behind it took 11ms.
+   */
+  countResultsForAthletes(athleteIds: string[]): Promise<Map<string, number>>;
   listResultsForDivision(divisionId: string): Promise<EngineResult[]>;
   countResultsForDivision(divisionId: string): Promise<number>;
   /**
@@ -211,6 +220,18 @@ export interface ResultsRepository {
       finishTimeMs: number;
       eventId: string;
     }[]
+  >;
+  /**
+   * Athlete search, ranked and deduped by the database.
+   *
+   * ⚠️ Returns one row per *person*, with their whole career counted. The
+   * source issues a new athlete id at every event, so a plain search returns
+   * the same name four times with two races each; and ranking by race count is
+   * what puts the Ben Sutherland somebody is looking for above the Ben who has
+   * raced once. Both are done in SQL because doing them here cost 35 seconds.
+   */
+  searchAthletes(q: string, limit?: number): Promise<
+    { slug: string; name: string; nationality: string; races: number }[]
   >;
   searchAthletesAndEvents(q: string, limit?: number): Promise<{
     athletes: EngineAthlete[];

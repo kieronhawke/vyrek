@@ -415,26 +415,27 @@ export class ResultsService implements ResultsDataSource {
   /* ── Search, records, distributions ───────────────────────────────── */
 
   async searchAll(q: string): Promise<SearchResults> {
-    const { athletes, events } = await this.repo.searchAthletesAndEvents(q, 8);
+    // ⚠️ Athletes ranked and deduped in SQL; only the events list is read here.
+    //
+    // This used to search, then count each hit one at a time, then group the
+    // duplicates in TypeScript — eighteen round trips, 35 seconds on "ben sut",
+    // for queries that run in single-digit milliseconds. The database does all
+    // three now and this is one call.
+    const [people, { events }] = await Promise.all([
+      this.repo.searchAthletes(q, 8),
+      this.repo.searchAthletesAndEvents(q, 8),
+    ]);
 
-    // ⚠️ Counted, and counted concurrently. This loaded every race of every
-    // matched athlete — all columns, splits included — one athlete after
-    // another, to call `.length` on each array. On the one call a user actually
-    // waits for, that was 7.7 seconds.
-    const withCounts = await Promise.all(
-      athletes.map(async (athlete) => ({
-        slug: athlete.slug,
-        name: athlete.name,
-        countryIso: athlete.nationality ?? "",
-        raceCount: await this.repo.countResultsForAthlete(athlete.id),
-      })),
-    );
+    const withCounts = people.map((p) => ({
+      slug: p.slug,
+      name: p.name,
+      countryIso: p.nationality,
+      raceCount: p.races,
+    }));
+
     return {
-      // ⚠️ One entry per person, not per stored profile. The source issues a
-      // new athlete id at every event, so a real athlete appears once per race
-      // — searching "Ben Sutherland" returned five profiles of one and two
-      // races each. See `identity-group.ts`.
-      athletes: dedupePeople(withCounts),
+      // Already one entry per person, ranked by career length, from SQL.
+      athletes: withCounts,
       events: events.map((e) => ({
         slug: e.slug,
         name: e.name,

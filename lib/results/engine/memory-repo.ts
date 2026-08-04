@@ -354,6 +354,12 @@ export class MemoryResultsRepository implements ResultsRepository {
     );
   }
 
+  async countResultsForAthletes(athleteIds: string[]) {
+    const out = new Map<string, number>();
+    for (const id of athleteIds) out.set(id, await this.countResultsForAthlete(id));
+    return out;
+  }
+
   async countResultsForAthlete(athleteId: string) {
     return (await this.listResultsForAthlete(athleteId)).length;
   }
@@ -460,6 +466,23 @@ export class MemoryResultsRepository implements ResultsRepository {
       .filter((r) => r.status === "finished" && r.finishTimeMs)
       .map((r) => Math.round((r.finishTimeMs as number) / 1000))
       .sort((a, b) => a - b);
+  }
+
+  async searchAthletes(q: string, limit = 8) {
+    const needle = q.trim().toLowerCase();
+    const hits = [...this.athletes.values()].filter(
+      (a) => !a.isAnonymised && a.name.toLowerCase().includes(needle),
+    );
+    const counted = await Promise.all(
+      hits.map(async (a) => ({
+        slug: a.slug,
+        name: a.name,
+        nationality: a.nationality ?? "",
+        races: await this.countResultsForAthlete(a.id),
+      })),
+    );
+    return counted.sort((x, y) => y.races - x.races || x.name.length - y.name.length)
+      .slice(0, limit);
   }
 
   async searchAthletesAndEvents(q: string, limit = 10) {

@@ -826,6 +826,14 @@ export class SupabaseResultsRepository implements ResultsRepository {
     return [...byId.values()].map(toResult);
   }
 
+  async countResultsForAthletes(athleteIds: string[]) {
+    if (athleteIds.length === 0) return new Map<string, number>();
+    const rows = await this.many<{ athlete_id: string; races: number }>(
+      this.db.rpc("results_athlete_race_counts", { p_ids: athleteIds }),
+    );
+    return new Map(rows.map((r) => [r.athlete_id, Number(r.races ?? 0)]));
+  }
+
   async countResultsForAthlete(athleteId: string) {
     // Ids only. The search box shows a race count next to each name, and
     // building it from `listResultsForAthlete` pulled every column of every race
@@ -1032,6 +1040,18 @@ export class SupabaseResultsRepository implements ResultsRepository {
       .map((r) => r.finish_time_ms)
       .filter((v): v is number => typeof v === "number")
       .map((ms) => Math.round(ms / 1000));
+  }
+
+  async searchAthletes(q: string, limit = 8) {
+    const rows = await this.many<{
+      slug: string; name: string; nationality: string | null; races: number;
+    }>(this.db.rpc("results_search_athletes", { p_query: q, p_limit: limit }));
+    return rows.map((r) => ({
+      slug: r.slug,
+      name: r.name,
+      nationality: r.nationality ?? "",
+      races: Number(r.races ?? 0),
+    }));
   }
 
   async searchAthletesAndEvents(q: string, limit = 10) {
