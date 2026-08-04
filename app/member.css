@@ -2008,3 +2008,62 @@
 @media (min-width: 1024px) {
   .member-main { --station-thumb: 72px; }
 }
+
+
+/* ── Connections, member view ─────────────────────────────────────────
+   Was six cards of our own roadmap: which API is open, what we are waiting
+   on, and a link to each provider's developer terms. This is the same
+   providers with only what somebody linking a watch wants to know. */
+.conn__card {
+  display: grid;
+  gap: 8px;
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.conn__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.conn__mark {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.conn__name {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: 700;
+  min-width: 0;
+}
+.conn__soon {
+  margin-left: auto;
+  flex: 0 0 auto;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px dashed var(--border);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.conn__brings {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.conn__foot {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}

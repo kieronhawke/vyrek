@@ -143,3 +143,84 @@ export const STATUS_LABEL: Record<ConnectionStatus, string> = {
   "needs-app": "Needs a phone app",
   closed: "Not available",
 };
+
+
+/* ── The member's view ──────────────────────────────────────────────────
+   The list above is ours: which API is open, which needs a phone app, which
+   is closed to us, and what is blocking each. Useful, and none of it the
+   member's business — it was on their screen until Kieron pointed out that
+   the customer view was carrying our roadmap.
+
+   This is the same providers with only the two things somebody linking their
+   watch actually wants: what it is, and what it will bring across.
+
+   `colour` is each brand's own, which is a published fact and safe to use.
+   The mark is their initials in our type, not their logo — we hold no
+   licensed logo files, and an approximation is a trademark problem as well as
+   looking worse than not trying. */
+
+export type MemberProvider = {
+  key: string;
+  name: string;
+  initials: string;
+  /** The brand's own colour. */
+  colour: string;
+  /** Text that reads on it. */
+  ink: string;
+  /** What it will carry across, in the member's terms. */
+  brings: string;
+};
+
+export const MEMBER_PROVIDERS: MemberProvider[] = [
+  {
+    key: "strava",
+    name: "Strava",
+    initials: "St",
+    colour: "#FC4C02",
+    ink: "#fff",
+    brings: "Runs, rides and workouts — distance, time, pace and heart rate.",
+  },
+  {
+    key: "apple-health",
+    name: "Apple Health",
+    /* Not the Apple glyph (U+F8FF): it renders only on Apple devices and is
+       an empty box everywhere else — which is what an empty string gave us
+       here too. */
+    initials: "AH",
+    colour: "#F2F2F7",
+    ink: "#111",
+    brings: "Steps, workouts, resting heart rate, sleep and weight.",
+  },
+  {
+    key: "google-fit",
+    name: "Google Fit",
+    initials: "G",
+    colour: "#4285F4",
+    ink: "#fff",
+    brings: "Steps, workouts and heart rate from an Android phone.",
+  },
+  {
+    key: "myfitnesspal",
+    name: "MyFitnessPal",
+    initials: "MFP",
+    colour: "#0066EE",
+    ink: "#fff",
+    brings: "Your food diary and macros, so you only log a meal once.",
+  },
+  {
+    key: "whoop",
+    name: "WHOOP",
+    initials: "W",
+    colour: "#00F19F",
+    ink: "#0a0a0a",
+    brings: "Recovery, strain and sleep.",
+  },
+  {
+    key: "garmin",
+    name: "Garmin",
+    initials: "GA",
+    colour: "#007CC3",
+    ink: "#fff",
+    brings: "Workouts, heart rate, sleep and body battery.",
+  },
+];
