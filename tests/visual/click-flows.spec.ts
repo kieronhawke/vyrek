@@ -160,8 +160,20 @@ test("hamburger drawer opens on mobile and contains all primary links", async ({
 }) => {
   await page.setViewportSize({ width: 375, height: 700 });
   await page.goto("/");
-  await page.getByRole("button", { name: /open navigation/i }).click();
-  const drawer = page.locator("#mobile-nav-drawer");
+  const toggle = page.getByRole("button", { name: /open navigation/i });
+  await toggle.click();
+
+  /* Found through aria-controls rather than a hardcoded id.
+     The drawer id is generated with useId() — it had to be, because the nav
+     renders more than once per document (a page and its loading skeleton),
+     and a fixed id appeared two or three times on every blog route. This
+     test still looked for "#mobile-nav-drawer" and so found nothing.
+     Following aria-controls also checks the wiring the fix was for. */
+  const drawerId = await toggle.getAttribute("aria-controls");
+  expect(drawerId, "the toggle must point at a drawer").toBeTruthy();
+  // An attribute selector, because useId() ids contain characters
+  // (colons) that are not valid unescaped in a CSS id selector.
+  const drawer = page.locator(`[id="${drawerId}"]`);
   await expect(drawer).toBeVisible();
   await expect(drawer.getByRole("link", { name: "programmes" })).toBeVisible();
   await expect(drawer.getByRole("link", { name: "how it works" })).toBeVisible();

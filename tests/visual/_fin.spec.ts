@@ -9,7 +9,9 @@ test("session can be finished; voice note is honest", async () => {
   p.on("pageerror", e => errs.push(e.message));
 
   // ── Workout player ──
-  await p.goto("http://localhost:3123/train", { waitUntil: "load" });
+  // Relative, so it follows PLAYWRIGHT_BASE_URL like every other spec.
+  // It was pinned to :3123, a port nothing in this repo ever serves.
+  await p.goto("/train", { waitUntil: "domcontentloaded" });
   await p.waitForTimeout(1500);
   let next = p.getByRole("button", { name: "Next exercise" });
   let hops = 0;
@@ -25,7 +27,7 @@ test("session can be finished; voice note is honest", async () => {
   }
 
   // ── Voice note ──
-  await p.goto("http://localhost:3123/control-preview/app/plan", { waitUntil: "load" });
+  await p.goto("/control-preview/app/plan", { waitUntil: "domcontentloaded" });
   await p.waitForTimeout(1500);
   const skip = p.getByRole("button", { name: "Skip" });
   if (await skip.count()) await skip.click();
