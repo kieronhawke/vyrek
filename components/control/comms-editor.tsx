@@ -177,6 +177,45 @@ function TemplateCard({
     });
   };
 
+  /**
+   * Drop a token where the pointer is, not at the end.
+   *
+   * The browser gives no caret position for a drop, so this uses
+   * caretPositionFromPoint (and the WebKit spelling) to find it. Where
+   * neither exists the token lands at the existing caret, which is worse
+   * than the pointer but far better than silently appending.
+   */
+  const dropAt = (
+    e: React.DragEvent<HTMLTextAreaElement | HTMLInputElement>,
+    field: "body" | "subject",
+  ) => {
+    const token = e.dataTransfer.getData("text/plain");
+    if (!token.startsWith("{{")) return;
+    e.preventDefault();
+    const el = e.currentTarget;
+    const value = field === "body" ? body : subject;
+
+    type WithCaret = Document & {
+      caretPositionFromPoint?: (x: number, y: number) => { offset: number } | null;
+      caretRangeFromPoint?: (x: number, y: number) => { startOffset: number } | null;
+    };
+    const d = document as WithCaret;
+    let at =
+      d.caretPositionFromPoint?.(e.clientX, e.clientY)?.offset ??
+      d.caretRangeFromPoint?.(e.clientX, e.clientY)?.startOffset ??
+      el.selectionStart ??
+      value.length;
+    at = Math.max(0, Math.min(at, value.length));
+
+    const next = value.slice(0, at) + token + value.slice(at);
+    if (field === "body") setBody(next);
+    else setSubject(next);
+    requestAnimationFrame(() => {
+      el.focus();
+      el.setSelectionRange(at + token.length, at + token.length);
+    });
+  };
+
   const shown = preview(body);
   const segs = draftSegments(shown);
   const gsm = draftIsGsm7(shown);
@@ -203,6 +242,8 @@ function TemplateCard({
                 className="ce-input"
                 value={subject}
                 onFocus={() => (lastFocused.current = "subject")}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => dropAt(e, "subject")}
                 onChange={(e) => setSubject(e.target.value)}
               />
             </label>
@@ -216,18 +257,28 @@ function TemplateCard({
               rows={def.channel === "sms" ? 4 : 10}
               value={body}
               onFocus={() => (lastFocused.current = "body")}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => dropAt(e, "body")}
               onChange={(e) => setBody(e.target.value)}
             />
           </label>
 
           <div className="ce-tokens">
-            <span className="ce-label">Click to insert</span>
+            <span className="ce-label">Click to insert, or drag into the message</span>
             <div className="ce-tokens__row">
               {def.tokens.map((id) => (
                 <button
                   key={id}
                   type="button"
                   className="ce-token"
+                  draggable
+                  onDragStart={(e) => {
+                    /* text/plain so dropping into any other text field also
+                       does something sensible rather than nothing. */
+                    e.dataTransfer.setData("text/plain", `{{${id}}}`);
+                    e.dataTransfer.setData("application/x-suth-token", id);
+                    e.dataTransfer.effectAllowed = "copy";
+                  }}
                   onClick={() => insert(id)}
                   title={TOKENS[id].hint ?? `Becomes "${TOKENS[id].example}"`}
                 >

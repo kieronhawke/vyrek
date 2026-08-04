@@ -1,9 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
   applyAction,
+  isOverdue,
   needsAction,
   nextActions,
+  nextStageOnHappyPath,
   stageProgress,
+  STAGE_GUIDE,
   STAGE_ORDER,
   type LeadStage,
 } from "./lead-workflow";
@@ -77,5 +80,37 @@ describe("lead workflow", () => {
     for (let i = 1; i < values.length; i++) expect(values[i]).toBeGreaterThan(values[i - 1]);
     expect(stageProgress("client")).toBe(1);
     expect(stageProgress("lost")).toBe(0);
+  });
+});
+
+describe("stage guidance", () => {
+  it("gives every stage something to read", () => {
+    for (const s of [...STAGE_ORDER, "lost" as const]) {
+      expect(STAGE_GUIDE[s], `${s} has no guide`).toBeTruthy();
+      expect(STAGE_GUIDE[s].what.length).toBeGreaterThan(10);
+      expect(STAGE_GUIDE[s].why.length).toBeGreaterThan(10);
+    }
+  });
+
+  it("only calls a stage overdue when it has a target to miss", () => {
+    // A paying client is never late for anything.
+    expect(isOverdue("client", 10_000)).toBeNull();
+    expect(isOverdue("lost", 10_000)).toBeNull();
+    expect(isOverdue("new", 1)).toBe(false);
+    expect(isOverdue("new", 999)).toBe(true);
+  });
+
+  it("names the next stage on the happy path, and nothing at the end", () => {
+    expect(nextStageOnHappyPath("new")).toBe("contacted");
+    expect(nextStageOnHappyPath("ready_to_onboard")).toBe("onboarding_sent");
+    expect(nextStageOnHappyPath("client")).toBeNull();
+    expect(nextStageOnHappyPath("lost")).toBeNull();
+  });
+
+  it("never points at itself, which would read as a loop", () => {
+    for (const s of STAGE_ORDER) {
+      const next = nextStageOnHappyPath(s);
+      if (next) expect(next).not.toBe(s);
+    }
   });
 });

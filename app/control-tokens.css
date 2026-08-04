@@ -3174,3 +3174,42 @@
 @media (pointer: fine) {
   [data-surface="control"] .ce-btn, [data-surface="control"] .ce-token { min-height: 34px; }
 }
+
+/* Pipeline guidance, override and the outstanding flag. */
+[data-surface="control"] .lp-card__overdue {
+  margin: 4px 0 0; font-size: var(--text-xs); color: var(--warn, #f5b83c);
+}
+[data-surface="control"] .lp-guide,
+[data-surface="control"] .lp-override { font-size: var(--text-sm); }
+[data-surface="control"] .lp-guide__toggle,
+[data-surface="control"] .lp-override__toggle {
+  cursor: pointer; color: var(--text-muted); font-size: var(--text-xs);
+  padding: 4px 0; list-style: none;
+}
+[data-surface="control"] .lp-guide__toggle::-webkit-details-marker,
+[data-surface="control"] .lp-override__toggle::-webkit-details-marker { display: none; }
+[data-surface="control"] .lp-guide__toggle::before,
+[data-surface="control"] .lp-override__toggle::before { content: "▸ "; }
+[data-surface="control"] details[open] > .lp-guide__toggle::before,
+[data-surface="control"] details[open] > .lp-override__toggle::before { content: "▾ "; }
+[data-surface="control"] .lp-guide__body {
+  display: grid; gap: 8px; padding: 10px 12px; margin-top: 6px;
+  border-radius: 8px; background: var(--surface-raised);
+  border: 1px solid var(--border);
+  font-size: var(--text-sm); line-height: 1.55; color: var(--text-muted);
+}
+[data-surface="control"] .lp-guide__body p { margin: 0; }
+[data-surface="control"] .lp-guide__what { color: var(--text); font-weight: 600; }
+[data-surface="control"] .lp-guide__watch { color: var(--warn, #f5b83c); }
+[data-surface="control"] .lp-guide__next strong { color: var(--accent-text, var(--accent)); }
+[data-surface="control"] .lp-override__row {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;
+}
+[data-surface="control"] .lp-override__btn {
+  min-height: 32px; padding: 0 10px; border-radius: 999px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); font-size: var(--text-xs); cursor: pointer;
+}
+[data-surface="control"] .lp-override__btn:disabled {
+  opacity: 0.4; cursor: default; border-color: var(--accent); color: var(--accent-text, var(--accent));
+}

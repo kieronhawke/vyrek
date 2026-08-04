@@ -4,9 +4,12 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useCelebration } from "@/components/control/celebrate";
 import {
   applyAction,
+  isOverdue,
   nextActions,
+  nextStageOnHappyPath,
   needsAction,
   stageProgress,
+  STAGE_GUIDE,
   STAGE_LABEL,
   STAGE_ORDER,
   type LeadEffect,
@@ -157,6 +160,14 @@ export function LeadPipeline({ leads }: { leads: PipelineLead[] }) {
                   <p className="lp-card__meta">
                     {lead.segment} · {lead.source} · waiting {lead.ageHours}h
                   </p>
+                  {/* What is outstanding, stated rather than left to be
+                      worked out from a timestamp. Each stage carries its own
+                      target, so "too long" means too long for THIS step. */}
+                  {isOverdue(stage, lead.ageHours) ? (
+                    <p className="lp-card__overdue">
+                      Past the {STAGE_GUIDE[stage].targetHours}h mark for this stage
+                    </p>
+                  ) : null}
                 </div>
                 <span className="lp-stage" data-terminal={stage === "client" || stage === "lost"}>
                   {STAGE_LABEL[stage]}
@@ -176,6 +187,49 @@ export function LeadPipeline({ leads }: { leads: PipelineLead[] }) {
               >
                 <div className="lp-rail__fill" style={{ width: `${pct}%` }} />
               </div>
+
+              {/* The playbook, in place. The operator should not have to
+                  remember why this step exists or what the usual mistake is,
+                  and a wiki nobody opens is not a process. */}
+              <details className="lp-guide">
+                <summary className="lp-guide__toggle">
+                  What to do here, and why
+                </summary>
+                <div className="lp-guide__body">
+                  <p className="lp-guide__what">{STAGE_GUIDE[stage].what}</p>
+                  <p>{STAGE_GUIDE[stage].why}</p>
+                  {STAGE_GUIDE[stage].watch ? (
+                    <p className="lp-guide__watch">{STAGE_GUIDE[stage].watch}</p>
+                  ) : null}
+                  {nextStageOnHappyPath(stage) ? (
+                    <p className="lp-guide__next">
+                      Next: <strong>{STAGE_LABEL[nextStageOnHappyPath(stage)!]}</strong>
+                    </p>
+                  ) : null}
+                </div>
+              </details>
+
+              {/* Override. Ben knows things the pipeline does not, so any
+                  stage is reachable directly; it is just never the first
+                  thing offered. */}
+              <details className="lp-override">
+                <summary className="lp-override__toggle">Move to any stage</summary>
+                <div className="lp-override__row">
+                  {[...STAGE_ORDER, "lost" as LeadStage].map((target) => (
+                    <button
+                      key={target}
+                      type="button"
+                      className="lp-override__btn"
+                      disabled={target === stage}
+                      onClick={() =>
+                        setStages((prev) => ({ ...prev, [lead.id]: target }))
+                      }
+                    >
+                      {STAGE_LABEL[target]}
+                    </button>
+                  ))}
+                </div>
+              </details>
 
               {actions.length ? (
                 <div className="lp-actions">

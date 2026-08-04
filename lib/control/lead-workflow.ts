@@ -250,3 +250,95 @@ export function applyAction(
   if (!action) return { stage, effects: [] };
   return { stage: action.to, effects: action.effects ?? [] };
 }
+
+/* ── How to handle an enquiry ───────────────────────────────────────────
+   The screen should not assume the operator remembers the playbook. Every
+   stage carries the reasoning: why this step exists, what good looks like,
+   and what the usual mistake is. Written as prose because it is read by a
+   person, not parsed. */
+
+export type StageGuide = {
+  /** What is true right now, in one line. */
+  what: string;
+  /** The thing to do, and why it is that thing. */
+  why: string;
+  /** The common error at this step. */
+  watch?: string;
+  /** How long this stage should take before it is a problem. */
+  targetHours?: number;
+};
+
+export const STAGE_GUIDE: Record<LeadStage, StageGuide> = {
+  new: {
+    what: "They have filled something in and nobody has replied yet.",
+    why: "Speed to first contact is the single biggest lever on whether somebody answers at all. A text inside the hour is worth more than a perfect message tomorrow.",
+    watch: "Do not wait until you have time for a proper conversation. The first message only has to prove a person read theirs.",
+    targetHours: 4,
+  },
+  contacted: {
+    what: "They know you exist and have not been booked in.",
+    why: "The aim is a time in the diary, not a conversation over text. A call is where the plan gets explained and objections come out.",
+    watch: "Long text threads feel like progress and rarely convert. Offer two specific times rather than asking when suits.",
+    targetHours: 48,
+  },
+  call_booked: {
+    what: "There is a call in the diary.",
+    why: "Nothing to do but turn up. The reminder goes out automatically the day before.",
+    watch: "If they go quiet before the call, send the reminder early rather than waiting for the no-show.",
+    targetHours: 168,
+  },
+  call_made: {
+    what: "You have spoken. This is the moment the outcome gets recorded.",
+    why: "Record it now, honestly. A pipeline full of calls with no outcome is a pipeline nobody trusts, and the follow-up automation cannot fire without knowing which way it went.",
+    watch: "Deciding is not a polite word for no. If it was a no, mark it a no; you will both be happier.",
+    targetHours: 4,
+  },
+  deciding: {
+    what: "They are thinking about it. A follow-up text has gone and a reminder is set.",
+    why: "Most people who buy do not buy on the call. The job now is to stay present without becoming a nuisance.",
+    watch: "Two follow-ups is attentive. Five is a reason to block the number. If the second gets nothing, let it rest.",
+    targetHours: 336,
+  },
+  ready_to_onboard: {
+    what: "They said yes. Nothing has been sent yet.",
+    why: "Send the onboarding email while the yes is warm. Every hour between the decision and the link is an hour for it to cool.",
+    watch: "Do not batch these up for the end of the day.",
+    targetHours: 2,
+  },
+  onboarding_sent: {
+    what: "The invite is with them.",
+    why: "Their move. Mark it as waiting so it leaves your list and stops looking like something you have forgotten.",
+    targetHours: 24,
+  },
+  onboarding_pending: {
+    what: "Waiting for them to create the account.",
+    why: "Nothing for you to do. This moves itself when the account appears.",
+    watch: "If it has been more than two days, one chase is reasonable. The link may have gone to spam.",
+    targetHours: 72,
+  },
+  client: {
+    what: "Paying client. This is the end of the pipeline.",
+    why: "They move to the client list and the coaching side takes over.",
+  },
+  lost: {
+    what: "Not proceeding.",
+    why: "Closed deliberately rather than left to rot. Reopen it if they come back.",
+  },
+};
+
+/**
+ * Whether a lead has sat in its stage longer than that stage should take.
+ * Returns null where there is no target, so a client is never "overdue".
+ */
+export function isOverdue(stage: LeadStage, hoursInStage: number): boolean | null {
+  const target = STAGE_GUIDE[stage].targetHours;
+  if (target === undefined) return null;
+  return hoursInStage > target;
+}
+
+/** The stage after this one on the happy path, for "what is next". */
+export function nextStageOnHappyPath(stage: LeadStage): LeadStage | null {
+  const actions = nextActions(stage);
+  const primary = actions.find((a) => !a.muted);
+  return primary && primary.to !== stage ? primary.to : null;
+}
