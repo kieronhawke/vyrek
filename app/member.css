@@ -1359,29 +1359,7 @@
   margin-bottom: 0 !important;
 }
 
-/* ── Start session: a focus mode, not a full-bleed page ───────────────
-   The player filled the viewport at every width, so on a monitor the set
-   counter, the rep target and the controls were flung to opposite edges with
-   a metre of nothing between them. A session is one thing at a time; the
-   layout should keep the eye's travel short whatever the screen. */
-.wp-root {
-  width: 100%;
-  max-width: 720px;
-  margin-inline: auto;
-  padding-inline: var(--space-2);
-}
 
-@media (min-width: 768px) {
-  .wp-root { padding-inline: var(--space-4); }
-
-  /* The action bar is fixed to the viewport, so it needs the same cap
-     applied to its contents rather than to the bar itself — a full-width
-     border along the bottom of the screen is right, controls stretched
-     across it are not. */
-  .wp-actions {
-    padding-inline: max(var(--space-2), calc((100vw - 720px) / 2)) !important;
-  }
-}
 
 /* ── Add food: three ways in ──────────────────────────────────────────
    Search, scan, photo. The sheet used to be a search box over forty-three
