@@ -46,7 +46,7 @@ type Panel = {
 const ATHLETE: Panel = {
   src: "/media/images/ben/ben-race-portrait.jpg",
   position: "50% 22%",
-  eyebrow: "Who writes your plan",
+  eyebrow: "Who you'll be speaking to",
   headline: "Coached by someone still in the race.",
   body: BEN.athletePromise,
   proof: ["2 world records", "4 British records", "Elite 15"],
@@ -55,7 +55,7 @@ const ATHLETE: Panel = {
 const BEGINNER: Panel = {
   src: "/media/images/ben/ben-steps.jpg",
   position: "38% 40%",
-  eyebrow: "Who writes your plan",
+  eyebrow: "Who you'll be speaking to",
   headline: "You don't need to be fit to start.",
   body: "Most people I coach came to me because nothing had stuck before. That is usually the plan's fault, not theirs.",
   proof: ["Coaching since 2015", "Beginners a speciality", "UK-based"],

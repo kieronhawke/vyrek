@@ -187,7 +187,7 @@ export default async function GearPage({
             </h2>
             <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
               Right kit, wrong plan: still slow. Right plan: any decent kit
-              will do. Take the quiz, see your Week 1 free.
+              will do. Answer a few questions and book a free fitness assessment.
             </p>
             <div className="mt-8">
               <CtaButton href="/quiz" size="lg">

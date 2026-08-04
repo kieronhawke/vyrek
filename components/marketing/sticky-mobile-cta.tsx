@@ -32,7 +32,7 @@ const HIDE_ON = [
 
 export function StickyMobileCta({
   href = "/quiz",
-  label = "See your Week 1 free",
+  label = "Free fitness assessment",
 }: {
   href?: string;
   label?: string;

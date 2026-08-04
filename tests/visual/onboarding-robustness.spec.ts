@@ -25,9 +25,8 @@ async function dismissConsent(page: Page) {
 
 async function enterQuiz(page: Page, url = "/quiz?rail=beginner") {
   await page.goto(url, { waitUntil: "domcontentloaded" });
-  await expect(page.locator("#welcome-heading")).toBeVisible({
-    timeout: 15_000,
-  });
+  // The entry carousel is gone; the quiz opens on the first question.
+  await expect(page.locator("h1").first()).toBeVisible({ timeout: 15_000 });
   await dismissConsent(page);
   for (let i = 0; i < 6; i++) {
     const cta = page.getByRole("button", { name: /find your plan/i }).first();
@@ -47,24 +46,27 @@ async function clickContinue(page: Page) {
 test.describe("Onboarding funnel robustness", () => {
   test.setTimeout(120_000);
 
-  test("entry screen: tapping the middle of the screen advances the slide", async ({
-    page,
-  }) => {
-    // Regression for a real dead zone: the headline sat over the centre of
-    // the full-screen "next slide" target with pointer-events-auto, so on a
-    // phone a tap in the middle of the entry screen did nothing at all.
+  test("the quiz opens on a question, not an animation", async ({ page }) => {
+    /* Replaces a regression test for a dead zone in the entry carousel —
+       the headline sat over the full-screen "next slide" target, so a tap
+       in the middle of the screen did nothing.
+
+       The carousel is gone entirely. It held two full-bleed slides on a
+       3.2-second timer, which meant somebody who had just clicked "free
+       fitness assessment" waited six seconds watching an animation before
+       being asked anything. It was the only screen in the funnel that took
+       time without giving anything back. The dead zone cannot come back
+       because the thing it lived in no longer exists; what is worth
+       holding is that the first thing they see is the first question. */
     await page.goto("/quiz", { waitUntil: "domcontentloaded" });
-    await expect(page.locator("#welcome-heading")).toBeVisible({
-      timeout: 15_000,
-    });
     await dismissConsent(page);
-
-    const first = await page.locator("#welcome-heading").textContent();
-    await page.getByRole("button", { name: /next slide/i }).click();
-    await page.waitForTimeout(400);
-    const second = await page.locator("#welcome-heading").textContent();
-
-    expect(second).not.toEqual(first);
+    await expect(
+      page.getByRole("heading", { name: /what brings you to suth performance/i }),
+    ).toBeVisible({ timeout: 15_000 });
+    // And no timer moves it under them.
+    const before = await page.locator("h1").first().textContent();
+    await page.waitForTimeout(7000);
+    expect(await page.locator("h1").first().textContent()).toBe(before);
   });
 
   test("answers survive a refresh mid-quiz", async ({ page }) => {

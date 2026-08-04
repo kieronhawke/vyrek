@@ -129,6 +129,12 @@ export type QuizAnswers = {
   readiness?: ReadinessValue;
   /** Captured mid-flow, never at the end, never behind a password. */
   email?: string;
+  /** Asked with the email now: this route ends in Ben ringing them. */
+  name?: string;
+  /** ISO country for the dialling code, so the number can be dialled. */
+  phoneIso?: string;
+  /** As typed, in their own country's format. Normalised on submit. */
+  phone?: string;
   /** Asked once, on the email screen, and carried to the final step. */
   marketingOptIn?: boolean;
   experience?: ExperienceValue;
