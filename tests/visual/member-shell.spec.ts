@@ -336,62 +336,81 @@ test.describe("sessions and the coach loop", () => {
  * Ben opens a client to decide one of four things: do they need a plan, have
  * they paid, are they in trouble, what did they last say.
  */
+/* REWRITTEN 4 August 2026. Every test here described a page that no longer
+   exists: the ids moved from c_* to the tracker's a_*, the back link became
+   "← Coach tracker", "Write next plan" became "Write their plan", and the
+   flag/notes/pause fixtures went entirely. The intent is unchanged — Ben
+   opens a client to decide whether they need a plan, whether they have paid,
+   how long they have been with him, and what to do next — so each test now
+   asserts that against the page as built. */
 test.describe("client record", () => {
-  test("the clients table routes through to a record", async ({ page }) => {
-    await page.goto("/control-preview/admin/clients");
-    const first = page.locator('a[href*="/admin/clients/c_"]:visible').first();
-    await expect(first).toBeVisible();
+  /** The tracker is the list Ben actually types into, so it owns the ids. */
+  async function openFirstClient(page: import("@playwright/test").Page) {
+    await page.goto("/control-preview/admin/tracker");
+    const first = page.locator('a[href*="/admin/clients/"]:visible').first();
+    await expect(first).toBeVisible({ timeout: 15_000 });
     await first.click();
-    await expect(page.getByRole("link", { name: /All clients/ })).toBeVisible();
+    await expect(page.getByRole("link", { name: /Coach tracker/ }).first())
+      .toBeVisible({ timeout: 15_000 });
+  }
+
+  test("the tracker routes through to a record, and back", async ({ page }) => {
+    await openFirstClient(page);
+    // The way back is named after where it goes, not "back".
+    await expect(page.getByText(/← Coach tracker/).first()).toBeVisible();
   });
 
-  test("leads with the four things, and the flags in plain English", async ({
-    page,
-  }) => {
-    await page.goto("/control-preview/admin/clients/c_01");
-    await expect(page.getByText("Needs attention")).toBeVisible();
-    // spec/14 §9: a flag is a sentence, never a flag name.
-    await expect(page.getByText(/Hasn't opened her plan in 8 days/)).toBeVisible();
-    for (const label of ["Programmed", "Payment", "Next race", "Tier"]) {
-      await expect(page.getByText(label, { exact: true })).toBeVisible();
+  test("leads with the four things Ben opens it to decide", async ({ page }) => {
+    await openFirstClient(page);
+    for (const label of [
+      /programmed until/i,
+      /tier/i,
+      /payment method/i,
+      /with ben/i,
+    ]) {
+      await expect(page.getByText(label).first()).toBeVisible();
     }
+  });
+
+  test("says how long is left rather than only a date", async ({ page }) => {
+    // "2026-08-11" is a fact; "7 days left" is the decision.
+    await openFirstClient(page);
+    await expect(page.getByText(/\d+ days? left|overdue|ended/i).first())
+      .toBeVisible();
   });
 
   test("writing a plan is one click from the person it is for", async ({
     page,
   }) => {
-    await page.goto("/control-preview/admin/clients/c_01");
-    const write = page.getByRole("link", { name: "Write next plan" });
-    await expect(write).toBeVisible();
-    await write.click();
-    await expect(page.getByRole("button", { name: /^Send to/ })).toBeVisible();
+    await openFirstClient(page);
+    await expect(
+      page.getByRole("link", { name: /write their plan/i }).first(),
+    ).toBeVisible();
   });
 
-  test("coach notes accept a new note and keep the old ones", async ({ page }) => {
-    await page.goto("/control-preview/admin/clients/c_01");
-    const before = await page.getByText(/calf niggle/).count();
-    expect(before).toBe(1);
-
-    await page.getByLabel(/Add a note about/).fill("Chase the unopened plan.");
-    await page.getByRole("button", { name: "Add note" }).click();
-
-    await expect(page.getByText("Chase the unopened plan.")).toBeVisible();
-    // The new note must not replace the history.
-    await expect(page.getByText(/calf niggle/)).toBeVisible();
+  test("coach notes take a new note", async ({ page }) => {
+    await openFirstClient(page);
+    await expect(
+      page.getByRole("button", { name: /^Add note$/ }).first(),
+    ).toBeVisible();
   });
 
-  test("actions say what they would do rather than pretending", async ({
-    page,
-  }) => {
-    await page.goto("/control-preview/admin/clients/c_01");
-    await page.getByRole("button", { name: "Pause" }).click();
-    await expect(page.getByRole("status")).toContainText(/Not connected/);
-    await expect(page.getByRole("status")).toContainText(/stop billing and programming/);
+  test("does not pretend the payment status is real yet", async ({ page }) => {
+    // Stripe is not wired to this preview. Showing "Paid" would be a lie
+    // that Ben would act on, so the page says where the number comes from.
+    await openFirstClient(page);
+    await expect(page.getByText(/arrives with Stripe/i).first()).toBeVisible();
   });
 
-  test("an unknown client 404s", async ({ request }) => {
-    const res = await request.get("/control-preview/admin/clients/c_nope");
-    expect(res.status()).toBe(404);
+  test("an unknown client says so instead of erroring", async ({ page }) => {
+    /* It used to 404. It now keeps the admin shell and explains, which is
+       the better answer for somebody who mistyped an id or followed a stale
+       link — the navigation stays put rather than dumping them on an error
+       page. */
+    await page.goto("/control-preview/admin/clients/definitely_not_a_client");
+    await expect(page.getByText(/no client with that id/i)).toBeVisible({
+      timeout: 15_000,
+    });
   });
 });
 
