@@ -941,15 +941,56 @@ export class SupabaseResultsRepository implements ResultsRepository {
     }));
   }
 
+  async getEventDivisionSummaries(eventId: string) {
+    const rows = await this.many<{
+      division_id: string;
+      total: number;
+      finisher_count: number;
+      leader_athlete_id: string | null;
+      leader_finish_time_ms: number | null;
+      waves: (string | null)[] | null;
+    }>(this.db.rpc("results_event_division_summary", { p_event_id: eventId }));
+
+    return new Map(
+      rows.map((r) => [
+        r.division_id,
+        {
+          total: Number(r.total ?? 0),
+          finisherCount: Number(r.finisher_count ?? 0),
+          leader: r.leader_athlete_id
+            ? { athleteId: r.leader_athlete_id, finishTimeMs: r.leader_finish_time_ms }
+            : null,
+          waves: r.waves ?? [],
+        },
+      ]),
+    );
+  }
+
+  async listStationTimes(station: string, divisionKey: string) {
+    const rows = await this.many<{ seconds: number }>(
+      this.db.rpc("results_station_times", {
+        p_station: station,
+        p_division_key: divisionKey,
+      }),
+    );
+    return rows.map((r) => r.seconds).filter((n) => Number.isFinite(n));
+  }
+
   async listResultsWithSplitsForDivision(divisionId: string) {
-    // `splits` defaults to `{}`, so "has splits" is "is not the empty object".
+    // ⚠️ Filtered on the generated `has_splits` column, not on the JSONB.
+    //
+    // This tested `splits <> '{}'`, which sounds right and is not: the column
+    // defaults to `{"runs": [], "stations": []}`, which is not the empty
+    // object. The filter therefore matched all 630,287 rows when 21 have
+    // splits — so this read the entire table every time, and the partial index
+    // built to cover a tiny minority covered everything. See migration 0107.
     return (
       await this.manyAll<ResultRow>((from, to) =>
         this.db
           .from("results_results")
           .select()
           .eq("division_id", divisionId)
-          .neq("splits", "{}")
+          .is("has_splits", true)
           .range(from, to),
       )
     ).map(toResult);

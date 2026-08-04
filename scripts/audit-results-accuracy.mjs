@@ -225,7 +225,7 @@ log(`  4. finish times        ${implausible} outside human range`);
 const splitRows = await all(
   "results_results",
   "id,finish_time_ms,splits",
-  (q) => q.neq("splits", "{}"),
+  (q) => q.is("has_splits", true),
 );
 const splitsById = new Map(splitRows.map((r) => [r.id, r.splits]));
 for (const r of results) r.splits = splitsById.get(r.id) ?? { runs: [], stations: [] };

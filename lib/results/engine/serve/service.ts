@@ -86,13 +86,22 @@ export class ResultsService implements ResultsDataSource {
     // segments per athlete — to print a field size and a leader. And the
     // divisions were read one after another: a fifteen-division event was sixty
     // sequential round trips. Rotterdam, at 12,366 results, took twelve seconds.
+    // ⚠️ One aggregate for the whole event, not four questions per division.
+    //
+    // Eighteen divisions meant seventy-two requests and about four seconds on
+    // the page people open most. Grouping is the database's job — see
+    // `results_event_division_summary` in migration 0108.
+    const byDivision = await this.repo.getEventDivisionSummaries(event.id);
+
     const summaries = (
       await Promise.all(
         divisions.map(async (division): Promise<EventDivisionSummary | null> => {
           const code = toDivisionCode(division.divisionKey);
           if (!code) return null;
 
-          const summary = await this.repo.getDivisionSummary(division.id);
+          const summary = byDivision.get(division.id) ?? {
+            total: 0, finisherCount: 0, leader: null, waves: [],
+          };
           const leaderAthlete = summary.leader
             ? await this.repo.getAthleteById(summary.leader.athleteId)
             : null;
@@ -507,33 +516,13 @@ export class ResultsService implements ResultsDataSource {
   async getStationDistribution(station: StationId, division: string): Promise<Distribution> {
     const divisionKey = toDivisionKey(division) ?? division;
 
-    // ⚠️ Only the rows that carry splits, and only the matching divisions.
+    // ⚠️ One query, not one per division.
     //
-    // This walked every event, listed its divisions, and read *every column of
-    // every row* of each matching one — to pull a single station's time off
-    // those that had one. Splits are fetched an athlete at a time and 99.5% of
-    // rows have none, so almost all of that was reading `splits: {}`. A station
-    // guide renders two of these and took 95 seconds.
-    //
-    // `listAllDivisions` replaces the per-event walk (223 round trips to find
-    // divisions by key), and `listResultsWithSplitsForDivision` reads the small
-    // populated minority through the partial index from migration 0103.
-    const divisions = (await this.repo.listAllDivisions()).filter(
-      (d) => d.divisionKey === divisionKey,
-    );
-
-    const perDivision = await Promise.all(
-      divisions.map(async (d) => {
-        const rows = await this.repo.listResultsWithSplitsForDivision(d.id);
-        return rows.flatMap((row) => {
-          if (!isFinish(row.status)) return [];
-          const segment = row.splits.stations.find((s) => s.key === station);
-          return segment ? [Math.round(segment.timeMs / 1000)] : [];
-        });
-      }),
-    );
-
-    return buildDistribution(perDivision.flat());
+    // This walked every division of the key and read its rows — about 130
+    // requests and six seconds for a page that renders two of these. The
+    // database unnests the splits and filters on `has_splits`, which covers 21
+    // rows rather than 630,287. See migration 0108.
+    return buildDistribution(await this.repo.listStationTimes(station, divisionKey));
   }
 
   /**

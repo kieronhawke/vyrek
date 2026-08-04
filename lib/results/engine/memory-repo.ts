@@ -423,6 +423,32 @@ export class MemoryResultsRepository implements ResultsRepository {
     return [...best.values()];
   }
 
+  async getEventDivisionSummaries(eventId: string) {
+    const out = new Map<string, {
+      total: number; finisherCount: number;
+      leader: { athleteId: string; finishTimeMs: number | null } | null;
+      waves: (string | null)[];
+    }>();
+    for (const d of this.divisions.values()) {
+      if (d.eventId !== eventId) continue;
+      out.set(d.id, await this.getDivisionSummary(d.id));
+    }
+    return out;
+  }
+
+  async listStationTimes(station: string, divisionKey: string) {
+    const out: number[] = [];
+    for (const d of this.divisions.values()) {
+      if (d.divisionKey !== divisionKey) continue;
+      for (const r of this.results.values()) {
+        if (r.divisionId !== d.id || r.status !== "finished") continue;
+        const seg = r.splits.stations.find((x) => x.key === station);
+        if (seg) out.push(Math.round(seg.timeMs / 1000));
+      }
+    }
+    return out;
+  }
+
   async listResultsWithSplitsForDivision(divisionId: string) {
     return (await this.listResultsForDivision(divisionId)).filter(
       (r) => r.splits.runs.length > 0 || r.splits.stations.length > 0,

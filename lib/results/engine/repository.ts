@@ -153,6 +153,28 @@ export interface ResultsRepository {
    */
   listResultsWithSplitsForDivision(divisionId: string): Promise<EngineResult[]>;
   /**
+   * Every division of one event, summarised, in a single call.
+   *
+   * The event page needs a field size, a finisher count, a leader and a wave
+   * list per division. Asking each separately was four requests per division —
+   * seventy-two for an eighteen-division event, about four seconds.
+   */
+  getEventDivisionSummaries(eventId: string): Promise<
+    Map<string, {
+      total: number;
+      finisherCount: number;
+      leader: { athleteId: string; finishTimeMs: number | null } | null;
+      waves: (string | null)[];
+    }>
+  >;
+  /**
+   * Every stored time for one station across a division key, in seconds.
+   *
+   * Built for the station guides' histogram, which used to walk each division
+   * of the key in turn: ~130 requests for a page that renders two of them.
+   */
+  listStationTimes(station: string, divisionKey: string): Promise<number[]>;
+  /**
    * Start-list rows for one division, with the athlete already joined.
    *
    * The start list needs a name, a nationality and an age group per entrant and

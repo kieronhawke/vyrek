@@ -146,7 +146,19 @@ export function statusFor(
   current: EngineEvent["status"],
   endsAt: string | null,
   now: Date = new Date(),
+  opts: { hasResults?: boolean } = {},
 ): EngineEvent["status"] {
+  // ⚠️ A race with no results is not a finished race.
+  //
+  // Season number alone used to close an event: anything from an earlier season
+  // must be over. But HYROX publishes next season's calendar early, so an
+  // event dated four months from now was being marked `final` with nothing in
+  // it — and because "latest finished race" sorts by date, that empty future
+  // event sat at the top of the results page. The page looked broken because
+  // the newest thing on it had no results.
+  if (current === "final" && opts.hasResults === false && endsAt) {
+    if (new Date(endsAt).getTime() > now.getTime()) return "upcoming";
+  }
   if (current !== "upcoming") return current;
   if (!endsAt) return current;
   return new Date(endsAt).getTime() < now.getTime() ? "final" : "upcoming";
