@@ -263,6 +263,85 @@ test.describe("checkout", () => {
     expect(res.status()).toBe(400);
     expect((await res.json()).error).toBe("PLAN_UNKNOWN");
   });
+
+  /**
+   * The agreed price has to come from the signed invite and nowhere else.
+   *
+   * Asking for the bespoke plan on a link that carries no agreed price is
+   * what a forged request looks like, and letting it through would mean the
+   * page got to decide what somebody pays.
+   */
+  test("the agreed plan is refused on an invite with no agreed price", async ({
+    page,
+  }) => {
+    const token = await mintInvite(page.request);
+    const res = await page.request.post("/api/onboarding/checkout", {
+      data: { token, plan: "custom" },
+    });
+    expect(res.status()).toBe(400);
+    expect((await res.json()).error).toBe("NO_AGREED_PRICE");
+  });
+
+  /**
+   * An amount in the request body does not stop the checkout working.
+   *
+   * WHAT THIS DOES AND DOES NOT PROVE. It proves the route does not read a
+   * posted amount as a signal — an unknown field does not divert it, error it,
+   * or change its answer. It does NOT prove what Stripe was asked to charge,
+   * because that lives in a session this test cannot see.
+   *
+   * The charge itself is covered where it can be: the token unit tests forge
+   * an edited price and assert the link stops resolving, and the route reads
+   * the amount from `read.invite` rather than from `body`. A test that
+   * asserted "£150 was charged" from here would be asserting its own
+   * assumption, which is worse than a narrower test that says so.
+   */
+  /* Refused rather than quietly dropped: an invite that silently ignored a
+     bad price would offer the published tiers to somebody Ben had just
+     quoted, and he would not find out until they rang back. */
+  test("an unreadable agreed price is refused at the invite, not ignored", async ({
+    page,
+  }) => {
+    const res = await page.request.post("/api/onboarding/invite", {
+      data: {
+        name: "Sam Reeves",
+        email: "sam@example.com",
+        kind: "payment",
+        agreedPrice: "one fifty",
+      },
+    });
+    expect(res.status()).toBe(400);
+    expect((await res.json()).error).toBe("PRICE_INVALID");
+  });
+});
+
+test.describe("a price agreed with one person", () => {
+  test("leads their plan step, and only theirs", async ({ page }) => {
+    const token = await mintInvite(page.request, {
+      kind: "payment",
+      agreedPrice: "150",
+      agreedName: "Sam's plan",
+    });
+    await page.goto(`/o/${token}?step=plan`);
+
+    const cards = page.locator(".ob-plan");
+    await expect(cards.first()).toContainText("Sam's plan");
+    await expect(cards.first()).toContainText("£150");
+    /* "Agreed with Ben", never "Most popular": calling a plan built for one
+       person popular is a fabricated claim about other people. */
+    await expect(cards.first()).toContainText("Agreed with Ben");
+    await expect(page.locator(".ob-plan__flag")).toHaveCount(1);
+
+    // Pre-selected. He quoted them a number; they should not have to hunt.
+    await expect(cards.first()).toHaveAttribute("aria-pressed", "true");
+
+    // An ordinary invite gets none of this.
+    const plain = await mintInvite(page.request, { kind: "payment" });
+    await page.goto(`/o/${plain}?step=plan`);
+    await expect(page.locator(".ob-plan").first()).not.toContainText(
+      "Agreed with Ben",
+    );
+  });
 });
 
 test.describe("the welcome landing", () => {

@@ -176,8 +176,17 @@ test.describe("Email templates", () => {
 });
 
 test.describe("Email rendering environments", () => {
-  // A representative spread: customer-facing, internal, and billing.
-  const IDS = ["lead-confirmation", "internal-lead", "club-d5"];
+  // A representative spread: customer-facing, internal, and billing. The two
+  // subscription emails are here because they are the ones that carry money —
+  // an amount that renders as white-on-white or falls off a 320px screen is
+  // the failure with the most expensive consequence.
+  const IDS = [
+    "lead-confirmation",
+    "internal-lead",
+    "club-d5",
+    "internal-subscription-started",
+    "internal-payment-received",
+  ];
 
   for (const id of IDS) {
     test(`${id} holds up in light mode, with images off, and at 320px`, async ({
