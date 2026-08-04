@@ -47,6 +47,12 @@ export function ManageBooking({ reference }: { reference: string }) {
   const [loading, setLoading] = useState(true);
   const [moving, setMoving] = useState(false);
   const [confirmCancel, setConfirmCancel] = useState(false);
+  /* The new time is chosen, then confirmed. Tapping a slot used to move the
+     booking outright — the same one-tap mistake the quiz and /book had, and
+     the more dangerous of the three, because here it silently overwrites a
+     time somebody has already arranged their day around and fires a text
+     saying so. A misplaced tap should not be able to do that. */
+  const [pending, setPending] = useState<{ startISO: string; label: string } | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
@@ -225,13 +231,44 @@ export function ManageBooking({ reference }: { reference: string }) {
           </h3>
           <BookingPicker
             excludeRef={booking.ref}
-            onChosen={(s) =>
-              act(
-                { action: "reschedule", startISO: s.startISO },
-                "Moved. We've sent you the new time.",
-              )
-            }
+            onChosen={(s) => setPending({ startISO: s.startISO, label: s.label })}
           />
+
+          {pending ? (
+            <div className="mt-8 rounded-2xl border border-suth-accent/40 bg-suth-elevated p-5 md:p-6">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
+                [ New time ]
+              </p>
+              <p className="mt-2 text-lg font-semibold leading-snug text-suth-text">
+                {formatWhen(pending.startISO)}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-suth-text-secondary">
+                Moving from {formatWhen(booking.startISO)}. Ben will get the
+                change and you&apos;ll get a text with the new time.
+              </p>
+
+              <button
+                type="button"
+                disabled={busy}
+                onClick={() =>
+                  act(
+                    { action: "reschedule", startISO: pending.startISO },
+                    "Moved. We've sent you the new time.",
+                  )
+                }
+                className="mt-5 inline-flex h-14 w-full items-center justify-center rounded-pill bg-suth-accent px-6 text-base font-semibold tracking-tight text-[#0A0A0A] transition-[background,opacity] duration-fast hover:bg-suth-accent-hover disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {busy ? "Moving…" : "Confirm the new time →"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setPending(null)}
+                className="mt-3 inline-flex h-11 w-full items-center justify-center rounded-pill border border-suth-border px-6 text-sm font-medium text-suth-text-secondary transition-colors hover:border-suth-border-strong hover:text-suth-text"
+              >
+                Choose a different time
+              </button>
+            </div>
+          ) : null}
         </div>
       ) : null}
     </div>
