@@ -194,9 +194,16 @@ export default async function StationPage({
           ...d,
           // A station with no splits stored yet is normal early in a season, and
           // a guide page must not 500 because of it.
-          distribution: await getResultsSource()
-            .getStationDistribution(stationId, d.division)
-            .catch(() => null),
+          //
+          // ⚠️ Bounded, because this page is prerendered. The histogram is an
+          // enhancement — the guide is complete without it — but the build
+          // gives each page 60 seconds and this query got slow enough under
+          // build-time concurrency to blow that, failing the whole deployment.
+          // A nice-to-have must never be able to stop a release.
+          distribution: await Promise.race([
+            getResultsSource().getStationDistribution(stationId, d.division),
+            new Promise<null>((resolve) => setTimeout(() => resolve(null), 8_000)),
+          ]).catch(() => null),
         })),
       )
     : [];

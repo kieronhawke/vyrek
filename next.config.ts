@@ -82,6 +82,18 @@ const PRIVATE_HEADERS = [
 const RESULTS_DATA = ["./data/results-demo/**"];
 
 const nextConfig: NextConfig = {
+  /**
+   * Prerender budget per page.
+   *
+   * ⚠️ Raised from the 60s default when the results section went live. These
+   * pages query the database at build time, and 8,636 of them do it at once —
+   * so a query that answers in two seconds against an idle store can take far
+   * longer under build concurrency. Exceeding the limit fails the whole
+   * deployment, which is a harsh outcome for a page that would have rendered
+   * fine a second later.
+   */
+  staticPageGenerationTimeout: 240,
+
   outputFileTracingIncludes: {
     // Globs, not an enumeration.
     //
