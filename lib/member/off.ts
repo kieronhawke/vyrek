@@ -232,20 +232,39 @@ export async function searchOff(
   url.searchParams.set("tag_contains_0", "contains");
   url.searchParams.set("tag_0", "united-kingdom");
 
-  try {
-    const res = await fetcher(url.toString(), {
-      headers: { "User-Agent": UA, Accept: "application/json" },
-      signal,
-      // OFF is slow under load and this sits behind a typing box.
-      next: { revalidate: 60 * 60 * 24 },
-    } as RequestInit);
-    if (!res.ok) return { foods: [], ok: false };
-    const body = (await res.json()) as { products?: OffProduct[] };
-    const foods = dedupe((body.products ?? []).map(toFood).filter(isFood)).slice(0, limit);
-    return { foods, ok: true };
-  } catch {
-    return { foods: [], ok: false };
+  /*
+   * One retry, briefly delayed.
+   *
+   * Measured from production: the same query that answers in 0.7s from a
+   * laptop comes back empty from a Vercel function often enough to notice,
+   * while the barcode endpoint on the same host is reliable. Open Food Facts
+   * rate-limits their legacy search path, and datacentre egress wears that
+   * first. A single retry converts a good share of those into an answer, and
+   * the successful result is then edge-cached for a day so the next person
+   * searching the same thing never touches OFF at all.
+   *
+   * One retry, not three: this sits behind a typing box, and an athlete
+   * waiting four seconds for "weetabix" has already given up.
+   */
+  for (let attempt = 0; attempt < 2; attempt++) {
+    if (attempt > 0) await new Promise((r) => setTimeout(r, 350));
+    try {
+      const res = await fetcher(url.toString(), {
+        headers: { "User-Agent": UA, Accept: "application/json" },
+        signal,
+        // OFF is slow under load and this sits behind a typing box.
+        next: { revalidate: 60 * 60 * 24 },
+      } as RequestInit);
+      if (!res.ok) continue;
+      const body = (await res.json()) as { products?: OffProduct[] };
+      const foods = dedupe((body.products ?? []).map(toFood).filter(isFood)).slice(0, limit);
+      return { foods, ok: true };
+    } catch {
+      /* Network or parse failure. Fall through to the retry, then give up
+         and let the caller say the database could not be reached. */
+    }
   }
+  return { foods: [], ok: false };
 }
 
 /** Look up one barcode. Null when it is unknown or has no usable nutrition. */

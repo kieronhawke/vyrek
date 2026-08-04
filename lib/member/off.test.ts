@@ -207,3 +207,42 @@ describe("search", () => {
     expect(url).toContain("united-kingdom");
   });
 });
+
+describe("retrying a rate-limited search", () => {
+  /**
+   * Measured from production: the query that answers in 0.7s from a laptop
+   * comes back empty from a Vercel function often enough to notice. Open Food
+   * Facts rate-limits their legacy search path and datacentre egress wears
+   * that first, so one retry converts a good share of those into an answer.
+   */
+  it("tries again once when the first attempt is refused", async () => {
+    let calls = 0;
+    const flaky = (async () => {
+      calls++;
+      if (calls === 1) return { ok: false, json: async () => ({}) };
+      return {
+        ok: true,
+        json: async () => ({ products: [product()] }),
+      };
+    }) as unknown as typeof fetch;
+
+    const out = await searchOff("weetabix", { fetcher: flaky });
+    expect(calls).toBe(2);
+    expect(out.ok).toBe(true);
+    expect(out.foods).toHaveLength(1);
+  });
+
+  /* One retry, not three. This sits behind a typing box and somebody waiting
+     four seconds for "weetabix" has already given up. */
+  it("gives up after the second attempt rather than hammering", async () => {
+    let calls = 0;
+    const dead = (async () => {
+      calls++;
+      return { ok: false, json: async () => ({}) };
+    }) as unknown as typeof fetch;
+
+    const out = await searchOff("weetabix", { fetcher: dead });
+    expect(calls).toBe(2);
+    expect(out).toEqual({ foods: [], ok: false });
+  });
+});
