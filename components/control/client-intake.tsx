@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useCollection } from "@/lib/control/store";
 import { PLANS } from "@/lib/onboarding/model";
-import { SEED_ATHLETES, TIER_LABEL, TIER_ORDER, type Tier, type TrackedAthlete } from "@/lib/control/tracker";
+import { SEED_ATHLETES, TIER_LABEL, TIER_ORDER, TRACKER_KEY, type Tier, type TrackedAthlete } from "@/lib/control/tracker";
 
 /**
  * ADD A CLIENT, AND SEND THEM THE LINK.
@@ -34,12 +34,12 @@ type SendResult = {
 };
 
 export function ClientIntake() {
-  const athletes = useCollection<TrackedAthlete>("tracker", SEED_ATHLETES);
+  const athletes = useCollection<TrackedAthlete>(TRACKER_KEY, SEED_ATHLETES);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [tier, setTier] = useState<Tier>("121");
+  const [tier, setTier] = useState<Tier>("coaching");
   const [plan, setPlan] = useState("");
   const [busy, setBusy] = useState<"full" | "payment" | null>(null);
   const [result, setResult] = useState<SendResult | null>(null);

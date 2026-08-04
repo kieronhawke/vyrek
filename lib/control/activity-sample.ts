@@ -71,7 +71,7 @@ const SEEDS: Seed[] = [
     id: "s_05", day: 1, hour: 19, ip: "192.0.2.44",
     country: "United Kingdom", countryIso: "GB", city: "London",
     lat: 51.51, lng: -0.13, timezone: "Europe/London", referrer: "google.com",
-    pages: [["/", 25], ["/journal/what-to-wear-for-hyrox", 190]],
+    pages: [["/", 25], ["/blog/hyrox-beginner-kit-list", 190]],
   },
   {
     id: "s_06", day: 2, hour: 12, ip: "203.0.113.9",
@@ -90,7 +90,7 @@ const SEEDS: Seed[] = [
     id: "s_08", day: 3, hour: 18, ip: "198.51.100.22",
     country: "Germany", countryIso: "DE", city: "Berlin",
     lat: 52.52, lng: 13.40, timezone: "Europe/Berlin", referrer: "google.de",
-    pages: [["/results", 310], ["/results/rankings", 180]],
+    pages: [["/results", 310], ["/results/city", 180]],
   },
   {
     id: "s_09", day: 3, hour: 14, ip: "192.0.2.67",
@@ -142,7 +142,7 @@ const SEEDS: Seed[] = [
     id: "s_16", day: 11, hour: 19, ip: "192.0.2.115",
     country: "United Kingdom", countryIso: "GB", city: "Liverpool",
     lat: 53.41, lng: -2.98, timezone: "Europe/London", referrer: "direct",
-    pages: [["/", 20], ["/journal", 60], ["/journal/first-hyrox", 210], ["/plan", 80]],
+    pages: [["/", 20], ["/blog", 60], ["/blog/first-hyrox-preparation-guide", 210], ["/plan", 80]],
     quiz: "Email", formStarted: true,
   },
   {
@@ -158,7 +158,7 @@ const SEEDS: Seed[] = [
     id: "s_18", day: 0, hour: 6, ip: "192.0.2.200",
     country: "United Kingdom", countryIso: "GB", city: "Manchester",
     lat: 53.48, lng: -2.24, timezone: "Europe/London", referrer: "direct",
-    pages: [["/", 30], ["/programmes", 45], ["/pricing", 25], ["/contact", 20], ["/journal", 35], ["/results", 60]],
+    pages: [["/", 30], ["/programmes", 45], ["/pricing", 25], ["/contact", 20], ["/blog", 35], ["/results", 60]],
   },
 ];
 

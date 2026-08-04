@@ -1,4 +1,5 @@
 import { isFictionalPerson } from "./fictional-people";
+import { seedLeads } from "./lead-seed";
 import { describe, expect, it } from "vitest";
 import {
   listCoachClients,
@@ -127,6 +128,13 @@ describe("the seeded set", () => {
     }
     for (const l of listLeads()) {
       expect(isFictionalPerson(l.name), `${l.name} is not on the fictional roster`).toBe(true);
+    }
+    /* The pipeline seed is a second roster of people and carries contact
+       details as well as names, so it has to clear the same bar. */
+    for (const l of seedLeads(new Date("2026-08-04T12:00:00Z"))) {
+      expect(isFictionalPerson(l.name), `${l.name} is not on the fictional roster`).toBe(true);
+      expect(l.email).toBe("kieronhawke@gmail.com");
+      expect(l.phone).toBe("07398790378");
     }
   });
 });

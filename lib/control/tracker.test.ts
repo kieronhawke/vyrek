@@ -9,6 +9,7 @@ import {
   urgency,
   type TrackedAthlete,
 } from "./tracker";
+import { CLIENTS } from "./fixtures";
 
 /** A fixed "today" so none of this drifts with the clock. */
 const NOW = new Date("2026-08-10T09:00:00Z");
@@ -17,7 +18,7 @@ function athlete(patch: Partial<TrackedAthlete>): TrackedAthlete {
   return {
     id: "x",
     name: "X",
-    tier: "121",
+    tier: "coaching",
     programmedUntil: null,
     note: "",
     monthly: 100,
@@ -86,15 +87,37 @@ describe("the work queue", () => {
 });
 
 describe("the seeded tracker", () => {
-  it("carries the four groups from the real sheet", () => {
-    expect(TIER_ORDER).toEqual(["121", "tier2", "non-hyrox", "vip"]);
+  /**
+   * The sheet's columns were 121 / Tier 2 / Non-HYROX / VIP. The product sells
+   * Hub / Programming / Coaching / 1-to-1 VIP, and carrying both vocabularies
+   * is what made the tracker and the clients page look like different things.
+   * The groups still have to all be populated; only their names changed.
+   */
+  it("carries all four tiers, in the vocabulary the business sells", () => {
+    expect(TIER_ORDER).toEqual(["elite", "coaching", "programming", "hub"]);
     for (const tier of TIER_ORDER) {
       expect(SEED_ATHLETES.some((a) => a.tier === tier)).toBe(true);
     }
   });
 
-  it("is about the size of the real one", () => {
-    expect(SEED_ATHLETES.length).toBeGreaterThanOrEqual(25);
+  /**
+   * The seed is now `CLIENTS`, not a second roster of its own. The bound is
+   * here so the demo cannot quietly collapse to a handful of rows, which is
+   * the state that makes an operations screen impossible to judge.
+   */
+  it("is a realistic roster, not a token few", () => {
+    expect(SEED_ATHLETES.length).toBeGreaterThanOrEqual(20);
+  });
+
+  /**
+   * The whole point of the merge. Every card in the client hub links to
+   * `/clients/<id>`, and that page resolves the id against this seed. If the
+   * two ever drift apart again, every one of those links becomes a profile of
+   * somebody who does not exist — which is exactly the bug this replaced.
+   */
+  it("shares its ids and names with the client list it is a view of", () => {
+    expect(SEED_ATHLETES.map((a) => a.id)).toEqual(CLIENTS.map((c) => c.id));
+    expect(SEED_ATHLETES.map((a) => a.name)).toEqual(CLIENTS.map((c) => c.name));
   });
 
   /**

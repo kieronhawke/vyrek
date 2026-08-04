@@ -5,6 +5,7 @@ import Link from "next/link";
 import { newId, useCollection } from "@/lib/control/store";
 import {
   SEED_ATHLETES,
+  TRACKER_KEY,
   TIER_LABEL,
   TIER_ORDER,
   URGENCY_LABEL,
@@ -77,7 +78,7 @@ function profileHref(base: string, a: TrackedAthlete) {
 
 export function CoachTracker({ base }: { base: string }) {
   const { items, update, add, remove, reset } = useCollection<TrackedAthlete>(
-    "tracker",
+    TRACKER_KEY,
     SEED_ATHLETES,
   );
   const [editing, setEditing] = useState<string | null>(null);
@@ -90,9 +91,11 @@ export function CoachTracker({ base }: { base: string }) {
     const name = newName.trim();
     if (!name) return;
     add({
-      id: newId("a", items),
+      id: newId("c", items),
       name,
-      tier: "tier2",
+      // Programming is the tier most people start on, and it is the one Ben
+      // can change in a click if it is wrong.
+      tier: "programming",
       programmedUntil: null,
       note: "New — no plan written yet",
       monthly: 95,

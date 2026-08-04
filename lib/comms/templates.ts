@@ -177,6 +177,50 @@ export const TEMPLATES: TemplateDef[] = [
       "{{firstName}}, it's {{coachName}}. Welcome aboard! 5 mins to set up: {{link}}",
   },
   {
+    /*
+     * The one the pipeline actually fires on its own (see
+     * lead-record.ts: pendingAutomations). It was the only automated message
+     * with no way to change its wording, which is the worst combination:
+     * sends itself, and Ben cannot touch it.
+     */
+    id: "sms.reminder-1h",
+    channel: "sms",
+    stage: "Call booked",
+    when: "An hour before the call. Sent automatically.",
+    tokens: ["coachName", "when"],
+    defaultBody:
+      "{{coachName}} here. We're on in about an hour ({{when}}). Speak shortly.",
+  },
+  {
+    id: "sms.callback",
+    channel: "sms",
+    stage: "New lead",
+    when: "They asked for a callback rather than booking a slot.",
+    tokens: ["firstName", "coachName", "when"],
+    defaultBody:
+      "Hi {{firstName}}, {{coachName}} from Suth Performance. Got your details. I'll call you {{when}}. Reply here if that changes.",
+  },
+  {
+    id: "sms.client-welcome",
+    channel: "sms",
+    stage: "Client",
+    when: "The first message after they become a coaching client.",
+    tokens: ["firstName", "coachName"],
+    defaultBody:
+      "Welcome aboard {{firstName}}. {{coachName}} here. Your first week is in your account now. Any questions, this number reaches me.",
+  },
+  {
+    /* Never automated blind — Ben sends this one, which is exactly why the
+       words have to be his rather than ours. */
+    id: "sms.race-day",
+    channel: "sms",
+    stage: "Client",
+    when: "The morning of a race. Coaching clients only, sent by hand.",
+    tokens: ["firstName", "coachName", "raceName"],
+    defaultBody:
+      "Morning {{firstName}}, {{coachName}} here. Today is just the victory lap on work you already did. Stick to the pacing plan. Go well.",
+  },
+  {
     id: "email.onboarding-invite",
     channel: "email",
     stage: "Ready to onboard",

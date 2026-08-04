@@ -23,6 +23,8 @@
  * PRIVACY: github.com/kieronhawke/vyrek is public. Seeds are placeholders.
  */
 
+import { CLIENTS } from "@/lib/control/fixtures";
+
 export type ClientNote = {
   id: string;
   /** ISO date. Sorted newest first for reading, oldest first for history. */
@@ -60,7 +62,11 @@ export type ClientProfile = {
   notes: ClientNote[];
 };
 
-export const PROFILE_KEY = "clients.profiles";
+/**
+ * Bumped in step with TRACKER_KEY. The old value holds profiles keyed to the
+ * retired `a_01`… ids, which would sit in the browser forever matching nobody.
+ */
+export const PROFILE_KEY = "clients.profiles.v2";
 
 export function emptyProfile(id: string, today: string): ClientProfile {
   return {
@@ -133,18 +139,57 @@ export function bmi(p: ClientProfile): number | null {
 }
 
 /**
- * Sample profiles for the seeded tracker athletes.
+ * Profiles for the seeded roster.
  *
- * Only the first three, deliberately: a console where every row is filled in
- * looks finished and hides exactly the state Ben will actually be in, which is
- * most of them empty. The empty ones are the point.
+ * Keyed off `CLIENTS`, which is the single roster the tracker and the client
+ * hub are both views of. Keying them off anything else is what left the last
+ * version seeding `a_01` while every card on screen linked to `c_01`, so every
+ * profile opened blank.
+ *
+ * CONTACT DETAILS ARE KIERON'S, ON PURPOSE
+ * ----------------------------------------
+ * Every record points at his own inbox and handset, so if a send is ever wired
+ * to this data by accident it reaches him and nobody else. The names are
+ * invented (see lib/control/fictional-people.ts); the address and number are
+ * real and deliberately his.
+ *
+ * ONLY THREE ARE FILLED IN
+ * ------------------------
+ * A console where every row is complete looks finished and hides exactly the
+ * state Ben will actually be in, which is most of them empty. The empty ones
+ * are the point, so the rest get contact details and a start date and nothing
+ * more — which is what a client genuinely looks like until somebody sits down
+ * and writes their goal up.
  */
 export function seedProfiles(today: string): ClientProfile[] {
-  return [
-    {
-      ...emptyProfile("a_01", today),
-      email: "athlete.a@example.com",
-      phone: "+44 7700 900001",
+  /*
+   * When they started.
+   *
+   * `emptyProfile` dates a new record today, which is right for somebody Ben
+   * has just added and wrong for a seeded roster: it left twenty-one clients
+   * all reading "with Ben: less than a month", which is the sort of detail
+   * that makes a demo obviously a demo.
+   *
+   * Spread deterministically by position instead — no randomness, so the same
+   * client shows the same tenure on every render and between server and
+   * browser. Roughly a month apart, oldest first, so the list looks like a
+   * business that grew rather than one that opened on Tuesday.
+   */
+  const joinedAt = (i: number): string => {
+    const d = new Date(`${today}T00:00:00Z`);
+    d.setUTCMonth(d.getUTCMonth() - (CLIENTS.length - i));
+    return d.toISOString().slice(0, 10);
+  };
+
+  const base = (id: string, i: number): ClientProfile => ({
+    ...emptyProfile(id, today),
+    email: "kieronhawke@gmail.com",
+    phone: "07398790378",
+    joined: joinedAt(i),
+  });
+
+  const rich: Record<string, Partial<ClientProfile>> = {
+    c_01: {
       joined: "2025-02-10",
       hyroxSlug: null,
       goal: "Sub-1:20 at Manchester. Sled push is the limiter.",
@@ -168,10 +213,7 @@ export function seedProfiles(today: string): ClientProfile[] {
         },
       ],
     },
-    {
-      ...emptyProfile("a_02", today),
-      email: "athlete.b@example.com",
-      phone: "+44 7700 900002",
+    c_02: {
       joined: "2026-05-04",
       goal: "First HYROX, finish strong.",
       heightCm: 165,
@@ -185,12 +227,12 @@ export function seedProfiles(today: string): ClientProfile[] {
         },
       ],
     },
-    {
-      ...emptyProfile("a_03", today),
-      email: "athlete.c@example.com",
+    c_03: {
       joined: "2025-11-18",
       goal: "Doubles with a partner in the spring.",
       notes: [],
     },
-  ];
+  };
+
+  return CLIENTS.map((c, i) => ({ ...base(c.id, i), ...rich[c.id] }));
 }

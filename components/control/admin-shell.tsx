@@ -53,7 +53,6 @@ const PAYMENT_ISSUES = CLIENTS.filter(
 export const MODULES: ModuleLink[] = [
   { href: "", label: "Dashboard", short: "Today", group: "Work" },
   { href: "/leads", label: "Leads", count: NEW_LEADS, group: "Work" },
-  { href: "/tracker", label: "Coach tracker", short: "Tracker", count: CLIENTS.length, group: "Work" },
   { href: "/clients", label: "Clients", count: CLIENTS.length, group: "Work" },
   { href: "/plans", label: "Plans", count: NEEDS_A_PLAN, group: "Work" },
   { href: "/diary", label: "Diary", group: "Work" },

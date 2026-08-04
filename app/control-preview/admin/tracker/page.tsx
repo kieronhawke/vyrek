@@ -1,19 +1,14 @@
-import { AdminShell } from "@/components/control/admin-shell";
-import { CoachTracker } from "@/components/control/coach-tracker";
-
-const BASE = "/control-preview/admin";
+import { redirect } from "next/navigation";
 
 /**
- * The coach tracker — the replacement for "Coaching Tracker.xlsx".
+ * The coach tracker was the same CLIENTS list as /clients, grouped by tier
+ * and sorted by who needs a plan. Two destinations for one dataset, which is
+ * why it was never obvious which to open.
  *
- * Same four groups, same one job: who is programmed until when. The difference
- * is that it answers "who is due" before you scroll, and every row is a click
- * from the builder that fixes it.
+ * It is now a lens on the hub. This redirect keeps the nav item, the command
+ * palette and any bookmark working, and lands on the view the page existed
+ * to show.
  */
 export default function TrackerPage() {
-  return (
-    <AdminShell base={BASE} title="Coach tracker">
-      <CoachTracker base={BASE} />
-    </AdminShell>
-  );
+  redirect("/control-preview/admin/clients?lens=needs_plan");
 }

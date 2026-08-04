@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useCollection } from "@/lib/control/store";
+import { CLIENTS } from "@/lib/control/fixtures";
+import { PAYMENT_STATE_LABEL, humanDate, paymentTone } from "@/lib/control/client-hub";
 import { HyroxLink } from "@/components/control/hyrox-link";
 import {
   PROFILE_KEY,
@@ -18,6 +20,7 @@ import {
 } from "@/lib/control/client-profile";
 import {
   SEED_ATHLETES,
+  TRACKER_KEY,
   TIER_LABEL,
   daysLeft,
   urgency,
@@ -42,6 +45,13 @@ import {
  * not a bug you can apologise for afterwards.
  */
 
+/** The three payment tones, as the CSS variables the rest of the console uses. */
+const PAYMENT_TONE: Record<"ok" | "warn" | "danger", string> = {
+  ok: "var(--ok)",
+  warn: "var(--warn)",
+  danger: "var(--danger)",
+};
+
 const URGENCY_TONE: Record<string, string> = {
   overdue: "var(--danger)",
   due: "var(--warn)",
@@ -59,7 +69,7 @@ export function ClientProfile({
   base: string;
   today: string;
 }) {
-  const athletes = useCollection<TrackedAthlete>("tracker", SEED_ATHLETES);
+  const athletes = useCollection<TrackedAthlete>(TRACKER_KEY, SEED_ATHLETES);
   const profiles = useCollection<Profile>(
     PROFILE_KEY,
     useMemo(() => seedProfiles(today), [today]),
@@ -96,8 +106,9 @@ export function ClientProfile({
   if (!athlete) {
     return (
       <p className="cp-hint">
-        No client with that id. They may have been removed from the tracker.{" "}
-        <Link href={`${base}/tracker`}>Back to the tracker</Link>.
+        No client with that id. They may have been removed from the client
+        list.{" "}
+        <Link href={`${base}/clients`}>Back to clients</Link>.
       </p>
     );
   }
@@ -111,6 +122,12 @@ export function ClientProfile({
   const planHref = `${base}/plans/${athlete.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
   const index = bmi(profile);
 
+  /* The billing side of the same person. The tracker row carries a yes/no
+     "card on file", which renders green for everybody and so tells Ben
+     nothing; the client record carries what actually happened to the last
+     charge. Undefined once he adds someone by hand, hence the fallback. */
+  const billing = CLIENTS.find((c) => c.id === athlete.id);
+
   return (
     <div className="cp">
       {/* The name lives here rather than in the shell's title: it comes from
@@ -122,12 +139,12 @@ export function ClientProfile({
       <section className="cp-status" aria-label="Status">
         <div className="cp-stat">
           <span className="eyebrow">Programmed until</span>
-          <strong className="num cp-stat__v" style={{ color: URGENCY_TONE[state] }}>
-            {athlete.programmedUntil ?? "Not set"}
+          <strong className="cp-stat__v" style={{ color: URGENCY_TONE[state] }}>
+            {athlete.programmedUntil ? humanDate(athlete.programmedUntil, true) : "Not set"}
           </strong>
           <span className="cp-stat__sub">
             {left === null
-              ? "no date on the tracker"
+              ? "no end date set"
               : left < 0
                 ? `${Math.abs(left)} days overdue`
                 : `${left} days left`}
@@ -139,16 +156,31 @@ export function ClientProfile({
           <span className="cp-stat__sub num">£{athlete.monthly}/month</span>
         </div>
         <div className="cp-stat">
-          <span className="eyebrow">Payment method</span>
-          <strong className="cp-stat__v" style={{ color: athlete.paymentSet ? "var(--ok)" : "var(--danger)" }}>
-            {athlete.paymentSet ? "On file" : "Missing"}
+          <span className="eyebrow">Payment</span>
+          <strong
+            className="cp-stat__v"
+            style={{
+              color: billing
+                ? PAYMENT_TONE[paymentTone(billing.payment)]
+                : athlete.paymentSet
+                  ? "var(--ok)"
+                  : "var(--danger)",
+            }}
+          >
+            {billing ? PAYMENT_STATE_LABEL[billing.payment] : athlete.paymentSet ? "On file" : "Missing"}
           </strong>
-          <span className="cp-stat__sub">real status arrives with Stripe</span>
+          <span className="cp-stat__sub">
+            {billing
+              ? `${billing.paymentLabel} · next charge in ${billing.billingInDays} days`
+              : "no billing record yet"}
+          </span>
         </div>
         <div className="cp-stat">
           <span className="eyebrow">With Ben</span>
           <strong className="cp-stat__v">{membershipLength(profile.joined, today)}</strong>
-          <span className="cp-stat__sub num">since {profile.joined || "—"}</span>
+          <span className="cp-stat__sub">
+            since {profile.joined ? humanDate(profile.joined, true) : "—"}
+          </span>
         </div>
       </section>
 
@@ -163,8 +195,8 @@ export function ClientProfile({
         <Link href={planHref} className="cp-btn cp-btn--go">
           Write their plan
         </Link>
-        <Link href={`${base}/tracker`} className="cp-btn">
-          Coach tracker
+        <Link href={`${base}/clients`} className="cp-btn">
+          All clients
         </Link>
         {profile.email ? (
           <a href={`mailto:${profile.email}`} className="cp-btn">

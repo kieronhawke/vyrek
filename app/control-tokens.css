@@ -2987,6 +2987,7 @@
   margin: 0 0 var(--space-2); font-size: var(--text-sm); color: var(--text-muted);
 }
 [data-surface="control"] .lp-summary strong { color: var(--text); font-size: var(--text-lg); }
+[data-surface="control"] .lp-summary span[data-tone="warn"] strong { color: var(--warn, #f5b83c); }
 [data-surface="control"] .lp-reset {
   margin-left: auto; min-height: 32px; padding: 0 12px; border-radius: 999px;
   border: 1px solid var(--border); background: transparent;
@@ -3027,15 +3028,6 @@
   border-color: var(--accent); color: var(--accent-text, var(--accent));
 }
 
-[data-surface="control"] .lp-rail {
-  height: 4px; border-radius: 999px; background: var(--border); overflow: hidden;
-}
-[data-surface="control"] .lp-rail__fill {
-  height: 100%; background: var(--accent);
-  transition: width 420ms cubic-bezier(.22,.61,.36,1);
-}
-[data-surface="control"] .lp-rail[data-lost="true"] .lp-rail__fill { background: var(--text-muted); }
-
 [data-surface="control"] .lp-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 [data-surface="control"] .lp-btn {
   min-height: 44px; padding: 0 14px; border-radius: 999px;
@@ -3074,7 +3066,6 @@
 @keyframes lp-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   [data-surface="control"] .lp-receipt { animation: none; }
-  [data-surface="control"] .lp-rail__fill { transition: none; }
 }
 
 /* ── Communications editor ──────────────────────────────────────────────
@@ -3176,40 +3167,424 @@
 }
 
 /* Pipeline guidance, override and the outstanding flag. */
-[data-surface="control"] .lp-card__overdue {
-  margin: 4px 0 0; font-size: var(--text-xs); color: var(--warn, #f5b83c);
+/* ── Lead pipeline: the simplified card ─────────────────────────────────
+   The guide panel and the ten-button stage override that used to live here
+   moved behind Edit. What replaced them is a booked call, one alert line, one
+   button, and a collapsed timeline. */
+
+[data-surface="control"] .lp-tags {
+  display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
 }
-[data-surface="control"] .lp-guide,
-[data-surface="control"] .lp-override { font-size: var(--text-sm); }
-[data-surface="control"] .lp-guide__toggle,
-[data-surface="control"] .lp-override__toggle {
+[data-surface="control"] .lp-manual {
+  padding: 2px 8px; border-radius: 999px; font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  border: 1px dashed var(--border); color: var(--text-faint);
+}
+[data-surface="control"] .lp-card[data-alert] { border-color: var(--warn, #f5b83c); }
+[data-surface="control"] .lp-card[data-quiet] { opacity: 0.78; }
+
+/* The booked slot. Leads book through our own system before they land here,
+   so this is a fact about them, not something to chase. */
+[data-surface="control"] .lp-call {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px;
+  margin: 0; padding: 8px 10px; border-radius: 8px;
+  background: var(--surface-raised); border: 1px solid var(--border);
+  font-size: var(--text-sm);
+}
+[data-surface="control"] .lp-call__when { font-weight: 620; color: var(--text); }
+[data-surface="control"] .lp-call__rel { font-size: var(--text-xs); color: var(--text-faint); }
+[data-surface="control"] .lp-call[data-state="imminent"] {
+  border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+[data-surface="control"] .lp-call[data-state="passed"] { opacity: 0.65; }
+
+[data-surface="control"] .lp-alert {
+  margin: 0; font-size: var(--text-sm); font-weight: 600;
+  color: var(--warn, #f5b83c);
+}
+[data-surface="control"] .lp-alert[data-tone="quiet"] {
+  font-weight: 500; color: var(--text-muted);
+}
+
+[data-surface="control"] .lp-btn[data-edit] {
+  margin-left: auto; color: var(--text-muted);
+}
+
+/* ── Timeline ─────────────────────────────────────────────────────────── */
+[data-surface="control"] .lp-timeline { font-size: var(--text-sm); }
+[data-surface="control"] .lp-timeline__toggle {
   cursor: pointer; color: var(--text-muted); font-size: var(--text-xs);
   padding: 4px 0; list-style: none;
 }
-[data-surface="control"] .lp-guide__toggle::-webkit-details-marker,
-[data-surface="control"] .lp-override__toggle::-webkit-details-marker { display: none; }
-[data-surface="control"] .lp-guide__toggle::before,
-[data-surface="control"] .lp-override__toggle::before { content: "▸ "; }
-[data-surface="control"] details[open] > .lp-guide__toggle::before,
-[data-surface="control"] details[open] > .lp-override__toggle::before { content: "▾ "; }
-[data-surface="control"] .lp-guide__body {
-  display: grid; gap: 8px; padding: 10px 12px; margin-top: 6px;
+[data-surface="control"] .lp-timeline__toggle::-webkit-details-marker { display: none; }
+[data-surface="control"] .lp-timeline__toggle::before { content: "▸ "; }
+[data-surface="control"] details[open] > .lp-timeline__toggle::before { content: "▾ "; }
+[data-surface="control"] .lp-timeline__none {
+  margin: 0; font-size: var(--text-xs); color: var(--text-faint);
+}
+[data-surface="control"] .lp-timeline__list {
+  list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px;
+}
+[data-surface="control"] .lp-ev {
+  display: grid; grid-template-columns: 52px 1fr auto; gap: 8px;
+  align-items: baseline; padding: 6px 8px; border-radius: 6px;
+  background: var(--surface-raised); font-size: var(--text-xs);
+  line-height: 1.5;
+}
+[data-surface="control"] .lp-ev__kind {
+  color: var(--text-faint); text-transform: uppercase;
+  letter-spacing: 0.04em; font-size: 10px;
+}
+[data-surface="control"] .lp-ev__body { color: var(--text-muted); }
+[data-surface="control"] .lp-ev__when { color: var(--text-faint); white-space: nowrap; }
+/* A reply is the one thing on this list that means somebody is still
+   talking, so it is the one thing that gets a colour. */
+[data-surface="control"] .lp-ev[data-inbound] { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+[data-surface="control"] .lp-ev[data-inbound] .lp-ev__kind,
+[data-surface="control"] .lp-ev[data-inbound] .lp-ev__body { color: var(--text); }
+[data-surface="control"] .lp-ev[data-queued] { border: 1px dashed var(--border); background: transparent; }
+
+/* ── Edit panel ───────────────────────────────────────────────────────── */
+[data-surface="control"] .lp-edit {
+  display: grid; gap: 12px; margin-top: 8px; padding: 12px;
   border-radius: 8px; background: var(--surface-raised);
   border: 1px solid var(--border);
-  font-size: var(--text-sm); line-height: 1.55; color: var(--text-muted);
 }
-[data-surface="control"] .lp-guide__body p { margin: 0; }
-[data-surface="control"] .lp-guide__what { color: var(--text); font-weight: 600; }
-[data-surface="control"] .lp-guide__watch { color: var(--warn, #f5b83c); }
-[data-surface="control"] .lp-guide__next strong { color: var(--accent-text, var(--accent)); }
-[data-surface="control"] .lp-override__row {
-  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;
+[data-surface="control"] .lp-edit__row { display: grid; gap: 6px; }
+[data-surface="control"] .lp-edit__label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-faint);
 }
-[data-surface="control"] .lp-override__btn {
+[data-surface="control"] .lp-edit__btns { display: flex; flex-wrap: wrap; gap: 6px; }
+[data-surface="control"] .lp-edit__note {
+  margin: 0; font-size: var(--text-xs); color: var(--text-muted);
+}
+[data-surface="control"] .lp-chip {
   min-height: 32px; padding: 0 10px; border-radius: 999px;
   border: 1px solid var(--border); background: transparent;
   color: var(--text-muted); font-size: var(--text-xs); cursor: pointer;
 }
-[data-surface="control"] .lp-override__btn:disabled {
-  opacity: 0.4; cursor: default; border-color: var(--accent); color: var(--accent-text, var(--accent));
+[data-surface="control"] .lp-chip:hover { background: var(--surface); color: var(--text); }
+[data-surface="control"] .lp-chip:disabled {
+  opacity: 0.4; cursor: default;
+  border-color: var(--accent); color: var(--accent-text, var(--accent));
+}
+[data-surface="control"] .lp-switch {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 32px;
+  padding: 0 12px 0 8px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); font-size: var(--text-xs);
+}
+[data-surface="control"] .lp-switch__dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--text-faint); transition: background 120ms ease;
+}
+[data-surface="control"] .lp-switch[aria-checked="true"] { color: var(--text); }
+[data-surface="control"] .lp-switch[aria-checked="true"] .lp-switch__dot { background: var(--accent); }
+
+[data-surface="control"] .lp-closed { margin-top: var(--space-3); }
+[data-surface="control"] .lp-closed__toggle {
+  background: none; border: 0; padding: 4px 0; cursor: pointer;
+  color: var(--text-muted); font-size: var(--text-xs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-surface="control"] .lp-switch__dot { transition: none; }
+}
+
+/* ── Client hub ─────────────────────────────────────────────────────────
+   One screen replacing /clients and /tracker. Board first, because the
+   question it opens on is "who needs me today", not "show me a table". */
+[data-surface="control"] .ch { display: grid; gap: var(--space-2); }
+[data-surface="control"] .ch-controls {
+  display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center;
+  justify-content: space-between;
+}
+[data-surface="control"] .ch-lenses { display: flex; flex-wrap: wrap; gap: 6px; }
+[data-surface="control"] .ch-lens {
+  display: inline-flex; align-items: center; gap: 7px;
+  min-height: 36px; padding: 0 12px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text-muted); font-size: var(--text-sm); cursor: pointer;
+}
+[data-surface="control"] .ch-lens__n {
+  font-size: var(--text-xs); color: var(--text);
+  background: var(--surface-raised); border-radius: 999px; padding: 1px 7px;
+}
+[data-surface="control"] .ch-lens[aria-pressed="true"] {
+  background: var(--accent); border-color: var(--accent); color: var(--accent-ink, #0a0a0a);
+}
+[data-surface="control"] .ch-lens[aria-pressed="true"] .ch-lens__n {
+  background: rgba(0,0,0,0.18); color: inherit;
+}
+[data-surface="control"] .ch-lens[data-tone="danger"][aria-pressed="false"] { border-color: var(--danger); color: var(--danger); }
+[data-surface="control"] .ch-lens[data-tone="warn"][aria-pressed="false"] { border-color: var(--warn, #f5b83c); color: var(--warn, #f5b83c); }
+
+[data-surface="control"] .ch-tools { display: flex; gap: 8px; align-items: center; margin-left: auto; }
+[data-surface="control"] .ch-search {
+  min-height: 36px; min-width: 200px; padding: 0 12px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--bg); color: var(--text); font: inherit;
+}
+[data-surface="control"] .ch-view { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; }
+[data-surface="control"] .ch-view__btn {
+  min-height: 36px; padding: 0 14px; border: 0; background: transparent;
+  color: var(--text-muted); font-size: var(--text-sm); cursor: pointer;
+}
+[data-surface="control"] .ch-view__btn[aria-pressed="true"] { background: var(--surface-raised); color: var(--text); }
+
+[data-surface="control"] .ch-board {
+  display: grid; gap: 10px; margin: 0; padding: 0; list-style: none;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+[data-surface="control"] .ch-card {
+  border: 1px solid var(--border); border-radius: 10px; background: var(--surface);
+  transition: border-color 140ms ease, transform 140ms ease;
+}
+[data-surface="control"] .ch-card:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+[data-surface="control"] .ch-card[data-urgent] { border-inline-start: 3px solid var(--danger); }
+[data-surface="control"] .ch-card__link {
+  display: grid; gap: 7px; padding: var(--space-2); color: inherit; text-decoration: none;
+}
+[data-surface="control"] .ch-card__top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+[data-surface="control"] .ch-card__name { font-weight: 650; }
+[data-surface="control"] .ch-card__tier {
+  flex: none; font-size: var(--text-2xs); text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--text-muted);
+}
+[data-surface="control"] .ch-card__deadline { margin: 0; font-size: var(--text-sm); color: var(--text-muted); }
+[data-surface="control"] .ch-card__deadline[data-urgent] { color: var(--danger); font-weight: 600; }
+[data-surface="control"] .ch-card__foot { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+[data-surface="control"] .ch-card__race { font-size: var(--text-xs); color: var(--text-muted); }
+[data-surface="control"] .ch-card__flag { margin: 0; font-size: var(--text-xs); color: var(--warn, #f5b83c); }
+[data-surface="control"] .ch-pay {
+  font-size: var(--text-xs); padding: 2px 8px; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--text-muted);
+}
+[data-surface="control"] .ch-pay[data-tone="ok"] { border-color: var(--ok, #6fcf5f); color: var(--ok, #6fcf5f); }
+[data-surface="control"] .ch-pay[data-tone="warn"] { border-color: var(--warn, #f5b83c); color: var(--warn, #f5b83c); }
+[data-surface="control"] .ch-pay[data-tone="danger"] { border-color: var(--danger); color: var(--danger); }
+
+[data-surface="control"] .ch-empty { color: var(--text-muted); padding: var(--space-3) 0; }
+[data-surface="control"] .ch-tablewrap { overflow-x: auto; }
+[data-surface="control"] .ch-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+[data-surface="control"] .ch-table th {
+  text-align: left; font-size: var(--text-2xs); text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--text-muted); padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+[data-surface="control"] .ch-table td { padding: 10px; border-bottom: 1px solid var(--border); }
+[data-surface="control"] .ch-table td[data-urgent] { color: var(--danger); font-weight: 600; }
+[data-surface="control"] .ch-table a { color: var(--accent-text, var(--accent)); text-decoration: none; }
+
+/* ── Communications hub ─────────────────────────────────────────────────
+   Everything the business says, in the form it will be read in. The email
+   preview is a real iframe of the real template at phone width; the texts
+   are bubbles, because a message that reads fine in a form field and badly
+   on a phone is the exact failure this screen exists to catch. */
+[data-surface="control"] .hub { display: grid; gap: var(--space-2); }
+
+[data-surface="control"] .hub-tabs {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--border); padding-bottom: 8px;
+}
+[data-surface="control"] .hub-tab {
+  min-height: 36px; padding: 0 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid transparent; background: transparent;
+  color: var(--text-muted); font-size: var(--text-sm); font-weight: 600;
+}
+[data-surface="control"] .hub-tab:hover { color: var(--text); }
+[data-surface="control"] .hub-tab[aria-selected="true"] {
+  background: var(--accent); color: var(--accent-on, #0a0a0a);
+}
+[data-surface="control"] .hub-tab__n {
+  margin-left: 6px; font-size: var(--text-xs); opacity: 0.7;
+}
+
+[data-surface="control"] .hub-search,
+[data-surface="control"] .hub-input,
+[data-surface="control"] .hub-textarea {
+  width: 100%; min-height: 40px; padding: 8px 12px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font: inherit; font-size: var(--text-sm);
+}
+[data-surface="control"] .hub-textarea { min-height: 96px; resize: vertical; }
+[data-surface="control"] .hub-input[aria-invalid="true"],
+[data-surface="control"] .hub-textarea[aria-invalid="true"] { border-color: var(--danger); }
+
+[data-surface="control"] .hub-list {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;
+}
+[data-surface="control"] .hub-row {
+  border: 1px solid var(--border); border-radius: var(--radius-card);
+  background: var(--surface); overflow: hidden;
+}
+[data-surface="control"] .hub-row[data-open] { border-color: var(--accent); }
+[data-surface="control"] .hub-row--sms { display: grid; gap: 6px; padding: 12px; }
+[data-surface="control"] .hub-row__head {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  padding: 12px; background: none; border: 0; cursor: pointer;
+  text-align: left; color: inherit;
+}
+[data-surface="control"] .hub-row__main { display: grid; gap: 2px; min-width: 0; }
+[data-surface="control"] .hub-row__subject {
+  font-weight: 620; color: var(--text); font-size: var(--text-sm);
+}
+[data-surface="control"] .hub-row__meta {
+  margin: 0; font-size: var(--text-xs); color: var(--text-faint);
+}
+[data-surface="control"] .hub-row__cta {
+  margin-left: auto; flex-shrink: 0; font-size: var(--text-xs);
+  color: var(--accent-text, var(--accent));
+}
+
+/* The phone. Not decoration: an email that looks fine at 1200px and falls
+   apart at 390 is one nobody has actually checked. */
+[data-surface="control"] .hub-preview {
+  display: grid; gap: 8px; justify-items: center;
+  padding: 0 12px 16px;
+}
+[data-surface="control"] .hub-phone {
+  width: 100%; max-width: 390px; border-radius: 20px; overflow: hidden;
+  border: 1px solid var(--border); background: #0a0a0a;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
+}
+[data-surface="control"] .hub-phone__frame {
+  display: block; width: 100%; height: 560px; border: 0;
+  background: #0a0a0a; color-scheme: dark;
+}
+[data-surface="control"] .hub-preview__note {
+  margin: 0; font-size: var(--text-xs); color: var(--text-faint);
+  text-align: center; max-width: 44ch;
+}
+
+/* A text message, shown as a text message. */
+[data-surface="control"] .hub-bubble {
+  margin: 0; padding: 10px 14px; border-radius: 16px 16px 16px 4px;
+  background: var(--surface-raised); border: 1px solid var(--border);
+  font-size: var(--text-sm); line-height: 1.5; color: var(--text);
+  max-width: 46ch; white-space: pre-wrap;
+}
+[data-surface="control"] .hub-cost {
+  margin: 0; font-size: var(--text-xs); color: var(--text-faint);
+}
+[data-surface="control"] .hub-cost[data-warn] { color: var(--warn, #f5b83c); }
+
+[data-surface="control"] .hub-mail {
+  border: 1px solid var(--border); border-radius: 8px; padding: 12px;
+  background: var(--surface-raised);
+}
+[data-surface="control"] .hub-mail__subject {
+  margin: 0 0 6px; font-weight: 650; color: var(--text); font-size: var(--text-sm);
+}
+[data-surface="control"] .hub-mail__body {
+  margin: 0; font-size: var(--text-sm); line-height: 1.6;
+  color: var(--text-muted); white-space: pre-wrap;
+}
+
+[data-surface="control"] .hub-empty,
+[data-surface="control"] .hub-lede {
+  margin: 0; font-size: var(--text-sm); color: var(--text-muted);
+  max-width: 60ch; line-height: 1.6;
+}
+
+[data-surface="control"] .hub-custom { display: grid; gap: var(--space-2); }
+[data-surface="control"] .hub-form {
+  display: grid; gap: 12px; padding: 14px; border-radius: var(--radius-card);
+  border: 1px solid var(--border); background: var(--surface);
+}
+[data-surface="control"] .hub-field { display: grid; gap: 6px; }
+[data-surface="control"] .hub-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-faint);
+}
+[data-surface="control"] .hub-choice { display: flex; flex-wrap: wrap; gap: 6px; }
+[data-surface="control"] .hub-chip {
+  min-height: 32px; padding: 0 12px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); font-size: var(--text-xs);
+}
+[data-surface="control"] .hub-chip:hover { background: var(--surface-raised); color: var(--text); }
+[data-surface="control"] .hub-chip[aria-pressed="true"] {
+  border-color: var(--accent); color: var(--accent-text, var(--accent));
+}
+[data-surface="control"] .hub-problem {
+  margin: 0; font-size: var(--text-xs); color: var(--danger);
+}
+[data-surface="control"] .hub-save {
+  min-height: 40px; padding: 0 18px; border-radius: 999px; cursor: pointer;
+  border: 0; background: var(--accent); color: var(--accent-on, #0a0a0a);
+  font-size: var(--text-sm); font-weight: 650;
+}
+[data-surface="control"] .hub-save:active { transform: scale(0.98); }
+
+@media (max-width: 520px) {
+  [data-surface="control"] .hub-phone__frame { height: 460px; }
+}
+
+/* ── The send queue ─────────────────────────────────────────────────────
+   Everything going out on its own, across every lead. The per-lead timeline
+   answers "what happens to this person"; this answers "what is going out
+   tonight, and do I want it to". */
+[data-surface="control"] .lp-queue { margin: 0 0 var(--space-2); }
+[data-surface="control"] .lp-queue__none {
+  margin: 0 0 var(--space-2); font-size: var(--text-xs); color: var(--text-faint);
+}
+[data-surface="control"] .lp-queue__toggle {
+  cursor: pointer; list-style: none; padding: 8px 12px; border-radius: 8px;
+  border: 1px dashed var(--border); background: transparent;
+  color: var(--text-muted); font-size: var(--text-sm);
+}
+[data-surface="control"] .lp-queue__toggle::-webkit-details-marker { display: none; }
+[data-surface="control"] .lp-queue__toggle::before { content: "▸ "; }
+[data-surface="control"] details[open] > .lp-queue__toggle::before { content: "▾ "; }
+[data-surface="control"] .lp-queue__list {
+  list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px;
+}
+[data-surface="control"] .lp-queue__item {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto;
+  gap: 10px; align-items: baseline; padding: 8px 12px; border-radius: 6px;
+  background: var(--surface-raised); font-size: var(--text-xs);
+}
+[data-surface="control"] .lp-queue__who { color: var(--text); font-weight: 620; }
+[data-surface="control"] .lp-queue__what { color: var(--text-muted); }
+[data-surface="control"] .lp-queue__when { color: var(--text-faint); white-space: nowrap; }
+@media (max-width: 520px) {
+  [data-surface="control"] .lp-queue__item { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* ── Signing up ─────────────────────────────────────────────────────────
+   The handover between a lead and a client, made visible. Above the roster
+   rather than inside it: these people have no tier, no plan and no payment,
+   and none of the counts that mean money include them. */
+[data-surface="control"] .ch-pending {
+  display: grid; gap: 8px; padding: 12px; border-radius: var(--radius-card);
+  border: 1px dashed var(--border); background: var(--surface);
+}
+[data-surface="control"] .ch-pending__title {
+  margin: 0; font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--text-faint); font-weight: 600;
+}
+[data-surface="control"] .ch-pending__list {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: 6px;
+}
+@media (min-width: 720px) {
+  [data-surface="control"] .ch-pending__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+[data-surface="control"] .ch-pcard {
+  border-radius: 8px; background: var(--surface-raised);
+  border: 1px solid transparent;
+}
+[data-surface="control"] .ch-pcard[data-stuck] { border-color: var(--warn, #f5b83c); }
+[data-surface="control"] .ch-pcard__link {
+  display: grid; gap: 2px; padding: 10px 12px;
+  text-decoration: none; color: inherit;
+}
+[data-surface="control"] .ch-pcard__link:hover { background: var(--surface); border-radius: 8px; }
+[data-surface="control"] .ch-pcard__name { font-weight: 620; color: var(--text); font-size: var(--text-sm); }
+[data-surface="control"] .ch-pcard__wait,
+[data-surface="control"] .ch-pcard__call { font-size: var(--text-xs); color: var(--text-faint); }
+[data-surface="control"] .ch-pcard__stuck {
+  font-size: var(--text-xs); color: var(--warn, #f5b83c); margin-top: 2px;
 }
