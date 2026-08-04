@@ -1,90 +1,79 @@
-# ACTION-REQUIRED.md
+# ACTION REQUIRED
 
-Updated 3 August 2026, after the results database went live with real data.
+## 1. Upgrade the Supabase compute size — everything is blocked on this
 
-**Nothing is blocking. The engine is built, connected, verified against the real
-database, and holding real HYROX results.**
+**Project:** `fsuaovtszewuimtuluzb` (the results database)
+**Where:** Supabase dashboard → the project → **Settings → Compute and Disk**
+**Change:** Micro → **Small or Medium**
 
-What follows is three optional items and one decision that is yours to time.
+### Why
 
----
+The database is **974 MB on an instance with 224 MB of memory** (Micro, 1 GB RAM).
+Nothing stays cached, so every query reads from disk. Measured directly, with
+nothing else running:
 
-## 1. Decision: when to point the public site at real data
+| Query | Time |
+| --- | --- |
+| Count 223 events | 0.6s |
+| Search athletes by name | **43s** |
+| Count 630,287 results | **110s** |
 
-`NEXT_PUBLIC_DATA_MODE` is still `demo`, deliberately. Flipping it to `live`:
+A healthy Postgres counts millions of rows a second. This manages about 5,700.
 
-- swaps the results section from 76,185 synthetic races to ingested ones
-- hides the "Demo data" pill
-- makes the section indexable
-- turns on the mika:Timing credit on every results view
+It has knock-on effects that look like unrelated bugs:
 
-Right now the database holds three divisions of one real weekend plus the
-season-9 catalogue. That is enough to prove the pipeline, not enough to be a
-results site. **My recommendation: leave it on `demo` until the backfill has
-run for a few days**, then flip it once and watch.
+- **PostgREST is currently down** (Cloudflare 522). Supabase's API layer gave up
+  waiting on queries like those, so `/api/results/*` returns errors even though
+  the database itself answers.
+- **Production builds fail.** They read the database while generating pages, and
+  the reads time out.
+- **Search is unusable.** The trigram index that makes `name ILIKE '%smith%'`
+  fast cannot be rebuilt — every attempt saturates the instance and takes the
+  API down with it.
 
-When you want it:
+This is not a query problem. The query work is done: narrow projections, keyset
+pagination, a precomputed record board, partial indexes, batched writes. A
+110-second count of 630k rows is a machine problem.
 
-```sh
-vercel env add NEXT_PUBLIC_DATA_MODE production   # value: live
-```
+### Cost
 
-It is inlined at build time, so the deploy has to be rebuilt after changing it.
-Tell me and I will do it and verify.
+Small (2 GB) or Medium (4 GB), roughly $15–60/month — inside the £100 authorised.
+Small holds the current working set; Medium leaves headroom as the archive grows.
 
-⚠️ One trap for that day: another terminal added `RESULTS_SOURCE` routing to
-`lib/results/index.ts`, and an explicit `RESULTS_SOURCE` **beats** the mode
-flag. It is unset in production, which is correct. If it ever gets set,
-flipping `NEXT_PUBLIC_DATA_MODE` will silently do nothing.
+### What happens immediately after
 
----
+The restart also brings PostgREST back, which fixes the current API outage. Then:
 
-## 2. Optional: two monitors
-
-Neither blocks anything. Both need an account with your email.
-
-| What | Where | Why |
-|---|---|---|
-| **Heartbeat** | Free account at cron-job.org → create a "cron monitor" expecting a ping every hour → send me the URL | Alerts when a sync *stops running*. Error tracking cannot catch that; it is the failure that goes unnoticed for weeks. |
-| **Sentry DSN** | Your Sentry project settings | Exceptions with context. `@sentry/nextjs` is already installed. |
-
-## 3. Optional: Vercel spend cap
-
-vercel.com → your team → **Settings → Billing → Spend Management**. Two minutes.
-The backstop that stops a bug in a worker becoming a bill. I left it alone
-because it is a billing setting.
-
-## 4. Optional: rotate the database password
-
-You pasted it in chat, so it is in this conversation's history and in my local
-`.env.local` (gitignored — checked). It is not in git and not in Vercel. If you
-would rather rotate it: Supabase → **Settings → Database → Reset database
-password**. Nothing I have built depends on that value; the application uses the
-API key, not the password.
+1. Rebuild the trigram index — search goes from 43s to roughly 200ms
+2. `VACUUM ANALYZE` and re-measure every serving call
+3. Deploy the current code (it is committed and ready)
+4. Verify the journey end to end: search "Sutherland" → open the athlete → see
+   their races
 
 ---
 
-## Done — no action needed
+## 2. Pro station weights (not blocking)
 
-- ✅ **Results database live**: project `fsuaovtszewuimtuluzb`, schema applied,
-  11 tables, RLS on all 11, erasure function, settings seeded.
-- ✅ **Kept separate from the application's Supabase project**, which holds
-  identity, customers, quiz and Stripe. Repointing the shared variables would
-  have broken admin login and the customer list.
-- ✅ **Repository verified against the real database** — all ten checks,
-  including that PostgREST resolves the athlete embed `getRanking` depends on,
-  which no amount of SQL testing would have caught.
-- ✅ **Real HYROX data ingested by the real workers**: the season-9 catalogue
-  (8 events, 146 divisions, dated and timezone-resolved), plus three divisions
-  of a real London weekend — 340 results, 417 athletes, 31 with full splits and
-  climbing as the splits worker runs.
-- ✅ **Every serving method returns real data** through the same contract the
-  frontend reads: rankings, athlete profiles, race breakdowns, search, records,
-  finish-time distributions.
-- ✅ **All environment variables set** in Vercel production:
-  `RESULTS_SUPABASE_URL`, `RESULTS_SUPABASE_SECRET_KEY`, `CRON_SECRET`,
-  `HYROX_SOURCE_ACCESS`, `HYROX_MAX_REQUESTS_PER_MINUTE`.
-- ✅ **Six cron schedules** registered and access-controlled.
-- ✅ **Vercel on Pro** — checked, not assumed. Nothing spent against the £100.
-- ✅ **550 tests green**, plus seven live tests that really contact
-  results.hyrox.com and the real database, skipped by default.
+`spec.mensPro` / `spec.womensPro` in `lib/hyrox-stations.ts` are deliberately
+unset, so the race-spec table on each station guide shows Open only. They are
+real published standards, but the Open figures already in the repo disagree with
+public sources on the sled stations, and a guide that quotes a race weight wrong
+is worse than one that stays quiet. Fill them from the official rules and the
+rows appear by themselves.
+
+---
+
+## State of the data (all ingested, nothing outstanding)
+
+- 223 events, 208 final · ~630,000 results · every one of 2,692 divisions pulled
+- Leaderboards verified against the source — Barcelona 2023's women's board
+  reads Aoife Fay, Victoria Cartmell, Oihane Salcedo González, exactly as HYROX
+  publishes it
+- `NEXT_PUBLIC_DATA_MODE=live` is set in production; `RESULTS_SOURCE` is unset,
+  so nothing outranks it
+- 1,120 tests pass
+
+Known and written up in `docs/results/REPORT.md`: partner identities on team
+divisions are still merged for divisions pulled before that fix, which affects
+some athlete profile pages rather than any leaderboard. The cron corrects them
+as it re-pulls.

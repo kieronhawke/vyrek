@@ -12,6 +12,7 @@ import {
   StatTiles,
 } from "@/components/member/ui";
 import { photoForStation, pickPhoto, HEROES, type StationSlug } from "@/lib/photo-library";
+import Image from "next/image";
 
 /**
  * PROGRESS — spec/11 §4 and §7.
@@ -144,19 +145,23 @@ export function ProgressScreen() {
                         background: "var(--bg)",
                       }}
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      {/*
+                        52px thumbnails. As raw `<img>` these bypassed the
+                        optimiser and shipped seven full-size originals to fill
+                        a column of postage stamps — the one page in the member
+                        area still doing it, and the member area is the part
+                        somebody opens every day on mobile data.
+
+                        `fill` rather than width/height: the parent is already
+                        `position: relative` with a fixed 52px box, and `sizes`
+                        tells the optimiser that is all it ever needs to serve.
+                      */}
+                      <Image
                         src={photo.src}
                         alt=""
-                        width={52}
-                        height={52}
-                        loading="lazy"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          filter: "grayscale(1)",
-                        }}
+                        fill
+                        sizes="52px"
+                        style={{ objectFit: "cover", filter: "grayscale(1)" }}
                       />
                     </div>
                   ) : null}
