@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import type { Metadata, Viewport } from "next";
 import { Oswald, Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -155,6 +156,11 @@ export default function RootLayout({
           <CommandPalette />
           <CookieBanner />
           <PresencePing />
+          {/* Renders nothing until NEXT_PUBLIC_GA_MEASUREMENT_ID is set AND
+              analytics consent is granted. Mounted here so it is present on
+              every route and can report client-side navigations, which gtag
+              does not do by itself in the App Router. */}
+          <GoogleAnalytics />
         </MotionConfigProvider>
         <script
           type="application/ld+json"

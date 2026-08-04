@@ -99,9 +99,54 @@ export default async function LocalisedHyroxTrainingPage({
     })),
   };
 
+  /* The English page emits Service and BreadcrumbList alongside the FAQ; the
+     localised one shipped with only the FAQ, so the German, French and Spanish
+     pages described themselves to a crawler less completely than the version
+     they are meant to outrank in that market. inLanguage is set on each, which
+     the English pair does not need and these do. */
+  const base = `${siteUrl()}/${locale.code}/hyrox-training`;
+  const serviceLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    inLanguage: locale.hreflang,
+    name: copy.title(city.name),
+    serviceType: "Hyrox coaching",
+    url: `${base}/${location}`,
+    areaServed: {
+      "@type": "City",
+      name: city.name,
+      containedInPlace: { "@type": "Country", name: city.country },
+    },
+    provider: {
+      "@type": "Organization",
+      name: "Suth Performance",
+      url: siteUrl(),
+      founder: { "@type": "Person", name: "Ben Sutherland" },
+    },
+    availableChannel: {
+      "@type": "ServiceChannel",
+      serviceUrl: `${siteUrl()}/quiz`,
+      // The funnel past this page is English; saying otherwise in markup would
+      // be a claim the site does not honour.
+      availableLanguage: "en",
+    },
+  };
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    inLanguage: locale.hreflang,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl() },
+      { "@type": "ListItem", position: 2, name: copy.h1(city.name), item: `${base}/${location}` },
+    ],
+  };
+
   return (
     <>
       <JsonLd data={faqLd} />
+      <JsonLd data={serviceLd} />
+      <JsonLd data={breadcrumbLd} />
       <LocalisedGeoPage
         copy={copy}
         locale={locale}

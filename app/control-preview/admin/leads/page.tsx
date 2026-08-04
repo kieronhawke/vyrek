@@ -3,6 +3,7 @@ import { DataTable, type Column } from "@/components/control/data-table";
 import { Num } from "@/components/control/num";
 import { ModuleNote, StatStrip } from "@/components/control/stat-strip";
 import { LEAD_ROWS, type LeadRow } from "@/lib/control/admin-fixtures";
+import { LeadPipeline } from "@/components/control/lead-pipeline";
 
 const BASE = "/control-preview/admin";
 
@@ -64,6 +65,21 @@ export default function AdminLeads() {
           whether they answer.
         </p>
       ) : null}
+      {/* The pipeline is the working surface: one card per lead, one
+          question each. The table below it stays, because sorting and CSV
+          are still the right tool when you want the whole list at once. */}
+      <LeadPipeline
+        leads={LEAD_ROWS.map((r) => ({
+          id: r.id,
+          name: r.name,
+          email: "kieronhawke@gmail.com",
+          phone: "07398790378",
+          segment: r.segment,
+          source: r.source,
+          ageHours: r.ageHours,
+        }))}
+      />
+
       <DataTable rows={LEAD_ROWS} columns={COLUMNS} caption="leads" />
       <ModuleNote>
         Kanban view, lead detail with the full timeline, and the automatic SMS
