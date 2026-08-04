@@ -128,11 +128,35 @@ function CoachTile({
           />
         }
       >
+        {/*
+          * THREE BRANCHES, AND THE MIDDLE ONE WAS MISSING.
+          *
+          * This checked for a video and, failing that, dropped straight to the
+          * giant initials. `coach.image` was never read at all — so all three
+          * tiles on the home page (Ben Sutherland, The method, The standard)
+          * carried a real photograph in the data and rendered two big letters
+          * instead. The images were on disk, correctly pathed, and simply
+          * never asked for.
+          *
+          * The initials stay as the last resort, which is what they were meant
+          * to be: a tile with neither footage nor a photograph still needs to
+          * look deliberate.
+          */}
         {coach.video ? (
           <LoopingVideo
             src={coach.video.src}
             poster={coach.video.poster}
             className="absolute inset-0"
+          />
+        ) : coach.image ? (
+          <Image
+            src={coach.image}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            /* Scaled slightly on hover, matching the video tiles, so the three
+               cards behave as one set rather than as two different components. */
+            className="pointer-events-none object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           />
         ) : (
           <span
@@ -146,6 +170,23 @@ function CoachTile({
         <div
           aria-hidden
           className="absolute inset-0 bg-gradient-to-t from-suth-base/95 via-suth-base/45 to-suth-base/20"
+        />
+        {/*
+          * A second, short scrim under the role label at the top.
+          *
+          * The main wash is built for the name at the foot of the card and
+          * fades to 20% by the top, which was fine over the giant initials
+          * these tiles used to show. Against a real photograph it is not: the
+          * label sits over bright grass on "The method" and over sky on "The
+          * standard", and reads as grey-on-grey.
+          *
+          * Deepening the main gradient instead would have worked and would
+          * have flattened the whole photograph to protect one line of type —
+          * the same wrong lever as dimming the image on the report cover.
+          */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-suth-base/85 via-suth-base/40 to-transparent"
         />
         <div
           aria-hidden

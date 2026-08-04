@@ -731,12 +731,21 @@ describe("athlete identity does not multiply (§13)", () => {
 
     const ids = [...h.repo.athletes.values()].map((a) => a.sourceAthleteId).sort();
     // Position-qualified, so the two people on one entry are distinguishable
-    // and neither is confused with the entry itself.
+    // and neither is confused with the entry itself — and **division**-qualified,
+    // because an entry id is not unique across the catalogue.
+    //
+    // ⚠️ The entry id alone was not enough. `LR3MS4JI55C948#p0` was parsed from
+    // boards at Incheon, Taipei, Shanghai, Osaka, Wuhan, Hong Kong and Beijing,
+    // so one synthetic athlete absorbed a different person from each and ended
+    // up listed in all fourteen divisions of a single event. `sourceResultId`
+    // carries the division and is the only identifier here guaranteed unique.
     expect(ids).toEqual([
-      "LRAA0000301#p0", "LRAA0000301#p1",
-      "LRAA0000302#p0", "LRAA0000302#p1",
+      "H_LR3MS4JI1738:LRAA0000301#p0", "H_LR3MS4JI1738:LRAA0000301#p1",
+      "H_LR3MS4JI1738:LRAA0000302#p0", "H_LR3MS4JI1738:LRAA0000302#p1",
     ]);
     expect(new Set(ids).size).toBe(4);
+    // Every id names its own division, so two events cannot share a partner.
+    for (const id of ids) expect(id).toContain(":");
   });
 
   it("re-syncing an individual board creates no new athletes either", async () => {
@@ -894,5 +903,78 @@ describe("station distributions (§6)", () => {
     expect(finish?.sampleCount).toBe(8);
     expect(finish?.medianMs).toBeGreaterThan(0);
     expect(finish?.percentiles.p50).toBeGreaterThan(0);
+  });
+});
+
+describe("a row that changes hands is a changed row", () => {
+  it("rewrites the athlete when a re-pull resolves the row differently", async () => {
+    // ⚠️ `materiallyDifferent` compared ranks, times, status and splits, and not
+    // who the row belonged to. So a re-pull that resolved a row to a different
+    // athlete saw "unchanged" and wrote nothing — which made the partner
+    // identity fix unshippable. 1,486 divisions were queued to re-pull under the
+    // corrected derivation and the first round reported `+0 rows`: correct by
+    // its own definition, having recomputed every id and thrown them away.
+    const h = await makeHarness();
+    const division = await h.repo.upsertDivision({
+      eventId: h.event.id, divisionKey: "open-men", displayName: "Open Men",
+      entrantCount: 0, publishedEntrantCount: null, sourceDivisionId: "H_X#men",
+    });
+    const [before] = await h.repo.upsertAthletes([{
+      slug: "before", name: "Before", nationality: null, gender: null,
+      sourceAthleteId: "A1", claimedByUserId: null, isDemo: false,
+      isAnonymised: false, identityConfidence: 1, needsIdentityReview: false,
+    }]);
+    const [after] = await h.repo.upsertAthletes([{
+      slug: "after", name: "After", nationality: null, gender: null,
+      sourceAthleteId: "A2", claimedByUserId: null, isDemo: false,
+      isAnonymised: false, identityConfidence: 1, needsIdentityReview: false,
+    }]);
+
+    const row = {
+      eventId: h.event.id, divisionId: division.id, sourceResultId: "H_X#men:R1",
+      rankOverall: 1, rankAgeGroup: 1, ageGroup: "30-34", sex: "men",
+      finishTimeMs: 3_600_000, roxzoneTimeMs: null, status: "finished" as const,
+      wave: null, bib: null, splits: { runs: [], stations: [] },
+      partnerAthleteIds: [], isDemo: false,
+    };
+
+    await h.repo.upsertResults([{ ...row, athleteId: before.id }]);
+    // Same result id, same time, different person.
+    const counts = await h.repo.upsertResults([{ ...row, athleteId: after.id }]);
+
+    expect(counts.updated).toBe(1);
+    expect(counts.unchanged).toBe(0);
+    const stored = await h.repo.getResultBySourceId("H_X#men:R1");
+    expect(stored?.athleteId).toBe(after.id);
+  });
+
+  it("treats a changed partner list as a change too", async () => {
+    const h = await makeHarness();
+    const division = await h.repo.upsertDivision({
+      eventId: h.event.id, divisionKey: "doubles-men", displayName: "Doubles Men",
+      entrantCount: 0, publishedEntrantCount: null, sourceDivisionId: "HD_X#men",
+    });
+    const made = await h.repo.upsertAthletes(
+      ["a", "b", "c"].map((n) => ({
+        slug: n, name: n.toUpperCase(), nationality: null, gender: null,
+        sourceAthleteId: `S${n}`, claimedByUserId: null, isDemo: false,
+        isAnonymised: false, identityConfidence: 1, needsIdentityReview: false,
+      })),
+    );
+
+    const row = {
+      eventId: h.event.id, divisionId: division.id, sourceResultId: "HD_X#men:R1",
+      athleteId: made[0].id, rankOverall: 1, rankAgeGroup: 1, ageGroup: "30-34",
+      sex: "men", finishTimeMs: 3_600_000, roxzoneTimeMs: null,
+      status: "finished" as const, wave: null, bib: null,
+      splits: { runs: [], stations: [] }, isDemo: false,
+    };
+
+    await h.repo.upsertResults([{ ...row, partnerAthleteIds: [made[1].id] }]);
+    const counts = await h.repo.upsertResults([{ ...row, partnerAthleteIds: [made[2].id] }]);
+
+    expect(counts.updated).toBe(1);
+    const stored = await h.repo.getResultBySourceId("HD_X#men:R1");
+    expect(stored?.partnerAthleteIds).toEqual([made[2].id]);
   });
 });

@@ -8,6 +8,7 @@ import { SplitHeading } from "@/components/shared/split-heading";
 import { LoopingVideo } from "@/components/shared/looping-video";
 import { CLUB } from "@/lib/pricing";
 import { BEN } from "@/lib/ben";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * Suth Club: the self-serve tier, and the destination for everyone the
@@ -33,6 +34,9 @@ export const metadata: Metadata = {
     "A personalised 12-week programme that rebuilds around what you actually train. Seven days free, no card needed, cancel any time.",
   alternates: { canonical: "/club" },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "Suth Club · Suth Performance",
     description:
       "A personalised 12-week programme that rebuilds around what you actually train. Seven days free, no card needed.",

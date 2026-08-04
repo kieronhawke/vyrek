@@ -1,3 +1,4 @@
+import { isFictionalPerson } from "./fictional-people";
 import { describe, expect, it } from "vitest";
 import {
   listCoachClients,
@@ -115,8 +116,17 @@ describe("the seeded set", () => {
   });
 
   it("never presents a fixture as a real person", () => {
-    // HARD-RULES §1. These names must stay obviously placeholder.
-    for (const c of listCoachClients()) expect(c.name).toMatch(/^Sample /);
-    for (const l of listLeads()) expect(l.name).toMatch(/^Sample /);
+    /* HARD-RULES §1. These used to have to start with "Sample ". They are
+       realistic names now, so the guard moved rather than went: every one
+       must come from lib/control/fictional-people.ts, a file whose header
+       states that everybody in it is invented. Dropping a real client's
+       name into a fixture fails here unless somebody also adds them to that
+       roster, which is much harder to do without noticing. */
+    for (const c of listCoachClients()) {
+      expect(isFictionalPerson(c.name), `${c.name} is not on the fictional roster`).toBe(true);
+    }
+    for (const l of listLeads()) {
+      expect(isFictionalPerson(l.name), `${l.name} is not on the fictional roster`).toBe(true);
+    }
   });
 });

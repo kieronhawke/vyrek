@@ -8,6 +8,7 @@ import { CtaButton } from "@/components/shared/cta-button";
 import { FAQS } from "@/lib/faqs";
 import { faqPageJsonLd, JsonLd } from "@/lib/blog/jsonld";
 import { siteUrl } from "@/lib/blog/urls";
+import Link from "next/link";
 
 // Pricing is deliberately not published (Kieron, 2026-07-29). Every
 // option routes to a free consultation with Ben; packages are agreed on
@@ -161,12 +162,12 @@ export default function PricingPage() {
             <p className="mt-4 text-sm text-suth-text-tertiary">
               Three minutes, then a free consultation with Ben. No card, no
               commitment. Or{" "}
-              <a
+              <Link
                 href="/free-consultation"
                 className="text-suth-accent underline decoration-suth-accent/40 underline-offset-4 hover:decoration-suth-accent"
               >
                 book the consultation directly
-              </a>
+              </Link>
               .
             </p>
           </section>

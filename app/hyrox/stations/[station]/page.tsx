@@ -25,8 +25,41 @@ import { clampDescription } from "@/lib/seo/description";
 import { getResultsSource } from "@/lib/results";
 import type { StationId } from "@/lib/results/model";
 import { StationHistogram } from "@/components/results/tools/station-histogram";
+import { StationRail, type RailSection } from "@/components/hyrox/station-rail";
 
 /** Guide slug to the results engine's station id. Differs for two plurals. */
+/**
+ * The rail's contents list.
+ *
+ * ⚠️ TWO SECTIONS ARE CONDITIONAL, and a hard-coded list gets this wrong.
+ *
+ * "The field" renders only when the results engine has stored splits for this
+ * station, and "Go deeper" only when there is published writing about it. A
+ * static list of all ten advertised both on every page — so on a station with
+ * no stored splits, two entries in the contents pointed at nothing. Tapping
+ * them did exactly nothing, which is the worst kind of broken link because it
+ * looks like the page is unresponsive rather than like the link is wrong.
+ *
+ * It was written as a static list first, and the e2e test that walks every
+ * contents link and asserts its target exists is what caught it. That test is
+ * the reason this signature takes the same booleans the JSX branches on:
+ * anything that can hide a section has to be able to hide its rail entry.
+ */
+function railSections(opts: { hasField: boolean; hasReading: boolean }): RailSection[] {
+  return [
+    { id: "goal-splits", label: "Goal splits" },
+    { id: "race-spec", label: "Race spec" },
+    ...(opts.hasField ? [{ id: "the-field", label: "The field" }] : []),
+    { id: "coaching-cues", label: "Coaching cues" },
+    { id: "common-faults", label: "Common faults" },
+    { id: "training-drills", label: "Training drills" },
+    { id: "faq", label: "FAQ" },
+    ...(opts.hasReading ? [{ id: "go-deeper", label: "Go deeper" }] : []),
+    { id: "up-next", label: "Up next" },
+    { id: "train-it", label: "Train it properly" },
+  ];
+}
+
 const STATION_ID_BY_GUIDE_SLUG: Record<string, StationId | undefined> = {
   "ski-erg": "ski-erg",
   "sled-push": "sled-push",
@@ -122,8 +155,21 @@ export async function generateMetadata({
       siteName: "Suth Performance",
       type: "article",
       locale: "en_GB",
+      // The station's own photograph where there is one, so a shared guide
+      // shows the movement it is about; the general race image otherwise.
+      images: [{
+        url: STATION_IMAGES[s.slug]?.src ?? "/media/images/track/og-default.jpg",
+        width: 1200,
+        height: 630,
+        alt: `HYROX ${s.name}`,
+      }],
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [STATION_IMAGES[s.slug]?.src ?? "/media/images/track/og-default.jpg"],
+    },
     robots: { index: true, follow: true },
   };
 }
@@ -247,7 +293,7 @@ export default async function StationPage({
             <span className="text-suth-text">{s.name}</span>
           </nav>
 
-          <div className="mx-auto max-w-3xl">
+          <div className="max-w-3xl">
             <Eyebrow>Station {String(s.order).padStart(2, "0")} · {s.spec.distance ?? s.spec.reps}</Eyebrow>
             <SplitHeading
               as="h1"
@@ -292,8 +338,29 @@ export default async function StationPage({
             ) : null}
           </div>
 
+          {/*
+            * DESKTOP LAYOUT.
+            *
+            * Everything below the hero was ten stacked `max-w-3xl` blocks, so a
+            * 1440px screen showed a 768px ribbon with a third of the page empty
+            * on each side. The reading column stays about the same width — a
+            * longer measure is harder to read, not easier — and the recovered
+            * space becomes a sticky reference rail instead.
+            *
+            * `minmax(0, 1fr)` rather than `1fr`: grid items default to
+            * `min-width: auto`, and the histogram and tables inside would
+            * otherwise refuse to shrink and push the rail off the page.
+            */}
+          <div className="mt-4 lg:grid lg:grid-cols-[minmax(0,1fr)_260px] lg:items-start lg:gap-14 xl:grid-cols-[minmax(0,1fr)_300px]">
+            <div className="min-w-0">
+
           {/* Goal splits */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
+          <section
+            id="goal-splits"
+            /* `scroll-mt` keeps the heading clear of the fixed nav when the
+               rail jump-links land here — without it the target sits under
+               the header and looks like the link went to the wrong place. */
+            className="mt-16 scroll-mt-28 border-t border-suth-border-subtle pt-10">
             <Eyebrow>Goal splits</Eyebrow>
             <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               What good looks like.
@@ -325,7 +392,12 @@ export default async function StationPage({
 
           {/* Race spec, as a table rather than prose: it is reference material,
               and people arrive at these pages to look one number up. */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
+          <section
+            id="race-spec"
+            /* `scroll-mt` keeps the heading clear of the fixed nav when the
+               rail jump-links land here — without it the target sits under
+               the header and looks like the link went to the wrong place. */
+            className="mt-16 scroll-mt-28 border-t border-suth-border-subtle pt-10">
             <Eyebrow>Race spec</Eyebrow>
             <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               What you actually face.
@@ -378,7 +450,12 @@ export default async function StationPage({
           {/* The distribution behind the goal splits above. Renders only when
               there are splits stored — an empty axis reads as breakage. */}
           {withData.length > 0 ? (
-            <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
+            <section
+            id="the-field"
+            /* `scroll-mt` keeps the heading clear of the fixed nav when the
+               rail jump-links land here — without it the target sits under
+               the header and looks like the link went to the wrong place. */
+            className="mt-16 scroll-mt-28 border-t border-suth-border-subtle pt-10">
               <Eyebrow>The field</Eyebrow>
               <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
                 How long it takes everyone else.
@@ -413,7 +490,12 @@ export default async function StationPage({
           ) : null}
 
           {/* Cues */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
+          <section
+            id="coaching-cues"
+            /* `scroll-mt` keeps the heading clear of the fixed nav when the
+               rail jump-links land here — without it the target sits under
+               the header and looks like the link went to the wrong place. */
+            className="mt-16 scroll-mt-28 border-t border-suth-border-subtle pt-10">
             <Eyebrow>Coaching cues</Eyebrow>
             <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               What to think about during the {s.name.toLowerCase()}.
@@ -436,7 +518,12 @@ export default async function StationPage({
           </section>
 
           {/* Faults */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
+          <section
+            id="common-faults"
+            /* `scroll-mt` keeps the heading clear of the fixed nav when the
+               rail jump-links land here — without it the target sits under
+               the header and looks like the link went to the wrong place. */
+            className="mt-16 scroll-mt-28 border-t border-suth-border-subtle pt-10">
             <Eyebrow>Common faults</Eyebrow>
             <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               What costs time.
@@ -452,7 +539,12 @@ export default async function StationPage({
           </section>
 
           {/* Drills */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
+          <section
+            id="training-drills"
+            /* `scroll-mt` keeps the heading clear of the fixed nav when the
+               rail jump-links land here — without it the target sits under
+               the header and looks like the link went to the wrong place. */
+            className="mt-16 scroll-mt-28 border-t border-suth-border-subtle pt-10">
             <Eyebrow>Training drills</Eyebrow>
             <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               What to train this week.
@@ -475,7 +567,12 @@ export default async function StationPage({
           </section>
 
           {/* FAQ */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
+          <section
+            id="faq"
+            /* `scroll-mt` keeps the heading clear of the fixed nav when the
+               rail jump-links land here — without it the target sits under
+               the header and looks like the link went to the wrong place. */
+            className="mt-16 scroll-mt-28 border-t border-suth-border-subtle pt-10">
             <Eyebrow>FAQ</Eyebrow>
             <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
               {s.name} questions.
@@ -504,7 +601,12 @@ export default async function StationPage({
               STATION_READING that is not live is dropped above, so this
               section disappears entirely rather than rendering a dead row. */}
           {reading.length > 0 && (
-            <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
+            <section
+            id="go-deeper"
+            /* `scroll-mt` keeps the heading clear of the fixed nav when the
+               rail jump-links land here — without it the target sits under
+               the header and looks like the link went to the wrong place. */
+            className="mt-16 scroll-mt-28 border-t border-suth-border-subtle pt-10">
               <Eyebrow>Go deeper</Eyebrow>
               <h2 className="mt-3 text-2xl font-black tracking-[-0.04em] text-suth-text md:text-3xl">
                 More on the {s.name.toLowerCase()}
@@ -532,7 +634,12 @@ export default async function StationPage({
           )}
 
           {/* Next station */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
+          <section
+            id="up-next"
+            /* `scroll-mt` keeps the heading clear of the fixed nav when the
+               rail jump-links land here — without it the target sits under
+               the header and looks like the link went to the wrong place. */
+            className="mt-16 scroll-mt-28 border-t border-suth-border-subtle pt-10">
             <Eyebrow>Up next</Eyebrow>
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {(() => {
@@ -576,7 +683,12 @@ export default async function StationPage({
           </section>
 
           {/* CTA */}
-          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10 text-center">
+          <section
+            id="train-it"
+            /* `scroll-mt` keeps the heading clear of the fixed nav when the
+               rail jump-links land here — without it the target sits under
+               the header and looks like the link went to the wrong place. */
+            className="mt-16 scroll-mt-28 border-t border-suth-border-subtle pt-10 text-center">
             <Eyebrow>Train it properly</Eyebrow>
             <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
               Build the {s.name.toLowerCase()} into your plan.
@@ -591,6 +703,16 @@ export default async function StationPage({
               </CtaButton>
             </div>
           </section>
+            </div>
+
+            <StationRail
+              station={s}
+              sections={railSections({
+                hasField: withData.length > 0,
+                hasReading: reading.length > 0,
+              })}
+            />
+          </div>
         </Container>
       </main>
       <MarketingFooter />

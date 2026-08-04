@@ -24,11 +24,18 @@
  */
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import path from "node:path";
+import os from "node:os";
 
 const ROOT = process.cwd();
 const CITIES = path.join(ROOT, "data", "locations", "intl-cities.json");
 const ENRICH_DIR = path.join(ROOT, "data", "locations", "enrichment-country");
 const ENDPOINT = "https://overpass-api.de/api/interpreter";
+const RESUME = path.join(os.tmpdir(), "suth-gyms-country-resume.json");
+/* A city this size coming back empty is a fetch failure, not sparse coverage.
+   Montreal and Calgary both did on the 780-city run and the script still
+   reported "780/780 cities" — two of Canada's largest markets would have
+   shipped as blank noindex pages behind a success message. */
+const SIGNIFICANT_POP_K = 100;
 const TODAY = new Date().toISOString().slice(0, 10);
 const SOURCE = "https://www.openstreetmap.org/copyright (via Overpass API)";
 
@@ -74,7 +81,17 @@ console.log(
 mkdirSync(ENRICH_DIR, { recursive: true });
 
 const metres = Math.round(RADIUS_KM * 1000);
-const allSites = new Map(); // city slug -> sites[]
+let allSites = new Map(); // city slug -> sites[]
+if (!process.argv.includes("--fresh") && existsSync(RESUME)) {
+  try {
+    const prior = JSON.parse(readFileSync(RESUME, "utf8"));
+    allSites = new Map(prior.sites);
+    console.log(`Resuming: ${allSites.size} cities already fetched (${prior.at}).`);
+    console.log("Pass --fresh to ignore and refetch everything.\n");
+  } catch {
+    /* A corrupt resume file is not worth failing over; start clean. */
+  }
+}
 
 /* Overpass answers a big multi-city query with a 504 often enough that a
    single pass leaves a third of the cities blank. A failed batch is split in
@@ -158,6 +175,14 @@ while (queue.length) {
     });
   }
 
+  /* Persist after every batch. The 780-city run took an hour and wrote
+     nothing until the last one completed, so a crash at batch 97 of 98 would
+     have thrown away the lot. This file is the resume point, not the output. */
+  writeFileSync(
+    RESUME,
+    JSON.stringify({ at: new Date().toISOString(), sites: [...allSites] }),
+  );
+
   await sleep(PAUSE_MS);
 }
 
@@ -222,6 +247,20 @@ console.log(
   `chains (${CHAIN_MIN_SITES}+ sites) : ${[...brandCount.values()].filter((n) => n >= CHAIN_MIN_SITES).length}`,
 );
 if (none.length) console.log(`no gym data       : ${none.join(", ")}`);
+
+const bigAndEmpty = cities.filter(
+  (c) => none.includes(c.slug) && (c.populationK ?? 0) >= SIGNIFICANT_POP_K,
+);
+if (bigAndEmpty.length) {
+  console.error(
+    `\nFAILED: ${bigAndEmpty.length} city/cities above ${SIGNIFICANT_POP_K}k came back with no gyms:\n  ` +
+      bigAndEmpty.map((c) => `${c.name} (${c.populationK}k)`).join("\n  ") +
+      `\n\nA city that size has gyms. This is Overpass refusing, not sparse coverage,\n` +
+      `and shipping it would put a blank noindex page on a real market.\n` +
+      `Re-run: node scripts/seed-gyms-country.mjs --batch 1 --only=${bigAndEmpty.map((c) => c.slug).join(",")}\n`,
+  );
+  process.exit(1);
+}
 if (failed.length) {
   console.log(
     `\n${failed.length} cities Overpass would not answer even alone: ${failed.join(", ")}`,

@@ -8,6 +8,7 @@ import { MicroLabel } from "@/components/results/ui/primitives";
 import { CoachingCta } from "@/components/results/coaching-cta";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * `/tools/good-hyrox-time` — the percentile tool with an editorial wrapper.
@@ -26,7 +27,10 @@ export const metadata: Metadata = {
     "A good HYROX time depends entirely on your division. Enter yours and see the exact "
     + "percentile it places you in, against real finish distributions.",
   alternates: { canonical: "/tools/good-hyrox-time" },
-  openGraph: { url: `${siteUrl()}/tools/good-hyrox-time`, type: "article" },
+  openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(), url: `${siteUrl()}/tools/good-hyrox-time`, type: "article" },
 };
 
 export default async function GoodTimePage({

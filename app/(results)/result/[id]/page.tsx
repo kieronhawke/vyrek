@@ -175,7 +175,9 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
           division={division}
         />
         {/* The full report is the headline action on this page, not a
-            footnote — it is the thing competitors charge $24.99 for. */}
+            footnote. It is the single most valuable thing here, and it is
+            free — stated plainly, without reference to what anyone else
+            charges. */}
         <Link
           href={`/report/${result.id}`}
           data-inline-tap

@@ -1,5 +1,6 @@
 "use client";
 
+import { WORLD_PATHS } from "@/lib/control/world-paths";
 import { useMemo, useState } from "react";
 import { useCollection } from "@/lib/control/store";
 import {
@@ -235,8 +236,7 @@ export function Activity({ today, now }: { today: string; now: string }) {
           </ul>
         </div>
         <p className="ac-hint">
-          Pins are plotted by latitude and longitude on a graticule — a
-          coordinate plot rather than a cartographic map. Tap a pin or a country
+          Pins are plotted by latitude and longitude. Tap a pin or a country
           to filter the table below.
         </p>
       </section>
@@ -417,12 +417,17 @@ function Stat({
 }
 
 /**
- * A coordinate plot, honestly.
+ * A world map.
  *
- * Equirectangular latitude and longitude on a graticule, with a pin per city
- * sized by how many sessions came from it. Not country outlines: a hand-drawn
- * world silhouette at this size would be a worse lie than an honest grid, and
- * the question being asked is "where, roughly" — which a graticule answers.
+ * Equirectangular latitude and longitude, with a pin per city sized by how
+ * many sessions came from it.
+ *
+ * This was a bare graticule, and the reasoning for that was sound: "a
+ * hand-drawn world silhouette at this size would be a worse lie than an
+ * honest grid". The objection was to drawing coastlines by eye, not to
+ * having them. It now renders Natural Earth 1:110m outlines from
+ * lib/control/world-paths.ts, which are surveyed rather than sketched, so
+ * a pin at 51°N reads as Britain instead of as a dot in empty space.
  *
  * Named GeoPlot rather than Map because a component called `Map` shadows the
  * global `Map` constructor inside its own body, and `new Map()` then resolves
@@ -460,7 +465,15 @@ function GeoPlot({
   return (
     <div className="ac-map">
       <svg viewBox="0 0 360 180" className="ac-map__svg" role="img" aria-label="Sessions by location">
-        {/* Graticule every 30°, so a pin can be placed by eye. */}
+        {/* Land first, so the pins sit on top of it. This was a bare grid
+            with dots floating on it, which told you a session came from
+            somewhere at 51°N but not that the somewhere was Britain. */}
+        <g className="ac-map__land">
+          {WORLD_PATHS.map((d, i) => (
+            <path key={i} d={d} />
+          ))}
+        </g>
+        {/* Graticule every 30°, over the land but under the pins. */}
         {[30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((x) => (
           <line key={`v${x}`} x1={x} y1={0} x2={x} y2={180} className="ac-map__grid" />
         ))}

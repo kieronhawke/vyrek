@@ -454,7 +454,7 @@ function Editor({
           <input
             value={value.client}
             onChange={(e) => set("client", e.target.value)}
-            placeholder="Sample A"
+            placeholder="Amelia Fraser"
             className="dc-input"
           />
         </label>

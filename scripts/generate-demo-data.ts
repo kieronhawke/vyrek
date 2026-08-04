@@ -263,6 +263,7 @@ function main() {
       const rows: {
         athlete: PoolAthlete; ageGroup: AgeGroup; finish: number;
         split: ReturnType<typeof splitRace>; dnf: boolean;
+        penaltySeconds: number; dsq: boolean;
       }[] = [];
 
       for (let i = 0; i < entrants; i++) {
@@ -311,7 +312,30 @@ function main() {
         const raw = skewedNormal(rng, target, profile.sdSeconds * 0.12, profile.skew);
         const finish = Math.max(profile.floorSeconds * uniform(rng, 1.0, 1.035), raw);
         const dnf = hasTimes && rng() < profile.dnfRate;
-        rows.push({ athlete, ageGroup, finish: Math.round(finish), split: splitRace(rng, profile, Math.round(finish)), dnf });
+
+        /*
+         * Penalties and disqualifications, so the demo dataset exercises the
+         * paths a real feed produces. Without them the only outcome ever seen
+         * in development is a clean finish or a DNF, and the DSQ and penalty
+         * rendering could regress indefinitely without anybody noticing.
+         *
+         * Magnitudes are the real ones: HYROX penalties are served as time,
+         * typically a minute for a no-repped station. Roughly one entry in
+         * twenty-five picks one up, and DSQ is rarer still.
+         */
+        const penaltySeconds = hasTimes && !dnf && rng() < 0.04
+          ? (rng() < 0.75 ? 60 : 120)
+          : 0;
+        const dsq = hasTimes && !dnf && rng() < 0.004;
+
+        rows.push({
+          athlete, ageGroup,
+          // The published finish already includes the penalty, which is why
+          // an athlete's splits can add up to less than their total.
+          finish: Math.round(finish) + penaltySeconds,
+          split: splitRace(rng, profile, Math.round(finish)),
+          dnf, penaltySeconds, dsq,
+        });
       }
 
       if (!hasTimes) {
@@ -334,7 +358,11 @@ function main() {
         continue;
       }
 
-      const finishers = rows.filter((r) => !r.dnf).sort((a, b) => a.split.finishSeconds - b.split.finishSeconds);
+      // DSQ entries are emitted separately below: they keep their splits but
+      // must not take a finishing position, or everyone behind them is ranked
+      // against a result that does not stand.
+      const finishers = rows.filter((r) => !r.dnf && !r.dsq)
+        .sort((a, b) => a.split.finishSeconds - b.split.finishSeconds);
       const agCounters = new Map<string, number>();
       const divisionResults = finishers.map((r, i) => {
         const agRank = (agCounters.get(r.ageGroup) ?? 0) + 1;
@@ -355,6 +383,9 @@ function main() {
           stations: r.split.stations,
           roxzoneSeconds: r.split.roxzoneSeconds,
           status: "finished" as const,
+          // Published finishes already include any penalty; carried separately
+          // so the report can explain why the splits do not sum to the total.
+          ...(r.penaltySeconds > 0 ? { penaltySeconds: r.penaltySeconds } : {}),
           ...(isDoubles(profile.code) || isRelay(profile.code)
             ? { partnerNames: [makeName(rng, profile.gender === "women" ? "women" : "men", r.athlete.countryIso)] }
             : {}),
@@ -382,6 +413,22 @@ function main() {
         });
         return row;
       });
+
+      // Disqualified entries keep their splits and their time — the race
+      // happened — but the result does not stand, and the report says so.
+      for (const r of rows.filter((x) => x.dsq)) {
+        divisionResults.push({
+          id: `${slug}-${profile.code}-dsq-${r.athlete.slug}`,
+          eventSlug: slug, division: profile.code,
+          athleteSlug: r.athlete.slug, athleteName: r.athlete.name,
+          countryIso: r.athlete.countryIso, ageGroup: r.ageGroup,
+          rank: 0, ageGroupRank: 0, finishSeconds: r.split.finishSeconds,
+          runs: r.split.runs, stations: r.split.stations,
+          roxzoneSeconds: r.split.roxzoneSeconds,
+          status: "dsq",
+          penaltySeconds: r.penaltySeconds || undefined,
+        } as never);
+      }
 
       for (const r of rows.filter((x) => x.dnf)) {
         divisionResults.push({

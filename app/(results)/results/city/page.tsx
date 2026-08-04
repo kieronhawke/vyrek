@@ -9,6 +9,7 @@ import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { FaqSection } from "@/components/results/ui/faq-section";
 import { MicroLabel, Nationality, EmptyState } from "@/components/results/ui/primitives";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * `/results/city` — the index of every city HYROX has raced in.
@@ -31,7 +32,10 @@ export const metadata: Metadata = {
     "Every city HYROX has raced in, with full results, finish times and "
     + "division rankings. Browse by country or jump straight to your race.",
   alternates: { canonical: "/results/city" },
-  openGraph: { url: `${siteUrl()}/results/city`, type: "website" },
+  openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(), url: `${siteUrl()}/results/city`, type: "website" },
 };
 
 const FAQS = [

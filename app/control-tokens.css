@@ -1892,9 +1892,20 @@
   background: var(--bg);
 }
 
+/* Land sits under the graticule and the pins. Filled just enough to read as
+   a continent against the panel, outlined just enough to separate countries,
+   and quiet enough that a pin is still the brightest thing on the map. */
+[data-surface="control"] .ac-map__land path {
+  fill: var(--surface-raised, #1a1a1a);
+  stroke: var(--border);
+  stroke-width: 0.15;
+  vector-effect: non-scaling-stroke;
+}
+
 [data-surface="control"] .ac-map__grid {
   stroke: var(--border);
   stroke-width: 0.5;
+  opacity: 0.5;
 }
 
 [data-surface="control"] .ac-map__equator {

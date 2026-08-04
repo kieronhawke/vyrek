@@ -230,6 +230,7 @@ export function AccountScreen({
         <Eyebrow>Your data</Eyebrow>
         <RowGroup>
           <Row label="Personal records" value="View →" href={`${base}/account/pr`} />
+          <Row label="Connections" value="Manage →" href={`${base}/connections`} />
           <Row label="Download everything" value="Request →" tone="var(--accent-text)" />
           <Row label="Privacy policy" value="Read →" href="/legal/privacy" />
         </RowGroup>

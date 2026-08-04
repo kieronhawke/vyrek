@@ -209,6 +209,55 @@ is at that moment, and a constant chosen against an idle one is what broke.
 contamination repair, live smoke). `tsc --noEmit` clean, ESLint clean,
 `next build` clean at 8,175 static pages.
 
+## The audit's verdict: not clean yet
+
+Run against the finished archive — 223 events, 613,476 results, 1,135,705
+athlete rows:
+
+```
+  1. completeness        127 short, 126 over-full
+  2. referential         0 orphaned results
+  3. ranks               244 divisions with rank anomalies
+  4. finish times        0 outside human range
+  5. splits              0 of 21 fail to reconcile
+  6. identity            258,321 name+nationality groups with >1 profile
+  7. orphaned profiles   4,659
+  8. division integrity  7,313 athletes in both boards (41 events)
+  9. provenance          1,371 ingestion runs, 5,611 quarantined rows
+```
+
+**255 errors. That is a "do not go live" result**, and the interesting part is
+which checks are clean: nothing references a row that does not exist, no finish
+time is outside what a human could run, and every split that exists reconciles
+with its finish. The data that is there is sound. The problem is *coverage and
+identity*, not corruption.
+
+Three things are genuinely wrong, and one was my own measurement:
+
+**The published figure's unit is not knowable per division.** It is derived —
+the board's rendered-row counter divided by the duplication factor measured on
+the page — and that yields *entries* on a board listing teams but *people* on a
+board listing each member. Both layouts exist: one doubles division publishes
+2,410 against 2,410 stored rows, another publishes 2,436 against 1,218.
+Insisting on one reading produced 1,378 false "over-full" errors. Accepting
+either cut the total from 1,516 to 255. An audit that cries wolf 1,378 times is
+not an audit.
+
+**127 divisions are short and 126 over-full** under both readings. Some hold
+nothing at all against a published few hundred. These are real gaps.
+
+**7,313 athletes still appear in both the men's and the women's board of one
+event**, across 41 events. The repair removed 2,795 provably-wrong rows and
+fixed the canonical case — Barcelona 2023's women's board now reads Aoife Fay,
+Victoria Cartmell, Oihane Salcedo González, exactly as the source does — but
+most of the remainder is not division contamination at all. It is the partner
+identity collision: one synthetic athlete absorbing a different person at each
+event, and therefore appearing on both boards. The derivation is fixed, but
+existing rows keep their old ids until their division is re-pulled.
+
+**244 divisions have rank anomalies** and **4,659 profiles are orphaned** —
+neither investigated yet.
+
 ## What is left
 
 ### Mine, in progress

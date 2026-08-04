@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClusterHub, type HubEntry } from "@/components/hyrox/cluster-hub";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 
@@ -11,6 +12,9 @@ export const metadata: Metadata = {
     "Most people who hate running have only ever run too fast. The conversational pace test, run-walk structure, and what changes after eight weeks.",
   alternates: { canonical: `${siteUrl()}/running` },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "Running guides. Suth Performance",
     description: "Why easy running is the point, and how to build it.",
     url: `${siteUrl()}/running`,

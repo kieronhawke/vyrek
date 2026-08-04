@@ -113,6 +113,12 @@ export function variantCopy(
       </>
     ),
     sub: localSub(seo, name, "pt"),
+    /* Both lanes independently found this: gym-coach-row-colour.jpg had a mean
+       luminance of 62, the darkest image in the library, and rendered as a
+       black rectangle under the scrim while the Hyrox variant's shot at 85
+       read fine. Theirs is the better fix — this camp photograph is part of a
+       set the rest of the page now uses, where my solo-watch-bw.jpg would have
+       been brighter but visually orphaned. */
     heroImage: "/media/images/camp/camp-turf-run-pair-wide.jpg",
     heroAlt: "Two athletes running on turf in bright daylight",
     cta: "Start the 3-minute quiz",

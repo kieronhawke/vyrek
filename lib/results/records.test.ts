@@ -1,8 +1,17 @@
 import { describe, it, expect } from "vitest";
 import {
-  worldRecords, nationalRecords, ageGroupRecords, countriesWithRecords,
-  freshRecords, isFresh, daysSince, announce, NEW_RECORD_DAYS,
+  worldRecords,
+  nationalRecords,
+  ageGroupRecords,
+  countriesWithRecords,
+  freshRecords,
+  isFresh,
+  daysSince,
+  announce,
+  NEW_RECORD_DAYS,
   type RecordCandidate,
+  divisionRank,
+  isBlueRiband,
 } from "./records";
 
 function candidate(over: Partial<RecordCandidate> = {}): RecordCandidate {
@@ -231,5 +240,56 @@ describe("announce", () => {
   it("omits the margin for a first-ever mark rather than saying zero", () => {
     const [row] = worldRecords([candidate({})]);
     expect(announce(row)).not.toContain("previous mark");
+  });
+});
+
+describe("division significance", () => {
+  it("puts the outright world bests first, not the alphabet", () => {
+    /*
+     * The bug this replaces: ordering by `divisionLabel.localeCompare` opened
+     * the record book on "HYROX Adaptive Men" and buried the fastest HYROX ever
+     * run somewhere in the middle. On a page whose whole job is significance,
+     * the first row is a claim about importance.
+     */
+    expect(divisionRank("hyrox-elite-men")).toBeLessThan(divisionRank("hyrox-adaptive-men"));
+    expect(divisionRank("hyrox-elite-men")).toBeLessThan(divisionRank("hyrox-doubles-mixed"));
+    expect(divisionRank("hyrox-pro-men")).toBeLessThan(divisionRank("hyrox-men"));
+    expect(divisionRank("hyrox-men")).toBeLessThan(divisionRank("hyrox-team-relay-men"));
+  });
+
+  it("sorts an unknown division to the end, never to the front", () => {
+    // A division added upstream should degrade into the tail rather than
+    // silently claim top billing on the record book.
+    expect(divisionRank("hyrox-something-new")).toBeGreaterThan(divisionRank("hyrox-adaptive-women"));
+  });
+
+  it("orders a real record list by significance", () => {
+    const rows = worldRecords([
+      { divisionCode: "hyrox-adaptive-men", divisionLabel: "HYROX Adaptive Men", athleteSlug: "x", athleteName: "X", countryIso: "NED", ageGroup: "30-34", finishSeconds: 3973, eventSlug: "e1", eventName: "E1", eventCity: "C", date: "2025-01-01", resultId: "1" },
+      { divisionCode: "hyrox-elite-men", divisionLabel: "HYROX Elite Men", athleteSlug: "y", athleteName: "Y", countryIso: "GBR", ageGroup: "30-34", finishSeconds: 3200, eventSlug: "e2", eventName: "E2", eventCity: "C", date: "2025-02-01", resultId: "2" },
+      { divisionCode: "hyrox-men", divisionLabel: "HYROX Men", athleteSlug: "z", athleteName: "Z", countryIso: "GBR", ageGroup: "30-34", finishSeconds: 3400, eventSlug: "e3", eventName: "E3", eventCity: "C", date: "2025-03-01", resultId: "3" },
+    ]);
+    expect(rows.map((r) => r.divisionCode)).toEqual([
+      "hyrox-elite-men",
+      "hyrox-men",
+      "hyrox-adaptive-men",
+    ]);
+  });
+
+  it("marks only the two outright world bests as blue-riband", () => {
+    // "Everything is a headline" is the state the page was already in.
+    const flagged = ["hyrox-elite-men", "hyrox-elite-women", "hyrox-pro-men", "hyrox-men", "hyrox-adaptive-men"]
+      .filter(isBlueRiband);
+    expect(flagged).toEqual(["hyrox-elite-men", "hyrox-elite-women"]);
+  });
+
+  it("still ranks the faster time first within one division", () => {
+    // Same division on both sides, so the division rank ties and the time has
+    // to break it — otherwise the slower athlete could hold the record.
+    const rows = worldRecords([
+      { divisionCode: "hyrox-men", divisionLabel: "HYROX Men", athleteSlug: "slow", athleteName: "Slow", countryIso: "GBR", ageGroup: "30-34", finishSeconds: 3400, eventSlug: "e1", eventName: "E1", eventCity: "C", date: "2025-01-01", resultId: "1" },
+      { divisionCode: "hyrox-men", divisionLabel: "HYROX Men", athleteSlug: "fast", athleteName: "Fast", countryIso: "GBR", ageGroup: "30-34", finishSeconds: 3200, eventSlug: "e2", eventName: "E2", eventCity: "C", date: "2025-02-01", resultId: "2" },
+    ]);
+    expect(rows[0].holder.finishSeconds).toBe(3200);
   });
 });

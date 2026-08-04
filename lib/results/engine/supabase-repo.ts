@@ -1352,8 +1352,30 @@ function toAlert(row: Record<string, unknown>): EngineAlert {
 }
 
 /** Same comparison the memory repo uses, for the same reason. */
+/**
+ * Has anything about this row actually changed?
+ *
+ * ⚠️ **Who the row belongs to counts as a change.** This compared ranks, times,
+ * status and splits, and not `athleteId` or `partnerAthleteIds` — so a re-pull
+ * that resolved a row to a *different athlete* saw "unchanged" and wrote
+ * nothing.
+ *
+ * That made the identity fix unshippable without anyone noticing. Partner ids
+ * were re-scoped to their division to stop one synthetic athlete absorbing a
+ * different person at every event, 1,486 divisions were queued to re-pull under
+ * the corrected derivation, and the first round reported `+0 rows` — correctly,
+ * by its own definition, having recomputed every id and discarded them all.
+ *
+ * A leaderboard is a list of names. A row whose name changed is a changed row.
+ */
 function materiallyDifferent(prior: EngineResult, next: UpsertResult): boolean {
+  const partnersChanged =
+    prior.partnerAthleteIds.length !== next.partnerAthleteIds.length ||
+    prior.partnerAthleteIds.some((id, i) => id !== next.partnerAthleteIds[i]);
+
   return (
+    prior.athleteId !== next.athleteId ||
+    partnersChanged ||
     prior.rankOverall !== (next.rankOverall ?? null) ||
     prior.rankAgeGroup !== (next.rankAgeGroup ?? null) ||
     prior.finishTimeMs !== (next.finishTimeMs ?? null) ||

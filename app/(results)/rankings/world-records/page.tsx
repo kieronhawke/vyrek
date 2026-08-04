@@ -5,6 +5,7 @@ import { RecordsBoard } from "@/components/results/rankings/records-board";
 import { MicroLabel } from "@/components/results/ui/primitives";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 3600;
 
@@ -14,7 +15,10 @@ export const metadata: Metadata = {
     "The fastest HYROX time recorded in every division — Open, Pro, Doubles, Relay and "
     + "Adaptive — with the event and athlete behind each one.",
   alternates: { canonical: "/rankings/world-records" },
-  openGraph: { url: `${siteUrl()}/rankings/world-records`, type: "website" },
+  openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(), url: `${siteUrl()}/rankings/world-records`, type: "website" },
 };
 
 export default async function WorldRecordsPage() {

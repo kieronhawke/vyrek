@@ -7,6 +7,7 @@
  * a fixed seed, so this is reproducible without being committed.
  */
 
+import { isFinish, normaliseStatus } from "./status";
 import "server-only";
 import type { DivisionCode, EventStatus } from "./types";
 import { STATION_IDS, PROFILE_BY_CODE, type StationId, type AgeGroup } from "./model";
@@ -36,7 +37,7 @@ type RawResult = {
   athleteSlug: string; athleteName: string; countryIso: string; ageGroup: AgeGroup;
   rank: number; ageGroupRank: number; finishSeconds: number;
   runs: number[]; stations: Record<StationId, number>; roxzoneSeconds: number;
-  status: "finished" | "dnf" | "entered"; partnerNames?: string[];
+  status: string; penaltySeconds?: number; partnerNames?: string[];
 };
 
 type EventShard = { slug: string; results: Record<string, RawResult[]> };
@@ -106,7 +107,7 @@ function shard(eventSlug: string): EventShard | null {
 
 function finishersOf(eventSlug: string, division: string): RawResult[] {
   const rows = shard(eventSlug)?.results[division] ?? [];
-  return rows.filter((r) => r.status === "finished");
+  return rows.filter((r) => isFinish(r.status, r.finishSeconds));
 }
 
 /* ─── Implementation ─────────────────────────────────────────────── */
@@ -175,8 +176,23 @@ export const demoDataSource: ResultsDataSource = {
 
     for (const [division, rows] of Object.entries(data.results)) {
       const row = rows.find((r) => r.id === id);
-      if (!row || row.status !== "finished") continue;
-      const field = rows.filter((r) => r.status === "finished");
+      if (!row) continue;
+
+      /*
+       * TWO DIFFERENT QUESTIONS, AND THEY WERE BEING ANSWERED WITH ONE FILTER.
+       *
+       * This skipped any row that was not a clean finish, so looking up a DNF
+       * or a disqualified entry returned nothing and the page 404'd. To the
+       * athlete that reads as the site having lost their race, which is worse
+       * than telling them plainly what happened — and they are exactly the
+       * person most likely to come looking.
+       *
+       * So the row is returned whatever its status, and `ResultStatusNotice`
+       * says what it was. What must stay filtered is the *field*: averages and
+       * percentiles are only meaningful over athletes who actually finished,
+       * and a DNF's zeroes would drag every division average down.
+       */
+      const field = rows.filter((r) => isFinish(r.status, r.finishSeconds));
       return {
         ...row,
         eventName: event.name,
@@ -326,7 +342,18 @@ function toRankingRow(leaderTime: number) {
     ageGroup: r.ageGroup,
     finishSeconds: r.finishSeconds,
     gapToLeaderSeconds: r.finishSeconds - leaderTime,
-    status: r.status === "dnf" ? "dnf" : "finished",
+    /*
+     * ⚠️ ALLOWLIST, NOT A DENYLIST — see `normaliseStatus`.
+     *
+     * This was `r.status === "dnf" ? "dnf" : "finished"`, which mapped
+     * *anything that is not literally "dnf"* onto a valid finish: "dsq",
+     * "dns", a capitalised "DNF", or a typo in a CSV column. This source also
+     * backs `scripts/import-results.ts`, so those are real results, and a
+     * disqualified athlete promoted to "finished" is eligible for the record
+     * book.
+     */
+    status: normaliseStatus(r.status),
+    penaltySeconds: r.penaltySeconds,
     partnerNames: r.partnerNames,
   });
 }

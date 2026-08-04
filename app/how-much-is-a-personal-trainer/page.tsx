@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClusterHub, type HubEntry } from "@/components/hyrox/cluster-hub";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 
@@ -19,6 +20,9 @@ export const metadata: Metadata = {
     "Honest guides to what personal training and online coaching cost in the UK, what changes the number, and how to tell whether the premium is buying you anything.",
   alternates: { canonical: `${siteUrl()}/how-much-is-a-personal-trainer` },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "What coaching costs. Suth Performance",
     description:
       "UK coaching costs, what drives them, and whether the premium buys anything.",

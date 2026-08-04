@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
@@ -143,12 +144,22 @@ export default function HowItWorksPage() {
                     * Nothing is lost by lazy-loading it: this sits beside a
                     * block of body copy well down the page, so it is not the
                     * LCP element on any viewport. */}
-                  <img
+                  {/*
+                    MEASURED: as a raw `<img>` these four served their full
+                    1467x2200 originals into a 486x364 slot — 1.5 MB of
+                    photography for about 120 KB of visible pixels, and the
+                    single heaviest thing on this page by a wide margin.
+
+                    `sizes` is the part that actually does the work: without it
+                    Next assumes 100vw and hands back a 1920-wide file, so the
+                    optimiser runs and nothing gets smaller.
+                  */}
+                  <Image
                     src={step.image}
                     alt=""
-                    className="absolute inset-0 h-full w-full object-cover grayscale"
-                    loading="lazy"
-                    decoding="async"
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover grayscale"
                   />
                   <div
                     aria-hidden

@@ -70,6 +70,26 @@ export function toE164(input: string): string | null {
   return null;
 }
 
+
+/**
+ * Ofcom reserves 07700 900000-900999 for drama and testing. No handset is
+ * ever allocated one, so Twilio rejects them with error 21211 and the send
+ * shows up in the live message log as a failure.
+ *
+ * Our own Playwright onboarding spec posts 07700900001, so every local run
+ * of it fired a real Twilio request and left another 21211 behind: 78 of
+ * them by 4 August 2026, all with localhost links in the body. Nobody missed
+ * a message, because nobody owns that number, but the live log stopped being
+ * a place you could see real failures.
+ *
+ * Short-circuited here rather than in the test, because the test is not the
+ * only thing that will ever use a reserved number, and a transport that
+ * silently posts unroutable numbers to a paid API is the actual defect.
+ */
+export function isReservedTestNumber(e164: string): boolean {
+  return /^\+447700900\d{3}$/.test(e164);
+}
+
 export type Sender =
   /** From "SUTH". Branded, free, and a dead end — nobody can reply. */
   | "brand"
@@ -93,14 +113,23 @@ export async function sendSms(args: {
    */
   marketing?: boolean;
 }): Promise<SmsResult> {
-  const cfg = config();
-  if (!cfg) {
-    return { ok: false, reason: "TWILIO_NOT_CONFIGURED" };
-  }
-
+  /* Whether the number can be sent to at all is decided before whether we
+     happen to hold credentials. Checking config first meant that in any
+     environment without Twilio the reserved-range guard was unreachable,
+     including the test that is supposed to prove it works. */
   const to = toE164(args.to);
   if (!to) {
     return { ok: false, reason: `NOT_A_PHONE_NUMBER: ${args.to}` };
+  }
+
+  // Never reaches Twilio: see isReservedTestNumber.
+  if (isReservedTestNumber(to)) {
+    return { ok: false, reason: `RESERVED_TEST_NUMBER: ${to}` };
+  }
+
+  const cfg = config();
+  if (!cfg) {
+    return { ok: false, reason: "TWILIO_NOT_CONFIGURED" };
   }
 
   const body = args.body.trim();

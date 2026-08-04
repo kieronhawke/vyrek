@@ -307,13 +307,13 @@ export function seedAppointments(today: string): Appointment[] {
   });
 
   return [
-    at(0, "ap_1", { start: "07:00", end: "08:00", title: "Track session", client: "Sample A", category: "session" }),
-    at(0, "ap_2", { start: "12:30", end: "13:00", title: "Check-in call", client: "Sample B", category: "call", remindMin: 30 }),
-    at(1, "ap_3", { start: "07:00", end: "08:15", title: "Strength", client: "Sample C", category: "session" }),
-    at(1, "ap_4", { start: "07:30", end: "08:30", title: "Consultation", client: "Sample D", category: "call" }),
+    at(0, "ap_1", { start: "07:00", end: "08:00", title: "Track session", client: "Amelia Fraser", category: "session" }),
+    at(0, "ap_2", { start: "12:30", end: "13:00", title: "Check-in call", client: "Marcus Bell", category: "call", remindMin: 30 }),
+    at(1, "ap_3", { start: "07:00", end: "08:15", title: "Strength", client: "Priya Raman", category: "session" }),
+    at(1, "ap_4", { start: "07:30", end: "08:30", title: "Consultation", client: "Tom Whitaker", category: "call" }),
     at(2, "ap_5", { start: "18:00", end: "19:30", title: "Group session", category: "session" }),
     at(3, "ap_6", { start: "09:00", end: "11:00", title: "Write next block", category: "admin", notes: "Four plans due Friday." }),
-    at(4, "ap_7", { start: "06:30", end: "07:30", title: "Track session", client: "Sample A", category: "session" }),
+    at(4, "ap_7", { start: "06:30", end: "07:30", title: "Track session", client: "Amelia Fraser", category: "session" }),
     at(5, "ap_8", { allDay: true, title: "HYROX Manchester", category: "race", remindMin: 1440 }),
   ];
 }

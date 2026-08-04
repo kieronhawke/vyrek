@@ -7,6 +7,7 @@ import { MicroLabel } from "@/components/results/ui/primitives";
 import { Trophy, CalendarRange, Medal } from "lucide-react";
 import { Breadcrumbs } from "@/components/results/ui/breadcrumbs";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { ogImages } from "@/lib/seo/og";
 
 /** `/rankings` — index of the global boards. */
 export const revalidate = 3600;
@@ -17,7 +18,10 @@ export const metadata: Metadata = {
     "Global HYROX rankings — all-time records and current season bests by division, "
     + "with every result linked to its full splits.",
   alternates: { canonical: "/rankings" },
-  openGraph: { url: `${siteUrl()}/rankings`, type: "website" },
+  openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(), url: `${siteUrl()}/rankings`, type: "website" },
 };
 
 export default async function RankingsIndex() {

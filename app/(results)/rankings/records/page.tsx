@@ -3,12 +3,18 @@ import Link from "next/link";
 import { siteUrl } from "@/lib/blog/urls";
 import { collectRecordCandidates, RECORD_DEPTH } from "@/lib/results/records-source";
 import {
-  worldRecords, nationalRecords, ageGroupRecords, countriesWithRecords,
-  freshRecords, NEW_RECORD_DAYS,
+  worldRecords,
+  nationalRecords,
+  ageGroupRecords,
+  countriesWithRecords,
+  freshRecords,
+  NEW_RECORD_DAYS,
+  isBlueRiband,
 } from "@/lib/results/records";
 import { breadcrumbList, jsonLd } from "@/lib/results/structured-data";
 import { formatCount, countryName } from "@/lib/results/format";
 import { RecordTable } from "@/components/results/rankings/record-table";
+import { BlueRiband } from "@/components/results/rankings/blue-riband";
 import { RecordBanner } from "@/components/results/rankings/record-banner";
 import { FaqSection } from "@/components/results/ui/faq-section";
 import { RelatedLinks } from "@/components/results/ui/related-links";
@@ -35,7 +41,15 @@ export const metadata: Metadata = {
     "The complete HYROX record book — world records in every division, national "
     + "records by country and every age-group mark, with what each one beat.",
   alternates: { canonical: "/rankings/records" },
-  openGraph: { url: `${siteUrl()}/rankings/records`, type: "website" },
+  openGraph: {
+    url: `${siteUrl()}/rankings/records`,
+    type: "website",
+    // These are the pages that travel: someone finds a record or a
+    // report and sends the link on. A shared link with no card is a
+    // link people scroll past.
+    images: [{ url: "/media/images/track/og-default.jpg", width: 1200, height: 630, alt: "HYROX athletes racing" }],
+  },
+  twitter: { card: "summary_large_image", images: ["/media/images/track/og-default.jpg"] },
 };
 
 export default async function RecordsPage({
@@ -166,16 +180,28 @@ export default async function RecordsPage({
         />
       </div>
 
-      {/* ── World ─────────────────────────────────────────────────── */}
+      {/*
+        ── World ───────────────────────────────────────────────────────
+        Split in two. Sixteen identically-weighted cards in alphabetical order
+        opened the record book on Adaptive Men and gave the fastest HYROX ever
+        run exactly the same presentation as everything else — which is what
+        made the page read as a list rather than a record book.
+
+        The two outright bests come out into their own block; the remaining
+        fourteen keep the existing card but now arrive in significance order
+        (see `divisionRank`) rather than alphabetically.
+      */}
+      <BlueRiband rows={world.filter((r) => isBlueRiband(r.divisionCode))} now={now} />
+
       <section className="mt-12" aria-labelledby="world-heading">
         <h2 id="world-heading" className="text-lg font-semibold text-suth-text">
-          World records
+          Every division
         </h2>
         <p className="mb-4 mt-1 text-sm text-suth-text-secondary">
           The fastest time ever recorded in each division, anywhere.
         </p>
         <RecordTable
-          rows={world}
+          rows={world.filter((r) => !isBlueRiband(r.divisionCode))}
           now={now}
           emptyTitle="No world records yet"
           emptyBody="Records appear as soon as a race is marked final."
@@ -224,7 +250,10 @@ export default async function RecordsPage({
                 <h3 className="mb-3 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
                   <Nationality iso={book.iso} />
                   {book.name} records
-                  <span className="text-suth-text-disabled">· {book.rows.length}</span>
+                  {/* `text-suth-text-disabled` (#555553) is 2.9:1 on this surface and
+                      fails AA. It is a count, not decoration — somebody scanning
+                      the record book uses it to see which divisions are populated. */}
+                  <span className="text-suth-text-tertiary">· {book.rows.length}</span>
                 </h3>
                 <RecordTable
                   rows={book.rows}

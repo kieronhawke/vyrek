@@ -1,9 +1,15 @@
 /**
- * Pre-written SMS for every funnel scenario, ready to wire to a provider.
+ * Pre-written SMS for every funnel scenario.
  *
- * Nothing here sends anything yet: there is no Twilio account and no number
- * for Ben. These are pure functions returning strings, so the day an
- * account exists the only new code is the transport.
+ * These are pure functions returning strings; sendSms in ./send.ts is the
+ * transport, and it is live. Twilio is wired, the account is active, and the
+ * onboarding invite in app/api/onboarding/invite/route.ts sends through it.
+ *
+ * This header used to say "there is no Twilio account and no number for Ben".
+ * That was true when it was written and stopped being true when the transport
+ * landed, and on 4 August 2026 it caused a full round of "SMS cannot be sent"
+ * before anyone checked the other worktree's env. If the transport changes,
+ * change this paragraph with it.
  *
  * Rules these are written to, and they are not stylistic preferences:
  *

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClusterHub, type HubEntry } from "@/components/hyrox/cluster-hub";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 
@@ -17,6 +18,9 @@ export const metadata: Metadata = {
     "What counts as a good HYROX time by division and age group, how to read your splits, and why comparing your finish across venues is unreliable.",
   alternates: { canonical: `${siteUrl()}/hyrox/times` },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "HYROX times and benchmarks. Suth Performance",
     description:
       "What a good time actually means, and what your splits are telling you.",

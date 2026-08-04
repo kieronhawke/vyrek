@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClusterHub, type HubEntry } from "@/components/hyrox/cluster-hub";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 
@@ -11,6 +12,9 @@ export const metadata: Metadata = {
     "What actually drives fat loss, why the scales mislead you weekly, and the long list of things that barely matter. No supplements, no fasting windows.",
   alternates: { canonical: `${siteUrl()}/fat-loss` },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "Fat loss guides. Suth Performance",
     description: "The four levers that matter, and the noise around them.",
     url: `${siteUrl()}/fat-loss`,

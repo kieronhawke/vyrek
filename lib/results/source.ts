@@ -1,3 +1,4 @@
+import type { ResultStatus } from "./status";
 /**
  * `ResultsDataSource` — brief §8.
  *
@@ -56,7 +57,9 @@ export type RankingRow = {
   ageGroup: AgeGroup;
   finishSeconds: number;
   gapToLeaderSeconds: number;
-  status: "finished" | "dnf";
+  status: ResultStatus;
+  /** Time added by officials, already included in `finishSeconds`. */
+  penaltySeconds?: number;
   partnerNames?: string[];
 };
 

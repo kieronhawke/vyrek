@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClusterHub, type HubEntry } from "@/components/hyrox/cluster-hub";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 
@@ -10,6 +11,9 @@ export const metadata: Metadata = {
     "Complete HYROX sessions: five prescribed workouts for each of the eight stations, plus benchmarks to test whether they are working.",
   alternates: { canonical: `${siteUrl()}/hyrox/workouts` },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "HYROX workouts. Suth Performance",
     description:
       "Prescribed sessions for every station, built on what the race actually demands.",

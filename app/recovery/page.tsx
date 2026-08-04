@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClusterHub, type HubEntry } from "@/components/hyrox/cluster-hub";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 
@@ -11,6 +12,9 @@ export const metadata: Metadata = {
     "When to train through a niggle and when to stop, what modification actually means, the red flags that need assessing, and how to come back without repeating it.",
   alternates: { canonical: `${siteUrl()}/recovery` },
   openGraph: {
+    // Without this the page inherits no card: a child `openGraph`
+    // replaces the root layout's entirely rather than merging with it.
+    images: ogImages(),
     title: "Recovery and injury guides. Suth Performance",
     description:
       "A usable framework for the grey area between an ache and an injury.",

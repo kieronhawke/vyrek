@@ -41,14 +41,18 @@ export function CalculatingScreen({ answers }: { answers: QuizAnswers }) {
   // Phase 3 = "Building your {programmeName} programme"
   // Phase 4 = "Plan ready"
   // Phase 5 = white flash
-  const [phase, setPhase] = useState(0);
-  const [progress, setProgress] = useState(0);
+  /* Reduced motion decides the starting state rather than being corrected
+     from an effect. usePrefersReducedMotion reads the query during render via
+     useSyncExternalStore, so this is right on the first paint — the old
+     version rendered phase 0 and immediately re-rendered at phase 4, which is
+     a visible flash of the wrong screen for exactly the people who asked for
+     less movement. */
+  const [phase, setPhase] = useState(prefersReducedMotion ? 4 : 0);
+  const [progress, setProgress] = useState(prefersReducedMotion ? 1 : 0);
 
   // Routing + phase progression
   useEffect(() => {
     if (prefersReducedMotion) {
-      setPhase(4);
-      setProgress(1);
       const id = window.setTimeout(() => router.push("/plan"), 1000);
       return () => window.clearTimeout(id);
     }

@@ -1,6 +1,7 @@
 import "server-only";
 
 import { getResultsSource } from "./index";
+import { isFinish } from "./status";
 import type { RecordCandidate } from "./records";
 
 /**
@@ -78,7 +79,9 @@ export async function collectRecordCandidates(): Promise<RecordCandidate[]> {
       const page = pages[j];
       if (!page) return;
       for (const row of page.rows) {
-        if (row.status !== "finished" || row.finishSeconds <= 0) continue;
+        // One gate for "does this count", so a DSQ can never reach the
+        // record book and a new status is one edit in `status.ts`.
+        if (!isFinish(row.status, row.finishSeconds)) continue;
         candidates.push({
           resultId: row.id,
           divisionCode: job.division as RecordCandidate["divisionCode"],

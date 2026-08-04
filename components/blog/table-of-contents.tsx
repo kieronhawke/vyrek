@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { cn } from "@/lib/utils";
 
 type Heading = { id: string; text: string; level: number };
@@ -12,13 +12,21 @@ type Heading = { id: string; text: string; level: number };
 export function TableOfContents() {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
-  // Desktop hides the toggle affordance (summary is pointer-events-none),
-  // so the list must start open there; mobile keeps the closed disclosure.
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (window.matchMedia("(min-width: 1024px)").matches) setOpen(true);
-  }, []);
+  /*
+   * Desktop hides the toggle affordance (summary is pointer-events-none), so
+   * the list must start open there; mobile keeps the closed disclosure.
+   *
+   * Read through `useSyncExternalStore` rather than `useState` + an effect.
+   * The effect version set state synchronously on mount, which is a cascading
+   * render the repo lints against: every reader of every article paid a second
+   * render of the whole contents list, and on desktop they also saw it flash
+   * shut and then open. This is exactly what the hook is for — a value that
+   * lives outside React, changes on its own, and needs an SSR snapshot.
+   */
+  const desktop = useSyncExternalStore(subscribeWide, isWideNow, () => false);
+  const [manual, setManual] = useState<boolean | null>(null);
+  const open = manual ?? desktop;
+  const setOpen = setManual;
 
   useEffect(() => {
     const article = document.getElementById("article-body");
@@ -88,4 +96,19 @@ export function TableOfContents() {
       </ol>
     </details>
   );
+}
+
+/* ── Viewport probe ─────────────────────────────────────────────────── */
+
+const WIDE = "(min-width: 1024px)";
+
+function subscribeWide(onChange: () => void): () => void {
+  const q = window.matchMedia(WIDE);
+  q.addEventListener("change", onChange);
+  return () => q.removeEventListener("change", onChange);
+}
+
+/** Server snapshot is `false`: mobile-first, so the disclosure starts closed. */
+function isWideNow(): boolean {
+  return window.matchMedia(WIDE).matches;
 }

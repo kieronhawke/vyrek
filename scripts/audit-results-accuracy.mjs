@@ -40,17 +40,33 @@ const findings = [];
 const report = (check, severity, message, detail) =>
   findings.push({ check, severity, message, detail });
 
-/** Everything, paged — PostgREST caps a single response at 1,000 rows. */
+/**
+ * Everything, paged — PostgREST caps a single response at 1,000 rows.
+ *
+ * ⚠️ Keyset, not OFFSET. `range(from, …)` makes the database walk and discard
+ * every row before the window, so page N costs N pages of work: reading
+ * 1,039,928 athletes that way took long enough to hit the statement timeout
+ * and the audit died partway through. Seeking on the last id seen is flat.
+ *
+ * `id` is a uuid primary key, so ordering on it is stable and unique — which is
+ * what keyset paging requires to neither skip nor repeat a row.
+ */
 async function all(table, columns, filter = (q) => q) {
   const out = [];
   const page = 1000;
-  for (let from = 0; ; from += page) {
-    const { data, error } = await filter(db.from(table).select(columns)).range(from, from + page - 1);
+  const select = columns.includes("id") ? columns : `id,${columns}`;
+  let after = null;
+
+  for (;;) {
+    let q = filter(db.from(table).select(select)).order("id", { ascending: true }).limit(page);
+    if (after) q = q.gt("id", after);
+    const { data, error } = await q;
     if (error) throw new Error(`${table}: ${error.message}`);
-    out.push(...(data ?? []));
-    if (!data || data.length < page) break;
+    const rows = data ?? [];
+    out.push(...rows);
+    if (rows.length < page) return out;
+    after = rows[rows.length - 1].id;
   }
-  return out;
 }
 
 const log = (s) => { if (!asJson) console.log(s); };
@@ -76,47 +92,54 @@ log(
 
 /* 1 ── Completeness against what the source published ─────────────────── */
 
-// ⚠️ Counted in people, on both sides.
+// ⚠️ The published figure's *unit* is not knowable per division.
 //
-// The published figure counts entrants; we store one row per *entry*, and a
-// doubles or relay entry is several people. Counting rows against it reported
-// every team division as half-missing, which is enough false noise to make the
-// whole audit ignorable.
-const byDivision = new Map();
+// It is derived — the board's rendered-row counter divided by the duplication
+// factor measured on the page — and that division yields entries on a board
+// that lists teams, but people on a board that lists each member separately.
+// Both layouts exist: one doubles division publishes 2,410 against 2,410 stored
+// rows, another publishes 2,436 against 1,218. Measured, not assumed.
+//
+// So both readings are accepted and a division is only reported when it fits
+// neither. Insisting on one produced 1,378 "over-full" errors that were purely
+// this ambiguity — and an audit that cries wolf 1,378 times is not an audit.
+const rowsByDivision = new Map();
+const peopleByDivision = new Map();
 for (const r of results) {
+  rowsByDivision.set(r.division_id, (rowsByDivision.get(r.division_id) ?? 0) + 1);
   const people = 1 + (r.partner_athlete_ids?.length ?? 0);
-  byDivision.set(r.division_id, (byDivision.get(r.division_id) ?? 0) + people);
+  peopleByDivision.set(r.division_id, (peopleByDivision.get(r.division_id) ?? 0) + people);
 }
 
 let short = 0;
 let over = 0;
 for (const d of divisions) {
-  const stored = byDivision.get(d.id) ?? 0;
   const published = d.published_entrant_count;
   if (published === null || published === undefined) continue;
 
-  // ⚠️ The published figure is derived and carries rounding.
-  //
-  // The board counts rendered rows, not people — each athlete renders two to
-  // four times — so the headcount is that counter divided by the duplication
-  // factor measured on the page (SOURCE.md §4). Division and rounding land it
-  // within a row or so, and flagging "239 of 240" as an error is how an audit
-  // teaches you to skim past it. One row, or 1% on a big board.
-  const tolerance = Math.max(1, Math.round(published * 0.01));
+  const asRows = rowsByDivision.get(d.id) ?? 0;
+  const asPeople = peopleByDivision.get(d.id) ?? 0;
 
-  if (stored + tolerance < published) {
+  // Rounding, because the published figure is a derived estimate: the counter
+  // divided by a measured ratio. One row, or 1% on a big board.
+  const tolerance = Math.max(1, Math.round(published * 0.01));
+  const fits = (n) => n + tolerance >= published && n <= published + tolerance;
+
+  if (fits(asRows) || fits(asPeople)) continue;
+
+  // Short under *both* readings is a genuine gap.
+  if (asPeople + tolerance < published) {
     short += 1;
-    report("completeness", "error", `${d.division_key} holds ${stored} of ${published} published`, {
-      divisionId: d.id, sourceDivisionId: d.source_division_id, stored, published,
+    report("completeness", "error", `${d.division_key} holds ${asRows} rows / ${asPeople} people against ${published} published`, {
+      divisionId: d.id, sourceDivisionId: d.source_division_id, asRows, asPeople, published,
     });
-  } else if (stored > published + tolerance) {
-    // More than published is as suspicious as fewer: it suggests rows from
-    // another division leaked in, which is a correctness failure not a gap.
-    // That is exactly what the unfiltered fallback adapter did — it returned a
-    // whole event under one division's name — so this check earns its keep.
+  } else {
+    // More than published under both readings suggests rows from another
+    // division leaked in — which is exactly what the unfiltered fallback
+    // adapter did, so this check earns its keep.
     over += 1;
-    report("completeness", "error", `${d.division_key} holds ${stored}, more than the ${published} published`, {
-      divisionId: d.id, stored, published,
+    report("completeness", "error", `${d.division_key} holds ${asRows} rows / ${asPeople} people, more than the ${published} published`, {
+      divisionId: d.id, asRows, asPeople, published,
     });
   }
 }
@@ -140,9 +163,22 @@ log(`  2. referential         ${orphans} orphaned results`);
 
 /* 3 ── Rank sanity ─────────────────────────────────────────────────────── */
 
+// ⚠️ Grouped once, not filtered per division.
+//
+// `results.filter(...)` inside the division loop is 2,692 passes over 613,476
+// rows — 1.65 billion comparisons — and the audit sat on this check for over
+// ten minutes without finishing. One pass to build the index costs nothing.
+const finishedByDivision = new Map();
+for (const r of results) {
+  if (r.status !== "finished") continue;
+  const list = finishedByDivision.get(r.division_id);
+  if (list) list.push(r);
+  else finishedByDivision.set(r.division_id, [r]);
+}
+
 let rankIssues = 0;
 for (const d of divisions) {
-  const rows = results.filter((r) => r.division_id === d.id && r.status === "finished");
+  const rows = finishedByDivision.get(d.id) ?? [];
   if (rows.length === 0) continue;
   const ranks = rows.map((r) => r.rank_overall).filter((r) => r !== null);
   const unique = new Set(ranks);

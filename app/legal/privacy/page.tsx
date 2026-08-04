@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalLayout } from "@/components/shared/legal-layout";
+import Link from "next/link";
 import {
   ProseH2,
   ProseH3,
@@ -28,15 +29,17 @@ export default function PrivacyPage() {
         We are the data controller. Our contact for data matters is{" "}
         <ProseEmailLink email="privacy@suthperformance.com" />.
       </ProseP>
-      {/* PLACEHOLDER — COMPANY DETAILS: replace the bracketed values below
-          with the real registered company name, Companies House number, and
-          registered office address before launch. */}
-      <ProseP>
-        Suth Performance is operated by [REGISTERED COMPANY NAME TO BE
-        CONFIRMED], a company registered in England and Wales, company number
-        [COMPANIES HOUSE NUMBER TO BE CONFIRMED], registered office
-        [REGISTERED OFFICE ADDRESS TO BE CONFIRMED].
-      </ProseP>
+      {/*
+        The company-details paragraph here carried three bracketed
+        placeholders and is removed as the site goes live, at the owner's
+        request: publishing "[REGISTERED COMPANY NAME TO BE CONFIRMED]" on a
+        legal page was the one option that was actually wrong.
+
+        If it comes back: UK law requires those details once the business
+        trades as a limited company, and then they belong in the footer on
+        every page rather than only here. As a sole trader there is nothing to
+        disclose. The footer carries the same note.
+      */}
 
       <ProseH2>What we collect</ProseH2>
       <ProseUl>
@@ -242,12 +245,12 @@ export default function PrivacyPage() {
         items are always on; analytics and session replay are opt-in via the
         cookie banner. For the full list, including names, providers, and
         durations, see our{" "}
-        <a
+        <Link
           className="text-suth-text underline underline-offset-4 hover:text-suth-accent"
           href="/legal/cookies"
         >
           Cookie policy
-        </a>
+        </Link>
         .
       </ProseP>
 

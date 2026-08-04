@@ -125,6 +125,16 @@ export type StationStanding = {
   deltaSeconds: number;
   /** Percentile within the division for this station alone. */
   percentile: number;
+  /**
+   * True when the organiser never published this station's split.
+   *
+   * ⚠️ A missing station used to be read as a zero-second split, and zero is
+   * the fastest possible time — so `percentileOf(dist, 0)` returned the 100th
+   * percentile. The athlete was then told a station they have no data for was
+   * their strongest, and the radar drew it at full reach. Anything that ranks
+   * or compares must exclude these.
+   */
+  missing?: boolean;
 };
 
 export function analyseStations(
@@ -133,7 +143,11 @@ export function analyseStations(
   distributions?: Partial<Record<StationId, Distribution>>,
 ): StationStanding[] {
   return STATION_IDS.map((station) => {
-    const seconds = splits.stations[station] ?? 0;
+    const raw = splits.stations[station];
+    // Absent, null, non-finite or non-positive all mean "not recorded". No
+    // segment of a HYROX takes zero seconds, so a 0 in the feed is never a time.
+    const missing = raw === undefined || raw === null || !Number.isFinite(raw) || raw <= 0;
+    const seconds = missing ? 0 : raw;
     const average = averages[station] ?? 0;
     const dist = distributions?.[station];
     return {
@@ -141,8 +155,14 @@ export function analyseStations(
       label: STATION_LABEL[station],
       seconds,
       averageSeconds: average,
-      deltaSeconds: seconds - average,
-      percentile: dist ? percentileOf(dist, seconds) : percentileFromAverage(seconds, average),
+      // A delta against a time we do not have is not zero-ish, it is unknown.
+      deltaSeconds: missing ? 0 : seconds - average,
+      // 50 is the honest placeholder for "no information": it moves the radar
+      // neither in nor out, where 100 pushed it to full reach.
+      percentile: missing
+        ? 50
+        : dist ? percentileOf(dist, seconds) : percentileFromAverage(seconds, average),
+      missing,
     };
   });
 }
@@ -159,14 +179,22 @@ function percentileFromAverage(seconds: number, average: number): number {
 }
 
 /** The one station to fix. Weakest by percentile, not by raw seconds. */
+/*
+ * Both of these rank on percentile, so both must ignore unpublished stations.
+ * Naming a station the athlete's strongest or weakest on the basis of a split
+ * nobody recorded is a confident, specific, wrong statement — and it is the
+ * kind a reader has no way to catch.
+ */
 export function weakestStation(standings: StationStanding[]): StationStanding | null {
-  if (standings.length === 0) return null;
-  return standings.reduce((worst, s) => (s.percentile < worst.percentile ? s : worst));
+  const known = standings.filter((s) => !s.missing);
+  if (known.length === 0) return null;
+  return known.reduce((worst, s) => (s.percentile < worst.percentile ? s : worst));
 }
 
 export function strongestStation(standings: StationStanding[]): StationStanding | null {
-  if (standings.length === 0) return null;
-  return standings.reduce((best, s) => (s.percentile > best.percentile ? s : best));
+  const known = standings.filter((s) => !s.missing);
+  if (known.length === 0) return null;
+  return known.reduce((best, s) => (s.percentile > best.percentile ? s : best));
 }
 
 /* ─── 4. What-if projection ───────────────────────────────────────

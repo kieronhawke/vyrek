@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Image from "next/image";
 import { MarketingNav } from "@/components/marketing/nav";
 import { MarketingFooter } from "@/components/marketing/footer";
@@ -185,6 +186,33 @@ const PROGRAMMES: ProgrammeDetail[] = [
   },
 ];
 
+/**
+ * Which level each programme is pitched at.
+ *
+ * Schema.org's `educationalLevel` is free text, but the three values below are
+ * the ones a search engine can actually do something with, and they are the
+ * same words already printed on each card's tag — so the markup and the page
+ * cannot drift apart into two different claims about the same programme.
+ */
+const LEVEL: Record<ProgrammeDetail["slug"], string> = {
+  "first-race": "Beginner",
+  "sub-90": "Intermediate",
+  doubles: "Intermediate",
+  pro: "Advanced",
+};
+
+/**
+ * Course markup for the four programmes.
+ *
+ * Deliberately *not* carrying an `offers` block. Google gives Course Info rich
+ * results to pages that declare a price, which is a real reason to add one —
+ * but pricing here is set on a consultation, so any number in the markup would
+ * be a number nobody is actually charged. Structured data that contradicts the
+ * page is worse than structured data that is merely incomplete: it is the kind
+ * of thing that gets a site's rich results pulled entirely.
+ *
+ * Everything below is checkable against the page itself.
+ */
 const courseListLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
@@ -195,6 +223,17 @@ const courseListLd = {
       "@type": "Course",
       name: `Suth Performance ${p.name} Hyrox programme`,
       description: p.audience,
+      url: `${siteUrl()}/programmes#${p.slug}`,
+      educationalLevel: LEVEL[p.slug],
+      timeRequired: "P12W",
+      inLanguage: "en-GB",
+      // The station and running work the plan actually contains, taken from
+      // the copy rendered on the card rather than written twice.
+      teaches: p.doing,
+      about: [
+        { "@type": "Thing", name: "HYROX" },
+        { "@type": "Thing", name: "Hybrid fitness racing" },
+      ],
       provider: {
         "@type": "Organization",
         name: "Suth Performance",
@@ -205,8 +244,84 @@ const courseListLd = {
         courseMode: "online",
         courseWorkload: "PT4H",
         duration: "P12W",
+        instructor: {
+          "@type": "Person",
+          name: "Ben Sutherland",
+          jobTitle: "Head coach",
+          description:
+            "HYROX Elite 15 athlete and coach, with multiple Pro Doubles wins.",
+        },
       },
     },
+  })),
+};
+
+/**
+ * Programme FAQs.
+ *
+ * These are the questions that decide whether somebody starts, and they were
+ * not answered anywhere on the page — which one to pick, what happens if the
+ * race is sooner than twelve weeks, whether it works around an existing gym
+ * routine. Rendered as `FAQPage` markup as well as visible copy, so the same
+ * answers are eligible as rich results against queries people genuinely type.
+ */
+const PROGRAMME_FAQS = [
+  {
+    q: "Which programme should I pick?",
+    a: "If you have never raced, First Race. If you have finished one and want "
+      + "to go faster, Sub-90. If you are racing with a partner, Doubles. Pro is "
+      + "for athletes chasing a podium or a qualifier. If you are between two of "
+      + "them, Ben will tell you which on the consultation — it is a five-minute "
+      + "conversation, not a sales call.",
+  },
+  {
+    q: "What if my race is in less than 12 weeks?",
+    a: "The plan compresses rather than dropping phases: you get less time at "
+      + "base and go into race-pace work sooner, with the taper protected. Tell "
+      + "Ben the date and he will say honestly whether the time is there — "
+      + "sometimes the right answer is to target the race after it.",
+  },
+  {
+    q: "How many days a week does a programme need?",
+    a: "Between three and five, and it is built to the number you actually "
+      + "have. Three sessions you complete beats five you skip, and every Sunday "
+      + "the next week is rebuilt from what you logged rather than what was "
+      + "prescribed.",
+  },
+  {
+    q: "Do I need a full gym?",
+    a: "No. The plan adapts to what you can reach — full gym, home setup or "
+      + "bodyweight. Sled push and pull are the hardest to replicate, so where "
+      + "there is no sled the programme substitutes work that trains the same "
+      + "quality.",
+  },
+  {
+    q: "Can I keep my current training alongside it?",
+    a: "Tell Ben what you want to keep and the plan is written around it. What "
+      + "does not work is running a Suth programme on top of a full separate "
+      + "schedule — the volume stops adding up and both get worse.",
+  },
+  {
+    q: "What happens after the 12 weeks?",
+    a: "You race, and then the next block is written from what the race "
+      + "actually showed. Most athletes go straight into another twelve weeks "
+      + "with a different target.",
+  },
+  {
+    q: "Is a programme a PDF or a real plan?",
+    a: "A real plan. Every week is dated to your race, you log sessions in the "
+      + "app, you message Ben inside it, and Sunday's recalibration changes what "
+      + "next week looks like.",
+  },
+];
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: PROGRAMME_FAQS.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
   })),
 };
 
@@ -217,6 +332,10 @@ export default function ProgrammesPage() {
         type="application/ld+json"
 
         dangerouslySetInnerHTML={{ __html: JSON.stringify(courseListLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
       <MarketingNav />
       <main>
@@ -247,7 +366,18 @@ export default function ProgrammesPage() {
             <Container>
               {/* Above-the-fold: hero image full-bleed on mobile, side-by-side on desktop */}
               <div
-                className={`mx-auto grid max-w-6xl items-start gap-10 md:grid-cols-2 md:gap-16 ${
+                /*
+                  `items-center` rather than `items-start`.
+
+                  The image is a 4:5 portrait and the copy beside it is a
+                  heading, three lines and a button — roughly half its height.
+                  Aligned to the top, the text finished a third of the way down
+                  and left a 400px void beneath it on every one of the four
+                  programmes, which read as a page that had failed to load
+                  something. Centring costs nothing and the column reads as
+                  deliberate.
+                */
+                className={`mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2 md:gap-16 ${
                   i % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""
                 }`}
               >
@@ -380,6 +510,59 @@ export default function ProgrammesPage() {
             </Container>
           </section>
         ))}
+
+        {/*
+          The questions that decide whether somebody starts.
+
+          The page described four programmes well and answered none of the
+          things a reader is actually weighing — which one am I, what if my race
+          is sooner than twelve weeks, does this work around the training I
+          already do. Those were being answered on consultations one at a time.
+        */}
+        <section
+          aria-labelledby="programme-faq-heading"
+          className="border-t border-suth-border-subtle py-20 md:py-28"
+        >
+          <Container>
+            <div className="mx-auto max-w-3xl">
+              <Eyebrow>Before you pick</Eyebrow>
+              <SplitHeading
+                as="h2"
+                id="programme-faq-heading"
+                className="mt-4 text-2xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-4xl"
+              >
+                Common questions
+              </SplitHeading>
+
+              <dl className="mt-10 divide-y divide-suth-border-subtle border-t border-suth-border-subtle">
+                {PROGRAMME_FAQS.map((f) => (
+                  <div key={f.q} className="py-6">
+                    <dt className="text-base font-bold text-suth-text md:text-lg">
+                      {f.q}
+                    </dt>
+                    <dd className="mt-2 text-sm leading-relaxed text-suth-text-secondary md:text-base">
+                      {f.a}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+
+              <p className="mt-10 text-sm text-suth-text-secondary">
+                Still not sure which one?{" "}
+                <Link
+                  href="/quiz"
+                  /* Underlined always, not just on hover. `hover:underline` alone
+                     fails WCAG 1.4.1: the link is distinguished by colour only,
+                     and on touch there is no hover state to reveal it. */
+                  className="text-suth-accent underline underline-offset-4"
+                >
+                  Take the three-minute quiz
+                </Link>{" "}
+                and Ben will tell you on a free consultation.
+              </p>
+            </div>
+          </Container>
+        </section>
       </main>
       <MarketingFooter />
     </>
