@@ -229,6 +229,29 @@ export function pendingAutomations(lead: LeadRecord, now: Date): Automation[] {
   return out.sort((a, b) => (a.dueISO < b.dueISO ? -1 : 1));
 }
 
+/** An automation with the person it is about attached. */
+export type QueuedSend = Automation & { leadId: string; leadName: string };
+
+/**
+ * Everything the system will send, across every lead, soonest first.
+ *
+ * The per-lead queue answers "what happens to this person". This answers the
+ * question Ben actually asks before he goes to bed, which is "what is going
+ * out overnight, and do I want any of it to". An automation nobody can see
+ * the whole of is one you switch off entirely the first time it surprises you.
+ */
+export function sendQueue(leads: LeadRecord[], now: Date): QueuedSend[] {
+  return leads
+    .flatMap((l) =>
+      pendingAutomations(l, now).map((a) => ({
+        ...a,
+        leadId: l.id,
+        leadName: l.name,
+      })),
+    )
+    .sort((a, b) => (a.dueISO < b.dueISO ? -1 : 1));
+}
+
 /**
  * When the automation has run out and it is Ben's turn.
  *

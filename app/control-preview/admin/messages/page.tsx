@@ -1,4 +1,8 @@
+import { render } from "@react-email/components";
 import { CommsEditor } from "@/components/control/comms-editor";
+import { CommsHub } from "@/components/control/comms-hub";
+import { EMAIL_SAMPLES } from "@/lib/email/catalogue";
+import { SMS_SAMPLES, isGsm7, segments } from "@/lib/sms/messages";
 import { AdminShell } from "@/components/control/admin-shell";
 import { DataTable, type Column } from "@/components/control/data-table";
 import { MESSAGE_ROWS, type MessageRow } from "@/lib/control/admin-fixtures";
@@ -34,9 +38,43 @@ const INBOX: Column<MessageRow>[] = [
   { key: "preview", label: "Message", render: (r) => r.preview, csv: (r) => r.preview },
 ];
 
-export default function AdminMessages() {
+/* The emails are rendered per request rather than at build time. They are
+   React components, so a wording change would otherwise be invisible here
+   until the next deploy — which is the one place it must not be. */
+export const dynamic = "force-dynamic";
+
+export default async function AdminMessages() {
+  /* Rendered on the server, from the same templates the sender uses. A
+     preview built from a second copy of the markup is a preview that drifts,
+     and the whole point of this screen is to approve what actually goes out. */
+  const emails = await Promise.all(
+    EMAIL_SAMPLES.map(async (s) => ({
+      id: s.id,
+      audience: s.audience,
+      when: s.when,
+      subject: s.subject,
+      html: await render(s.element, { pretty: false }),
+    })),
+  );
+
+  const texts = SMS_SAMPLES.map((s) => ({
+    id: s.id,
+    audience: s.audience,
+    when: s.when,
+    text: s.text,
+    segments: segments(s.text),
+    gsm7: isGsm7(s.text),
+  }));
+
   return (
     <AdminShell base={BASE} title="Messages">
+      {/* Everything the business says, in the form it will be read in. The
+          email preview is the real email, not a description of one. */}
+      <CommsHub emails={emails} texts={texts} />
+
+      <h2 className="eyebrow" style={{ margin: "var(--space-4) 0 var(--space-1)" }}>
+        Change the wording
+      </h2>
       {/* Editing the words, for somebody who does not write code. Tokens are
           buttons, the preview is always on, and a text says what it costs
           before it is sent. */}

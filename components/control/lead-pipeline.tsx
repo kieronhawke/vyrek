@@ -17,6 +17,7 @@ import {
   moveTo,
   needsPersonalMessage,
   pendingAutomations,
+  sendQueue,
   sortLeads,
   sortTimeline,
   type CloseReason,
@@ -214,6 +215,8 @@ export function LeadPipeline({ nowISO }: { nowISO: string }) {
           Reset pipeline
         </button>
       </div>
+
+      <SendQueue leads={leads} now={now} />
 
       <ul className="lp-list" role="list">
         {open.map((lead) => (
@@ -561,5 +564,41 @@ function EditPanel({
         )}
       </div>
     </div>
+  );
+}
+
+/**
+ * Everything going out on its own, across every lead.
+ *
+ * The per-lead timeline answers "what happens to this person". This answers
+ * the question Ben actually asks before he shuts the laptop: what is the
+ * system going to send overnight, and do I want any of it to. An automation
+ * you cannot see the whole of is one you switch off entirely the first time
+ * it surprises you.
+ *
+ * Collapsed when there is nothing due, rather than hidden: "nothing queued"
+ * is itself worth being able to confirm.
+ */
+function SendQueue({ leads, now }: { leads: LeadRecord[]; now: Date }) {
+  const queue = sendQueue(leads, now);
+  if (!queue.length) {
+    return <p className="lp-queue__none">Nothing queued to send.</p>;
+  }
+  return (
+    <details className="lp-queue">
+      <summary className="lp-queue__toggle">
+        {queue.length} message{queue.length === 1 ? "" : "s"} queued to send —
+        next {relative(queue[0].dueISO, now)}
+      </summary>
+      <ol className="lp-queue__list" role="list">
+        {queue.map((q) => (
+          <li key={q.id} className="lp-queue__item">
+            <span className="lp-queue__who">{q.leadName}</span>
+            <span className="lp-queue__what">{q.label}</span>
+            <span className="lp-queue__when">{relative(q.dueISO, now)}</span>
+          </li>
+        ))}
+      </ol>
+    </details>
   );
 }

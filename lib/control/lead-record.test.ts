@@ -12,6 +12,7 @@ import {
   moveTo,
   needsPersonalMessage,
   pendingAutomations,
+  sendQueue,
   sortLeads,
   sortTimeline,
   type LeadRecord,
@@ -364,5 +365,38 @@ describe("the seeded pipeline", () => {
         NOW.getTime() + 72 * HOUR,
       );
     }
+  });
+});
+
+describe("the send queue", () => {
+  /**
+   * Soonest first, across every lead. The order is the whole value: Ben reads
+   * the top of this list to know what happens next, not to browse it.
+   */
+  it("gathers every lead's automations in the order they fire", () => {
+    const soon = new Date(NOW.getTime() + 3 * HOUR).toISOString();
+    const q = sendQueue(
+      [
+        lead({ id: "b", stage: "onboarding_sent", stageSinceISO: at(1) }),
+        lead({ id: "a", stage: "call_booked", booking: { ref: "R", startISO: soon, minutes: 20 } }),
+      ],
+      NOW,
+    );
+    expect(q.map((x) => x.leadId)).toEqual(["a", "b", "b"]);
+    for (let i = 1; i < q.length; i++) {
+      expect(q[i - 1].dueISO <= q[i].dueISO).toBe(true);
+    }
+  });
+
+  /* Carries who it is about. A queue of "follow-up text" with no name on it
+     is a list nobody can act on. */
+  it("says who each message is for", () => {
+    const q = sendQueue([lead({ name: "Dean Fitzgerald", stage: "onboarding_sent", stageSinceISO: at(1) })], NOW);
+    expect(q[0].leadName).toBe("Dean Fitzgerald");
+  });
+
+  it("leaves out anyone Ben has switched off", () => {
+    const off = lead({ stage: "onboarding_sent", stageSinceISO: at(1), automation: false });
+    expect(sendQueue([off], NOW)).toHaveLength(0);
   });
 });

@@ -3375,3 +3375,179 @@
 [data-surface="control"] .ch-table td { padding: 10px; border-bottom: 1px solid var(--border); }
 [data-surface="control"] .ch-table td[data-urgent] { color: var(--danger); font-weight: 600; }
 [data-surface="control"] .ch-table a { color: var(--accent-text, var(--accent)); text-decoration: none; }
+
+/* ── Communications hub ─────────────────────────────────────────────────
+   Everything the business says, in the form it will be read in. The email
+   preview is a real iframe of the real template at phone width; the texts
+   are bubbles, because a message that reads fine in a form field and badly
+   on a phone is the exact failure this screen exists to catch. */
+[data-surface="control"] .hub { display: grid; gap: var(--space-2); }
+
+[data-surface="control"] .hub-tabs {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--border); padding-bottom: 8px;
+}
+[data-surface="control"] .hub-tab {
+  min-height: 36px; padding: 0 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid transparent; background: transparent;
+  color: var(--text-muted); font-size: var(--text-sm); font-weight: 600;
+}
+[data-surface="control"] .hub-tab:hover { color: var(--text); }
+[data-surface="control"] .hub-tab[aria-selected="true"] {
+  background: var(--accent); color: var(--accent-on, #0a0a0a);
+}
+[data-surface="control"] .hub-tab__n {
+  margin-left: 6px; font-size: var(--text-xs); opacity: 0.7;
+}
+
+[data-surface="control"] .hub-search,
+[data-surface="control"] .hub-input,
+[data-surface="control"] .hub-textarea {
+  width: 100%; min-height: 40px; padding: 8px 12px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font: inherit; font-size: var(--text-sm);
+}
+[data-surface="control"] .hub-textarea { min-height: 96px; resize: vertical; }
+[data-surface="control"] .hub-input[aria-invalid="true"],
+[data-surface="control"] .hub-textarea[aria-invalid="true"] { border-color: var(--danger); }
+
+[data-surface="control"] .hub-list {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;
+}
+[data-surface="control"] .hub-row {
+  border: 1px solid var(--border); border-radius: var(--radius-card);
+  background: var(--surface); overflow: hidden;
+}
+[data-surface="control"] .hub-row[data-open] { border-color: var(--accent); }
+[data-surface="control"] .hub-row--sms { display: grid; gap: 6px; padding: 12px; }
+[data-surface="control"] .hub-row__head {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  padding: 12px; background: none; border: 0; cursor: pointer;
+  text-align: left; color: inherit;
+}
+[data-surface="control"] .hub-row__main { display: grid; gap: 2px; min-width: 0; }
+[data-surface="control"] .hub-row__subject {
+  font-weight: 620; color: var(--text); font-size: var(--text-sm);
+}
+[data-surface="control"] .hub-row__meta {
+  margin: 0; font-size: var(--text-xs); color: var(--text-faint);
+}
+[data-surface="control"] .hub-row__cta {
+  margin-left: auto; flex-shrink: 0; font-size: var(--text-xs);
+  color: var(--accent-text, var(--accent));
+}
+
+/* The phone. Not decoration: an email that looks fine at 1200px and falls
+   apart at 390 is one nobody has actually checked. */
+[data-surface="control"] .hub-preview {
+  display: grid; gap: 8px; justify-items: center;
+  padding: 0 12px 16px;
+}
+[data-surface="control"] .hub-phone {
+  width: 100%; max-width: 390px; border-radius: 20px; overflow: hidden;
+  border: 1px solid var(--border); background: #0a0a0a;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
+}
+[data-surface="control"] .hub-phone__frame {
+  display: block; width: 100%; height: 560px; border: 0;
+  background: #0a0a0a; color-scheme: dark;
+}
+[data-surface="control"] .hub-preview__note {
+  margin: 0; font-size: var(--text-xs); color: var(--text-faint);
+  text-align: center; max-width: 44ch;
+}
+
+/* A text message, shown as a text message. */
+[data-surface="control"] .hub-bubble {
+  margin: 0; padding: 10px 14px; border-radius: 16px 16px 16px 4px;
+  background: var(--surface-raised); border: 1px solid var(--border);
+  font-size: var(--text-sm); line-height: 1.5; color: var(--text);
+  max-width: 46ch; white-space: pre-wrap;
+}
+[data-surface="control"] .hub-cost {
+  margin: 0; font-size: var(--text-xs); color: var(--text-faint);
+}
+[data-surface="control"] .hub-cost[data-warn] { color: var(--warn, #f5b83c); }
+
+[data-surface="control"] .hub-mail {
+  border: 1px solid var(--border); border-radius: 8px; padding: 12px;
+  background: var(--surface-raised);
+}
+[data-surface="control"] .hub-mail__subject {
+  margin: 0 0 6px; font-weight: 650; color: var(--text); font-size: var(--text-sm);
+}
+[data-surface="control"] .hub-mail__body {
+  margin: 0; font-size: var(--text-sm); line-height: 1.6;
+  color: var(--text-muted); white-space: pre-wrap;
+}
+
+[data-surface="control"] .hub-empty,
+[data-surface="control"] .hub-lede {
+  margin: 0; font-size: var(--text-sm); color: var(--text-muted);
+  max-width: 60ch; line-height: 1.6;
+}
+
+[data-surface="control"] .hub-custom { display: grid; gap: var(--space-2); }
+[data-surface="control"] .hub-form {
+  display: grid; gap: 12px; padding: 14px; border-radius: var(--radius-card);
+  border: 1px solid var(--border); background: var(--surface);
+}
+[data-surface="control"] .hub-field { display: grid; gap: 6px; }
+[data-surface="control"] .hub-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-faint);
+}
+[data-surface="control"] .hub-choice { display: flex; flex-wrap: wrap; gap: 6px; }
+[data-surface="control"] .hub-chip {
+  min-height: 32px; padding: 0 12px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); font-size: var(--text-xs);
+}
+[data-surface="control"] .hub-chip:hover { background: var(--surface-raised); color: var(--text); }
+[data-surface="control"] .hub-chip[aria-pressed="true"] {
+  border-color: var(--accent); color: var(--accent-text, var(--accent));
+}
+[data-surface="control"] .hub-problem {
+  margin: 0; font-size: var(--text-xs); color: var(--danger);
+}
+[data-surface="control"] .hub-save {
+  min-height: 40px; padding: 0 18px; border-radius: 999px; cursor: pointer;
+  border: 0; background: var(--accent); color: var(--accent-on, #0a0a0a);
+  font-size: var(--text-sm); font-weight: 650;
+}
+[data-surface="control"] .hub-save:active { transform: scale(0.98); }
+
+@media (max-width: 520px) {
+  [data-surface="control"] .hub-phone__frame { height: 460px; }
+}
+
+/* ── The send queue ─────────────────────────────────────────────────────
+   Everything going out on its own, across every lead. The per-lead timeline
+   answers "what happens to this person"; this answers "what is going out
+   tonight, and do I want it to". */
+[data-surface="control"] .lp-queue { margin: 0 0 var(--space-2); }
+[data-surface="control"] .lp-queue__none {
+  margin: 0 0 var(--space-2); font-size: var(--text-xs); color: var(--text-faint);
+}
+[data-surface="control"] .lp-queue__toggle {
+  cursor: pointer; list-style: none; padding: 8px 12px; border-radius: 8px;
+  border: 1px dashed var(--border); background: transparent;
+  color: var(--text-muted); font-size: var(--text-sm);
+}
+[data-surface="control"] .lp-queue__toggle::-webkit-details-marker { display: none; }
+[data-surface="control"] .lp-queue__toggle::before { content: "▸ "; }
+[data-surface="control"] details[open] > .lp-queue__toggle::before { content: "▾ "; }
+[data-surface="control"] .lp-queue__list {
+  list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px;
+}
+[data-surface="control"] .lp-queue__item {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto;
+  gap: 10px; align-items: baseline; padding: 8px 12px; border-radius: 6px;
+  background: var(--surface-raised); font-size: var(--text-xs);
+}
+[data-surface="control"] .lp-queue__who { color: var(--text); font-weight: 620; }
+[data-surface="control"] .lp-queue__what { color: var(--text-muted); }
+[data-surface="control"] .lp-queue__when { color: var(--text-faint); white-space: nowrap; }
+@media (max-width: 520px) {
+  [data-surface="control"] .lp-queue__item { grid-template-columns: 1fr; gap: 2px; }
+}
