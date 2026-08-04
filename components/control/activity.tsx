@@ -1,7 +1,15 @@
 "use client";
 
 import { WORLD_PATHS } from "@/lib/control/world-paths";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import "leaflet/dist/leaflet.css";
+import {
+  GeoMap,
+  MAP_THEMES,
+  CITY_ACCURACY_KM,
+  type MapTheme,
+  type GeoPoint,
+} from "@/components/control/geo-map";
 import { useCollection } from "@/lib/control/store";
 import {
   ADMIN_IPS_KEY,
@@ -72,6 +80,17 @@ export function Activity({ today, now }: { today: string; now: string }) {
   const [sort, setSort] = useState<SortKey>("last-seen");
   const [country, setCountry] = useState("");
   const [open, setOpen] = useState<string | null>(null);
+  /* Kieron liked the dark map and asked to be able to switch. Persisted,
+     because a map that forgets its theme on every navigation is worse than
+     one that never had a switch. */
+  const [mapTheme, setMapTheme] = useState<MapTheme>("dark");
+  useEffect(() => {
+    const saved = window.localStorage.getItem("activity.mapTheme") as MapTheme | null;
+    if (saved && MAP_THEMES.some((t) => t.key === saved)) setMapTheme(saved);
+  }, []);
+  useEffect(() => {
+    window.localStorage.setItem("activity.mapTheme", mapTheme);
+  }, [mapTheme]);
 
   const excluded = adminIps.items.map((r) => r.id);
 
@@ -212,8 +231,27 @@ export function Activity({ today, now }: { today: string; now: string }) {
       {/* ── Where they are ─────────────────────────────────────────────── */}
       <section className="ac-panel" aria-label="Locations">
         <h2 className="ac-panel__title">Where they are</h2>
+        <div className="ac-maptheme" role="group" aria-label="Map style">
+          {MAP_THEMES.map((t) => (
+            <button
+              key={t.key}
+              type="button"
+              className="ac-maptheme__btn"
+              aria-pressed={mapTheme === t.key}
+              onClick={() => setMapTheme(t.key)}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
         <div className="ac-geo">
-          <GeoPlot sessions={counted} onPick={(id) => setOpen(id)} />
+          <GeoMap
+            points={cityPoints(counted)}
+            theme={mapTheme}
+            height={380}
+            onSelect={(id) => setOpen(id)}
+            ariaLabel="Sessions by location"
+          />
           <ul className="ac-countries">
             {countries.map((c) => (
               <li key={c.countryIso}>
@@ -236,8 +274,10 @@ export function Activity({ today, now }: { today: string; now: string }) {
           </ul>
         </div>
         <p className="ac-hint">
-          Pins are plotted by latitude and longitude. Tap a pin or a country
-          to filter the table below.
+          Drag to pan, scroll or pinch to zoom. The ring around each pin is
+          how precisely an IP actually places somebody, not a margin of error
+          we chose. Tap a pin for the session, or a country to filter the
+          table below.
         </p>
       </section>
 
@@ -378,6 +418,7 @@ export function Activity({ today, now }: { today: string; now: string }) {
         <Detail
           session={detail}
           now={now}
+          mapTheme={mapTheme}
           excluded={excluded.includes(detail.ip)}
           onExclude={() => {
             adminIps.add({ id: detail.ip });
@@ -416,135 +457,60 @@ function Stat({
   );
 }
 
+
+
 /**
- * A world map.
- *
- * Equirectangular latitude and longitude, with a pin per city sized by how
- * many sessions came from it.
- *
- * This was a bare graticule, and the reasoning for that was sound: "a
- * hand-drawn world silhouette at this size would be a worse lie than an
- * honest grid". The objection was to drawing coastlines by eye, not to
- * having them. It now renders Natural Earth 1:110m outlines from
- * lib/control/world-paths.ts, which are surveyed rather than sketched, so
- * a pin at 51°N reads as Britain instead of as a dot in empty space.
- *
- * Named GeoPlot rather than Map because a component called `Map` shadows the
- * global `Map` constructor inside its own body, and `new Map()` then resolves
- * to the component. TypeScript caught it; at runtime it would have been a
- * blank panel with no error.
+ * One pin per city rather than per session, so ten visits from Manchester
+ * are one marker of size ten instead of ten markers stacked on each other.
+ * The id is the first session there, which is what a click opens.
  */
-function GeoPlot({
-  sessions,
-  onPick,
-}: {
-  sessions: Session[];
-  onPick: (id: string) => void;
-}) {
-  const cities = useMemo(() => {
-    const map = new Map<string, { lat: number; lng: number; city: string; n: number; id: string; enquiries: number }>();
-    for (const s of sessions) {
-      const key = `${s.lat},${s.lng}`;
-      const row = map.get(key) ?? {
+function cityPoints(sessions: Session[]): GeoPoint[] {
+  const byCity = new Map<string, GeoPoint>();
+  for (const s of sessions) {
+    const key = `${s.lat},${s.lng}`;
+    const existing = byCity.get(key);
+    if (existing) {
+      existing.weight = (existing.weight ?? 1) + 1;
+      existing.accent = existing.accent || s.enquired;
+    } else {
+      byCity.set(key, {
+        id: s.id,
         lat: s.lat,
         lng: s.lng,
-        city: s.city,
-        n: 0,
-        id: s.id,
-        enquiries: 0,
-      };
-      row.n++;
-      if (s.enquired) row.enquiries++;
-      map.set(key, row);
+        label: s.city,
+        weight: 1,
+        accent: s.enquired,
+      });
     }
-    return [...map.values()];
-  }, [sessions]);
-
-  const most = Math.max(1, ...cities.map((c) => c.n));
-
-  return (
-    <div className="ac-map">
-      <svg viewBox="0 0 360 180" className="ac-map__svg" role="img" aria-label="Sessions by location">
-        {/* Land first, so the pins sit on top of it. This was a bare grid
-            with dots floating on it, which told you a session came from
-            somewhere at 51°N but not that the somewhere was Britain. */}
-        <g className="ac-map__land">
-          {WORLD_PATHS.map((d, i) => (
-            <path key={i} d={d} />
-          ))}
-        </g>
-        {/* Graticule every 30°, over the land but under the pins. */}
-        {[30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((x) => (
-          <line key={`v${x}`} x1={x} y1={0} x2={x} y2={180} className="ac-map__grid" />
-        ))}
-        {[30, 60, 90, 120, 150].map((y) => (
-          <line key={`h${y}`} x1={0} y1={y} x2={360} y2={y} className="ac-map__grid" />
-        ))}
-        <line x1={0} y1={90} x2={360} y2={90} className="ac-map__equator" />
-        <line x1={180} y1={0} x2={180} y2={180} className="ac-map__equator" />
-
-        {cities.map((c) => {
-          const p = project(c.lat, c.lng);
-          const r = 2 + (c.n / most) * 5;
-          return (
-            <g key={`${c.lat},${c.lng}`}>
-              <circle
-                cx={p.x * 360}
-                cy={p.y * 180}
-                r={r + 4}
-                className="ac-map__halo"
-                data-enquiry={c.enquiries > 0 || undefined}
-              />
-              <circle
-                cx={p.x * 360}
-                cy={p.y * 180}
-                r={r}
-                className="ac-map__pin"
-                data-enquiry={c.enquiries > 0 || undefined}
-              >
-                {/* One string child, not several. React splits multi-child
-                    text with comment markers and a <title> reconciles
-                    differently from a normal element, which showed up as a
-                    hydration mismatch that discarded the whole tree. */}
-                <title>{`${c.city} — ${c.n} session${c.n === 1 ? "" : "s"}${
-                  c.enquiries ? `, ${c.enquiries} enquiry` : ""
-                }`}</title>
-              </circle>
-            </g>
-          );
-        })}
-      </svg>
-      <ul className="ac-map__key">
-        {cities
-          .slice()
-          .sort((a, b) => b.n - a.n)
-          .slice(0, 5)
-          .map((c) => (
-            <li key={c.city + c.lat}>
-              <button type="button" className="ac-map__city" onClick={() => onPick(c.id)}>
-                {c.city} <span className="num">{c.n}</span>
-              </button>
-            </li>
-          ))}
-      </ul>
-    </div>
-  );
+  }
+  return [...byCity.values()];
 }
 
 function Detail({
   session: s,
   now,
   excluded,
+  mapTheme,
   onExclude,
   onClose,
 }: {
   session: Session;
   now: string;
   excluded: boolean;
+  mapTheme: MapTheme;
   onExclude: () => void;
   onClose: () => void;
 }) {
-  const p = project(s.lat, s.lng);
+  /* Escape closes it. Previously the only way out was the scrim, and the
+     scrim covered the whole viewport including behind the panel, so a click
+     anywhere near the sheet dismissed it. */
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
   return (
     <div className="ac-detail" role="dialog" aria-modal="true" aria-label="Session detail">
       <button type="button" className="ac-detail__scrim" aria-label="Close" onClick={onClose} />
@@ -554,16 +520,32 @@ function Detail({
           <span aria-hidden>{flag(s.countryIso) ?? "•"}</span> {s.city}, {s.country}
         </h3>
 
-        <svg viewBox="0 0 360 180" className="ac-detail__map" role="img" aria-label={`Location of ${s.city}`}>
-          {[60, 120, 180, 240, 300].map((x) => (
-            <line key={x} x1={x} y1={0} x2={x} y2={180} className="ac-map__grid" />
-          ))}
-          {[45, 90, 135].map((y) => (
-            <line key={y} x1={0} y1={y} x2={360} y2={y} className="ac-map__grid" />
-          ))}
-          <circle cx={p.x * 360} cy={p.y * 180} r={10} className="ac-map__halo" data-enquiry />
-          <circle cx={p.x * 360} cy={p.y * 180} r={4} className="ac-map__pin" data-enquiry />
-        </svg>
+        {/* Was the entire planet in a 360x180 SVG, which answered "which
+            continent" and nothing else. Now the same map component, focused
+            on the session, with the accuracy ring drawn at its real size so
+            the area is the answer rather than the dot. */}
+        <div className="ac-detail__mapwrap">
+          <GeoMap
+            points={[
+              {
+                id: s.id,
+                lat: s.lat,
+                lng: s.lng,
+                label: s.city,
+                accent: s.enquired,
+              },
+            ]}
+            theme={mapTheme}
+            focus={{ lat: s.lat, lng: s.lng, zoom: 9 }}
+            height={240}
+            ariaLabel={`Map of the area around ${s.city}`}
+          />
+          <p className="ac-detail__accuracy">
+            Somewhere in this ring. An IP places somebody to about{" "}
+            {CITY_ACCURACY_KM}km, further on mobile networks, so the circle is
+            the honest answer and the dot is only its centre.
+          </p>
+        </div>
 
         <dl className="ac-facts">
           <Fact k="IP address" v={s.ip} mono />
