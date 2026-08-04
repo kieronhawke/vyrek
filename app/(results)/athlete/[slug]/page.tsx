@@ -20,6 +20,7 @@ import { AthleteExport } from "@/components/results/export/athlete-export";
 import { StatTile, MicroLabel, Nationality, Time, Delta } from "@/components/results/ui/primitives";
 import { CoachingCta } from "@/components/results/coaching-cta";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { showDemoLabels } from "@/lib/results/demo-labels";
 
 /**
  * `/athlete/{slug}` — profile and full history.
@@ -265,7 +266,10 @@ export default async function AthletePage({ params }: { params: Promise<{ slug: 
         </div>
       </header>
 
-      {athlete.isPlaceholder ? (
+      {/* The wording is about synthetic data, so it belongs with the other demo
+          labels rather than with the profile-claim feature: in live mode a
+          placeholder profile is an unclaimed real athlete, not a demo one. */}
+      {athlete.isPlaceholder && showDemoLabels() ? (
         <p className="mt-4 rounded-md border border-suth-warning/30 bg-suth-warning/5 px-4 py-2.5 text-xs text-suth-text-secondary">
           <span className="font-semibold text-suth-warning">Demo placeholder.</span>{" "}
           This profile holds synthetic data pending a profile claim. The times below are not a
