@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cache } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getResultsSource } from "@/lib/results";
@@ -30,13 +31,24 @@ import { RelatedLinks } from "@/components/results/ui/related-links";
 
 export const revalidate = 3600;
 
+
+/**
+ * One read of the profile per request.
+ *
+ * ⚠️ `generateMetadata` and the page body both need the athlete, and Next calls
+ * them separately — so this ran twice, and on a career of any size that is two
+ * of the most expensive reads on the site for one page view. `cache` dedupes
+ * them within a request.
+ */
+const loadAthlete = cache(async (slug: string) => getResultsSource().getAthlete(slug));
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const athlete = await getResultsSource().getAthlete(slug);
+  const athlete = await loadAthlete(slug);
   if (!athlete) return { title: "Athlete not found" };
 
   const pb = athlete.pbSeconds ? formatTime(athlete.pbSeconds) : null;
@@ -60,19 +72,28 @@ export async function generateMetadata({
   };
 }
 
+/** How many recent races to pull full splits for, for the career chart. */
+const CAREER_SPLIT_DEPTH = 8;
+
 export default async function AthletePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const source = getResultsSource();
-  const athlete = await source.getAthlete(slug);
+  const athlete = await loadAthlete(slug);
   if (!athlete) notFound();
 
   const now = new Date();
   const races = [...athlete.races].sort((a, b) => b.date.localeCompare(a.date));
   const finished = races.filter((r) => r.finishSeconds > 0);
 
-  // Career splits, for the per-station axes. One getResult per race; they hit
-  // the same cached event shards, so this stays cheap.
-  const details = await Promise.all(finished.map((r) => source.getResult(r.resultId)));
+  // Career splits, for the per-station axes.
+  //
+  // ⚠️ Bounded. Each `getResult` is about six queries, so a long career meant
+  // ninety of them for one page — and splits exist on 21 of 630,287 results,
+  // so almost all of that work finds nothing. The chart plots a trend, and the
+  // most recent races are the ones a trend is about.
+  const details = await Promise.all(
+    finished.slice(0, CAREER_SPLIT_DEPTH).map((r) => source.getResult(r.resultId)),
+  );
   const latestId = finished[0]?.resultId;
 
   const splits: CareerSplit[] = [];

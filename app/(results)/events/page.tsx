@@ -39,6 +39,9 @@ const SEASONS = [
   { value: "s7", label: "Season 7" },
 ];
 
+/** Events shown before the page asks you to filter or opt into the lot. */
+const RECENT_LIMIT = 60;
+
 const REGIONS = [
   { value: "", label: "Worldwide" },
   { value: "Europe", label: "Europe" },
@@ -48,9 +51,9 @@ const REGIONS = [
 export default async function EventsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ season?: string; region?: string }>;
+  searchParams: Promise<{ season?: string; region?: string; all?: string }>;
 }) {
-  const { season = "", region = "" } = await searchParams;
+  const { season = "", region = "", all = "" } = await searchParams;
   const now = new Date();
 
   const events = await getResultsSource().listEvents({
@@ -58,8 +61,17 @@ export default async function EventsPage({
     ...(region ? { region } : {}),
   });
 
-  const grouped = new Map<string, typeof events>();
-  for (const event of events) {
+  // ⚠️ Bounded by default.
+  //
+  // Rendering all 223 events produced 1.4 MB of HTML for one page — every
+  // navigation to or from it felt heavy, and nobody scrolls to 2019 to find
+  // this weekend's results. The most recent races are what the page is for;
+  // the rest are a filter or a click away, and `?all=1` still renders the lot.
+  const showAll = all === "1" || Boolean(season) || Boolean(region);
+  const visible = showAll ? events : events.slice(0, RECENT_LIMIT);
+
+  const grouped = new Map<string, typeof visible>();
+  for (const event of visible) {
     const key = `${event.season.toUpperCase()} · ${event.year}`;
     if (!grouped.has(key)) grouped.set(key, []);
     grouped.get(key)!.push(event);
@@ -85,7 +97,17 @@ export default async function EventsPage({
           HYROX Events
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-suth-text-secondary">
-          Every race across three seasons. {events.length} events shown.
+          {showAll
+            ? `Every race we hold results for. ${visible.length} events.`
+            : `The ${visible.length} most recent races, of ${events.length}.`}
+          {showAll ? null : (
+            <>
+              {" "}
+              <Link href="/events?all=1" className="text-suth-accent underline">
+                Show every event
+              </Link>
+            </>
+          )}
         </p>
       </header>
 

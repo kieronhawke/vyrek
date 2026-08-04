@@ -256,3 +256,35 @@ describe("enrichment, end to end", () => {
     expect(event?.region).toBeFalsy();
   });
 });
+
+describe("a race with results has happened", () => {
+  it("closes an upcoming event that holds results", () => {
+    // Closing needed a past date or a past season, and the current season's
+    // races have neither — so Delhi, Sydney and Hangzhou sat as `upcoming`
+    // holding 21,790 results between them, invisible to every results page.
+    expect(statusFor("upcoming", null, new Date(), { hasResults: true })).toBe("final");
+    expect(statusFor("upcoming", "2099-01-01T00:00:00Z", new Date(), { hasResults: true }))
+      .toBe("final");
+  });
+
+  it("leaves a race that is happening now alone", () => {
+    // Results arrive while a live race runs; closing it mid-flight would put a
+    // podium on an event still being contested.
+    for (const status of ["live", "updates_paused"] as const) {
+      expect(statusFor(status, null, new Date(), { hasResults: true })).toBe(status);
+    }
+  });
+
+  it("still leaves a genuinely upcoming race upcoming", () => {
+    expect(statusFor("upcoming", "2099-01-01T00:00:00Z", new Date(), { hasResults: false }))
+      .toBe("upcoming");
+  });
+
+  it("reopens a future event that was closed with nothing in it", () => {
+    // HYROX publishes next season's calendar early, so season number alone
+    // marked an event four months away as final with no results in it — and it
+    // then sat at the top of "latest finished races".
+    expect(statusFor("final", "2099-01-01T00:00:00Z", new Date(), { hasResults: false }))
+      .toBe("upcoming");
+  });
+});

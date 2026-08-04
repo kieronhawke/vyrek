@@ -159,6 +159,18 @@ export function statusFor(
   if (current === "final" && opts.hasResults === false && endsAt) {
     if (new Date(endsAt).getTime() > now.getTime()) return "upcoming";
   }
+
+  // ⚠️ And the converse: a race with results has happened.
+  //
+  // Closing an event needed either a past date or a past season, and the
+  // current season's races have neither — so Delhi, Sydney and Hangzhou sat as
+  // `upcoming` holding 21,790 results between them. An upcoming race has no
+  // results by definition; having them is the strongest evidence there is.
+  //
+  // `live` and `updates_paused` are left alone: those are races happening now,
+  // and their results arrive while they run.
+  if (current === "upcoming" && opts.hasResults === true) return "final";
+
   if (current !== "upcoming") return current;
   if (!endsAt) return current;
   return new Date(endsAt).getTime() < now.getTime() ? "final" : "upcoming";
