@@ -3076,3 +3076,101 @@
   [data-surface="control"] .lp-receipt { animation: none; }
   [data-surface="control"] .lp-rail__fill { transition: none; }
 }
+
+/* ── Communications editor ──────────────────────────────────────────────
+   Written for somebody editing wording, not markup: the preview is always
+   on screen, tokens are buttons, and the cost of a text is stated before
+   it is sent rather than discovered on the bill. */
+[data-surface="control"] .ce { display: grid; gap: var(--space-3); }
+[data-surface="control"] .ce-summary {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2);
+  font-size: var(--text-sm); color: var(--text-muted);
+}
+[data-surface="control"] .ce-summary strong { color: var(--text); font-size: var(--text-lg); }
+[data-surface="control"] .ce-reset-all {
+  margin-left: auto; min-height: 36px; padding: 0 12px; border-radius: 999px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); font-size: var(--text-xs); cursor: pointer;
+}
+[data-surface="control"] .ce-stage__title {
+  margin: 0 0 8px; font-size: var(--text-2xs); text-transform: uppercase;
+  letter-spacing: 0.18em; color: var(--accent-text, var(--accent));
+}
+[data-surface="control"] .ce-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+[data-surface="control"] .ce-card {
+  border: 1px solid var(--border); border-radius: 10px; background: var(--surface);
+  overflow: hidden;
+}
+[data-surface="control"] .ce-card[data-open] { border-color: var(--border-strong); }
+[data-surface="control"] .ce-card__head {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  min-height: 52px; padding: 0 var(--space-2);
+  background: transparent; border: 0; color: var(--text);
+  text-align: left; cursor: pointer; font: inherit;
+}
+[data-surface="control"] .ce-card__chan {
+  flex: none; padding: 3px 8px; border-radius: 999px; font-size: var(--text-2xs);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  border: 1px solid var(--border); color: var(--text-muted);
+}
+[data-surface="control"] .ce-card__chan[data-chan="sms"] { border-color: var(--accent); color: var(--accent-text, var(--accent)); }
+[data-surface="control"] .ce-card__when { flex: 1; min-width: 0; font-size: var(--text-sm); color: var(--text-muted); }
+[data-surface="control"] .ce-card__edited {
+  flex: none; font-size: var(--text-2xs); text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--accent-text, var(--accent));
+}
+[data-surface="control"] .ce-card__chev { flex: none; color: var(--text-muted); font-size: 18px; }
+[data-surface="control"] .ce-card__body {
+  display: grid; gap: var(--space-2);
+  padding: var(--space-2); border-top: 1px solid var(--border);
+}
+[data-surface="control"] .ce-field { display: grid; gap: 6px; }
+[data-surface="control"] .ce-label {
+  font-size: var(--text-2xs); text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+[data-surface="control"] .ce-input,
+[data-surface="control"] .ce-textarea {
+  width: 100%; padding: 10px 12px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--bg); color: var(--text);
+  font: inherit; line-height: 1.55; resize: vertical;
+}
+[data-surface="control"] .ce-input:focus,
+[data-surface="control"] .ce-textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+[data-surface="control"] .ce-tokens { display: grid; gap: 6px; }
+[data-surface="control"] .ce-tokens__row { display: flex; flex-wrap: wrap; gap: 6px; }
+[data-surface="control"] .ce-token {
+  min-height: 36px; padding: 0 12px; border-radius: 999px;
+  border: 1px dashed var(--accent); background: transparent;
+  color: var(--accent-text, var(--accent)); font-size: var(--text-xs);
+  font-weight: 600; cursor: pointer;
+}
+[data-surface="control"] .ce-token:hover { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+[data-surface="control"] .ce-preview {
+  display: grid; gap: 6px; padding: var(--space-2);
+  border-radius: 8px; background: var(--surface-raised); border: 1px solid var(--border);
+}
+[data-surface="control"] .ce-preview__text {
+  margin: 0; white-space: pre-wrap; line-height: 1.6; font-size: var(--text-sm);
+}
+[data-surface="control"] .ce-meta { margin: 0; font-size: var(--text-xs); color: var(--text-muted); }
+[data-surface="control"] .ce-meta[data-warn] { color: var(--warn, #f5b83c); }
+[data-surface="control"] .ce-warn {
+  margin: 0; padding: 10px 12px; border-radius: 8px; font-size: var(--text-sm);
+  border: 1px solid var(--warn, #f5b83c); color: var(--warn, #f5b83c);
+}
+[data-surface="control"] .ce-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+[data-surface="control"] .ce-btn {
+  min-height: 44px; padding: 0 16px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface-raised);
+  color: var(--text); font-size: var(--text-sm); font-weight: 600; cursor: pointer;
+}
+[data-surface="control"] .ce-btn[data-primary] {
+  background: var(--accent); border-color: var(--accent); color: var(--accent-ink, #0a0a0a);
+}
+[data-surface="control"] .ce-btn[data-muted] { background: transparent; color: var(--text-muted); font-weight: 500; }
+[data-surface="control"] .ce-btn:disabled { opacity: 0.45; cursor: default; }
+[data-surface="control"] .ce-hint { color: var(--text-muted); font-size: var(--text-sm); }
+@media (pointer: fine) {
+  [data-surface="control"] .ce-btn, [data-surface="control"] .ce-token { min-height: 34px; }
+}

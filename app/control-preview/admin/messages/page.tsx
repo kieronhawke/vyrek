@@ -1,3 +1,4 @@
+import { CommsEditor } from "@/components/control/comms-editor";
 import { AdminShell } from "@/components/control/admin-shell";
 import { DataTable, type Column } from "@/components/control/data-table";
 import { MESSAGE_ROWS, type MessageRow } from "@/lib/control/admin-fixtures";
@@ -36,6 +37,11 @@ const INBOX: Column<MessageRow>[] = [
 export default function AdminMessages() {
   return (
     <AdminShell base={BASE} title="Messages">
+      {/* Editing the words, for somebody who does not write code. Tokens are
+          buttons, the preview is always on, and a text says what it costs
+          before it is sent. */}
+      <CommsEditor />
+
       <StatStrip
         stats={[
           {
