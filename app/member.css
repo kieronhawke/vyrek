@@ -548,9 +548,24 @@
   cursor: pointer;
 }
 
+/*
+ * Seven columns is a phone pattern that does not survive being widened.
+ *
+ * At 1000px it gave each day about 130px: "Mark done" wrapped onto two
+ * lines, a coach note wrapped onto four, and the columns ended at wildly
+ * different heights with a third of the row empty. The week shape is already
+ * carried by the block bar above and the strip on Today, so readability wins
+ * here — each day gets room enough to read a session and tick it off.
+ */
+@media (min-width: 700px) {
+  .week__grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--space-2);
+  }
+}
+
 @media (min-width: 1024px) {
-  .week__grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
-  .week__day { padding: 10px; }
+  .week__day { padding: var(--space-2); }
 }
 
 /* ── First-run walkthrough ────────────────────────────────────────────────
@@ -1921,13 +1936,26 @@
    then the next, so the mobile reading order survives and the width gets
    used. The volume chart is the exception: it wants to be wide. */
 @media (min-width: 1024px) {
+  /*
+   * Columns, not a grid, for the same reason as Account: a grid aligns its
+   * rows, so the short summary card beside the tall stations list left a
+   * gap the height of the difference — several hundred pixels of nothing in
+   * the left column while the right one kept going.
+   */
   .progress-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 0 var(--space-4);
-    align-items: start;
+    column-count: 2;
+    column-gap: var(--space-4);
   }
-  .progress-grid > section[data-wide] { grid-column: 1 / -1; }
+  .progress-grid > section {
+    break-inside: avoid;
+    margin-bottom: var(--space-4) !important;
+  }
+  /* The volume chart is the one thing that wants the full width, so it sits
+     outside the column flow. */
+  .progress-grid > section[data-wide] {
+    column-span: all;
+    break-inside: avoid;
+  }
 }
 
 /* Managing a booked call from the thread it was booked in. Quieter than the
@@ -1956,3 +1984,27 @@
   text-underline-offset: 2px;
 }
 .cbook__drop:hover { color: var(--danger); }
+
+
+/* ── Stat tiles ───────────────────────────────────────────────────────
+   Capped rather than stretched. Three tiles filling a monitor put a
+   two-character number in the middle of a 330px box with its label a long
+   way from it. */
+.member-stattiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: var(--space-1);
+}
+
+@media (min-width: 700px) {
+  .member-stattiles {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 220px));
+  }
+}
+
+/* Station thumbnails have room to be legible on a desktop. At 52px a photo of
+   somebody mid-sled-push is a dark smudge; the point of having a photo at all
+   is that the row is identifiable at a glance. */
+@media (min-width: 1024px) {
+  .member-main { --station-thumb: 72px; }
+}

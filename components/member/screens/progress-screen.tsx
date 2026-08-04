@@ -11,6 +11,7 @@ import {
   StatTile,
   StatTiles,
 } from "@/components/member/ui";
+import Image from "next/image";
 import { photoForStation, pickPhoto, HEROES, type StationSlug } from "@/lib/photo-library";
 
 /**
@@ -137,26 +138,39 @@ export function ProgressScreen() {
                       style={{
                         position: "relative",
                         flex: "0 0 auto",
-                        width: 52,
-                        height: 52,
+                        width: "var(--station-thumb, 52px)",
+                        height: "var(--station-thumb, 52px)",
                         borderRadius: "var(--radius-card)",
                         overflow: "hidden",
                         background: "var(--bg)",
                       }}
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      {/*
+                        52px thumbnails. As raw <img> these bypassed the
+                        optimiser and pulled the full 1200x1800 originals —
+                        about a megabyte of photography to draw eight postage
+                        stamps, on a screen a member opens on mobile data.
+
+                        `fill` rather than width/height because the parent is
+                        already a fixed 52px box with `position: relative`,
+                        and `sizes` tells the optimiser 52px is all it will
+                        ever need to serve.
+
+                        Not greyscaled any more either: at this size, a dark
+                        photo desaturated is a black square, and eight
+                        identical black squares tell the athlete nothing about
+                        which station they are looking at.
+                      */}
+                      <Image
                         src={photo.src}
                         alt=""
-                        width={52}
-                        height={52}
-                        loading="lazy"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          filter: "grayscale(1)",
-                        }}
+                        fill
+                        sizes="72px"
+                        /* Lifted a little. These are dark action frames and
+                           at thumbnail size, unlifted, eight of them read as
+                           eight identical black squares — which tells the
+                           athlete nothing about which station a row is. */
+                        style={{ objectFit: "cover", filter: "brightness(1.35) contrast(1.05)" }}
                       />
                     </div>
                   ) : null}
