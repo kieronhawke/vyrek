@@ -229,6 +229,25 @@ function main() {
 
   const eventIndex: unknown[] = [];
   const athleteRaces = new Map<string, unknown[]>();
+
+  /*
+   * ⚠️ EVERY ATHLETE WE LINK TO MUST HAVE A PAGE.
+   *
+   * The athlete index was built from `pool` — the 4,000 profiled athletes who
+   * recur across events. But most entrants are "one-off" athletes minted
+   * inline with a slug like `samuel-johnson-s8-2025-stockholm-158`, and those
+   * never reached `pool`, so they never reached `athletes.json` and
+   * `/athlete/[slug]` 404'd for them.
+   *
+   * Meanwhile the ranking pages linked to them regardless: 6 of the 16 athlete
+   * links on /rankings were dead — 38%, on a primary results surface, and
+   * invisible unless you actually followed them.
+   *
+   * This registry records every athlete a result is written for, whoever they
+   * are, and the index is built from it. The invariant is simply that the two
+   * cannot disagree.
+   */
+  const racedAthletes = new Map<string, PoolAthlete>();
   let totalResults = 0;
 
   // Reference splits per division, accumulated as we go. Precomputing these at
@@ -405,6 +424,7 @@ function main() {
           bucket.rox.push(row.roxzoneSeconds);
         }
 
+        racedAthletes.set(r.athlete.slug, r.athlete);
         if (!athleteRaces.has(r.athlete.slug)) athleteRaces.set(r.athlete.slug, []);
         athleteRaces.get(r.athlete.slug)!.push({
           eventSlug: slug, eventCity: seed.city, season: seed.season, year: seed.year,
@@ -470,9 +490,13 @@ function main() {
     });
   }
 
-  // Athlete index: only those with a race, sorted for stable output.
-  const athleteIndex = pool
+  /*
+   * Built from `racedAthletes`, not `pool`: see the note where that map is
+   * declared. Sorted so the output is stable between runs with the same seed.
+   */
+  const athleteIndex = [...racedAthletes.values()]
     .filter((a) => athleteRaces.has(a.slug))
+    .sort((a, b) => a.slug.localeCompare(b.slug))
     .map((a) => ({
       slug: a.slug, name: a.name, countryIso: a.countryIso, gender: a.gender,
       ageGroup: a.ageGroup, isPlaceholder: a.isPlaceholder ?? false,

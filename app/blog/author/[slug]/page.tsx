@@ -10,6 +10,7 @@ import { listPostsByAuthor } from "@/lib/blog/posts";
 import { AUTHORS } from "@/lib/blog/authors";
 import { clampDescription } from "@/lib/seo/description";
 import { authorUrl, blogIndexUrl, siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 import {
   authorPersonJsonLd,
   breadcrumbJsonLd,
@@ -39,6 +40,9 @@ export async function generateMetadata({
     description: clampDescription(author.bio),
     alternates: { canonical: authorUrl(slug) },
     openGraph: {
+      // A child `openGraph` replaces the root layout's entirely rather
+      // than merging, so without this the page inherits no social card.
+      images: ogImages(),
       title: `Posts by ${author.name}`,
       description: clampDescription(author.bio),
       url: authorUrl(slug),

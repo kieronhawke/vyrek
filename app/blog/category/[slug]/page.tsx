@@ -7,6 +7,7 @@ import { Eyebrow } from "@/components/shared/eyebrow";
 import { Breadcrumb } from "@/components/blog/breadcrumb";
 import { PostCard } from "@/components/blog/post-card";
 import { PostFinalCta } from "@/components/blog/post-final-cta";
+import { ogImages } from "@/lib/seo/og";
 import {
   listPostsByCategory,
   CATEGORIES,
@@ -43,6 +44,9 @@ export async function generateMetadata({
     description: cat.metaDescription,
     alternates: { canonical: categoryUrl(slug) },
     openGraph: {
+      // A child `openGraph` replaces the root layout's entirely rather
+      // than merging, so without this the page inherits no social card.
+      images: ogImages(),
       title,
       description: cat.metaDescription,
       url: categoryUrl(slug),

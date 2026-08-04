@@ -7,6 +7,7 @@ import { formatCount } from "@/lib/results/format";
 import { StartersList } from "@/components/results/starters/starters-list";
 import { MicroLabel, StatusBadge, EmptyState } from "@/components/results/ui/primitives";
 import { RelatedLinks } from "@/components/results/ui/related-links";
+import { ogImages } from "@/lib/seo/og";
 
 /**
  * `/starters/{event}` — start lists by division and wave.
@@ -33,7 +34,10 @@ export async function generateMetadata({
       `Every wave and division for HYROX ${event.city} ${event.year} — `
       + `${formatCount(event.totalAthletes)} athletes, searchable by name.`,
     alternates: { canonical: `/starters/${slug}` },
-    openGraph: { url: `${siteUrl()}/starters/${slug}`, type: "website" },
+    openGraph: {
+      // A child `openGraph` replaces the root layout's entirely rather
+      // than merging, so without this the page inherits no social card.
+      images: ogImages(), url: `${siteUrl()}/starters/${slug}`, type: "website" },
   };
 }
 

@@ -23,6 +23,7 @@ import { PLAN_TEMPLATES } from "@/lib/plan-templates";
 import { STATIONS } from "@/lib/hyrox-stations";
 import { listPostMeta } from "@/lib/blog/posts";
 import { siteUrl } from "@/lib/blog/urls";
+import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 86400;
 export const dynamicParams = false;
@@ -45,6 +46,9 @@ export async function generateMetadata({
     description: t.hook,
     alternates: { canonical: url },
     openGraph: {
+      // A child `openGraph` replaces the root layout's entirely rather
+      // than merging, so without this the page inherits no social card.
+      images: ogImages(),
       title: t.seoTitle ?? t.title,
       description: t.hook,
       url,
