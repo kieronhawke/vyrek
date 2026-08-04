@@ -232,6 +232,38 @@ export function nextActions(stage: LeadStage): LeadAction[] {
   }
 }
 
+/* ── One button, not six ────────────────────────────────────────────────
+   The first version rendered every action a stage offered, plus a "move to
+   any stage" row, plus the playbook. Six or seven controls per card, on a
+   list of a dozen leads, which is a wall of buttons rather than a decision.
+
+   So the screen asks one question per lead and offers one answer. Everything
+   else — the alternatives, the overrides, closing — moves behind Edit, where
+   it is still one click away and no longer competing for attention.
+
+   THE ONE EXCEPTION is the call outcome. "How did it go" is a genuine fork
+   with three answers and no default, and hiding two of them behind Edit would
+   make the most important moment in the pipeline the fiddliest. A stage can
+   say so, and only that one does. */
+
+/** True when the stage is a question with several equal answers. */
+export function isFork(stage: LeadStage): boolean {
+  return stage === "call_made";
+}
+
+/** The single action the card leads with. Null at the end of the pipeline. */
+export function primaryAction(stage: LeadStage): LeadAction | null {
+  return nextActions(stage)[0] ?? null;
+}
+
+/**
+ * Everything else this stage can do, for the Edit panel.
+ * Empty at a fork, because the fork's answers are all on the card already.
+ */
+export function otherActions(stage: LeadStage): LeadAction[] {
+  return isFork(stage) ? [] : nextActions(stage).slice(1);
+}
+
 /** Whether a stage still needs Ben. Drives the "needs you" count. */
 export function needsAction(stage: LeadStage): boolean {
   return stage !== "client" && stage !== "lost" && stage !== "onboarding_pending";

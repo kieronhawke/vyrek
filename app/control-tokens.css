@@ -2987,6 +2987,7 @@
   margin: 0 0 var(--space-2); font-size: var(--text-sm); color: var(--text-muted);
 }
 [data-surface="control"] .lp-summary strong { color: var(--text); font-size: var(--text-lg); }
+[data-surface="control"] .lp-summary span[data-tone="warn"] strong { color: var(--warn, #f5b83c); }
 [data-surface="control"] .lp-reset {
   margin-left: auto; min-height: 32px; padding: 0 12px; border-radius: 999px;
   border: 1px solid var(--border); background: transparent;
@@ -3027,15 +3028,6 @@
   border-color: var(--accent); color: var(--accent-text, var(--accent));
 }
 
-[data-surface="control"] .lp-rail {
-  height: 4px; border-radius: 999px; background: var(--border); overflow: hidden;
-}
-[data-surface="control"] .lp-rail__fill {
-  height: 100%; background: var(--accent);
-  transition: width 420ms cubic-bezier(.22,.61,.36,1);
-}
-[data-surface="control"] .lp-rail[data-lost="true"] .lp-rail__fill { background: var(--text-muted); }
-
 [data-surface="control"] .lp-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 [data-surface="control"] .lp-btn {
   min-height: 44px; padding: 0 14px; border-radius: 999px;
@@ -3074,7 +3066,6 @@
 @keyframes lp-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   [data-surface="control"] .lp-receipt { animation: none; }
-  [data-surface="control"] .lp-rail__fill { transition: none; }
 }
 
 /* ── Communications editor ──────────────────────────────────────────────
@@ -3176,42 +3167,129 @@
 }
 
 /* Pipeline guidance, override and the outstanding flag. */
-[data-surface="control"] .lp-card__overdue {
-  margin: 4px 0 0; font-size: var(--text-xs); color: var(--warn, #f5b83c);
+/* ── Lead pipeline: the simplified card ─────────────────────────────────
+   The guide panel and the ten-button stage override that used to live here
+   moved behind Edit. What replaced them is a booked call, one alert line, one
+   button, and a collapsed timeline. */
+
+[data-surface="control"] .lp-tags {
+  display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
 }
-[data-surface="control"] .lp-guide,
-[data-surface="control"] .lp-override { font-size: var(--text-sm); }
-[data-surface="control"] .lp-guide__toggle,
-[data-surface="control"] .lp-override__toggle {
+[data-surface="control"] .lp-manual {
+  padding: 2px 8px; border-radius: 999px; font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  border: 1px dashed var(--border); color: var(--text-faint);
+}
+[data-surface="control"] .lp-card[data-alert] { border-color: var(--warn, #f5b83c); }
+[data-surface="control"] .lp-card[data-quiet] { opacity: 0.78; }
+
+/* The booked slot. Leads book through our own system before they land here,
+   so this is a fact about them, not something to chase. */
+[data-surface="control"] .lp-call {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px;
+  margin: 0; padding: 8px 10px; border-radius: 8px;
+  background: var(--surface-raised); border: 1px solid var(--border);
+  font-size: var(--text-sm);
+}
+[data-surface="control"] .lp-call__when { font-weight: 620; color: var(--text); }
+[data-surface="control"] .lp-call__rel { font-size: var(--text-xs); color: var(--text-faint); }
+[data-surface="control"] .lp-call[data-state="imminent"] {
+  border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+[data-surface="control"] .lp-call[data-state="passed"] { opacity: 0.65; }
+
+[data-surface="control"] .lp-alert {
+  margin: 0; font-size: var(--text-sm); font-weight: 600;
+  color: var(--warn, #f5b83c);
+}
+[data-surface="control"] .lp-alert[data-tone="quiet"] {
+  font-weight: 500; color: var(--text-muted);
+}
+
+[data-surface="control"] .lp-btn[data-edit] {
+  margin-left: auto; color: var(--text-muted);
+}
+
+/* ── Timeline ─────────────────────────────────────────────────────────── */
+[data-surface="control"] .lp-timeline { font-size: var(--text-sm); }
+[data-surface="control"] .lp-timeline__toggle {
   cursor: pointer; color: var(--text-muted); font-size: var(--text-xs);
   padding: 4px 0; list-style: none;
 }
-[data-surface="control"] .lp-guide__toggle::-webkit-details-marker,
-[data-surface="control"] .lp-override__toggle::-webkit-details-marker { display: none; }
-[data-surface="control"] .lp-guide__toggle::before,
-[data-surface="control"] .lp-override__toggle::before { content: "▸ "; }
-[data-surface="control"] details[open] > .lp-guide__toggle::before,
-[data-surface="control"] details[open] > .lp-override__toggle::before { content: "▾ "; }
-[data-surface="control"] .lp-guide__body {
-  display: grid; gap: 8px; padding: 10px 12px; margin-top: 6px;
+[data-surface="control"] .lp-timeline__toggle::-webkit-details-marker { display: none; }
+[data-surface="control"] .lp-timeline__toggle::before { content: "▸ "; }
+[data-surface="control"] details[open] > .lp-timeline__toggle::before { content: "▾ "; }
+[data-surface="control"] .lp-timeline__none {
+  margin: 0; font-size: var(--text-xs); color: var(--text-faint);
+}
+[data-surface="control"] .lp-timeline__list {
+  list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px;
+}
+[data-surface="control"] .lp-ev {
+  display: grid; grid-template-columns: 52px 1fr auto; gap: 8px;
+  align-items: baseline; padding: 6px 8px; border-radius: 6px;
+  background: var(--surface-raised); font-size: var(--text-xs);
+  line-height: 1.5;
+}
+[data-surface="control"] .lp-ev__kind {
+  color: var(--text-faint); text-transform: uppercase;
+  letter-spacing: 0.04em; font-size: 10px;
+}
+[data-surface="control"] .lp-ev__body { color: var(--text-muted); }
+[data-surface="control"] .lp-ev__when { color: var(--text-faint); white-space: nowrap; }
+/* A reply is the one thing on this list that means somebody is still
+   talking, so it is the one thing that gets a colour. */
+[data-surface="control"] .lp-ev[data-inbound] { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+[data-surface="control"] .lp-ev[data-inbound] .lp-ev__kind,
+[data-surface="control"] .lp-ev[data-inbound] .lp-ev__body { color: var(--text); }
+[data-surface="control"] .lp-ev[data-queued] { border: 1px dashed var(--border); background: transparent; }
+
+/* ── Edit panel ───────────────────────────────────────────────────────── */
+[data-surface="control"] .lp-edit {
+  display: grid; gap: 12px; margin-top: 8px; padding: 12px;
   border-radius: 8px; background: var(--surface-raised);
   border: 1px solid var(--border);
-  font-size: var(--text-sm); line-height: 1.55; color: var(--text-muted);
 }
-[data-surface="control"] .lp-guide__body p { margin: 0; }
-[data-surface="control"] .lp-guide__what { color: var(--text); font-weight: 600; }
-[data-surface="control"] .lp-guide__watch { color: var(--warn, #f5b83c); }
-[data-surface="control"] .lp-guide__next strong { color: var(--accent-text, var(--accent)); }
-[data-surface="control"] .lp-override__row {
-  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;
+[data-surface="control"] .lp-edit__row { display: grid; gap: 6px; }
+[data-surface="control"] .lp-edit__label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-faint);
 }
-[data-surface="control"] .lp-override__btn {
+[data-surface="control"] .lp-edit__btns { display: flex; flex-wrap: wrap; gap: 6px; }
+[data-surface="control"] .lp-edit__note {
+  margin: 0; font-size: var(--text-xs); color: var(--text-muted);
+}
+[data-surface="control"] .lp-chip {
   min-height: 32px; padding: 0 10px; border-radius: 999px;
   border: 1px solid var(--border); background: transparent;
   color: var(--text-muted); font-size: var(--text-xs); cursor: pointer;
 }
-[data-surface="control"] .lp-override__btn:disabled {
-  opacity: 0.4; cursor: default; border-color: var(--accent); color: var(--accent-text, var(--accent));
+[data-surface="control"] .lp-chip:hover { background: var(--surface); color: var(--text); }
+[data-surface="control"] .lp-chip:disabled {
+  opacity: 0.4; cursor: default;
+  border-color: var(--accent); color: var(--accent-text, var(--accent));
+}
+[data-surface="control"] .lp-switch {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 32px;
+  padding: 0 12px 0 8px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); font-size: var(--text-xs);
+}
+[data-surface="control"] .lp-switch__dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--text-faint); transition: background 120ms ease;
+}
+[data-surface="control"] .lp-switch[aria-checked="true"] { color: var(--text); }
+[data-surface="control"] .lp-switch[aria-checked="true"] .lp-switch__dot { background: var(--accent); }
+
+[data-surface="control"] .lp-closed { margin-top: var(--space-3); }
+[data-surface="control"] .lp-closed__toggle {
+  background: none; border: 0; padding: 4px 0; cursor: pointer;
+  color: var(--text-muted); font-size: var(--text-xs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-surface="control"] .lp-switch__dot { transition: none; }
 }
 
 /* ── Client hub ─────────────────────────────────────────────────────────
