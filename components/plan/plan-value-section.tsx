@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 /**
  * "What you unlock" — 5-item value list above the paywall.
@@ -47,18 +48,16 @@ const ITEMS: Item[] = [
 
 export function PlanValueSection() {
   const rootRef = useRef<HTMLElement>(null);
+  /* Reduced motion is read during render rather than set from an effect: the
+     old version painted hidden, then re-rendered visible, which is both a
+     wasted frame and what the set-state-in-effect rule was flagging. */
+  const reducedMotion = usePrefersReducedMotion();
   const [visible, setVisible] = useState(false);
+  const show = visible || reducedMotion;
 
   useEffect(() => {
     const el = rootRef.current;
-    if (!el) return;
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      setVisible(true);
-      return;
-    }
+    if (!el || reducedMotion) return;
     const obs = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -74,7 +73,7 @@ export function PlanValueSection() {
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <section
@@ -121,11 +120,11 @@ export function PlanValueSection() {
             key={item.number}
             className="will-change-[opacity,transform]"
             style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(12px)",
+              opacity: show ? 1 : 0,
+              transform: show ? "translateY(0)" : "translateY(12px)",
               transition:
                 "opacity 480ms cubic-bezier(0.16,1,0.3,1), transform 480ms cubic-bezier(0.16,1,0.3,1)",
-              transitionDelay: visible ? `${i * 80}ms` : "0ms",
+              transitionDelay: show ? `${i * 80}ms` : "0ms",
             }}
           >
             <div className="flex items-baseline gap-3">

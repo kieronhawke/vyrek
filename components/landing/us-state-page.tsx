@@ -178,7 +178,7 @@ export function UsStatePage({
               src={
                 variant === "hyrox"
                   ? "/media/images/track/pair-frontal-bw.jpg"
-                  : "/media/images/track/gym-coach-row-colour.jpg"
+                  : "/media/images/track/solo-watch-bw.jpg"
               }
               alt=""
               fill

@@ -113,8 +113,17 @@ export function variantCopy(
       </>
     ),
     sub: localSub(seo, name, "pt"),
-    heroImage: "/media/images/track/gym-coach-row-colour.jpg",
-    heroAlt: "Coach standing over an athlete mid rowing interval in the gym",
+    /* Was gym-coach-row-colour.jpg, the darkest image in the library at a mean
+       luminance of 62. Under the scrim it rendered as a black rectangle while
+       the Hyrox variant's shot (85) read fine — the hero was invisible on
+       every personal-trainer page and nobody could see why.
+
+       solo-watch-bw.jpg is the brightest at 154 and suits the copy better: an
+       athlete checking their own watch between reps is what self-directed
+       training looks like, where a coach standing over a rower is the thing
+       these pages argue you do not need. */
+    heroImage: "/media/images/track/solo-watch-bw.jpg",
+    heroAlt: "Athlete checking a training watch on the track between reps",
     cta: "Start the 3-minute quiz",
     benefits: [
       {
