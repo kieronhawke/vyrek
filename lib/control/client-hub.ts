@@ -30,6 +30,20 @@ export type Lens =
   | "racing"
   | CoachClient["tier"];
 
+/**
+ * Whether a query string is a lens we know.
+ *
+ * The page reads this from the URL, which anyone can type into. An unknown
+ * value falls back to "everyone" rather than filtering to nothing, because a
+ * mistyped link should show Ben his clients, not an empty screen.
+ */
+export function isLens(value: unknown): value is Lens {
+  return (
+    typeof value === "string" &&
+    (["all", "needs_plan", "payment", "racing", ...TIER_ORDER] as string[]).includes(value)
+  );
+}
+
 export function matchesLens(c: CoachClient, lens: Lens): boolean {
   switch (lens) {
     case "all":

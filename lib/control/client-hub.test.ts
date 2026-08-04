@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { listCoachClients } from "./fixtures";
-import { TIER_LABEL, clientLenses, humanDate, matchesLens, nextDeadline, paymentTone } from "./client-hub";
+import { TIER_LABEL, clientLenses, humanDate, isLens, matchesLens, nextDeadline, paymentTone } from "./client-hub";
 import type { CoachClient } from "./fixtures";
 
 const base = (over: Partial<CoachClient> = {}): CoachClient => ({
@@ -85,5 +85,21 @@ describe("humanDate", () => {
   it("passes rubbish through rather than guessing", () => {
     expect(humanDate("")).toBe("\u2014");
     expect(humanDate("not a date")).toBe("not a date");
+  });
+});
+
+describe("isLens", () => {
+  /**
+   * The lens is read off the URL, which anyone can type into. A mistyped link
+   * must show Ben his clients, not an empty screen — so an unknown value is
+   * rejected here and the page falls back to "everyone".
+   */
+  it("accepts the lenses that exist and rejects anything else", () => {
+    for (const good of ["all", "needs_plan", "payment", "racing", "elite", "coaching", "programming", "hub"]) {
+      expect(isLens(good), good).toBe(true);
+    }
+    for (const bad of ["", "ALL", "needsplan", "vip", "121", undefined, null, 3, {}]) {
+      expect(isLens(bad), String(bad)).toBe(false);
+    }
   });
 });

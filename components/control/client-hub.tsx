@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { listCoachClients } from "@/lib/control/fixtures";
 import {
@@ -33,20 +32,19 @@ import type { CoachClient } from "@/lib/control/fixtures";
  * when you want to sort or export the lot, but the default answers the
  * question Ben actually opens this with, which is "who needs me today".
  */
-export function ClientHub({ base }: { base: string }) {
-  const [clients, setClients] = useState<CoachClient[]>([]);
-  const params = useSearchParams();
-  /* /tracker redirects here with ?lens=needs_plan, so the page it replaced
-     still lands on the view it existed to show. */
-  const [lens, setLens] = useState<Lens>(
-    (params.get("lens") as Lens) || "all",
-  );
+export function ClientHub({ base, lens: initialLens = "all" }: { base: string; lens?: Lens }) {
+  /*
+   * The roster is a plain import, so it renders on the server. It used to be
+   * loaded in an effect, which meant the first paint was an empty board even
+   * once the Suspense boundary was gone.
+   */
+  const clients = useMemo(() => listCoachClients(), []);
+  /* The starting lens comes from the query, resolved on the server. /tracker
+     redirects here with ?lens=needs_plan so the page it replaced still lands
+     on the view it existed to show. */
+  const [lens, setLens] = useState<Lens>(initialLens);
   const [view, setView] = useState<"board" | "table">("board");
   const [q, setQ] = useState("");
-
-  useEffect(() => {
-    setClients(listCoachClients());
-  }, []);
 
   const lenses = useMemo(() => clientLenses(clients), [clients]);
 
