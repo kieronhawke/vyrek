@@ -1853,3 +1853,48 @@
   text-decoration: underline; text-underline-offset: 2px;
 }
 .cx__note { margin: 0; font-size: var(--text-xs); line-height: 1.5; color: var(--text-faint); }
+
+/* ── The remaining screens on a desktop ───────────────────────────────
+   Plan, Fuel, Progress and Connections were all single columns that simply
+   got wider, so on a monitor each was a ribbon of content with the rest of
+   the viewport empty. None of them needs a bespoke layout — they need their
+   repeating parts to use the width they are given. */
+
+@media (min-width: 1024px) {
+  /* Connections: cards, not a stack. Six providers in one column is a
+     scroll for information that fits on a screen. */
+  .conn__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-2);
+    align-items: start;
+  }
+
+  /* Prose above a grid still wants a reading measure. */
+  .conn__intro { max-width: var(--member-prose); }
+}
+
+/* Fuel: two columns, so the day's totals stay visible while the meals below
+   are scrolled. `.fuel` is already a flex column, so this is a change of
+   direction rather than a restructure of the component. */
+@media (min-width: 1024px) {
+  .fuel {
+    display: grid;
+    grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-3);
+  }
+  /* The totals card leads and stays put; the meals take the wider column. */
+  .fuel > .fuel__card:first-of-type { position: sticky; top: var(--space-4); }
+  .fuel > *:not(.fuel__card:first-of-type) { grid-column: 2; }
+  .fuel > .fuel__card:first-of-type { grid-column: 1; grid-row: 1 / span 99; }
+}
+
+/* A stat strip that stretches to fill a monitor puts a metre between the
+   number and its label. Cap the tiles instead. */
+@media (min-width: 1024px) {
+  .member-main .statTiles,
+  .member-main [class*="statTiles"] {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 220px));
+  }
+}

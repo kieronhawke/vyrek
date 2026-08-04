@@ -55,10 +55,18 @@ export function Connections() {
                    * one config value away — and Ben should be able to see that
                    * distinction on the page rather than in a repo.
                    */
+                  /*
+                   * This used to say "no other change needed", which was not
+                   * true: the route the button points at did not exist, so
+                   * adding the keys alone would have produced a 404. The route
+                   * exists now; what is still missing is somewhere to keep the
+                   * tokens the callback returns. Saying so beats a promise
+                   * nobody can check.
+                   */
                   <p className="conn__pending">
-                    Waiting on Strava API keys being added to the site settings.
-                    Once they are in, this becomes a working button — no other
-                    change needed.
+                    Waiting on Strava API keys, and on somewhere to store the
+                    connection. The sign-in handshake is built; it needs those
+                    two before it can carry anything across.
                   </p>
                 )
               ) : null}
