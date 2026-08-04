@@ -1519,6 +1519,52 @@
 
 [data-surface="control"] .cp-panel__body { display: grid; gap: var(--space-1); }
 
+/* ── Station benchmarks ───────────────────────────────────────────────
+   A table because it is one: four columns, eight rows, and every cell in a
+   column is the same kind of thing. Cards would have been prettier and would
+   have made "is the sled pull faster or slower than it was" a scan instead
+   of a glance. */
+[data-surface="control"] .cp-splits {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+[data-surface="control"] .cp-splits th,
+[data-surface="control"] .cp-splits td {
+  text-align: left;
+  padding: 5px 8px 5px 0;
+  border-bottom: 1px solid var(--border);
+}
+[data-surface="control"] .cp-splits thead th {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+[data-surface="control"] .cp-splits tbody th {
+  font-weight: 600;
+  white-space: nowrap;
+}
+[data-surface="control"] .cp-splitinput {
+  width: 84px;
+  padding: 5px 8px;
+  border-radius: var(--radius-input, 8px);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
+[data-surface="control"] .cp-splitchange {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+[data-surface="control"] .cp-splitchange[data-dir="faster"] { color: var(--accent-text); }
+[data-surface="control"] .cp-splitchange[data-dir="slower"] { color: var(--warning, #e0a33e); }
+
 [data-surface="control"] .cp-two {
   display: grid;
   grid-template-columns: minmax(0, 1fr);

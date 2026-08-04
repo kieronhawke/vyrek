@@ -6,6 +6,7 @@ import { useCollection } from "@/lib/control/store";
 import { CLIENTS } from "@/lib/control/fixtures";
 import { PAYMENT_STATE_LABEL, humanDate, paymentTone } from "@/lib/control/client-hub";
 import { HyroxLink } from "@/components/control/hyrox-link";
+import { ClientSplitsEditor } from "@/components/control/client-splits";
 import {
   PROFILE_KEY,
   bmi,
@@ -362,6 +363,11 @@ export function ClientProfile({
           </ul>
         )}
       </Panel>
+
+      {/* Where the athlete's Progress screen gets its eight station times.
+          They were a fixture — the same numbers for every client — so the
+          screen was wrong for everybody from the second week onwards. */}
+      <ClientSplitsEditor id={id} today={today} />
 
       <p className="cp-hint">
         {Math.round(completeness(profile) * 100)}% of the essentials are on

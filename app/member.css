@@ -561,6 +561,11 @@
   .week__grid {
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: var(--space-2);
+    /* Each day is as tall as its own session, not as tall as the longest one
+       in its row. Stretched, a rest day became a card-sized box with the word
+       "Rest" at the top and nothing under it, and Tuesday looked like it was
+       missing something Monday had. */
+    align-items: start;
   }
 }
 
