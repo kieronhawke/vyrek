@@ -74,16 +74,34 @@ export function formatRelativeDate(iso: string, now: Date, fallback = ""): strin
   const then = new Date(iso).getTime();
   if (!iso || Number.isNaN(then)) return fallback;
 
-  const days = Math.round((then - now.getTime()) / 86_400_000);
-  const abs = Math.abs(days);
-  if (abs === 0) return "today";
-  const unit = abs < 7 ? ["day", abs]
-    : abs < 31 ? ["week", Math.round(abs / 7)]
-    : abs < 365 ? ["month", Math.round(abs / 30)]
-    : ["year", Math.round(abs / 365)];
-  const [name, value] = unit as [string, number];
-  const plural = value === 1 ? name : `${name}s`;
-  return days < 0 ? `${value} ${plural} ago` : `in ${value} ${plural}`;
+  const ms = then - now.getTime();
+  const ahead = ms >= 0;
+  const abs = Math.abs(ms);
+
+  // ⚠️ Hours and minutes, not just days.
+  //
+  // "today" is the least useful thing to tell somebody whose race is tomorrow
+  // morning. The unit shrinks as the race approaches — "in 3 days", "in 20
+  // hours", "in 40 minutes" — because that is the difference between a date in
+  // a list and a countdown, and a countdown is what the day before a race
+  // actually feels like.
+  const minutes = Math.round(abs / 60_000);
+  if (minutes < 1) return ahead ? "any moment" : "just now";
+  if (minutes < 60) return phrase(minutes, "minute", ahead);
+
+  const hours = Math.round(abs / 3_600_000);
+  if (hours < 24) return phrase(hours, "hour", ahead);
+
+  const days = Math.round(abs / 86_400_000);
+  if (days < 7) return phrase(days, "day", ahead);
+  if (days < 31) return phrase(Math.round(days / 7), "week", ahead);
+  if (days < 365) return phrase(Math.round(days / 30), "month", ahead);
+  return phrase(Math.round(days / 365), "year", ahead);
+}
+
+function phrase(value: number, unit: string, ahead: boolean): string {
+  const noun = value === 1 ? unit : `${unit}s`;
+  return ahead ? `in ${value} ${noun}` : `${value} ${noun} ago`;
 }
 
 const FLAG_OFFSET = 0x1f1e6 - "a".charCodeAt(0);

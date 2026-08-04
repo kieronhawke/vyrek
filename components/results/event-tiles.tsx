@@ -2,6 +2,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Time, StatusBadge, MicroLabel } from "./ui/primitives";
 import { CityMark } from "./ui/city-mark";
+import { Countdown } from "./countdown";
 import { formatCount, formatRelativeDate } from "@/lib/results/format";
 import type { EventSummary, EventDivisionSummary } from "@/lib/results/source";
 
@@ -40,9 +41,20 @@ export function EventTile({
             {event.name}
           </h3>
           <p className="mt-0.5 flex items-center gap-1.5 text-xs text-suth-text-secondary">
-            <span className="whitespace-nowrap">
-              {formatRelativeDate(event.startDate, now, String(event.year))}
-            </span>
+            {/* A race still to come gets a live countdown; everything else is a
+                fixed fact and renders as plain text. Ticking a result from 2023
+                would be motion for its own sake. */}
+            {event.status === "upcoming" && event.startDate ? (
+              <Countdown
+                startDate={event.startDate}
+                initial={formatRelativeDate(event.startDate, now, String(event.year))}
+                className="whitespace-nowrap font-medium text-suth-accent tabular-nums"
+              />
+            ) : (
+              <span className="whitespace-nowrap">
+                {formatRelativeDate(event.startDate, now, String(event.year))}
+              </span>
+            )}
           </p>
           {/* Where the race is, the way an atlas would say it. The reference
               site puts "Japan, Asia" under every card and it is the fastest way

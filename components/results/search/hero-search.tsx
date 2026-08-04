@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Search } from "lucide-react";
-import { GlobalSearch } from "./global-search";
+import { GlobalSearch, prefetchPopular } from "./global-search";
 
 /**
  * The landing page's hero search.
@@ -20,6 +20,12 @@ export function HeroSearch({ athleteCount, eventCount }: { athleteCount: number;
       <button
         type="button"
         onClick={() => setOpen(true)}
+        // Start the 61 kB name list on the first sign of intent, so it is
+        // usually already in memory by the time the panel has finished
+        // animating open. A pointer over the button, or a tab onto it, is
+        // several hundred milliseconds of warning.
+        onPointerEnter={() => void prefetchPopular()}
+        onFocus={() => void prefetchPopular()}
         className="group flex w-full items-center gap-3 rounded-md border border-suth-border
                    bg-suth-elevated px-4 py-4 text-left transition-colors
                    hover:border-suth-accent/40 md:py-5

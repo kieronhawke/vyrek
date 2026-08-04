@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { formatTime } from "@/lib/results/format";
 import { Flag } from "../ui/flag";
 import { detectIntent } from "@/lib/results/search";
+import { instantSearch, mergeResults, type PopularAthlete } from "@/lib/results/search/instant";
 import type { SearchResults } from "@/lib/results/source";
 
 /**
@@ -24,6 +25,33 @@ import type { SearchResults } from "@/lib/results/source";
 
 const RECENT_KEY = "suth:results:recent-searches";
 const MAX_RECENT = 6;
+
+/**
+ * The prefetched name list, held for the lifetime of the tab.
+ *
+ * Module scope, not React state: the palette unmounts on close, and a visitor
+ * who opens search three times should download this once. The promise itself is
+ * cached so two rapid opens share one request rather than racing.
+ */
+let popularIndex: PopularAthlete[] | null = null;
+let popularRequest: Promise<PopularAthlete[]> | null = null;
+
+export function prefetchPopular(): Promise<PopularAthlete[]> {
+  if (popularIndex) return Promise.resolve(popularIndex);
+  popularRequest ??= fetch("/api/results/search/popular")
+    .then((res) => (res.ok ? res.json() : { athletes: [] }))
+    .then((data: { athletes?: PopularAthlete[] }) => {
+      popularIndex = data.athletes ?? [];
+      return popularIndex;
+    })
+    .catch(() => {
+      // Never fatal. Without it the palette behaves exactly as it did before:
+      // every query answered by the server.
+      popularRequest = null;
+      return [];
+    });
+  return popularRequest;
+}
 
 type Flat =
   | { kind: "athlete"; slug: string; name: string; countryIso: string; raceCount: number }
@@ -56,10 +84,25 @@ function SearchPanel({ onClose }: { onClose: () => void }) {
   // localStorage is available and no effect is needed to hydrate it.
   const [recent, setRecent] = useState<string[]>(readRecent);
 
+  // The prefetched names, once they arrive. Held in state so the first render
+  // after the download re-matches whatever has already been typed — a fast
+  // typist can be three characters in before this lands.
+  const [popular, setPopular] = useState<PopularAthlete[]>(() => popularIndex ?? []);
+
   useEffect(() => {
     // After paint, so the mobile sheet animation does not fight the keyboard.
     const frame = requestAnimationFrame(() => inputRef.current?.focus());
     return () => cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    let live = true;
+    prefetchPopular().then((index) => {
+      if (live) setPopular(index);
+    });
+    return () => {
+      live = false;
+    };
   }, []);
 
   // Debounced fetch. Aborts in-flight requests so a fast typist never sees an
@@ -108,9 +151,21 @@ function SearchPanel({ onClose }: { onClose: () => void }) {
    * ("no athletes match 1:31:30") into the tool they actually wanted.
    */
   const intent = detectIntent(trimmed);
+
+  /**
+   * Matched against the prefetched list on every render, with no effect and no
+   * state of its own — so it is already on screen in the same frame as the
+   * keystroke that produced it.
+   *
+   * 5,000 names scored takes well under a millisecond; putting it behind a
+   * `useMemo` would cost more in cache bookkeeping than it saves.
+   */
+  const instant = showResults ? instantSearch(popular, trimmed) : [];
+  const athletes = mergeResults(instant, results.athletes);
+
   const flat: Flat[] = showResults
     ? [
-        ...results.athletes.map((a) => ({ kind: "athlete" as const, ...a })),
+        ...athletes.map((a) => ({ kind: "athlete" as const, ...a })),
         ...results.events.map((e) => ({ kind: "event" as const, ...e })),
       ]
     : [];
@@ -290,9 +345,9 @@ function SearchPanel({ onClose }: { onClose: () => void }) {
 
           {flat.length > 0 ? (
             <div role="listbox" aria-label="Search results">
-              {results.athletes.length > 0 ? (
-                <Section title={`Athletes (${results.athletes.length})`}>
-                  {results.athletes.map((a, i) => (
+              {athletes.length > 0 ? (
+                <Section title={`Athletes (${athletes.length})`}>
+                  {athletes.map((a, i) => (
                     <Row
                       key={a.slug}
                       active={active === i}
@@ -312,7 +367,7 @@ function SearchPanel({ onClose }: { onClose: () => void }) {
               {results.events.length > 0 ? (
                 <Section title={`Events (${results.events.length})`}>
                   {results.events.map((e, i) => {
-                    const index = results.athletes.length + i;
+                    const index = athletes.length + i;
                     return (
                       <Row
                         key={e.slug}

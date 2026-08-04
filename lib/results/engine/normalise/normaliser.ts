@@ -29,7 +29,13 @@ import type {
 } from "../types";
 import { checkParseShape, type SentinelVerdict } from "../validate/sentinel";
 import { validateRow } from "../validate/validate";
-import { athleteSlug, decideIdentity, type ExistingAthlete } from "./identity";
+import {
+  athleteSlug,
+  decideIdentity,
+  fingerprint,
+  SLUG_WINDOW,
+  type ExistingAthlete,
+} from "./identity";
 import { parseRank, parseTimeToMs } from "./time";
 import { DIVISION_PREFIXES } from "../source/mika-parse";
 
@@ -335,18 +341,45 @@ export class Normaliser {
       ),
     );
     const bases = [...new Set(missing.map((person) => athleteSlug(person.name)))];
-    const candidates = bases.flatMap((base) => [base, ...Array.from({ length: 9 }, (_, i) => `${base}-${i + 2}`)]);
+    const candidates = bases.flatMap((base) => [
+      base,
+      ...Array.from({ length: SLUG_WINDOW - 1 }, (_, i) => `${base}-${i + 2}`),
+    ]);
     const taken = await this.repo.findTakenSlugs(candidates);
     const claimedSlugs = new Set<string>(taken);
 
-    const allocate = (name: string): string => {
+    /**
+     * ⚠️ Never hand out a numbered slug the database was not asked about.
+     *
+     * `findTakenSlugs` checks `base` and `-2`…`-10`. The old allocator counted
+     * on to `-500`, so the moment a name needed an eleventh slot it invented
+     * `-11` without ever asking whether that row existed. It usually did — from
+     * an earlier division — and the upsert declares `ON CONFLICT (slug) DO
+     * UPDATE`, so a *different person* was quietly written over the top and
+     * inherited every result already attached to that row.
+     *
+     * The damage is visible in production: every one of the 38 Latin-named
+     * athletes holding an impossible race count ends in `-11`, and
+     * `jaafar-moumen-11` had accumulated 57 races belonging to 57 people. Names
+     * that fold to an empty base — every CJK, Cyrillic, Greek and Arabic name,
+     * before the fix in `athleteSlug` — hit the ceiling on the first big board
+     * and collapsed 2,523 rows the same way. One of them held 212 results
+     * across 33 events.
+     *
+     * Past the checked window the suffix comes from the person's own identity
+     * instead of a counter. Two people cannot derive the same one, and the same
+     * person derives the same one on every run, so re-ingesting is still
+     * idempotent. It is uglier than `-11`, and it is a slug nobody reads: the
+     * eleventh James Kelly keeps his own results, which is what a slug is for.
+     */
+    const allocate = (name: string, identity: string): string => {
       const base = athleteSlug(name);
       if (!claimedSlugs.has(base)) return base;
-      for (let n = 2; n < 500; n += 1) {
+      for (let n = 2; n <= SLUG_WINDOW; n += 1) {
         const candidate = `${base}-${n}`;
         if (!claimedSlugs.has(candidate)) return candidate;
       }
-      return `${base}-${Date.now().toString(36)}`;
+      return `${base}-${fingerprint(identity)}`;
     };
 
     for (const p of prepared) {
@@ -377,7 +410,12 @@ export class Normaliser {
           if (needsReview) identityReviews += 1;
         }
 
-        const slug = allocate(person.name);
+        // The stable id when there is one; otherwise the row and seat that made
+        // this person, which is the same key `pendingByPerson` files them under.
+        const slug = allocate(
+          person.name,
+          person.stableId ?? `person:${personKey(p.raw.sourceResultId, position)}`,
+        );
         claimedSlugs.add(slug);
         if (person.stableId) pendingBySlug.set(person.stableId, slug);
         else pendingByPerson.set(personKey(p.raw.sourceResultId, position), slug);
