@@ -1732,3 +1732,124 @@
 @media (min-width: 1024px) {
   .coachpage { max-width: 760px; }
 }
+
+/* ── Account ──────────────────────────────────────────────────────────
+   Two columns on a monitor. It was a single stack of label-left /
+   value-right rows at every width, which on a wide screen is a narrow
+   column of text with a metre of nothing beside it. */
+.account-grid { display: grid; gap: var(--space-4); }
+@media (min-width: 1024px) {
+  .account-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+  /* The sections flow down one column and then the next, which keeps the
+     mobile reading order intact while filling the width. */
+  .account-main { display: contents; }
+  .account-main > section { break-inside: avoid; }
+}
+
+/* ── Profile editor ──────────────────────────────────────────────────── */
+.pe { display: grid; gap: var(--space-2); }
+.pe__identity { display: flex; align-items: center; gap: var(--space-2); }
+.pe__avatar {
+  flex: 0 0 auto; width: 72px; height: 72px; border-radius: 999px;
+  overflow: hidden; background: var(--surface-raised);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.pe__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.pe__initials { font-size: var(--text-lg); font-weight: 700; color: var(--text-muted); }
+.pe__identityActions { display: flex; flex-wrap: wrap; gap: 6px; }
+.pe__btn {
+  min-height: 36px; padding: 0 12px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface-raised);
+  color: var(--text); font-size: var(--text-xs); font-weight: 600;
+}
+.pe__fields { display: grid; gap: var(--space-2); }
+.pe__field { display: grid; gap: 4px; font-size: var(--text-xs); color: var(--text-muted); }
+.pe__field small { font-size: 11px; color: var(--text-faint); }
+.pe__input {
+  width: 100%; min-height: 44px; padding: 8px 12px;
+  border-radius: var(--radius-input, 10px);
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font: inherit; font-size: var(--text-sm);
+}
+.pe__input:disabled { color: var(--text-muted); background: var(--surface-raised); }
+.pe__actions { display: flex; gap: 8px; }
+.pe__save {
+  min-height: 44px; padding: 0 20px; border-radius: 999px; border: 0;
+  background: var(--accent); color: var(--accent-ink, #0a0a0a);
+  font-size: var(--text-sm); font-weight: 700; cursor: pointer;
+}
+.pe__save:disabled { background: var(--surface-raised); color: var(--text-faint); cursor: not-allowed; }
+.pe__note, .pe__error { margin: 0; font-size: var(--text-xs); line-height: 1.5; color: var(--text-muted); }
+.pe__error { color: var(--danger); }
+
+/* ── Billing block ───────────────────────────────────────────────────── */
+.acctbill { display: grid; gap: 8px; margin-top: var(--space-1); justify-items: start; }
+.acctbill__cancel {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--text-muted); font-size: var(--text-xs);
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.acctbill__cancel:hover { color: var(--danger); }
+.acctbill__note { margin: 0; font-size: var(--text-xs); color: var(--text-muted); }
+
+/* ── Cancellation ────────────────────────────────────────────────────── */
+.cx {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--space-2);
+  background: color-mix(in srgb, #000 62%, transparent);
+  backdrop-filter: blur(4px);
+}
+.cx__card {
+  width: 100%; max-width: 460px; max-height: 90svh; overflow-y: auto;
+  display: grid; gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background: var(--bg); border: 1px solid var(--border);
+}
+.cx__ben { display: flex; align-items: center; gap: var(--space-2); }
+.cx__portrait {
+  position: relative; flex: 0 0 auto; width: 56px; height: 56px;
+  border-radius: 999px; overflow: hidden; background: #14100f;
+}
+.cx__benwho { display: flex; flex-direction: column; min-width: 0; }
+.cx__benname { font-weight: 700; font-size: var(--text-sm); }
+.cx__bensub { font-size: var(--text-xs); color: var(--text-muted); }
+.cx__x {
+  margin-left: auto; background: none; border: 0; cursor: pointer;
+  color: var(--text-muted); min-width: 36px; min-height: 36px; font-size: var(--text-base);
+}
+.cx__title { margin: 0; font-size: var(--text-lg); font-weight: 800; line-height: 1.2; }
+.cx__lede { margin: 0; font-size: var(--text-sm); line-height: 1.55; color: var(--text-muted); }
+.cx__reasons { display: grid; gap: 6px; }
+.cx__reason {
+  text-align: left; min-height: 44px; padding: 10px 12px;
+  border-radius: var(--radius-button); cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font-size: var(--text-sm);
+}
+.cx__reason[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-faint); color: var(--accent-text); }
+.cx__field { display: grid; gap: 4px; font-size: var(--text-xs); color: var(--text-muted); }
+.cx__textarea {
+  width: 100%; padding: 10px 12px; border-radius: var(--radius-input, 10px);
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font: inherit; font-size: var(--text-sm); resize: vertical;
+}
+.cx__facts { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size: var(--text-sm); line-height: 1.5; color: var(--text-muted); }
+.cx__actions { display: grid; gap: 8px; }
+.cx__go, .cx__danger, .cx__stay {
+  min-height: 46px; padding: 0 18px; border-radius: 999px; cursor: pointer;
+  font-size: var(--text-sm); font-weight: 700; border: 1px solid var(--border);
+}
+.cx__go { background: var(--accent); color: var(--accent-ink, #0a0a0a); border-color: transparent; }
+.cx__danger { background: var(--danger); color: #fff; border-color: transparent; }
+.cx__stay { background: transparent; color: var(--text); }
+/* Always visible, never disabled — the property lib/member/cancel.ts exists
+   to guarantee. It is quieter than the others, not hidden. */
+.cx__skip {
+  justify-self: center; background: none; border: 0; padding: 6px; cursor: pointer;
+  color: var(--text-faint); font-size: var(--text-xs);
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.cx__note { margin: 0; font-size: var(--text-xs); line-height: 1.5; color: var(--text-faint); }
