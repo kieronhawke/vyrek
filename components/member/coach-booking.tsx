@@ -29,18 +29,33 @@ type Slot = { startISO: string; label: string };
 
 type Stage = "dates" | "slots" | "confirming" | "done" | "error";
 
+/** An existing booking, when this sheet is being used to change one. */
+export type ExistingBooking = { ref: string; startISO: string };
+
 export function CoachBooking({
   firstName,
   email,
   phone,
+  existing,
   onBooked,
+  onDropped,
   onCancel,
 }: {
   firstName: string;
   email: string;
   phone: string;
+  /**
+   * Set when an athlete is changing a call rather than making one.
+   *
+   * Same picker either way. Booking and moving are the same question — which
+   * of Ben's free times suits — and giving them two different screens would
+   * mean two things to keep in step for no gain.
+   */
+  existing?: ExistingBooking;
   /** Posts the confirmation into the thread. */
   onBooked: (args: { ref: string; startISO: string }) => void;
+  /** Called when an existing call is cancelled outright. */
+  onDropped?: (args: { ref: string }) => void;
   onCancel: () => void;
 }) {
   const [stage, setStage] = useState<Stage>("dates");
@@ -96,8 +111,33 @@ export function CoachBooking({
     }
   }
 
+  /** Give up the slot entirely. Ben and the athlete are both notified. */
+  async function dropCall() {
+    if (!existing) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/booking/${existing.ref}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "cancel", reason: "Cancelled from the app" }),
+      });
+      const body = (await res.json()) as { ok: boolean; error?: string };
+      if (!body.ok) {
+        setError(body.error ?? "Could not cancel that. Try again in a moment.");
+        return;
+      }
+      onDropped?.({ ref: existing.ref });
+      setStage("done");
+    } catch {
+      setError("Could not reach the diary. Try again in a moment.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function book(slot: Slot) {
-    if (number.trim().length < 7) {
+    if (!existing && number.trim().length < 7) {
       setError("Ben needs a number to call you on.");
       return;
     }
@@ -105,7 +145,16 @@ export function CoachBooking({
     setBusy(true);
     setError(null);
     try {
-      const res = await fetch("/api/booking", {
+      /* Moving an existing call goes to its own endpoint, which frees the old
+         slot, takes the new one and emails and texts both parties about the
+         change. Posting a second booking would leave the first in the diary. */
+      const res = existing
+        ? await fetch(`/api/booking/${existing.ref}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "reschedule", startISO: slot.startISO }),
+          })
+        : await fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -118,7 +167,10 @@ export function CoachBooking({
         }),
       });
       const body = (await res.json()) as { ok: boolean; ref?: string; error?: string };
-      if (!body.ok || !body.ref) {
+      /* The reschedule endpoint answers with the new time rather than a ref,
+         because the ref has not changed. */
+      const ref = body.ref ?? existing?.ref;
+      if (!body.ok || !ref) {
         /* The server re-checks the slot against stored state, so "taken" is a
            real answer here and not a bug. Say so and send them back to the
            times rather than failing silently. */
@@ -127,7 +179,7 @@ export function CoachBooking({
         return;
       }
       setStage("done");
-      onBooked({ ref: body.ref, startISO: slot.startISO });
+      onBooked({ ref, startISO: slot.startISO });
     } catch {
       setError("Could not book that. Try again in a moment.");
       setStage("slots");
@@ -139,7 +191,9 @@ export function CoachBooking({
   return (
     <div className="cbook">
       <div className="cbook__head">
-        <p className="cbook__title">Book a review call with Ben</p>
+        <p className="cbook__title">
+          {existing ? "Move your call with Ben" : "Book a review call with Ben"}
+        </p>
         <button type="button" className="cbook__close" onClick={onCancel} aria-label="Close">
           ✕
         </button>
@@ -149,6 +203,15 @@ export function CoachBooking({
         <p className="cbook__error" role="status">
           {error}
         </p>
+      ) : null}
+
+      {/* Giving up the slot sits alongside moving it, not behind it. Somebody
+          who cannot make a call should not have to book a different one to
+          get out of the first. */}
+      {existing && stage !== "done" ? (
+        <button type="button" className="cbook__drop" onClick={() => void dropCall()} disabled={busy}>
+          Cancel this call instead
+        </button>
       ) : null}
 
       {stage === "dates" ? (
@@ -183,6 +246,7 @@ export function CoachBooking({
           <button type="button" className="cbook__back" onClick={() => setStage("dates")}>
             ← Another day
           </button>
+          {existing ? null : (
           <label className="cbook__field">
             <span>Number for Ben to call</span>
             <input
@@ -195,6 +259,7 @@ export function CoachBooking({
               placeholder="07…"
             />
           </label>
+          )}
           {busy ? (
             <p className="cbook__note">Loading times…</p>
           ) : slots.length === 0 ? (

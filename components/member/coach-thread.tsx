@@ -16,7 +16,9 @@ import {
   type Attachment,
   type TopicId,
 } from "@/lib/member/coach-actions";
-import { CoachBooking } from "@/components/member/coach-booking";
+import { CoachBooking, type ExistingBooking } from "@/components/member/coach-booking";
+import { useRecord } from "@/lib/control/store";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { formatBookingTime } from "@/lib/booking/model";
 import type { Photo } from "@/lib/photo-library";
 
@@ -67,7 +69,19 @@ export function CoachThread({
   email?: string;
   phone?: string;
 }) {
-  const [thread, setThread] = useState<CoachMessage[]>(DEMO_THREAD);
+  /*
+   * Anything the athlete adds persists; the seeded conversation does not need
+   * to. Without this a booked call vanished on reload, which made the whole
+   * "move or cancel it later" idea hollow — the reference it needs was gone.
+   */
+  const { value: mine, save: saveMine } = useRecord<CoachMessage[]>(
+    "coach.thread.v1",
+    [],
+  );
+  const hydrated = useHydrated();
+  const thread = hydrated ? [...DEMO_THREAD, ...mine] : DEMO_THREAD;
+  /** Which booking the manage sheet is pointed at, if any. */
+  const [managing, setManaging] = useState<ExistingBooking | null>(null);
   const [draft, setDraft] = useState<Draft>({ topic: null, body: "" });
   const [sheet, setSheet] = useState<Sheet>("none");
   const [attachment, setAttachment] = useState<Attachment | null>(null);
@@ -92,10 +106,15 @@ export function CoachThread({
   }, [attachment]);
 
   function append(message: Partial<CoachMessage> & Pick<CoachMessage, "author" | "body">) {
-    setThread((t) => [
-      ...t,
-      { id: `local-${t.length + 1}-${Date.now()}`, sentAt: new Date().toISOString(), ...message },
+    saveMine([
+      ...mine,
+      { id: `local-${mine.length + 1}-${Date.now()}`, sentAt: new Date().toISOString(), ...message },
     ]);
+  }
+
+  /** Rewrite the entry a booking wrote, so the thread shows the current time. */
+  function updateBooking(ref: string, patch: Partial<CoachMessage>) {
+    saveMine(mine.map((m) => (m.booking?.ref === ref ? { ...m, ...patch } : m)));
   }
 
   async function send() {
@@ -160,7 +179,15 @@ export function CoachThread({
           <div key={group.day} className="ct__day">
             <p className="ct__daylabel">{formatDay(group.day)}</p>
             {group.messages.map((m) => (
-              <Bubble key={m.id} message={m} coachPhoto={coachPhoto} />
+              <Bubble
+                key={m.id}
+                message={m}
+                coachPhoto={coachPhoto}
+                onManage={(b) => {
+                  setManaging(b);
+                  setSheet("booking");
+                }}
+              />
             ))}
           </div>
         ))}
@@ -246,9 +273,35 @@ export function CoachThread({
           firstName={firstName}
           email={email}
           phone={phone}
-          onCancel={() => setSheet("none")}
-          onBooked={({ ref, startISO }) => {
+          existing={managing ?? undefined}
+          onCancel={() => {
             setSheet("none");
+            setManaging(null);
+          }}
+          onDropped={({ ref }) => {
+            setSheet("none");
+            setManaging(null);
+            updateBooking(ref, {
+              body: "Review call cancelled.",
+              booking: undefined,
+            });
+            setNotice("Cancelled. Ben has been told and you have an email confirming it.");
+          }}
+          onBooked={({ ref, startISO }) => {
+            const moving = Boolean(managing);
+            setSheet("none");
+            setManaging(null);
+            if (moving) {
+              /* Rewritten in place rather than appended. A thread with three
+                 entries for one call, two of them wrong, is worse than one
+                 that says where the call actually is. */
+              updateBooking(ref, {
+                body: `Review call moved to ${formatBookingTime(startISO)}. Reference ${ref}.`,
+                booking: { ref, startISO },
+              });
+              setNotice("Moved. Ben has been told and the new time is confirmed by email and text.");
+              return;
+            }
             append({
               author: "system",
               body: `Review call booked for ${formatBookingTime(startISO)}. Reference ${ref}.`,
@@ -345,9 +398,11 @@ export function CoachThread({
 function Bubble({
   message: m,
   coachPhoto,
+  onManage,
 }: {
   message: CoachMessage;
   coachPhoto: Photo;
+  onManage?: (booking: ExistingBooking) => void;
 }) {
   /* A booked call is neither Ben talking nor the athlete talking. It is a
      thing that happened, and it reads as one: centred, quieter, no avatar. */
@@ -355,6 +410,18 @@ function Bubble({
     return (
       <div className="ct__system">
         <p>{m.body}</p>
+        {/* The call can be changed from where it was booked. Sending somebody
+            hunting for the confirmation email to move a call they arranged
+            here is the sort of thing that turns into a no-show. */}
+        {m.booking && onManage ? (
+          <button
+            type="button"
+            className="ct__manage"
+            onClick={() => onManage(m.booking!)}
+          >
+            Move or cancel
+          </button>
+        ) : null}
       </div>
     );
   }
