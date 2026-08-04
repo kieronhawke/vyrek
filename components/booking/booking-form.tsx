@@ -160,6 +160,22 @@ export function BookingForm({
 
   return (
     <div className="space-y-10">
+      {/* THE ERROR LIVES ABOVE THE PICKER, NOT INSIDE THE FORM.
+          It used to sit inside the form, which is fine for a validation
+          message and wrong for the one error that matters most: when the
+          server says TAKEN we clear the slot to send them back to the grid,
+          the form unmounts, and the explanation went with it. They were
+          bounced back to the calendar with no idea why their booking had not
+          gone through — the worst possible moment to lose the message. */}
+      {error ? (
+        <p
+          role="alert"
+          className="rounded-lg border border-suth-danger/40 bg-suth-danger/10 px-4 py-3 text-sm text-suth-text"
+        >
+          {error}
+        </p>
+      ) : null}
+
       <BookingPicker onChosen={setSlot} />
 
       {slot ? (
@@ -227,15 +243,6 @@ export function BookingForm({
               onChange={(e) => setCompany(e.target.value)}
             />
           </div>
-
-          {error ? (
-            <p
-              role="alert"
-              className="mt-4 rounded-lg border border-suth-danger/40 bg-suth-danger/10 px-4 py-3 text-sm text-suth-text"
-            >
-              {error}
-            </p>
-          ) : null}
 
           <button
             type="submit"
