@@ -198,3 +198,93 @@ trick.
 
 The prose is not the moat. The data is, and we do not have it yet. Phase 2 is
 the plan.
+
+---
+
+## 7. The indexing rollout
+
+Written 4 August 2026, after Kieron asked how to open indexing without Google
+reading 6,015 new pages as spam.
+
+### The problem in one line
+
+Everything is behind a single `X-Robots-Tag: noindex, nofollow` in
+`next.config.ts`. Removing it exposes **6,015 indexable pages in one moment** —
+a site that had nothing indexed yesterday and six thousand programmatic pages
+today. That pattern is what the March 2026 update was built to catch, and the
+signal is the *shape of the launch*, not just the content.
+
+### What the guidance actually says
+
+The surviving-programmatic-SEO advice converges on two numbers: **25–30 new
+pages a week**, and **start with one template family**. We cannot publish 6,015
+pages at 30 a week — that is four years — but the constraint is about how fast
+an index *grows*, and we control that with the sitemap and the robots header
+rather than by withholding pages that already exist.
+
+### The mechanism we have, and the one we need
+
+Right now indexing is all-or-nothing: one header, on or off. Staging needs
+per-family control. Two options, and the second is better:
+
+1. **Sitemap-only staging.** Leave the header off everything, and list only the
+   current stage in `sitemap.xml`. Simple, but weak — Google crawls links, not
+   just sitemaps, and the footer links every family from every page.
+2. **Per-family robots.** Keep the blanket header, and override it to
+   `X-Robots-Tag: all` for the enabled prefixes. Stronger, because it controls
+   what can be indexed rather than what we happen to have advertised.
+
+Option 2 needs care: Next merges headers across matching rules, and the
+override behaviour must be **verified against a real build** before trusting it
+with the whole site's indexability. Do not ship it on the assumption that later
+rules win.
+
+### The order, and why
+
+Each stage waits on the previous one's Search Console data — not on a calendar.
+
+| Stage | Pages | Why here |
+|---|---|---|
+| 1. UK towns | 1,882 | Best data density: gyms, parkruns, a real nearest race. Home market, English, evidenced demand. A recoverable mistake. |
+| 2. UK directories | 152 | Only once the towns they list are indexed, or they are hubs pointing at nothing. |
+| 3. Race cities | 91 | Strongest single fact per page — the race is here. |
+| 4. US states | 102 | Best uniqueness score of any family at 37%. |
+| 5. Expanded markets | 1,560 | Largest and thinnest. Last, on purpose. |
+| 6. Localised de/fr/es | 22 | Reviewed and approved, but a separate signal: a new language on an established domain. |
+
+### What to watch between stages
+
+Give each stage **four weeks minimum**, and read three things in Search Console:
+
+- **Indexed vs discovered-not-indexed.** A high not-indexed ratio is Google
+  saying the pages are not worth its time. That is the signal to stop, not to
+  push the next stage.
+- **Impressions per indexed page.** Rising with page count is healthy. Flat
+  while page count climbs means the new pages are diluting, not adding.
+- **Manual actions.** Obviously. Check on day one of every stage.
+
+Stop conditions, agreed in advance so they are not renegotiated under pressure:
+more than 40% discovered-not-indexed, any manual action, or a fall in
+impressions for pages that were already ranking.
+
+### What has to be true before stage 1
+
+- [x] Native review of de/fr/es — done, though it gates stage 6 not stage 1
+- [x] Legal placeholders removed
+- [x] Canonicals correct on the live domain
+- [x] Zero duplicate titles, descriptions, broken links — enforced by the gate
+- [ ] **Redis keys set**, so the equipment layer starts accumulating. Every week
+      without it is a week the pages are not getting more distinct
+- [ ] Within-family overlap **under 40%** — currently 50–63%
+- [ ] The 337 thin indexable pages resolved — the directories are improved but
+      most counties still sit under 250 words
+
+The last two are the honest blockers. Stage 1 is the safest possible start, and
+it should still not begin while half its own family reads as near-duplicate.
+
+### The thing that actually decides this
+
+None of the above matters as much as whether these pages say something no
+competitor can. That is `lib/gym-intel/`, and it is switched off for want of
+two environment variables. **A staged rollout of pages that are still 55%
+alike is a slower way to arrive at the same problem.**
