@@ -14,10 +14,10 @@ type Row = {
 };
 
 const ROWS: Row[] = [
-  { id: "p1", client: "Sample B", amount: 15000, daysOverdue: 7, method: "card" },
-  { id: "p2", client: "Sample F", amount: 1299, daysOverdue: 12, method: "card" },
-  { id: "p3", client: "Sample A", amount: 8000, daysOverdue: -3, method: "card" },
-  { id: "p4", client: "Sample D", amount: 25000, daysOverdue: -1, method: "bank_transfer" },
+  { id: "p1", client: "Marcus Bell", amount: 15000, daysOverdue: 7, method: "card" },
+  { id: "p2", client: "Daniel Osei", amount: 1299, daysOverdue: 12, method: "card" },
+  { id: "p3", client: "Amelia Fraser", amount: 8000, daysOverdue: -3, method: "card" },
+  { id: "p4", client: "Tom Whitaker", amount: 25000, daysOverdue: -1, method: "bank_transfer" },
 ];
 
 const money = (p: number) => `£${(p / 100).toFixed(2)}`;

@@ -37,10 +37,10 @@ const SWATCHES = [
 
 /** Stand-in rows. No real client data, and none of it is presented as real. */
 const ROWS = [
-  { client: "Sample A", until: 2, paid: "12 Aug", race: 42, rate: 8000 },
-  { client: "Sample B", until: 18, paid: "3 days late", race: 96, rate: 15000 },
-  { client: "Sample C", until: -3, paid: "3 Aug", race: 7, rate: 1299 },
-  { client: "Sample D", until: 26, paid: "28 Aug", race: 180, rate: 25000 },
+  { client: "Amelia Fraser", until: 2, paid: "12 Aug", race: 42, rate: 8000 },
+  { client: "Marcus Bell", until: 18, paid: "3 days late", race: 96, rate: 15000 },
+  { client: "Priya Raman", until: -3, paid: "3 Aug", race: 7, rate: 1299 },
+  { client: "Tom Whitaker", until: 26, paid: "28 Aug", race: 180, rate: 25000 },
 ];
 
 const cell: React.CSSProperties = {

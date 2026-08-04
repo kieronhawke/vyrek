@@ -35,30 +35,30 @@ export type UserRow = {
 };
 
 export const LEAD_ROWS: LeadRow[] = [
-  { id: "l1", name: "Sample Lead A", segment: "Beginner", status: "New", source: "Quiz", ageHours: 2 },
-  { id: "l2", name: "Sample Lead B", segment: "HYROX", status: "New", source: "Quiz", ageHours: 31 },
-  { id: "l3", name: "Sample Lead C", segment: "Faster", status: "Contacted", source: "Contact form", ageHours: 76 },
-  { id: "l4", name: "Sample Lead D", segment: "Unsure", status: "Call booked", source: "Referral", ageHours: 120 },
+  { id: "l1", name: "Jess Moreau", segment: "Beginner", status: "New", source: "Quiz", ageHours: 2 },
+  { id: "l2", name: "Alex Trant", segment: "HYROX", status: "New", source: "Quiz", ageHours: 31 },
+  { id: "l3", name: "Simon Ayodele", segment: "Faster", status: "Contacted", source: "Contact form", ageHours: 76 },
+  { id: "l4", name: "Katie Vaughan", segment: "Unsure", status: "Call booked", source: "Referral", ageHours: 120 },
 ];
 
 export const PLAN_ROWS: PlanRow[] = [
-  { id: "pl1", client: "Sample A", block: "Weeks 5–8", status: "Draft", coachNote: false, opened: "—" },
-  { id: "pl2", client: "Sample C", block: "Weeks 9–12", status: "Overdue", coachNote: false, opened: "—" },
-  { id: "pl3", client: "Sample D", block: "Weeks 1–4", status: "Sent", coachNote: true, opened: "3 times" },
-  { id: "pl4", client: "Sample E", block: "Race block", status: "Active", coachNote: true, opened: "9 times" },
+  { id: "pl1", client: "Amelia Fraser", block: "Weeks 5–8", status: "Draft", coachNote: false, opened: "—" },
+  { id: "pl2", client: "Priya Raman", block: "Weeks 9–12", status: "Overdue", coachNote: false, opened: "—" },
+  { id: "pl3", client: "Tom Whitaker", block: "Weeks 1–4", status: "Sent", coachNote: true, opened: "3 times" },
+  { id: "pl4", client: "Sofia Nowak", block: "Race block", status: "Active", coachNote: true, opened: "9 times" },
 ];
 
 export const APPT_ROWS: ApptRow[] = [
-  { id: "a1", client: "Sample A", type: "Plan review", when: "Today 18:30", status: "Confirmed" },
-  { id: "a2", client: "Sample Lead D", type: "Consultation", when: "Tomorrow 07:00", status: "Scheduled" },
-  { id: "a3", client: "Sample E", type: "Race debrief", when: "Thu 19:00", status: "Scheduled" },
-  { id: "a4", client: "Sample B", type: "Check-in", when: "Fri 12:00", status: "No show" },
+  { id: "a1", client: "Amelia Fraser", type: "Plan review", when: "Today 18:30", status: "Confirmed" },
+  { id: "a2", client: "Katie Vaughan", type: "Consultation", when: "Tomorrow 07:00", status: "Scheduled" },
+  { id: "a3", client: "Sofia Nowak", type: "Race debrief", when: "Thu 19:00", status: "Scheduled" },
+  { id: "a4", client: "Marcus Bell", type: "Check-in", when: "Fri 12:00", status: "No show" },
 ];
 
 export const MESSAGE_ROWS: MessageRow[] = [
-  { id: "m1", client: "Sample C", channel: "SMS", direction: "In", preview: "Knee felt better today, managed all 3 sets", when: "12 min ago" },
-  { id: "m2", client: "Sample A", channel: "Email", direction: "Out", preview: "Your plan is ready", when: "2 hours ago" },
-  { id: "m3", client: "Sample F", channel: "SMS", direction: "Out", preview: "Payment failed, update your card", when: "Yesterday" },
+  { id: "m1", client: "Priya Raman", channel: "SMS", direction: "In", preview: "Knee felt better today, managed all 3 sets", when: "12 min ago" },
+  { id: "m2", client: "Amelia Fraser", channel: "Email", direction: "Out", preview: "Your plan is ready", when: "2 hours ago" },
+  { id: "m3", client: "Daniel Osei", channel: "SMS", direction: "Out", preview: "Payment failed, update your card", when: "Yesterday" },
 ];
 
 export const TEMPLATE_ROWS: TemplateRow[] = [
