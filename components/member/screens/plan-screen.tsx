@@ -157,8 +157,28 @@ export function PlanScreen({
       <section>
         <Eyebrow>Take it with you</Eyebrow>
         <RowGroup>
-          <Row label="Print or save as PDF" value="Open →" tone="var(--accent-text)" href="/print/plan/haseeb" />
-          <Row label="Spreadsheet" value="Download .xlsx →" tone="var(--accent-text)" href="/api/export/haseeb/xlsx" />
+          {/* v2 is the designed one: branded masthead, day cards two-up, an
+              icon and a set quantity on every line. v1 still exists as the
+              ink-saver and the admin week builder offers both — but the member
+              was being sent to the plain version, which is why the PDF looked
+              like the old format. It was. */}
+          <Row
+            label="Print or save as PDF"
+            value="Open →"
+            tone="var(--accent-text)"
+            href="/print/plan/haseeb/v2"
+          />
+          {/* v2, for the same reason as the PDF above: it carries the brand
+              masthead, the black-and-chartreuse header and banded days, and
+              it is a row per line of work so the file can be sorted and
+              filtered. v1 is Ben's plain seven-column sheet and is still what
+              the builder offers as the alternative. */}
+          <Row
+            label="Spreadsheet"
+            value="Download .xlsx →"
+            tone="var(--accent-text)"
+            href="/api/export/haseeb/xlsx-v2"
+          />
           <Row label="Add this week to your calendar" value="Download .ics →" tone="var(--accent-text)" href="/api/member/week.ics" />
           <Row label="Station technique guides" value="Open →" href={`${base}/plan/stations`} />
           <Row label="Your splits and benchmarks" value="Open →" href={`${base}/progress`} />

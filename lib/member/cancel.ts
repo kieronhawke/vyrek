@@ -183,7 +183,15 @@ export type CancelSummary = {
 export function cancellationNote(s: CancelSummary, firstName: string): string {
   const reason = reasonById(s.reason)?.label ?? "Unknown";
   const detail = s.detail.trim();
+  /*
+   * The label keeps its own casing.
+   *
+   * This used to lowercase the whole thing to make it read as part of the
+   * sentence, which turned "I am injured" into "i am injured" — the first
+   * person pronoun, lowercased, in the line Ben reads about somebody
+   * leaving. Quoting it instead keeps the athlete's words as their words.
+   */
   return detail
-    ? `${firstName} cancelled — ${reason.toLowerCase()}. "${detail}"`
-    : `${firstName} cancelled — ${reason.toLowerCase()}.`;
+    ? `${firstName} cancelled — "${reason}". "${detail}"`
+    : `${firstName} cancelled — "${reason}".`;
 }

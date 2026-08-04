@@ -713,11 +713,6 @@
 
    The "none" variant is deliberately not a button: a week with no recording
    should not offer something to press. */
-.week__media--none {
-  margin: var(--space-1) 0 0;
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-}
 
 .week__media-player {
   display: flex;
@@ -1738,12 +1733,30 @@
    value-right rows at every width, which on a wide screen is a narrow
    column of text with a metre of nothing beside it. */
 .account-grid { display: grid; gap: var(--space-4); }
+
 @media (min-width: 1024px) {
-  .account-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
-  /* The sections flow down one column and then the next, which keeps the
-     mobile reading order intact while filling the width. */
-  .account-main { display: contents; }
-  .account-main > section { break-inside: avoid; }
+  /*
+   * Multi-column rather than a two-column grid.
+   *
+   * A grid aligns its rows, so a short section sitting beside a tall one
+   * leaves a hole underneath it the height of the difference — and these
+   * sections are wildly uneven: three stat tiles beside a four-row
+   * subscription table left a visible gap the size of a card. Columns flow
+   * instead, so each section starts where the last one ended.
+   *
+   * `break-inside: avoid` stops a card being sliced across the column
+   * boundary, which is the one failure mode this layout has.
+   */
+  .account-grid { display: block; }
+  .account-main {
+    column-count: 2;
+    column-gap: var(--space-4);
+  }
+  .account-main > section {
+    break-inside: avoid;
+    /* Columns do not collapse margins the way a grid gap does. */
+    margin-bottom: var(--space-4) !important;
+  }
 }
 
 /* ── Profile editor ──────────────────────────────────────────────────── */
@@ -1809,9 +1822,13 @@
   background: var(--bg); border: 1px solid var(--border);
 }
 .cx__ben { display: flex; align-items: center; gap: var(--space-2); }
+/* Larger than the avatars elsewhere and not desaturated: this is the one
+   screen whose point is that a person is asking, and the same treatment used
+   in the chrome made it a dark disc on a dark sheet. */
 .cx__portrait {
-  position: relative; flex: 0 0 auto; width: 56px; height: 56px;
+  position: relative; flex: 0 0 auto; width: 72px; height: 72px;
   border-radius: 999px; overflow: hidden; background: #14100f;
+  border: 1px solid var(--border);
 }
 .cx__benwho { display: flex; flex-direction: column; min-width: 0; }
 .cx__benname { font-weight: 700; font-size: var(--text-sm); }

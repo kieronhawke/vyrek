@@ -87,10 +87,14 @@ export function CancelFlow({
           <span className="cx__portrait">
             <Image
               src={portrait.src}
-              alt=""
+              alt="Ben Sutherland"
               fill
-              sizes="56px"
-              style={{ objectFit: "cover", filter: "grayscale(1)" }}
+              sizes="72px"
+              /* Not greyscaled here, unlike everywhere else in the app. This
+                 is the one screen whose whole point is that a person is
+                 asking — and a dark portrait, desaturated, at 56px on a dark
+                 modal was effectively invisible. */
+              style={{ objectFit: "cover" }}
             />
           </span>
           <span className="cx__benwho">
@@ -135,16 +139,26 @@ export function CancelFlow({
                 placeholder="You do not have to fill this in."
               />
             </label>
+            {/*
+              Keeping is the emphasised button and cancelling is the plain
+              one — not the other way round, which is how this first shipped.
+              An accent-coloured "Continue to cancel" is the brightest thing
+              on the screen actively recommending that somebody leaves.
+
+              This is the whole of "a little bit tricky": the exit is one tap,
+              never disabled, and never hidden. It just is not the thing the
+              page is nudging you towards.
+            */}
             <div className="cx__actions">
+              <button type="button" className="cx__go" onClick={onClose}>
+                Keep my membership
+              </button>
               <button
                 type="button"
-                className="cx__go"
+                className="cx__stay"
                 onClick={() => setStage(reason ? stageAfterReason(reason) : "confirm")}
               >
                 Continue to cancel
-              </button>
-              <button type="button" className="cx__stay" onClick={onClose}>
-                Keep my membership
               </button>
             </div>
             {/* Skipping the question is allowed. Requiring an answer to leave

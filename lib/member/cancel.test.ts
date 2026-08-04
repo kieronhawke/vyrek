@@ -95,8 +95,29 @@ describe("what Ben is told", () => {
       { reason: "no_time", detail: "", atISO: "2026-08-04T12:00:00Z" },
       "Amelia",
     );
-    expect(note).toBe("Amelia cancelled — i have not got the time.");
+    expect(note).toBe('Amelia cancelled — "I have not got the time".');
     expect(note.length).toBeLessThan(160);
+  });
+
+  /**
+   * The reason keeps its own casing.
+   *
+   * An earlier version lowercased it to make it read as part of the
+   * sentence, which turned "I am injured" into "i am injured" — a lowercase
+   * first-person pronoun in the line Ben reads about somebody leaving. This
+   * test previously asserted the broken output, so it encoded the bug rather
+   * than catching it.
+   */
+  it("never mangles a reason that starts with I", () => {
+    for (const r of REASONS) {
+      const note = cancellationNote(
+        { reason: r.id, detail: "", atISO: "2026-08-04T12:00:00Z" },
+        "Amelia",
+      );
+      expect(note, r.id).toContain(r.label);
+      expect(note, r.id).not.toContain("i am");
+      expect(note, r.id).not.toContain("i have");
+    }
   });
 
   /* The sentence somebody types on the way out is usually more use than the

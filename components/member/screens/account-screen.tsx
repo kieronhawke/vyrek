@@ -196,19 +196,9 @@ export function AccountScreen({
             has nothing to do with billing. A working portal button and the
             portal route it posts to both already existed and were mounted
             nowhere. */}
+        {/* AccountBilling carries the "not connected yet" note itself, so the
+            copy that used to live here would render it a second time. */}
         <AccountBilling firstName={firstName} hasSubscription={Boolean(sub)} />
-        {!sub ? (
-          <p
-            style={{
-              margin: "var(--space-1) 0 0",
-              fontSize: "var(--text-xs)",
-              color: "var(--text-muted)",
-            }}
-          >
-            Billing detail appears once Stripe is connected. Nothing here is
-            invented in the meantime.
-          </p>
-        ) : null}
       </section>
 
       <section style={{ marginBottom: "var(--space-4)" }}>

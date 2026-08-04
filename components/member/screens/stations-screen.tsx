@@ -1,0 +1,135 @@
+import Link from "next/link";
+import { DEMO_STATIONS, DEMO_VIDEOS_ALL } from "@/lib/member/demo";
+
+/**
+ * THE STATION TECHNIQUE LIBRARY, as markup.
+ *
+ * Split from the page so the ungated preview can render it. Until this split
+ * there was no preview mount, so the "Station technique guides" link on Plan
+ * was a dead end for anybody reviewing the app — which is exactly where it
+ * gets reviewed.
+ */
+export function StationsScreen({ base = "/app" }: { base?: string }) {
+  return (
+    <div>
+      <Link
+        href={`${base}/plan`}
+        className="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary hover:text-suth-text"
+      >
+        ← Plan
+      </Link>
+
+      <header className="mt-4">
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
+          [ Stations library ]
+        </p>
+        <h1 className="mt-1 text-2xl font-black tracking-[-0.02em] text-suth-text md:text-3xl">
+          The 8 Hyrox stations
+        </h1>
+        <p className="mt-1 text-sm text-suth-text-secondary">
+          Spec, technique, common failure pattern. Tap a station to drill in.
+        </p>
+      </header>
+
+      <nav aria-label="Stations" className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {DEMO_STATIONS.map((s) => (
+          <a
+            key={s.slug}
+            href={`#${s.slug}`}
+            className="rounded-lg border border-suth-border-subtle bg-suth-elevated/60 p-3 text-center transition-colors hover:border-suth-border-strong"
+          >
+            <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-suth-accent">
+              [{String(s.number).padStart(2, "0")}]
+            </p>
+            <p className="mt-1 text-sm font-semibold text-suth-text">
+              {s.name}
+            </p>
+          </a>
+        ))}
+      </nav>
+
+      <div className="mt-10 space-y-8">
+        {DEMO_STATIONS.map((s) => {
+          const vid = s.videoId
+            ? DEMO_VIDEOS_ALL.find((v) => v.id === s.videoId)
+            : null;
+          return (
+            <section
+              key={s.slug}
+              id={s.slug}
+              className="scroll-mt-24 rounded-2xl border border-suth-border bg-suth-elevated/60 p-5 md:p-6"
+            >
+              <header className="flex items-baseline justify-between gap-3">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-accent">
+                  [ Station {String(s.number).padStart(2, "0")} ]
+                </p>
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                  {s.spec}
+                </span>
+              </header>
+              <h2 className="mt-2 text-xl font-black tracking-[-0.02em] text-suth-text md:text-2xl">
+                {s.name}
+              </h2>
+
+              <div className="mt-4 rounded-md border border-suth-border-subtle bg-suth-base/40 p-3">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+                  Gold standard
+                </p>
+                <p className="mt-1 font-mono text-sm tabular-nums text-suth-text">
+                  {s.goldStandard}
+                </p>
+              </div>
+
+              <div className="mt-5">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+                  Technique
+                </p>
+                <ul role="list" className="mt-2 space-y-2">
+                  {s.technique.map((t, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span
+                        aria-hidden
+                        className="mt-2 size-1.5 shrink-0 rounded-full bg-suth-accent"
+                      />
+                      <p className="text-sm leading-relaxed text-suth-text">
+                        {t}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-5 rounded-md border border-red-500/30 bg-red-500/5 p-3">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-red-300">
+                  Failure pattern
+                </p>
+                <p className="mt-1 text-sm leading-relaxed text-suth-text-secondary">
+                  {s.failurePattern}
+                </p>
+              </div>
+
+              {vid ? (
+                <div className="mt-5 flex items-center gap-3 rounded-md border border-suth-border-subtle bg-suth-base/40 p-3">
+                  <span
+                    aria-hidden
+                    className="flex size-9 items-center justify-center rounded-full bg-suth-accent text-base text-[#0A0A0A]"
+                  >
+                    ▶
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium text-suth-text">
+                      {vid.title}
+                    </p>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                      {vid.coach} · {Math.round(vid.durationSec / 60)} min
+                    </p>
+                  </div>
+                </div>
+              ) : null}
+            </section>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

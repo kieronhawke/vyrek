@@ -14,8 +14,11 @@ import { useEffect, useRef, useState } from "react";
  *
  *   • **With a URL** — a real player. Play/pause, a scrub bar, elapsed and
  *     remaining, and it stops cleanly when the component unmounts.
- *   • **Without one** — says the week has no voice note, in plain words, and
- *     is not a button at all.
+ *   • **Without one** — renders nothing at all. It used to say "No voice note
+ *     for this week", which is a line of text reporting an absence: it takes
+ *     up the same room as the player, on every screen, to tell the athlete
+ *     about something that is not there. A week without a voice note should
+ *     simply not have that block on it.
  *
  * `preload="none"` matters. This sits on the plan screen, which somebody opens
  * every day on mobile data, and a two-minute recording fetched on every visit
@@ -53,13 +56,8 @@ export function CoachMedia({
     return () => { el?.pause(); };
   }, []);
 
-  if (!url) {
-    return (
-      <p className="week__media week__media--none">
-        No voice note for this week.
-      </p>
-    );
-  }
+  /* Nothing, not a notice. See the note at the top of this file. */
+  if (!url) return null;
 
   const toggle = () => {
     const el = audio.current;
