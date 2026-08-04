@@ -1,5 +1,7 @@
 import { AdminShell } from "@/components/control/admin-shell";
 import { ClientIntake } from "@/components/control/client-intake";
+import { Suspense } from "react";
+import { ClientHub } from "@/components/control/client-hub";
 import { ClientsManager } from "@/components/control/clients-manager";
 
 const BASE = "/control-preview/admin";
@@ -14,8 +16,20 @@ const BASE = "/control-preview/admin";
 export default function AdminClients() {
   return (
     <AdminShell base={BASE} title="Clients">
-      <ClientIntake />
-      <ClientsManager base={BASE} />
+      {/* The hub is the screen. Adding a client is a thing you do
+          occasionally, so it sits at the bottom rather than being the first
+          thing between you and the list. */}
+      {/* useSearchParams opts the subtree into client rendering, so it
+          needs a boundary or the whole page refuses to prerender. */}
+      <Suspense fallback={<p className="ch-empty">Loading clients…</p>}>
+        <ClientHub base={BASE} />
+      </Suspense>
+
+      <details className="ch-more">
+        <summary>Add a client, or edit the list directly</summary>
+        <ClientIntake />
+        <ClientsManager base={BASE} />
+      </details>
     </AdminShell>
   );
 }

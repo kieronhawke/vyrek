@@ -17,7 +17,7 @@ import {
   type Mute,
   type Template,
 } from "@/lib/control/messaging";
-import { SEED_ATHLETES, type TrackedAthlete } from "@/lib/control/tracker";
+import { SEED_ATHLETES, TRACKER_KEY, type TrackedAthlete } from "@/lib/control/tracker";
 
 /**
  * MESSAGING — every automated SMS and email, in one place, editable.
@@ -41,7 +41,7 @@ import { SEED_ATHLETES, type TrackedAthlete } from "@/lib/control/tracker";
 export function Messaging() {
   const templates = useCollection<Template>(TEMPLATES_KEY, SEED_TEMPLATES);
   const mutes = useCollection<Mute>(MUTES_KEY, []);
-  const athletes = useCollection<TrackedAthlete>("tracker", SEED_ATHLETES);
+  const athletes = useCollection<TrackedAthlete>(TRACKER_KEY, SEED_ATHLETES);
 
   const [openId, setOpenId] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "sms" | "email">("all");
