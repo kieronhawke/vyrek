@@ -32,16 +32,6 @@ export const metadata: Metadata = {
     images: ogImages(), url: `${siteUrl()}/events`, type: "website" },
 };
 
-const SEASONS = [
-  { value: "", label: "All seasons" },
-  { value: "s9", label: "Season 9" },
-  { value: "s8", label: "Season 8" },
-  { value: "s7", label: "Season 7" },
-];
-
-/** Events shown before the page asks you to filter or opt into the lot. */
-const RECENT_LIMIT = 60;
-
 const REGIONS = [
   { value: "", label: "Worldwide" },
   { value: "Europe", label: "Europe" },
@@ -61,14 +51,18 @@ export default async function EventsPage({
     ...(region ? { region } : {}),
   });
 
-  // ⚠️ Bounded by default.
+  // ⚠️ One season at a time, and the whole of it.
   //
-  // Rendering all 223 events produced 1.4 MB of HTML for one page — every
-  // navigation to or from it felt heavy, and nobody scrolls to 2019 to find
-  // this weekend's results. The most recent races are what the page is for;
-  // the rest are a filter or a click away, and `?all=1` still renders the lot.
-  const showAll = all === "1" || Boolean(season) || Boolean(region);
-  const visible = showAll ? events : events.slice(0, RECENT_LIMIT);
+  // Rendering all 223 events was 1.4 MB of HTML on every navigation. Capping it
+  // at "the 60 most recent" fixed the weight and broke the shape: a season is
+  // how HYROX publishes its calendar and how people look for a race, so a list
+  // that stops mid-season is worse than a long one.
+  //
+  // So the default is the current season in full — 65 events at most — and
+  // every other season is one click away and equally complete.
+  const seasons = [...new Set(events.map((e) => e.season))].sort().reverse();
+  const activeSeason = season || (region || all === "1" ? "" : seasons[0] ?? "");
+  const visible = activeSeason ? events.filter((e) => e.season === activeSeason) : events;
 
   const grouped = new Map<string, typeof visible>();
   for (const event of visible) {
@@ -97,22 +91,33 @@ export default async function EventsPage({
           HYROX Events
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-suth-text-secondary">
-          {showAll
-            ? `Every race we hold results for. ${visible.length} events.`
-            : `The ${visible.length} most recent races, of ${events.length}.`}
-          {showAll ? null : (
+          {activeSeason
+            ? `${visible.length} races in ${activeSeason.toUpperCase()}.`
+            : `Every race we hold results for. ${visible.length} events.`}
+          {activeSeason ? (
             <>
               {" "}
               <Link href="/events?all=1" className="text-suth-accent underline">
-                Show every event
+                Show every season
               </Link>
             </>
-          )}
+          ) : null}
         </p>
       </header>
 
       <div className="mt-6 space-y-3">
-        <FilterRow label="Season" options={SEASONS} active={season} build={(v) => buildHref({ season: v })} />
+        <FilterRow
+          label="Season"
+          options={[
+            { value: "", label: "All seasons" },
+            // ⚠️ Built from what is actually stored. A hardcoded list of three
+            // hid six seasons of the archive — 2018 to 2022 were unreachable
+            // from this page.
+            ...seasons.map((value) => ({ value, label: `Season ${value.replace(/^s/, "")}` })),
+          ]}
+          active={activeSeason}
+          build={(v) => buildHref({ season: v })}
+        />
         <FilterRow label="Region" options={REGIONS} active={region} build={(v) => buildHref({ region: v })} />
       </div>
 

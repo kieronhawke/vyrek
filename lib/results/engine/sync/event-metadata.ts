@@ -191,6 +191,8 @@ export type EnrichResult = {
   closedBySeason: string[];
   /** Events with no calendar entry that were still given a country and region. */
   placed: string[];
+  /** Events closed because they hold results, whatever their date said. */
+  closedByResults: string[];
 };
 
 /**
@@ -207,6 +209,7 @@ export async function enrichEventMetadata(
   const now = opts.now ?? new Date();
   const result: EnrichResult = {
     enriched: [], unmatched: [], ambiguous: [], closedBySeason: [], placed: [],
+    closedByResults: [],
   };
 
   for (const event of await repo.listEvents()) {
@@ -215,6 +218,25 @@ export async function enrichEventMetadata(
     if (event.startDatetime) continue;
 
     const metadata = metadataFor(event.city, event.year, races);
+
+    // ⚠️ Applied to every event, before any calendar branching.
+    //
+    // This rule lived in `statusFor` and was never passed the one fact it
+    // needed, so it never fired — and the calendar-matched branch it sat in is
+    // reached by a minority of events anyway. Sydney kept reverting to
+    // `upcoming` while holding 15,460 results because every pass "fixed" it and
+    // the next one put it back.
+    //
+    // A race with results has happened. `live` and `updates_paused` are left
+    // alone: those results are arriving as the race runs.
+    if (
+      event.status === "upcoming"
+      && event.athleteCount > 0
+    ) {
+      await repo.upsertEvent({ ...(event as EngineEvent), status: "final" });
+      result.closedByResults.push(event.slug);
+      continue;
+    }
 
     // ⚠️ A calendar date in the future cannot belong to a race we hold results
     // for.

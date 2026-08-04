@@ -29,20 +29,25 @@ import { CoachingCta } from "@/components/results/coaching-cta";
 export const revalidate = 300;
 
 /**
- * ⚠️ Not prerendered at build.
+ * The recent season, prerendered; the archive, on demand.
  *
- * This page reads the results database, and there are hundreds of it. Building
- * them all meant thousands of queries against the store while three build
- * workers hammered it in parallel — pages that answer in two seconds on an idle
- * database took past four minutes, and three deployments failed on it in a row.
- * Raising the budget only moved which page died.
+ * ⚠️ Both extremes are wrong here. Prerendering all 223 events meant thousands
+ * of queries during the build and failed three deployments in a row. Building
+ * none of them made every first visit a cold render — 2.5 to 5 seconds on the
+ * page people click most, which reads as broken.
  *
- * `revalidate` above already caches each page once rendered, so returning no
- * params costs a slower first request and nothing else. Prerendering thousands
- * of database-backed pages at build time is the thing that does not scale.
+ * So the current season is built ahead of time and everything older is
+ * rendered on first request and then cached by `revalidate`. That is where the
+ * traffic is: nobody is waiting on a 2019 board, and everybody is waiting on
+ * last weekend's.
  */
-export function generateStaticParams() {
-  return [];
+export async function generateStaticParams() {
+  const events = await getResultsSource().listEvents();
+  const seasons = [...new Set(events.map((e) => e.season))].sort().reverse();
+  const current = seasons[0];
+  return events
+    .filter((e) => e.season === current)
+    .map((event) => ({ slug: event.slug }));
 }
 
 export async function generateMetadata({

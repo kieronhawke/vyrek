@@ -288,3 +288,34 @@ describe("a race with results has happened", () => {
       .toBe("upcoming");
   });
 });
+
+describe("⚠️ the rule has to actually run", () => {
+  it("closes an upcoming event holding results, with no calendar match", async () => {
+    // The rule existed in `statusFor` and was never passed `hasResults`, so it
+    // never fired — and the branch it sat in is only reached by events that
+    // match the published calendar, which most do not. Sydney kept reverting
+    // to `upcoming` while holding 15,460 results.
+    const h = await makeHarness({
+      event: {
+        slug: "s9-2026-nowhere-with-results", city: "Nowhere-on-Sea",
+        season: "s9", year: 2026, status: "upcoming", athleteCount: 5544,
+        startDate: null, startDatetime: null,
+      },
+    });
+    const outcome = await enrichEventMetadata(h.repo, { races: [] });
+    expect(outcome.closedByResults).toContain("s9-2026-nowhere-with-results");
+    expect((await h.repo.getEventBySlug("s9-2026-nowhere-with-results"))?.status).toBe("final");
+  });
+
+  it("leaves a race with no results upcoming", async () => {
+    const h = await makeHarness({
+      event: {
+        slug: "s9-2026-not-yet", city: "Nowhere-on-Sea", season: "s9",
+        year: 2026, status: "upcoming", athleteCount: 0,
+        startDate: null, startDatetime: null,
+      },
+    });
+    await enrichEventMetadata(h.repo, { races: [] });
+    expect((await h.repo.getEventBySlug("s9-2026-not-yet"))?.status).toBe("upcoming");
+  });
+});
