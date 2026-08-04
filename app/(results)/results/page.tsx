@@ -112,6 +112,24 @@ export default async function ResultsLandingPage() {
         </div>
       ) : null}
 
+      {/* ⚠️ Before the finished races, deliberately.
+          The reference site opens on what is about to happen — its first card
+          reads "in 20 hours" — and a visitor arriving the week of their race
+          wants that before an archive. "Latest results" follows immediately. */}
+{upcoming.length > 0 ? (
+        <section className="mt-12" aria-labelledby="upcoming-heading">
+          <h2 id="upcoming-heading" className="mb-3 text-lg font-semibold text-suth-text">
+            Coming up
+          </h2>
+          <EventRail label="Upcoming events">
+            {upcoming.map((event) => (
+              <RailItem key={event.slug}>
+                <EventTile event={event} now={now} className="h-full" />
+              </RailItem>
+            ))}
+          </EventRail>
+        </section>
+      ) : null}
       <section className="mt-12" aria-labelledby="latest-heading">
         <div className="mb-3 flex items-baseline justify-between">
           <h2 id="latest-heading" className="text-lg font-semibold text-suth-text">
@@ -147,20 +165,7 @@ export default async function ResultsLandingPage() {
         )}
       </section>
 
-      {upcoming.length > 0 ? (
-        <section className="mt-12" aria-labelledby="upcoming-heading">
-          <h2 id="upcoming-heading" className="mb-3 text-lg font-semibold text-suth-text">
-            Coming up
-          </h2>
-          <EventRail label="Upcoming events">
-            {upcoming.map((event) => (
-              <RailItem key={event.slug}>
-                <EventTile event={event} now={now} className="h-full" />
-              </RailItem>
-            ))}
-          </EventRail>
-        </section>
-      ) : null}
+      
 
       <section className="mt-12" aria-labelledby="tools-heading">
         <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">

@@ -40,10 +40,19 @@ export function EventTile({
             {event.name}
           </h3>
           <p className="mt-0.5 flex items-center gap-1.5 text-xs text-suth-text-secondary">
-            <span className="truncate">{event.city}</span>
-            <span aria-hidden className="text-suth-text-disabled">·</span>
-            <span className="whitespace-nowrap">{formatRelativeDate(event.startDate, now, String(event.year))}</span>
+            <span className="whitespace-nowrap">
+              {formatRelativeDate(event.startDate, now, String(event.year))}
+            </span>
           </p>
+          {/* Where the race is, the way an atlas would say it. The reference
+              site puts "Japan, Asia" under every card and it is the fastest way
+              to place a city you do not know — 218 of 223 events carry both. */}
+          {event.country ? (
+            <p className="mt-0.5 truncate text-xs text-suth-text-tertiary">
+              {event.country}
+              {event.region ? `, ${event.region}` : ""}
+            </p>
+          ) : null}
         </div>
         <StatusBadge status={event.status} />
       </div>
