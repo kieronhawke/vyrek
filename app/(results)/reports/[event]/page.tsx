@@ -33,15 +33,24 @@ const HUMAN_TAKES: Record<string, string> = {};
  * same per-division reads, and 208 of them at build time is most of a
  * deploy. The recent ones are the ones anybody reads; an older report still
  * renders on first request and caches from then on.
+ *
+ * The field-size limit is not a nicety. This file's first version sorted by
+ * size after recency and so prebuilt /reports/s8-2026-lyon — the single
+ * largest field in the dataset — which took longer than the 240-second
+ * per-page ceiling and started retrying. Sorting by "biggest first" reads
+ * like it favours the pages that matter and in fact selects the ones the
+ * build cannot afford.
  */
 const PREBUILT_REPORTS = 6;
+const MAX_PREBUILT_FIELD = 5_000;
 
 export async function generateStaticParams() {
   const events = await getResultsSource()
     .listEvents({ status: "finished" })
     .catch(() => []);
   return [...events]
-    .sort((a, b) => b.year - a.year || (b.totalAthletes ?? 0) - (a.totalAthletes ?? 0))
+    .filter((e) => (e.totalAthletes ?? 0) <= MAX_PREBUILT_FIELD)
+    .sort((a, b) => b.year - a.year || a.slug.localeCompare(b.slug))
     .slice(0, PREBUILT_REPORTS)
     .map((e) => ({ event: e.slug }));
 }

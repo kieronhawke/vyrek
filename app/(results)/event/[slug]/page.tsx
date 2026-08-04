@@ -47,11 +47,29 @@ export const revalidate = 300;
  * for pages nobody has asked for yet.
  *
  * The list is chosen the way a visitor arrives: anything not yet finished
- * (people check those before race day), then the most recent finished
- * events, biggest first. `/results/city/[slug]` already reasons exactly this
- * way and caps at 60; this is the same principle applied to the family that
- * actually costs the time.
+ * (people check those before race day), then the most recent finished ones.
+ * `/results/city/[slug]` already reasons exactly this way and caps at 60;
+ * this is the same principle applied to the family that costs the time.
+ *
+ * BUT NOT THE GIANTS, AND THAT CORRECTION IS THE POINT. The first version of
+ * this ordered by field size after recency — "most recent, biggest first" —
+ * which reads sensibly and is exactly wrong for a build-time cap: it hand-
+ * picked the six largest fields in the whole dataset, and /reports/s8-2026-
+ * lyon (16,023 athletes) then blew the 240-second per-page ceiling on the
+ * very deploy meant to fix the timeouts.
+ *
+ * A page that cannot render in 240 seconds with 29 build workers cannot
+ * render inside a request either, so prebuilding it was never going to make
+ * it work — it only decided whether one broken page took the whole deploy
+ * with it. Anything over the threshold is left to render on demand, and the
+ * real repair is making the page cheaper, which is a results-lane job and is
+ * not done here.
  */
+
+/* Lyon at 16,023 is measured — it timed out. Nothing below that is measured
+   at all, so this sits well under it rather than close to it: it covers 183
+   of the 208 finished events and leaves the 25 largest out. */
+const MAX_PREBUILT_FIELD = 5_000;
 /* Twelve, not forty. The per-page cost cannot be measured from here — the
    results database is a separate project this worktree has no keys for, and
    locally the source falls back to fourteen demo events, which is why the
@@ -66,17 +84,13 @@ export async function generateStaticParams() {
   // simply renders on demand, which is the fallback anyway.
   const events = await getResultsSource().listEvents().catch(() => []);
 
-  const rank = (e: (typeof events)[number]) => {
-    // Upcoming and live first — they are what somebody checks this week.
-    if (e.status !== "finished") return [0, -e.year, 0] as const;
-    return [1, -e.year, -(e.totalAthletes ?? 0)] as const;
-  };
-
   return [...events]
+    .filter((e) => (e.totalAthletes ?? 0) <= MAX_PREBUILT_FIELD)
     .sort((a, b) => {
-      const [ax, ay, az] = rank(a);
-      const [bx, by, bz] = rank(b);
-      return ax - bx || ay - by || az - bz;
+      // Upcoming and live first — they are what somebody checks this week.
+      const af = a.status === "finished" ? 1 : 0;
+      const bf = b.status === "finished" ? 1 : 0;
+      return af - bf || b.year - a.year || a.slug.localeCompare(b.slug);
     })
     .slice(0, PREBUILT_EVENTS)
     .map((e) => ({ slug: e.slug }));
