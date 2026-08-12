@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/app/onboarding.css";
 import { resolveInvite } from "@/lib/onboarding/resolve";
+import { markInviteOpened } from "@/lib/onboarding/invite-store";
 import { OnboardingFlow } from "@/components/onboarding/flow";
 import { InviteProblem } from "@/components/onboarding/invite-problem";
 
@@ -33,6 +34,10 @@ export default async function OnboardingPage({
   // Accepts a short id or a signed token — see lib/onboarding/resolve.ts.
   const read = await resolveInvite(token);
   if (!read.ok) return <InviteProblem reason={read.reason} />;
+
+  // Record the first open for the admin's links-sent list. No-op for old
+  // signed-token links, which have no stored row to stamp.
+  await markInviteOpened(token);
 
   return (
     <OnboardingFlow

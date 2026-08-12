@@ -102,6 +102,17 @@ export default async function AdminClientsPage({
                 : plan
                   ? `${plan.display}/mo`
                   : "—";
+              // The journey in one line: sent, then opened, then signed up.
+              // "Opened, not signed up" is the one worth a follow-up call.
+              const opened = inv.openedISO
+                ? `opened ${new Date(inv.openedISO).toLocaleString("en-GB", {
+                    weekday: "short",
+                    day: "numeric",
+                    month: "short",
+                    hour: "numeric",
+                    minute: "2-digit",
+                  })}`
+                : null;
               const body = (
                 <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
                   <div className="min-w-0">
@@ -131,6 +142,15 @@ export default async function AdminClientsPage({
                         ? "expired"
                         : `sent ${new Date(inv.createdISO).toLocaleDateString("en-GB")}`}
                     </p>
+                    {!customerId ? (
+                      <p
+                        className={`mt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] ${
+                          opened ? "text-amber-300" : "text-suth-text-tertiary"
+                        }`}
+                      >
+                        {opened ?? "not opened yet"}
+                      </p>
+                    ) : null}
                   </div>
                 </div>
               );

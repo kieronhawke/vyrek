@@ -113,8 +113,27 @@ export type StoredInvite = {
   id: string;
   createdISO: string;
   expiresISO: string;
+  openedISO: string | null;
   payload: InvitePayload;
 };
+
+/**
+ * First open only: `.is("opened_at", null)` makes later opens no-ops, so the
+ * timestamp always answers "when did they first look at it". Failure is
+ * swallowed — tracking must never be the reason a link doesn't open.
+ */
+export async function markInviteOpened(id: string): Promise<void> {
+  if (!looksLikeInviteId(id) || !dbConfigured()) return;
+  try {
+    await supabaseAdmin()
+      .from("onboarding_invites")
+      .update({ opened_at: new Date().toISOString() })
+      .eq("id", id)
+      .is("opened_at", null);
+  } catch {
+    /* The invite still opens; it just isn't recorded. */
+  }
+}
 
 /**
  * Newest first, for the admin's "who have I sent links to" list. Includes
@@ -125,7 +144,7 @@ export async function recentInvites(limit = 50): Promise<StoredInvite[]> {
   try {
     const { data, error } = await supabaseAdmin()
       .from("onboarding_invites")
-      .select("id, created_at, expires_at, payload")
+      .select("id, created_at, expires_at, opened_at, payload")
       .order("created_at", { ascending: false })
       .limit(limit);
     if (error || !data) return [];
@@ -133,6 +152,7 @@ export async function recentInvites(limit = 50): Promise<StoredInvite[]> {
       id: r.id as string,
       createdISO: r.created_at as string,
       expiresISO: r.expires_at as string,
+      openedISO: (r.opened_at as string | null) ?? null,
       payload: r.payload as InvitePayload,
     }));
   } catch {
