@@ -76,8 +76,20 @@ export default async function AdminLayout({
 
           <AdminSideNav items={NAV} />
 
-          {/* The other half of the same system: Ben's phone-first view. */}
-          <div className="mt-6 border-t border-suth-border-subtle pt-4">
+          {/* The other surfaces of the same system, one login. */}
+          <div className="mt-6 space-y-2 border-t border-suth-border-subtle pt-4">
+            <Link
+              href="/console"
+              className="flex items-center justify-between rounded-xl border border-suth-border bg-suth-elevated px-3 py-2.5 text-sm text-suth-text transition-colors hover:border-suth-border-strong"
+            >
+              <span>
+                Coaching console
+                <span className="block text-xs text-suth-text-tertiary">
+                  Plans, diary, clients, comms
+                </span>
+              </span>
+              <span aria-hidden>→</span>
+            </Link>
             <Link
               href="/coach"
               className="flex items-center justify-between rounded-xl border border-suth-border bg-suth-elevated px-3 py-2.5 text-sm text-suth-text transition-colors hover:border-suth-border-strong"
@@ -85,7 +97,7 @@ export default async function AdminLayout({
               <span>
                 Coach view
                 <span className="block text-xs text-suth-text-tertiary">
-                  Ben&apos;s five screens
+                  Ben&apos;s phone-sized view
                 </span>
               </span>
               <span aria-hidden>→</span>

@@ -15,9 +15,15 @@ import { createServerClient } from "@supabase/ssr";
  */
 
 export const config = {
-  // /coach is Ben's real client surface — same login as /admin, worn
-  // differently. (/control-preview, the old fixture clone, is gone.)
-  matcher: ["/admin/:path*", "/app/:path*", "/coach/:path*"],
+  // Both admin surfaces share one login: /admin (Mission Control, money and
+  // business) and /console (the desktop coaching console — plan builder,
+  // diary, clients). /coach is Ben's phone-sized view of the same.
+  matcher: [
+    "/admin/:path*",
+    "/console/:path*",
+    "/app/:path*",
+    "/coach/:path*",
+  ],
 };
 
 export async function middleware(req: NextRequest) {
@@ -50,7 +56,11 @@ export async function middleware(req: NextRequest) {
       data: { user },
     } = await sb.auth.getUser();
     if (!user) {
-      if (path.startsWith("/admin") || path.startsWith("/coach")) {
+      if (
+        path.startsWith("/admin") ||
+        path.startsWith("/console") ||
+        path.startsWith("/coach")
+      ) {
         return NextResponse.redirect(new URL("/admin/login", req.url));
       }
       const login = new URL("/login", req.url);
