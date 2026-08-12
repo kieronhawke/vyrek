@@ -32,12 +32,16 @@ const NAV: SideNavItem[] = [
   { href: "/admin/customers", label: "Customers", group: "Members", icon: "customers" },
   { href: "/admin/subscriptions", label: "Subscriptions", group: "Members", icon: "subscriptions" },
   { href: "/admin/payments", label: "Payments", group: "Members", icon: "payments" },
+  { href: "/admin/finance", label: "Finance", group: "Members", icon: "finance" },
+  { href: "/admin/accounts", label: "Accounts", group: "Members", icon: "accounts" },
   // Partners.
   { href: "/admin/partners", label: "Applications", group: "Partners", icon: "applications" },
   { href: "/admin/partners/list", label: "Partners", group: "Partners", icon: "partners" },
   { href: "/admin/payouts", label: "Payouts", group: "Partners", icon: "payouts" },
   // Content & growth.
   { href: "/admin/blog", label: "Blog posts", group: "Content", icon: "blog" },
+  { href: "/admin/assets", label: "Assets", group: "Content", icon: "assets" },
+  { href: "/admin/seo", label: "SEO", group: "Content", icon: "seo" },
   { href: "/admin/results-engine", label: "Results engine", group: "Content", icon: "results" },
   { href: "/admin/waitlist", label: "Waitlist", group: "Marketing", icon: "waitlist" },
   { href: "/admin/messaging", label: "Emails & texts", group: "Marketing", icon: "quiz" },

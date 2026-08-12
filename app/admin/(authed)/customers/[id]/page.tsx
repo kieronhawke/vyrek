@@ -11,6 +11,8 @@ import { getCustomer } from "@/lib/admin/queries";
 import { customerJourney } from "@/lib/admin/journey";
 import { subscriptionBilling } from "@/lib/billing/subscription-info";
 import { paymentsForCustomer } from "@/lib/billing/payments";
+import { plansForCustomer } from "@/lib/coach/data";
+import { FitnessProfile } from "@/components/admin/fitness-profile";
 import { CustomerActions } from "@/components/admin/customer-actions";
 import { SubscriptionActions } from "@/components/admin/subscription-actions";
 import { ExportPaymentsCsv } from "@/components/admin/export-payments";
@@ -49,7 +51,7 @@ export default async function AdminCustomerDetailPage({
   // These four reads only depend on the customer/subscription already
   // loaded, not on each other — so they run together rather than as a
   // waterfall of awaits.
-  const [billing, payments, journey, memberMode] = await Promise.all([
+  const [billing, payments, journey, memberMode, plans] = await Promise.all([
     // Live from Stripe: the rate, the pause state and the card. Null when
     // Stripe is unreachable — the page still renders its DB fields.
     latestSub?.stripe_subscription_id && latestSub.status !== "canceled"
@@ -77,8 +79,40 @@ export default async function AdminCustomerDetailPage({
         return null;
       }
     })(),
+    // This person's training plans, so the billing page doubles as a full
+    // client view: what Ben has written and how long it runs.
+    plansForCustomer(customer.id),
   ]);
   const lastPaid = payments?.find((p) => p.paid) ?? null;
+
+  // Programme state. The latest SENT plan drives "how long are they
+  // programmed for"; drafts are noted but never count as coverage.
+  const sentPlans = plans.filter((p) => p.status === "sent");
+  const currentPlan = sentPlans[0] ?? null;
+  const todayMs = new Date().setHours(0, 0, 0, 0);
+  const daysLeft = currentPlan
+    ? Math.floor(
+        (new Date(`${currentPlan.weekStart}T00:00:00`).getTime() +
+          currentPlan.days * 86_400_000 -
+          todayMs) /
+          86_400_000,
+      )
+    : null;
+  const daysLeftLabel =
+    daysLeft === null
+      ? null
+      : daysLeft < 0
+        ? `Ran out ${Math.abs(daysLeft)} day${Math.abs(daysLeft) === 1 ? "" : "s"} ago`
+        : daysLeft === 0
+          ? "Runs out today"
+          : `${daysLeft} day${daysLeft === 1 ? "" : "s"} of programming left`;
+  const daysLeftTone: "good" | "warn" | "bad" =
+    daysLeft === null || daysLeft < 0
+      ? "bad"
+      : daysLeft <= 2
+        ? "warn"
+        : "good";
+  const draftWaiting = plans.find((p) => p.status === "draft") ?? null;
 
   return (
     <>
@@ -219,6 +253,80 @@ export default async function AdminCustomerDetailPage({
           )}
         </Card>
       </div>
+
+      {/* Programme — what Ben has written for them, and how long it runs. */}
+      <section className="mt-10">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+            Programme
+          </h2>
+          <Link
+            href={`/admin/plans/${customer.id}`}
+            className="inline-flex h-10 items-center rounded-pill bg-suth-accent px-4 text-sm font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover"
+          >
+            Open plan builder →
+          </Link>
+        </div>
+        <Card>
+          {currentPlan ? (
+            <>
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <p className="font-semibold text-suth-text">{currentPlan.title}</p>
+                  <p className="mt-0.5 text-sm text-suth-text-tertiary">
+                    Week of{" "}
+                    {format(
+                      new Date(`${currentPlan.weekStart}T00:00:00`),
+                      "dd MMM yyyy",
+                    )}{" "}
+                    · {currentPlan.days} day{currentPlan.days === 1 ? "" : "s"}
+                    {currentPlan.sentAtISO
+                      ? ` · sent ${format(new Date(currentPlan.sentAtISO), "dd MMM yyyy")}`
+                      : ""}
+                  </p>
+                </div>
+                {daysLeftLabel ? (
+                  <Badge tone={daysLeftTone}>{daysLeftLabel}</Badge>
+                ) : null}
+              </div>
+              {draftWaiting ? (
+                <p className="mt-3 text-sm text-amber-300">
+                  A draft for &ldquo;{draftWaiting.title}&rdquo; is waiting to be sent.
+                </p>
+              ) : null}
+            </>
+          ) : draftWaiting ? (
+            <p className="text-sm text-suth-text-secondary">
+              No plan sent yet. A draft for &ldquo;{draftWaiting.title}&rdquo; is
+              waiting in the builder.
+            </p>
+          ) : (
+            <p className="text-sm text-suth-text-tertiary">
+              No plan written yet. Open the plan builder to write their first week.
+            </p>
+          )}
+        </Card>
+
+        {sentPlans.length > 0 ? (
+          <div className="mt-4">
+            <h3 className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+              Recent sent plans
+            </h3>
+            <Table
+              headers={["Plan", "Week", "Days", "Sent"]}
+              empty="No plans sent yet."
+              rows={sentPlans.slice(0, 8).map((p) => [
+                <span key="t" className="text-suth-text">{p.title}</span>,
+                format(new Date(`${p.weekStart}T00:00:00`), "dd MMM yyyy"),
+                <span key="d" className="num">{p.days}</span>,
+                p.sentAtISO
+                  ? format(new Date(p.sentAtISO), "dd MMM yyyy")
+                  : "-",
+              ])}
+            />
+          </div>
+        ) : null}
+      </section>
 
       {/* Subscription history */}
       <section className="mt-10">
@@ -419,14 +527,15 @@ export default async function AdminCustomerDetailPage({
         </section>
       ) : null}
 
-      {/* Latest quiz response */}
+      {/* What Ben knows about them — the quiz answers, read back in plain
+          English. The raw JSON stays underneath for completeness. */}
       <section className="mt-10">
         <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-          Latest quiz response
+          What Ben knows about them
         </h2>
         {latestQuiz ? (
           <Card>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="font-semibold text-suth-text">
                 Programme: {latestQuiz.program ?? "-"}
               </p>
@@ -436,9 +545,17 @@ export default async function AdminCustomerDetailPage({
                   : "-"}
               </span>
             </div>
-            <pre className="mt-4 max-h-96 overflow-auto rounded-md border border-suth-border-subtle bg-suth-base/40 p-4 text-xs leading-relaxed text-suth-text-secondary">
-              {JSON.stringify(latestQuiz.answers, null, 2)}
-            </pre>
+            <div className="mt-4">
+              <FitnessProfile answers={latestQuiz.answers} />
+            </div>
+            <details className="mt-4">
+              <summary className="cursor-pointer font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary hover:text-suth-text-secondary">
+                Raw answers
+              </summary>
+              <pre className="mt-3 max-h-96 overflow-auto rounded-md border border-suth-border-subtle bg-suth-base/40 p-4 text-xs leading-relaxed text-suth-text-secondary">
+                {JSON.stringify(latestQuiz.answers, null, 2)}
+              </pre>
+            </details>
           </Card>
         ) : (
           <Card>

@@ -200,6 +200,78 @@ function invoicePaymentIntentIdOf(inv: Stripe.Invoice): string | null {
   return null;
 }
 
+export type MonthRevenue = {
+  /** How a person reads the month, e.g. "Aug 2026". */
+  label: string;
+  /** Sortable key, e.g. "2026-08". */
+  ym: string;
+  /** Everything collected against paid invoices raised that month. */
+  collectedPence: number;
+};
+
+/**
+ * The last 12 calendar months of collected revenue, oldest first, for the
+ * finance overview. One pass over paid invoices across the whole window,
+ * bucketed by the month Stripe raised them — not 12 sequential month calls.
+ * Sums `amount_paid`, skips invoices whose customer was since deleted, and
+ * degrades to null on a Stripe error like every other reader here.
+ */
+export async function monthlyRevenue12m(
+  now: Date = new Date(),
+): Promise<MonthRevenue[] | null> {
+  // Twelve buckets ending on the current calendar month, keyed by "YYYY-MM".
+  const months: MonthRevenue[] = [];
+  const bucket = new Map<string, MonthRevenue>();
+  for (let i = 11; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const ym = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    const label = new Intl.DateTimeFormat("en-GB", {
+      month: "short",
+      year: "numeric",
+    }).format(d);
+    const row: MonthRevenue = { label, ym, collectedPence: 0 };
+    months.push(row);
+    bucket.set(ym, row);
+  }
+
+  const windowStart = Math.floor(
+    new Date(now.getFullYear(), now.getMonth() - 11, 1).getTime() / 1000,
+  );
+  const windowEnd = Math.floor(
+    new Date(now.getFullYear(), now.getMonth() + 1, 1).getTime() / 1000,
+  );
+
+  try {
+    const { stripe } = await import("@/lib/stripe");
+    const s = stripe();
+    let startingAfter: string | undefined;
+    // A year of invoices at Ben's scale is a handful of pages; cap it so a
+    // runaway never spins. 20 × 100 covers any realistic month-mix.
+    for (let page = 0; page < 20; page++) {
+      const invoices = await s.invoices.list({
+        limit: 100,
+        status: "paid",
+        created: { gte: windowStart, lt: windowEnd },
+        expand: ["data.customer"],
+        ...(startingAfter ? { starting_after: startingAfter } : {}),
+      });
+      for (const inv of invoices.data) {
+        if (invoiceCustomerDeleted(inv)) continue;
+        const d = new Date(inv.created * 1000);
+        const ym = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+        const row = bucket.get(ym);
+        if (row) row.collectedPence += inv.amount_paid ?? 0;
+      }
+      if (!invoices.has_more) break;
+      startingAfter = invoices.data[invoices.data.length - 1]?.id;
+    }
+    return months;
+  } catch (e) {
+    console.error("[payments] 12-month revenue failed", e);
+    return null;
+  }
+}
+
 /**
  * What this calendar month should finish on: everything already
  * collected plus every active subscription whose next renewal lands

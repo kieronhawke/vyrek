@@ -115,6 +115,31 @@ function Glyph({ name }: { name: string }) {
         <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
       </>
     ),
+    finance: (
+      <>
+        <path d="M3 3v18h18" />
+        <path d="M7 15l3.5-4 3 2.5L21 6" />
+      </>
+    ),
+    accounts: (
+      <>
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7" />
+      </>
+    ),
+    assets: (
+      <>
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <circle cx="8.5" cy="8.5" r="1.8" />
+        <path d="M21 15l-5-5L5 21" />
+      </>
+    ),
+    seo: (
+      <>
+        <circle cx="11" cy="11" r="7" />
+        <path d="M21 21l-4.3-4.3" />
+      </>
+    ),
     settings: (
       <>
         <circle cx="12" cy="12" r="3" />
