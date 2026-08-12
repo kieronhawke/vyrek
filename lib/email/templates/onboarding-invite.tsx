@@ -163,7 +163,10 @@ export function onboardingInviteSms(
   link: string,
   kind: "full" | "payment",
 ): string {
+  // A payment-only invite goes to an EXISTING client on an agreed rate, so
+  // "pick your plan" was wrong: there is nothing to pick. The link sets up
+  // their account and card, that's all.
   return kind === "payment"
-    ? `${firstName}, it's Ben. Ready when you are - pick your plan: ${link}`
+    ? `Hi ${firstName}, it's Ben. Your account set-up link: ${link}`
     : `${firstName}, it's Ben. Welcome aboard! 5 mins to set up: ${link}`;
 }

@@ -15,7 +15,9 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 function gbp(pence: number): string {
-  return `£${(pence / 100).toLocaleString("en-GB", { minimumFractionDigits: 2 })}`;
+  // Whole pounds. "£185.00" on a stat tile reads like an invoice line;
+  // the tile is for the shape of the number, not the pennies.
+  return `£${Math.round(pence / 100).toLocaleString("en-GB")}`;
 }
 
 function statValue(

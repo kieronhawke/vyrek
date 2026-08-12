@@ -379,21 +379,51 @@ export async function sendCustomerPasswordReset(
   try {
     const { user } = await assertAdmin();
     const sb = supabaseAdmin();
+    const email = customerEmail.trim().toLowerCase();
     const { data, error } = await sb.auth.admin.generateLink({
       type: "recovery",
-      email: customerEmail.trim().toLowerCase(),
+      email,
     });
     if (error) throw error;
+
+    // SEND IT OURSELVES. The generated link used to depend on Supabase's
+    // built-in mailer, which is rate-limited to a handful an hour and
+    // unbranded, so "Send password reset" produced nothing in the inbox.
+    // Resend on the verified domain, through our own callback route, is
+    // the same delivery path every other email already uses.
+    const hashed = data?.properties?.hashed_token;
+    let sent = false;
+    if (hashed) {
+      const { siteUrl } = await import("@/lib/site-url");
+      const { sendSignInLink } = await import("@/lib/email/send");
+      const signInUrl = `${siteUrl()}/auth/callback?token_hash=${encodeURIComponent(
+        hashed,
+      )}&type=recovery&next=${encodeURIComponent("/app/account")}`;
+      const full = data?.user?.user_metadata?.full_name;
+      const firstName =
+        (typeof full === "string" && full.trim().split(/\s+/)[0]) ||
+        email.split("@")[0].split(/[\W_]+/)[0];
+      const result = await sendSignInLink({
+        to: email,
+        firstName: firstName
+          ? firstName[0].toUpperCase() + firstName.slice(1)
+          : "there",
+        signInUrl,
+      });
+      sent = result.ok;
+    }
+
     await logEvent({
       actor: user.email ?? "admin",
       action: "customer.signed_up",
       targetKind: "customer",
       metadata: {
-        event: "password_reset_link_generated",
-        email: customerEmail,
+        event: "password_reset_link_sent",
+        email,
+        delivered: sent,
       },
     });
-    return { ok: true, link: data?.properties?.action_link ?? undefined };
+    return { ok: true, link: sent ? undefined : (data?.properties?.action_link ?? undefined) };
   } catch (e) {
     return fail(e);
   }
@@ -613,6 +643,7 @@ export async function changeSubscriptionRate(
             to: customer.email as string,
             firstName,
             newAmountPence,
+            oldAmountPence: item.price.unit_amount,
             nextInvoiceISO: subRow.current_period_end as string | null,
           });
         }

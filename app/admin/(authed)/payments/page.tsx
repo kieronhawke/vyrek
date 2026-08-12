@@ -1,6 +1,10 @@
 import { format } from "date-fns";
 import { PageHeader, Badge, Card, Stat, Table } from "@/components/admin/ui";
-import { recentPayments, liveMrrPence } from "@/lib/billing/payments";
+import {
+  recentPayments,
+  liveMrrPence,
+  forecastThisMonthPence,
+} from "@/lib/billing/payments";
 import { stripeDashboardUrl } from "@/lib/billing/stripe-dashboard";
 
 export const dynamic = "force-dynamic";
@@ -8,6 +12,11 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Payments" };
 
 function gbp(pence: number): string {
+  // Whole pounds on tiles; the table keeps exact amounts via gbpExact.
+  return `£${Math.round(pence / 100).toLocaleString("en-GB")}`;
+}
+
+function gbpExact(pence: number): string {
   return `£${(pence / 100).toLocaleString("en-GB", {
     minimumFractionDigits: pence % 100 === 0 ? 0 : 2,
     maximumFractionDigits: 2,
@@ -49,6 +58,7 @@ export default async function AdminPaymentsPage() {
     recentPayments(60),
     liveMrrPence(),
   ]);
+  let forecast: number | null = null;
 
   if (payments === null) {
     return (
@@ -79,6 +89,8 @@ export default async function AdminPaymentsPage() {
     )
     .reduce((sum, p) => sum + p.amountPence, 0);
 
+  forecast = await forecastThisMonthPence(collectedThisMonth);
+
   return (
     <>
       <PageHeader
@@ -98,7 +110,11 @@ export default async function AdminPaymentsPage() {
       />
 
       <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-        <Stat label="MRR" value={mrr !== null ? gbp(mrr) : "—"} />
+        <Stat
+          label="Forecast this month"
+          value={forecast !== null ? gbp(forecast) : "—"}
+          hint="Collected plus renewals due before month end."
+        />
         <Stat label="Collected this month" value={gbp(collectedThisMonth)} />
         <Stat
           label="Failed payments"
@@ -107,6 +123,9 @@ export default async function AdminPaymentsPage() {
         />
         <Stat label="Awaiting payment" value={String(openInvoices.length)} />
       </div>
+      <p className="mb-8 -mt-4 text-xs text-suth-text-tertiary">
+        MRR across every rate: {mrr !== null ? gbp(mrr) : "unavailable"}.
+      </p>
 
       {failed.length > 0 ? (
         <section className="mb-8">
@@ -120,7 +139,7 @@ export default async function AdminPaymentsPage() {
               <span key="c" className="text-suth-text">
                 {p.customerName ?? p.customerEmail ?? p.stripeCustomerId ?? "—"}
               </span>,
-              <span key="a" className="font-mono">{gbp(p.amountPence)}</span>,
+              <span key="a" className="font-mono">{gbpExact(p.amountPence)}</span>,
               <Badge key="s" tone="bad">{statusLabel(p)}</Badge>,
               String(p.attemptCount),
               p.hostedInvoiceUrl ? (
@@ -160,7 +179,7 @@ export default async function AdminPaymentsPage() {
             <span key="d" className="text-suth-text-secondary">
               {p.description ?? "—"}
             </span>,
-            <span key="a" className="font-mono">{gbp(p.amountPence)}</span>,
+            <span key="a" className="font-mono">{gbpExact(p.amountPence)}</span>,
             <Badge key="s" tone={statusTone(p)}>{statusLabel(p)}</Badge>,
             <a
               key="l"

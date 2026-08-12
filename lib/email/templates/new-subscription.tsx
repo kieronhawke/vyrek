@@ -20,6 +20,7 @@ export function NewSubscriptionEmail({
   email,
   planName,
   rate,
+  paymentMethod,
   adminUrl,
   stripeUrl,
   source,
@@ -28,6 +29,8 @@ export function NewSubscriptionEmail({
   email: string;
   planName: string | null;
   rate: string | null;
+  /** "visa •••• 4242", "Direct Debit •••• 2345", or null when unknown. */
+  paymentMethod?: string | null;
   adminUrl: string;
   stripeUrl: string;
   /** "payment link" or "website sign-up" — how they arrived. */
@@ -43,7 +46,9 @@ export function NewSubscriptionEmail({
       <P>
         {planName ?? "Subscription"}
         {rate ? ` · ${rate} a month` : ""}, set up just now via their {source}.
-        Their card is on file and collects automatically from today.
+        {paymentMethod
+          ? ` Paying by ${paymentMethod}, collected automatically from today.`
+          : " Their payment method is on file and collects automatically from today."}
       </P>
 
       <Btn href={adminUrl}>Open in the admin</Btn>

@@ -174,7 +174,7 @@ export function OnboardingWelcome({
 
         <div className="obw-actions">
           <Link href="/login" className="obw-go">
-            {emailedTo ? "Sign in" : "Go to my account"}
+            Set up my account
           </Link>
           <Link href="/" className="obw-second">
             Back to the site

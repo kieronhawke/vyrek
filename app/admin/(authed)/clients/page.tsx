@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/admin/ui";
 import { SendPaymentLink } from "@/components/admin/send-payment-link";
 import { recentInvites } from "@/lib/onboarding/invite-store";
 import { planByKey } from "@/lib/onboarding/model";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export const dynamic = "force-dynamic";
 
@@ -26,6 +27,30 @@ export default async function AdminClientsPage() {
   // Read once in the data phase, not during render — the page is
   // force-dynamic so this is per-request anyway.
   const now = new Date().getTime();
+
+  // Which invited people have become customers, so a sent link that has
+  // been used clicks straight through to their customer page.
+  const emails = Array.from(
+    new Set(
+      invites
+        .map((i) => (i.payload.email || "").trim().toLowerCase())
+        .filter(Boolean),
+    ),
+  );
+  const customerByEmail = new Map<string, string>();
+  if (emails.length > 0) {
+    try {
+      const { data } = await supabaseAdmin()
+        .from("customers")
+        .select("id, email")
+        .in("email", emails);
+      for (const c of (data ?? []) as Array<{ id: string; email: string }>) {
+        customerByEmail.set(c.email.toLowerCase(), c.id);
+      }
+    } catch {
+      /* Rows render unlinked. */
+    }
+  }
 
   return (
     <>
@@ -61,41 +86,60 @@ export default async function AdminClientsPage() {
               const p = inv.payload;
               const plan = planByKey(p.plan);
               const expired = new Date(inv.expiresISO).getTime() < now;
+              const customerId = customerByEmail.get(
+                (p.email || "").trim().toLowerCase(),
+              );
               const rate = p.amountPence
                 ? `${gbp(p.amountPence)}/mo, their rate`
                 : plan
                   ? `${plan.display}/mo`
                   : "—";
-              return (
-                <li
-                  key={inv.id}
-                  className="rounded-xl border border-suth-border bg-suth-elevated p-4"
-                >
-                  <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
-                    <div className="min-w-0">
-                      <p className="text-sm font-medium text-suth-text">
-                        {p.name || "—"}
-                        <span className="ml-2 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
-                          {p.kind === "payment" ? "payment link" : "full set-up"}
+              const body = (
+                <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-suth-text">
+                      {p.name || "—"}
+                      <span className="ml-2 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
+                        {p.kind === "payment" ? "payment link" : "full set-up"}
+                      </span>
+                      {customerId ? (
+                        <span className="ml-2 rounded-pill bg-emerald-500/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-emerald-300">
+                          signed up →
                         </span>
-                      </p>
-                      <p className="mt-0.5 text-xs text-suth-text-secondary">
-                        {[p.email, p.phone].filter(Boolean).join(" · ") || "no contact stored"}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="num text-sm text-suth-text">{rate}</p>
-                      <p
-                        className={`mt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] ${
-                          expired ? "text-suth-danger" : "text-suth-text-tertiary"
-                        }`}
-                      >
-                        {expired
-                          ? "expired"
-                          : `sent ${new Date(inv.createdISO).toLocaleDateString("en-GB")}`}
-                      </p>
-                    </div>
+                      ) : null}
+                    </p>
+                    <p className="mt-0.5 text-xs text-suth-text-secondary">
+                      {[p.email, p.phone].filter(Boolean).join(" · ") || "no contact stored"}
+                    </p>
                   </div>
+                  <div className="text-right">
+                    <p className="num text-sm text-suth-text">{rate}</p>
+                    <p
+                      className={`mt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] ${
+                        expired && !customerId ? "text-suth-danger" : "text-suth-text-tertiary"
+                      }`}
+                    >
+                      {expired && !customerId
+                        ? "expired"
+                        : `sent ${new Date(inv.createdISO).toLocaleDateString("en-GB")}`}
+                    </p>
+                  </div>
+                </div>
+              );
+              return (
+                <li key={inv.id}>
+                  {customerId ? (
+                    <Link
+                      href={`/admin/customers/${customerId}`}
+                      className="block rounded-xl border border-suth-border bg-suth-elevated p-4 transition-colors hover:border-suth-border-strong"
+                    >
+                      {body}
+                    </Link>
+                  ) : (
+                    <div className="rounded-xl border border-suth-border bg-suth-elevated p-4">
+                      {body}
+                    </div>
+                  )}
                 </li>
               );
             })}

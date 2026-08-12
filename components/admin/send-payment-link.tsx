@@ -19,9 +19,11 @@ import { useRouter } from "next/navigation";
  */
 
 const PRESETS = [
-  { key: "coaching-121", label: "1:1 Coaching", pounds: 220 },
-  { key: "coaching-tier2", label: "Programming", pounds: 80 },
-  { key: "club", label: "Suth Club", pounds: 12.99 },
+  { key: "coaching-121", label: "1:1 Coaching", pounds: 220, soon: false },
+  { key: "coaching-tier2", label: "Programming", pounds: 80, soon: false },
+  // Visible so Ben knows it's on the way, disabled so nobody is invited
+  // to a product that isn't ready.
+  { key: "club", label: "Suth Club", pounds: 12.99, soon: true },
 ] as const;
 
 type SendResult = {
@@ -199,24 +201,37 @@ export function SendPaymentLink() {
       <div className="mt-5">
         <span className={labelCls}>Plan &amp; rate</span>
         <div className="mt-2 flex flex-wrap items-center gap-2">
-          {PRESETS.map((p) => (
-            <button
-              key={p.key}
-              type="button"
-              onClick={() => {
-                setPlan(p.key);
-                setCustomRate(false);
-              }}
-              aria-pressed={plan === p.key && !customRate}
-              className={`inline-flex h-11 items-center rounded-pill border px-4 text-sm font-medium transition-colors ${
-                plan === p.key && !customRate
-                  ? "border-suth-accent bg-suth-accent/15 text-suth-accent"
-                  : "border-suth-border text-suth-text-secondary hover:border-suth-border-strong"
-              }`}
-            >
-              {p.label} · £{p.pounds}
-            </button>
-          ))}
+          {PRESETS.map((p) =>
+            p.soon ? (
+              <span
+                key={p.key}
+                className="inline-flex h-11 cursor-not-allowed items-center gap-2 rounded-pill border border-suth-border-subtle px-4 text-sm text-suth-text-tertiary opacity-60"
+                title="Suth Club opens for clients soon"
+              >
+                {p.label}
+                <span className="font-mono text-[9px] uppercase tracking-[0.16em]">
+                  Coming soon
+                </span>
+              </span>
+            ) : (
+              <button
+                key={p.key}
+                type="button"
+                onClick={() => {
+                  setPlan(p.key);
+                  setCustomRate(false);
+                }}
+                aria-pressed={plan === p.key && !customRate}
+                className={`inline-flex h-11 items-center rounded-pill border px-4 text-sm font-medium transition-colors ${
+                  plan === p.key && !customRate
+                    ? "border-suth-accent bg-suth-accent/15 text-suth-accent"
+                    : "border-suth-border text-suth-text-secondary hover:border-suth-border-strong"
+                }`}
+              >
+                {p.label} · £{p.pounds}
+              </button>
+            ),
+          )}
           <button
             type="button"
             onClick={() => setCustomRate(true)}

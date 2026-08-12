@@ -331,6 +331,7 @@ export function sendNewSubscriptionAlert(args: {
   email: string;
   planName: string | null;
   rate: string | null;
+  paymentMethod?: string | null;
   adminUrl: string;
   stripeUrl: string;
   source: string;

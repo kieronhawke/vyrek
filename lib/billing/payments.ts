@@ -1,6 +1,9 @@
 import "server-only";
 import type Stripe from "stripe";
-import { invoiceSubscriptionId } from "@/lib/billing/stripe-compat";
+import {
+  invoiceSubscriptionId,
+  subscriptionPeriodEndUnix,
+} from "@/lib/billing/stripe-compat";
 
 /**
  * Payment visibility, read straight from Stripe. The DB mirrors
@@ -89,6 +92,39 @@ export async function paymentsForCustomer(
     return invoices.data.map(toRow);
   } catch (e) {
     console.error("[payments] customer invoice list failed", e);
+    return null;
+  }
+}
+
+/**
+ * What this calendar month should finish on: everything already
+ * collected plus every active subscription whose next renewal lands
+ * before the month ends. An honest forecast, not a hope.
+ */
+export async function forecastThisMonthPence(
+  collectedPence: number,
+): Promise<number | null> {
+  try {
+    const { stripe } = await import("@/lib/stripe");
+    const s = stripe();
+    const now = new Date();
+    const monthEnd =
+      new Date(now.getFullYear(), now.getMonth() + 1, 1).getTime() / 1000;
+    let upcoming = 0;
+    const subs = await s.subscriptions.list({ status: "active", limit: 100 });
+    for (const sub of subs.data) {
+      const end = subscriptionPeriodEndUnix(
+        sub as Parameters<typeof subscriptionPeriodEndUnix>[0],
+      );
+      if (end && end < monthEnd) {
+        for (const item of sub.items.data) {
+          upcoming += (item.price.unit_amount ?? 0) * (item.quantity ?? 1);
+        }
+      }
+    }
+    return collectedPence + upcoming;
+  } catch (e) {
+    console.error("[payments] forecast failed", e);
     return null;
   }
 }

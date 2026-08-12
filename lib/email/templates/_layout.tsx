@@ -220,7 +220,7 @@ export function SignOff({ line }: { line?: string }) {
         Ben
         <br />
         <span style={{ color: TEXT_FAINT, fontSize: 14 }}>
-          Ben Sutherland · Suth Performance
+          Suth Performance
         </span>
       </Text>
     </>

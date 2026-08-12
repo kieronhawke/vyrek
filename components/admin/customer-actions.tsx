@@ -33,8 +33,8 @@ export function CustomerActions({
       else {
         setMsg(
           r.link
-            ? "Password reset link generated. Share it manually if Supabase hasn't auto-emailed."
-            : "Password reset link sent via email.",
+            ? "Email delivery failed, so here is the link to share with them yourself."
+            : "Sign-in link emailed to them. It lets them straight into their account, no password needed.",
         );
         router.refresh();
       }

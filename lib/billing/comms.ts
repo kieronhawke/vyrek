@@ -47,8 +47,8 @@ export async function sendCustomerLifecycleEmail(args: {
       eyebrow: "Cancellation confirmed",
       heading: name ? `Sorry to see you go, ${name}.` : "Sorry to see you go.",
       body: endDate
-        ? `Your cancellation is in. You keep full access until ${endDate}, and nothing is charged after that.`
-        : "Your cancellation is in. You keep full access until the end of what you've paid for, and nothing is charged after that.",
+        ? `Your cancellation is in. You keep full access until ${endDate}, and nothing is charged after that. Whatever you're training for next, we want to keep supporting you, so if there's anything we can do, just let Ben know. You'll always be part of what we're building here.`
+        : "Your cancellation is in. You keep full access until the end of what you've paid for, and nothing is charged after that. Whatever you're training for next, we want to keep supporting you, so if there's anything we can do, just let Ben know.",
       note: "Change your mind before then? Open Manage billing in your account and turn it back on. Everything picks up where it left off.",
       ctaLabel: "Your account",
     },
@@ -57,32 +57,32 @@ export async function sendCustomerLifecycleEmail(args: {
       eyebrow: "Cancellation removed",
       heading: name ? `Good call, ${name}.` : "Good to have you back.",
       body: endDate
-        ? `Your membership carries on as normal. The next payment is on ${endDate}, same as before.`
-        : "Your membership carries on as normal, with payments on your usual date.",
+        ? `Your membership carries on as normal. The next payment is on ${endDate}, same as before. Right, back to work.`
+        : "Your membership carries on as normal, with payments on your usual date. Right, back to work.",
       ctaLabel: "Your account",
     },
     cancelled: {
       subject: "Your membership has ended",
       eyebrow: "Membership ended",
-      heading: "All done.",
-      body: "Your membership has ended and nothing more will be charged. Thanks for training with me. If you ever fancy coming back, a message is all it takes and we pick up where we left off.",
+      heading: name ? `All done, ${name}.` : "All done.",
+      body: "Your membership has ended and nothing more will be charged. Thank you for training with me, genuinely. Keep smashing it, you've got this, and do keep in touch. If you ever fancy coming back, a message is all it takes and we pick up exactly where we left off.",
     },
     paused: {
       subject: "Your payments are paused",
       eyebrow: "Payments paused",
       heading: name ? `All paused, ${name}.` : "All paused.",
       body: resumeDate
-        ? `Nothing will be collected until ${resumeDate}, when payments start again by themselves. You don't need to do anything.`
-        : "Nothing will be collected until we start things up again. You don't need to do anything.",
+        ? `Your payments with Suth Performance are paused, and nothing will be collected until ${resumeDate}, when they start again by themselves. This isn't the end, just a breather, and the door stays wide open. Whenever you're ready to get back to it, Ben will be right there to pick up where you left off. We're here to support you.`
+        : "Your payments with Suth Performance are paused, and nothing will be collected until we start things up again. This isn't the end, just a breather, and the door stays wide open. Whenever you want to get back to it, restart from your account below and Ben will be in touch to sort the next steps. We're here to support you.",
       ctaLabel: "Your account",
     },
     resumed: {
-      subject: "Your payments are back on",
+      subject: "Let's get back training",
       eyebrow: "Payments resumed",
-      heading: "Back on.",
+      heading: name ? `Let's get back training, ${name}.` : "Let's get back training.",
       body: endDate
-        ? `Payments are running again, with the next one on ${endDate}. Everything else stays exactly as it was.`
-        : "Payments are running again on your usual date. Everything else stays exactly as it was.",
+        ? `Your payments are running again, with the next one on ${endDate}, and everything else stays exactly as it was. Good to have you back at it.`
+        : "Your payments are running again on your usual date, and everything else stays exactly as it was. Good to have you back at it.",
       ctaLabel: "Your account",
     },
     payment_failed: {
@@ -123,23 +123,39 @@ export async function sendRateChangeEmail(args: {
   to: string;
   firstName?: string | null;
   newAmountPence: number;
+  oldAmountPence?: number | null;
   nextInvoiceISO?: string | null;
 }): Promise<void> {
-  const rate =
-    args.newAmountPence % 100 === 0
-      ? `£${args.newAmountPence / 100}`
-      : `£${(args.newAmountPence / 100).toFixed(2)}`;
+  const gbp = (p: number) =>
+    p % 100 === 0 ? `£${p / 100}` : `£${(p / 100).toFixed(2)}`;
+  const rate = gbp(args.newAmountPence);
   const when = fmtDate(args.nextInvoiceISO);
   const name = args.firstName?.trim();
+  // A reduction is good news and gets said as good news; anything else is
+  // a neutral confirmation of what was already agreed in person.
+  const reduced =
+    args.oldAmountPence != null && args.newAmountPence < args.oldAmountPence;
   await send({
     to: args.to,
-    subject: `Your new rate: ${rate} a month`,
+    subject: reduced
+      ? `Your rate has been reduced to ${rate} a month`
+      : `Your new rate: ${rate} a month`,
     react: SubscriptionNoticeEmail({
-      eyebrow: "Rate updated",
-      heading: name ? `Sorted, ${name}.` : "Sorted.",
-      body: when
-        ? `As agreed with Ben, your membership is now ${rate} a month. It starts from your next payment on ${when}. Nothing else changes.`
-        : `As agreed with Ben, your membership is now ${rate} a month, starting from your next payment. Nothing else changes.`,
+      eyebrow: reduced ? "Rate reduced" : "Rate updated",
+      heading: reduced
+        ? name
+          ? `Good news, ${name}.`
+          : "Good news."
+        : name
+          ? `Sorted, ${name}.`
+          : "Sorted.",
+      body: reduced
+        ? when
+          ? `As agreed, your rate has been reduced to ${rate} a month, starting from your next payment on ${when}. Everything else stays exactly the same.`
+          : `As agreed, your rate has been reduced to ${rate} a month, starting from your next payment. Everything else stays exactly the same.`
+        : when
+          ? `As agreed, your membership is now ${rate} a month. It starts from your next payment on ${when}. Nothing else changes.`
+          : `As agreed, your membership is now ${rate} a month, starting from your next payment. Nothing else changes.`,
       ctaLabel: "Your account",
       ctaHref: ACCOUNT_URL(),
     }),

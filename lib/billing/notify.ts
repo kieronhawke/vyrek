@@ -40,6 +40,21 @@ export async function notifyAdminNewSubscription(args: {
     args.stripeSubscriptionId,
   );
 
+  // How they're paying: "visa •••• 4242" or "Direct Debit •••• 2345".
+  // The admin wants to know at a glance whether this is a card or Bacs.
+  let paymentMethod: string | null = null;
+  if (args.stripeSubscriptionId) {
+    try {
+      const { subscriptionBilling } = await import(
+        "@/lib/billing/subscription-info"
+      );
+      const billing = await subscriptionBilling(args.stripeSubscriptionId);
+      paymentMethod = billing?.paymentMethod ?? null;
+    } catch {
+      /* The alert is still worth sending without it. */
+    }
+  }
+
   const inbox = process.env.CONSULTATION_INBOX ?? "kieron.hawke@gmail.com";
   const recipients = new Set([inbox]);
   // Ben gets his own copy when his address is set and different.
@@ -54,6 +69,7 @@ export async function notifyAdminNewSubscription(args: {
         email: args.email,
         planName: args.planName,
         rate,
+        paymentMethod,
         adminUrl,
         stripeUrl,
         source: args.source,
