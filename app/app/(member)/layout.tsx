@@ -12,9 +12,11 @@ import { factsFromContext, resolveFirstRun } from "@/lib/member/first-run";
  */
 export const dynamic = "force-dynamic";
 
-function initialsFor(email: string): string {
-  const local = email.replace(/@.*/, "");
-  const parts = local.split(/[\W_]+/).filter(Boolean);
+function initialsFor(email: string, fullName?: string | null): string {
+  // The name Ben typed beats anything guessed from the email address; a
+  // client on a shared or plus-addressed inbox got someone else's letters.
+  const source = fullName?.trim() || email.replace(/@.*/, "");
+  const parts = source.split(/[\W_]+/).filter(Boolean);
   const letters = parts.slice(0, 2).map((p) => p[0]?.toUpperCase() ?? "");
   return letters.join("") || "S";
 }
@@ -34,7 +36,7 @@ export default async function MemberTabsLayout({
     <>
       <RegisterTrainSW />
       <MemberShell
-        initials={initialsFor(ctx.user.email)}
+        initials={initialsFor(ctx.user.email, ctx.user.fullName)}
         blockWeek={state.facts.publishedWeeks}
         mode={ctx.memberMode}
       >
