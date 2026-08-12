@@ -13,7 +13,10 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
  */
 
 export type MemberContext = {
-  user: { id: string; email: string };
+  /** fullName comes from auth metadata — the name Ben typed on the invite.
+   *  Falling back to the email's local part greeted a client who paid via
+   *  someone else's inbox (or a plus-address) with the wrong name. */
+  user: { id: string; email: string; fullName: string | null };
   customer: {
     id: string;
     email: string;
@@ -94,5 +97,17 @@ export async function assertMember(
     console.warn("[member/auth] context load failed", err);
   }
 
-  return { user: { id: user.id, email: user.email }, customer, programme, quizAnswers, subscription };
+  const fullName =
+    typeof user.user_metadata?.full_name === "string" &&
+    user.user_metadata.full_name.trim()
+      ? user.user_metadata.full_name.trim()
+      : null;
+
+  return {
+    user: { id: user.id, email: user.email, fullName },
+    customer,
+    programme,
+    quizAnswers,
+    subscription,
+  };
 }

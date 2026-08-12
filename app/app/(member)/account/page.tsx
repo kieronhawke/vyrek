@@ -12,10 +12,12 @@ export default async function MemberAccountPage() {
   const ctx = await assertMember("/app/account");
   const email = ctx.user.email;
   const firstName =
-    email
+    ctx.user.fullName?.split(/\s+/)[0] ||
+    (email
       .replace(/@.*/, "")
       .split(/[\W_]+/)[0]
-      ?.replace(/^./, (c) => c.toUpperCase()) ?? "Athlete";
+      ?.replace(/^./, (c) => c.toUpperCase()) ??
+      "Athlete");
 
   const state = resolveFirstRun(factsFromContext(ctx));
   const joined = state.facts.joinedAt;

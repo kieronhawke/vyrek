@@ -53,8 +53,8 @@ export function ChangeRequestForm() {
         }}
       >
         <p style={{ margin: 0, fontSize: "var(--text-sm)", lineHeight: 1.55 }}>
-          <strong>Sent to Ben.</strong> He&apos;ll come back to you directly —
-          usually the same day.
+          <strong>Sent to Ben.</strong>{" "}
+          He&apos;ll come back to you directly — usually the same day.
         </p>
       </div>
     );

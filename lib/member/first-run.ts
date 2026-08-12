@@ -116,7 +116,7 @@ export function daysUntilRace(
  * their own without touching any of the presentation.
  */
 export function factsFromContext(ctx: {
-  user: { email: string };
+  user: { email: string; fullName?: string | null };
   customer: { created_at: string | null } | null;
   programme: string | null;
   quizAnswers: Record<string, unknown> | null;
@@ -138,11 +138,15 @@ export function factsFromContext(ctx: {
         ? Number(rawDays)
         : null;
 
+  // The name Ben typed on the invite beats anything guessed from the email
+  // address — a plus-address or shared inbox greeted the wrong person.
   const firstName =
+    ctx.user.fullName?.split(/\s+/)[0] ||
     ctx.user.email
       .replace(/@.*/, "")
       .split(/[\W_]+/)[0]
-      ?.replace(/^./, (c) => c.toUpperCase()) || null;
+      ?.replace(/^./, (c) => c.toUpperCase()) ||
+    null;
 
   return {
     firstName,
