@@ -46,8 +46,13 @@ export const revalidate = 3600;
 
 // Unknown slugs used to be blocked outright (dynamicParams = false) so
 // crawlers got real 404s. Posts written in the admin exist only in the
-// database, so unknown-at-build slugs must now render on demand; getPost
-// returning null still gives a genuine notFound() 404 for junk URLs.
+// database, so unknown-at-build slugs must now render on demand.
+//
+// KNOWN TRADEOFF (verified in prod, 2026-08-12): an unknown slug on this
+// ISR route serves the not-found page with a 200 status, exactly like the
+// category pages always have. Harmless while the sitewide noindex header
+// is on; put proper 404 statuses on the pre-indexing checklist alongside
+// removing that header (see next.config.ts).
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
