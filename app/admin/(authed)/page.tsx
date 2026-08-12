@@ -104,7 +104,7 @@ export default async function AdminOverviewPage() {
         <Stat
           label="Monthly recurring revenue"
           value={s.mrr_pence.ok ? gbp(s.mrr_pence.data) : "-"}
-          hint="paid × £8.99"
+          hint="Live from Stripe, summed across every rate."
         />
         <Stat label="Cancelled" value={statValue(s.cancelled)} hint="Lifetime." />
         <Stat
