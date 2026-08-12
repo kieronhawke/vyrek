@@ -59,15 +59,13 @@ export default async function AdminOverviewPage() {
       {anyBlocked ? (
         <div className="mb-6">
           <NoticeCard
-            title="Schema partially applied"
+            title="Some figures unavailable"
             body={
               <>
-                One or more queries failed. Most common cause: migrations
-                0002 / 0003 / 0004 haven&apos;t been run yet (see{" "}
-                <code className="text-suth-text">
-                  supabase/migrations/
-                </code>
-                ). Apply via the Supabase Dashboard SQL Editor.
+                One or more queries failed — usually Stripe or Supabase being
+                briefly unreachable. Refresh in a minute; if it persists,
+                check the pending files in{" "}
+                <code className="text-suth-text">supabase/migrations/</code>.
               </>
             }
           />

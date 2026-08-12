@@ -68,6 +68,10 @@ import {
   changeRequestSubject,
 } from "@/lib/email/templates/change-request";
 import {
+  NewSubscriptionEmail,
+  newSubscriptionSubject,
+} from "@/lib/email/templates/new-subscription";
+import {
   InternalLeadEmail,
   internalLeadSubject,
 } from "@/lib/email/templates/internal-lead";
@@ -317,6 +321,25 @@ export function sendInternalLeadBrief(args: {
       readiness: rest.readiness,
     }),
     react: InternalLeadEmail(rest),
+  });
+}
+
+/** Internal: a client just set their payment up. The good-news email. */
+export function sendNewSubscriptionAlert(args: {
+  to: string;
+  clientName: string;
+  email: string;
+  planName: string | null;
+  rate: string | null;
+  adminUrl: string;
+  stripeUrl: string;
+  source: string;
+}): Promise<Result> {
+  const { to, ...rest } = args;
+  return send({
+    to,
+    subject: newSubscriptionSubject(rest.clientName || rest.email, rest.rate),
+    react: NewSubscriptionEmail(rest),
   });
 }
 

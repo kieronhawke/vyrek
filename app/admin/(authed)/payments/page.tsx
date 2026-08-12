@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { PageHeader, Badge, Card, Stat, Table } from "@/components/admin/ui";
 import { recentPayments, liveMrrPence } from "@/lib/billing/payments";
+import { stripeDashboardUrl } from "@/lib/billing/stripe-dashboard";
 
 export const dynamic = "force-dynamic";
 
@@ -84,6 +85,16 @@ export default async function AdminPaymentsPage() {
         eyebrow="Members"
         title="Payments"
         description="Every invoice, live from Stripe — failures first, then everything else newest first."
+        actions={
+          <a
+            href={stripeDashboardUrl("home")}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text hover:border-suth-border-strong"
+          >
+            Open Stripe ↗
+          </a>
+        }
       />
 
       <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -139,7 +150,7 @@ export default async function AdminPaymentsPage() {
           All payments
         </h2>
         <Table
-          headers={["Date", "Client", "For", "Amount", "Status"]}
+          headers={["Date", "Client", "For", "Amount", "Status", "Stripe"]}
           empty="No invoices yet. They appear the moment a subscription bills."
           rows={payments.map((p) => [
             format(new Date(p.createdISO), "dd MMM yyyy"),
@@ -151,6 +162,15 @@ export default async function AdminPaymentsPage() {
             </span>,
             <span key="a" className="font-mono">{gbp(p.amountPence)}</span>,
             <Badge key="s" tone={statusTone(p)}>{statusLabel(p)}</Badge>,
+            <a
+              key="l"
+              href={stripeDashboardUrl("invoice", p.id)}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs text-suth-text-secondary underline-offset-4 hover:text-suth-accent hover:underline"
+            >
+              Open ↗
+            </a>,
           ])}
         />
       </section>

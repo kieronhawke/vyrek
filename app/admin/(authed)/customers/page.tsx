@@ -1,7 +1,16 @@
 import Link from "next/link";
 import { format } from "date-fns";
-import { PageHeader, Table, NoticeCard } from "@/components/admin/ui";
+import { PageHeader, Table, Badge, NoticeCard } from "@/components/admin/ui";
 import { listCustomers } from "@/lib/admin/queries";
+import { stripeDashboardUrl } from "@/lib/billing/stripe-dashboard";
+
+function statusTone(status: string | null | undefined) {
+  if (status === "active") return "good" as const;
+  if (status === "trialing") return "accent" as const;
+  if (status === "past_due") return "warn" as const;
+  if (status === "canceled") return "bad" as const;
+  return "neutral" as const;
+}
 
 export const dynamic = "force-dynamic";
 
@@ -46,7 +55,7 @@ export default async function AdminCustomersPage({
         />
       ) : (
         <Table
-          headers={["Email", "Stripe", "Referral code", "Created"]}
+          headers={["Email", "Subscription", "Stripe", "Created"]}
           empty={search ? `No customers matching "${search}".` : "No customers yet."}
           rows={result.data.map((c) => [
             <Link
@@ -56,12 +65,30 @@ export default async function AdminCustomersPage({
             >
               {c.email}
             </Link>,
-            <span key="stripe" className="font-mono text-xs text-suth-text-secondary">
-              {c.stripe_customer_id ?? "-"}
-            </span>,
-            <span key="ref" className="font-mono text-xs">
-              {c.referral_code ?? "-"}
-            </span>,
+            c.subscription_status ? (
+              <Badge key="sub" tone={statusTone(c.subscription_status)}>
+                {c.subscription_status}
+              </Badge>
+            ) : (
+              <span key="sub" className="text-xs text-suth-text-tertiary">
+                none
+              </span>
+            ),
+            c.stripe_customer_id ? (
+              <a
+                key="stripe"
+                href={stripeDashboardUrl("customer", c.stripe_customer_id)}
+                target="_blank"
+                rel="noreferrer"
+                className="font-mono text-xs text-suth-text-secondary underline-offset-4 hover:text-suth-accent hover:underline"
+              >
+                Open ↗
+              </a>
+            ) : (
+              <span key="stripe" className="font-mono text-xs text-suth-text-tertiary">
+                -
+              </span>
+            ),
             c.created_at
               ? format(new Date(c.created_at), "dd MMM yyyy, HH:mm")
               : "-",

@@ -175,11 +175,32 @@ export async function POST(req: Request) {
             .update(subRowValues)
             .eq("id", existingSub.id);
         } else {
-          await admin.from("subscriptions").insert({
+          const { error: insErr } = await admin.from("subscriptions").insert({
             id: randomUUID(),
             stripe_subscription_id: subscriptionId,
             ...subRowValues,
           });
+          if (!insErr) {
+            // New money via the website funnel — same admin alert the
+            // invite funnel sends, deduped by the insert itself.
+            const { data: cust } = await admin
+              .from("customers")
+              .select("email")
+              .eq("id", customerId)
+              .maybeSingle();
+            const { notifyAdminNewSubscription } = await import(
+              "@/lib/billing/notify"
+            );
+            void notifyAdminNewSubscription({
+              clientName: String(session.metadata?.client_name ?? ""),
+              email: cust?.email ?? "",
+              customerRowId: customerId,
+              stripeSubscriptionId: subscriptionId,
+              amountPence: sub.items?.data?.[0]?.price?.unit_amount ?? null,
+              planName: null,
+              source: "website sign-up",
+            }).catch(() => {});
+          }
         }
 
         // Mark any open abandoned-plan record recovered.

@@ -15,6 +15,7 @@ import { CustomerActions } from "@/components/admin/customer-actions";
 import { SubscriptionManage } from "@/components/admin/subscription-manage";
 import { MemberModeToggle } from "@/components/admin/member-mode-toggle";
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { stripeDashboardUrl } from "@/lib/billing/stripe-dashboard";
 
 function gbp(pence: number): string {
   return pence % 100 === 0
@@ -107,7 +108,18 @@ export default async function AdminCustomerDetailPage({
             <div className="flex justify-between gap-3">
               <dt className="text-suth-text-tertiary">Stripe customer</dt>
               <dd className="font-mono text-xs text-suth-text">
-                {customer.stripe_customer_id ?? "-"}
+                {customer.stripe_customer_id ? (
+                  <a
+                    href={stripeDashboardUrl("customer", customer.stripe_customer_id)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-suth-accent underline-offset-4 hover:underline"
+                  >
+                    {customer.stripe_customer_id} ↗
+                  </a>
+                ) : (
+                  "-"
+                )}
               </dd>
             </div>
             <div className="flex justify-between gap-3">
@@ -171,7 +183,21 @@ export default async function AdminCustomerDetailPage({
                 <div className="flex justify-between gap-3">
                   <dt className="text-suth-text-tertiary">Stripe sub</dt>
                   <dd className="font-mono text-xs text-suth-text">
-                    {latestSub.stripe_subscription_id ?? "-"}
+                    {latestSub.stripe_subscription_id ? (
+                      <a
+                        href={stripeDashboardUrl(
+                          "subscription",
+                          latestSub.stripe_subscription_id,
+                        )}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-suth-accent underline-offset-4 hover:underline"
+                      >
+                        {latestSub.stripe_subscription_id} ↗
+                      </a>
+                    ) : (
+                      "-"
+                    )}
                   </dd>
                 </div>
               </dl>

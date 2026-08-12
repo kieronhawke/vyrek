@@ -219,6 +219,9 @@ export type AdminCustomer = {
   stripe_customer_id: string | null;
   referral_code: string | null;
   auth_user_id?: string | null;
+  /** Latest subscription status, joined in listCustomers so the roster
+      answers "who is paying" without a click per row. */
+  subscription_status?: string | null;
 };
 
 export async function listCustomers(opts: {
@@ -235,7 +238,31 @@ export async function listCustomers(opts: {
     if (opts.search) q = q.ilike("email", `%${opts.search}%`);
     const { data, error } = await q;
     if (error) return fail(error);
-    return { ok: true, data: (data as AdminCustomer[]) ?? [] };
+    const customers = (data as AdminCustomer[]) ?? [];
+
+    // One query for everyone's latest subscription status, not one per row.
+    if (customers.length > 0) {
+      const { data: subs } = await sb
+        .from("subscriptions")
+        .select("customer_id, status, created_at")
+        .in(
+          "customer_id",
+          customers.map((c) => c.id),
+        )
+        .order("created_at", { ascending: false });
+      const latest = new Map<string, string>();
+      for (const s of (subs ?? []) as Array<{
+        customer_id: string;
+        status: string;
+      }>) {
+        if (!latest.has(s.customer_id)) latest.set(s.customer_id, s.status);
+      }
+      for (const c of customers) {
+        c.subscription_status = latest.get(c.id) ?? null;
+      }
+    }
+
+    return { ok: true, data: customers };
   } catch (e) {
     return fail(e);
   }

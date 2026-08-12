@@ -211,6 +211,23 @@ export async function activateFromSession(
         });
         if (error) {
           console.error("[activation] subscription insert failed", error.message);
+        } else {
+          // A NEW subscription row = money just arrived. Tell the admin on
+          // every channel; inserting the row is the dedupe — the losing
+          // activation caller takes the update branch above and stays quiet.
+          const { notifyAdminNewSubscription } = await import(
+            "@/lib/billing/notify"
+          );
+          const amountPence = sub?.items?.data?.[0]?.price?.unit_amount ?? null;
+          void notifyAdminNewSubscription({
+            clientName: name,
+            email,
+            customerRowId,
+            stripeSubscriptionId: subscriptionId,
+            amountPence,
+            planName: plan || null,
+            source: isBillingOnly ? "payment link" : "set-up link",
+          }).catch(() => {});
         }
       }
     }
