@@ -145,10 +145,10 @@ export const clubSms = {
     `Suth Club: your free week ends ${endsOn}. Add a card to carry on, or do nothing and it stops. No charge either way.${STOP}`,
 
   cardExpiring: ({ month }: { month: string }) =>
-    `Suth Club: the card on your account expires ${month}. Update it and nothing changes. suthperformance.com/account${STOP}`,
+    `Suth Club: the card on your account expires ${month}. Update it and nothing changes. suthperformance.com/app/account${STOP}`,
 
   paymentFailed: () =>
-    `Suth Club: your payment did not go through. Update your card and nothing else changes. suthperformance.com/account${STOP}`,
+    `Suth Club: your payment did not go through. Update your card and nothing else changes. suthperformance.com/app/account${STOP}`,
 } as const;
 
 /* ─── Registry, for the preview screen and tests ────────────────────── */

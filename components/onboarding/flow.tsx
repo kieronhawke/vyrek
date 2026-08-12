@@ -126,9 +126,13 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
       setError(
         data?.error === "STRIPE_NOT_CONFIGURED"
           ? "Payments are not switched on yet. Ben will sort this out. Nothing you have entered is lost."
-          : data?.error === "INVITE_INVALID"
-            ? "This link has expired. Ask Ben for a new one. Your answers are saved on this device."
-            : "Something went wrong reaching the payment page. Try again in a moment.",
+          : data?.error === "SIGNING_NOT_CONFIGURED"
+            ? "Payments are not switched on yet. Ben will sort this out. Nothing you have entered is lost."
+            : data?.error === "ALREADY_SUBSCRIBED"
+              ? "You're already set up and paying. There's nothing more to do here. Sign in to your account to manage it."
+              : data?.error === "INVITE_INVALID"
+                ? "This link has expired. Ask Ben for a new one. Your answers are saved on this device."
+                : "Something went wrong reaching the payment page. Try again in a moment.",
       );
     } catch {
       setError("No connection. Try again when you are back online.");

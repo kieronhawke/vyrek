@@ -22,12 +22,16 @@ export function Day1Email({
   durationMin,
   intensity,
 }: {
-  workoutTitle: string;
-  durationMin: number;
-  intensity: string;
-}) {
+  workoutTitle?: string;
+  durationMin?: number;
+  intensity?: string;
+} = {}) {
+  const preview =
+    workoutTitle && durationMin
+      ? `Day 1. ${workoutTitle}, ${durationMin} min.`
+      : "Day 1. Today's session is ready.";
   return (
-    <EmailLayout preview={`Day 1. ${workoutTitle}, ${durationMin} min.`} campaign="day-1">
+    <EmailLayout preview={preview} campaign="day-1">
           <Text style={monoEyebrow}>[ DAY 01 ]</Text>
           <Heading
             style={{
@@ -56,29 +60,33 @@ export function Day1Email({
 
           <hr style={hrRule} />
 
-          <Text
-            style={{
-              color: TEXT,
-              fontFamily: fontStack,
-              fontSize: 18,
-              fontWeight: 600,
-              lineHeight: 1.4,
-              margin: 0,
-            }}
-          >
-            {workoutTitle}
-          </Text>
-          <Text
-            style={{
-              color: TEXT_DIM,
-              fontFamily: fontStack,
-              fontSize: 14,
-              lineHeight: 1.6,
-              margin: "4px 0 0",
-            }}
-          >
-            {durationMin} min · {intensity}
-          </Text>
+          {workoutTitle ? (
+            <Text
+              style={{
+                color: TEXT,
+                fontFamily: fontStack,
+                fontSize: 18,
+                fontWeight: 600,
+                lineHeight: 1.4,
+                margin: 0,
+              }}
+            >
+              {workoutTitle}
+            </Text>
+          ) : null}
+          {durationMin && intensity ? (
+            <Text
+              style={{
+                color: TEXT_DIM,
+                fontFamily: fontStack,
+                fontSize: 14,
+                lineHeight: 1.6,
+                margin: "4px 0 0",
+              }}
+            >
+              {durationMin} min · {intensity}
+            </Text>
+          ) : null}
 
           <Button
             href="https://suthperformance.com/plan"

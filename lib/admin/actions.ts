@@ -460,6 +460,17 @@ export async function refundLastStripeInvoice(
     if (!paymentIntentId && !chargeId) {
       return { ok: false, error: "invoice has no payment to refund" };
     }
+    // Re-check for an existing refund at execution time, not just at preview.
+    // Between opening the modal and confirming, the subscription could renew
+    // or a second admin could refund the same payment; without this a client
+    // gets two months back when one was intended. A failed/canceled refund
+    // does not count (the money never went back), so those don't block a retry.
+    if (paymentIntentId) {
+      const prior = await s.refunds.list({ payment_intent: paymentIntentId, limit: 10 });
+      if (prior.data.some((r) => r.status !== "failed" && r.status !== "canceled")) {
+        return { ok: false, error: "This payment has already been refunded." };
+      }
+    }
     // The subscription id rides along so the refund webhook can name the
     // client and link the admin straight back without extra lookups.
     const refund = await s.refunds.create({
@@ -758,6 +769,8 @@ export async function getRefundPreview(
   ActionResult & {
     amount_pence?: number;
     description?: string | null;
+    invoiceId?: string;
+    paymentIntentId?: string | null;
     paidOnISO?: string | null;
     alreadyRefunded?: boolean;
   }
@@ -783,13 +796,23 @@ export async function getRefundPreview(
     const pi = invoicePaymentIntentId(invoice);
     let alreadyRefunded = false;
     if (pi) {
-      const refunds = await s.refunds.list({ payment_intent: pi, limit: 1 });
-      alreadyRefunded = refunds.data.length > 0;
+      const refunds = await s.refunds.list({ payment_intent: pi, limit: 10 });
+      // A FAILED or CANCELED refund is not a refund — the money never went
+      // back. Counting it here made the preview say "already refunded" for
+      // the exact case the refund_failed webhook exists to flag, and Ben
+      // would leave a client unrefunded after being told money was coming.
+      alreadyRefunded = refunds.data.some(
+        (r) => r.status !== "failed" && r.status !== "canceled",
+      );
     }
     return {
       ok: true,
       amount_pence: invoice.amount_paid ?? 0,
       description: invoice.lines?.data?.[0]?.description ?? null,
+      // The invoice this preview is about, so the refund action can act on
+      // exactly this one rather than re-resolving latest_invoice later.
+      invoiceId: latestInvoiceId,
+      paymentIntentId: pi,
       paidOnISO: invoice.status_transitions?.paid_at
         ? new Date(invoice.status_transitions.paid_at * 1000).toISOString()
         : null,

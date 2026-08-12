@@ -47,8 +47,8 @@ export async function sendCustomerLifecycleEmail(args: {
       eyebrow: "Cancellation confirmed",
       heading: name ? `Sorry to see you go, ${name}.` : "Sorry to see you go.",
       body: endDate
-        ? `Your cancellation is in. You keep full access until ${endDate}, and nothing is charged after that. Whatever you're training for next, we want to keep supporting you, so if there's anything we can do, just let Ben know. You'll always be part of what we're building here.`
-        : "Your cancellation is in. You keep full access until the end of what you've paid for, and nothing is charged after that. Whatever you're training for next, we want to keep supporting you, so if there's anything we can do, just let Ben know.",
+        ? `Your cancellation is in. You keep full access until ${endDate}, and nothing is charged after that. Whatever you're training for next, if there's anything I can do, just reply and it comes straight to me.`
+        : "Your cancellation is in. You keep full access until the end of what you've paid for, and nothing is charged after that. Whatever you're training for next, if there's anything I can do, just reply and it comes straight to me.",
       note: "Change your mind before then? Open Manage billing in your account and turn it back on. Everything picks up where it left off.",
       ctaLabel: "Your account",
     },
@@ -72,8 +72,8 @@ export async function sendCustomerLifecycleEmail(args: {
       eyebrow: "Payments paused",
       heading: name ? `All paused, ${name}.` : "All paused.",
       body: resumeDate
-        ? `Your payments with Suth Performance are paused, and nothing will be collected until ${resumeDate}, when they start again by themselves. This isn't the end, just a breather, and the door stays wide open. Whenever you're ready to get back to it, Ben will be right there to pick up where you left off. We're here to support you.`
-        : "Your payments with Suth Performance are paused, and nothing will be collected until we start things up again. This isn't the end, just a breather, and the door stays wide open. Whenever you want to get back to it, restart from your account below and Ben will be in touch to sort the next steps. We're here to support you.",
+        ? `Your payments with Suth Performance are paused, and nothing will be collected until ${resumeDate}, when they start again by themselves. This isn't the end, just a breather, and the door stays wide open. Whenever you're ready to get back to it, I'll be right here to pick up where you left off.`
+        : "Your payments with Suth Performance are paused, and nothing will be collected until we start things up again. This isn't the end, just a breather, and the door stays wide open. Whenever you want to get back to it, restart from your account below and I'll be in touch to sort the next steps.",
       ctaLabel: "Your account",
     },
     resumed: {

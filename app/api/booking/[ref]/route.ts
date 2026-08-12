@@ -32,12 +32,22 @@ export const runtime = "nodejs";
  */
 
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: { params: Promise<{ ref: string }> },
 ) {
   const { ref } = await params;
   if (!isBookingRef(ref)) {
     return NextResponse.json({ ok: false, error: "Not found" }, { status: 404 });
+  }
+  // The ref alone reveals a name and a call time, so throttle GET like the
+  // POST: without it, the short ref space could be walked to harvest client
+  // names and consultation times.
+  const limited = await limiters.consultation.limit(`lookup:${requestIp(req)}`);
+  if (!limited.success) {
+    return NextResponse.json(
+      { ok: false, error: "Too many requests" },
+      { status: 429, headers: { "Retry-After": "3600" } },
+    );
   }
   const booking = await findBooking(ref);
   if (!booking) {

@@ -32,6 +32,12 @@ import { showDemoLabels } from "@/lib/results/demo-labels";
 
 export const revalidate = 3600;
 
+// Nothing prebuilt, but with static params declared each visited slug is
+// cached as on-demand ISR under `revalidate` instead of rendering per-request.
+export async function generateStaticParams() {
+  return [];
+}
+
 
 /**
  * One read of the profile per request.

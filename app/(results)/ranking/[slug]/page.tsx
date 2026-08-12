@@ -24,6 +24,12 @@ import { ogImages } from "@/lib/seo/og";
 
 export const revalidate = 300;
 
+// Nothing prebuilt, but with static params declared each visited slug is
+// cached as on-demand ISR under `revalidate` instead of rendering per-request.
+export async function generateStaticParams() {
+  return [];
+}
+
 export async function generateMetadata({
   params,
 }: {

@@ -75,24 +75,38 @@ function planWords(daysLeft: number | null, latestStatus: "draft" | "sent" | nul
 export async function listRealCoachClients(): Promise<RealCoachClient[]> {
   const sb = supabaseAdmin();
 
-  const [{ data: customers }, { data: subs }, { data: plans }] =
-    await Promise.all([
-      sb
-        .from("customers")
-        .select("id, email, full_name, created_at")
-        .order("created_at", { ascending: false })
-        .limit(200),
-      sb
-        .from("subscriptions")
-        .select("customer_id, status, created_at")
-        .order("created_at", { ascending: false })
-        .limit(400),
-      sb
-        .from("training_plans")
-        .select("id, customer_id, week_start, days, status, created_at")
-        .order("created_at", { ascending: false })
-        .limit(1000),
-    ]);
+  const { data: customers } = await sb
+    .from("customers")
+    .select("id, email, full_name, created_at")
+    .order("created_at", { ascending: false })
+    .limit(200);
+  const customerIds = ((customers ?? []) as Array<{ id: string }>).map((c) => c.id);
+
+  // ⚠️ Both windows below are newest-first then deduped first-per-customer
+  // in JS, so any row past the cap silently costs the OLDEST clients their
+  // latest subscription/plan ("No subscription" / "No plan sent yet").
+  // Two defences: the queries are scoped to the customers actually being
+  // listed (so strangers' rows can't consume window slots), and the caps
+  // sit far above a 200-client roster's realistic totals (a handful of
+  // subscription rows each; plans accrue ~1/week per active client).
+  // Note PostgREST clamps any single response to the project's max-rows
+  // setting (Supabase default 1000) regardless of `limit` — if either
+  // table ever genuinely approaches that, move to a latest-per-customer
+  // query rather than a bigger window.
+  const [{ data: subs }, { data: plans }] = await Promise.all([
+    sb
+      .from("subscriptions")
+      .select("customer_id, status")
+      .in("customer_id", customerIds)
+      .order("created_at", { ascending: false })
+      .limit(2000),
+    sb
+      .from("training_plans")
+      .select("id, customer_id, week_start, days, status")
+      .in("customer_id", customerIds)
+      .order("created_at", { ascending: false })
+      .limit(5000),
+  ]);
 
   // Newest subscription per customer wins.
   const subByCustomer = new Map<string, string>();

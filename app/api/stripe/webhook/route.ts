@@ -226,8 +226,12 @@ export async function POST(req: Request) {
           });
           const outcome = await activateFromSession(full);
           if (!outcome.ok) {
-            console.error(
-              `[stripe/webhook] invite activation failed: ${outcome.error}`,
+            // The client's card was charged. Throwing releases the
+            // idempotency claim and returns 500 so Stripe redelivers and a
+            // later attempt completes the account, instead of ACKing a
+            // paid-but-empty state that never retries.
+            throw new Error(
+              `invite activation failed: ${outcome.error ?? "unknown"}`,
             );
           }
           break;
@@ -260,17 +264,21 @@ export async function POST(req: Request) {
             ? new Date(periodEndUnix * 1000).toISOString(): null,
         };
         if (existingSub?.id) {
-          await admin
+          const { error: updErr } = await admin
             .from("subscriptions")
             .update(subRowValues)
             .eq("id", existingSub.id);
+          // A dropped mirror write means the DB and Stripe disagree about a
+          // live subscription. Throw so the retry reconciles it.
+          if (updErr) throw new Error(`sub mirror update failed: ${updErr.message}`);
         } else {
           const { error: insErr } = await admin.from("subscriptions").insert({
             id: randomUUID(),
             stripe_subscription_id: subscriptionId,
             ...subRowValues,
           });
-          if (!insErr) {
+          if (insErr) throw new Error(`sub mirror insert failed: ${insErr.message}`);
+          {
             // New money via the website funnel — same admin alert the
             // invite funnel sends, deduped by the insert itself.
             const { data: cust } = await admin
@@ -310,9 +318,12 @@ export async function POST(req: Request) {
           await sendWelcomeEmail({
             to: customer.email,
             trialEndsAt: trialEndUnix ? new Date(trialEndUnix * 1000): null,
+            // The template reads "your {programmeName} programme" — an empty
+            // or "your" fallback produced "your your programme". "training"
+            // reads correctly: "your training programme".
             programmeName:
-              (session.metadata?.programme as string | undefined) ??
-              "your",
+              (session.metadata?.programme as string | undefined)?.trim() ||
+              "training",
           }).catch((err) => {
              
             console.error("[stripe/webhook] welcome email failed", err);

@@ -117,6 +117,31 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
+
+  // IP velocity rate-limit, checked BEFORE any auth user is minted: 8 signups
+  // per source IP per 24 hours, enforced cluster-wide via Upstash. Running it
+  // first stops a loop creating auth users at will (resource exhaustion /
+  // auth-table pollution) as well as the multi-account-from-one-IP referral
+  // abuse it was written for.
+  const ip = requestIp(req);
+  const velocity = await limiters.accountCreateIp.limit(ip);
+  if (!velocity.success) {
+    const retryAfter = Math.max(
+      60,
+      Math.ceil(((velocity.reset ?? Date.now() + 3_600_000) - Date.now()) / 1000),
+    );
+    const hours = Math.max(1, Math.round(retryAfter / 3600));
+    return NextResponse.json(
+      {
+        ok: false,
+        reason: "rate-limited",
+        retryAfterSeconds: retryAfter,
+        message: `Too many signups from this network in the last 24 hours. Try again in about ${hours} hour${hours === 1 ? "" : "s"}, or email support@suthperformance.com if this looks wrong.`,
+      },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } },
+    );
+  }
+
   /* MINT THE USER HERE, CONFIRMED.
    *
    * The browser used to call supabase.auth.signUp() and pass us the id.
@@ -180,33 +205,6 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { ok: false, reason: "invalid-auth-user-id" },
       { status: 400 },
-    );
-  }
-
-  // IP velocity rate-limit: 8 signups per source IP per 24 hours, enforced
-  // cluster-wide via Upstash (falls back to in-process for local dev).
-  // Blocks the trivial multi-account-from-one-IP referral abuse pattern.
-  const ip = requestIp(req);
-  const velocity = await limiters.accountCreateIp.limit(ip);
-  if (!velocity.success) {
-    const retryAfter = Math.max(
-      60,
-      Math.ceil(((velocity.reset ?? Date.now() + 3_600_000) - Date.now()) / 1000),
-    );
-    const hours = Math.max(1, Math.round(retryAfter / 3600));
-    return NextResponse.json(
-      {
-        ok: false,
-        reason: "rate-limited",
-        retryAfterSeconds: retryAfter,
-        message: `Too many signups from this network in the last 24 hours. Try again in about ${hours} hour${hours === 1 ? "" : "s"}, or email support@suthperformance.com if this looks wrong.`,
-      },
-      {
-        status: 429,
-        headers: {
-          "Retry-After": String(retryAfter),
-        },
-      },
     );
   }
 

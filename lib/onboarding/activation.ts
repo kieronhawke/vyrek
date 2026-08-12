@@ -83,6 +83,14 @@ export async function activateFromSession(
 
   const sb = supabaseAdmin();
 
+  /* The money already moved. If ANY durable write below fails, we must NOT
+   * report success: the webhook returns 200 on ok:true and Stripe never
+   * retries, so a swallowed DB error would leave a paying client with no
+   * account and no second chance. Every critical failure sets this, and the
+   * function returns ok:false so the webhook 500s and Stripe redelivers.
+   * Every step is idempotent, so a redelivery is safe. */
+  let criticalError: string | null = null;
+
   /* 1 — the auth user. Confirmed, no password.
    *
    * `userIsNew` is what gates the email below. Activation runs TWICE per
@@ -119,6 +127,10 @@ export async function activateFromSession(
         .maybeSingle();
       authUserId = (existing?.auth_user_id as string | null) ?? null;
       if (!authUserId) {
+        // The user exists in auth but we can't recover their id here. A
+        // retry (after the racing caller commits the customer row) will
+        // find it, so signal failure rather than press on account-less.
+        criticalError = "AUTH_ID_UNRESOLVED";
         console.error(
           "[activation] user exists but no customer row carries their id:",
           created.error.message,
@@ -126,6 +138,7 @@ export async function activateFromSession(
       }
     }
   } catch (e) {
+    criticalError = "AUTH_UNREACHABLE";
     console.error("[activation] auth admin unreachable", e);
   }
 
@@ -153,6 +166,7 @@ export async function activateFromSession(
         })
         .eq("id", customerRowId);
       if (error) {
+        criticalError = "CUSTOMER_UPDATE_FAILED";
         console.error("[activation] customer update failed", error.message);
       }
     } else {
@@ -165,12 +179,14 @@ export async function activateFromSession(
         ...(name?.trim() ? { full_name: name.trim() } : {}),
       });
       if (error) {
+        criticalError = "CUSTOMER_INSERT_FAILED";
         console.error("[activation] customer insert failed", error.message);
       } else {
         customerRowId = id;
       }
     }
   } catch (e) {
+    criticalError = "CUSTOMER_WRITE_THREW";
     console.error("[activation] customer write threw", e);
   }
 
@@ -187,7 +203,7 @@ export async function activateFromSession(
         .eq("stripe_subscription_id", subscriptionId)
         .maybeSingle();
       if (existing?.id) {
-        await sb
+        const { error } = await sb
           .from("subscriptions")
           .update({
             customer_id: customerRowId,
@@ -200,6 +216,10 @@ export async function activateFromSession(
               : null,
           })
           .eq("id", existing.id);
+        if (error) {
+          criticalError = "SUBSCRIPTION_UPDATE_FAILED";
+          console.error("[activation] subscription update failed", error.message);
+        }
       } else {
         // subscriptions.id is a uuid with no default; the Stripe sub id is
         // NOT a uuid and Postgres rejects it — mint our own.
@@ -214,6 +234,7 @@ export async function activateFromSession(
             : null,
         });
         if (error) {
+          criticalError = "SUBSCRIPTION_INSERT_FAILED";
           console.error("[activation] subscription insert failed", error.message);
         } else {
           // A NEW subscription row = money just arrived. Tell the admin on
@@ -236,6 +257,7 @@ export async function activateFromSession(
       }
     }
   } catch (e) {
+    criticalError = "SUBSCRIPTION_WRITE_THREW";
     console.error("[activation] subscription write threw", e);
   }
 
@@ -276,5 +298,10 @@ export async function activateFromSession(
     }).catch(() => {});
   }
 
+  // ok:false makes the webhook 500 and Stripe redeliver. Every write above
+  // is idempotent (createUser dedupes, customer/subscription are
+  // select-then-write on natural keys), so a redelivery completes what this
+  // run couldn't rather than duplicating it.
+  if (criticalError) return { ok: false, email, error: criticalError };
   return { ok: true, email };
 }

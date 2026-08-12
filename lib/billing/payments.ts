@@ -225,32 +225,36 @@ export async function liveMrrPence(): Promise<number | null> {
   try {
     const { stripe } = await import("@/lib/stripe");
     const s = stripe();
-    let total = 0;
-    for (const status of ["active", "trialing"] as const) {
-      let startingAfter: string | undefined;
-      // Paginate defensively; at Ben's scale this is one page.
-      for (let page = 0; page < 10; page++) {
-        const subs = await s.subscriptions.list({
-          status,
-          limit: 100,
-          ...(startingAfter ? { starting_after: startingAfter } : {}),
-        });
-        for (const sub of subs.data) {
-          for (const item of sub.items.data) {
-            const amount = item.price.unit_amount ?? 0;
-            const interval = item.price.recurring?.interval;
-            const count = item.price.recurring?.interval_count ?? 1;
-            const qty = item.quantity ?? 1;
-            if (interval === "month") total += (amount * qty) / count;
-            else if (interval === "year") total += (amount * qty) / (12 * count);
-            else if (interval === "week") total += (amount * qty * 52) / (12 * count);
+    // The two statuses are independent lists — fetch them concurrently.
+    const totals = await Promise.all(
+      (["active", "trialing"] as const).map(async (status) => {
+        let total = 0;
+        let startingAfter: string | undefined;
+        // Paginate defensively; at Ben's scale this is one page.
+        for (let page = 0; page < 10; page++) {
+          const subs = await s.subscriptions.list({
+            status,
+            limit: 100,
+            ...(startingAfter ? { starting_after: startingAfter } : {}),
+          });
+          for (const sub of subs.data) {
+            for (const item of sub.items.data) {
+              const amount = item.price.unit_amount ?? 0;
+              const interval = item.price.recurring?.interval;
+              const count = item.price.recurring?.interval_count ?? 1;
+              const qty = item.quantity ?? 1;
+              if (interval === "month") total += (amount * qty) / count;
+              else if (interval === "year") total += (amount * qty) / (12 * count);
+              else if (interval === "week") total += (amount * qty * 52) / (12 * count);
+            }
           }
+          if (!subs.has_more) break;
+          startingAfter = subs.data[subs.data.length - 1]?.id;
         }
-        if (!subs.has_more) break;
-        startingAfter = subs.data[subs.data.length - 1]?.id;
-      }
-    }
-    return Math.round(total);
+        return total;
+      }),
+    );
+    return Math.round(totals.reduce((sum, t) => sum + t, 0));
   } catch (e) {
     console.error("[payments] MRR calc failed", e);
     return null;

@@ -233,11 +233,15 @@ export function collectionPageJsonLd(posts: PostMeta[]) {
 
 /** Inline a JSON-LD block inside any server component. */
 export function JsonLd({ data }: { data: unknown }) {
+  // `<` is escaped so a title or excerpt containing markup cannot break out
+  // of the script element. Same treatment as lib/results/structured-data.ts.
   return (
     <script
       type="application/ld+json"
-       
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(data).replace(/</g, "\\u003c"),
+      }}
     />
   );
 }

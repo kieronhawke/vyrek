@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { resolveInvite } from "@/lib/onboarding/resolve";
+import { signingConfigured } from "@/lib/onboarding/token";
 import { planByKey } from "@/lib/onboarding/model";
 import { siteUrl } from "@/lib/site-url";
 import { ensurePlanProduct } from "@/lib/billing/products";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
 /**
  * CHECKOUT, FROM AN INVITE.
@@ -35,6 +37,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "BAD_REQUEST" }, { status: 400 });
   }
 
+  // Defence in depth: if invite signing is not configured, the HMAC would
+  // ride on the in-repo fallback constant and a stranger could forge an
+  // invite priced however they liked. Refuse to take money in that state.
+  if (!signingConfigured()) {
+    return NextResponse.json({ error: "SIGNING_NOT_CONFIGURED" }, { status: 503 });
+  }
+
   // Accepts a short id or a signed token. Using readInvite here would reject
   // every short link at the moment of payment, which is the worst place in the
   // whole flow to break.
@@ -46,11 +55,14 @@ export async function POST(request: Request) {
   }
 
   // Ben's agreed per-client rate, carried on the SIGNED invite — never from
-  // the request body, so a client cannot name their own price. When a rate
-  // is set, the plan comes from the invite too: a body that paired somebody
-  // else's plan key with this rate would mislabel what they're buying.
+  // the request body, so a client cannot name their own price. Whenever the
+  // invite names a plan (any agreed-rate invite, or a full invite where Ben
+  // chose the tier), that plan wins; the request body only picks the tier on
+  // an open invite that deliberately left it to the buyer. Otherwise someone
+  // invited for 1:1 Coaching could POST plan:"club" and self-downgrade to the
+  // trialing Club tier.
   const isCustomRate = typeof read.invite.amountPence === "number";
-  const plan = planByKey(isCustomRate ? read.invite.plan : body.plan);
+  const plan = planByKey(read.invite.plan || body.plan);
   if (!plan) {
     return NextResponse.json({ error: "PLAN_UNKNOWN" }, { status: 400 });
   }
@@ -60,6 +72,39 @@ export async function POST(request: Request) {
   // checkout.
   const amountPence = read.invite.amountPence ?? plan.pence;
   const trialDays = isCustomRate ? 0 : plan.trialDays;
+
+  // Already paying? Stop here. Invites stay valid for weeks, so the commonest
+  // way to double-charge somebody is them re-opening the text ("did that go
+  // through?") and paying a second time. If this email already has a live
+  // subscription, send them to their account instead of creating another.
+  const inviteEmail = (read.invite.email || "").trim().toLowerCase();
+  if (inviteEmail) {
+    try {
+      const sb = supabaseAdmin();
+      const { data: cust } = await sb
+        .from("customers")
+        .select("id")
+        .eq("email", inviteEmail)
+        .maybeSingle();
+      if (cust?.id) {
+        const { data: live } = await sb
+          .from("subscriptions")
+          .select("id")
+          .eq("customer_id", cust.id)
+          .in("status", ["active", "trialing", "past_due"])
+          .limit(1);
+        if (live && live.length > 0) {
+          return NextResponse.json(
+            { error: "ALREADY_SUBSCRIBED", accountUrl: `${siteUrl().replace(/\/$/, "")}/app/account` },
+            { status: 409 },
+          );
+        }
+      }
+    } catch (e) {
+      // A lookup blip must not block a genuine first payment; log and proceed.
+      console.error("[onboarding/checkout] existing-sub check failed", e);
+    }
+  }
 
   let client: ReturnType<typeof stripe>;
   try {

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { render } from "@react-email/components";
 import { OnboardingInviteEmail } from "@/lib/email/templates/onboarding-invite";
 import { WelcomeEmail } from "@/lib/email/templates/welcome";
-import { PaymentFailedEmail } from "@/lib/email/templates/payment-failed";
+import { SubscriptionNoticeEmail } from "@/lib/email/templates/subscription-notice";
 import {
   InternalLeadEmail,
   internalLeadSubject,
@@ -79,8 +79,15 @@ const EMAILS: { name: string; el: React.ReactElement }[] = [
     }),
   },
   {
-    name: "payment failed",
-    el: PaymentFailedEmail({ updatePaymentUrl: "https://www.suthperformance.com/account" }),
+    // The live payment-failed note, built the way lib/billing/comms.ts does.
+    name: "payment failed (subscription notice)",
+    el: SubscriptionNoticeEmail({
+      eyebrow: "Payment not taken",
+      heading: "One small thing to fix.",
+      body: "This month's payment didn't go through. It happens: an expired card, a new bank app, a limit. Update your card and it retries by itself. Your access is untouched in the meantime.",
+      ctaLabel: "Update your card",
+      ctaHref: "https://www.suthperformance.com/app/account",
+    }),
   },
   {
     name: "internal lead brief",

@@ -6,8 +6,6 @@ import { Day1Email } from "@/lib/email/templates/day-1";
 import { Day3Email } from "@/lib/email/templates/day-3";
 import { Day5Email } from "@/lib/email/templates/day-5";
 import { Day6Email } from "@/lib/email/templates/day-6";
-import { PaymentFailedEmail } from "@/lib/email/templates/payment-failed";
-import { CancellationEmail } from "@/lib/email/templates/cancellation";
 import { CLUB } from "@/lib/pricing";
 import {
   OnboardingInviteEmail,
@@ -206,11 +204,9 @@ export async function sendWelcomeEmail(args: {
   const drip = [
     {
       subject: "Day 1.",
-      react: Day1Email({
-        workoutTitle: "Your first session",
-        durationMin: 60,
-        intensity: "Race-specific",
-      }),
+      // No per-client plan data exists at schedule time, so the email says
+      // the session is ready rather than inventing a title or a duration.
+      react: Day1Email(),
       scheduledAt: new Date(now + 24 * 60 * 60 * 1000),
     },
     {
@@ -240,27 +236,6 @@ export async function sendWelcomeEmail(args: {
   );
 
   return immediate;
-}
-
-export async function sendPaymentFailedEmail(args: {
-  to: string;
-  updatePaymentUrl?: string;
-}): Promise<Result> {
-  return send({
-    to: args.to,
-    subject: "Couldn't take this month's payment",
-    react: PaymentFailedEmail({ updatePaymentUrl: args.updatePaymentUrl }),
-  });
-}
-
-export async function sendCancellationEmail(args: {
-  to: string;
-}): Promise<Result> {
-  return send({
-    to: args.to,
-    subject: "Your Suth Performance membership is cancelled",
-    react: CancellationEmail(),
-  });
 }
 
 

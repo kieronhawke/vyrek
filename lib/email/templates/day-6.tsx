@@ -22,6 +22,7 @@ import {
   TECH_MARK,
 } from "@/lib/email/templates/_styles";
 import { EmailLayout } from "@/lib/email/templates/_layout";
+import { CLUB } from "@/lib/pricing";
 
 export function Day6Email({
   week2Teasers = [
@@ -33,8 +34,8 @@ export function Day6Email({
   week2Teasers?: string[];
 } = {}) {
   return (
-    <EmailLayout preview={`Tomorrow: £8.99. Cancel anytime.`} campaign="day-6">
-          <Text style={monoEyebrow}>[ DAY 06 · TOMORROW: £8.99 ]</Text>
+    <EmailLayout preview={`Tomorrow: ${CLUB.monthlyDisplay}. Cancel anytime.`} campaign="day-6">
+          <Text style={monoEyebrow}>[ DAY 06 · TOMORROW: {CLUB.monthlyDisplay} ]</Text>
           <Heading
             style={{
               color: TEXT,
@@ -46,7 +47,7 @@ export function Day6Email({
               margin: "16px 0 8px",
             }}
           >
-            Tomorrow: £8.99.
+            Tomorrow: {CLUB.monthlyDisplay}.
           </Heading>
           <Text
             style={{
@@ -57,8 +58,8 @@ export function Day6Email({
               margin: 0,
             }}
           >
-            Your trial converts tomorrow. £8.99 a month for the next 11 weeks
-            of programming. Cancel from your account any time.
+            Your trial converts tomorrow. {CLUB.monthlyDisplay} a month for the
+            next 11 weeks of programming. Cancel from your account any time.
           </Text>
 
           <hr style={hrRule} />
@@ -123,7 +124,7 @@ export function Day6Email({
 
           <Section style={{ marginTop: 12 }}>
             <Link
-              href="https://suthperformance.com/account/cancel"
+              href="https://www.suthperformance.com/app/account"
               style={ctaSecondary}
             >
               Cancel my trial

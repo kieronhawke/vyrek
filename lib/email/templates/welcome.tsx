@@ -31,8 +31,11 @@ export function WelcomeEmail({
 }) {
   const tEnd = trialEndsAt ? formatDate(trialEndsAt) : "in 7 days";
   const tFirst = formatDate(firstWorkoutDate);
+  const firstDay = firstWorkoutDate.toLocaleDateString("en-GB", {
+    weekday: "long",
+  });
   return (
-    <EmailLayout preview={`You&apos;re in. Day 1 starts {tFirst}.`} campaign="welcome">
+    <EmailLayout preview={`You're in. Day 1 starts ${tFirst}.`} campaign="welcome">
           <Heading
             style={{
               color: TEXT,
@@ -96,7 +99,7 @@ export function WelcomeEmail({
           >
             01 · Add Suth Performance to your home screen
             <br />
-            02 · Open Tuesday morning
+            02 · Open {firstDay} morning
             <br />
             03 · Hit the session
           </Text>

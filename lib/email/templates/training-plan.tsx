@@ -37,7 +37,7 @@ export function TrainingPlanEmail({
 
   return (
     <EmailLayout
-      preview={`${title} — week starting ${weekLabel}.`}
+      preview={`${title}. Week starting ${weekLabel}.`}
       campaign="training-plan"
     >
       <Eyebrow>Week starting {weekLabel}</Eyebrow>

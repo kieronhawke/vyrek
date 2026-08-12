@@ -46,36 +46,39 @@ export default async function AdminCustomerDetailPage({
   const { customer, subscriptions, quizResponses } = res.data;
   const latestSub = subscriptions[0];
   const latestQuiz = quizResponses[0];
-  // Live from Stripe: the rate, the pause state and the card. Null when
-  // Stripe is unreachable — the page still renders its DB fields.
-  const billing =
+  // These four reads only depend on the customer/subscription already
+  // loaded, not on each other — so they run together rather than as a
+  // waterfall of awaits.
+  const [billing, payments, journey, memberMode] = await Promise.all([
+    // Live from Stripe: the rate, the pause state and the card. Null when
+    // Stripe is unreachable — the page still renders its DB fields.
     latestSub?.stripe_subscription_id && latestSub.status !== "canceled"
-      ? await subscriptionBilling(latestSub.stripe_subscription_id)
-      : null;
-  const payments = customer.stripe_customer_id
-    ? await paymentsForCustomer(customer.stripe_customer_id)
-    : null;
-  const lastPaid = payments?.find((p) => p.paid) ?? null;
-  // The rest of this person's story, joined by email: enquiries, calls,
-  // links sent. One admin, one page per person.
-  const journey = await customerJourney(customer.email);
-
-  // Which portal this client sees. Lives on the auth user, not the
-  // customer row — null when they've never signed in.
-  let memberMode: "billing" | "full" | null = null;
-  if (customer.auth_user_id) {
-    try {
-      const { data } = await supabaseAdmin().auth.admin.getUserById(
-        customer.auth_user_id,
-      );
-      memberMode =
-        data?.user?.user_metadata?.member_mode === "billing"
+      ? subscriptionBilling(latestSub.stripe_subscription_id)
+      : Promise.resolve(null),
+    customer.stripe_customer_id
+      ? paymentsForCustomer(customer.stripe_customer_id)
+      : Promise.resolve(null),
+    // The rest of this person's story, joined by email: enquiries, calls,
+    // links sent. One admin, one page per person.
+    customerJourney(customer.email),
+    // Which portal this client sees. Lives on the auth user, not the
+    // customer row — null when they've never signed in.
+    (async (): Promise<"billing" | "full" | null> => {
+      if (!customer.auth_user_id) return null;
+      try {
+        const { data } = await supabaseAdmin().auth.admin.getUserById(
+          customer.auth_user_id,
+        );
+        return data?.user?.user_metadata?.member_mode === "billing"
           ? "billing"
           : "full";
-    } catch {
-      /* Renders without the toggle. */
-    }
-  }
+      } catch {
+        /* Renders without the toggle. */
+        return null;
+      }
+    })(),
+  ]);
+  const lastPaid = payments?.find((p) => p.paid) ?? null;
 
   return (
     <>
