@@ -30,6 +30,7 @@ const NAV: { href: string; label: string; group: string; icon: string }[] = [
   { href: "/admin/waitlist", label: "Waitlist", group: "Marketing", icon: "waitlist" },
   { href: "/admin/messaging", label: "Emails & texts", group: "Marketing", icon: "messaging" },
   { href: "/admin/quiz", label: "Quiz responses", group: "Marketing", icon: "quiz" },
+  { href: "/admin/settings", label: "Settings", group: "System", icon: "settings" },
 ];
 
 function SuthMonogram({ className }: { className?: string }) {

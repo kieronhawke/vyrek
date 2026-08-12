@@ -72,6 +72,17 @@ function toRow(inv: Stripe.Invoice): PaymentRow {
   };
 }
 
+/**
+ * True when an invoice belongs to a customer who has since been deleted in
+ * Stripe. Such invoices are orphaned history — they should not show in the
+ * live payments view or count toward current totals. (A deleted Stripe
+ * customer comes back from the expand as `{ deleted: true }`.)
+ */
+function invoiceCustomerDeleted(inv: Stripe.Invoice): boolean {
+  const c = inv.customer;
+  return Boolean(c && typeof c === "object" && "deleted" in c && c.deleted);
+}
+
 /** Newest invoices across the whole account, for the payments page. */
 export async function recentPayments(limit = 60): Promise<PaymentRow[] | null> {
   try {
@@ -80,7 +91,9 @@ export async function recentPayments(limit = 60): Promise<PaymentRow[] | null> {
       limit,
       expand: ["data.customer"],
     });
-    return invoices.data.map(toRow);
+    return invoices.data
+      .filter((inv) => !invoiceCustomerDeleted(inv))
+      .map(toRow);
   } catch (e) {
     console.error("[payments] invoice list failed", e);
     return null;
@@ -111,7 +124,11 @@ export async function paymentsForMonth(
         expand: ["data.customer"],
         ...(startingAfter ? { starting_after: startingAfter } : {}),
       });
-      rows.push(...invoices.data.map(toRow));
+      rows.push(
+        ...invoices.data
+          .filter((inv) => !invoiceCustomerDeleted(inv))
+          .map(toRow),
+      );
       if (!invoices.has_more) break;
       startingAfter = invoices.data[invoices.data.length - 1]?.id;
     }
