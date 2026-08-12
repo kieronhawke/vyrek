@@ -84,6 +84,41 @@ export async function recentPayments(limit = 60): Promise<PaymentRow[] | null> {
   }
 }
 
+/**
+ * Every invoice raised in one calendar month, for browsing back through
+ * the payments page. Month-scoped at the Stripe API (created gte/lt), so
+ * a busy month is complete rather than clipped by a global limit.
+ */
+export async function paymentsForMonth(
+  year: number,
+  monthIndex: number,
+): Promise<PaymentRow[] | null> {
+  try {
+    const { stripe } = await import("@/lib/stripe");
+    const s = stripe();
+    const start = Math.floor(new Date(year, monthIndex, 1).getTime() / 1000);
+    const end = Math.floor(new Date(year, monthIndex + 1, 1).getTime() / 1000);
+    const rows: PaymentRow[] = [];
+    let startingAfter: string | undefined;
+    // Five pages of 100 is far beyond any month Ben will have.
+    for (let page = 0; page < 5; page++) {
+      const invoices = await s.invoices.list({
+        limit: 100,
+        created: { gte: start, lt: end },
+        expand: ["data.customer"],
+        ...(startingAfter ? { starting_after: startingAfter } : {}),
+      });
+      rows.push(...invoices.data.map(toRow));
+      if (!invoices.has_more) break;
+      startingAfter = invoices.data[invoices.data.length - 1]?.id;
+    }
+    return rows;
+  } catch (e) {
+    console.error("[payments] month invoice list failed", e);
+    return null;
+  }
+}
+
 /** One client's payment history, for the customer detail page. */
 export async function paymentsForCustomer(
   stripeCustomerId: string,

@@ -1,7 +1,9 @@
+import Link from "next/link";
 import { format } from "date-fns";
 import { PageHeader, Badge, Card, Stat, Table } from "@/components/admin/ui";
 import {
   recentPayments,
+  paymentsForMonth,
   liveMrrPence,
   forecastThisMonthPence,
 } from "@/lib/billing/payments";
@@ -53,10 +55,34 @@ function statusLabel(row: {
  * the open ones counted at the top — the two numbers that decide whether
  * Ben needs to chase anyone today. Read live from Stripe, not a mirror.
  */
-export default async function AdminPaymentsPage() {
+export default async function AdminPaymentsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ month?: string }>;
+}) {
+  const sp = await searchParams;
+  const now = new Date();
+  const monthKey = (y: number, mIdx: number) =>
+    `${y}-${String(mIdx + 1).padStart(2, "0")}`;
+  const currentKey = monthKey(now.getFullYear(), now.getMonth());
+  // ?month=2026-07 browses a past month; anything malformed, in the
+  // future, or absent lands on the live view of this month.
+  const requested = /^\d{4}-(0[1-9]|1[0-2])$/.test(sp.month ?? "")
+    ? sp.month!
+    : currentKey;
+  const viewKey = requested > currentKey ? currentKey : requested;
+  const isCurrent = viewKey === currentKey;
+  const [viewYear, viewMonth1] = viewKey.split("-").map(Number);
+  const viewStart = new Date(viewYear, viewMonth1 - 1, 1);
+  const prevStart = new Date(viewYear, viewMonth1 - 2, 1);
+  const nextStart = new Date(viewYear, viewMonth1, 1);
+  const monthName = (d: Date) => format(d, "MMMM yyyy");
+
   const [payments, mrr] = await Promise.all([
-    recentPayments(60),
-    liveMrrPence(),
+    isCurrent
+      ? recentPayments(60)
+      : paymentsForMonth(viewYear, viewMonth1 - 1),
+    isCurrent ? liveMrrPence() : Promise.resolve(null),
   ]);
   let forecast: number | null = null;
 
@@ -80,16 +106,18 @@ export default async function AdminPaymentsPage() {
 
   const failed = payments.filter((p) => !p.paid && p.attempted && p.status === "open");
   const openInvoices = payments.filter((p) => !p.paid && p.status === "open" && !p.attempted);
+  // The current view mixes months (newest 60 invoices), so the month
+  // filter matters there; a browsed month is already scoped.
   const collectedThisMonth = payments
     .filter(
       (p) =>
         p.paid &&
-        new Date(p.createdISO).getMonth() === new Date().getMonth() &&
-        new Date(p.createdISO).getFullYear() === new Date().getFullYear(),
+        new Date(p.createdISO).getMonth() === viewStart.getMonth() &&
+        new Date(p.createdISO).getFullYear() === viewStart.getFullYear(),
     )
     .reduce((sum, p) => sum + p.amountPence, 0);
 
-  forecast = await forecastThisMonthPence(collectedThisMonth);
+  if (isCurrent) forecast = await forecastThisMonthPence(collectedThisMonth);
 
   return (
     <>
@@ -109,23 +137,71 @@ export default async function AdminPaymentsPage() {
         }
       />
 
-      <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-        <Stat
-          label="Forecast this month"
-          value={forecast !== null ? gbp(forecast) : "—"}
-          hint="Collected plus renewals due before month end."
-        />
-        <Stat label="Collected this month" value={gbp(collectedThisMonth)} />
-        <Stat
-          label="Failed payments"
-          value={String(failed.length)}
-          hint={failed.length > 0 ? "Listed under Needs attention" : undefined}
-        />
-        <Stat label="Awaiting payment" value={String(openInvoices.length)} />
+      {/* Month switcher: back through history one month at a time, with a
+          one-tap way home to the live view. */}
+      <div className="mb-6 flex flex-wrap items-center gap-3">
+        <Link
+          href={`/admin/payments?month=${monthKey(prevStart.getFullYear(), prevStart.getMonth())}`}
+          className="inline-flex h-10 items-center rounded-pill border border-suth-border px-4 text-sm text-suth-text-secondary hover:border-suth-border-strong hover:text-suth-text"
+        >
+          ← {monthName(prevStart)}
+        </Link>
+        <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text">
+          {monthName(viewStart)}
+          {isCurrent ? " · now" : ""}
+        </span>
+        {!isCurrent ? (
+          <>
+            <Link
+              href={
+                monthKey(nextStart.getFullYear(), nextStart.getMonth()) === currentKey
+                  ? "/admin/payments"
+                  : `/admin/payments?month=${monthKey(nextStart.getFullYear(), nextStart.getMonth())}`
+              }
+              className="inline-flex h-10 items-center rounded-pill border border-suth-border px-4 text-sm text-suth-text-secondary hover:border-suth-border-strong hover:text-suth-text"
+            >
+              {monthName(nextStart)} →
+            </Link>
+            <Link
+              href="/admin/payments"
+              className="text-sm text-suth-accent underline underline-offset-4"
+            >
+              Back to this month
+            </Link>
+          </>
+        ) : null}
       </div>
-      <p className="mb-8 -mt-4 text-xs text-suth-text-tertiary">
-        MRR across every rate: {mrr !== null ? gbp(mrr) : "unavailable"}.
-      </p>
+
+      {isCurrent ? (
+        <>
+          <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+            <Stat
+              label="Forecast this month"
+              value={forecast !== null ? gbp(forecast) : "—"}
+              hint="Collected plus renewals due before month end."
+            />
+            <Stat label="Collected this month" value={gbp(collectedThisMonth)} />
+            <Stat
+              label="Failed payments"
+              value={String(failed.length)}
+              hint={failed.length > 0 ? "Listed under Needs attention" : undefined}
+            />
+            <Stat label="Awaiting payment" value={String(openInvoices.length)} />
+          </div>
+          <p className="mb-8 -mt-4 text-xs text-suth-text-tertiary">
+            MRR across every rate: {mrr !== null ? gbp(mrr) : "unavailable"}.
+          </p>
+        </>
+      ) : (
+        <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-3">
+          <Stat
+            label={`Collected in ${format(viewStart, "MMMM")}`}
+            value={gbp(collectedThisMonth)}
+          />
+          <Stat label="Invoices raised" value={String(payments.length)} />
+          <Stat label="Failed payments" value={String(failed.length)} />
+        </div>
+      )}
 
       {failed.length > 0 ? (
         <section className="mb-8">
@@ -170,7 +246,11 @@ export default async function AdminPaymentsPage() {
         </h2>
         <Table
           headers={["Date", "Client", "For", "Amount", "Status", "Stripe"]}
-          empty="No invoices yet. They appear the moment a subscription bills."
+          empty={
+            isCurrent
+              ? "No invoices yet. They appear the moment a subscription bills."
+              : `No invoices in ${monthName(viewStart)}.`
+          }
           rows={payments.map((p) => [
             format(new Date(p.createdISO), "dd MMM yyyy"),
             <span key="c" className="text-suth-text">
