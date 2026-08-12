@@ -109,6 +109,37 @@ export async function storeInvite(payload: InvitePayload): Promise<StoreResult> 
 }
 
 /** Resolve a short id back to its invite. Null when unknown or expired. */
+export type StoredInvite = {
+  id: string;
+  createdISO: string;
+  expiresISO: string;
+  payload: InvitePayload;
+};
+
+/**
+ * Newest first, for the admin's "who have I sent links to" list. Includes
+ * expired rows the sweep hasn't reached — the admin wants to see that an
+ * invite ran out, not have it vanish.
+ */
+export async function recentInvites(limit = 50): Promise<StoredInvite[]> {
+  try {
+    const { data, error } = await supabaseAdmin()
+      .from("onboarding_invites")
+      .select("id, created_at, expires_at, payload")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    if (error || !data) return [];
+    return data.map((r) => ({
+      id: r.id as string,
+      createdISO: r.created_at as string,
+      expiresISO: r.expires_at as string,
+      payload: r.payload as InvitePayload,
+    }));
+  } catch {
+    return [];
+  }
+}
+
 export async function loadInvite(id: string): Promise<InvitePayload | null> {
   if (!looksLikeInviteId(id)) return null;
 

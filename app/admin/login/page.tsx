@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { currentUserOrNull } from "@/lib/supabase/optional";
 import { isAdminEmail } from "@/lib/admin/auth";
 import { AdminLoginForm } from "@/components/admin/login-form";
-import { DemoEntry } from "@/components/shared/demo-entry";
 
 export const metadata: Metadata = {
   title: "Sign in. Suth Performance admin",
@@ -32,7 +31,6 @@ export default async function AdminLoginPage() {
           Suth Performance admin only. Sign in with the email on the allowlist.
         </p>
         <AdminLoginForm />
-        <DemoEntry variant="admin" />
       </div>
     </main>
   );

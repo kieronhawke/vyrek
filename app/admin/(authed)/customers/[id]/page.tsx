@@ -8,8 +8,17 @@ import {
   Table,
 } from "@/components/admin/ui";
 import { getCustomer } from "@/lib/admin/queries";
+import { subscriptionBilling } from "@/lib/billing/subscription-info";
+import { paymentsForCustomer } from "@/lib/billing/payments";
 import { CancelSubscriptionButton } from "@/components/admin/cancel-subscription-button";
 import { CustomerActions } from "@/components/admin/customer-actions";
+import { SubscriptionManage } from "@/components/admin/subscription-manage";
+
+function gbp(pence: number): string {
+  return pence % 100 === 0
+    ? `£${pence / 100}`
+    : `£${(pence / 100).toFixed(2)}`;
+}
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +42,15 @@ export default async function AdminCustomerDetailPage({
   const { customer, subscriptions, quizResponses } = res.data;
   const latestSub = subscriptions[0];
   const latestQuiz = quizResponses[0];
+  // Live from Stripe: the rate, the pause state and the card. Null when
+  // Stripe is unreachable — the page still renders its DB fields.
+  const billing =
+    latestSub?.stripe_subscription_id && latestSub.status !== "canceled"
+      ? await subscriptionBilling(latestSub.stripe_subscription_id)
+      : null;
+  const payments = customer.stripe_customer_id
+    ? await paymentsForCustomer(customer.stripe_customer_id)
+    : null;
 
   return (
     <>
@@ -88,10 +106,28 @@ export default async function AdminCustomerDetailPage({
           </p>
           {latestSub ? (
             <>
-              <p className="mt-3">
+              <p className="mt-3 flex flex-wrap items-center gap-2">
                 <Badge tone={statusTone(latestSub.status)}>{latestSub.status}</Badge>
+                {billing?.paused ? <Badge tone="warn">collection paused</Badge> : null}
+                {billing?.cancelAtPeriodEnd ? (
+                  <Badge tone="warn">cancels at period end</Badge>
+                ) : null}
               </p>
               <dl className="mt-3 space-y-2 text-sm">
+                {billing?.amountPence ? (
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-suth-text-tertiary">Monthly rate</dt>
+                    <dd className="num text-suth-text">
+                      {gbp(billing.amountPence)}/{billing.interval}
+                    </dd>
+                  </div>
+                ) : null}
+                {billing?.paymentMethod ? (
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-suth-text-tertiary">Payment method</dt>
+                    <dd className="text-suth-text">{billing.paymentMethod}</dd>
+                  </div>
+                ) : null}
                 <div className="flex justify-between gap-3">
                   <dt className="text-suth-text-tertiary">Trial ends</dt>
                   <dd className="text-suth-text">
@@ -117,7 +153,13 @@ export default async function AdminCustomerDetailPage({
               </dl>
               {latestSub.stripe_subscription_id &&
               latestSub.status !== "canceled" ? (
-                <div className="mt-4 border-t border-suth-border-subtle pt-4">
+                <div className="mt-4 space-y-4 border-t border-suth-border-subtle pt-4">
+                  <SubscriptionManage
+                    stripeSubscriptionId={latestSub.stripe_subscription_id}
+                    amountPence={billing?.amountPence ?? null}
+                    paused={billing?.paused ?? false}
+                    pauseResumesISO={billing?.pauseResumesISO ?? null}
+                  />
                   <CancelSubscriptionButton
                     stripeSubscriptionId={latestSub.stripe_subscription_id}
                   />
@@ -154,6 +196,48 @@ export default async function AdminCustomerDetailPage({
               : "-",
           ])}
         />
+      </section>
+
+      {/* Payment history, live from Stripe */}
+      <section className="mt-10">
+        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+          Payment history
+        </h2>
+        {payments === null ? (
+          <Card>
+            <p className="text-sm text-suth-text-tertiary">
+              {customer.stripe_customer_id
+                ? "Couldn't reach Stripe just now — refresh in a moment."
+                : "No Stripe customer yet, so no payments to show."}
+            </p>
+          </Card>
+        ) : (
+          <Table
+            headers={["Date", "For", "Amount", "Status"]}
+            empty="No invoices yet."
+            rows={payments.map((p) => [
+              format(new Date(p.createdISO), "dd MMM yyyy"),
+              <span key="d" className="text-suth-text-secondary">
+                {p.description ?? "—"}
+              </span>,
+              <span key="a" className="font-mono">{gbp(p.amountPence)}</span>,
+              <Badge
+                key="s"
+                tone={
+                  p.paid
+                    ? "good"
+                    : p.status === "open" && p.attempted
+                      ? "bad"
+                      : p.status === "open"
+                        ? "warn"
+                        : "neutral"
+                }
+              >
+                {p.paid ? "paid" : p.status}
+              </Badge>,
+            ])}
+          />
+        )}
       </section>
 
       {/* Customer actions */}

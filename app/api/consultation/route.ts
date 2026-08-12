@@ -155,6 +155,7 @@ export async function POST(req: Request) {
     name: lead.name,
     email: lead.email,
     phone: lead.phone,
+    invitedAtISO: null,
     rail: short(body.rail) ?? null,
     wants: short(body.wants) ?? "A free consultation",
     readiness: short(body.readiness) ?? null,

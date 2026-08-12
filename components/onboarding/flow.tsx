@@ -225,9 +225,15 @@ function StepBody({
     case "photo":
       return <Photo answers={answers} set={set} />;
     case "plan":
-      return <Plans answers={answers} set={set} />;
+      return <Plans answers={answers} set={set} invite={invite} />;
     case "pay":
-      return <Pay answers={answers} beginner={invite.rail === "beginner"} />;
+      return (
+        <Pay
+          answers={answers}
+          beginner={invite.rail === "beginner"}
+          invite={invite}
+        />
+      );
     default:
       return null;
   }
@@ -581,7 +587,59 @@ function Photo({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) 
   );
 }
 
-function Plans({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) => void }) {
+/** "£220" for whole pounds, "£12.99" otherwise. */
+function formatPence(pence: number): string {
+  return pence % 100 === 0
+    ? `£${pence / 100}`
+    : `£${(pence / 100).toFixed(2)}`;
+}
+
+function Plans({
+  answers,
+  set,
+  invite,
+}: {
+  answers: Answers;
+  set: (p: Partial<Answers>) => void;
+  invite: InvitePayload;
+}) {
+  // Ben agreed a personal rate with this client, so there is nothing to
+  // choose: one card, their plan, their price. Showing the public menu here
+  // would show an existing client a different number from the one Ben
+  // quoted them, at the exact moment they reach for a card.
+  if (invite.amountPence) {
+    const p = planByKey(invite.plan) ?? PLANS[0];
+    return (
+      <div className="ob-plans">
+        <button
+          type="button"
+          className="ob-plan"
+          data-on
+          data-featured
+          onClick={() => set({ plan: p.key })}
+          aria-pressed
+        >
+          <span className="ob-plan__flag">Your plan</span>
+          <span className="ob-plan__head">
+            <span className="ob-plan__name">{p.name}</span>
+            <span className="ob-plan__price">
+              <span className="num">{formatPence(invite.amountPence)}</span>
+              <span className="ob-plan__cadence">a month</span>
+            </span>
+          </span>
+          <span className="ob-plan__summary">
+            The rate you agreed with Ben. Collected monthly, cancel any time.
+          </span>
+          <ul className="ob-plan__list">
+            {p.includes.map((i) => (
+              <li key={i}>{i}</li>
+            ))}
+          </ul>
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="ob-plans">
       {PLANS.map((p) => (
@@ -617,9 +675,23 @@ function Plans({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) 
   );
 }
 
-function Pay({ answers, beginner }: { answers: Answers; beginner?: boolean }) {
+function Pay({
+  answers,
+  beginner,
+  invite,
+}: {
+  answers: Answers;
+  beginner?: boolean;
+  invite: InvitePayload;
+}) {
   const plan = planByKey(answers.plan);
   const rows = summarise(answers, beginner);
+  // The agreed rate wins over the public price, and an agreed rate has no
+  // free days — the first collection is at checkout.
+  const price = invite.amountPence
+    ? formatPence(invite.amountPence)
+    : plan?.display;
+  const trialDays = invite.amountPence ? 0 : (plan?.trialDays ?? 0);
 
   return (
     <div className="ob-pay">
@@ -627,12 +699,12 @@ function Pay({ answers, beginner }: { answers: Answers; beginner?: boolean }) {
         <div className="ob-total">
           <span className="ob-total__name">{plan.name}</span>
           <span className="ob-total__price num">
-            {plan.display}
+            {price}
             <span className="ob-plan__cadence">{plan.cadence}</span>
           </span>
-          {plan.trialDays > 0 ? (
+          {trialDays > 0 ? (
             <span className="ob-total__trial">
-              Nothing today — your first {plan.trialDays} days are free.
+              Nothing today — your first {trialDays} days are free.
             </span>
           ) : null}
         </div>

@@ -1,0 +1,222 @@
+import { randomUUID } from "node:crypto";
+import type Stripe from "stripe";
+import { supabaseAdmin } from "@/lib/supabase/admin";
+import { siteUrl } from "@/lib/site-url";
+import { sendAccountReady } from "@/lib/email/send";
+
+/**
+ * TURN A PAID CHECKOUT SESSION INTO AN ACCOUNT THEY CAN GET INTO.
+ *
+ * Shared by two callers:
+ *   - /api/onboarding/activate — fired from the welcome page in the browser
+ *   - /api/stripe/webhook (checkout.session.completed) — fired by Stripe
+ *
+ * The webhook path is the one that matters: a client who pays and then
+ * closes the tab on the Stripe receipt page never loads the welcome page,
+ * and before this was shared, that person had paid and no account existed.
+ * Both paths are idempotent, so whichever fires second finds the work done.
+ *
+ * NO PASSWORD, DELIBERATELY. The person has just paid; a password field
+ * between them and their plan is a drop-off for no security gain. The
+ * account is created confirmed and they get a branded sign-in link by
+ * email. The link goes through our own /auth/callback with a token hash,
+ * because Supabase's hosted action_link redirected to a page that had no
+ * way to exchange it — every invited customer was stranded at a password
+ * login they could never pass.
+ */
+
+export type ActivationOutcome = {
+  ok: boolean;
+  email?: string;
+  error?: string;
+};
+
+function periodEndUnix(sub: Stripe.Subscription): number | null {
+  const legacy = (sub as unknown as { current_period_end?: number })
+    .current_period_end;
+  if (typeof legacy === "number") return legacy;
+  const ends = (sub.items?.data ?? [])
+    .map(
+      (i) =>
+        (i as unknown as { current_period_end?: number }).current_period_end,
+    )
+    .filter((n): n is number => typeof n === "number");
+  return ends.length ? Math.max(...ends) : null;
+}
+
+/**
+ * `session` must be retrieved with `expand: ["subscription", "customer"]`.
+ * The caller has already verified the session is paid / trialing.
+ */
+export async function activateFromSession(
+  session: Stripe.Checkout.Session,
+): Promise<ActivationOutcome> {
+  const email = (session.customer_details?.email ?? "").trim().toLowerCase();
+  const name = String(session.metadata?.client_name ?? "");
+  const plan = String(session.metadata?.plan ?? "");
+  const stripeCustomerId =
+    typeof session.customer === "string"
+      ? session.customer
+      : (session.customer?.id ?? null);
+  const sub =
+    typeof session.subscription === "object" && session.subscription !== null
+      ? session.subscription
+      : null;
+  const subscriptionId =
+    typeof session.subscription === "string"
+      ? session.subscription
+      : (sub?.id ?? null);
+
+  if (!email) {
+    // Stripe always has an email for a subscription; a session without one
+    // is a real anomaly rather than a normal branch.
+    return { ok: false, error: "NO_EMAIL" };
+  }
+
+  const sb = supabaseAdmin();
+
+  /* 1 — the auth user. Confirmed, no password. */
+  let authUserId: string | null = null;
+  try {
+    const created = await sb.auth.admin.createUser({
+      email,
+      email_confirm: true,
+      user_metadata: { full_name: name },
+    });
+    if (created.data.user) {
+      authUserId = created.data.user.id;
+    } else if (created.error) {
+      // Already registered — they came back, or Ben set them up earlier.
+      // generateLink returns the existing user without paging through
+      // listUsers (which silently broke past 200 users).
+      const { data } = await sb.auth.admin.generateLink({
+        type: "magiclink",
+        email,
+      });
+      authUserId = data?.user?.id ?? null;
+      if (!authUserId) {
+        console.error("[activation] createUser failed", created.error.message);
+      }
+    }
+  } catch (e) {
+    console.error("[activation] auth admin unreachable", e);
+  }
+
+  /* 2 — the customer row. Look first, then insert or update: customers.id
+   * has no default, and supplying one on the update path would rewrite the
+   * primary key of a row that already exists. */
+  let customerRowId: string | null = null;
+  try {
+    const existing = await sb
+      .from("customers")
+      .select("id")
+      .eq("email", email)
+      .maybeSingle();
+
+    if (existing.data?.id) {
+      customerRowId = existing.data.id;
+      const { error } = await sb
+        .from("customers")
+        .update({
+          ...(authUserId ? { auth_user_id: authUserId } : {}),
+          ...(stripeCustomerId ? { stripe_customer_id: stripeCustomerId } : {}),
+        })
+        .eq("id", customerRowId);
+      if (error) {
+        console.error("[activation] customer update failed", error.message);
+      }
+    } else {
+      const id = randomUUID();
+      const { error } = await sb.from("customers").insert({
+        id,
+        email,
+        ...(authUserId ? { auth_user_id: authUserId } : {}),
+        ...(stripeCustomerId ? { stripe_customer_id: stripeCustomerId } : {}),
+      });
+      if (error) {
+        console.error("[activation] customer insert failed", error.message);
+      } else {
+        customerRowId = id;
+      }
+    }
+  } catch (e) {
+    console.error("[activation] customer write threw", e);
+  }
+
+  /* 3 — the subscription row, with its real status ("trialing" stays
+   * "trialing" — the webhook keeps it current from then on). */
+  try {
+    if (subscriptionId && customerRowId) {
+      const status = sub?.status ?? "active";
+      const trialEnd = sub?.trial_end ?? null;
+      const periodEnd = sub ? periodEndUnix(sub) : null;
+      const { data: existing } = await sb
+        .from("subscriptions")
+        .select("id")
+        .eq("stripe_subscription_id", subscriptionId)
+        .maybeSingle();
+      if (existing?.id) {
+        await sb
+          .from("subscriptions")
+          .update({
+            customer_id: customerRowId,
+            status,
+            trial_end: trialEnd
+              ? new Date(trialEnd * 1000).toISOString()
+              : null,
+            current_period_end: periodEnd
+              ? new Date(periodEnd * 1000).toISOString()
+              : null,
+          })
+          .eq("id", existing.id);
+      } else {
+        // subscriptions.id is a uuid with no default; the Stripe sub id is
+        // NOT a uuid and Postgres rejects it — mint our own.
+        const { error } = await sb.from("subscriptions").insert({
+          id: randomUUID(),
+          customer_id: customerRowId,
+          stripe_subscription_id: subscriptionId,
+          status,
+          trial_end: trialEnd ? new Date(trialEnd * 1000).toISOString() : null,
+          current_period_end: periodEnd
+            ? new Date(periodEnd * 1000).toISOString()
+            : null,
+        });
+        if (error) {
+          console.error("[activation] subscription insert failed", error.message);
+        }
+      }
+    }
+  } catch (e) {
+    console.error("[activation] subscription write threw", e);
+  }
+
+  /* 4 — a way in, with no password to invent. The link is generated by
+   * Supabase but sent by us through Resend on the verified domain, and it
+   * targets our own /auth/callback with the token hash so the exchange
+   * actually happens. */
+  let signInUrl = `${siteUrl()}/login`;
+  try {
+    const link = await sb.auth.admin.generateLink({
+      type: "magiclink",
+      email,
+    });
+    const hashed = link.data?.properties?.hashed_token;
+    if (hashed) {
+      signInUrl = `${siteUrl()}/auth/callback?token_hash=${encodeURIComponent(
+        hashed,
+      )}&type=magiclink&next=${encodeURIComponent("/app/today")}`;
+    }
+  } catch (e) {
+    console.error("[activation] generateLink failed", e);
+  }
+
+  void sendAccountReady({
+    to: email,
+    firstName: (name || email).split(/[\s@]/)[0],
+    signInUrl,
+    planName: plan,
+  }).catch(() => {});
+
+  return { ok: true, email };
+}

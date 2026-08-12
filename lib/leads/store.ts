@@ -77,6 +77,7 @@ function fromRow(r: Row): Lead {
     name: r.name,
     email: r.email,
     phone: r.phone,
+    invitedAtISO: r.invited_at,
     rail: r.rail,
     wants: r.wants,
     readiness: r.readiness,

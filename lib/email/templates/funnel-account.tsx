@@ -173,7 +173,7 @@ export function RenewalReminderEmail({
         surprised by a charge is a rubbish way to find out.
       </P>
 
-      <Btn href={trackedUrl("/account", "renewal")}>Manage my plan →</Btn>
+      <Btn href={trackedUrl("/app/account", "renewal")}>Manage my plan →</Btn>
 
       <SignOff />
     </EmailLayout>

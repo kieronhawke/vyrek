@@ -416,15 +416,23 @@ export async function refundLastStripeInvoice(
     if (!latestInvoiceId) {
       return { ok: false, error: "no invoice on this subscription" };
     }
-    const invoice = await s.invoices.retrieve(latestInvoiceId);
-    const chargeId =
-      typeof (invoice as unknown as { charge?: string }).charge === "string"
-        ? (invoice as unknown as { charge: string }).charge
-        : null;
-    if (!chargeId) {
-      return { ok: false, error: "invoice has no charge to refund" };
+    // "payments" is where the paid charge lives on the current Stripe API;
+    // the flat invoice.charge field is gone. The compat helpers read both
+    // shapes, so this works whichever API version the account is on.
+    const invoice = await s.invoices.retrieve(latestInvoiceId, {
+      expand: ["payments"],
+    });
+    const { invoicePaymentIntentId, invoiceChargeId } = await import(
+      "@/lib/billing/stripe-compat"
+    );
+    const paymentIntentId = invoicePaymentIntentId(invoice);
+    const chargeId = paymentIntentId ? null : invoiceChargeId(invoice);
+    if (!paymentIntentId && !chargeId) {
+      return { ok: false, error: "invoice has no payment to refund" };
     }
-    const refund = await s.refunds.create({ charge: chargeId });
+    const refund = await s.refunds.create(
+      paymentIntentId ? { payment_intent: paymentIntentId } : { charge: chargeId! },
+    );
     await logEvent({
       actor: user.email ?? "admin",
       action: "subscription.cancelled",
@@ -443,6 +451,174 @@ export async function refundLastStripeInvoice(
 }
 
 // ─── Subscription actions ───────────────────────────────
+
+/**
+ * Move a client onto a new monthly rate.
+ *
+ * Applies from the next invoice — no proration, no surprise mid-month
+ * charge. The subscription item keeps its product; only the price changes,
+ * created inline exactly like the checkout does, so nobody has to log
+ * into Stripe to add a Price first.
+ */
+export async function changeSubscriptionRate(
+  stripeSubscriptionId: string,
+  newAmountPence: number,
+): Promise<ActionResult & { amount_pence?: number }> {
+  try {
+    const { user } = await assertAdmin();
+    if (
+      !Number.isInteger(newAmountPence) ||
+      newAmountPence < 100 ||
+      newAmountPence > 100_000
+    ) {
+      return { ok: false, error: "rate must be between £1 and £1,000 a month" };
+    }
+    const { stripe } = await import("@/lib/stripe");
+    const s = stripe();
+    const sub = await s.subscriptions.retrieve(stripeSubscriptionId);
+    const item = sub.items.data[0];
+    if (!item) return { ok: false, error: "subscription has no items" };
+    const productId =
+      typeof item.price.product === "string"
+        ? item.price.product
+        : item.price.product.id;
+
+    await s.subscriptions.update(stripeSubscriptionId, {
+      items: [
+        {
+          id: item.id,
+          price_data: {
+            currency: "gbp",
+            unit_amount: newAmountPence,
+            recurring: { interval: "month" },
+            product: productId,
+          },
+        },
+      ],
+      proration_behavior: "none",
+    });
+
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "subscription.activated",
+      targetKind: "subscription",
+      targetId: stripeSubscriptionId,
+      metadata: {
+        event: "rate_changed",
+        from_pence: item.price.unit_amount,
+        to_pence: newAmountPence,
+      },
+    });
+
+    revalidatePath("/admin/subscriptions");
+    return { ok: true, amount_pence: newAmountPence };
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+/**
+ * Pause collection — the "money is tight this month" option the dunning
+ * rules prefer over cancelling. Access continues, invoices are parked as
+ * uncollectible, and it resumes automatically if a date is given.
+ */
+export async function pauseSubscription(
+  stripeSubscriptionId: string,
+  resumeISO?: string,
+): Promise<ActionResult> {
+  try {
+    const { user } = await assertAdmin();
+    const { stripe } = await import("@/lib/stripe");
+    const s = stripe();
+    const resumesAt = resumeISO
+      ? Math.floor(new Date(resumeISO).getTime() / 1000)
+      : undefined;
+    if (resumeISO && (!resumesAt || Number.isNaN(resumesAt) || resumesAt <= Date.now() / 1000)) {
+      return { ok: false, error: "resume date must be in the future" };
+    }
+    await s.subscriptions.update(stripeSubscriptionId, {
+      pause_collection: {
+        behavior: "mark_uncollectible",
+        ...(resumesAt ? { resumes_at: resumesAt } : {}),
+      },
+    });
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "subscription.activated",
+      targetKind: "subscription",
+      targetId: stripeSubscriptionId,
+      metadata: { event: "paused", resumes_at: resumeISO ?? null },
+    });
+    revalidatePath("/admin/subscriptions");
+    return { ok: true };
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+export async function resumeSubscription(
+  stripeSubscriptionId: string,
+): Promise<ActionResult> {
+  try {
+    const { user } = await assertAdmin();
+    const { stripe } = await import("@/lib/stripe");
+    const s = stripe();
+    await s.subscriptions.update(stripeSubscriptionId, {
+      // Empty string is Stripe's "unset this" — null is rejected.
+      pause_collection: "" as unknown as undefined,
+    });
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "subscription.activated",
+      targetKind: "subscription",
+      targetId: stripeSubscriptionId,
+      metadata: { event: "resumed" },
+    });
+    revalidatePath("/admin/subscriptions");
+    return { ok: true };
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+/**
+ * The kind cancel: the client keeps what they paid for until the period
+ * ends, then it stops. This is the default the UI offers; the immediate
+ * cancel below is the escalation.
+ */
+export async function cancelSubscriptionAtPeriodEnd(
+  stripeSubscriptionId: string,
+): Promise<ActionResult> {
+  try {
+    const { user } = await assertAdmin();
+    const { stripe } = await import("@/lib/stripe");
+    const s = stripe();
+    await s.subscriptions.update(stripeSubscriptionId, {
+      cancel_at_period_end: true,
+    });
+
+    // Status stays as-is until Stripe fires customer.subscription.deleted
+    // at period end; record the intent so the admin list shows it now.
+    const sb = supabaseAdmin();
+    await sb
+      .from("subscriptions")
+      .update({ cancellation_reason: "admin-cancelled-at-period-end" })
+      .eq("stripe_subscription_id", stripeSubscriptionId);
+
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "subscription.cancelled",
+      targetKind: "subscription",
+      targetId: stripeSubscriptionId,
+      metadata: { source: "admin", mode: "at_period_end" },
+    });
+
+    revalidatePath("/admin/subscriptions");
+    return { ok: true };
+  } catch (e) {
+    return fail(e);
+  }
+}
 
 export async function cancelSubscriptionImmediately(
   stripeSubscriptionId: string,

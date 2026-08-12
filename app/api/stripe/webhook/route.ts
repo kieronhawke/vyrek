@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
 import {
@@ -16,6 +17,11 @@ import {
   type Tier,
 } from "@/lib/partners/commission";
 import { logEvent } from "@/lib/admin/events";
+import {
+  subscriptionPeriodEndUnix,
+  invoiceSubscriptionId,
+} from "@/lib/billing/stripe-compat";
+import { activateFromSession } from "@/lib/onboarding/activation";
 
 /**
  * Stripe webhook receiver. The request body MUST be read as raw text for
@@ -31,9 +37,9 @@ import { logEvent } from "@/lib/admin/events";
  *   - invoice.payment_succeeded → log; first paid invoice is the trial-to-paid moment
  *   - invoice.payment_failed → send payment-failed email
  *
- * All errors that originate from our own DB logic are swallowed and logged
- * so Stripe doesn't retry endlessly; failures get re-emitted as 500 only when
- * signature verification fails.
+ * A handler failure releases the idempotency claim and returns 500 so
+ * Stripe retries with backoff; signature failures return 400 and are never
+ * retried.
  */
 
 export const runtime = "nodejs";
@@ -73,10 +79,13 @@ export async function POST(req: Request) {
 
   const admin = supabaseAdmin();
 
-  // Idempotency: insert the event id; if a row already exists (Stripe
-  // retry, dashboard replay) we ack the delivery and skip side effects.
-  // Pre-fix, `invoice.payment_succeeded` would double-credit the partner
-  // ledger on every retry.
+  // Idempotency: claim the event id before processing; a duplicate claim
+  // (Stripe retry, dashboard replay) acks the delivery and skips side
+  // effects. Pre-fix, `invoice.payment_succeeded` would double-credit the
+  // partner ledger on every retry. The claim is RELEASED if the handler
+  // throws, so a genuinely failed delivery can be retried rather than
+  // being permanently marked as processed by a row written up front.
+  let claimed = false;
   {
     const { data: dedup, error: dedupErr } = await admin
       .from("stripe_events")
@@ -101,8 +110,8 @@ export async function POST(req: Request) {
       } else {
         console.error("[stripe/webhook] dedupe insert failed", dedupErr);
       }
-    } else if (!dedup) {
-      console.warn("[stripe/webhook] dedupe returned no row, continuing");
+    } else {
+      claimed = true;
     }
   }
 
@@ -115,30 +124,63 @@ export async function POST(req: Request) {
           typeof session.subscription === "string"
             ? session.subscription: session.subscription?.id;
 
+        // Invite-funnel sessions carry no client_reference_id — the person
+        // has no customers row yet, creating it IS the job. Activation is
+        // idempotent with the welcome page's own call, so whichever fires
+        // second finds the work already done. This is the path that saves
+        // the client who pays and then closes the tab on Stripe's receipt
+        // page: before it, they had paid and no account existed.
+        if (!customerId && session.metadata?.flow === "invite") {
+          const full = await stripe().checkout.sessions.retrieve(session.id, {
+            expand: ["subscription", "customer"],
+          });
+          const outcome = await activateFromSession(full);
+          if (!outcome.ok) {
+            console.error(
+              `[stripe/webhook] invite activation failed: ${outcome.error}`,
+            );
+          }
+          break;
+        }
+
         if (!customerId || !subscriptionId) break;
 
         const sub = await stripe().subscriptions.retrieve(subscriptionId);
 
-        // The Stripe sub object's properties have shifted across SDK
-        // versions. Read what we need defensively.
         const status = sub.status;
         const trialEndUnix = sub.trial_end;
-        const periodEndUnix =
-          (sub as unknown as { current_period_end?: number }).current_period_end ?? null;
+        const periodEndUnix = subscriptionPeriodEndUnix(sub);
 
-        await admin.from("subscriptions").upsert(
-            {
-              id: subscriptionId,
-              customer_id: customerId,
-              stripe_subscription_id: subscriptionId,
-              status,
-              trial_end: trialEndUnix
-                ? new Date(trialEndUnix * 1000).toISOString(): null,
-              current_period_end: periodEndUnix
-                ? new Date(periodEndUnix * 1000).toISOString(): null,
-            },
-            { onConflict: "stripe_subscription_id" },
-          );
+        // subscriptions.id is a uuid with no default. The Stripe sub id
+        // ("sub_...") is not a uuid — writing it there made Postgres
+        // reject the row and the error was swallowed, so self-serve
+        // subscriptions silently never persisted. Look up, then
+        // insert-with-minted-uuid or update.
+        const { data: existingSub } = await admin
+          .from("subscriptions")
+          .select("id")
+          .eq("stripe_subscription_id", subscriptionId)
+          .maybeSingle();
+        const subRowValues = {
+          customer_id: customerId,
+          status,
+          trial_end: trialEndUnix
+            ? new Date(trialEndUnix * 1000).toISOString(): null,
+          current_period_end: periodEndUnix
+            ? new Date(periodEndUnix * 1000).toISOString(): null,
+        };
+        if (existingSub?.id) {
+          await admin
+            .from("subscriptions")
+            .update(subRowValues)
+            .eq("id", existingSub.id);
+        } else {
+          await admin.from("subscriptions").insert({
+            id: randomUUID(),
+            stripe_subscription_id: subscriptionId,
+            ...subRowValues,
+          });
+        }
 
         // Mark any open abandoned-plan record recovered.
         await admin.from("abandoned_plans").update({ recovered_at: new Date().toISOString() }).eq("customer_id", customerId).is("recovered_at", null);
@@ -170,8 +212,7 @@ export async function POST(req: Request) {
 
       case "customer.subscription.updated": {
         const sub = event.data.object as Stripe.Subscription;
-        const periodEndUnix =
-          (sub as unknown as { current_period_end?: number }).current_period_end ?? null;
+        const periodEndUnix = subscriptionPeriodEndUnix(sub);
         await admin.from("subscriptions").update({
             status: sub.status,
             current_period_end: periodEndUnix
@@ -281,9 +322,7 @@ export async function POST(req: Request) {
 
       case "invoice.payment_succeeded": {
         const invoice = event.data.object as Stripe.Invoice;
-        const subscriptionId =
-          (invoice as unknown as { subscription?: string }).subscription ??
-          null;
+        const subscriptionId = invoiceSubscriptionId(invoice);
         const amountPence = invoice.amount_paid ?? 0;
         if (!subscriptionId || amountPence <= 0) break;
 
@@ -372,9 +411,7 @@ export async function POST(req: Request) {
 
       case "invoice.payment_failed": {
         const invoice = event.data.object as Stripe.Invoice;
-        const subscriptionId =
-          (invoice as unknown as { subscription?: string }).subscription ??
-          null;
+        const subscriptionId = invoiceSubscriptionId(invoice);
         if (!subscriptionId) break;
         const { data: sub } = await admin.from("subscriptions").select("customer_id, created_at").eq("stripe_subscription_id", subscriptionId).maybeSingle();
         if (!sub) break;
@@ -431,9 +468,20 @@ export async function POST(req: Request) {
       }
     }
   } catch (err) {
-    // Log and 200, we don't want Stripe retrying past a transient DB blip.
-     
     console.error("[stripe/webhook] handler error", err);
+    // Release the idempotency claim so Stripe's retry gets a clean run —
+    // a claim written up front and kept on failure would dedupe the retry
+    // away and the event would be lost for good.
+    if (claimed) {
+      await admin
+        .from("stripe_events")
+        .delete()
+        .eq("event_id", event.id)
+        .then(undefined, () => {});
+    }
+    // Non-200 so Stripe retries with backoff; transient DB blips recover
+    // on a later attempt instead of being swallowed.
+    return NextResponse.json({ error: "HANDLER_ERROR" }, { status: 500 });
   }
 
   return NextResponse.json({ received: true });

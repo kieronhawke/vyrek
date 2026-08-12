@@ -7,7 +7,6 @@ import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { CustomerLoginForm } from "@/components/account/login-form";
-import { DemoEntry } from "@/components/shared/demo-entry";
 
 export const metadata: Metadata = {
   /* The root layout appends " \u00b7 Suth Performance" to every child title.
@@ -55,7 +54,6 @@ export default async function LoginPage({
               Sign in with the email and password you used to save your plan.
             </p>
             <CustomerLoginForm />
-            <DemoEntry variant="member" />
             <p className="mt-12 text-center text-sm text-suth-text-tertiary">
               First time here?{" "}
               <Link

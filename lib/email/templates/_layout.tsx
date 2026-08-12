@@ -365,7 +365,7 @@ export function EmailLayout({
                 You&apos;re getting this because you asked us for a training
                 plan.{" "}
                 <Link
-                  href={trackedUrl("/account", campaign)}
+                  href={trackedUrl("/app/account", campaign)}
                   style={footerLinkStyle}
                 >
                   Unsubscribe

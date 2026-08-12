@@ -4,6 +4,7 @@ import {
   inviteUrl,
   inviteUrlForSms,
   signingConfigured,
+  validAmountPence,
   INVITE_DAYS,
   type InviteKind,
 } from "@/lib/onboarding/token";
@@ -13,6 +14,9 @@ import { sendOnboardingInvite } from "@/lib/email/send";
 import { onboardingInviteSms } from "@/lib/email/templates/onboarding-invite";
 import { sendSms, smsConfigured } from "@/lib/sms/send";
 import { siteUrl } from "@/lib/site-url";
+import { supabaseServer } from "@/lib/supabase/server";
+import { isAdminEmail } from "@/lib/admin/auth";
+import { limiters, requestIp } from "@/lib/rate-limit";
 
 /**
  * CREATE AN INVITE AND SEND IT.
@@ -41,11 +45,42 @@ type Body = {
   phone?: string;
   kind?: "full" | "payment";
   plan?: string;
+  /**
+   * The monthly rate Ben agreed with this client, in pence. Existing
+   * clients are on different grandfathered rates; this is how each one's
+   * link charges THEIR price. Carried on the signed invite, so the client
+   * cannot edit it.
+   */
+  amountPence?: number;
   /** "beginner" keeps racing language out of their onboarding. */
   rail?: string;
+  /** When the invite came from an enquiry row, stamp it as invited. */
+  leadId?: string;
 };
 
 export async function POST(request: Request) {
+  // Admin-only. This endpoint sends email and SMS in Suth's name; before
+  // this gate, anyone on the internet could POST here and spam arbitrary
+  // addresses with real invites.
+  try {
+    const sb = await supabaseServer();
+    const {
+      data: { user },
+    } = await sb.auth.getUser();
+    if (!user || !isAdminEmail(user.email)) {
+      return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
+    }
+  } catch {
+    return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
+  }
+
+  // Belt and braces even for an authed admin: a runaway client-side loop
+  // should not be able to burn SMS credit.
+  const rl = await limiters.adminInvite.limit(`invite:${requestIp(request)}`);
+  if (!rl.success) {
+    return NextResponse.json({ error: "RATE_LIMITED" }, { status: 429 });
+  }
+
   let body: Body;
   try {
     body = (await request.json()) as Body;
@@ -71,6 +106,17 @@ export async function POST(request: Request) {
 
   const plan = planByKey(body.plan);
 
+  // A custom rate must be a plausible one. Silently dropping a bad value
+  // would send a link charging the PUBLIC price to a client Ben promised a
+  // different rate — the worst possible failure here — so it's an error.
+  let amountPence: number | undefined;
+  if (body.amountPence !== undefined && body.amountPence !== null) {
+    if (!validAmountPence(body.amountPence)) {
+      return NextResponse.json({ error: "AMOUNT_INVALID" }, { status: 400 });
+    }
+    amountPence = Number(body.amountPence);
+  }
+
   /*
    * Short link first, signed token as the fallback.
    *
@@ -92,7 +138,10 @@ export async function POST(request: Request) {
     email,
     phone,
     kind: kind as InviteKind,
-    plan: plan?.key,
+    // A custom rate needs a plan to describe what it buys; default to 1:1
+    // coaching, which is what Ben's existing clients are on.
+    plan: amountPence ? (plan?.key ?? "coaching-121") : plan?.key,
+    ...(amountPence ? { amountPence } : {}),
     ...(rail ? { rail } : {}),
   };
   const stored = await storeInvite({
@@ -131,6 +180,14 @@ export async function POST(request: Request) {
         })
       : Promise.resolve({ ok: false as const, reason: "NO_PHONE_GIVEN" }),
   ]);
+
+  // Stamp the lead as invited so the enquiries list shows it after a
+  // refresh. markInvited never throws; a stamp failure never fails an
+  // invite that has already gone out.
+  if (body.leadId) {
+    const { markInvited } = await import("@/lib/leads/store");
+    await markInvited(String(body.leadId));
+  }
 
   return NextResponse.json({
     link,

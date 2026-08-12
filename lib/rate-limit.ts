@@ -88,6 +88,10 @@ export const limiters = {
   // Authenticated surfaces (lighter throttle)
   accountCreate: build("rl:acct", 10, "1 h"),
   accountCreateIp: build("rl:acct_ip", 8, "1 d"),
+  // Admin sending invites: generous enough for onboarding a whole client
+  // roster in one sitting, tight enough that a runaway loop can't burn
+  // SMS credit.
+  adminInvite: build("rl:inv", 60, "1 h"),
 } as const;
 
 /** Pull an IP for keying. Falls back to "anon". */

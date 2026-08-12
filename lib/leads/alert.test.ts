@@ -20,6 +20,7 @@ function lead(over: Partial<Lead> = {}): Lead {
     name: "Sam Reeves",
     email: "sam@example.com",
     phone: "07700900123",
+    invitedAtISO: null,
     rail: "Getting fit",
     wants: "A free consultation",
     readiness: null,

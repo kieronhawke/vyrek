@@ -75,6 +75,9 @@ function LeadRow({ lead, now }: { lead: Lead; now: number }) {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // Stamped server-side, so it survives a refresh — the old client-only
+  // "sent ✓" vanished on reload and Ben couldn't tell who he'd invited.
+  const alreadyInvited = Boolean(lead.invitedAtISO);
 
   const waited = waitedFor(lead.createdISO, now);
   const place = shortPlace(lead);
@@ -94,6 +97,7 @@ function LeadRow({ lead, now }: { lead: Lead; now: number }) {
           // The lead knows which route they came down; without this the
           // setup link asks a "getting fit" client about their HYROX races.
           rail: /getting fit|beginner/i.test(lead.rail ?? "") ? "beginner" : undefined,
+          leadId: lead.id,
         }),
       });
       const d = (await res.json()) as { link?: string; error?: string };
@@ -156,8 +160,19 @@ function LeadRow({ lead, now }: { lead: Lead; now: number }) {
           disabled={sending || Boolean(sent)}
           className="inline-flex h-9 items-center rounded-pill border border-suth-accent px-4 text-xs font-medium text-suth-accent transition-colors hover:bg-suth-accent hover:text-[#0A0A0A] disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-suth-accent"
         >
-          {sending ? "Sending…" : sent ? "Setup link sent ✓" : "Send account setup"}
+          {sending
+            ? "Sending…"
+            : sent
+              ? "Setup link sent ✓"
+              : alreadyInvited
+                ? "Send again"
+                : "Send account setup"}
         </button>
+        {alreadyInvited && !sent ? (
+          <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
+            Invited {new Date(lead.invitedAtISO!).toLocaleDateString("en-GB")}
+          </span>
+        ) : null}
       </div>
 
       {sent ? (

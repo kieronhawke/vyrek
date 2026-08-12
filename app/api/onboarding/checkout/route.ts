@@ -44,10 +44,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "INVITE_INVALID", reason: read.reason }, { status: 403 });
   }
 
-  const plan = planByKey(body.plan);
+  // Ben's agreed per-client rate, carried on the SIGNED invite — never from
+  // the request body, so a client cannot name their own price. When a rate
+  // is set, the plan comes from the invite too: a body that paired somebody
+  // else's plan key with this rate would mislabel what they're buying.
+  const isCustomRate = typeof read.invite.amountPence === "number";
+  const plan = planByKey(isCustomRate ? read.invite.plan : body.plan);
   if (!plan) {
     return NextResponse.json({ error: "PLAN_UNKNOWN" }, { status: 400 });
   }
+
+  // A custom rate also means no trial: this is an existing client moving
+  // their agreed payment onto Stripe, and the first collection happens at
+  // checkout.
+  const amountPence = read.invite.amountPence ?? plan.pence;
+  const trialDays = isCustomRate ? 0 : plan.trialDays;
 
   let client: ReturnType<typeof stripe>;
   try {
@@ -69,29 +80,38 @@ export async function POST(request: Request) {
           quantity: 1,
           price_data: {
             currency: "gbp",
-            unit_amount: plan.pence,
+            unit_amount: amountPence,
             recurring: { interval: "month" },
             product_data: {
               name: `Suth Performance — ${plan.name}`,
-              description: plan.summary,
+              description: isCustomRate
+                ? `${plan.summary} Your agreed monthly rate.`
+                : plan.summary,
             },
           },
         },
       ],
       subscription_data: {
-        ...(plan.trialDays > 0 ? { trial_period_days: plan.trialDays } : {}),
+        ...(trialDays > 0 ? { trial_period_days: trialDays } : {}),
         metadata: {
           plan: plan.key,
           onboarding: read.invite.kind,
           client_name: read.invite.name,
+          amount_pence: String(amountPence),
         },
       },
       metadata: {
+        // "flow" is what the webhook branches on: an invite session has no
+        // client_reference_id (no customers row exists yet) and activation
+        // creates the account server-side even if the buyer never returns
+        // from Stripe's receipt page.
+        flow: "invite",
         plan: plan.key,
         onboarding: read.invite.kind,
         client_name: read.invite.name,
       },
       allow_promotion_codes: true,
+      locale: "en-GB",
       // Back to the step they were on, not to the top of the funnel: somebody
       // who pressed back on a card form has not changed their mind about the
       // five minutes of answers they just gave.

@@ -60,6 +60,14 @@ import {
   accountReadySubject,
 } from "@/lib/email/templates/account-ready";
 import {
+  SignInLinkEmail,
+  signInLinkSubject,
+} from "@/lib/email/templates/sign-in-link";
+import {
+  ChangeRequestEmail,
+  changeRequestSubject,
+} from "@/lib/email/templates/change-request";
+import {
   InternalLeadEmail,
   internalLeadSubject,
 } from "@/lib/email/templates/internal-lead";
@@ -93,6 +101,8 @@ async function send(args: {
   subject: string;
   react: React.ReactNode;
   scheduledAt?: Date;
+  /** Set on internal notifications so Ben's reply goes to the client. */
+  replyTo?: string;
 }): Promise<Result> {
   const c = client();
   if (!c) {
@@ -125,6 +135,7 @@ async function send(args: {
       subject: args.subject,
       react: args.react,
       text,
+      replyTo: args.replyTo,
       scheduledAt: args.scheduledAt
         ? args.scheduledAt.toISOString(): undefined,
     });
@@ -306,6 +317,38 @@ export function sendInternalLeadBrief(args: {
       readiness: rest.readiness,
     }),
     react: InternalLeadEmail(rest),
+  });
+}
+
+/** Internal: a client asked for a subscription change, forwarded to Ben. */
+export function sendChangeRequest(args: {
+  to: string;
+  replyTo: string;
+  email: string;
+  planName: string | null;
+  rate: string | null;
+  message: string;
+}): Promise<Result> {
+  const { to, replyTo, ...rest } = args;
+  return send({
+    to,
+    replyTo,
+    subject: changeRequestSubject(rest.email),
+    react: ChangeRequestEmail(rest),
+  });
+}
+
+/** A sign-in link requested from the login page — the passwordless door. */
+export function sendSignInLink(args: {
+  to: string;
+  firstName: string;
+  signInUrl: string;
+}): Promise<Result> {
+  const { to, ...rest } = args;
+  return send({
+    to,
+    subject: signInLinkSubject(),
+    react: SignInLinkEmail(rest),
   });
 }
 

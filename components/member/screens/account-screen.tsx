@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MemberSignOut } from "@/components/member/sign-out";
+import { ManageBillingButton } from "@/components/member/manage-billing-button";
 import {
   Card,
   Chip,
@@ -16,7 +17,18 @@ import { BEN_PHOTOS, pickPhoto } from "@/lib/photo-library";
 export type AccountSubscription = {
   status: string;
   current_period_end: string | null;
+  /** Live from Stripe when available; null degrades the rows honestly. */
+  planName?: string | null;
+  amountPence?: number | null;
+  paused?: boolean;
+  cancelAtPeriodEnd?: boolean;
 } | null;
+
+function gbp(pence: number): string {
+  return pence % 100 === 0
+    ? `£${pence / 100}`
+    : `£${(pence / 100).toFixed(2)}`;
+}
 
 /**
  * ACCOUNT, as markup. Split from the auth boundary for the same reason as
@@ -160,25 +172,64 @@ export function AccountScreen({
       <section style={{ marginBottom: "var(--space-4)" }}>
         <Eyebrow>Subscription</Eyebrow>
         <RowGroup>
-          <Row label="Plan" value="Personal Programming" />
+          <Row label="Plan" value={sub?.planName ?? programme} />
+          {sub?.amountPence ? (
+            <Row label="Rate" value={`${gbp(sub.amountPence)} a month`} />
+          ) : null}
           <Row
             label="Status"
-            value={sub?.status ?? "Not connected"}
+            value={
+              sub
+                ? sub.paused
+                  ? "paused"
+                  : sub.cancelAtPeriodEnd
+                    ? `${sub.status} · ends soon`
+                    : sub.status
+                : "Not connected"
+            }
             tone={sub ? "var(--ok)" : "var(--text-muted)"}
           />
           <Row
-            label="Renews"
-            value={formatDate(sub?.current_period_end) ?? "—"}
+            label="Next payment"
+            value={
+              sub?.paused
+                ? "paused"
+                : (formatDate(sub?.current_period_end) ?? "—")
+            }
             tone={sub ? undefined : "var(--text-muted)"}
           />
-          <Row
-            label="Manage billing"
-            value="Open →"
-            tone="var(--accent-text)"
-            href="/account"
-          />
         </RowGroup>
-        {!sub ? (
+        {sub ? (
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "var(--space-1)",
+              marginTop: "var(--space-2)",
+            }}
+          >
+            {/* The real door: Stripe's hosted portal. Card changes and
+                cancellation happen there, so card details never come near
+                this codebase. */}
+            <ManageBillingButton />
+            <Link
+              href={`${base}/account/change`}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                height: 40,
+                padding: "0 16px",
+                borderRadius: 999,
+                border: "1px solid var(--border)",
+                fontSize: "var(--text-sm)",
+                color: "var(--text-muted)",
+                textDecoration: "none",
+              }}
+            >
+              Request a change
+            </Link>
+          </div>
+        ) : (
           <p
             style={{
               margin: "var(--space-1) 0 0",
@@ -186,10 +237,21 @@ export function AccountScreen({
               color: "var(--text-muted)",
             }}
           >
-            Billing detail appears once Stripe is connected. Nothing here is
-            invented in the meantime.
+            No subscription on this account yet. If that looks wrong, message
+            Ben — nothing here is invented.
           </p>
-        ) : null}
+        )}
+        <p
+          style={{
+            margin: "var(--space-1) 0 0",
+            fontSize: "var(--text-xs)",
+            color: "var(--text-muted)",
+          }}
+        >
+          Update your card, change plan or cancel any time in Manage billing.
+          Cancelling keeps your access until the end of what you&apos;ve paid
+          for.
+        </p>
       </section>
 
       <section style={{ marginBottom: "var(--space-4)" }}>

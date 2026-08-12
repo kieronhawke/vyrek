@@ -136,7 +136,7 @@ export function ClubTrialEndingEmail({
         <Row label="Cancel" value="From inside your account, any time" />
       </Panel>
 
-      <Btn href={trackedUrl("/account", "club-d5")}>Keep my plan →</Btn>
+      <Btn href={trackedUrl("/app/account", "club-d5")}>Keep my plan →</Btn>
 
       <SignOff line="If it hasn't been useful, reply and tell me why. That's worth more to me than the subscription." />
     </EmailLayout>

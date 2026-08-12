@@ -251,7 +251,7 @@ export function ReferralEmail({
         <Row label="Code" value={code} />
       </Panel>
 
-      <Btn href={trackedUrl("/account", "referral")}>Share my code →</Btn>
+      <Btn href={trackedUrl("/app/account", "referral")}>Share my code →</Btn>
 
       <SignOff />
     </EmailLayout>

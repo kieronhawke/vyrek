@@ -37,6 +37,14 @@ export type InvitePayload = {
   /** Suggested plan, when Ben has already agreed one. */
   plan?: string;
   /**
+   * The rate Ben agreed with THIS client, in pence per month. Existing
+   * clients are on all sorts of grandfathered rates, so the public plan
+   * price cannot be the only price. Signed like everything else here — a
+   * client cannot edit their own rate without breaking the signature —
+   * and the checkout route reads it server-side, never from the request.
+   */
+  amountPence?: number;
+  /**
    * Which route they came in on, so onboarding can ask the right questions.
    *
    * One character in the link, and it fixes a real hole: somebody who came
@@ -170,6 +178,9 @@ export function createInvite(
     n: payload.name.trim().split(/\s+/)[0],
     k: payload.kind === "payment" ? "p" : "f",
     ...(payload.plan ? { l: payload.plan } : {}),
+    // The agreed per-client rate. Six characters at most (£1000 = "a":100000)
+    // and only present when Ben set one, so standard invites stay short.
+    ...(payload.amountPence ? { a: payload.amountPence } : {}),
     // Only ever "b": athlete is the default, so spending a character to say
     // so would make every racing link longer for nothing.
     ...(payload.rail === "beginner" ? { r: "b" } : {}),
@@ -182,6 +193,16 @@ export function createInvite(
 export type InviteResult =
   | { ok: true; invite: InvitePayload }
   | { ok: false; reason: "malformed" | "tampered" | "expired" };
+
+/**
+ * A monthly rate that could plausibly be real: whole pence, £1 to £1,000 a
+ * month. Shared by the invite API (validating Ben's input) and the token
+ * reader (refusing a nonsense value that somehow got signed).
+ */
+export function validAmountPence(value: unknown): boolean {
+  const n = Number(value);
+  return Number.isInteger(n) && n >= 100 && n <= 100_000;
+}
 
 /**
  * Read a token back, or say precisely why not.
@@ -234,6 +255,9 @@ export function readInvite(token: string, now = Date.now()): InviteResult {
       phone: String(raw.p ?? raw.phone ?? ""),
       kind,
       ...(raw.l || raw.plan ? { plan: String(raw.l ?? raw.plan) } : {}),
+      ...(validAmountPence(raw.a ?? raw.amountPence)
+        ? { amountPence: Number(raw.a ?? raw.amountPence) }
+        : {}),
       ...(raw.r === "b" || raw.rail === "beginner"
         ? { rail: "beginner" as const }
         : {}),

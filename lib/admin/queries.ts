@@ -81,10 +81,15 @@ export async function overviewStats(): Promise<{
     count("waitlist"),
   ]);
 
-  // MRR = paid subscriptions × £8.99 (Phase 1 single price)
-  const mrr_pence: Result<number> = paid.ok
-    ? { ok: true, data: paid.data * 899 }
-    : { ok: false, reason: paid.reason };
+  // Real MRR from Stripe: the sum of what subscriptions actually charge.
+  // The old `paid × £8.99` was wrong for everyone on £220, £80 or a
+  // grandfathered rate.
+  const { liveMrrPence } = await import("@/lib/billing/payments");
+  const liveMrr = await liveMrrPence();
+  const mrr_pence: Result<number> =
+    liveMrr !== null
+      ? { ok: true, data: liveMrr }
+      : { ok: false, reason: "Stripe unreachable" };
 
   return {
     customers,

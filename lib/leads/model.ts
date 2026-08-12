@@ -29,6 +29,11 @@ export type Lead = {
   email: string;
   phone: string | null;
 
+  /** When Ben sent the account setup link, or null. Survives a refresh —
+   * the old client-side-only "sent ✓" state vanished on reload and Ben
+   * couldn't tell who he had already invited. */
+  invitedAtISO: string | null;
+
   /** "Getting fit" or "Racing" — which quiz rail they came down. */
   rail: string | null;
   /** What they said they want, in their own words where we have them. */
