@@ -475,13 +475,35 @@ export async function changeSubscriptionRate(
     }
     const { stripe } = await import("@/lib/stripe");
     const s = stripe();
-    const sub = await s.subscriptions.retrieve(stripeSubscriptionId);
+    const sub = await s.subscriptions.retrieve(stripeSubscriptionId, {
+      expand: ["items.data.price.product"],
+    });
     const item = sub.items.data[0];
     if (!item) return { ok: false, error: "subscription has no items" };
-    const productId =
-      typeof item.price.product === "string"
-        ? item.price.product
-        : item.price.product.id;
+
+    // The item's own product is only reusable while it's active. Products
+    // minted by old inline-product_data checkouts are archived by Stripe
+    // the moment the session completes and refuse new prices — the exact
+    // failure the first live rate-change test hit. Fall back to the
+    // persistent per-plan product, resolved from the subscription's plan
+    // metadata (defaulting to 1:1 coaching, which is what every custom
+    // rate is).
+    const rawProduct = item.price.product;
+    let productId =
+      typeof rawProduct === "string"
+        ? rawProduct
+        : "deleted" in rawProduct && rawProduct.deleted
+          ? null
+          : rawProduct.active
+            ? rawProduct.id
+            : null;
+    if (!productId) {
+      const { ensurePlanProduct } = await import("@/lib/billing/products");
+      const { planByKey } = await import("@/lib/onboarding/model");
+      const plan =
+        planByKey(String(sub.metadata?.plan ?? "")) ?? planByKey("coaching-121")!;
+      productId = await ensurePlanProduct(plan.key, plan.name, plan.summary);
+    }
 
     await s.subscriptions.update(stripeSubscriptionId, {
       items: [

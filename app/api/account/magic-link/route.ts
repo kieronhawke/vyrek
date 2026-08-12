@@ -63,9 +63,14 @@ export async function POST(request: Request) {
       const signInUrl = `${siteUrl()}/auth/callback?token_hash=${encodeURIComponent(
         hashed,
       )}&type=magiclink&next=${encodeURIComponent("/app/today")}`;
-      const firstName =
+      const rawFirst =
         String(user.user_metadata?.full_name ?? "").split(/\s+/)[0] ||
-        email.split("@")[0];
+        // "kieron.hawke" is not a greeting; take the first word-ish chunk
+        // and cap it.
+        email.split("@")[0].split(/[\W_]+/)[0];
+      const firstName = rawFirst
+        ? rawFirst[0].toUpperCase() + rawFirst.slice(1)
+        : "there";
       await sendSignInLink({ to: email, firstName, signInUrl }).catch((e) => {
         console.error("[magic-link] send failed", e);
       });

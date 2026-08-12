@@ -3,6 +3,7 @@ import { stripe } from "@/lib/stripe";
 import { resolveInvite } from "@/lib/onboarding/resolve";
 import { planByKey } from "@/lib/onboarding/model";
 import { siteUrl } from "@/lib/site-url";
+import { ensurePlanProduct } from "@/lib/billing/products";
 
 /**
  * CHECKOUT, FROM AN INVITE.
@@ -82,12 +83,10 @@ export async function POST(request: Request) {
             currency: "gbp",
             unit_amount: amountPence,
             recurring: { interval: "month" },
-            product_data: {
-              name: `Suth Performance — ${plan.name}`,
-              description: isCustomRate
-                ? `${plan.summary} Your agreed monthly rate.`
-                : plan.summary,
-            },
+            // A persistent per-plan product, NOT inline product_data:
+            // Stripe archives inline products immediately, and an archived
+            // product refuses the new price a later rate change needs.
+            product: await ensurePlanProduct(plan.key, plan.name, plan.summary),
           },
         },
       ],
