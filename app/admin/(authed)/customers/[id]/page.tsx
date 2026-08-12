@@ -10,9 +10,9 @@ import {
 import { getCustomer } from "@/lib/admin/queries";
 import { subscriptionBilling } from "@/lib/billing/subscription-info";
 import { paymentsForCustomer } from "@/lib/billing/payments";
-import { CancelSubscriptionButton } from "@/components/admin/cancel-subscription-button";
 import { CustomerActions } from "@/components/admin/customer-actions";
-import { SubscriptionManage } from "@/components/admin/subscription-manage";
+import { SubscriptionActions } from "@/components/admin/subscription-actions";
+import { ExportPaymentsCsv } from "@/components/admin/export-payments";
 import { MemberModeToggle } from "@/components/admin/member-mode-toggle";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { stripeDashboardUrl } from "@/lib/billing/stripe-dashboard";
@@ -54,6 +54,7 @@ export default async function AdminCustomerDetailPage({
   const payments = customer.stripe_customer_id
     ? await paymentsForCustomer(customer.stripe_customer_id)
     : null;
+  const lastPaid = payments?.find((p) => p.paid) ?? null;
 
   // Which portal this client sees. Lives on the auth user, not the
   // customer row — null when they've never signed in.
@@ -203,16 +204,34 @@ export default async function AdminCustomerDetailPage({
               </dl>
               {latestSub.stripe_subscription_id &&
               latestSub.status !== "canceled" ? (
-                <div className="mt-4 space-y-4 border-t border-suth-border-subtle pt-4">
-                  <SubscriptionManage
+                <div className="mt-4 border-t border-suth-border-subtle pt-4">
+                  <SubscriptionActions
                     stripeSubscriptionId={latestSub.stripe_subscription_id}
                     amountPence={billing?.amountPence ?? null}
                     paused={billing?.paused ?? false}
                     pauseResumesISO={billing?.pauseResumesISO ?? null}
+                    periodEndISO={
+                      billing?.currentPeriodEndISO ??
+                      latestSub.current_period_end
+                    }
+                    lastPaymentPence={lastPaid?.amountPence ?? null}
+                    lastPaymentISO={lastPaid?.createdISO ?? null}
+                    clientLabel={customer.email.split("@")[0]}
                   />
-                  <CancelSubscriptionButton
-                    stripeSubscriptionId={latestSub.stripe_subscription_id}
-                  />
+                </div>
+              ) : null}
+              {latestSub.status === "canceled" ? (
+                <div className="mt-4 border-t border-suth-border-subtle pt-4">
+                  <p className="text-sm text-suth-text-secondary">
+                    Their membership has ended. Want them back? Send a fresh
+                    payment link with their details already filled in.
+                  </p>
+                  <Link
+                    href={`/admin/clients?name=${encodeURIComponent(customer.email.split("@")[0])}&email=${encodeURIComponent(customer.email)}`}
+                    className="mt-3 inline-flex h-11 items-center rounded-pill bg-suth-accent px-5 text-sm font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover"
+                  >
+                    Restart this client →
+                  </Link>
                 </div>
               ) : null}
             </>
@@ -250,9 +269,17 @@ export default async function AdminCustomerDetailPage({
 
       {/* Payment history, live from Stripe */}
       <section className="mt-10">
-        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-          Payment history
-        </h2>
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+            Payment history
+          </h2>
+          {payments && payments.length > 0 ? (
+            <ExportPaymentsCsv
+              rows={payments}
+              filename={`payments-${customer.email.split("@")[0]}.csv`}
+            />
+          ) : null}
+        </div>
         {payments === null ? (
           <Card>
             <p className="text-sm text-suth-text-tertiary">
@@ -263,7 +290,7 @@ export default async function AdminCustomerDetailPage({
           </Card>
         ) : (
           <Table
-            headers={["Date", "For", "Amount", "Status"]}
+            headers={["Date", "For", "Amount", "Status", "Receipt"]}
             empty="No invoices yet."
             rows={payments.map((p) => [
               format(new Date(p.createdISO), "dd MMM yyyy"),
@@ -271,20 +298,42 @@ export default async function AdminCustomerDetailPage({
                 {p.description ?? "—"}
               </span>,
               <span key="a" className="font-mono">{gbp(p.amountPence)}</span>,
-              <Badge
-                key="s"
-                tone={
-                  p.paid
-                    ? "good"
-                    : p.status === "open" && p.attempted
-                      ? "bad"
-                      : p.status === "open"
-                        ? "warn"
-                        : "neutral"
-                }
-              >
-                {p.paid ? "paid" : p.status}
-              </Badge>,
+              <span key="s" className="inline-flex items-center gap-1.5">
+                <Badge
+                  tone={
+                    p.refundedPence > 0
+                      ? "neutral"
+                      : p.paid
+                        ? "good"
+                        : p.status === "open" && p.attempted
+                          ? "bad"
+                          : p.status === "open"
+                            ? "warn"
+                            : "neutral"
+                  }
+                >
+                  {p.refundedPence >= p.amountPence && p.amountPence > 0
+                    ? "refunded"
+                    : p.refundedPence > 0
+                      ? `refunded ${gbp(p.refundedPence)}`
+                      : p.paid
+                        ? "paid"
+                        : p.status}
+                </Badge>
+              </span>,
+              p.invoicePdf ? (
+                <a
+                  key="r"
+                  href={p.invoicePdf}
+                  className="text-xs text-suth-text-secondary underline-offset-4 hover:text-suth-accent hover:underline"
+                >
+                  Download ↓
+                </a>
+              ) : (
+                <span key="r" className="text-xs text-suth-text-tertiary">
+                  —
+                </span>
+              ),
             ])}
           />
         )}

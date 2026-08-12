@@ -29,6 +29,10 @@ export type PaymentRow = {
   stripeCustomerId: string | null;
   subscriptionId: string | null;
   hostedInvoiceUrl: string | null;
+  /** Stripe's PDF receipt for a paid invoice. */
+  invoicePdf: string | null;
+  /** Pence refunded against this invoice's payment, 0 when none. */
+  refundedPence: number;
   description: string | null;
 };
 
@@ -59,6 +63,8 @@ function toRow(inv: Stripe.Invoice): PaymentRow {
       typeof customer === "string" ? customer : (customer?.id ?? null),
     subscriptionId: invoiceSubscriptionId(inv),
     hostedInvoiceUrl: inv.hosted_invoice_url ?? null,
+    invoicePdf: inv.invoice_pdf ?? null,
+    refundedPence: 0,
     description: inv.lines?.data?.[0]?.description ?? null,
   };
 }
@@ -85,15 +91,51 @@ export async function paymentsForCustomer(
 ): Promise<PaymentRow[] | null> {
   try {
     const { stripe } = await import("@/lib/stripe");
-    const invoices = await stripe().invoices.list({
-      customer: stripeCustomerId,
-      limit,
+    const s = stripe();
+    const [invoices, refunds] = await Promise.all([
+      s.invoices.list({
+        customer: stripeCustomerId,
+        limit,
+        expand: ["data.payments"],
+      }),
+      // Refunds don't live on the invoice, so a refunded payment showed as
+      // plain "paid" and the admin couldn't see money had gone back.
+      s.refunds.list({ limit: 100 }).catch(() => ({ data: [] })),
+    ]);
+    const refundedByPi = new Map<string, number>();
+    for (const r of refunds.data) {
+      const pi = typeof r.payment_intent === "string" ? r.payment_intent : r.payment_intent?.id;
+      if (pi && r.status !== "failed" && r.status !== "canceled") {
+        refundedByPi.set(pi, (refundedByPi.get(pi) ?? 0) + r.amount);
+      }
+    }
+    return invoices.data.map((inv) => {
+      const row = toRow(inv);
+      const pi = invoicePaymentIntentIdOf(inv);
+      if (pi) row.refundedPence = refundedByPi.get(pi) ?? 0;
+      return row;
     });
-    return invoices.data.map(toRow);
   } catch (e) {
     console.error("[payments] customer invoice list failed", e);
     return null;
   }
+}
+
+function invoicePaymentIntentIdOf(inv: Stripe.Invoice): string | null {
+  const legacy = (inv as unknown as { payment_intent?: string | { id?: string } }).payment_intent;
+  if (typeof legacy === "string") return legacy;
+  if (legacy && typeof legacy === "object" && typeof legacy.id === "string") return legacy.id;
+  const payments = (
+    inv as unknown as {
+      payments?: { data?: Array<{ payment?: { payment_intent?: string | { id?: string } } }> };
+    }
+  ).payments;
+  for (const p of payments?.data ?? []) {
+    const pi = p.payment?.payment_intent;
+    if (typeof pi === "string") return pi;
+    if (pi && typeof pi === "object" && typeof pi.id === "string") return pi.id;
+  }
+  return null;
 }
 
 /**

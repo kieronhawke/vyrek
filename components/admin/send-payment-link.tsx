@@ -42,10 +42,18 @@ type SendResult = {
   };
 };
 
-export function SendPaymentLink() {
+export function SendPaymentLink({
+  initialName = "",
+  initialEmail = "",
+}: {
+  /** Pre-filled when arriving from a customer page, e.g. the restart
+      button on a cancelled client. */
+  initialName?: string;
+  initialEmail?: string;
+} = {}) {
   const router = useRouter();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState(initialName);
+  const [email, setEmail] = useState(initialEmail);
   const [phone, setPhone] = useState("");
   const [kind, setKind] = useState<"payment" | "full">("payment");
   const [plan, setPlan] = useState<string>("coaching-121");

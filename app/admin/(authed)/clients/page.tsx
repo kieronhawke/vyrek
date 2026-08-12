@@ -22,7 +22,12 @@ function gbp(pence: number): string {
  * the list underneath is his answer to "did I already send Sarah hers?".
  * Accounts and subscriptions live under Customers once they've paid.
  */
-export default async function AdminClientsPage() {
+export default async function AdminClientsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ name?: string; email?: string }>;
+}) {
+  const sp = await searchParams;
   const invites = await recentInvites(50);
   // Read once in the data phase, not during render — the page is
   // force-dynamic so this is per-request anyway.
@@ -60,7 +65,10 @@ export default async function AdminClientsPage() {
         description="Send a payment or set-up link at the client's own rate. Once they pay, they appear under Customers with a live subscription."
       />
 
-      <SendPaymentLink />
+      <SendPaymentLink
+        initialName={sp.name?.trim() || undefined}
+        initialEmail={sp.email?.trim() || undefined}
+      />
 
       <section className="mt-8">
         <div className="flex items-baseline justify-between">

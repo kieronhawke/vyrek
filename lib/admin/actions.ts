@@ -472,8 +472,48 @@ export async function refundLastStripeInvoice(
         event: "invoice_refunded",
         refundId: refund.id,
         amount_pence: refund.amount,
+        refund_status: refund.status,
       },
     });
+
+    // Tell the client their money is coming back. A refund with no email
+    // is a "did that actually go through?" message three days later.
+    try {
+      const sb = supabaseAdmin();
+      const { data: subRow } = await sb
+        .from("subscriptions")
+        .select("customer_id")
+        .eq("stripe_subscription_id", stripeSubscriptionId)
+        .maybeSingle();
+      if (subRow?.customer_id) {
+        const { data: customer } = await sb
+          .from("customers")
+          .select("email, auth_user_id")
+          .eq("id", subRow.customer_id)
+          .maybeSingle();
+        if (customer?.email) {
+          let firstName: string | null = null;
+          if (customer.auth_user_id) {
+            const { data } = await sb.auth.admin.getUserById(
+              customer.auth_user_id as string,
+            );
+            const full = data?.user?.user_metadata?.full_name;
+            if (typeof full === "string" && full.trim()) {
+              firstName = full.trim().split(/\s+/)[0];
+            }
+          }
+          const { sendRefundEmail } = await import("@/lib/billing/comms");
+          await sendRefundEmail({
+            to: customer.email as string,
+            firstName,
+            amountPence: refund.amount,
+          });
+        }
+      }
+    } catch (e) {
+      console.error("[actions] refund email failed", e);
+    }
+
     return { ok: true, refundId: refund.id, amount_pence: refund.amount };
   } catch (e) {
     return fail(e);
@@ -667,6 +707,7 @@ export async function changeSubscriptionRate(
 export async function pauseSubscription(
   stripeSubscriptionId: string,
   resumeISO?: string,
+  reason?: string,
 ): Promise<ActionResult> {
   try {
     const { user } = await assertAdmin();
@@ -689,10 +730,66 @@ export async function pauseSubscription(
       action: "subscription.activated",
       targetKind: "subscription",
       targetId: stripeSubscriptionId,
-      metadata: { event: "paused", resumes_at: resumeISO ?? null },
+      metadata: {
+        event: "paused",
+        resumes_at: resumeISO ?? null,
+        reason: reason ?? null,
+      },
     });
     revalidatePath("/admin/subscriptions");
     return { ok: true };
+  } catch (e) {
+    return fail(e);
+  }
+}
+
+/**
+ * What a refund WOULD do, before anything is touched. The modal shows
+ * this so the admin confirms a number, not a guess.
+ */
+export async function getRefundPreview(
+  stripeSubscriptionId: string,
+): Promise<
+  ActionResult & {
+    amount_pence?: number;
+    description?: string | null;
+    paidOnISO?: string | null;
+    alreadyRefunded?: boolean;
+  }
+> {
+  try {
+    await assertAdmin();
+    const { stripe } = await import("@/lib/stripe");
+    const s = stripe();
+    const sub = await s.subscriptions.retrieve(stripeSubscriptionId);
+    const latestInvoiceId =
+      typeof sub.latest_invoice === "string"
+        ? sub.latest_invoice
+        : sub.latest_invoice?.id;
+    if (!latestInvoiceId) {
+      return { ok: false, error: "no invoice on this subscription" };
+    }
+    const invoice = await s.invoices.retrieve(latestInvoiceId, {
+      expand: ["payments"],
+    });
+    const { invoicePaymentIntentId } = await import(
+      "@/lib/billing/stripe-compat"
+    );
+    const pi = invoicePaymentIntentId(invoice);
+    let alreadyRefunded = false;
+    if (pi) {
+      const refunds = await s.refunds.list({ payment_intent: pi, limit: 1 });
+      alreadyRefunded = refunds.data.length > 0;
+    }
+    return {
+      ok: true,
+      amount_pence: invoice.amount_paid ?? 0,
+      description: invoice.lines?.data?.[0]?.description ?? null,
+      paidOnISO: invoice.status_transitions?.paid_at
+        ? new Date(invoice.status_transitions.paid_at * 1000).toISOString()
+        : null,
+      alreadyRefunded,
+    };
   } catch (e) {
     return fail(e);
   }

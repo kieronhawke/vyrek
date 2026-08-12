@@ -3,14 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/admin/ui";
-import {
-  sendCustomerPasswordReset,
-  refundLastStripeInvoice,
-} from "@/lib/admin/actions";
-
-function gbp(pence: number): string {
-  return `£${(pence / 100).toLocaleString("en-GB", { minimumFractionDigits: 2 })}`;
-}
+import { sendCustomerPasswordReset } from "@/lib/admin/actions";
 
 export function CustomerActions({
   email,
@@ -41,29 +34,6 @@ export function CustomerActions({
     });
   }
 
-  function refundLast() {
-    if (!stripeSubscriptionId) return;
-    if (
-      !confirm(
-        "Refund the most recent invoice on this subscription? This issues a real Stripe refund.",
-      )
-    ) {
-      return;
-    }
-    setErr(null);
-    setMsg(null);
-    startTransition(async () => {
-      const r = await refundLastStripeInvoice(stripeSubscriptionId);
-      if (!r.ok) setErr(r.error);
-      else {
-        setMsg(
-          `Refund queued (${gbp(r.amount_pence ?? 0)}). Stripe refund id: ${r.refundId}.`,
-        );
-        router.refresh();
-      }
-    });
-  }
-
   return (
     <Card>
       <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
@@ -76,18 +46,8 @@ export function CustomerActions({
           disabled={pending}
           className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text hover:border-suth-border-strong disabled:opacity-50"
         >
-          Send password reset
+          Email them a sign-in link
         </button>
-        {stripeSubscriptionId ? (
-          <button
-            type="button"
-            onClick={refundLast}
-            disabled={pending}
-            className="inline-flex h-10 items-center rounded-pill border border-amber-500/40 bg-amber-500/10 px-4 text-sm text-amber-300 hover:bg-amber-500/20 disabled:opacity-50"
-          >
-            Refund last invoice
-          </button>
-        ) : null}
       </div>
       {msg ? (
         <p className="mt-4 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-300">

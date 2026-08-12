@@ -162,6 +162,31 @@ export async function sendRateChangeEmail(args: {
   });
 }
 
+/** The refund note: what's coming back, and honestly, when. */
+export async function sendRefundEmail(args: {
+  to: string;
+  firstName?: string | null;
+  amountPence: number;
+}): Promise<void> {
+  const amount =
+    args.amountPence % 100 === 0
+      ? `£${args.amountPence / 100}`
+      : `£${(args.amountPence / 100).toFixed(2)}`;
+  const name = args.firstName?.trim();
+  await send({
+    to: args.to,
+    subject: `Your ${amount} refund is on its way`,
+    react: SubscriptionNoticeEmail({
+      eyebrow: "Refund processed",
+      heading: name ? `Sorted, ${name}.` : "Sorted.",
+      body: `We've refunded ${amount} back to your payment method. Banks usually show it within 5 to 10 working days, and it appears against the original payment rather than as a new one. Nothing else about your membership changes.`,
+      note: "If it hasn't appeared after 10 working days, reply to this email and we'll chase it with the bank.",
+      ctaLabel: "Your account",
+      ctaHref: ACCOUNT_URL(),
+    }),
+  });
+}
+
 export async function sendAdminLifecycleAlert(args: {
   kind: AdminAlertKind;
   clientEmail: string;
