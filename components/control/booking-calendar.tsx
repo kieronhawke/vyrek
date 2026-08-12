@@ -278,6 +278,7 @@ export function BookingCalendar() {
         <div className="mt-4 space-y-3 rounded-xl border border-suth-border-subtle bg-suth-elevated p-4">
           <SettingSentence
             before="Each call lasts"
+            unit="minutes"
             value={draft.slotMinutes}
             onChange={(v) => setDraft({ ...draft, slotMinutes: v })}
             options={[
@@ -291,6 +292,7 @@ export function BookingCalendar() {
           <SettingSentence
             before="Keep"
             after="free after every call"
+            unit="minutes"
             value={draft.bufferMinutes}
             onChange={(v) => setDraft({ ...draft, bufferMinutes: v })}
             options={[
@@ -304,6 +306,7 @@ export function BookingCalendar() {
           <SettingSentence
             before="People must book at least"
             after="before the call"
+            unit="hours"
             value={draft.minNoticeHours}
             onChange={(v) => setDraft({ ...draft, minNoticeHours: v })}
             options={[
@@ -318,6 +321,7 @@ export function BookingCalendar() {
           <SettingSentence
             before="The diary is open"
             after="ahead"
+            unit="days"
             value={draft.horizonDays}
             onChange={(v) => setDraft({ ...draft, horizonDays: v })}
             options={[
@@ -894,12 +898,15 @@ function SettingSentence({
   value,
   onChange,
   options,
+  unit,
 }: {
   before: string;
   after?: string;
   value: number;
   onChange: (v: number) => void;
   options: Array<[number, string]>;
+  /** Names an off-list saved value, e.g. 28 → "28 days". */
+  unit: string;
 }) {
   const id = `set-${before.replace(/\s+/g, "-").toLowerCase()}`;
   const listed = options.some(([v]) => v === value);
@@ -915,7 +922,9 @@ function SettingSentence({
         onChange={(e) => onChange(Number(e.target.value))}
         className="h-10 rounded-lg border border-suth-border bg-suth-base px-3 text-sm font-medium text-suth-text outline-none focus:border-suth-accent"
       >
-        {!listed ? <option value={value}>{String(value)}</option> : null}
+        {!listed ? (
+          <option value={value}>{`${value} ${unit}`}</option>
+        ) : null}
         {options.map(([v, text]) => (
           <option key={v} value={v}>
             {text}
