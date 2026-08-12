@@ -276,10 +276,11 @@ export function AccountScreen({
           <Eyebrow>Your training space</Eyebrow>
           <Card>
             <p style={{ margin: 0, fontSize: "var(--text-sm)", lineHeight: 1.55 }}>
-              <strong>Coming to your account.</strong> Your training carries on
-              with Ben exactly as it does now. When your programme moves in
-              here — your weekly plan, session logging, progress — Ben switches
-              it on and you&apos;ll get a message. Nothing for you to do.
+              <strong>Coming to your account.</strong>{" "}
+              Your training carries on with Ben exactly as it does now. When
+              your programme moves in here — your weekly plan, session logging,
+              progress — Ben switches it on and you&apos;ll get a message.
+              Nothing for you to do.
             </p>
           </Card>
         </section>
