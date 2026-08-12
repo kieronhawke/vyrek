@@ -19,6 +19,9 @@ export async function GET(req: Request) {
   const lat = Number(searchParams.get("lat"));
   const lon = Number(searchParams.get("lon"));
   const zoom = Number(searchParams.get("z") ?? 11);
+  // Optional size, bounded so the tile renderer can't be asked for a mural.
+  const width = Math.min(1200, Math.max(200, Number(searchParams.get("w")) || 600));
+  const height = Math.min(900, Math.max(160, Number(searchParams.get("h")) || 240));
 
   const valid =
     Number.isFinite(lat) &&
@@ -33,7 +36,15 @@ export async function GET(req: Request) {
     return new Response("Bad coordinates", { status: 400 });
   }
 
-  const png = await renderMap({ lat, lon, zoom: Math.round(zoom) });
+  const noMarker = searchParams.get("marker") === "0";
+  const png = await renderMap({
+    lat,
+    lon,
+    zoom: Math.round(zoom),
+    width,
+    height,
+    marker: !noMarker,
+  });
 
   return new Response(new Uint8Array(png), {
     headers: {

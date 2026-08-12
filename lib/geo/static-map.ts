@@ -89,12 +89,15 @@ export async function renderMap({
   zoom = 11,
   width = 600,
   height = 240,
+  marker: drawMarker = true,
 }: {
   lat: number;
   lon: number;
   zoom?: number;
   width?: number;
   height?: number;
+  /** False for overview maps whose pins are drawn by the caller. */
+  marker?: boolean;
 }): Promise<Buffer> {
   try {
     const centre = project(lat, lon, zoom);
@@ -171,6 +174,9 @@ export async function renderMap({
        </svg>`,
     );
 
+    if (!drawMarker) {
+      return await sharp(cropped).png({ compressionLevel: 9 }).toBuffer();
+    }
     return await sharp(cropped)
       .composite([{ input: marker, left: 0, top: 0 }])
       .png({ compressionLevel: 9 })
