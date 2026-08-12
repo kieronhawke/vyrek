@@ -5,6 +5,7 @@ import { isLeadId, shortPlace } from "@/lib/leads/model";
 import { mapImagePath } from "@/lib/geo/static-map";
 import { googleMapsUrl } from "@/lib/geo/request-location";
 import { describeDuration } from "@/lib/geo/request-location";
+import { customerIdForEmail } from "@/lib/admin/journey";
 
 /**
  * THE FULL ENQUIRY, OPENED FROM A TEXT MESSAGE.
@@ -37,6 +38,11 @@ export default async function LeadPage({
 
   const lead = await getLead(id);
   if (!lead) notFound();
+
+  // If this person went on to become a paying client, say so up top and
+  // link straight to their customer record. The admin link is behind the
+  // admin login, so it reveals nothing to anyone else holding this URL.
+  const customerId = await customerIdForEmail(lead.email);
 
   const place = shortPlace(lead);
   const hasCoords = lead.latitude !== null && lead.longitude !== null;
@@ -75,6 +81,15 @@ export default async function LeadPage({
 
           {place ? (
             <p className="mt-2 text-base text-suth-text-secondary">{place}</p>
+          ) : null}
+
+          {customerId ? (
+            <a
+              href={`/admin/customers/${customerId}`}
+              className="mt-3 inline-flex items-center rounded-pill bg-suth-accent/15 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-accent"
+            >
+              Now a client · open their record →
+            </a>
           ) : null}
         </div>
 

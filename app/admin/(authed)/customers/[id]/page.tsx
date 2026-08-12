@@ -8,6 +8,7 @@ import {
   Table,
 } from "@/components/admin/ui";
 import { getCustomer } from "@/lib/admin/queries";
+import { customerJourney } from "@/lib/admin/journey";
 import { subscriptionBilling } from "@/lib/billing/subscription-info";
 import { paymentsForCustomer } from "@/lib/billing/payments";
 import { CustomerActions } from "@/components/admin/customer-actions";
@@ -55,6 +56,9 @@ export default async function AdminCustomerDetailPage({
     ? await paymentsForCustomer(customer.stripe_customer_id)
     : null;
   const lastPaid = payments?.find((p) => p.paid) ?? null;
+  // The rest of this person's story, joined by email: enquiries, calls,
+  // links sent. One admin, one page per person.
+  const journey = await customerJourney(customer.email);
 
   // Which portal this client sees. Lives on the auth user, not the
   // customer row — null when they've never signed in.
@@ -353,6 +357,105 @@ export default async function AdminCustomerDetailPage({
           stripeSubscriptionId={latestSub?.stripe_subscription_id ?? null}
         />
       </section>
+
+      {/* The whole story: enquiry → call → link → account, one page. */}
+      {journey.enquiries.length > 0 ||
+      journey.calls.length > 0 ||
+      journey.invites.length > 0 ? (
+        <section className="mt-10">
+          <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+            How they got here
+          </h2>
+          <div className="grid gap-4 lg:grid-cols-3">
+            <Card>
+              <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                Enquiries
+              </p>
+              {journey.enquiries.length === 0 ? (
+                <p className="text-sm text-suth-text-tertiary">None on file.</p>
+              ) : (
+                <ul role="list" className="space-y-2">
+                  {journey.enquiries.map((e) => (
+                    <li key={e.id}>
+                      <a
+                        href={`/l/${e.id}`}
+                        className="block rounded-lg border border-suth-border-subtle p-3 transition-colors hover:border-suth-border-strong"
+                      >
+                        <p className="text-sm text-suth-text">
+                          {e.wants ?? e.goal ?? "Enquiry"}
+                        </p>
+                        <p className="mt-0.5 text-xs text-suth-text-tertiary">
+                          {format(new Date(e.createdISO), "d MMM yyyy")}
+                          {e.place ? ` · ${e.place}` : ""} · open →
+                        </p>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Card>
+            <Card>
+              <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                Calls with Ben
+              </p>
+              {journey.calls.length === 0 ? (
+                <p className="text-sm text-suth-text-tertiary">None booked.</p>
+              ) : (
+                <ul role="list" className="space-y-2">
+                  {journey.calls.map((c) => (
+                    <li
+                      key={c.ref}
+                      className="rounded-lg border border-suth-border-subtle p-3"
+                    >
+                      <p className="text-sm text-suth-text">
+                        {format(new Date(c.startsISO), "EEE d MMM yyyy, h:mmaaa")}
+                      </p>
+                      <p className="mt-0.5 text-xs text-suth-text-tertiary">
+                        {c.minutes} min ·{" "}
+                        {c.status === "cancelled" ? (
+                          <span className="text-suth-danger">cancelled</span>
+                        ) : new Date(c.startsISO) > new Date() ? (
+                          "coming up"
+                        ) : (
+                          "happened"
+                        )}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Card>
+            <Card>
+              <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                Links sent
+              </p>
+              {journey.invites.length === 0 ? (
+                <p className="text-sm text-suth-text-tertiary">None sent.</p>
+              ) : (
+                <ul role="list" className="space-y-2">
+                  {journey.invites.map((inv) => (
+                    <li
+                      key={inv.id}
+                      className="rounded-lg border border-suth-border-subtle p-3"
+                    >
+                      <p className="text-sm text-suth-text">
+                        {inv.kind}
+                        {inv.amountPence ? ` · ${gbp(inv.amountPence)}/mo` : ""}
+                      </p>
+                      <p className="mt-0.5 text-xs text-suth-text-tertiary">
+                        sent {format(new Date(inv.createdISO), "d MMM")} ·{" "}
+                        {inv.openedISO
+                          ? `opened ${format(new Date(inv.openedISO), "d MMM, h:mmaaa")}`
+                          : "not opened"}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Card>
+          </div>
+        </section>
+      ) : null}
 
       {/* Latest quiz response */}
       <section className="mt-10">
