@@ -43,7 +43,8 @@ export type AdminEventAction =
   | "subscription.cancelled"
   | "subscription.early_payment_failure"
   | "subscription.change_requested"
-  | "customer.signed_up";
+  | "customer.signed_up"
+  | "blog.post_saved";
 
 export type LogEventInput = {
   actor: string;
@@ -54,7 +55,8 @@ export type LogEventInput = {
     | "partner_referral"
     | "partner_payout"
     | "subscription"
-    | "customer";
+    | "customer"
+    | "blog_post";
   targetId?: string;
   metadata?: Record<string, unknown>;
 };
@@ -151,6 +153,7 @@ export function eventLabel(action: AdminEventAction): string {
     "subscription.early_payment_failure": "Early payment failure (review)",
     "subscription.change_requested": "Client requested a change",
     "customer.signed_up": "Customer signed up",
+    "blog.post_saved": "Blog post changed",
   };
   return labels[action] ?? action;
 }

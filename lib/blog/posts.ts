@@ -155,33 +155,95 @@ async function parseFile(filename: string): Promise<Post | null> {
   };
 }
 
-// Cache the parsed posts within a single server run.
-let cached: Promise<Post[]> | null = null;
+// Only the FILE posts are cached per server run: they cannot change
+// without a deploy. Database overrides are fetched fresh on every call,
+// because they change the moment Ben presses save in the admin and a
+// warm lambda holding a stale merge would keep serving his old words.
+let cachedFiles: Promise<Post[]> | null = null;
 
-export function listPosts(): Promise<Post[]> {
-  if (cached) return cached;
-  cached = (async () => {
+export function listFilePosts(): Promise<Post[]> {
+  if (cachedFiles) return cachedFiles;
+  cachedFiles = (async () => {
     const files = await readAllMdxFiles();
-    const posts = (
-      await Promise.all(files.map((f) => parseFile(f)))
-    ).filter((p): p is Post => p !== null);
-    /* Newest first, then slug, so the order is deterministic.
-       The old comparator never returned 0, so for the hundred-odd posts
-       sharing a publish date the result was whatever the sort happened to
-       do with an inconsistent comparator. That matters more than it sounds:
-       hero images are assigned so that no two neighbouring cards share one,
-       and a listing order that can move invalidates that the moment anything
-       is re-parsed in a different order. */
-    posts.sort((a, b) =>
-      a.publishedAt === b.publishedAt
-        ? a.slug.localeCompare(b.slug)
-        : a.publishedAt > b.publishedAt
-          ? -1
-          : 1,
+    return (await Promise.all(files.map((f) => parseFile(f)))).filter(
+      (p): p is Post => p !== null,
     );
-    return posts;
   })();
-  return cached;
+  return cachedFiles;
+}
+
+/** A database row shaped into the same Post the file parser produces. */
+function dbRowToPost(row: import("@/lib/blog/store").BlogPostRow): Post {
+  const rt = readingTime(row.content);
+  const category = (
+    CATEGORIES[row.category as Category] ? row.category : "training"
+  ) as Category;
+  return {
+    slug: row.slug,
+    title: row.title || row.slug,
+    excerpt: row.excerpt,
+    category,
+    tags: row.tags,
+    publishedAt: row.publishedAt,
+    updatedAt: row.updatedAtISO.slice(0, 10),
+    authorSlug: row.authorSlug,
+    author: AUTHORS[row.authorSlug] ?? AUTHORS["suth-team"],
+    heroImage:
+      row.heroImage || "/media/images/track/programme-first-race.jpg",
+    heroAlt: row.heroAlt ?? "",
+    seoTitle: row.seoTitle ?? undefined,
+    seoDescription: row.seoDescription ?? undefined,
+    faqs: undefined,
+    readingMinutes: Math.max(1, Math.ceil(rt.minutes)),
+    words: Math.round(rt.words),
+    featured: row.featured,
+    content: row.content,
+  };
+}
+
+export async function listPosts(): Promise<Post[]> {
+  const [files, overrides] = await Promise.all([
+    listFilePosts(),
+    import("@/lib/blog/store").then((m) => m.listDbPosts()),
+  ]);
+
+  // Start from the files, then let each row hide, replace, or add.
+  // Drafts change nothing publicly: a drafted edit of a live file post
+  // leaves the file version up until it is published.
+  const bySlug = new Map(files.map((p) => [p.slug, p] as const));
+  for (const row of overrides) {
+    if (row.status === "hidden") bySlug.delete(row.slug);
+    else if (row.status === "published") bySlug.set(row.slug, dbRowToPost(row));
+  }
+
+  const posts = Array.from(bySlug.values());
+  /* Newest first, then slug, so the order is deterministic.
+     The old comparator never returned 0, so for the hundred-odd posts
+     sharing a publish date the result was whatever the sort happened to
+     do with an inconsistent comparator. That matters more than it sounds:
+     hero images are assigned so that no two neighbouring cards share one,
+     and a listing order that can move invalidates that the moment anything
+     is re-parsed in a different order. */
+  posts.sort((a, b) =>
+    a.publishedAt === b.publishedAt
+      ? a.slug.localeCompare(b.slug)
+      : a.publishedAt > b.publishedAt
+        ? -1
+        : 1,
+  );
+  return posts;
+}
+
+/**
+ * For the admin and the preview page only: a post in ANY state, database
+ * version first so Ben always sees his latest words, drafts included.
+ */
+export async function getAnyPost(slug: string): Promise<Post | null> {
+  const { getDbPost } = await import("@/lib/blog/store");
+  const row = await getDbPost(slug);
+  if (row) return dbRowToPost(row);
+  const files = await listFilePosts();
+  return files.find((p) => p.slug === slug) ?? null;
 }
 
 export async function listPostMeta(): Promise<PostMeta[]> {

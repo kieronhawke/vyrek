@@ -44,10 +44,11 @@ import {
 
 export const revalidate = 3600;
 
-// Block unknown slugs from rendering as dynamic 200s, a request for a
-// slug that wasn't in generateStaticParams returns a real 404, not the
-// not-found page with a 200 status (better for SEO + crawlers).
-export const dynamicParams = false;
+// Unknown slugs used to be blocked outright (dynamicParams = false) so
+// crawlers got real 404s. Posts written in the admin exist only in the
+// database, so unknown-at-build slugs must now render on demand; getPost
+// returning null still gives a genuine notFound() 404 for junk URLs.
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const slugs = await allSlugs();

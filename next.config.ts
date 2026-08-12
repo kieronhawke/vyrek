@@ -82,6 +82,18 @@ const PRIVATE_HEADERS = [
 const RESULTS_DATA = ["./data/results-demo/**"];
 
 const nextConfig: NextConfig = {
+  images: {
+    // Blog images Ben uploads from the admin land in Supabase Storage;
+    // next/image refuses remote hosts unless they are named here.
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "yqaucesppyjpozrbetkf.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
+    ],
+  },
+
   /**
    * Prerender budget per page.
    *
