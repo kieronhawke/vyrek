@@ -47,14 +47,7 @@ export function OnboardingWelcome({
 }) {
   const plan = planByKey(planKey);
   const first = name.split(/\s+/)[0];
-  const [lit, setLit] = useState(false);
   const [emailedTo, setEmailedTo] = useState<string | null>(null);
-
-  // One frame later, so the transition has a start state to move from.
-  useEffect(() => {
-    const id = requestAnimationFrame(() => setLit(true));
-    return () => cancelAnimationFrame(id);
-  }, []);
 
   /* CREATE THE ACCOUNT THEY HAVE JUST BEEN TOLD THEY HAVE.
      This page has said "your account is set up" since it was written, and
@@ -83,8 +76,11 @@ export function OnboardingWelcome({
     };
   }, [sessionId, confirmed]);
 
+  // The entrance animation lives entirely in CSS now. Gating it on a
+  // script-set attribute once left the page blank on the live site, and
+  // this is the one screen that must never be blank.
   return (
-    <div className="ob obw" data-lit={lit || undefined}>
+    <div className="ob obw">
       <main className="obw-main">
         <div className="obw-mark" aria-hidden>
           <svg viewBox="0 0 64 64" width="76" height="76">
