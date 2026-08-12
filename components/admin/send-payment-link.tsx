@@ -85,9 +85,9 @@ export function SendPaymentLink() {
       if (!res.ok || !data.link) {
         setError(
           data.error === "AMOUNT_INVALID"
-            ? "That rate doesn't look right — it needs to be between £1 and £1,000 a month."
+            ? "That rate doesn't look right. It needs to be between £1 and £1,000 a month."
             : data.error === "RATE_LIMITED"
-              ? "Too many links in a short time — wait a few minutes."
+              ? "Too many links in a short time. Wait a few minutes and try again."
               : (data.error ?? "Couldn't create the link."),
         );
         return;
@@ -175,7 +175,7 @@ export function SendPaymentLink() {
               : "border-suth-border text-suth-text-secondary hover:border-suth-border-strong"
           }`}
         >
-          Payment only — existing client
+          Payment only · existing client
         </button>
         <button
           type="button"
@@ -187,7 +187,7 @@ export function SendPaymentLink() {
               : "border-suth-border text-suth-text-secondary hover:border-suth-border-strong"
           }`}
         >
-          Full onboarding — new client
+          Full onboarding · new client
         </button>
       </div>
       <p className="mt-2 text-xs text-suth-text-tertiary">
@@ -246,7 +246,7 @@ export function SendPaymentLink() {
         {customRate ? (
           <p className="mt-2 text-xs text-suth-text-tertiary">
             The exact monthly figure Ben agreed with them. Charged from the
-            first payment — no trial on an agreed rate.
+            first payment; no trial on an agreed rate.
           </p>
         ) : null}
         {!rateValid ? (
@@ -264,7 +264,7 @@ export function SendPaymentLink() {
             onChange={(e) => setBeginner(e.target.checked)}
             className="h-4 w-4 accent-[#A3E635]"
           />
-          General fitness client — keep racing language out of their set-up
+          General fitness client (keeps racing language out of their set-up)
         </label>
       ) : null}
 
@@ -309,21 +309,21 @@ export function SendPaymentLink() {
           <ul className="mt-3 space-y-1 text-xs">
             <li className={result.email?.ok ? "text-emerald-300" : "text-suth-text-tertiary"}>
               {result.email?.ok
-                ? `Email sent${result.email.sandbox ? " — via the Resend sandbox sender, which only delivers to the account owner. Verify the domain to reach clients." : ""}`
+                ? `Email sent${result.email.sandbox ? ". It went via the Resend sandbox sender, which only delivers to the account owner. Verify the domain to reach clients." : ""}`
                 : result.email?.attempted
                   ? `Email failed: ${result.email.reason ?? "unknown"}`
-                  : "No email given — send them the link yourself."}
+                  : "No email given, so send them the link yourself."}
             </li>
             <li className={result.sms?.ok ? "text-emerald-300" : "text-suth-text-tertiary"}>
               {result.sms?.ok
                 ? `Text sent as ${result.sms.sentAs ?? "SUTH"}`
                 : result.sms?.attempted
                   ? `Text not sent: ${result.sms.reason ?? (result.sms.configured ? "unknown" : "SMS not configured")}`
-                  : "No mobile given — no text attempted."}
+                  : "No mobile given, so no text was attempted."}
             </li>
             {result.secured === false ? (
               <li className="text-amber-300">
-                This link is signed with the development fallback secret — set
+                This link is signed with the development fallback secret. Set
                 ONBOARDING_SECRET in production.
               </li>
             ) : null}

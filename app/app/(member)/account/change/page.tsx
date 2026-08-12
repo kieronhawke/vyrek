@@ -34,7 +34,7 @@ export default async function RequestChangePage() {
           lineHeight: 1.55,
         }}
       >
-        Anything about your plan, your rate, pausing, or how you train — tell
+        Anything about your plan, your rate, pausing, or how you train: tell
         Ben in your own words and he&apos;ll sort it with you. For card
         changes or cancelling, use Manage billing on your{" "}
         <Link

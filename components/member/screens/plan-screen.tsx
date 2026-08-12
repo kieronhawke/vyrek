@@ -126,8 +126,8 @@ export function PlanScreen({
                 Set this block · Sunday 26 July
               </p>
               <p style={{ margin: 0, fontSize: "var(--text-sm)", lineHeight: 1.55 }}>
-                We move into build this week. The runs get faster, not longer —
-                threshold means uncomfortable but repeatable, not a race. Sled
+                We move into build this week. The runs get faster, not longer.
+                Threshold means uncomfortable but repeatable, not a race. Sled
                 work is technique under fatigue, so if the push turns into a
                 grind, drop the weight rather than the standard. Tell me how
                 Thursday feels; that is the session I will adjust first.

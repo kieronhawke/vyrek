@@ -38,7 +38,7 @@ export async function ensurePlanProduct(
   }
 
   const created = await s.products.create({
-    name: `Suth Performance — ${name}`,
+    name: `Suth Performance · ${name}`,
     ...(description ? { description } : {}),
     metadata: { suth_plan: planKey },
   });

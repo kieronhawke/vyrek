@@ -58,7 +58,7 @@ export function OnboardingInviteEmail({
     <EmailLayout
       preview={
         payment
-          ? "Pick your plan and you're set — takes two minutes."
+          ? "Pick your plan and you're set. It takes two minutes."
           : "Five minutes, and Ben can write your first week."
       }
       campaign="onboarding-invite"
@@ -69,7 +69,7 @@ export function OnboardingInviteEmail({
       <P>
         {payment
           ? "Everything is ready at my end. Pick the plan that suits you, add a card, and I'll get your first week written."
-          : "Before I write your first week I need a few things from you — what you're training for, how you're training now, and anything I should know about injuries."}
+          : "Before I write your first week I need a few things from you: what you're training for, how you're training now, and anything I should know about injuries."}
       </P>
 
       <P>
@@ -124,7 +124,7 @@ export function OnboardingInviteEmail({
       ) : null}
 
       <Section>
-        <P>Any questions at all, just reply to this — it comes straight to me.</P>
+        <P>Any questions at all, just reply to this. It comes straight to me.</P>
       </Section>
 
       <SignOff />

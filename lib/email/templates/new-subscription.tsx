@@ -42,7 +42,7 @@ export function NewSubscriptionEmail({
       <H1>{clientName || email}</H1>
       <P>
         {planName ?? "Subscription"}
-        {rate ? ` · ${rate} a month` : ""} — set up just now via {source}.
+        {rate ? ` · ${rate} a month` : ""}, set up just now via their {source}.
         Their card is on file and collects automatically from today.
       </P>
 
@@ -84,4 +84,4 @@ export function NewSubscriptionEmail({
 export const newSubscriptionSubject = (
   clientName: string,
   rate: string | null,
-) => `💷 New subscription — ${clientName}${rate ? ` · ${rate}/mo` : ""}`;
+) => `New subscription: ${clientName}${rate ? ` · ${rate}/mo` : ""}`;

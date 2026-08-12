@@ -46,7 +46,7 @@ export function AccountReadyEmail({
 }) {
   return (
     <EmailLayout
-      preview="Your account is ready — one tap to get in."
+      preview="Your account is ready. One tap and you're in."
       campaign="account-ready"
     >
       <Eyebrow>You&apos;re in</Eyebrow>
@@ -58,11 +58,11 @@ export function AccountReadyEmail({
 
       <P>
         {variant === "billing"
-          ? `Your ${planName || "membership"} now collects automatically each month — nothing else changes. Your account is where you see payments, update your card, or make changes.`
+          ? `Your ${planName || "membership"} now collects automatically each month, and nothing else changes. Your account is where you see payments, update your card, or make changes.`
           : planName
             ? `Your ${planName} is set up and your account is waiting.`
             : "Your account is set up and waiting."}{" "}
-        There&apos;s no password to remember — this link signs you straight
+        There&apos;s no password to remember. This link signs you straight
         in.
       </P>
 
@@ -81,7 +81,7 @@ export function AccountReadyEmail({
             expired, in an email that promised it would work, is a support
             message in the first hour of somebody paying. */}
         The link works for a short while for security. If it&apos;s stopped
-        working, ask for a new one from the sign-in page — same address, no
+        working, ask for a new one from the sign-in page. Same address, no
         password needed.
       </Text>
 
@@ -116,7 +116,7 @@ export function AccountReadyEmail({
       </Panel>
 
       <Section>
-        <P>Any questions at all, just reply — it comes straight to me.</P>
+        <P>Any questions at all, just reply. It comes straight to me.</P>
       </Section>
 
       <SignOff />

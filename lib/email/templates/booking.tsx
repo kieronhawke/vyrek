@@ -75,7 +75,7 @@ export function BookingConfirmedEmail({
 
       <Section>
         <P>
-          If something comes up, move it rather than missing it — the link
+          If something comes up, move it rather than missing it. The link
           above takes two taps.
         </P>
       </Section>
@@ -86,7 +86,7 @@ export function BookingConfirmedEmail({
 }
 
 export const bookingConfirmedSubject = (when: string) =>
-  `Your free consultation — ${when}`;
+  `Your free consultation, ${when}`;
 
 export function BookingChangedEmail({
   firstName,
@@ -104,7 +104,7 @@ export function BookingChangedEmail({
       <H1>Your call has moved.</H1>
 
       <P>
-        {firstName}, sorry — I&apos;ve had to move our call. It&apos;s now{" "}
+        {firstName}, sorry, I&apos;ve had to move our call. It&apos;s now{" "}
         {when}.
       </P>
 
@@ -118,7 +118,7 @@ export function BookingChangedEmail({
       </Panel>
 
       <P>
-        If the new time doesn&apos;t work, pick another one — there&apos;s no
+        If the new time doesn&apos;t work, pick another one. There&apos;s no
         need to reply.
       </P>
 
@@ -130,7 +130,7 @@ export function BookingChangedEmail({
 }
 
 export const bookingChangedSubject = (when: string) =>
-  `Your consultation has moved — now ${when}`;
+  `Your consultation has moved to ${when}`;
 
 export function BookingCancelledEmail({
   firstName,
@@ -194,7 +194,7 @@ export function InternalBookingEmail({
 }) {
   return (
     <EmailLayout
-      preview={`${name} booked a consultation — ${when}`}
+      preview={`${name} booked a consultation, ${when}`}
       campaign="internal-booking"
     >
       <Eyebrow>New booking</Eyebrow>

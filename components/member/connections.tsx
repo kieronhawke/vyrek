@@ -22,7 +22,7 @@ export function Connections() {
   return (
     <div className="conn">
       <p className="conn__intro">
-        Link an account and your training carries across automatically — no
+        Link an account and your training carries across automatically. No
         double entry. Where something is not here, it is because the provider
         does not allow it, and each one says which.
       </p>
@@ -57,7 +57,7 @@ export function Connections() {
                    */
                   <p className="conn__pending">
                     Waiting on Strava API keys being added to the site settings.
-                    Once they are in, this becomes a working button — no other
+                    Once they are in, this becomes a working button. No other
                     change needed.
                   </p>
                 )

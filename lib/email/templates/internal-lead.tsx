@@ -127,7 +127,7 @@ export function InternalLeadEmail({
       {/* Above everything else, because this is the action. */}
       {dialable ? (
         <Btn href={`tel:${dialable}`}>
-          Call {firstName} — {phone}
+          Call {firstName} on {phone}
         </Btn>
       ) : (
         <Btn href={`mailto:${email}`}>Email {firstName}</Btn>

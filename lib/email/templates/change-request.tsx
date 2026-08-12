@@ -56,4 +56,4 @@ export function ChangeRequestEmail({
 }
 
 export const changeRequestSubject = (email: string) =>
-  `Change request — ${email}`;
+  `Change request from ${email}`;

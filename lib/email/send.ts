@@ -100,7 +100,7 @@ function client(): Resend | null {
 
 type Result = { ok: true; id?: string } | { ok: false; reason: string };
 
-async function send(args: {
+export async function send(args: {
   to: string;
   subject: string;
   react: React.ReactNode;

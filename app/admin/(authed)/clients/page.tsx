@@ -62,7 +62,7 @@ export default async function AdminClientsPage() {
               const plan = planByKey(p.plan);
               const expired = new Date(inv.expiresISO).getTime() < now;
               const rate = p.amountPence
-                ? `${gbp(p.amountPence)}/mo — their rate`
+                ? `${gbp(p.amountPence)}/mo, their rate`
                 : plan
                   ? `${plan.display}/mo`
                   : "—";

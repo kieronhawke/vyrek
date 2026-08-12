@@ -58,7 +58,7 @@ export function OnboardingFlow({ token, invite, startStep, cancelled }: Props) {
   const [index, setIndex] = useState(startIndex === -1 ? 0 : startIndex);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(
-    cancelled ? "No problem — nothing was charged. Pick up where you left off." : null,
+    cancelled ? "No problem. Nothing was charged, so pick up where you left off." : null,
   );
   const headingRef = useRef<HTMLHeadingElement>(null);
 
@@ -106,9 +106,9 @@ export function OnboardingFlow({ token, invite, startStep, cancelled }: Props) {
       }
       setError(
         data?.error === "STRIPE_NOT_CONFIGURED"
-          ? "Payments are not switched on yet. Ben will sort this out — nothing you have entered is lost."
+          ? "Payments are not switched on yet. Ben will sort this out. Nothing you have entered is lost."
           : data?.error === "INVITE_INVALID"
-            ? "This link has expired. Ask Ben for a new one — your answers are saved on this device."
+            ? "This link has expired. Ask Ben for a new one. Your answers are saved on this device."
             : "Something went wrong reaching the payment page. Try again in a moment.",
       );
     } catch {
@@ -261,7 +261,7 @@ function Welcome({ invite }: { invite: InvitePayload }) {
       </ul>
       <p className="ob-note">
         {invite.kind === "payment" ? "About two minutes." : "About five minutes."} You can
-        stop and come back — it saves as you go.
+        stop and come back. It saves as you go.
       </p>
     </div>
   );
@@ -292,7 +292,7 @@ function Account({ answers, set }: { answers: Answers; set: (p: Partial<Answers>
           Continue with Apple
         </button>
         <p className="ob-note">
-          Not switched on yet — Google and Apple sign-in need their providers
+          Not switched on yet. Google and Apple sign-in need their providers
           enabling. Use your email for now and you can link them later.
         </p>
       </div>
@@ -467,7 +467,7 @@ function Health({ answers, set }: { answers: Answers; set: (p: Partial<Answers>)
           onChange={(e) => set({ conditions: e.target.value })}
           className="ob-input ob-textarea"
           rows={3}
-          placeholder="Asthma — I carry an inhaler."
+          placeholder="Asthma. I carry an inhaler."
         />
       </Field>
     </div>
@@ -704,7 +704,7 @@ function Pay({
           </span>
           {trialDays > 0 ? (
             <span className="ob-total__trial">
-              Nothing today — your first {trialDays} days are free.
+              Nothing today. Your first {trialDays} days are free.
             </span>
           ) : null}
         </div>

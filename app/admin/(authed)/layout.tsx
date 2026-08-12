@@ -3,6 +3,7 @@ import Link from "next/link";
 import { assertAdmin } from "@/lib/admin/auth";
 import { AdminSignOut } from "@/components/admin/sign-out";
 import { AdminMobileNav } from "@/components/admin/mobile-nav";
+import { AdminSideNav } from "@/components/admin/side-nav";
 
 export const metadata: Metadata = {
   title: "Mission control",
@@ -12,23 +13,23 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-const NAV: { href: string; label: string; group: string }[] = [
-  { href: "/admin", label: "Overview", group: "Today" },
-  { href: "/admin/leads", label: "Enquiries", group: "Today" },
-  { href: "/admin/calendar", label: "Consultations", group: "Today" },
-  { href: "/admin/live", label: "Live on site", group: "Today" },
-  { href: "/admin/results-engine", label: "Results engine", group: "Today" },
-  { href: "/admin/clients", label: "Clients", group: "Members" },
-  { href: "/admin/customers", label: "Customers", group: "Members" },
-  { href: "/admin/subscriptions", label: "Subscriptions", group: "Members" },
-  { href: "/admin/payments", label: "Payments", group: "Members" },
-  { href: "/admin/partners", label: "Applications", group: "Partners" },
-  { href: "/admin/partners/list", label: "Partners", group: "Partners" },
-  { href: "/admin/payouts", label: "Payouts", group: "Partners" },
-  { href: "/admin/blog", label: "Blog posts", group: "Content" },
-  { href: "/admin/waitlist", label: "Waitlist", group: "Marketing" },
-  { href: "/admin/messaging", label: "Emails & texts", group: "Marketing" },
-  { href: "/admin/quiz", label: "Quiz responses", group: "Marketing" },
+const NAV: { href: string; label: string; group: string; icon: string }[] = [
+  { href: "/admin", label: "Overview", group: "Today", icon: "overview" },
+  { href: "/admin/leads", label: "Enquiries", group: "Today", icon: "enquiries" },
+  { href: "/admin/calendar", label: "Consultations", group: "Today", icon: "consultations" },
+  { href: "/admin/live", label: "Live on site", group: "Today", icon: "live" },
+  { href: "/admin/results-engine", label: "Results engine", group: "Today", icon: "results" },
+  { href: "/admin/clients", label: "Clients", group: "Members", icon: "clients" },
+  { href: "/admin/customers", label: "Customers", group: "Members", icon: "customers" },
+  { href: "/admin/subscriptions", label: "Subscriptions", group: "Members", icon: "subscriptions" },
+  { href: "/admin/payments", label: "Payments", group: "Members", icon: "payments" },
+  { href: "/admin/partners", label: "Applications", group: "Partners", icon: "applications" },
+  { href: "/admin/partners/list", label: "Partners", group: "Partners", icon: "partners" },
+  { href: "/admin/payouts", label: "Payouts", group: "Partners", icon: "payouts" },
+  { href: "/admin/blog", label: "Blog posts", group: "Content", icon: "blog" },
+  { href: "/admin/waitlist", label: "Waitlist", group: "Marketing", icon: "waitlist" },
+  { href: "/admin/messaging", label: "Emails & texts", group: "Marketing", icon: "messaging" },
+  { href: "/admin/quiz", label: "Quiz responses", group: "Marketing", icon: "quiz" },
 ];
 
 export default async function AdminLayout({
@@ -39,8 +40,6 @@ export default async function AdminLayout({
   // (authed) route group: every page under here requires an admin user.
   // /admin/login lives outside the group and has no auth gate.
   const { user } = await assertAdmin();
-
-  const groups = Array.from(new Set(NAV.map((n) => n.group)));
 
   return (
     <div className="min-h-svh bg-suth-base text-suth-text">
@@ -56,27 +55,7 @@ export default async function AdminLayout({
             Suth Performance admin
           </p>
 
-          <nav aria-label="Admin" className="mt-8 space-y-6">
-            {groups.map((group) => (
-              <div key={group}>
-                <p className="px-2 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-                  {group}
-                </p>
-                <ul className="mt-2 space-y-0.5">
-                  {NAV.filter((n) => n.group === group).map((n) => (
-                    <li key={n.href}>
-                      <Link
-                        href={n.href}
-                        className="block rounded-md px-2 py-1.5 text-sm text-suth-text-secondary transition-colors hover:bg-suth-elevated hover:text-suth-text"
-                      >
-                        {n.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </nav>
+          <AdminSideNav items={NAV} />
 
           <div className="mt-10 border-t border-suth-border-subtle pt-4">
             <p className="px-2 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">

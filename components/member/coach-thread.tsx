@@ -234,7 +234,7 @@ export function CoachThread({ coachPhoto }: { coachPhoto: Photo }) {
               fontSize: "var(--text-sm)",
             }}
           >
-            <strong>Saved on this device — not sent.</strong> Messaging needs
+            <strong>Saved on this device, not sent.</strong> Messaging needs
             email and SMS connecting. Once it is, this lands in Ben&apos;s inbox
             and he is nudged if it sits unanswered.
           </p>

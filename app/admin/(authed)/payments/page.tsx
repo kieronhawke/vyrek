@@ -60,7 +60,7 @@ export default async function AdminPaymentsPage() {
         />
         <Card>
           <p className="text-sm text-suth-text-secondary">
-            Couldn&apos;t reach Stripe just now. Refresh in a moment — nothing
+            Couldn&apos;t reach Stripe just now. Refresh in a moment. Nothing
             is wrong with the subscriptions themselves.
           </p>
         </Card>
@@ -84,7 +84,7 @@ export default async function AdminPaymentsPage() {
       <PageHeader
         eyebrow="Members"
         title="Payments"
-        description="Every invoice, live from Stripe — failures first, then everything else newest first."
+        description="Every invoice, live from Stripe. Failures first, then everything else newest first."
         actions={
           <a
             href={stripeDashboardUrl("home")}

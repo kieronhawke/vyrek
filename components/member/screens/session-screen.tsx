@@ -100,7 +100,7 @@ export function SessionScreen({
             <p style={{ margin: 0, fontSize: "var(--text-sm)", lineHeight: 1.6 }}>
               Recovery is where the adaptation happens, not a gap in the plan.
               Walk, sleep, eat properly. If you feel like you have to do
-              something, make it mobility rather than a session — training on
+              something, make it mobility rather than a session. Training on
               top of a rest day is how a good week turns into a bad fortnight.
             </p>
           </Card>
@@ -199,7 +199,7 @@ export function SessionScreen({
           {/* The thing an online coach otherwise cannot do: see you move. */}
           <section>
             <Eyebrow right="Ben reviews it">Film your form</Eyebrow>
-            <FormVideo subject={day.slug} label={`${day.day} — ${day.title}`} />
+            <FormVideo subject={day.slug} label={`${day.day} · ${day.title}`} />
           </section>
         </>
       ) : null}

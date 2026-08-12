@@ -28,7 +28,7 @@ export function ChangeRequestForm() {
         body: JSON.stringify({ message: message.trim() }),
       });
       if (res.status === 429) {
-        setErr("Too many requests — give it a few minutes.");
+        setErr("Too many requests. Give it a few minutes.");
       } else if (!res.ok) {
         setErr("That didn't send. Try again in a moment.");
       } else {
@@ -54,7 +54,7 @@ export function ChangeRequestForm() {
       >
         <p style={{ margin: 0, fontSize: "var(--text-sm)", lineHeight: 1.55 }}>
           <strong>Sent to Ben.</strong>{" "}
-          He&apos;ll come back to you directly — usually the same day.
+          He&apos;ll come back to you directly, usually the same day.
         </p>
       </div>
     );

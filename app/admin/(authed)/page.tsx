@@ -62,7 +62,7 @@ export default async function AdminOverviewPage() {
             title="Some figures unavailable"
             body={
               <>
-                One or more queries failed — usually Stripe or Supabase being
+                One or more queries failed, usually because Stripe or Supabase was
                 briefly unreachable. Refresh in a minute; if it persists,
                 check the pending files in{" "}
                 <code className="text-suth-text">supabase/migrations/</code>.

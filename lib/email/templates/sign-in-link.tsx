@@ -27,14 +27,14 @@ export function SignInLinkEmail({
 }) {
   return (
     <EmailLayout
-      preview="Your sign-in link — one tap and you're in."
+      preview="Your sign-in link. One tap and you're in."
       campaign="sign-in-link"
     >
       <Eyebrow>Sign in</Eyebrow>
       <H1>Here you go, {firstName}.</H1>
 
       <P>
-        Tap the button and you&apos;re straight into your account — no
+        Tap the button and you&apos;re straight into your account. No
         password needed.
       </P>
 
@@ -50,7 +50,7 @@ export function SignInLinkEmail({
         }}
       >
         The link works for a short while for security, and only from this
-        email. Didn&apos;t ask for it? You can safely ignore this — nobody
+        email. Didn&apos;t ask for it? You can safely ignore this. Nobody
         gets in without it.
       </Text>
 

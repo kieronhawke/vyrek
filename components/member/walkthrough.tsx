@@ -31,7 +31,7 @@ const STEPS: Step[] = [
   {
     tab: "Plan",
     title: "The whole week, as Ben wrote it",
-    body: "Seven days, morning and afternoon. Tick a session off when it is done — Ben sees what you have completed before he writes the next week.",
+    body: "Seven days, morning and afternoon. Tick a session off when it is done. Ben sees what you have completed before he writes the next week.",
   },
   {
     tab: "Fuel",
@@ -41,7 +41,7 @@ const STEPS: Step[] = [
   {
     tab: "Coach",
     title: "Ask Ben anything",
-    body: "One thread, straight to him. Picked up a niggle, need to move a session, unsure about technique — this is the fastest way to get an answer.",
+    body: "One thread, straight to him. Picked up a niggle, need to move a session, unsure about technique: this is the fastest way to get an answer.",
   },
   {
     tab: "You",

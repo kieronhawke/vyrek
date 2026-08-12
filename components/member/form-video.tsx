@@ -119,7 +119,7 @@ export function FormVideo({ subject, label }: { subject: string; label: string }
           id={`vnote-${subject}`}
           value={note}
           onChange={(e) => setNote(e.target.value)}
-          placeholder="Sled push — hips feel high"
+          placeholder="Sled push, hips feel high"
           style={{
             width: "100%",
             minHeight: 44,

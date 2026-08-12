@@ -582,6 +582,45 @@ export async function changeSubscriptionRate(
       },
     });
 
+    // Tell the client. A rate that changes with no confirmation in their
+    // inbox is a dispute waiting for the next bank statement.
+    try {
+      const sb2 = supabaseAdmin();
+      const { data: subRow } = await sb2
+        .from("subscriptions")
+        .select("customer_id, current_period_end")
+        .eq("stripe_subscription_id", stripeSubscriptionId)
+        .maybeSingle();
+      if (subRow?.customer_id) {
+        const { data: customer } = await sb2
+          .from("customers")
+          .select("email, auth_user_id")
+          .eq("id", subRow.customer_id)
+          .maybeSingle();
+        if (customer?.email) {
+          let firstName: string | null = null;
+          if (customer.auth_user_id) {
+            const { data } = await sb2.auth.admin.getUserById(
+              customer.auth_user_id as string,
+            );
+            const full = data?.user?.user_metadata?.full_name;
+            if (typeof full === "string" && full.trim()) {
+              firstName = full.trim().split(/\s+/)[0];
+            }
+          }
+          const { sendRateChangeEmail } = await import("@/lib/billing/comms");
+          await sendRateChangeEmail({
+            to: customer.email as string,
+            firstName,
+            newAmountPence,
+            nextInvoiceISO: subRow.current_period_end as string | null,
+          });
+        }
+      }
+    } catch (e) {
+      console.error("[actions] rate-change email failed", e);
+    }
+
     revalidatePath("/admin/subscriptions");
     return { ok: true, amount_pence: newAmountPence };
   } catch (e) {

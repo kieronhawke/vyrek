@@ -6,10 +6,7 @@ import {
   getStripeWebhookSecret,
 } from "@/lib/stripe";
 import { supabaseAdmin } from "@/lib/supabase/admin";
-import {
-  sendCancellationEmail,
-  sendWelcomeEmail,
-} from "@/lib/email/send";
+import { sendWelcomeEmail } from "@/lib/email/send";
 import {
   commissionPence,
   tierForActiveCount,
@@ -22,6 +19,99 @@ import {
   invoiceSubscriptionId,
 } from "@/lib/billing/stripe-compat";
 import { activateFromSession } from "@/lib/onboarding/activation";
+import { commsFor, type LifecycleEvent } from "@/lib/billing/lifecycle";
+import {
+  sendCustomerLifecycleEmail,
+  sendAdminLifecycleAlert,
+} from "@/lib/billing/comms";
+
+/**
+ * Who to write to about a subscription, from our own records. Null when
+ * the sub was never mirrored (nothing to send is safer than guessing).
+ */
+async function lifecycleRecipient(
+  admin: ReturnType<typeof supabaseAdmin>,
+  stripeSubscriptionId: string,
+): Promise<{
+  email: string;
+  firstName: string | null;
+  customerRowId: string | null;
+} | null> {
+  const { data: subRow } = await admin
+    .from("subscriptions")
+    .select("customer_id")
+    .eq("stripe_subscription_id", stripeSubscriptionId)
+    .maybeSingle();
+  if (!subRow?.customer_id) return null;
+  const { data: customer } = await admin
+    .from("customers")
+    .select("id, email, auth_user_id")
+    .eq("id", subRow.customer_id)
+    .maybeSingle();
+  if (!customer?.email) return null;
+  let firstName: string | null = null;
+  if (customer.auth_user_id) {
+    try {
+      const { data } = await admin.auth.admin.getUserById(
+        customer.auth_user_id as string,
+      );
+      const full = data?.user?.user_metadata?.full_name;
+      if (typeof full === "string" && full.trim()) {
+        firstName = full.trim().split(/\s+/)[0];
+      }
+    } catch {
+      /* Name is a nicety. */
+    }
+  }
+  return {
+    email: customer.email as string,
+    firstName,
+    customerRowId: customer.id as string,
+  };
+}
+
+/** Run the lifecycle engine for one event and send what it decides. */
+async function dispatchLifecycle(
+  admin: ReturnType<typeof supabaseAdmin>,
+  event: LifecycleEvent,
+  ctx: {
+    stripeSubscriptionId: string;
+    periodEndISO?: string | null;
+    resumeISO?: string | null;
+    attemptCount?: number;
+  },
+): Promise<void> {
+  const comms = commsFor(event);
+  if (comms.length === 0) return;
+  const recipient = await lifecycleRecipient(admin, ctx.stripeSubscriptionId);
+  await Promise.all(
+    comms.map((c) => {
+      if (c.channel === "customer_email") {
+        if (!recipient) return Promise.resolve();
+        return sendCustomerLifecycleEmail({
+          kind: c.kind,
+          to: recipient.email,
+          firstName: recipient.firstName,
+          periodEndISO: ctx.periodEndISO,
+          resumeISO: ctx.resumeISO,
+        }).catch((e) =>
+          console.error(`[stripe/webhook] ${c.kind} email failed`, e),
+        );
+      }
+      return sendAdminLifecycleAlert({
+        kind: c.kind,
+        clientEmail: recipient?.email ?? ctx.stripeSubscriptionId,
+        clientName: recipient?.firstName,
+        customerRowId: recipient?.customerRowId,
+        stripeSubscriptionId: ctx.stripeSubscriptionId,
+        periodEndISO: ctx.periodEndISO,
+        attemptCount: ctx.attemptCount,
+      }).catch((e) =>
+        console.error(`[stripe/webhook] ${c.kind} admin alert failed`, e),
+      );
+    }),
+  );
+}
 
 /**
  * Stripe webhook receiver. The request body MUST be read as raw text for
@@ -234,13 +324,45 @@ export async function POST(req: Request) {
       case "customer.subscription.updated": {
         const sub = event.data.object as Stripe.Subscription;
         const periodEndUnix = subscriptionPeriodEndUnix(sub);
+        const periodEndISO = periodEndUnix
+          ? new Date(periodEndUnix * 1000).toISOString()
+          : null;
         await admin.from("subscriptions").update({
             status: sub.status,
-            current_period_end: periodEndUnix
-              ? new Date(periodEndUnix * 1000).toISOString(): null,
+            current_period_end: periodEndISO,
             trial_end: sub.trial_end
               ? new Date(sub.trial_end * 1000).toISOString(): null,
           }).eq("stripe_subscription_id", sub.id);
+
+        // Stripe's previous_attributes carries exactly the fields that
+        // changed, which is what tells a cancellation-being-scheduled
+        // apart from a routine renewal touching the same object.
+        const prevAttrs =
+          (event.data as { previous_attributes?: Record<string, unknown> })
+            .previous_attributes ?? {};
+        const lifecycleEvent: LifecycleEvent = {
+          type: "subscription.updated",
+          prevCancelAtPeriodEnd:
+            "cancel_at_period_end" in prevAttrs
+              ? Boolean(prevAttrs.cancel_at_period_end)
+              : undefined,
+          prevPaused:
+            "pause_collection" in prevAttrs
+              ? Boolean(prevAttrs.pause_collection)
+              : undefined,
+          next: {
+            status: sub.status,
+            cancelAtPeriodEnd: Boolean(sub.cancel_at_period_end),
+            paused: Boolean(sub.pause_collection),
+          },
+        };
+        await dispatchLifecycle(admin, lifecycleEvent, {
+          stripeSubscriptionId: sub.id,
+          periodEndISO,
+          resumeISO: sub.pause_collection?.resumes_at
+            ? new Date(sub.pause_collection.resumes_at * 1000).toISOString()
+            : null,
+        });
         break;
       }
 
@@ -251,22 +373,16 @@ export async function POST(req: Request) {
             cancelled_at: new Date().toISOString(),
           }).eq("stripe_subscription_id", sub.id);
 
-        // Look up the cancelled customer and send a confirmation email.
+        // The goodbye note to the customer, plus the admin's heads-up,
+        // both decided by the lifecycle engine.
+        await dispatchLifecycle(
+          admin,
+          { type: "subscription.deleted" },
+          { stripeSubscriptionId: sub.id },
+        );
+
         const { data: subRow } = await admin.from("subscriptions").select("customer_id").eq("stripe_subscription_id", sub.id).maybeSingle();
         if (subRow?.customer_id) {
-          const { data: customer } = await admin.from("customers").select("email").eq("id", subRow.customer_id).maybeSingle();
-          if (customer?.email) {
-            await sendCancellationEmail({ to: customer.email }).catch(
-              (err) => {
-
-                console.error(
-                  "[stripe/webhook] cancellation email failed",
-                  err,
-                );
-              },
-            );
-          }
-
           await logEvent({
             actor: "system",
             action: "subscription.cancelled",
@@ -346,6 +462,16 @@ export async function POST(req: Request) {
         const subscriptionId = invoiceSubscriptionId(invoice);
         const amountPence = invoice.amount_paid ?? 0;
         if (!subscriptionId || amountPence <= 0) break;
+
+        // A success on a retry closes the loop the failure email opened.
+        await dispatchLifecycle(
+          admin,
+          {
+            type: "invoice.payment_succeeded",
+            attemptCount: invoice.attempt_count ?? 1,
+          },
+          { stripeSubscriptionId: subscriptionId },
+        );
 
         // Resolve our customer id from the subscription.
         const { data: subRow } = await admin
@@ -436,16 +562,20 @@ export async function POST(req: Request) {
         if (!subscriptionId) break;
         const { data: sub } = await admin.from("subscriptions").select("customer_id, created_at").eq("stripe_subscription_id", subscriptionId).maybeSingle();
         if (!sub) break;
-        const { data: customer } = await admin.from("customers").select("email").eq("id", sub.customer_id).maybeSingle();
-        if (customer?.email) {
-          const { sendPaymentFailedEmail } = await import("@/lib/email/send");
-          await sendPaymentFailedEmail({ to: customer.email }).catch((err) => {
-            console.error(
-              "[stripe/webhook] payment-failed email send failed",
-              err,
-            );
-          });
-        }
+
+        // Customer gets the fix-it note, admin gets the who-to-watch note.
+        await dispatchLifecycle(
+          admin,
+          {
+            type: "invoice.payment_failed",
+            attemptCount: invoice.attempt_count ?? 1,
+            hasNextAttempt: Boolean(invoice.next_payment_attempt),
+          },
+          {
+            stripeSubscriptionId: subscriptionId,
+            attemptCount: invoice.attempt_count ?? 1,
+          },
+        );
 
         // Stage 12 (PART 11.10) — Manual review queue trigger.
         //

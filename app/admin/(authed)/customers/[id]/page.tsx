@@ -257,7 +257,7 @@ export default async function AdminCustomerDetailPage({
           <Card>
             <p className="text-sm text-suth-text-tertiary">
               {customer.stripe_customer_id
-                ? "Couldn't reach Stripe just now — refresh in a moment."
+                ? "Couldn't reach Stripe just now. Refresh in a moment."
                 : "No Stripe customer yet, so no payments to show."}
             </p>
           </Card>

@@ -255,7 +255,7 @@ export function AccountScreen({
             }}
           >
             No subscription on this account yet. If that looks wrong, message
-            Ben — nothing here is invented.
+            Ben. Nothing here is invented.
           </p>
         )}
         <p
@@ -277,10 +277,10 @@ export function AccountScreen({
           <Card>
             <p style={{ margin: 0, fontSize: "var(--text-sm)", lineHeight: 1.55 }}>
               <strong>Coming to your account.</strong>{" "}
-              Your training carries on with Ben exactly as it does now. When
-              your programme moves in here — your weekly plan, session logging,
-              progress — Ben switches it on and you&apos;ll get a message.
-              Nothing for you to do.
+              Your training carries on with Ben exactly as it does now. When your
+              weekly plan, session logging and progress move in here, Ben
+              switches it on and you&apos;ll get a message. Nothing for you to
+              do.
             </p>
           </Card>
         </section>

@@ -58,7 +58,7 @@ export function SubscriptionManage({
       const r = await changeSubscriptionRate(stripeSubscriptionId, newPence);
       if (!r.ok) setErr(r.error);
       else {
-        setMsg(`Rate changed to ${gbp(newPence)}/mo — applies from the next invoice.`);
+        setMsg(`Rate changed to ${gbp(newPence)}/mo. It applies from the next invoice.`);
         setEditing(false);
         router.refresh();
       }
@@ -97,7 +97,7 @@ export function SubscriptionManage({
       const r = await resumeSubscription(stripeSubscriptionId);
       if (!r.ok) setErr(r.error);
       else {
-        setMsg("Collection resumed — next invoice charges as normal.");
+        setMsg("Collection resumed. The next invoice charges as normal.");
         router.refresh();
       }
     });

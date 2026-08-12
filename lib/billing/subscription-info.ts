@@ -39,7 +39,7 @@ export async function subscriptionBilling(
       product && typeof product === "object" && "name" in product
         ? // "Suth Performance — 1:1 Coaching" reads better without the brand
           // prefix on screens that are already inside the brand.
-          product.name.replace(/^Suth Performance\s*—\s*/, "")
+          product.name.replace(/^Suth Performance\s*[—·-]\s*/, "")
         : null;
     const pause = sub.pause_collection;
     const periodEnd = subscriptionPeriodEndUnix(sub);

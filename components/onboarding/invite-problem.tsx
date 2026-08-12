@@ -15,7 +15,7 @@ export function InviteProblem({
   const copy = {
     expired: {
       title: "This link has expired",
-      body: "Setup links last 30 days. Ask Ben for a new one and you'll be straight back in — nothing you filled in is lost.",
+      body: "Setup links last 30 days. Ask Ben for a new one and you'll be straight back in. Nothing you filled in is lost.",
     },
     malformed: {
       title: "This link looks incomplete",
@@ -23,7 +23,7 @@ export function InviteProblem({
     },
     tampered: {
       title: "This link isn't valid",
-      body: "It doesn't match anything we issued. Open the one from Ben's email or text — if that fails too, let him know.",
+      body: "It doesn't match anything we issued. Open the one from Ben's email or text. If that fails too, let him know.",
     },
   }[reason];
 

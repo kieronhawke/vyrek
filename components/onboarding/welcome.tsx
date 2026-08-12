@@ -100,10 +100,10 @@ export function OnboardingWelcome({
         <p className="obw-lead">
           {confirmed
             ? trialing
-              ? "Your trial has started — nothing has been charged yet."
+              ? "Your trial has started. Nothing has been charged yet."
               : "Your subscription is live."
             : hadSession
-              ? "Payment received. The confirmation is still coming through — nothing more for you to do."
+              ? "Payment received. The confirmation is still coming through. Nothing more for you to do."
               : "Your account is set up."}
           {/* The plan name, not the price.
             *
@@ -121,13 +121,13 @@ export function OnboardingWelcome({
                 <span className="obw-next__n num">1</span>
                 <span>
                   <strong>Your payment collects automatically</strong> each
-                  month from now on — nothing to remember.
+                  month from now on. Nothing to remember.
                 </span>
               </li>
               <li>
                 <span className="obw-next__n num">2</span>
                 <span>
-                  <strong>Your account shows every payment</strong> — update
+                  <strong>Your account shows every payment.</strong> Update
                   your card or make changes any time.
                 </span>
               </li>
@@ -145,7 +145,7 @@ export function OnboardingWelcome({
                 <span className="obw-next__n num">1</span>
                 <span>
                   <strong>Ben writes your first week.</strong>{" "}He has everything
-                  you sent &mdash; usually within a day.
+                  you sent, usually within a day.
                 </span>
               </li>
               <li>
@@ -171,7 +171,7 @@ export function OnboardingWelcome({
             what this says. */}
         {emailedTo ? (
           <p className="obw-note" aria-live="polite">
-            Check <strong>{emailedTo}</strong> — I&apos;ve sent you a link
+            Check <strong>{emailedTo}</strong>. I&apos;ve sent you a link
             that signs you straight in. No password to remember.
           </p>
         ) : null}
