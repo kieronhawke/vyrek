@@ -229,6 +229,12 @@ export async function sendAdminLifecycleAlert(args: {
           ? `Attempt ${args.attemptCount} at their monthly payment has failed. Stripe keeps retrying and they've been emailed a fix link. If this keeps happening, it becomes a conversation.`
           : "Their monthly payment failed on the first try. Stripe retries by itself and they've been emailed a fix link. Nothing to do yet unless you know something's up.",
     },
+    refund_failed: {
+      subject: `Refund failed: ${who}`,
+      eyebrow: "Refund failed",
+      heading: who,
+      body: "A refund you issued has failed on Stripe's side, usually a closed account or an expired card, so the money has not gone back. Open Stripe to retry it to another payment method, and let them know since they were told it was on its way.",
+    },
   };
 
   const c = copy[args.kind];

@@ -57,7 +57,10 @@ export type CustomerEmailKind =
 export type AdminAlertKind =
   | "cancel_scheduled"
   | "cancelled"
-  | "payment_failed";
+  | "payment_failed"
+  // Not produced by commsFor: the refund webhook raises it directly when a
+  // refund Stripe accepted later bounces (closed account, expired card).
+  | "refund_failed";
 
 export type Comm =
   | { channel: "customer_email"; kind: CustomerEmailKind }

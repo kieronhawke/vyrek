@@ -33,6 +33,8 @@ export type PaymentRow = {
   invoicePdf: string | null;
   /** Pence refunded against this invoice's payment, 0 when none. */
   refundedPence: number;
+  /** True while any of that money is still pending on Stripe's side. */
+  refundPending: boolean;
   description: string | null;
 };
 
@@ -65,6 +67,7 @@ function toRow(inv: Stripe.Invoice): PaymentRow {
     hostedInvoiceUrl: inv.hosted_invoice_url ?? null,
     invoicePdf: inv.invoice_pdf ?? null,
     refundedPence: 0,
+    refundPending: false,
     description: inv.lines?.data?.[0]?.description ?? null,
   };
 }
@@ -138,16 +141,23 @@ export async function paymentsForCustomer(
       s.refunds.list({ limit: 100 }).catch(() => ({ data: [] })),
     ]);
     const refundedByPi = new Map<string, number>();
+    const pendingByPi = new Set<string>();
     for (const r of refunds.data) {
       const pi = typeof r.payment_intent === "string" ? r.payment_intent : r.payment_intent?.id;
       if (pi && r.status !== "failed" && r.status !== "canceled") {
         refundedByPi.set(pi, (refundedByPi.get(pi) ?? 0) + r.amount);
+        if (r.status === "pending" || r.status === "requires_action") {
+          pendingByPi.add(pi);
+        }
       }
     }
     return invoices.data.map((inv) => {
       const row = toRow(inv);
       const pi = invoicePaymentIntentIdOf(inv);
-      if (pi) row.refundedPence = refundedByPi.get(pi) ?? 0;
+      if (pi) {
+        row.refundedPence = refundedByPi.get(pi) ?? 0;
+        row.refundPending = pendingByPi.has(pi);
+      }
       return row;
     });
   } catch (e) {

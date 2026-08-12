@@ -617,6 +617,63 @@ export async function POST(req: Request) {
         }
         break;
       }
+
+      case "refund.updated":
+      case "refund.failed": {
+        // A refund can bounce days after Stripe accepted it (closed account,
+        // expired card). The client was already told money is coming back,
+        // so a silent failure here is the worst outcome — the admin must
+        // hear about it and retry from Stripe.
+        const refund = event.data.object as Stripe.Refund;
+        if (refund.status !== "failed") break;
+        const subscriptionId = refund.metadata?.stripe_subscription_id ?? null;
+        let clientEmail = "unknown client";
+        let clientName: string | null = null;
+        let customerRowId: string | null = null;
+        if (subscriptionId) {
+          const { data: subRow } = await admin
+            .from("subscriptions")
+            .select("customer_id")
+            .eq("stripe_subscription_id", subscriptionId)
+            .maybeSingle();
+          if (subRow?.customer_id) {
+            const { data: customer } = await admin
+              .from("customers")
+              .select("id, email, full_name")
+              .eq("id", subRow.customer_id)
+              .maybeSingle();
+            if (customer) {
+              customerRowId = customer.id;
+              clientEmail = customer.email ?? clientEmail;
+              clientName =
+                (customer as { full_name?: string | null }).full_name ?? null;
+            }
+          }
+        }
+        const { sendAdminLifecycleAlert } = await import("@/lib/billing/comms");
+        await sendAdminLifecycleAlert({
+          kind: "refund_failed",
+          clientEmail,
+          clientName,
+          customerRowId,
+          stripeSubscriptionId: subscriptionId,
+        });
+        const { logEvent } = await import("@/lib/admin/events");
+        await logEvent({
+          actor: "stripe-webhook",
+          action: "subscription.cancelled",
+          targetKind: "subscription",
+          targetId: subscriptionId ?? refund.id,
+          metadata: {
+            event: "refund_failed",
+            refundId: refund.id,
+            amount_pence: refund.amount,
+            failure_reason:
+              (refund as { failure_reason?: string }).failure_reason ?? null,
+          },
+        }).catch(() => {});
+        break;
+      }
     }
   } catch (err) {
     console.error("[stripe/webhook] handler error", err);

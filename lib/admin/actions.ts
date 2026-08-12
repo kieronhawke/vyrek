@@ -460,9 +460,14 @@ export async function refundLastStripeInvoice(
     if (!paymentIntentId && !chargeId) {
       return { ok: false, error: "invoice has no payment to refund" };
     }
-    const refund = await s.refunds.create(
-      paymentIntentId ? { payment_intent: paymentIntentId } : { charge: chargeId! },
-    );
+    // The subscription id rides along so the refund webhook can name the
+    // client and link the admin straight back without extra lookups.
+    const refund = await s.refunds.create({
+      ...(paymentIntentId
+        ? { payment_intent: paymentIntentId }
+        : { charge: chargeId! }),
+      metadata: { stripe_subscription_id: stripeSubscriptionId },
+    });
     await logEvent({
       actor: user.email ?? "admin",
       action: "subscription.cancelled",

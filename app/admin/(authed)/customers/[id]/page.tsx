@@ -302,7 +302,9 @@ export default async function AdminCustomerDetailPage({
                 <Badge
                   tone={
                     p.refundedPence > 0
-                      ? "neutral"
+                      ? p.refundPending
+                        ? "warn"
+                        : "neutral"
                       : p.paid
                         ? "good"
                         : p.status === "open" && p.attempted
@@ -312,13 +314,15 @@ export default async function AdminCustomerDetailPage({
                             : "neutral"
                   }
                 >
-                  {p.refundedPence >= p.amountPence && p.amountPence > 0
-                    ? "refunded"
-                    : p.refundedPence > 0
-                      ? `refunded ${gbp(p.refundedPence)}`
-                      : p.paid
-                        ? "paid"
-                        : p.status}
+                  {p.refundPending
+                    ? `refund in progress · ${gbp(p.refundedPence)}`
+                    : p.refundedPence >= p.amountPence && p.amountPence > 0
+                      ? "refunded"
+                      : p.refundedPence > 0
+                        ? `refunded ${gbp(p.refundedPence)}`
+                        : p.paid
+                          ? "paid"
+                          : p.status}
                 </Badge>
               </span>,
               p.invoicePdf ? (
