@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { assertMember } from "@/lib/member/auth";
+import { assertFullMember } from "@/lib/member/auth";
 import { findDay } from "@/lib/member/week";
 import { SessionScreen } from "@/components/member/screens/session-screen";
 
@@ -9,7 +9,7 @@ export default async function SessionPage({
 }: {
   params: Promise<{ day: string }>;
 }) {
-  await assertMember("/app/plan");
+  await assertFullMember("/app/plan");
   const { day: slug } = await params;
   const day = findDay(slug);
   // Only the current week is programmed, so anything else is a 404 rather

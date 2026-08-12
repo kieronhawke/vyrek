@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { assertMember } from "@/lib/member/auth";
+import { assertFullMember } from "@/lib/member/auth";
 import { findRace } from "@/lib/member/demo";
 
 export const dynamic = "force-dynamic";
@@ -20,7 +20,7 @@ export default async function RaceDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  await assertMember(`/app/analysis/race/${slug}`);
+  await assertFullMember(`/app/analysis/race/${slug}`);
   const race = findRace(slug);
   if (!race) notFound();
 

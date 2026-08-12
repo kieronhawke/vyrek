@@ -450,6 +450,56 @@ export async function refundLastStripeInvoice(
   }
 }
 
+// ─── Member portal mode ─────────────────────────────────
+
+/**
+ * Flip a client between the billing-only portal (payment-link clients:
+ * subscription management, nothing else) and the full training app. This
+ * is the "switch their training space on" moment — reversible, logged.
+ */
+export async function setMemberMode(
+  customerId: string,
+  mode: "billing" | "full",
+): Promise<ActionResult> {
+  try {
+    const { user } = await assertAdmin();
+    const sb = supabaseAdmin();
+    const { data: customer } = await sb
+      .from("customers")
+      .select("auth_user_id, email")
+      .eq("id", customerId)
+      .maybeSingle();
+    const authUserId = customer?.auth_user_id as string | null;
+    if (!authUserId) {
+      return { ok: false, error: "customer has no signed-in account yet" };
+    }
+    // Read-merge-write: updateUserById's metadata merge behaviour has
+    // shifted across GoTrue versions, and losing full_name here would
+    // un-name the client everywhere.
+    const { data: existing } = await sb.auth.admin.getUserById(authUserId);
+    const { error } = await sb.auth.admin.updateUserById(authUserId, {
+      user_metadata: {
+        ...(existing?.user?.user_metadata ?? {}),
+        member_mode: mode,
+      },
+    });
+    if (error) return { ok: false, error: error.message };
+
+    await logEvent({
+      actor: user.email ?? "admin",
+      action: "subscription.activated",
+      targetKind: "customer",
+      targetId: customerId,
+      metadata: { event: "member_mode_changed", mode },
+    });
+
+    revalidatePath(`/admin/customers/${customerId}`);
+    return { ok: true };
+  } catch (e) {
+    return fail(e);
+  }
+}
+
 // ─── Subscription actions ───────────────────────────────
 
 /**

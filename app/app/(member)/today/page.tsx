@@ -1,4 +1,4 @@
-import { assertMember } from "@/lib/member/auth";
+import { assertFullMember } from "@/lib/member/auth";
 import { programmeLabel } from "@/lib/member/demo";
 import { TodayScreen } from "@/components/member/screens/today-screen";
 import { FirstRunScreen } from "@/components/member/screens/first-run-screen";
@@ -14,7 +14,7 @@ import { factsFromContext, resolveFirstRun } from "@/lib/member/first-run";
  * their own.
  */
 export default async function TodayPage() {
-  const ctx = await assertMember("/app/today");
+  const ctx = await assertFullMember("/app/today");
   const state = resolveFirstRun(factsFromContext(ctx));
 
   if (state.stage !== "ready") {

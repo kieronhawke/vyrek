@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { assertMember } from "@/lib/member/auth";
+import { assertFullMember } from "@/lib/member/auth";
 import { DEMO_STATIONS, DEMO_VIDEOS_ALL } from "@/lib/member/demo";
 
 export const dynamic = "force-dynamic";
 
 export default async function StationsLibraryPage() {
-  await assertMember("/app/plan/stations");
+  await assertFullMember("/app/plan/stations");
 
   return (
     <div>

@@ -17,6 +17,15 @@ export type MemberContext = {
    *  Falling back to the email's local part greeted a client who paid via
    *  someone else's inbox (or a plus-address) with the wrong name. */
   user: { id: string; email: string; fullName: string | null };
+  /**
+   * What this account can see. "billing" is an existing client moved onto
+   * Stripe via a payment-only link: they manage their subscription and
+   * nothing else, because their training already happens with Ben outside
+   * the app. The admin flips them to "full" when their training space is
+   * ready. Absent metadata means "full" — every account that existed
+   * before this field did.
+   */
+  memberMode: "billing" | "full";
   customer: {
     id: string;
     email: string;
@@ -34,6 +43,19 @@ export type MemberContext = {
     stripe_subscription_id: string | null;
   } | null;
 };
+
+/**
+ * The gate for TRAINING pages. Billing-only clients — existing clients
+ * moved onto Stripe via a payment link — bounce to their subscription
+ * page rather than seeing training screens the admin hasn't switched on.
+ */
+export async function assertFullMember(
+  pagePath = "/app",
+): Promise<MemberContext> {
+  const ctx = await assertMember(pagePath);
+  if (ctx.memberMode === "billing") redirect("/app/account");
+  return ctx;
+}
 
 export async function assertMember(
   pagePath = "/app",
@@ -102,9 +124,12 @@ export async function assertMember(
     user.user_metadata.full_name.trim()
       ? user.user_metadata.full_name.trim()
       : null;
+  const memberMode =
+    user.user_metadata?.member_mode === "billing" ? "billing" : "full";
 
   return {
     user: { id: user.id, email: user.email, fullName },
+    memberMode,
     customer,
     programme,
     quizAnswers,

@@ -45,6 +45,7 @@ export function AccountScreen({
   blockTotal = 12,
   memberSince,
   base = "/app",
+  mode = "full",
 }: {
   firstName: string;
   email: string;
@@ -57,7 +58,14 @@ export function AccountScreen({
   blockTotal?: number;
   memberSince?: string | null;
   base?: string;
+  /**
+   * "billing" is the payment-link portal: subscription management only.
+   * Training tiles and training links would read as broken emptiness to a
+   * client whose training deliberately lives with Ben, not in the app.
+   */
+  mode?: "billing" | "full";
 }) {
+  const billing = mode === "billing";
   const portrait = pickPhoto(BEN_PHOTOS, "coach-card");
 
   return (
@@ -136,38 +144,47 @@ export function AccountScreen({
             </div>
           </div>
         </div>
-        <Row
-          label="Message Ben"
-          value="Open →"
-          tone="var(--accent-text)"
-          href={`${base}/today`}
-        />
+        {billing ? (
+          <Row
+            label="Training"
+            value="Carries on with Ben as normal"
+          />
+        ) : (
+          <Row
+            label="Message Ben"
+            value="Open →"
+            tone="var(--accent-text)"
+            href={`${base}/today`}
+          />
+        )}
       </Card>
 
-      <section style={{ marginBottom: "var(--space-4)" }}>
-        <Eyebrow>Your training</Eyebrow>
-        {/* These were hardcoded to 47 sessions, week 4, and April 2026, so
-            the page of record told somebody who signed up this morning that
-            they had been training here since spring. Real numbers, and an
-            honest zero where there is nothing yet. */}
-        <StatTiles>
-          <StatTile
-            label="Sessions"
-            value={String(sessionsLogged ?? 47)}
-            sub="all time"
-          />
-          <StatTile
-            label="This block"
-            value={blockWeek === 0 ? "—" : String(blockWeek ?? 4)}
-            sub={blockWeek === 0 ? "not started" : `of ${blockTotal} weeks`}
-          />
-          <StatTile
-            label="Member since"
-            value={memberSince?.split(" ")[0] ?? "Apr"}
-            sub={memberSince?.split(" ")[1] ?? "2026"}
-          />
-        </StatTiles>
-      </section>
+      {billing ? null : (
+        <section style={{ marginBottom: "var(--space-4)" }}>
+          <Eyebrow>Your training</Eyebrow>
+          {/* These were hardcoded to 47 sessions, week 4, and April 2026, so
+              the page of record told somebody who signed up this morning that
+              they had been training here since spring. Real numbers, and an
+              honest zero where there is nothing yet. */}
+          <StatTiles>
+            <StatTile
+              label="Sessions"
+              value={String(sessionsLogged ?? 47)}
+              sub="all time"
+            />
+            <StatTile
+              label="This block"
+              value={blockWeek === 0 ? "—" : String(blockWeek ?? 4)}
+              sub={blockWeek === 0 ? "not started" : `of ${blockTotal} weeks`}
+            />
+            <StatTile
+              label="Member since"
+              value={memberSince?.split(" ")[0] ?? "Apr"}
+              sub={memberSince?.split(" ")[1] ?? "2026"}
+            />
+          </StatTiles>
+        </section>
+      )}
 
       <section style={{ marginBottom: "var(--space-4)" }}>
         <Eyebrow>Subscription</Eyebrow>
@@ -254,45 +271,65 @@ export function AccountScreen({
         </p>
       </section>
 
-      <section style={{ marginBottom: "var(--space-4)" }}>
-        <Eyebrow>Health information</Eyebrow>
-        <Card>
-          <p style={{ margin: 0, fontSize: "var(--text-sm)", lineHeight: 1.55 }}>
-            <strong>Ben can see this.</strong> Nobody else can, it is encrypted
-            on our side, and you can change or remove it at any time.
-          </p>
-          <div style={{ marginTop: "var(--space-1)" }}>
-            <ChipRow>
-              <Chip tone="warn">Special category data</Chip>
-            </ChipRow>
-          </div>
-        </Card>
-      </section>
+      {billing ? (
+        <section style={{ marginBottom: "var(--space-4)" }}>
+          <Eyebrow>Your training space</Eyebrow>
+          <Card>
+            <p style={{ margin: 0, fontSize: "var(--text-sm)", lineHeight: 1.55 }}>
+              <strong>Coming to your account.</strong> Your training carries on
+              with Ben exactly as it does now. When your programme moves in
+              here — your weekly plan, session logging, progress — Ben switches
+              it on and you&apos;ll get a message. Nothing for you to do.
+            </p>
+          </Card>
+        </section>
+      ) : (
+        <>
+          <section style={{ marginBottom: "var(--space-4)" }}>
+            <Eyebrow>Health information</Eyebrow>
+            <Card>
+              <p style={{ margin: 0, fontSize: "var(--text-sm)", lineHeight: 1.55 }}>
+                <strong>Ben can see this.</strong> Nobody else can, it is encrypted
+                on our side, and you can change or remove it at any time.
+              </p>
+              <div style={{ marginTop: "var(--space-1)" }}>
+                <ChipRow>
+                  <Chip tone="warn">Special category data</Chip>
+                </ChipRow>
+              </div>
+            </Card>
+          </section>
 
-      <section style={{ marginBottom: "var(--space-4)" }}>
-        <Eyebrow>Notifications</Eyebrow>
-        <RowGroup>
-          <Row label="Session reminders" value="On" tone="var(--ok)" />
-          <Row label="Plan ready each Sunday" value="On" tone="var(--ok)" />
-          <Row label="Ben's weekly email" value="On" tone="var(--ok)" />
-          <Row label="Offers and news" value="Off" tone="var(--text-muted)" />
-        </RowGroup>
-        <p
-          style={{
-            margin: "var(--space-1) 0 0",
-            fontSize: "var(--text-xs)",
-            color: "var(--text-muted)",
-          }}
-        >
-          Reminders start sending once email and SMS are connected.
-        </p>
-      </section>
+          <section style={{ marginBottom: "var(--space-4)" }}>
+            <Eyebrow>Notifications</Eyebrow>
+            <RowGroup>
+              <Row label="Session reminders" value="On" tone="var(--ok)" />
+              <Row label="Plan ready each Sunday" value="On" tone="var(--ok)" />
+              <Row label="Ben's weekly email" value="On" tone="var(--ok)" />
+              <Row label="Offers and news" value="Off" tone="var(--text-muted)" />
+            </RowGroup>
+            <p
+              style={{
+                margin: "var(--space-1) 0 0",
+                fontSize: "var(--text-xs)",
+                color: "var(--text-muted)",
+              }}
+            >
+              Reminders start sending once email and SMS are connected.
+            </p>
+          </section>
+        </>
+      )}
 
       <section style={{ marginBottom: "var(--space-4)" }}>
         <Eyebrow>Your data</Eyebrow>
         <RowGroup>
-          <Row label="Personal records" value="View →" href={`${base}/account/pr`} />
-          <Row label="Connections" value="Manage →" href={`${base}/connections`} />
+          {billing ? null : (
+            <>
+              <Row label="Personal records" value="View →" href={`${base}/account/pr`} />
+              <Row label="Connections" value="Manage →" href={`${base}/connections`} />
+            </>
+          )}
           <Row label="Download everything" value="Request →" tone="var(--accent-text)" />
           <Row label="Privacy policy" value="Read →" href="/legal/privacy" />
         </RowGroup>
@@ -307,8 +344,10 @@ export function AccountScreen({
           color: "var(--text-muted)",
         }}
       >
-        Training figures on this screen are sample data until the database is
-        connected; your account details above are real.{" "}
+        {billing
+          ? "Anything look wrong with a payment? "
+          : "Training figures on this screen are sample data until the database is connected; your account details above are real. "}
+        {""}
         {/* Underlined, not just coloured: inside a muted paragraph the accent
             is only 1.06:1 against the surrounding text, so colour alone would
             not tell a reader this is a link. */}

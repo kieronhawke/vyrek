@@ -13,6 +13,8 @@ import { paymentsForCustomer } from "@/lib/billing/payments";
 import { CancelSubscriptionButton } from "@/components/admin/cancel-subscription-button";
 import { CustomerActions } from "@/components/admin/customer-actions";
 import { SubscriptionManage } from "@/components/admin/subscription-manage";
+import { MemberModeToggle } from "@/components/admin/member-mode-toggle";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
 function gbp(pence: number): string {
   return pence % 100 === 0
@@ -51,6 +53,23 @@ export default async function AdminCustomerDetailPage({
   const payments = customer.stripe_customer_id
     ? await paymentsForCustomer(customer.stripe_customer_id)
     : null;
+
+  // Which portal this client sees. Lives on the auth user, not the
+  // customer row — null when they've never signed in.
+  let memberMode: "billing" | "full" | null = null;
+  if (customer.auth_user_id) {
+    try {
+      const { data } = await supabaseAdmin().auth.admin.getUserById(
+        customer.auth_user_id,
+      );
+      memberMode =
+        data?.user?.user_metadata?.member_mode === "billing"
+          ? "billing"
+          : "full";
+    } catch {
+      /* Renders without the toggle. */
+    }
+  }
 
   return (
     <>
@@ -98,6 +117,11 @@ export default async function AdminCustomerDetailPage({
               </dd>
             </div>
           </dl>
+          {memberMode ? (
+            <div className="mt-4 border-t border-suth-border-subtle pt-4">
+              <MemberModeToggle customerId={customer.id} mode={memberMode} />
+            </div>
+          ) : null}
         </Card>
 
         <Card>

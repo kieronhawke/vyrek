@@ -31,6 +31,7 @@ export function OnboardingWelcome({
   trialing,
   hadSession,
   sessionId,
+  billingOnly = false,
 }: {
   name: string;
   planKey: string;
@@ -39,6 +40,10 @@ export function OnboardingWelcome({
   hadSession: boolean;
   /** The Stripe session. Creating the account is authorised by it, not by us. */
   sessionId?: string;
+  /** Payment-only invite: an existing client whose training stays with Ben.
+      Promising "Ben writes your first week" here would promise a feature
+      that is deliberately not switched on for them yet. */
+  billingOnly?: boolean;
 }) {
   const plan = planByKey(planKey);
   const first = name.split(/\s+/)[0];
@@ -110,26 +115,54 @@ export function OnboardingWelcome({
         </p>
 
         <ol className="obw-next">
-          <li>
-            <span className="obw-next__n num">1</span>
-            <span>
-              <strong>Ben writes your first week.</strong>{" "}He has everything you
-              sent &mdash; usually within a day.
-            </span>
-          </li>
-          <li>
-            <span className="obw-next__n num">2</span>
-            <span>
-              <strong>It lands in your account</strong> and you get a text.
-            </span>
-          </li>
-          <li>
-            <span className="obw-next__n num">3</span>
-            <span>
-              <strong>Tick sessions off as you go.</strong> That is what he
-              reads before writing the next one.
-            </span>
-          </li>
+          {billingOnly ? (
+            <>
+              <li>
+                <span className="obw-next__n num">1</span>
+                <span>
+                  <strong>Your payment collects automatically</strong> each
+                  month from now on — nothing to remember.
+                </span>
+              </li>
+              <li>
+                <span className="obw-next__n num">2</span>
+                <span>
+                  <strong>Your account shows every payment</strong> — update
+                  your card or make changes any time.
+                </span>
+              </li>
+              <li>
+                <span className="obw-next__n num">3</span>
+                <span>
+                  <strong>Training carries on with Ben</strong> exactly as it
+                  does now.
+                </span>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <span className="obw-next__n num">1</span>
+                <span>
+                  <strong>Ben writes your first week.</strong>{" "}He has everything
+                  you sent &mdash; usually within a day.
+                </span>
+              </li>
+              <li>
+                <span className="obw-next__n num">2</span>
+                <span>
+                  <strong>It lands in your account</strong> and you get a text.
+                </span>
+              </li>
+              <li>
+                <span className="obw-next__n num">3</span>
+                <span>
+                  <strong>Tick sessions off as you go.</strong> That is what he
+                  reads before writing the next one.
+                </span>
+              </li>
+            </>
+          )}
         </ol>
 
         {/* "Go to my account" sent them to /app, where the gate bounced them

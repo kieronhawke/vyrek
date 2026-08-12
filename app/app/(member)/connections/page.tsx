@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { assertMember } from "@/lib/member/auth";
+import { assertFullMember } from "@/lib/member/auth";
 import { Connections } from "@/components/member/connections";
 
 export const metadata: Metadata = { title: "Connections" };
 
 /** CONNECTIONS — auth boundary only. */
 export default async function MemberConnectionsPage() {
-  await assertMember("/app/connections");
+  await assertFullMember("/app/connections");
   return (
     <>
       <p className="eyebrow">Account</p>

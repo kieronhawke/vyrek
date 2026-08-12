@@ -19,6 +19,7 @@ export function MemberShell({
   initials,
   blockWeek,
   blockTotal,
+  mode = "full",
   children,
 }: {
   /** Route prefix, so the ungated preview mount reuses this verbatim. */
@@ -28,21 +29,33 @@ export function MemberShell({
   /** Weeks published to this member. 0 hides the block indicator entirely. */
   blockWeek?: number;
   blockTotal?: number;
+  /**
+   * "billing" collapses the shell to a one-page subscription portal: no
+   * tab bar, no rail — an existing client managing their payment has
+   * exactly one place to be, and four dead tabs would make the portal
+   * feel broken rather than focused.
+   */
+  mode?: "billing" | "full";
   children: ReactNode;
 }) {
   return (
-    <div className="member-frame">
-      {/* Desktop: the wordmark sits above the rail. */}
-      <div className="member-railhead">
-        <Link href={base} aria-label="Suth Performance">
-          <Wordmark size="sm" accent="var(--accent)" className="text-[color:var(--text)]" />
-        </Link>
-      </div>
+    <div className="member-frame" data-mode={mode}>
+      {/* Desktop: the wordmark sits above the rail. No rail in billing
+          mode, so nothing to sit above. */}
+      {mode === "billing" ? null : (
+        <>
+          <div className="member-railhead">
+            <Link href={base} aria-label="Suth Performance">
+              <Wordmark size="sm" accent="var(--accent)" className="text-[color:var(--text)]" />
+            </Link>
+          </div>
 
-      {/* Desktop: block progress sits under the wordmark, above the rail. */}
-      <div className="member-railprogress">
-        <BlockProgress current={blockWeek} total={blockTotal} />
-      </div>
+          {/* Desktop: block progress sits under the wordmark, above the rail. */}
+          <div className="member-railprogress">
+            <BlockProgress current={blockWeek} total={blockTotal} />
+          </div>
+        </>
+      )}
 
       {/* Mobile: wordmark left, account right. The rail replaces this above
           768px, so the avatar is not duplicated. */}
@@ -76,16 +89,23 @@ export function MemberShell({
         ) : null}
       </header>
 
-      <MemberNav base={base} />
+      {mode === "billing" ? null : <MemberNav base={base} />}
 
-      <main className="member-main">{children}</main>
+      <main
+        className="member-main"
+        // The rail's grid column collapses when there is no rail, so a
+        // billing portal centres instead of hugging a phantom sidebar.
+        data-mode={mode}
+      >
+        {children}
+      </main>
 
       {/* Shown once, on the first visit after onboarding. */}
       {/* The five-step tour explains Today, the week strip and the session
           card. None of those exist yet for somebody still waiting on week
           one, so it was pointing at empty space and covering the screen that
           actually answers their question. It waits for a real block. */}
-      {blockWeek !== 0 && <Walkthrough />}
+      {mode !== "billing" && blockWeek !== 0 && <Walkthrough />}
     </div>
   );
 }

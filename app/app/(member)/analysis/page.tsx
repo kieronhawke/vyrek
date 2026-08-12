@@ -1,4 +1,4 @@
-import { assertMember } from "@/lib/member/auth";
+import { assertFullMember } from "@/lib/member/auth";
 import { DEMO_ATHLETES_ALL, DEMO_RACES_ALL } from "@/lib/member/demo";
 import { AthleteSearch } from "@/components/member/athlete-search";
 import { RaceList } from "@/components/member/race-list";
@@ -15,7 +15,7 @@ import { Eyebrow } from "@/components/member/ui";
  * The width used to be set here (max-w-3xl); it belongs to the shell now.
  */
 export default async function AnalysisPage() {
-  await assertMember("/app/analysis");
+  await assertFullMember("/app/analysis");
 
   return (
     <>

@@ -36,6 +36,7 @@ export default async function MemberTabsLayout({
       <MemberShell
         initials={initialsFor(ctx.user.email)}
         blockWeek={state.facts.publishedWeeks}
+        mode={ctx.memberMode}
       >
         {children}
       </MemberShell>

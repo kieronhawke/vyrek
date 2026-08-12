@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { assertAdmin } from "@/lib/admin/auth";
 import { AdminSignOut } from "@/components/admin/sign-out";
+import { AdminMobileNav } from "@/components/admin/mobile-nav";
 
 export const metadata: Metadata = {
   title: "Mission control",
@@ -91,21 +92,10 @@ export default async function AdminLayout({
         </aside>
 
         <main className="flex-1 px-4 py-6 md:px-0 md:py-10">
-          {/* Mobile chip nav (collapsed sidebar) */}
-          <nav
-            aria-label="Admin sections"
-            className="-mx-4 mb-6 flex gap-2 overflow-x-auto px-4 pb-1 md:hidden"
-          >
-            {NAV.map((n) => (
-              <Link
-                key={n.href}
-                href={n.href}
-                className="inline-flex h-9 shrink-0 items-center rounded-pill border border-suth-border-subtle bg-suth-elevated px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-secondary"
-              >
-                {n.label}
-              </Link>
-            ))}
-          </nav>
+          {/* Mobile chip nav (collapsed sidebar), current section lit. */}
+          <AdminMobileNav
+            items={NAV.map(({ href, label }) => ({ href, label }))}
+          />
           {children}
         </main>
       </div>

@@ -31,10 +31,18 @@ export function AccountReadyEmail({
   firstName,
   signInUrl,
   planName,
+  variant = "full",
 }: {
   firstName: string;
   signInUrl: string;
   planName?: string;
+  /**
+   * "billing" is an existing client moved onto Stripe by a payment link:
+   * their training already happens with Ben, so the email promises the
+   * subscription portal — not a first week that deliberately isn't
+   * switched on yet.
+   */
+  variant?: "billing" | "full";
 }) {
   return (
     <EmailLayout
@@ -42,12 +50,18 @@ export function AccountReadyEmail({
       campaign="account-ready"
     >
       <Eyebrow>You&apos;re in</Eyebrow>
-      <H1>Welcome aboard, {firstName}.</H1>
+      <H1>
+        {variant === "billing"
+          ? `All set, ${firstName}.`
+          : `Welcome aboard, ${firstName}.`}
+      </H1>
 
       <P>
-        {planName
-          ? `Your ${planName} is set up and your account is waiting.`
-          : "Your account is set up and waiting."}{" "}
+        {variant === "billing"
+          ? `Your ${planName || "membership"} now collects automatically each month — nothing else changes. Your account is where you see payments, update your card, or make changes.`
+          : planName
+            ? `Your ${planName} is set up and your account is waiting.`
+            : "Your account is set up and waiting."}{" "}
         There&apos;s no password to remember — this link signs you straight
         in.
       </P>
@@ -81,11 +95,23 @@ export function AccountReadyEmail({
             margin: 0,
           }}
         >
-          I write your first week around what you told me
-          <br />
-          It lands in your account, and you get a text
-          <br />
-          Message me any time from inside the app
+          {variant === "billing" ? (
+            <>
+              Your payment collects automatically each month
+              <br />
+              Update your card or make changes any time from your account
+              <br />
+              Training carries on with me exactly as it does now
+            </>
+          ) : (
+            <>
+              I write your first week around what you told me
+              <br />
+              It lands in your account, and you get a text
+              <br />
+              Message me any time from inside the app
+            </>
+          )}
         </Text>
       </Panel>
 

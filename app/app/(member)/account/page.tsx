@@ -33,6 +33,7 @@ export default async function MemberAccountPage() {
 
   return (
     <AccountScreen
+      mode={ctx.memberMode}
       sessionsLogged={state.facts.loggedSessions}
       blockWeek={state.facts.publishedWeeks}
       memberSince={

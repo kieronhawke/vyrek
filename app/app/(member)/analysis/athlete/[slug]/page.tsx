@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { assertMember } from "@/lib/member/auth";
+import { assertFullMember } from "@/lib/member/auth";
 import { findAthlete } from "@/lib/member/demo";
 
 export const dynamic = "force-dynamic";
@@ -11,7 +11,7 @@ export default async function AthleteDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  await assertMember(`/app/analysis/athlete/${slug}`);
+  await assertFullMember(`/app/analysis/athlete/${slug}`);
   const athlete = findAthlete(slug);
   if (!athlete) notFound();
 

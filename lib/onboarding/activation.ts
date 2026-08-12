@@ -58,6 +58,10 @@ export async function activateFromSession(
   // The first live test email read "Your coaching-121 is set up".
   const planKey = String(session.metadata?.plan ?? "");
   const plan = planByKey(planKey)?.name ?? "";
+  // A payment-only invite is an EXISTING client whose training already
+  // happens with Ben — their portal opens in billing mode: subscription
+  // management only, until the admin switches their training space on.
+  const isBillingOnly = session.metadata?.onboarding === "payment";
   const stripeCustomerId =
     typeof session.customer === "string"
       ? session.customer
@@ -93,7 +97,10 @@ export async function activateFromSession(
     const created = await sb.auth.admin.createUser({
       email,
       email_confirm: true,
-      user_metadata: { full_name: name },
+      user_metadata: {
+        full_name: name,
+        member_mode: isBillingOnly ? "billing" : "full",
+      },
     });
     if (created.data.user) {
       authUserId = created.data.user.id;
@@ -220,6 +227,10 @@ export async function activateFromSession(
    * actually happens. */
   if (userIsNew) {
     let signInUrl = `${siteUrl()}/login`;
+    // A billing-only client's home is their subscription page — landing
+    // them on "Ben is writing your first week" would promise a feature
+    // that is deliberately not switched on yet.
+    const landing = isBillingOnly ? "/app/account" : "/app/today";
     try {
       const link = await sb.auth.admin.generateLink({
         type: "magiclink",
@@ -229,7 +240,7 @@ export async function activateFromSession(
       if (hashed) {
         signInUrl = `${siteUrl()}/auth/callback?token_hash=${encodeURIComponent(
           hashed,
-        )}&type=magiclink&next=${encodeURIComponent("/app/today")}`;
+        )}&type=magiclink&next=${encodeURIComponent(landing)}`;
       }
     } catch (e) {
       console.error("[activation] generateLink failed", e);
@@ -240,6 +251,7 @@ export async function activateFromSession(
       firstName: (name || email).split(/[\s@]/)[0],
       signInUrl,
       planName: plan,
+      variant: isBillingOnly ? "billing" : "full",
     }).catch(() => {});
   }
 

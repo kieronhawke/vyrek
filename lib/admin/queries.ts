@@ -218,6 +218,7 @@ export type AdminCustomer = {
   created_at: string | null;
   stripe_customer_id: string | null;
   referral_code: string | null;
+  auth_user_id?: string | null;
 };
 
 export async function listCustomers(opts: {
@@ -264,7 +265,7 @@ export async function getCustomer(id: string): Promise<
     const sb = supabaseAdmin();
     const { data: customer, error: cErr } = await sb
       .from("customers")
-      .select("id, email, created_at, stripe_customer_id, referral_code")
+      .select("id, email, created_at, stripe_customer_id, referral_code, auth_user_id")
       .eq("id", id)
       .maybeSingle();
     if (cErr) return fail(cErr);

@@ -30,6 +30,7 @@ export default async function OnboardingWelcomePage({
   let planName = "";
   let confirmed = false;
   let trialing = false;
+  let billingOnly = false;
 
   if (sessionId) {
     try {
@@ -40,6 +41,7 @@ export default async function OnboardingWelcomePage({
         session.payment_status === "paid" || session.status === "complete";
       name = String(session.metadata?.client_name ?? "");
       planName = String(session.metadata?.plan ?? "");
+      billingOnly = session.metadata?.onboarding === "payment";
       const sub = session.subscription;
       trialing = typeof sub === "object" && sub !== null && sub.status === "trialing";
     } catch {
@@ -57,6 +59,7 @@ export default async function OnboardingWelcomePage({
       confirmed={confirmed}
       trialing={trialing}
       hadSession={Boolean(sessionId)}
+      billingOnly={billingOnly}
     />
   );
 }

@@ -1239,3 +1239,27 @@
 }
 .fuel__session-time { flex: none; font-size: var(--text-xs); color: var(--text-muted); }
 .fuel__session-body { min-width: 0; }
+
+/* ── Billing-only portal ──────────────────────────────────────────────────
+   A payment-link client has one page, so there is no rail and no tab bar.
+   The desktop rules above reserve space for both; give it back. The
+   railhead/railprogress divs render nothing useful without a rail either. */
+@media (min-width: 768px) {
+  .member-main[data-mode="billing"] {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: min(var(--member-max), 760px);
+  }
+}
+.member-main[data-mode="billing"] {
+  /* No floating tab bar to clear on mobile. */
+  padding-bottom: calc(env(safe-area-inset-bottom) + var(--space-6));
+}
+
+/* The topbar normally hands over to the rail at 768px; a billing portal
+   has no rail, so the topbar stays as the header at every width. */
+@media (min-width: 768px) {
+  .member-frame[data-mode="billing"] .member-topbar {
+    display: flex;
+  }
+}

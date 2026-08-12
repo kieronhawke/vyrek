@@ -358,6 +358,7 @@ export function sendAccountReady(args: {
   firstName: string;
   signInUrl: string;
   planName?: string;
+  variant?: "billing" | "full";
 }): Promise<Result> {
   const { to, ...rest } = args;
   return send({

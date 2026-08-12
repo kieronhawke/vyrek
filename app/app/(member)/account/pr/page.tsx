@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { assertMember } from "@/lib/member/auth";
+import { assertFullMember } from "@/lib/member/auth";
 import { DEMO_PRS } from "@/lib/member/demo";
 
 export const dynamic = "force-dynamic";
@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 const CATEGORIES = ["Strength", "Cardio", "Hyrox"] as const;
 
 export default async function PersonalRecordsPage() {
-  await assertMember("/app/account/pr");
+  await assertFullMember("/app/account/pr");
 
   return (
     <div>

@@ -112,8 +112,11 @@ export function SendPaymentLink() {
     }
   }
 
+  // text-base, not text-sm: an input under 16px makes iOS Safari zoom the
+  // whole page on focus, which is the single fastest way for a form to
+  // stop feeling like an app. h-12 puts every field at thumb size.
   const inputCls =
-    "mt-1.5 block h-11 w-full rounded-md border border-suth-border bg-suth-elevated px-3 text-sm text-suth-text outline-none focus:border-suth-accent";
+    "mt-1.5 block h-12 w-full rounded-md border border-suth-border bg-suth-elevated px-3 text-base text-suth-text outline-none focus:border-suth-accent";
   const labelCls = "block text-xs font-medium text-suth-text-secondary";
 
   return (
@@ -166,7 +169,7 @@ export function SendPaymentLink() {
           type="button"
           onClick={() => setKind("payment")}
           aria-pressed={kind === "payment"}
-          className={`inline-flex h-9 items-center rounded-pill border px-4 text-xs font-medium transition-colors ${
+          className={`inline-flex h-11 items-center rounded-pill border px-4 text-sm font-medium transition-colors ${
             kind === "payment"
               ? "border-suth-accent bg-suth-accent text-[#0A0A0A]"
               : "border-suth-border text-suth-text-secondary hover:border-suth-border-strong"
@@ -178,7 +181,7 @@ export function SendPaymentLink() {
           type="button"
           onClick={() => setKind("full")}
           aria-pressed={kind === "full"}
-          className={`inline-flex h-9 items-center rounded-pill border px-4 text-xs font-medium transition-colors ${
+          className={`inline-flex h-11 items-center rounded-pill border px-4 text-sm font-medium transition-colors ${
             kind === "full"
               ? "border-suth-accent bg-suth-accent text-[#0A0A0A]"
               : "border-suth-border text-suth-text-secondary hover:border-suth-border-strong"
@@ -205,7 +208,7 @@ export function SendPaymentLink() {
                 setCustomRate(false);
               }}
               aria-pressed={plan === p.key && !customRate}
-              className={`inline-flex h-9 items-center rounded-pill border px-4 text-xs font-medium transition-colors ${
+              className={`inline-flex h-11 items-center rounded-pill border px-4 text-sm font-medium transition-colors ${
                 plan === p.key && !customRate
                   ? "border-suth-accent bg-suth-accent/15 text-suth-accent"
                   : "border-suth-border text-suth-text-secondary hover:border-suth-border-strong"
@@ -218,7 +221,7 @@ export function SendPaymentLink() {
             type="button"
             onClick={() => setCustomRate(true)}
             aria-pressed={customRate}
-            className={`inline-flex h-9 items-center rounded-pill border px-4 text-xs font-medium transition-colors ${
+            className={`inline-flex h-11 items-center rounded-pill border px-4 text-sm font-medium transition-colors ${
               customRate
                 ? "border-suth-accent bg-suth-accent/15 text-suth-accent"
                 : "border-suth-border text-suth-text-secondary hover:border-suth-border-strong"
@@ -228,12 +231,12 @@ export function SendPaymentLink() {
           </button>
           {customRate ? (
             <label className="flex items-center gap-1.5">
-              <span className="text-sm text-suth-text">£</span>
+              <span className="text-base text-suth-text">£</span>
               <input
                 inputMode="decimal"
                 value={rate}
                 onChange={(e) => setRate(e.target.value)}
-                className="h-9 w-24 rounded-md border border-suth-border bg-suth-elevated px-3 text-sm text-suth-text outline-none focus:border-suth-accent"
+                className="h-12 w-28 rounded-md border border-suth-border bg-suth-elevated px-3 text-base text-suth-text outline-none focus:border-suth-accent"
                 aria-label="Monthly rate in pounds"
               />
               <span className="text-xs text-suth-text-tertiary">a month</span>
@@ -270,14 +273,14 @@ export function SendPaymentLink() {
           type="button"
           onClick={send}
           disabled={busy || !canSend}
-          className="inline-flex h-11 items-center rounded-pill bg-suth-accent px-6 text-sm font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover disabled:opacity-50"
+          className="inline-flex h-12 w-full items-center justify-center rounded-pill bg-suth-accent px-6 text-base font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover disabled:opacity-50 sm:w-auto"
         >
           {busy ? "Sending…" : "Send the link"}
         </button>
         {!canSend && name.trim() ? (
-          <span className="ml-3 text-xs text-suth-text-tertiary">
+          <p className="mt-2 text-xs text-suth-text-tertiary sm:ml-3 sm:mt-0 sm:inline">
             Needs an email or a mobile number.
-          </span>
+          </p>
         ) : null}
       </div>
 
