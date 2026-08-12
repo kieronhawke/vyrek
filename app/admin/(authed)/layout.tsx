@@ -76,7 +76,23 @@ export default async function AdminLayout({
 
           <AdminSideNav items={NAV} />
 
-          <div className="mt-10 border-t border-suth-border-subtle pt-4">
+          {/* The other half of the same system: Ben's phone-first view. */}
+          <div className="mt-6 border-t border-suth-border-subtle pt-4">
+            <Link
+              href="/coach"
+              className="flex items-center justify-between rounded-xl border border-suth-border bg-suth-elevated px-3 py-2.5 text-sm text-suth-text transition-colors hover:border-suth-border-strong"
+            >
+              <span>
+                Coach view
+                <span className="block text-xs text-suth-text-tertiary">
+                  Ben&apos;s five screens
+                </span>
+              </span>
+              <span aria-hidden>→</span>
+            </Link>
+          </div>
+
+          <div className="mt-6 border-t border-suth-border-subtle pt-4">
             <p className="px-2 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
               Signed in
             </p>

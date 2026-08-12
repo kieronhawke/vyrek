@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Archivo } from "next/font/google";
+import { assertAdmin } from "@/lib/admin/auth";
 import { CoachTabs } from "@/components/control/coach-tabs";
 import { CommandPalette } from "@/components/control/command-palette";
 import "@/app/control-tokens.css";
@@ -27,11 +29,16 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function CoachLayout({
+export default async function CoachLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Same login as Mission Control: one identity, two views. The
+  // middleware bounces anonymous visits at the edge; this is the
+  // canonical page-level check behind it.
+  await assertAdmin();
+
   return (
     <div
       data-surface="control"
@@ -67,7 +74,22 @@ export default function CoachLayout({
         >
           Coach
         </span>
-        <CommandPalette />
+        <span style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+          <Link
+            href="/admin"
+            style={{
+              fontSize: "var(--text-sm)",
+              color: "var(--text-muted)",
+              textDecoration: "none",
+              border: "1px solid var(--border)",
+              borderRadius: 999,
+              padding: "6px 12px",
+            }}
+          >
+            Mission Control →
+          </Link>
+          <CommandPalette />
+        </span>
       </header>
 
       {/* Bottom padding clears the fixed tab bar plus the home indicator. */}

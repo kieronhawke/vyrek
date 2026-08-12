@@ -147,6 +147,9 @@ export async function activateFromSession(
         .update({
           ...(authUserId ? { auth_user_id: authUserId } : {}),
           ...(stripeCustomerId ? { stripe_customer_id: stripeCustomerId } : {}),
+          // The name on the row itself, so the coach's client list never
+          // needs an auth API call per person.
+          ...(name?.trim() ? { full_name: name.trim() } : {}),
         })
         .eq("id", customerRowId);
       if (error) {
@@ -159,6 +162,7 @@ export async function activateFromSession(
         email,
         ...(authUserId ? { auth_user_id: authUserId } : {}),
         ...(stripeCustomerId ? { stripe_customer_id: stripeCustomerId } : {}),
+        ...(name?.trim() ? { full_name: name.trim() } : {}),
       });
       if (error) {
         console.error("[activation] customer insert failed", error.message);

@@ -1,52 +1,68 @@
-import { Num } from "@/components/control/num";
-import { SplitBar } from "@/components/control/split-bar";
+import Link from "next/link";
 import {
-  listCoachClients,
-  sortForToday,
-  todayCounts,
-  type CoachClient,
-} from "@/lib/control/fixtures";
+  listRealCoachClients,
+  sortForCoachToday,
+  type RealCoachClient,
+} from "@/lib/coach/data";
+
+export const dynamic = "force-dynamic";
 
 /**
- * COACH MODE — TODAY
+ * COACH MODE — TODAY, ON REAL DATA.
  *
- * docs/build-pack/spec/10 §5. Ben said it plainly: "I need to know when
- * they've got programming up until. From a logistical point of view, I need
- * to know if they've paid or not." That is the whole screen.
+ * Ben said it plainly: "I need to know when they've got programming up
+ * until. From a logistical point of view, I need to know if they've paid
+ * or not." That is the whole screen — now read from the same tables as
+ * Mission Control instead of fixtures.
  *
- * Three counts above, then one list. No MRR, no churn, no graphs — spec/09 §0
- * is explicit that he never sees a financial metric.
- *
- * Tables become cards below 768px (spec/14 §6), and this screen is designed
- * card-first because it is never used on a desktop.
+ * No MRR, no churn, no graphs: spec/09 §0 says he never sees a financial
+ * metric, and that constraint survives the wiring-up.
  */
 
-function paymentTone(c: CoachClient) {
-  if (c.payment === "failed" || c.payment === "late") return "danger" as const;
-  return undefined;
+const toneColor: Record<RealCoachClient["paymentTone"], string> = {
+  ok: "var(--text-muted)",
+  warn: "var(--warn)",
+  danger: "var(--danger)",
+};
+
+function Count({ n, label, tone }: { n: number; label: string; tone?: string }) {
+  return (
+    <div
+      style={{
+        flex: 1,
+        minWidth: 96,
+        padding: "var(--space-2)",
+        border: "1px solid var(--border)",
+        borderRadius: 12,
+        background: "var(--surface)",
+      }}
+    >
+      <div
+        style={{
+          fontSize: "var(--text-xl)",
+          fontWeight: 800,
+          letterSpacing: "-0.02em",
+          color: tone ?? "var(--text)",
+        }}
+      >
+        {n}
+      </div>
+      <div style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)" }}>
+        {label}
+      </div>
+    </div>
+  );
 }
 
-function programmingTone(c: CoachClient) {
-  if (c.programmingStatus === "overdue") return "danger" as const;
-  if (c.programmingStatus === "due_soon") return "warn" as const;
-  return undefined;
-}
+export default async function CoachTodayPage() {
+  const clients = sortForCoachToday(await listRealCoachClients());
 
-/** Plain English, never a status enum. spec/14 §9. */
-function programmingLabel(c: CoachClient): string {
-  if (c.programmingStatus === "overdue") {
-    return `Ran out ${Math.abs(c.programmedUntilDays)} days ago`;
-  }
-  if (c.programmingStatus === "awaiting_race_debrief") {
-    return "Debrief due";
-  }
-  if (c.programmedUntilDays === 0) return "Runs out today";
-  return `${c.programmedUntilDays} days left`;
-}
-
-export default function CoachTodayPage() {
-  const clients = sortForToday(listCoachClients());
-  const counts = todayCounts();
+  const needsPlan = clients.filter(
+    (c) =>
+      c.programmedDaysLeft === null ||
+      c.programmedDaysLeft <= 2,
+  ).length;
+  const moneyTrouble = clients.filter((c) => c.paymentTone === "danger").length;
 
   return (
     <>
@@ -62,154 +78,82 @@ export default function CoachTodayPage() {
         Today
       </h1>
 
-      {/* ── The only three numbers on the screen ───────────────────── */}
+      <div style={{ display: "flex", gap: "var(--space-2)", flexWrap: "wrap" }}>
+        <Count n={clients.length} label="Clients" />
+        <Count
+          n={needsPlan}
+          label="Need a plan"
+          tone={needsPlan > 0 ? "var(--warn)" : undefined}
+        />
+        <Count
+          n={moneyTrouble}
+          label="Payment failed"
+          tone={moneyTrouble > 0 ? "var(--danger)" : undefined}
+        />
+      </div>
+
       <ul
         role="list"
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "var(--space-1)",
           listStyle: "none",
-          margin: "0 0 var(--space-4)",
+          margin: "var(--space-3) 0 0",
           padding: 0,
+          display: "grid",
+          gap: "var(--space-2)",
         }}
       >
-        {[
-          { label: "Plans due", value: counts.plansDue, tone: counts.plansDue > 0 ? ("warn" as const) : undefined },
-          { label: "Payments late", value: counts.paymentsLate, tone: counts.paymentsLate > 0 ? ("danger" as const) : undefined },
-          { label: "Races < 14d", value: counts.racesSoon, tone: undefined },
-        ].map((stat) => (
-          <li
-            key={stat.label}
-            style={{
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
-              borderRadius: "var(--radius-card)",
-              padding: "var(--space-2)",
-            }}
-          >
-            <Num align="left" tone={stat.tone} size="metric">
-              {stat.value}
-            </Num>
-            <p className="eyebrow" style={{ marginTop: 4 }}>
-              {stat.label}
-            </p>
+        {clients.length === 0 ? (
+          <li style={{ color: "var(--text-muted)", fontSize: "var(--text-md)" }}>
+            No clients yet. They appear here the moment somebody signs up.
           </li>
-        ))}
-      </ul>
-
-      {/* ── The list ───────────────────────────────────────────────── */}
-      <h2 className="eyebrow" style={{ marginBottom: "var(--space-2)" }}>
-        Who needs you
-      </h2>
-
-      <ul role="list" style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: "var(--space-2)" }}>
-        {clients.map((c) => (
-          <li
-            key={c.id}
-            id={c.id}
-            style={{
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
-              borderRadius: "var(--radius-card)",
-              padding: "var(--space-2)",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "baseline",
-                justifyContent: "space-between",
-                gap: "var(--space-2)",
-                marginBottom: "var(--space-2)",
-              }}
-            >
-              <span style={{ fontWeight: 600, fontSize: "var(--text-base)" }}>
-                {c.name}
-              </span>
-              <span
+        ) : (
+          clients.map((c) => (
+            <li key={c.customerId}>
+              <Link
+                href={`/coach/plans/${c.customerId}`}
                 style={{
-                  fontSize: "var(--text-xs)",
-                  color:
-                    paymentTone(c) === "danger"
-                      ? "var(--danger)"
-                      : "var(--text-muted)",
-                  whiteSpace: "nowrap",
+                  display: "block",
+                  padding: "var(--space-2)",
+                  border: "1px solid var(--border)",
+                  borderRadius: 12,
+                  background: "var(--surface)",
+                  textDecoration: "none",
+                  color: "var(--text)",
                 }}
               >
-                {c.payment === "paid" ? "Paid " : ""}
-                <span className="num">{c.paymentLabel}</span>
-              </span>
-            </div>
-
-            {/* Runway against their next billing date, which is exactly
-                the example spec/14 §4 gives. The floor at zero is what
-                separates "two days left" from "already run out" — without
-                it both painted the same danger red. */}
-            <SplitBar
-              label="Programmed until"
-              value={c.programmedUntilDays}
-              target={c.billingInDays}
-              max={30}
-              criticalAtOrBelow={0}
-              warnAtOrBelow={7}
-              display={programmingLabel(c)}
-              targetLabel="renewal"
-            />
-
-            {c.nextRace ? (
-              <p
-                style={{
-                  marginTop: "var(--space-2)",
-                  fontSize: "var(--text-xs)",
-                  color: "var(--text-muted)",
-                }}
-              >
-                {c.nextRace.name} in <span className="num">{c.nextRace.inDays}</span> days
-                {c.nextRace.priority === "A" ? " · A race" : null}
-              </p>
-            ) : null}
-
-            {c.flags.length > 0 ? (
-              <ul
-                role="list"
-                style={{
-                  listStyle: "none",
-                  margin: "var(--space-2) 0 0",
-                  padding: 0,
-                  display: "grid",
-                  gap: 4,
-                }}
-              >
-                {c.flags.map((flag) => (
-                  <li
-                    key={flag}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "baseline",
+                    gap: "var(--space-2)",
+                  }}
+                >
+                  <span style={{ fontWeight: 700 }}>{c.name}</span>
+                  <span
                     style={{
-                      fontSize: "var(--text-xs)",
-                      color:
-                        programmingTone(c) === "danger"
-                          ? "var(--danger)"
-                          : "var(--text-muted)",
+                      fontSize: "var(--text-sm)",
+                      color: toneColor[c.planTone],
+                      whiteSpace: "nowrap",
                     }}
                   >
-                    {flag}
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-          </li>
-        ))}
+                    {c.planLabel}
+                  </span>
+                </div>
+                <div
+                  style={{
+                    marginTop: 2,
+                    fontSize: "var(--text-sm)",
+                    color: toneColor[c.paymentTone],
+                  }}
+                >
+                  {c.paymentLabel}
+                </div>
+              </Link>
+            </li>
+          ))
+        )}
       </ul>
-
-      <p
-        style={{
-          marginTop: "var(--space-4)",
-          fontSize: "var(--text-xs)",
-          color: "var(--text-muted)",
-        }}
-      >
-        Sample records. Real clients appear once the database is connected.
-      </p>
     </>
   );
 }

@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { listCoachClients, listLeads } from "@/lib/control/fixtures";
 
 /**
  * THE COMMAND PALETTE — docs/build-pack/spec/14 §5.
@@ -36,11 +35,11 @@ const PAGES: Item[] = [
   { id: "p_messages", label: "Messages", group: "Go to", href: "/coach/messages" },
   { id: "p_diary", label: "Diary", group: "Go to", href: "/coach/diary" },
   {
-    id: "p_design",
-    label: "Design system",
+    id: "p_admin",
+    label: "Mission Control",
     group: "Go to",
-    href: "/control-preview",
-    keywords: "tokens split bar reference",
+    href: "/admin",
+    keywords: "admin operator payments customers",
   },
 ];
 
@@ -51,10 +50,8 @@ const PAGES: Item[] = [
  * silently does nothing when clicked.
  */
 const PENDING_ACTIONS: Item[] = [
-  { id: "a_pay", label: "Send payment link", group: "Actions", hint: "Phase C" },
-  { id: "a_paid", label: "Mark as paid", group: "Actions", hint: "Phase C" },
-  { id: "a_plan", label: "Build next block", group: "Actions", hint: "Phase D" },
-  { id: "a_msg", label: "Send a message", group: "Actions", hint: "Phase E" },
+  { id: "a_plan", label: "Write a plan", group: "Actions", href: "/coach/plans" },
+  { id: "a_msg", label: "Send a message", group: "Actions", href: "/coach/messages" },
 ];
 
 export function CommandPalette() {
@@ -65,24 +62,9 @@ export function CommandPalette() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const items = useMemo<Item[]>(() => {
-    const clients: Item[] = listCoachClients().map((c) => ({
-      id: `c:${c.id}`,
-      label: c.name,
-      hint:
-        c.programmedUntilDays < 0
-          ? "programming overdue"
-          : `${c.programmedUntilDays} days programmed`,
-      group: "Clients",
-      href: `/coach/clients#${c.id}`,
-    }));
-    const leads: Item[] = listLeads().map((l) => ({
-      id: `l:${l.id}`,
-      label: l.name,
-      hint: l.segment,
-      group: "Leads",
-      href: `/coach/clients#${l.id}`,
-    }));
-    return [...clients, ...leads, ...PAGES, ...PENDING_ACTIONS];
+    // Pages and actions only. Real people are searched on the screens
+    // themselves, where the data actually lives.
+    return [...PAGES, ...PENDING_ACTIONS];
   }, []);
 
   const results = useMemo(() => {

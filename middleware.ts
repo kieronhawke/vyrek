@@ -15,11 +15,9 @@ import { createServerClient } from "@supabase/ssr";
  */
 
 export const config = {
-  // /control-preview is the fixture-data clone of the admin and member
-  // shells. It contains no real data, but an unauthenticated replica of
-  // the whole admin UI is not something to leave on the open internet —
-  // it goes behind the same admin login.
-  matcher: ["/admin/:path*", "/app/:path*", "/control-preview/:path*"],
+  // /coach is Ben's real client surface — same login as /admin, worn
+  // differently. (/control-preview, the old fixture clone, is gone.)
+  matcher: ["/admin/:path*", "/app/:path*", "/coach/:path*"],
 };
 
 export async function middleware(req: NextRequest) {
@@ -52,7 +50,7 @@ export async function middleware(req: NextRequest) {
       data: { user },
     } = await sb.auth.getUser();
     if (!user) {
-      if (path.startsWith("/admin") || path.startsWith("/control-preview")) {
+      if (path.startsWith("/admin") || path.startsWith("/coach")) {
         return NextResponse.redirect(new URL("/admin/login", req.url));
       }
       const login = new URL("/login", req.url);
