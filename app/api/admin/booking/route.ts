@@ -56,10 +56,35 @@ export async function GET() {
     loadAvailability(),
     loadBookings(),
   ]);
+
+  // Match bookings back to their original enquiries by email, so a past
+  // or cancelled call clicks through to what the person first asked for.
+  const leadIdByEmail: Record<string, string> = {};
+  try {
+    const emails = Array.from(
+      new Set(bookings.map((b) => b.email.trim().toLowerCase()).filter(Boolean)),
+    );
+    if (emails.length > 0) {
+      const { supabaseAdmin } = await import("@/lib/supabase/admin");
+      const { data } = await supabaseAdmin()
+        .from("consultation_leads")
+        .select("id, email, created_at")
+        .in("email", emails)
+        .order("created_at", { ascending: false });
+      for (const row of (data ?? []) as Array<{ id: string; email: string }>) {
+        const key = row.email.toLowerCase();
+        if (!(key in leadIdByEmail)) leadIdByEmail[key] = row.id;
+      }
+    }
+  } catch {
+    /* Bookings render without enquiry links. */
+  }
+
   return NextResponse.json({
     ok: true,
     availability,
     bookings,
+    leadIdByEmail,
     durable: bookingStoreReady(),
   });
 }
