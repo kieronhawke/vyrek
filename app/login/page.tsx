@@ -51,7 +51,8 @@ export default async function LoginPage({
               Welcome back.
             </h1>
             <p className="mt-4 text-base text-suth-text-secondary">
-              Sign in with the email and password you used to save your plan.
+              Pop in your email and we&apos;ll send you a sign-in link — no
+              password needed.
             </p>
             <CustomerLoginForm />
             <p className="mt-12 text-center text-sm text-suth-text-tertiary">
