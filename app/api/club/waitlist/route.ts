@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { limiters, requestIp } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -21,7 +22,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Bad request" }, { status: 400 });
   }
 
-  const name = (body.name ?? "").trim().slice(0, 120);
+  // Strip angle brackets so no markup is ever stored or echoed into the
+  // confirmation email. React escapes on render anyway; this keeps the
+  // stored record clean too.
+  const name = (body.name ?? "").replace(/[<>]/g, "").trim().slice(0, 120);
   const email = (body.email ?? "").trim().toLowerCase().slice(0, 200);
   const phone = (body.phone ?? "").trim().slice(0, 30);
   const goal = (body.goal ?? "").trim().slice(0, 1000);
@@ -30,6 +34,21 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { ok: false, error: "That email address does not look right." },
       { status: 400 },
+    );
+  }
+
+  // Throttle before we touch the database or send anything. Per-IP stops a
+  // flood; per-email stops someone signing a victim up to be emailed and
+  // texted repeatedly from our domain.
+  const ip = requestIp(req);
+  const [byIp, byEmail] = await Promise.all([
+    limiters.clubWaitlistIp.limit(`ip:${ip}`),
+    limiters.clubWaitlistEmail.limit(`em:${email}`),
+  ]);
+  if (!byIp.success || !byEmail.success) {
+    return NextResponse.json(
+      { ok: false, error: "You're already on the list. We'll be in touch." },
+      { status: 429, headers: { "Retry-After": "3600" } },
     );
   }
 

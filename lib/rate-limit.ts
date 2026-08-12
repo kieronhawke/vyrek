@@ -85,6 +85,12 @@ export const limiters = {
   emailGateEmail: build("rl:eg_em", 5, "1 h"),
   feedback: build("rl:fb", 20, "1 h"),
   partnerClick: build("rl:p_click", 60, "1 h"),
+  // Suth Club waiting list. Unauthenticated and it sends an email (and a
+  // text): without a throttle it is an open relay for bombing a victim's
+  // inbox from our domain and burning send credit. Per-IP caps the flood;
+  // per-email caps re-sends to one address.
+  clubWaitlistIp: build("rl:club_ip", 6, "1 h"),
+  clubWaitlistEmail: build("rl:club_em", 3, "1 d"),
   // Authenticated surfaces (lighter throttle)
   accountCreate: build("rl:acct", 10, "1 h"),
   accountCreateIp: build("rl:acct_ip", 8, "1 d"),

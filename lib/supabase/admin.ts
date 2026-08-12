@@ -1,3 +1,6 @@
+// Hard guard: this module holds the service-role key. Importing it from a
+// client component becomes a build error rather than a silent secret leak.
+import "server-only";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 let cached: SupabaseClient | null = null;
