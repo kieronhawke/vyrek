@@ -104,6 +104,17 @@ function Glyph({ name }: { name: string }) {
         <path d="M9.5 9.2a2.5 2.5 0 1 1 3.4 2.3c-.8.3-.9 1-1 1.7M12 16.8h.01" />
       </>
     ),
+    plans: (
+      <>
+        <rect x="3" y="4" width="18" height="17" rx="2" />
+        <path d="M3 9h18M8 2.5v3M16 2.5v3M7 13h5M7 17h8" />
+      </>
+    ),
+    activity: (
+      <>
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+      </>
+    ),
     settings: (
       <>
         <circle cx="12" cy="12" r="3" />
@@ -136,20 +147,30 @@ export type SideNavItem = {
   icon: string;
 };
 
-export function AdminSideNav({ items }: { items: SideNavItem[] }) {
+export function AdminSideNav({
+  items,
+  collapsed = false,
+}: {
+  items: SideNavItem[];
+  collapsed?: boolean;
+}) {
   const pathname = usePathname();
   const isActive = (href: string) =>
     href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
   const groups = Array.from(new Set(items.map((n) => n.group)));
 
   return (
-    <nav aria-label="Admin" className="mt-8 space-y-6">
+    <nav aria-label="Admin" className={collapsed ? "mt-5 space-y-3" : "mt-6 space-y-5"}>
       {groups.map((group) => (
         <div key={group}>
-          <p className="px-2 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-            {group}
-          </p>
-          <ul className="mt-2 space-y-0.5">
+          {!collapsed ? (
+            <p className="px-2 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+              {group}
+            </p>
+          ) : (
+            <div className="mx-2 border-t border-suth-border-subtle" aria-hidden />
+          )}
+          <ul className={collapsed ? "mt-1 space-y-1" : "mt-2 space-y-0.5"}>
             {items
               .filter((n) => n.group === group)
               .map((n) => {
@@ -159,14 +180,17 @@ export function AdminSideNav({ items }: { items: SideNavItem[] }) {
                     <Link
                       href={n.href}
                       aria-current={active ? "page" : undefined}
-                      className={`flex items-center gap-2.5 rounded-md px-2 py-1.5 text-sm transition-colors ${
+                      title={collapsed ? n.label : undefined}
+                      className={`flex items-center rounded-md text-sm transition-colors ${
+                        collapsed ? "justify-center px-0 py-2" : "gap-2.5 px-2 py-1.5"
+                      } ${
                         active
                           ? "bg-suth-accent/10 font-medium text-suth-accent"
                           : "text-suth-text-secondary hover:bg-suth-elevated hover:text-suth-text"
                       }`}
                     >
                       <Glyph name={n.icon} />
-                      {n.label}
+                      {!collapsed ? n.label : null}
                     </Link>
                   </li>
                 );

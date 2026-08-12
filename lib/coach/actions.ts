@@ -198,7 +198,7 @@ export async function sendClientMessage(input: {
       sent_by: user.email ?? "coach",
     });
 
-    revalidatePath("/coach/messages");
+    revalidatePath("/admin/messages");
     return { ok: true };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : "unknown error" };
@@ -206,8 +206,7 @@ export async function sendClientMessage(input: {
 }
 
 function revalidateCoach(customerId: string) {
-  revalidatePath("/coach");
-  revalidatePath("/coach/plans");
-  revalidatePath(`/coach/plans/${customerId}`);
+  revalidatePath("/admin/plans");
+  revalidatePath(`/admin/plans/${customerId}`);
   revalidatePath("/app/plan");
 }

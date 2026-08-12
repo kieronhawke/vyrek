@@ -514,3 +514,22 @@ a.inline, [data-inline-tap], .prose a, nav[aria-label="Breadcrumb"] a {
     transform: none;
   }
 }
+
+/* Bridge: the coaching plan editor and messenger were built with the
+   control-theme tokens, and now live inside Mission Control. This maps
+   those tokens onto Mission Control's own palette so the components render
+   in the right colours without a rewrite or the full control theme. */
+.mc-coach-embed {
+  --accent: var(--color-suth-accent);
+  --accent-ink: #0A0A0A;
+  --bg: var(--color-suth-base);
+  --surface: var(--color-suth-elevated);
+  --text: var(--color-suth-text);
+  --text-muted: var(--color-suth-text-secondary);
+  --text-faint: var(--color-suth-text-tertiary);
+  --border: var(--color-suth-border);
+  --border-strong: var(--color-suth-border-strong);
+  --danger: var(--color-suth-danger);
+  --text-sm: 0.875rem;
+  --tabbar-h: 0px;
+}
