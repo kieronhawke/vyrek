@@ -113,15 +113,18 @@ export default function ClubPage() {
               tools. You run it yourself, at your own pace.
             </p>
 
+            {/* Club hasn't opened yet, so the door is a waiting list, not
+                a trial. The price stays visible: people join lists for
+                things they can afford. */}
             <div className="mt-8 flex flex-col items-center gap-3">
               <Link
-                href="/quiz?support=self"
+                href="/club/waitlist"
                 className="inline-flex h-14 w-full max-w-xs items-center justify-center rounded-pill bg-suth-accent px-8 text-base font-semibold text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover active:scale-[0.99]"
               >
-                {CLUB.ctaLabel}
+                Join the waiting list →
               </Link>
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-                {CLUB.trialLine} Then {CLUB.monthlyDisplay}/mo
+                Coming soon. {CLUB.monthlyDisplay}/mo when it opens.
               </p>
               <p className="text-sm text-suth-text-tertiary">
                 Or {CLUB.annualDisplay} a year. {CLUB.anchorCopy}.
@@ -233,21 +236,20 @@ export default function ClubPage() {
 
           <section className="mx-auto mt-20 max-w-2xl text-center">
             <h2 className="text-2xl font-black tracking-[-0.03em] text-suth-text md:text-3xl">
-              Try it for a week. It costs nothing.
+              Opening soon. Get in first.
             </h2>
             <p className="mt-4 text-base text-suth-text-secondary">
-              Answer a few questions, see your first week, and decide from
-              there. We don&apos;t ask for a card to start, and nobody will
-              ring you.
+              Leave your details and you&apos;ll hear the moment the doors
+              open. No card, no commitment, and nobody will ring you.
             </p>
             <Link
-              href="/quiz?support=self"
+              href="/club/waitlist"
               className="mt-8 inline-flex h-14 items-center justify-center rounded-pill bg-suth-accent px-8 text-base font-semibold text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover active:scale-[0.99]"
             >
-              {CLUB.ctaLabel}
+              Join the waiting list →
             </Link>
             <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-              {CLUB.trialLine}
+              First to know, first in.
             </p>
           </section>
         </Container>

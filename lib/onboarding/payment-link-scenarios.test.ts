@@ -54,9 +54,10 @@ describe("every plan/kind/rail/rate combination round-trips the signed token", (
           expect(read.invite.kind).toBe(kind);
           expect(read.invite.plan).toBe(plan);
           expect(read.invite.rail).toBe(rail);
-          // The steps the client walks: 3 for payment-only, 9 for full.
+          // The steps the client walks: 3 for payment-only, 10 for full
+          // (the coaching-style screen made it ten).
           expect(stepsFor(read.invite.kind)).toHaveLength(
-            kind === "payment" ? 3 : 9,
+            kind === "payment" ? 3 : 10,
           );
         });
       }

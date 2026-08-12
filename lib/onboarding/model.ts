@@ -111,6 +111,7 @@ export type StepKey =
   | "training"
   | "health"
   | "availability"
+  | "support"
   | "photo"
   | "plan"
   | "pay";
@@ -130,8 +131,9 @@ export const STEPS: Step[] = [
   { key: "account", title: "Create your account", blurb: "So your plan is waiting for you every week.", required: true },
   { key: "about", title: "About you", blurb: "The basics Ben needs before he writes anything.", required: true },
   { key: "training", title: "Your training now", blurb: "Where you are, so he knows where to start.", required: true },
-  { key: "health", title: "Anything he should know", blurb: "Injuries, conditions, anything that changes a session.", required: false },
+  { key: "health", title: "Anything he should know", blurb: "Tap anything that applies. It shapes the plan, it never waters it down.", required: false },
   { key: "availability", title: "When you can train", blurb: "He builds the week around your week.", required: true },
+  { key: "support", title: "How Ben should coach you", blurb: "Everyone works differently. Tell him what actually works for you.", required: false },
   { key: "photo", title: "Add a photo", blurb: "Optional. It just makes the place feel like yours.", required: false },
   { key: "plan", title: "Choose your plan", blurb: "Change or cancel whenever you like.", required: true },
   { key: "pay", title: "Payment", blurb: "Secure checkout, handled by Stripe.", required: true },
@@ -160,15 +162,73 @@ export type Answers = {
   experience: "first" | "some" | "experienced" | "";
   trainingDays: number | null;
   currentTraining: string;
+  /** Free text kept for older saved records; the structured picker replaces it. */
   injuries: string;
+  /**
+   * The layered injury picker, same shape as the quiz: which areas, then
+   * per-area how it is now, who is helping, what sets it off, and a note.
+   * Article 9 data, like everything on the health screen.
+   */
+  injuryAreas: string[];
+  injuryDetails: Record<string, InjuryDetail>;
   /** Article 9 data. The screen says who can see it. */
   conditions: string;
   /** Weekday keys they can train. */
   availableDays: string[];
   preferredTime: "morning" | "lunch" | "evening" | "varies" | "";
+  /** How they want to be coached: tone, accountability, check-ins, channel. */
+  coachingStyle: string;
+  accountability: string;
+  checkIn: string;
+  contactPreference: string;
   photoDataUrl: string;
   plan: PlanKey | "";
 };
+
+export type InjuryDetail = {
+  /** current | recent | past */
+  recency: string;
+  /** physio | self-managed | not-assessed */
+  care: string;
+  triggers: string[];
+  note: string;
+};
+
+/** The health screen's areas. "none" clears everything else. */
+export const INJURY_AREAS = [
+  { key: "none", label: "No injuries, all clear" },
+  { key: "lower-back", label: "Lower back" },
+  { key: "knee", label: "Knee" },
+  { key: "shoulder", label: "Shoulder" },
+  { key: "achilles-calf", label: "Achilles or calf" },
+  { key: "other", label: "Somewhere else" },
+] as const;
+
+export const COACHING_STYLES = [
+  { key: "push", label: "Push me hard", note: "I respond to being challenged" },
+  { key: "encourage", label: "Build me up", note: "Encouragement gets more out of me" },
+  { key: "straight", label: "Straight talking", note: "Tell me plainly what to fix" },
+  { key: "hands-off", label: "Set it and let me run", note: "I like getting on with it" },
+] as const;
+
+export const ACCOUNTABILITY_OPTIONS = [
+  { key: "chase", label: "Chase me if I go quiet", note: "Silence usually means I've drifted" },
+  { key: "nudge", label: "A nudge now and then", note: "The odd reminder keeps me honest" },
+  { key: "self", label: "I hold myself accountable", note: "I'll come to Ben when I need him" },
+] as const;
+
+export const CHECKIN_OPTIONS = [
+  { key: "weekly", label: "Every week" },
+  { key: "fortnightly", label: "Every couple of weeks" },
+  { key: "monthly", label: "Monthly" },
+  { key: "as-needed", label: "Only when something changes" },
+] as const;
+
+export const CONTACT_OPTIONS = [
+  { key: "text", label: "Text or WhatsApp" },
+  { key: "email", label: "Email" },
+  { key: "app", label: "In the app" },
+] as const;
 
 export const DAYS = [
   { key: "mon", label: "Mon" },
@@ -193,9 +253,15 @@ export function emptyAnswers(name = "", email = "", phone = ""): Answers {
     trainingDays: null,
     currentTraining: "",
     injuries: "",
+    injuryAreas: [],
+    injuryDetails: {},
     conditions: "",
     availableDays: [],
     preferredTime: "",
+    coachingStyle: "",
+    accountability: "",
+    checkIn: "",
+    contactPreference: "",
     photoDataUrl: "",
     plan: "",
   };
@@ -292,8 +358,24 @@ export function summarise(
         .join(", "),
     });
   }
-  if (a.injuries.trim() || a.conditions.trim()) {
+  const flaggedInjuries = a.injuryAreas.filter((k) => k !== "none");
+  if (flaggedInjuries.length > 0) {
+    out.push({
+      label: "Injuries",
+      value: INJURY_AREAS.filter((i) => flaggedInjuries.includes(i.key))
+        .map((i) => i.label)
+        .join(", "),
+    });
+  } else if (a.injuries.trim() || a.conditions.trim()) {
     out.push({ label: "Health notes", value: "Given to Ben" });
+  }
+  if (a.coachingStyle) {
+    const style = COACHING_STYLES.find((c) => c.key === a.coachingStyle);
+    if (style) out.push({ label: "Coaching style", value: style.label });
+  }
+  if (a.checkIn) {
+    const c = CHECKIN_OPTIONS.find((o) => o.key === a.checkIn);
+    if (c) out.push({ label: "Check-ins", value: c.label });
   }
   return out;
 }

@@ -672,14 +672,22 @@ export async function listWaitlist(opts: {
   limit?: number;
 }): Promise<
   Result<
-    Array<{ id: string; email: string; source: string | null; created_at: string }>
+    Array<{
+      id: string;
+      email: string;
+      name: string | null;
+      phone: string | null;
+      goal: string | null;
+      source: string | null;
+      created_at: string;
+    }>
   >
 > {
   try {
     const sb = supabaseAdmin();
     const { data, error } = await sb
       .from("waitlist")
-      .select("id, email, source, created_at")
+      .select("id, email, name, phone, goal, source, created_at")
       .order("created_at", { ascending: false })
       .limit(opts.limit ?? 500);
     if (error) return fail(error);
@@ -688,6 +696,9 @@ export async function listWaitlist(opts: {
       data: (data ?? []) as Array<{
         id: string;
         email: string;
+        name: string | null;
+        phone: string | null;
+        goal: string | null;
         source: string | null;
         created_at: string;
       }>,

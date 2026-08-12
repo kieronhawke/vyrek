@@ -3,7 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useRecord } from "@/lib/control/store";
 import {
+  ACCOUNTABILITY_OPTIONS,
+  CHECKIN_OPTIONS,
+  COACHING_STYLES,
+  CONTACT_OPTIONS,
   DAYS,
+  INJURY_AREAS,
   PLANS,
   blocker,
   emptyAnswers,
@@ -12,9 +17,16 @@ import {
   stepsFor,
   summarise,
   type Answers,
+  type InjuryDetail,
   type PlanKey,
   type Step,
 } from "@/lib/onboarding/model";
+import {
+  INJURY_CARE_LABEL,
+  INJURY_RECENCY_LABEL,
+  INJURY_TRIGGER_OPTIONS,
+  type InjuryValue,
+} from "@/lib/quiz-flow";
 import type { InvitePayload } from "@/lib/onboarding/token";
 
 /**
@@ -41,14 +53,21 @@ import type { InvitePayload } from "@/lib/onboarding/token";
  * until there is a database, and the screen says so before they finish.
  */
 
-type Props = { token: string; invite: InvitePayload; startStep?: string; cancelled?: boolean };
+type Props = {
+  token: string;
+  invite: InvitePayload;
+  startStep?: string;
+  cancelled?: boolean;
+  /** What the quiz already told us, so nothing is asked twice. */
+  prefill?: Partial<Answers>;
+};
 
-export function OnboardingFlow({ token, invite, startStep, cancelled }: Props) {
+export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }: Props) {
   const steps = stepsFor(invite.kind);
   const storeKey = `onboarding.${invite.email || invite.name}`;
   const { value: answers, save } = useRecord<Answers>(
     storeKey,
-    emptyAnswers(invite.name, invite.email, invite.phone),
+    { ...emptyAnswers(invite.name, invite.email, invite.phone), ...prefill },
   );
 
   const startIndex = Math.max(
@@ -222,6 +241,8 @@ function StepBody({
       return <Health answers={answers} set={set} />;
     case "availability":
       return <Availability answers={answers} set={set} />;
+    case "support":
+      return <Support answers={answers} set={set} />;
     case "photo":
       return <Photo answers={answers} set={set} />;
     case "plan":
@@ -414,7 +435,9 @@ function Training({
       <fieldset className="ob-choices">
         <legend className="ob-label">Days a week you can train</legend>
         <div className="ob-numbers">
-          {[2, 3, 4, 5, 6].map((n) => (
+          {/* Starts at 1: someone with one day a week is exactly as welcome,
+              and a picker that starts at 2 quietly says otherwise. */}
+          {[1, 2, 3, 4, 5, 6].map((n) => (
             <button
               key={n}
               type="button"
@@ -443,7 +466,45 @@ function Training({
   );
 }
 
+/**
+ * The layered health screen, borrowed from the quiz because it works:
+ * tap an area, answer three tap-able follow-ups about it, add a note if
+ * words help. Nobody has to compose a paragraph about their back unless
+ * they want to.
+ */
 function Health({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) => void }) {
+  const areas = answers.injuryAreas;
+
+  function toggleArea(key: string) {
+    if (key === "none") {
+      // "All clear" is an answer, not the absence of one — and it clears
+      // anything else that was tapped by mistake.
+      set({ injuryAreas: areas.includes("none") ? [] : ["none"], injuryDetails: {} });
+      return;
+    }
+    const next = areas.includes(key)
+      ? areas.filter((a) => a !== key)
+      : [...areas.filter((a) => a !== "none"), key];
+    const details = { ...answers.injuryDetails };
+    if (!next.includes(key)) delete details[key];
+    else if (!details[key]) details[key] = { recency: "", care: "", triggers: [], note: "" };
+    set({ injuryAreas: next, injuryDetails: details });
+  }
+
+  function setDetail(area: string, patch: Partial<InjuryDetail>) {
+    const current = answers.injuryDetails[area] ?? {
+      recency: "",
+      care: "",
+      triggers: [],
+      note: "",
+    };
+    set({
+      injuryDetails: { ...answers.injuryDetails, [area]: { ...current, ...patch } },
+    });
+  }
+
+  const flagged = areas.filter((a) => a !== "none");
+
   return (
     <div className="ob-fields">
       {/* Article 9 special-category data. Saying who sees it is part of the
@@ -452,16 +513,112 @@ function Health({ answers, set }: { answers: Answers; set: (p: Partial<Answers>)
         Only Ben sees this. It is never shown to anyone else and never used for
         anything except writing your training.
       </p>
-      <Field label="Injuries, past or present">
-        <textarea
-          value={answers.injuries}
-          onChange={(e) => set({ injuries: e.target.value })}
-          className="ob-input ob-textarea"
-          rows={3}
-          placeholder="Left calf tear in June. Fine now but it flares if I add mileage fast."
-        />
-      </Field>
-      <Field label="Anything else he should know">
+
+      <fieldset className="ob-choices">
+        <legend className="ob-label">Any injuries he should plan around?</legend>
+        <div className="ob-days">
+          {INJURY_AREAS.map((area) => (
+            <button
+              key={area.key}
+              type="button"
+              className="ob-day ob-day--wide"
+              data-on={areas.includes(area.key) || undefined}
+              aria-pressed={areas.includes(area.key)}
+              onClick={() => toggleArea(area.key)}
+            >
+              {area.label}
+            </button>
+          ))}
+        </div>
+      </fieldset>
+
+      {flagged.map((area) => {
+        const label =
+          INJURY_AREAS.find((a) => a.key === area)?.label ?? "that area";
+        const detail = answers.injuryDetails[area] ?? {
+          recency: "",
+          care: "",
+          triggers: [],
+          note: "",
+        };
+        const triggers = INJURY_TRIGGER_OPTIONS[area as InjuryValue] ?? [];
+        return (
+          <div key={area} className="ob-injury">
+            <p className="ob-label">About your {label.toLowerCase()}</p>
+
+            <p className="ob-hint">How is it right now?</p>
+            <div className="ob-pills">
+              {(["current", "recent", "past"] as const).map((r) => (
+                <button
+                  key={r}
+                  type="button"
+                  className="ob-pill"
+                  data-on={detail.recency === r || undefined}
+                  aria-pressed={detail.recency === r}
+                  onClick={() => setDetail(area, { recency: r })}
+                >
+                  {INJURY_RECENCY_LABEL[r]}
+                </button>
+              ))}
+            </div>
+
+            <p className="ob-hint">Anyone helping you with it?</p>
+            <div className="ob-pills">
+              {(["physio", "self-managed", "not-assessed"] as const).map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  className="ob-pill"
+                  data-on={detail.care === c || undefined}
+                  aria-pressed={detail.care === c}
+                  onClick={() => setDetail(area, { care: c })}
+                >
+                  {INJURY_CARE_LABEL[c]}
+                </button>
+              ))}
+            </div>
+
+            {triggers.length > 0 ? (
+              <>
+                <p className="ob-hint">What tends to set it off? Tap any.</p>
+                <div className="ob-pills">
+                  {triggers.map((t) => {
+                    const on = detail.triggers.includes(t.value);
+                    return (
+                      <button
+                        key={t.value}
+                        type="button"
+                        className="ob-pill"
+                        data-on={on || undefined}
+                        aria-pressed={on}
+                        onClick={() =>
+                          setDetail(area, {
+                            triggers: on
+                              ? detail.triggers.filter((x) => x !== t.value)
+                              : [...detail.triggers, t.value],
+                          })
+                        }
+                      >
+                        {t.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </>
+            ) : null}
+
+            <input
+              value={detail.note}
+              onChange={(e) => setDetail(area, { note: e.target.value })}
+              className="ob-input"
+              placeholder="Anything else about it, in your own words (optional)"
+              aria-label={`Anything else about your ${label.toLowerCase()}`}
+            />
+          </div>
+        );
+      })}
+
+      <Field label="Anything else he should know" hint="Conditions, medication, anything that changes a session.">
         <textarea
           value={answers.conditions}
           onChange={(e) => set({ conditions: e.target.value })}
@@ -470,6 +627,87 @@ function Health({ answers, set }: { answers: Answers; set: (p: Partial<Answers>)
           placeholder="Asthma. I carry an inhaler."
         />
       </Field>
+    </div>
+  );
+}
+
+/**
+ * How they want to be coached. Two people on the same plan can need
+ * opposite things from Ben, and asking up front beats finding out in
+ * week three that somebody hates being chased.
+ */
+function Support({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) => void }) {
+  return (
+    <div className="ob-fields">
+      <fieldset className="ob-choices">
+        <legend className="ob-label">What gets the best out of you?</legend>
+        {COACHING_STYLES.map((o) => (
+          <button
+            key={o.key}
+            type="button"
+            className="ob-choice"
+            aria-pressed={answers.coachingStyle === o.key}
+            data-on={answers.coachingStyle === o.key || undefined}
+            onClick={() => set({ coachingStyle: o.key })}
+          >
+            <span className="ob-choice__label">{o.label}</span>
+            <span className="ob-choice__note">{o.note}</span>
+          </button>
+        ))}
+      </fieldset>
+
+      <fieldset className="ob-choices">
+        <legend className="ob-label">Keeping you on track</legend>
+        {ACCOUNTABILITY_OPTIONS.map((o) => (
+          <button
+            key={o.key}
+            type="button"
+            className="ob-choice"
+            aria-pressed={answers.accountability === o.key}
+            data-on={answers.accountability === o.key || undefined}
+            onClick={() => set({ accountability: o.key })}
+          >
+            <span className="ob-choice__label">{o.label}</span>
+            <span className="ob-choice__note">{o.note}</span>
+          </button>
+        ))}
+      </fieldset>
+
+      <fieldset className="ob-choices">
+        <legend className="ob-label">How often should he check in on progress?</legend>
+        <div className="ob-pills">
+          {CHECKIN_OPTIONS.map((o) => (
+            <button
+              key={o.key}
+              type="button"
+              className="ob-pill"
+              data-on={answers.checkIn === o.key || undefined}
+              aria-pressed={answers.checkIn === o.key}
+              onClick={() => set({ checkIn: o.key })}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset className="ob-choices">
+        <legend className="ob-label">Best way to reach you</legend>
+        <div className="ob-pills">
+          {CONTACT_OPTIONS.map((o) => (
+            <button
+              key={o.key}
+              type="button"
+              className="ob-pill"
+              data-on={answers.contactPreference === o.key || undefined}
+              aria-pressed={answers.contactPreference === o.key}
+              onClick={() => set({ contactPreference: o.key })}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
+      </fieldset>
     </div>
   );
 }
@@ -526,48 +764,129 @@ function Availability({ answers, set }: { answers: Answers; set: (p: Partial<Ans
   );
 }
 
+/**
+ * The photo screen with an actual editor: after choosing a picture you
+ * can zoom with a slider and drag it around the circle until your face
+ * is where you want it. Every adjustment re-crops the stored 320px
+ * square, so what you see in the circle is exactly what is kept.
+ *
+ * The full-resolution original lives only in component state — it is a
+ * phone photo measured in megabytes and localStorage is not.
+ */
 function Photo({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) => void }) {
   const input = useRef<HTMLInputElement>(null);
+  const [img, setImg] = useState<HTMLImageElement | null>(null);
+  const [zoom, setZoom] = useState(1);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const drag = useRef<{ x: number; y: number; ox: number; oy: number } | null>(null);
+
+  const SIZE = 320;
+
+  function crop(image: HTMLImageElement, z: number, off: { x: number; y: number }) {
+    const canvas = document.createElement("canvas");
+    canvas.width = SIZE;
+    canvas.height = SIZE;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const scale = Math.max(SIZE / image.width, SIZE / image.height) * z;
+    const w = image.width * scale;
+    const h = image.height * scale;
+    // The image must always cover the square, so the drag can never pull
+    // an edge into view and leave a black stripe on the avatar.
+    const maxX = Math.max(0, (w - SIZE) / 2);
+    const maxY = Math.max(0, (h - SIZE) / 2);
+    const x = Math.min(maxX, Math.max(-maxX, off.x));
+    const y = Math.min(maxY, Math.max(-maxY, off.y));
+    ctx.drawImage(image, (SIZE - w) / 2 + x, (SIZE - h) / 2 + y, w, h);
+    set({ photoDataUrl: canvas.toDataURL("image/jpeg", 0.82) });
+    return { x, y };
+  }
 
   function pick(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    // Downscaled before it is stored: a modern phone photo is 4MB and this
-    // goes into localStorage, which has a handful of megabytes in total.
     const reader = new FileReader();
     reader.onload = () => {
-      const img = new Image();
-      img.onload = () => {
-        const size = 320;
-        const canvas = document.createElement("canvas");
-        canvas.width = size;
-        canvas.height = size;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
-        const scale = Math.max(size / img.width, size / img.height);
-        const w = img.width * scale;
-        const h = img.height * scale;
-        ctx.drawImage(img, (size - w) / 2, (size - h) / 2, w, h);
-        set({ photoDataUrl: canvas.toDataURL("image/jpeg", 0.82) });
+      const image = new Image();
+      image.onload = () => {
+        setImg(image);
+        setZoom(1);
+        setOffset({ x: 0, y: 0 });
+        crop(image, 1, { x: 0, y: 0 });
       };
-      img.src = String(reader.result);
+      image.src = String(reader.result);
     };
     reader.readAsDataURL(file);
   }
 
+  function applyZoom(z: number) {
+    setZoom(z);
+    if (img) {
+      const clamped = crop(img, z, offset);
+      if (clamped) setOffset(clamped);
+    }
+  }
+
+  function onPointerDown(e: React.PointerEvent) {
+    if (!img) return;
+    (e.target as Element).setPointerCapture(e.pointerId);
+    drag.current = { x: e.clientX, y: e.clientY, ox: offset.x, oy: offset.y };
+  }
+
+  function onPointerMove(e: React.PointerEvent) {
+    if (!img || !drag.current) return;
+    const next = {
+      x: drag.current.ox + (e.clientX - drag.current.x),
+      y: drag.current.oy + (e.clientY - drag.current.y),
+    };
+    const clamped = crop(img, zoom, next);
+    if (clamped) setOffset(clamped);
+  }
+
+  function onPointerUp() {
+    drag.current = null;
+  }
+
   return (
     <div className="ob-photo">
-      <div className="ob-avatar" data-empty={!answers.photoDataUrl || undefined}>
+      <div
+        className="ob-avatar"
+        data-empty={!answers.photoDataUrl || undefined}
+        data-editable={Boolean(img) || undefined}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+        style={img ? { touchAction: "none", cursor: "grab" } : undefined}
+      >
         {answers.photoDataUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={answers.photoDataUrl} alt="Your profile photo" />
+          <img src={answers.photoDataUrl} alt="Your profile photo" draggable={false} />
         ) : (
           <span aria-hidden>+</span>
         )}
       </div>
 
+      {img ? (
+        <div className="ob-photo-tools">
+          <label className="ob-hint" htmlFor="ob-zoom">
+            Zoom, then drag the photo to line it up
+          </label>
+          <input
+            id="ob-zoom"
+            type="range"
+            min={1}
+            max={3}
+            step={0.05}
+            value={zoom}
+            onChange={(e) => applyZoom(Number(e.target.value))}
+            className="ob-zoom"
+          />
+        </div>
+      ) : null}
+
       <label className="ob-upload">
-        {answers.photoDataUrl ? "Choose a different one" : "Take or choose a photo"}
+        {answers.photoDataUrl ? "Choose a different photo" : "Take or choose a photo"}
         <input
           ref={input}
           type="file"
@@ -579,7 +898,14 @@ function Photo({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) 
       </label>
 
       {answers.photoDataUrl ? (
-        <button type="button" className="ob-remove" onClick={() => set({ photoDataUrl: "" })}>
+        <button
+          type="button"
+          className="ob-remove"
+          onClick={() => {
+            setImg(null);
+            set({ photoDataUrl: "" });
+          }}
+        >
           Remove
         </button>
       ) : null}

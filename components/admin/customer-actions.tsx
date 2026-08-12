@@ -39,12 +39,12 @@ export function CustomerActions({
       <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
         Customer actions
       </p>
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-4 grid grid-cols-1 gap-2 sm:flex sm:flex-wrap">
         <button
           type="button"
           onClick={passwordReset}
           disabled={pending}
-          className="inline-flex h-10 items-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text hover:border-suth-border-strong disabled:opacity-50"
+          className="inline-flex h-12 items-center justify-center rounded-pill border border-suth-border bg-suth-elevated px-4 text-sm text-suth-text hover:border-suth-border-strong disabled:opacity-50 sm:h-10 sm:w-auto"
         >
           Email them a sign-in link
         </button>

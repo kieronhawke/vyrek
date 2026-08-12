@@ -38,12 +38,18 @@ export default async function ShortOnboardingPage({
   // the person has actually seen it. No-op for old signed-token links.
   await markInviteOpened(token);
 
+  // What the quiz already told us about this person, so the flow asks
+  // nothing twice. Empty for someone who never did the quiz.
+  const { quizPrefill } = await import("@/lib/onboarding/prefill");
+  const prefill = await quizPrefill(read.invite.email);
+
   return (
     <OnboardingFlow
       token={token}
       invite={read.invite}
       startStep={step}
       cancelled={cancelled === "1"}
+      prefill={prefill}
     />
   );
 }

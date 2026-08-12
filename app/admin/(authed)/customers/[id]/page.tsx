@@ -206,38 +206,8 @@ export default async function AdminCustomerDetailPage({
                   </dd>
                 </div>
               </dl>
-              {latestSub.stripe_subscription_id &&
-              latestSub.status !== "canceled" ? (
-                <div className="mt-4 border-t border-suth-border-subtle pt-4">
-                  <SubscriptionActions
-                    stripeSubscriptionId={latestSub.stripe_subscription_id}
-                    amountPence={billing?.amountPence ?? null}
-                    paused={billing?.paused ?? false}
-                    pauseResumesISO={billing?.pauseResumesISO ?? null}
-                    periodEndISO={
-                      billing?.currentPeriodEndISO ??
-                      latestSub.current_period_end
-                    }
-                    lastPaymentPence={lastPaid?.amountPence ?? null}
-                    lastPaymentISO={lastPaid?.createdISO ?? null}
-                    clientLabel={customer.email.split("@")[0]}
-                  />
-                </div>
-              ) : null}
-              {latestSub.status === "canceled" ? (
-                <div className="mt-4 border-t border-suth-border-subtle pt-4">
-                  <p className="text-sm text-suth-text-secondary">
-                    Their membership has ended. Want them back? Send a fresh
-                    payment link with their details already filled in.
-                  </p>
-                  <Link
-                    href={`/admin/clients?name=${encodeURIComponent(customer.email.split("@")[0])}&email=${encodeURIComponent(customer.email)}`}
-                    className="mt-3 inline-flex h-11 items-center rounded-pill bg-suth-accent px-5 text-sm font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover"
-                  >
-                    Restart this client →
-                  </Link>
-                </div>
-              ) : null}
+              {/* All actions live in one place at the foot of the page —
+                  this card stays purely informational. */}
             </>
           ) : (
             <p className="mt-3 text-sm text-suth-text-tertiary">
@@ -345,17 +315,6 @@ export default async function AdminCustomerDetailPage({
             ])}
           />
         )}
-      </section>
-
-      {/* Customer actions */}
-      <section className="mt-10">
-        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-          Account actions
-        </h2>
-        <CustomerActions
-          email={customer.email}
-          stripeSubscriptionId={latestSub?.stripe_subscription_id ?? null}
-        />
       </section>
 
       {/* The whole story: enquiry → call → link → account, one page. */}
@@ -486,6 +445,57 @@ export default async function AdminCustomerDetailPage({
           </Card>
         )}
       </section>
+      {/* ── Every action on this customer, in one clear block ─────────
+          The details above are for reading; this is for doing. On a phone
+          each button is full width, so the thing to tap is unmissable. */}
+      <section className="mt-10">
+        <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+          Actions for this customer
+        </h2>
+
+        {latestSub?.stripe_subscription_id && latestSub.status !== "canceled" ? (
+          <Card>
+            <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+              Their subscription
+            </p>
+            <SubscriptionActions
+              stripeSubscriptionId={latestSub.stripe_subscription_id}
+              amountPence={billing?.amountPence ?? null}
+              paused={billing?.paused ?? false}
+              pauseResumesISO={billing?.pauseResumesISO ?? null}
+              periodEndISO={
+                billing?.currentPeriodEndISO ?? latestSub.current_period_end
+              }
+              lastPaymentPence={lastPaid?.amountPence ?? null}
+              lastPaymentISO={lastPaid?.createdISO ?? null}
+              clientLabel={customer.email.split("@")[0]}
+            />
+          </Card>
+        ) : null}
+
+        {latestSub?.status === "canceled" ? (
+          <Card>
+            <p className="text-sm text-suth-text-secondary">
+              Their membership has ended. Want them back? Send a fresh
+              payment link with their details already filled in.
+            </p>
+            <Link
+              href={`/admin/clients?name=${encodeURIComponent(customer.email.split("@")[0])}&email=${encodeURIComponent(customer.email)}`}
+              className="mt-3 inline-flex h-12 w-full items-center justify-center rounded-pill bg-suth-accent px-5 text-sm font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover sm:h-11 sm:w-auto"
+            >
+              Restart this client →
+            </Link>
+          </Card>
+        ) : null}
+
+        <div className="mt-4">
+          <CustomerActions
+            email={customer.email}
+            stripeSubscriptionId={latestSub?.stripe_subscription_id ?? null}
+          />
+        </div>
+      </section>
+
     </>
   );
 }

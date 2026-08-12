@@ -135,11 +135,11 @@ export function SubscriptionActions({
   }
 
   const trigger =
-    "inline-flex h-11 items-center rounded-pill border border-suth-border px-4 text-sm text-suth-text hover:border-suth-border-strong disabled:opacity-50";
+    "inline-flex h-12 w-full items-center justify-center rounded-pill border border-suth-border px-4 text-sm text-suth-text hover:border-suth-border-strong disabled:opacity-50 sm:h-11 sm:w-auto";
 
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap gap-2">
+      <div className="grid grid-cols-1 gap-2 sm:flex sm:flex-wrap">
         <button type="button" className={trigger} disabled={pending} onClick={() => { setMsg(null); setFlow("rate"); }}>
           Change rate{amountPence ? ` (now ${gbp(amountPence)}/mo)` : ""}
         </button>
@@ -168,7 +168,7 @@ export function SubscriptionActions({
         </button>
         <button
           type="button"
-          className="inline-flex h-11 items-center rounded-pill border border-amber-500/40 bg-amber-500/10 px-4 text-sm text-amber-300 hover:bg-amber-500/20 disabled:opacity-50"
+          className="inline-flex h-12 w-full items-center justify-center rounded-pill border border-amber-500/40 bg-amber-500/10 px-4 text-sm text-amber-300 hover:bg-amber-500/20 disabled:opacity-50 sm:h-11 sm:w-auto"
           disabled={pending}
           onClick={() => { setMsg(null); setFlow("cancel_end"); }}
         >
@@ -176,7 +176,7 @@ export function SubscriptionActions({
         </button>
         <button
           type="button"
-          className="inline-flex h-11 items-center rounded-pill border border-red-500/40 bg-red-500/10 px-4 text-sm text-red-300 hover:bg-red-500/20 disabled:opacity-50"
+          className="inline-flex h-12 w-full items-center justify-center rounded-pill border border-red-500/40 bg-red-500/10 px-4 text-sm text-red-300 hover:bg-red-500/20 disabled:opacity-50 sm:h-11 sm:w-auto"
           disabled={pending}
           onClick={() => { setMsg(null); setFlow("cancel_now"); }}
         >
@@ -275,7 +275,7 @@ export function SubscriptionActions({
           <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             Why is it pausing?
           </p>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-1 gap-2 sm:flex sm:flex-wrap">
             {PAUSE_REASONS.map((r) => (
               <button
                 key={r}
@@ -297,7 +297,7 @@ export function SubscriptionActions({
           <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
             For how long?
           </p>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-1 gap-2 sm:flex sm:flex-wrap">
             {PAUSE_DURATIONS.map((d) => (
               <button
                 key={d.label}
