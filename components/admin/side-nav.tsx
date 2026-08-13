@@ -180,8 +180,17 @@ export function AdminSideNav({
   collapsed?: boolean;
 }) {
   const pathname = usePathname();
+  // A route matches an item when it IS the href or sits under it. When more
+  // than one matches (e.g. /admin/partners and /admin/partners/list on the
+  // list page), only the longest — most specific — one lights, so a child
+  // never also highlights its parent.
+  const matchLen = (href: string) => {
+    if (href === "/admin") return pathname === "/admin" ? href.length : -1;
+    return pathname === href || pathname.startsWith(`${href}/`) ? href.length : -1;
+  };
+  const bestMatch = Math.max(-1, ...items.map((n) => matchLen(n.href)));
   const isActive = (href: string) =>
-    href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
+    bestMatch >= 0 && matchLen(href) === bestMatch;
   const groups = Array.from(new Set(items.map((n) => n.group)));
 
   return (

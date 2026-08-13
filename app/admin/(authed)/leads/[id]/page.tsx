@@ -45,10 +45,18 @@ export default async function AdminLeadDetailPage({
       .then((r) => r.data ?? [], () => []),
   ]);
 
+  // Most relevant booking, not just the latest-dated: a confirmed upcoming
+  // call beats a later cancelled one (see lib/admin/leads-lifecycle.ts).
+  const nowMs = Date.now();
+  const isLive = (b: { startISO: string; status: string }) =>
+    b.status === "confirmed" && new Date(b.startISO).getTime() >= nowMs - 3600_000;
   const booking =
     bookings
       .filter((b) => norm(b.email) === key)
-      .sort((a, b) => b.startISO.localeCompare(a.startISO))[0] ?? null;
+      .sort((a, b) => {
+        if (isLive(a) !== isLive(b)) return isLive(a) ? -1 : 1;
+        return b.startISO.localeCompare(a.startISO);
+      })[0] ?? null;
   const customerId = (custRes as { id: string } | null)?.id ?? null;
   const invite = (invRes as Array<{ opened_at: string | null; payload: { email?: string } }>).find(
     (i) => norm(i.payload?.email) === key,

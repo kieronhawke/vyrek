@@ -40,6 +40,61 @@ export type LeadWithStage = {
 
 const norm = (e: string | null | undefined) => (e ?? "").trim().toLowerCase();
 
+type Booking = { startISO: string; status: "confirmed" | "cancelled" };
+
+/**
+ * The most relevant booking, PURE and tested. A confirmed call still to
+ * come (or within the last hour) beats a later-dated cancelled or past one,
+ * so the callback list never hides a booked call behind a cancellation.
+ */
+export function chooseBooking(bookings: Booking[], nowMs: number): Booking | null {
+  const isLive = (b: Booking) =>
+    b.status === "confirmed" && new Date(b.startISO).getTime() >= nowMs - 3600_000;
+  let best: Booking | null = null;
+  for (const b of bookings) {
+    if (!best) {
+      best = b;
+      continue;
+    }
+    const better = isLive(b) !== isLive(best) ? isLive(b) : b.startISO > best.startISO;
+    if (better) best = b;
+  }
+  return best;
+}
+
+/**
+ * Where a lead is in the journey, PURE and tested. Furthest-reached point
+ * wins: paying client, then a live booked call, then link sent, then a past
+ * call, else brand new.
+ */
+export function stageFor(opts: {
+  hasCustomer: boolean;
+  booking: Booking | null;
+  hasInvite: boolean;
+  linkOpenedISO: string | null;
+  nowMs: number;
+}): { stage: LeadStage; detail: string } {
+  const { hasCustomer, booking, hasInvite, linkOpenedISO, nowMs } = opts;
+  const live =
+    booking?.status === "confirmed" &&
+    new Date(booking.startISO).getTime() >= nowMs - 3600_000;
+  if (hasCustomer) return { stage: "client", detail: "Signed up and paying" };
+  if (booking && live) return { stage: "booked", detail: `Call ${fmt(booking.startISO)}` };
+  if (hasInvite)
+    return {
+      stage: "link_sent",
+      detail: linkOpenedISO
+        ? `Link opened ${fmtDate(linkOpenedISO)}`
+        : "Onboarding link sent, not opened yet",
+    };
+  if (booking)
+    return {
+      stage: "call_done",
+      detail: booking.status === "cancelled" ? "Call was cancelled" : `Call was ${fmt(booking.startISO)}`,
+    };
+  return { stage: "new", detail: "Needs a callback" };
+}
+
 export async function leadsWithStage(limit = 100): Promise<LeadWithStage[]> {
   const leads = await recentLeads(limit);
   if (leads.length === 0) return [];
@@ -67,17 +122,22 @@ export async function leadsWithStage(limit = 100): Promise<LeadWithStage[]> {
     customerByEmail.set(norm(c.email), c.id);
   }
 
-  // Newest booking per email (any status), and newest invite per email.
-  const bookingByEmail = new Map<
-    string,
-    { startISO: string; status: "confirmed" | "cancelled" }
-  >();
+  // Group bookings per email, then pick the most relevant one via the pure,
+  // tested chooseBooking (a confirmed upcoming call beats a later cancelled
+  // one). The empty-key guard matches the invite/customer joins.
+  const nowMs = Date.now();
+  const bookingsByEmail = new Map<string, Booking[]>();
   for (const b of bookings) {
     const key = norm(b.email);
-    const prev = bookingByEmail.get(key);
-    if (!prev || b.startISO > prev.startISO) {
-      bookingByEmail.set(key, { startISO: b.startISO, status: b.status });
-    }
+    if (!key) continue;
+    const list = bookingsByEmail.get(key) ?? [];
+    list.push({ startISO: b.startISO, status: b.status });
+    bookingsByEmail.set(key, list);
+  }
+  const bookingByEmail = new Map<string, Booking>();
+  for (const [key, list] of bookingsByEmail) {
+    const chosen = chooseBooking(list, nowMs);
+    if (chosen) bookingByEmail.set(key, chosen);
   }
 
   const inviteByEmail = new Map<string, string | null>();
@@ -89,37 +149,20 @@ export async function leadsWithStage(limit = 100): Promise<LeadWithStage[]> {
     if (key && !inviteByEmail.has(key)) inviteByEmail.set(key, inv.opened_at);
   }
 
-  const now = Date.now();
-
   return leads.map((lead): LeadWithStage => {
     const key = norm(lead.email);
     const customerId = customerByEmail.get(key) ?? null;
     const booking = bookingByEmail.get(key) ?? null;
-    const linkOpened = inviteByEmail.get(key);
+    const linkOpened = inviteByEmail.get(key) ?? null;
     const hasInvite = inviteByEmail.has(key) || Boolean(lead.invitedAtISO);
 
-    let stage: LeadStage = "new";
-    let detail: string | null = null;
-
-    if (customerId) {
-      stage = "client";
-      detail = "Signed up and paying";
-    } else if (booking && booking.status === "confirmed" && new Date(booking.startISO).getTime() >= now - 3600_000) {
-      stage = "booked";
-      detail = `Call ${fmt(booking.startISO)}`;
-    } else if (hasInvite) {
-      stage = "link_sent";
-      detail = linkOpened ? `Link opened ${fmtDate(linkOpened)}` : "Onboarding link sent, not opened yet";
-    } else if (booking) {
-      stage = "call_done";
-      detail =
-        booking.status === "cancelled"
-          ? "Call was cancelled"
-          : `Call was ${fmt(booking.startISO)}`;
-    } else {
-      stage = "new";
-      detail = "Needs a callback";
-    }
+    const { stage, detail } = stageFor({
+      hasCustomer: Boolean(customerId),
+      booking,
+      hasInvite,
+      linkOpenedISO: linkOpened,
+      nowMs,
+    });
 
     return {
       lead,
@@ -127,7 +170,7 @@ export async function leadsWithStage(limit = 100): Promise<LeadWithStage[]> {
       detail,
       bookingStartISO: booking?.startISO ?? null,
       bookingStatus: booking?.status ?? null,
-      linkOpenedISO: linkOpened ?? null,
+      linkOpenedISO: linkOpened,
       customerId,
     };
   });
