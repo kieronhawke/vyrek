@@ -12,6 +12,7 @@ export function ClubWaitlistForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [goal, setGoal] = useState("");
+  const [company, setCompany] = useState(""); // honeypot
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +25,7 @@ export function ClubWaitlistForm() {
       const res = await fetch("/api/club/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, goal }),
+        body: JSON.stringify({ name, email, phone, goal, company }),
       });
       const d = (await res.json()) as { ok: boolean; error?: string };
       if (!d.ok) {
@@ -49,9 +50,9 @@ export function ClubWaitlistForm() {
           See you at the front of the queue{name ? `, ${name.split(/\s+/)[0]}` : ""}.
         </h2>
         <p className="mt-4 text-base text-suth-text-secondary">
-          We&apos;ve emailed you a confirmation
-          {phone.trim() ? " and sent you a text" : ""}. The moment Suth Club
-          opens, you&apos;ll be the first to know.
+          Look out for a confirmation in your inbox
+          {phone.trim() ? " (and a text)" : ""}. The moment Suth Club opens,
+          you&apos;ll be the first to know.
         </p>
       </div>
     );
@@ -64,6 +65,29 @@ export function ClubWaitlistForm() {
 
   return (
     <form onSubmit={submit} className="space-y-5">
+      {/* Honeypot: positioned off-screen (not display:none, which bots detect)
+          and hidden from assistive tech and tab order. */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          width: "1px",
+          height: "1px",
+          overflow: "hidden",
+        }}
+      >
+        <label htmlFor="wl-company">Company (leave blank)</label>
+        <input
+          id="wl-company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+        />
+      </div>
+
       {error ? (
         <p role="alert" className="rounded-lg border border-suth-danger/40 bg-suth-danger/10 px-4 py-3 text-sm text-suth-text">
           {error}

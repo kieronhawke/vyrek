@@ -87,9 +87,12 @@ export const limiters = {
   partnerClick: build("rl:p_click", 60, "1 h"),
   // Suth Club waiting list. Unauthenticated and it sends an email (and a
   // text): without a throttle it is an open relay for bombing a victim's
-  // inbox from our domain and burning send credit. Per-IP caps the flood;
-  // per-email caps re-sends to one address.
-  clubWaitlistIp: build("rl:club_ip", 6, "1 h"),
+  // inbox from our domain and burning send credit. The per-EMAIL cap is the
+  // real victim-protection (re-sends to one address); the per-IP cap only
+  // needs to stop machine-gun flooding, so it's set high enough that a busy
+  // shared IP (mobile carrier / office NAT / an Instagram burst) doesn't trip
+  // real people — the funnel is designed for exactly those bursts.
+  clubWaitlistIp: build("rl:club_ip", 30, "1 h"),
   clubWaitlistEmail: build("rl:club_em", 3, "1 d"),
   // Authenticated surfaces (lighter throttle)
   accountCreate: build("rl:acct", 10, "1 h"),
