@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { activateFromSession } from "@/lib/onboarding/activation";
+import { limiters, requestIp } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -23,6 +24,17 @@ export const dynamic = "force-dynamic";
 type Body = { sessionId?: string };
 
 export async function POST(request: Request) {
+  // Throttle the Stripe lookups behind this anonymous endpoint. The webhook is
+  // the reliable activation path; this fast path shouldn't be hammerable.
+  const ip = requestIp(request);
+  const rl = await limiters.onboardingActivate.limit(`ip:${ip}`);
+  if (!rl.success) {
+    return NextResponse.json(
+      { error: "RATE_LIMITED" },
+      { status: 429, headers: { "Retry-After": "3600" } },
+    );
+  }
+
   let body: Body;
   try {
     body = (await request.json()) as Body;

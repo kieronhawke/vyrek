@@ -94,6 +94,12 @@ export const limiters = {
   // real people — the funnel is designed for exactly those bursts.
   clubWaitlistIp: build("rl:club_ip", 30, "1 h"),
   clubWaitlistEmail: build("rl:club_em", 3, "1 d"),
+  // Onboarding checkout/activate. Anonymous by necessity (the client is being
+  // set up and has no session yet), and each checkout spawns a Stripe session +
+  // a product lookup, so an unthrottled replay is cost amplification. Generous
+  // enough for a real client retrying a card, tight enough to stop a loop.
+  onboardingCheckout: build("rl:onb_co", 15, "1 h"),
+  onboardingActivate: build("rl:onb_act", 30, "1 h"),
   // Authenticated surfaces (lighter throttle)
   accountCreate: build("rl:acct", 10, "1 h"),
   accountCreateIp: build("rl:acct_ip", 8, "1 d"),

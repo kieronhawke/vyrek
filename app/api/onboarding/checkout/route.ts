@@ -6,6 +6,7 @@ import { planByKey } from "@/lib/onboarding/model";
 import { siteUrl } from "@/lib/site-url";
 import { ensurePlanProduct } from "@/lib/billing/products";
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { limiters, requestIp } from "@/lib/rate-limit";
 
 /**
  * CHECKOUT, FROM AN INVITE.
@@ -30,9 +31,20 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
-  let body: { token?: string; plan?: string };
+  // Anonymous but not unlimited: each call creates a Stripe session and looks
+  // up a product, so an unthrottled replay of a valid link is cost/DoS.
+  const ip = requestIp(request);
+  const rl = await limiters.onboardingCheckout.limit(`ip:${ip}`);
+  if (!rl.success) {
+    return NextResponse.json(
+      { error: "RATE_LIMITED" },
+      { status: 429, headers: { "Retry-After": "3600" } },
+    );
+  }
+
+  let body: { token?: string; plan?: string; email?: string };
   try {
-    body = (await request.json()) as { token?: string; plan?: string };
+    body = (await request.json()) as { token?: string; plan?: string; email?: string };
   } catch {
     return NextResponse.json({ error: "BAD_REQUEST" }, { status: 400 });
   }
@@ -73,18 +85,29 @@ export async function POST(request: Request) {
   const amountPence = read.invite.amountPence ?? plan.pence;
   const trialDays = isCustomRate ? 0 : plan.trialDays;
 
+  // The address we dedupe and pre-fill against. The short-SMS invite path
+  // deliberately drops the email from the signed token to keep the text to one
+  // segment — so on that path we fall back to the email the client just typed
+  // into the flow. Without this, the double-charge guard below was silently
+  // skipped for every SMS invite (and Stripe collected a fresh email too),
+  // which is exactly when a re-opened link causes a second charge.
+  const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+  const bodyEmail = (body.email || "").trim().toLowerCase();
+  const clientEmail =
+    (read.invite.email || "").trim().toLowerCase() ||
+    (EMAIL_RE.test(bodyEmail) ? bodyEmail : "");
+
   // Already paying? Stop here. Invites stay valid for weeks, so the commonest
   // way to double-charge somebody is them re-opening the text ("did that go
   // through?") and paying a second time. If this email already has a live
   // subscription, send them to their account instead of creating another.
-  const inviteEmail = (read.invite.email || "").trim().toLowerCase();
-  if (inviteEmail) {
+  if (clientEmail) {
     try {
       const sb = supabaseAdmin();
       const { data: cust } = await sb
         .from("customers")
         .select("id")
-        .eq("email", inviteEmail)
+        .eq("email", clientEmail)
         .maybeSingle();
       if (cust?.id) {
         const { data: live } = await sb
@@ -118,9 +141,10 @@ export async function POST(request: Request) {
   try {
     const session = await client.checkout.sessions.create({
       mode: "subscription",
-      // Pre-filled from the signed invite, so they do not retype an address
-      // Ben already has — and so the Stripe customer matches the client.
-      customer_email: read.invite.email || undefined,
+      // Pre-filled so they don't retype an address we already have and so the
+      // Stripe customer matches the client. Prefers the signed invite's email,
+      // falling back to the one the client entered in the flow.
+      customer_email: clientEmail || undefined,
       line_items: [
         {
           quantity: 1,

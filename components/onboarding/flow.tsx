@@ -116,7 +116,10 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
       const res = await fetch("/api/onboarding/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, plan: answers.plan }),
+        // The client's own email lets the server dedupe and pre-fill Stripe
+        // even on the short-SMS invite path, where the signed token carries
+        // no email of its own.
+        body: JSON.stringify({ token, plan: answers.plan, email: answers.email }),
       });
       const data = await res.json();
       if (data?.url) {
