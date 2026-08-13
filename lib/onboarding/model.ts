@@ -295,6 +295,11 @@ export function blocker(step: StepKey, a: Answers): string | null {
     case "plan":
       if (!a.plan) return "Choose a plan to carry on.";
       return null;
+    case "pay":
+      // Reachable without a plan via the cancel redirect (?step=pay). Say why
+      // the checkout button is disabled instead of leaving it dead and silent.
+      if (!a.plan) return "Choose a plan first, then head to checkout.";
+      return null;
     default:
       return null;
   }

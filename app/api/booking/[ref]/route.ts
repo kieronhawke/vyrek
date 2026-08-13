@@ -108,7 +108,8 @@ export async function POST(
       status: "cancelled",
       cancelledReason: body.reason?.slice(0, 300),
     });
-    if (!updated) {
+    // A cancel can't lose a slot race, but the union includes the sentinel.
+    if (!updated || updated === "SLOT_TAKEN") {
       return NextResponse.json(
         { ok: false, error: "Couldn't cancel that. Please try again." },
         { status: 500 },
@@ -161,6 +162,14 @@ export async function POST(
     rescheduledFromISO: previousISO,
     status: "confirmed",
   });
+  // Someone grabbed the slot between our availability check and our write.
+  // Give the honest "that time's gone" rather than a generic "try again".
+  if (updated === "SLOT_TAKEN") {
+    return NextResponse.json(
+      { ok: false, error: "That time isn't available.", code: "TAKEN" },
+      { status: 409 },
+    );
+  }
   if (!updated) {
     return NextResponse.json(
       { ok: false, error: "Couldn't move that. Please try again." },

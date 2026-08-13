@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
 import { supabaseServer } from "@/lib/supabase/server";
 import { limiters, requestIp } from "@/lib/rate-limit";
 import { readPartnerAttributionCookie } from "@/lib/partners/attribution-cookie";
+import { findAuthUserIdByEmail } from "@/lib/onboarding/activation";
 import {
   determineProgramme,
   determineStartDate,
@@ -176,11 +177,11 @@ export async function POST(req: Request) {
         mintedHere = true;
       } else {
         // Already registered. Not an error here — the caller signs in next,
-        // and a wrong password fails there with the right message.
-        const { data } = await admin.auth.admin.listUsers({ perPage: 200 });
-        authUserId =
-          data?.users.find((u) => (u.email ?? "").toLowerCase() === email)?.id ??
-          "";
+        // and a wrong password fails there with the right message. Paginated
+        // lookup (not a single perPage:200 page) so a returning client past
+        // the 200th auth user resolves to 409 already-registered rather than
+        // a misleading 502.
+        authUserId = (await findAuthUserIdByEmail(admin, email)) ?? "";
         if (!authUserId) {
           return NextResponse.json(
             { ok: false, reason: "auth-create-failed" },

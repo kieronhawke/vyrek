@@ -170,10 +170,16 @@ export async function findBooking(ref: string): Promise<Booking | null> {
   }
 }
 
+/**
+ * "SLOT_TAKEN" is returned when the update lost the race for a slot (the
+ * partial-unique index on confirmed bookings rejected it, 23505) — distinct
+ * from a plain null failure so a reschedule can say "that time's gone" rather
+ * than a generic "try again".
+ */
 export async function updateBooking(
   ref: string,
   patch: Partial<Booking>,
-): Promise<Booking | null> {
+): Promise<Booking | "SLOT_TAKEN" | null> {
   const row: Record<string, unknown> = {};
   if (patch.startISO !== undefined) row.starts_at = patch.startISO;
   if (patch.status !== undefined) row.status = patch.status;
@@ -193,7 +199,11 @@ export async function updateBooking(
       .eq("ref", ref.trim().toUpperCase())
       .select("*")
       .maybeSingle();
-    if (error || !data) return null;
+    if (error) {
+      if ((error as { code?: string }).code === "23505") return "SLOT_TAKEN";
+      return null;
+    }
+    if (!data) return null;
     return fromRow(data as Row);
   } catch {
     return null;

@@ -443,8 +443,9 @@ function Training({
         <legend className="ob-label">Days a week you can train</legend>
         <div className="ob-numbers">
           {/* Starts at 1: someone with one day a week is exactly as welcome,
-              and a picker that starts at 2 quietly says otherwise. */}
-          {[1, 2, 3, 4, 5, 6].map((n) => (
+              and a picker that starts at 2 quietly says otherwise. Runs to 7
+              so a "trains every day" quiz answer has a button to land on. */}
+          {[1, 2, 3, 4, 5, 6, 7].map((n) => (
             <button
               key={n}
               type="button"

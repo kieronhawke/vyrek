@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { limiters, requestIp } from "@/lib/rate-limit";
+import { looksLikePhone } from "@/lib/validation/phone";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -46,6 +47,12 @@ export async function POST(req: Request) {
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     return NextResponse.json(
       { ok: false, error: "That email address does not look right." },
+      { status: 400 },
+    );
+  }
+  if (phone && !looksLikePhone(phone)) {
+    return NextResponse.json(
+      { ok: false, error: "That mobile number does not look right." },
       { status: 400 },
     );
   }

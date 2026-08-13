@@ -169,7 +169,7 @@ export function ConsultationCapture({ answers }: { answers: QuizAnswers }) {
       </div>
 
       {error ? (
-        <p role="alert" className="mt-3 text-sm text-suth-accent">
+        <p role="alert" className="mt-3 text-sm text-suth-danger">
           {error}
         </p>
       ) : null}

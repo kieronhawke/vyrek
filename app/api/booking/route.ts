@@ -10,6 +10,7 @@ import {
   takenStarts,
 } from "@/lib/booking/store";
 import { newBookingRef, type Booking } from "@/lib/booking/model";
+import { looksLikePhone } from "@/lib/validation/phone";
 import { logOutcomes, notifyBooked } from "@/lib/booking/notify";
 import { limiters, requestIp } from "@/lib/rate-limit";
 
@@ -109,8 +110,9 @@ export async function POST(req: Request) {
     );
   }
   // A consultation is a phone call, so the number is not optional here even
-  // though it is elsewhere.
-  if (phone.length < 7 || phone.length > 32) {
+  // though it is elsewhere — and it has to actually be a number, or Ben ends
+  // up with a booking he can't ring.
+  if (phone.length > 32 || !looksLikePhone(phone)) {
     return NextResponse.json(
       { ok: false, error: "Please enter a phone number Ben can call." },
       { status: 400 },

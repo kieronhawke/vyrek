@@ -32,7 +32,7 @@ import { planByKey } from "@/lib/onboarding/model";
  * createUser reports "already registered" and the customers row hasn't
  * carried it back yet — never to send anything.
  */
-async function findAuthUserIdByEmail(
+export async function findAuthUserIdByEmail(
   sb: ReturnType<typeof supabaseAdmin>,
   email: string,
 ): Promise<string | null> {

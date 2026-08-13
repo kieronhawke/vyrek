@@ -11,6 +11,7 @@ import { siteUrl } from "@/lib/site-url";
 import { newLeadId, shortPlace, type Lead } from "@/lib/leads/model";
 import { saveLead } from "@/lib/leads/store";
 import { leadAlertSms, leadAlertSmsUnstored } from "@/lib/leads/alert";
+import { looksLikePhone } from "@/lib/validation/phone";
 import { mapImagePath } from "@/lib/geo/static-map";
 import { sendSms } from "@/lib/sms/send";
 import { adminEmails, adminMobiles } from "@/lib/admin/recipients";
@@ -80,12 +81,14 @@ const GOAL_LABELS: Record<string, string> = {
 const GOALS = Object.keys(GOAL_LABELS);
 
 function validate(b: Body): string | null {
-  if (b.company) return "Something went wrong."; // honeypot tripped
   if (!b.name || b.name.trim().length < 2) return "Please enter your name.";
   if (b.name.length > 120) return "Name is too long.";
   if (!b.email || b.email.length > 254 || !EMAIL_RE.test(b.email))
     return "Please enter a valid email.";
-  if (b.phone && b.phone.length > 32) return "Phone number is too long.";
+  if (b.phone && b.phone.trim()) {
+    if (b.phone.length > 32) return "Phone number is too long.";
+    if (!looksLikePhone(b.phone)) return "That phone number doesn't look right.";
+  }
   if (!b.goal || !GOALS.includes(b.goal)) return "Please pick a goal.";
   if (b.message && b.message.length > 2000) return "Message is too long.";
   return null;
@@ -109,6 +112,13 @@ export async function POST(req: Request) {
       { ok: false, error: "Invalid request." },
       { status: 400 },
     );
+  }
+
+  // Honeypot: a bot filled the hidden field. Answer with a plain success —
+  // like the booking endpoint — so it can't tell the field is checked (a 400
+  // teaches it exactly that). Nothing is stored or sent.
+  if (body.company && body.company.trim()) {
+    return NextResponse.json({ ok: true });
   }
 
   const invalid = validate(body);
