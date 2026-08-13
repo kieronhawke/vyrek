@@ -13,6 +13,7 @@ import { saveLead } from "@/lib/leads/store";
 import { leadAlertSms } from "@/lib/leads/alert";
 import { mapImagePath } from "@/lib/geo/static-map";
 import { sendSms } from "@/lib/sms/send";
+import { adminEmails, adminMobiles } from "@/lib/admin/recipients";
 import {
   sendInternalLeadBrief,
   sendLeadConfirmation,
@@ -184,8 +185,7 @@ export async function POST(req: Request) {
   const leadUrl = leadStored ? `${siteUrl()}/l/${record.id}` : null;
   const place = shortPlace(record);
 
-  const internal = await sendInternalLeadBrief({
-    to: inbox,
+  const briefArgs = {
     name: lead.name,
     email: lead.email,
     phone: lead.phone,
@@ -210,21 +210,33 @@ export async function POST(req: Request) {
     timeOnSite: describeDuration(session.secondsOnSite),
     pageViews: session.pageViews ?? null,
     leadUrl,
-  });
+  };
+  // Kieron gets the primary send (its result drives the response); Ben and
+  // any other admins get their own copy, best-effort.
+  const internal = await sendInternalLeadBrief({ to: inbox, ...briefArgs });
+  void Promise.all(
+    adminEmails()
+      .filter((to) => to !== inbox)
+      .map((to) =>
+        sendInternalLeadBrief({ to, ...briefArgs }).catch((e) =>
+          console.error("[consultation] admin brief copy failed", e),
+        ),
+      ),
+  );
 
   // The text. Short on purpose — it fires on every enquiry and every
   // segment is billed, so it carries the four facts Ben needs to decide
-  // whether to ring now and puts everything else one tap away.
+  // whether to ring now and puts everything else one tap away. Sent to
+  // every admin number (Kieron and Ben).
   if (leadUrl) {
-    void sendSms({
-      to: process.env.BEN_MOBILE ?? "",
-      body: leadAlertSms(record, siteUrl()),
-      sender: "brand",
-    }).then((r) => {
-      if (!r.ok && r.reason !== "NOT_A_PHONE_NUMBER") {
-        console.warn("[consultation] lead text failed", r.reason);
-      }
-    });
+    const smsBody = leadAlertSms(record, siteUrl());
+    for (const to of adminMobiles()) {
+      void sendSms({ to, body: smsBody, sender: "brand" }).then((r) => {
+        if (!r.ok && r.reason !== "NOT_A_PHONE_NUMBER") {
+          console.warn("[consultation] lead text failed", r.reason);
+        }
+      });
+    }
   }
   emailed = internal.ok;
   if (!internal.ok) {

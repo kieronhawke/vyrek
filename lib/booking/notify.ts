@@ -1,6 +1,7 @@
 import { render } from "@react-email/components";
 import { Resend } from "resend";
 import { sendSms } from "@/lib/sms/send";
+import { adminEmails, adminMobiles } from "@/lib/admin/recipients";
 import { siteUrl } from "@/lib/site-url";
 import {
   BookingCancelledEmail,
@@ -40,17 +41,6 @@ import {
  */
 
 type Outcome = { channel: string; ok: boolean; detail?: string };
-
-function benEmail(): string | null {
-  // ADMIN_EMAILS is the existing list; the first is the one that gets the
-  // operational mail rather than everyone on it.
-  const first = (process.env.ADMIN_EMAILS ?? "").split(",")[0]?.trim();
-  return first || null;
-}
-
-function benPhone(): string | null {
-  return process.env.BEN_MOBILE?.trim() || null;
-}
 
 function firstNameOf(name: string): string {
   return name.trim().split(/\s+/)[0] || "there";
@@ -111,6 +101,25 @@ async function text(
 const adminUrl = () => `${siteUrl()}/admin/calendar`;
 const manageUrl = (ref: string) => `${siteUrl()}/book/manage/${ref}`;
 
+// The admin copy of a booking notice goes to every admin (Kieron and Ben),
+// on email and by text. Returns the promises to spread into each event's
+// Promise.all. A "not configured" outcome when nobody is set keeps the
+// outcome log honest.
+function adminEmailFanout(subject: string, react: React.ReactElement): Promise<Outcome>[] {
+  const tos = adminEmails();
+  if (tos.length === 0) {
+    return [Promise.resolve<Outcome>({ channel: "email:admin", ok: false, detail: "no admin email" })];
+  }
+  return tos.map((to) => email({ to, subject, react }));
+}
+function adminSmsFanout(body: string): Promise<Outcome>[] {
+  const tos = adminMobiles();
+  if (tos.length === 0) {
+    return [Promise.resolve<Outcome>({ channel: "sms:admin", ok: false, detail: "no admin number" })];
+  }
+  return tos.map((to) => text(to, body, "brand"));
+}
+
 /* ── The three events ──────────────────────────────────────────────────── */
 
 export async function notifyBooked(b: Booking): Promise<Outcome[]> {
@@ -135,30 +144,21 @@ export async function notifyBooked(b: Booking): Promise<Outcome[]> {
       `${first}, it's Ben. You're booked in for ${short}. I'll call you then. Need to move it? ${manageUrl(b.ref)}`,
       "number",
     ),
-    benEmail()
-      ? email({
-          to: benEmail()!,
-          subject: internalBookingSubject(b.name, when),
-          react: InternalBookingEmail({
-            name: b.name,
-            email: b.email,
-            phone: b.phone,
-            when,
-            ref: b.ref,
-            rail: b.rail,
-            note: b.note,
-            adminUrl: adminUrl(),
-          }),
-        })
-      : Promise.resolve<Outcome>({
-          channel: "email:ben",
-          ok: false,
-          detail: "ADMIN_EMAILS not set",
-        }),
-    text(
-      benPhone(),
+    ...adminEmailFanout(
+      internalBookingSubject(b.name, when),
+      InternalBookingEmail({
+        name: b.name,
+        email: b.email,
+        phone: b.phone,
+        when,
+        ref: b.ref,
+        rail: b.rail,
+        note: b.note,
+        adminUrl: adminUrl(),
+      }),
+    ),
+    ...adminSmsFanout(
       `New consultation: ${b.name}, ${short}. ${b.phone || "no number"}`,
-      "brand",
     ),
   ]);
 }
@@ -191,19 +191,16 @@ export async function notifyRescheduled(
       `${first}, it's Ben. I've had to move our call - it's now ${short}. Doesn't work? Pick another: ${manageUrl(b.ref)}`,
       "number",
     ),
-    benEmail()
-      ? email({
-          to: benEmail()!,
-          subject: internalBookingChangedSubject(b.name, false),
-          react: InternalBookingChangedEmail({
-            name: b.name,
-            when,
-            previous,
-            adminUrl: adminUrl(),
-          }),
-        })
-      : Promise.resolve<Outcome>({ channel: "email:ben", ok: false }),
-    text(benPhone(), `Moved: ${b.name} now ${short}.`, "brand"),
+    ...adminEmailFanout(
+      internalBookingChangedSubject(b.name, false),
+      InternalBookingChangedEmail({
+        name: b.name,
+        when,
+        previous,
+        adminUrl: adminUrl(),
+      }),
+    ),
+    ...adminSmsFanout(`Moved: ${b.name} now ${short}.`),
   ]);
 }
 
@@ -227,19 +224,16 @@ export async function notifyCancelled(b: Booking): Promise<Outcome[]> {
       `${first}, it's Ben. Our call on ${short} is cancelled. Book another time whenever suits: ${siteUrl()}/book`,
       "number",
     ),
-    benEmail()
-      ? email({
-          to: benEmail()!,
-          subject: internalBookingChangedSubject(b.name, true),
-          react: InternalBookingChangedEmail({
-            name: b.name,
-            when,
-            cancelled: true,
-            adminUrl: adminUrl(),
-          }),
-        })
-      : Promise.resolve<Outcome>({ channel: "email:ben", ok: false }),
-    text(benPhone(), `Cancelled: ${b.name}, was ${short}.`, "brand"),
+    ...adminEmailFanout(
+      internalBookingChangedSubject(b.name, true),
+      InternalBookingChangedEmail({
+        name: b.name,
+        when,
+        cancelled: true,
+        adminUrl: adminUrl(),
+      }),
+    ),
+    ...adminSmsFanout(`Cancelled: ${b.name}, was ${short}.`),
   ]);
 }
 

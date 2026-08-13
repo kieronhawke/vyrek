@@ -3,6 +3,7 @@ import {
   SubscriptionNoticeEmail,
 } from "@/lib/email/templates/subscription-notice";
 import { AdminAlertEmail } from "@/lib/email/templates/admin-alert";
+import { adminEmails } from "@/lib/admin/recipients";
 import { siteUrl } from "@/lib/site-url";
 import { stripeDashboardUrl } from "@/lib/billing/stripe-dashboard";
 import type { AdminAlertKind, CustomerEmailKind } from "@/lib/billing/lifecycle";
@@ -238,13 +239,9 @@ export async function sendAdminLifecycleAlert(args: {
   };
 
   const c = copy[args.kind];
-  const inbox = process.env.CONSULTATION_INBOX ?? "kieron.hawke@gmail.com";
-  const recipients = new Set([inbox]);
-  const ben = process.env.BEN_EMAIL ?? "ben@suthperformance.com";
-  if (ben && ben !== inbox) recipients.add(ben);
 
   await Promise.all(
-    Array.from(recipients).map((to) =>
+    adminEmails().map((to) =>
       send({
         to,
         subject: c.subject,

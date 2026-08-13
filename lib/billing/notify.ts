@@ -1,5 +1,6 @@
 import { sendNewSubscriptionAlert } from "@/lib/email/send";
 import { sendSms, smsConfigured } from "@/lib/sms/send";
+import { adminEmails, adminMobiles } from "@/lib/admin/recipients";
 import { logEvent } from "@/lib/admin/events";
 import { stripeDashboardUrl } from "@/lib/billing/stripe-dashboard";
 import { siteUrl } from "@/lib/site-url";
@@ -55,14 +56,9 @@ export async function notifyAdminNewSubscription(args: {
     }
   }
 
-  const inbox = process.env.CONSULTATION_INBOX ?? "kieron.hawke@gmail.com";
-  const recipients = new Set([inbox]);
-  // Ben gets his own copy when his address is set and different.
-  const ben = process.env.BEN_EMAIL ?? "ben@suthperformance.com";
-  if (ben && ben !== inbox) recipients.add(ben);
-
+  // Kieron and Ben, on email and by text — one shared recipient list.
   await Promise.all([
-    ...Array.from(recipients).map((to) =>
+    ...adminEmails().map((to) =>
       sendNewSubscriptionAlert({
         to,
         clientName: args.clientName,
@@ -78,15 +74,18 @@ export async function notifyAdminNewSubscription(args: {
       }),
     ),
     (async () => {
-      const mobile = process.env.BEN_MOBILE?.trim();
-      if (!mobile || !smsConfigured()) return;
+      if (!smsConfigured()) return;
       const who = args.clientName || args.email;
       const body = `NEW SUB: ${who}${rate ? ` - ${rate}/mo` : ""}${
         args.planName ? ` (${args.planName})` : ""
       }. Card on file, collects monthly. ${siteUrl().replace(/^https?:\/\/(www\.)?/, "")}/admin`;
-      await sendSms({ to: mobile, body, sender: "brand" }).catch((e) => {
-        console.error("[notify] new-subscription SMS failed", e);
-      });
+      await Promise.all(
+        adminMobiles().map((to) =>
+          sendSms({ to, body, sender: "brand" }).catch((e) => {
+            console.error("[notify] new-subscription SMS failed", e);
+          }),
+        ),
+      );
     })(),
     logEvent({
       actor: "system",

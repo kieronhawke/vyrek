@@ -3,6 +3,7 @@ import { supabaseServer } from "@/lib/supabase/server";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { subscriptionBilling } from "@/lib/billing/subscription-info";
 import { sendChangeRequest } from "@/lib/email/send";
+import { adminEmails } from "@/lib/admin/recipients";
 import { logEvent } from "@/lib/admin/events";
 import { limiters, requestIp } from "@/lib/rate-limit";
 
@@ -36,6 +37,9 @@ export async function POST(request: Request) {
   if (!user?.email) {
     return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
   }
+  // Captured now: property narrowing on user.email is dropped inside the
+  // best-effort .map() callback below, so hold the string in a const.
+  const memberEmail = user.email;
 
   let body: Body;
   try {
@@ -82,15 +86,24 @@ export async function POST(request: Request) {
     /* The request still goes through with just the email. */
   }
 
-  const inbox = process.env.CONSULTATION_INBOX ?? "kieron.hawke@gmail.com";
+  // To every admin (Kieron and Ben). The first send drives the response;
+  // the rest are best-effort copies.
+  const [primary, ...others] = adminEmails();
   const emailResult = await sendChangeRequest({
-    to: inbox,
-    replyTo: user.email,
-    email: user.email,
+    to: primary ?? "kieron.hawke@gmail.com",
+    replyTo: memberEmail,
+    email: memberEmail,
     planName,
     rate,
     message,
   });
+  void Promise.all(
+    others.map((to) =>
+      sendChangeRequest({ to, replyTo: memberEmail, email: memberEmail, planName, rate, message }).catch(
+        (e) => console.error("[request-change] admin copy failed", e),
+      ),
+    ),
+  );
 
   await logEvent({
     actor: user.email,
