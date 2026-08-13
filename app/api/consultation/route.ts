@@ -214,9 +214,10 @@ export async function POST(req: Request) {
   // Kieron gets the primary send (its result drives the response); Ben and
   // any other admins get their own copy, best-effort.
   const internal = await sendInternalLeadBrief({ to: inbox, ...briefArgs });
+  const inboxKey = inbox.trim().toLowerCase();
   void Promise.all(
     adminEmails()
-      .filter((to) => to !== inbox)
+      .filter((to) => to !== inboxKey)
       .map((to) =>
         sendInternalLeadBrief({ to, ...briefArgs }).catch((e) =>
           console.error("[consultation] admin brief copy failed", e),
