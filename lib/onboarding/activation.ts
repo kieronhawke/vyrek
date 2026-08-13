@@ -26,6 +26,32 @@ import { planByKey } from "@/lib/onboarding/model";
  * login they could never pass.
  */
 
+/**
+ * Find an existing auth user's id by email, paginating so it does not
+ * silently stop at the first 200 users. Used only to recover the id when
+ * createUser reports "already registered" and the customers row hasn't
+ * carried it back yet — never to send anything.
+ */
+async function findAuthUserIdByEmail(
+  sb: ReturnType<typeof supabaseAdmin>,
+  email: string,
+): Promise<string | null> {
+  const target = email.trim().toLowerCase();
+  try {
+    for (let page = 1; page <= 20; page++) {
+      const { data, error } = await sb.auth.admin.listUsers({ page, perPage: 200 });
+      if (error) return null;
+      const users = data?.users ?? [];
+      const hit = users.find((u) => (u.email ?? "").toLowerCase() === target);
+      if (hit) return hit.id;
+      if (users.length < 200) break; // last page
+    }
+  } catch {
+    /* fall through to null */
+  }
+  return null;
+}
+
 export type ActivationOutcome = {
   ok: boolean;
   email?: string;
@@ -127,12 +153,18 @@ export async function activateFromSession(
         .maybeSingle();
       authUserId = (existing?.auth_user_id as string | null) ?? null;
       if (!authUserId) {
-        // The user exists in auth but we can't recover their id here. A
-        // retry (after the racing caller commits the customer row) will
-        // find it, so signal failure rather than press on account-less.
+        // The customers row hasn't carried the id back yet (the racing
+        // caller may have inserted a row before it knew the id, or a
+        // transient blip lost it). Recover it straight from Supabase Auth
+        // by email so this run can backfill auth_user_id, rather than
+        // wedging the account and retrying the webhook forever. Paginated
+        // (not generateLink, which would kill the winner's emailed token).
+        authUserId = await findAuthUserIdByEmail(sb, email);
+      }
+      if (!authUserId) {
         criticalError = "AUTH_ID_UNRESOLVED";
         console.error(
-          "[activation] user exists but no customer row carries their id:",
+          "[activation] user exists but id unrecoverable:",
           created.error.message,
         );
       }
@@ -178,7 +210,32 @@ export async function activateFromSession(
         ...(stripeCustomerId ? { stripe_customer_id: stripeCustomerId } : {}),
         ...(name?.trim() ? { full_name: name.trim() } : {}),
       });
-      if (error) {
+      // Lost the insert race (customers.email is unique): another caller
+      // inserted between our SELECT and INSERT — possibly with a null
+      // auth_user_id. Fall back to an UPDATE by email so THIS run, which
+      // may be the only one holding the id, still writes it onto the row.
+      if (error && /duplicate key|unique/i.test(error.message)) {
+        const { data: row } = await sb
+          .from("customers")
+          .select("id")
+          .eq("email", email)
+          .maybeSingle();
+        if (row?.id) {
+          customerRowId = row.id;
+          const { error: updErr } = await sb
+            .from("customers")
+            .update({
+              ...(authUserId ? { auth_user_id: authUserId } : {}),
+              ...(stripeCustomerId ? { stripe_customer_id: stripeCustomerId } : {}),
+              ...(name?.trim() ? { full_name: name.trim() } : {}),
+            })
+            .eq("id", row.id);
+          if (updErr) {
+            criticalError = "CUSTOMER_UPDATE_FAILED";
+            console.error("[activation] customer conflict-update failed", updErr.message);
+          }
+        }
+      } else if (error) {
         criticalError = "CUSTOMER_INSERT_FAILED";
         console.error("[activation] customer insert failed", error.message);
       } else {

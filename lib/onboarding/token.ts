@@ -176,6 +176,12 @@ export function createInvite(
    */
   const compact = {
     n: payload.name.trim().split(/\s+/)[0],
+    // Email stays OUT (see the warning above): putting it back pushes the
+    // fallback SMS past three segments and the text silently never sends,
+    // which is worse than the narrow double-charge gap it would close. The
+    // short-id path (default when the store is up) already carries email,
+    // so the already-subscribed guard works there. Signed tokens are only
+    // the rare store-down fallback.
     k: payload.kind === "payment" ? "p" : "f",
     ...(payload.plan ? { l: payload.plan } : {}),
     // The agreed per-client rate. Six characters at most (£1000 = "a":100000)

@@ -792,6 +792,9 @@ function Photo({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) 
     canvas.height = SIZE;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    // A corrupt or zero-dimension file makes the scale Infinity and
+    // drawImage throw. Bail cleanly rather than kill the photo step.
+    if (!image.width || !image.height) return;
     const scale = Math.max(SIZE / image.width, SIZE / image.height) * z;
     const w = image.width * scale;
     const h = image.height * scale;
