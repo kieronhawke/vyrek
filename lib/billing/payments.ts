@@ -18,7 +18,12 @@ import {
 export type PaymentRow = {
   id: string;
   createdISO: string;
+  /** What the invoice billed (amount_due). Shown per-row. */
   amountPence: number;
+  /** What was actually collected on it (amount_paid). Used for revenue totals
+   * so Finance and Payments agree on one field; the two differ only when a
+   * proration or credit means due ≠ paid. */
+  amountPaidPence: number;
   status: string; // draft | open | paid | uncollectible | void
   paid: boolean;
   attempted: boolean;
@@ -44,6 +49,7 @@ function toRow(inv: Stripe.Invoice): PaymentRow {
     id: inv.id ?? "",
     createdISO: new Date(inv.created * 1000).toISOString(),
     amountPence: inv.amount_due ?? 0,
+    amountPaidPence: inv.amount_paid ?? 0,
     status: inv.status ?? "open",
     paid: Boolean(inv.status === "paid"),
     attempted: Boolean(inv.attempted),
@@ -83,17 +89,68 @@ function invoiceCustomerDeleted(inv: Stripe.Invoice): boolean {
   return Boolean(c && typeof c === "object" && "deleted" in c && c.deleted);
 }
 
+/**
+ * Refunds keyed by the payment_intent they were taken against. Refunds don't
+ * live on the invoice, so without this a refunded payment reads as plain
+ * "paid" and counts in full toward revenue. Paginated; ignores failed/canceled
+ * refunds (no money moved). Best-effort — a refunds outage just means refunds
+ * aren't netted this render, never a crash.
+ */
+async function refundsByPaymentIntent(
+  s: Stripe,
+): Promise<{ refunded: Map<string, number>; pending: Set<string> }> {
+  const refunded = new Map<string, number>();
+  const pending = new Set<string>();
+  try {
+    let startingAfter: string | undefined;
+    for (let page = 0; page < 20; page++) {
+      const list = await s.refunds.list({
+        limit: 100,
+        ...(startingAfter ? { starting_after: startingAfter } : {}),
+      });
+      for (const r of list.data) {
+        const pi =
+          typeof r.payment_intent === "string" ? r.payment_intent : r.payment_intent?.id;
+        if (pi && r.status !== "failed" && r.status !== "canceled") {
+          refunded.set(pi, (refunded.get(pi) ?? 0) + r.amount);
+          if (r.status === "pending" || r.status === "requires_action") pending.add(pi);
+        }
+      }
+      if (!list.has_more) break;
+      startingAfter = list.data[list.data.length - 1]?.id;
+    }
+  } catch {
+    /* Best-effort: return whatever we gathered. */
+  }
+  return { refunded, pending };
+}
+
+/** Attach refund figures to a row from a pre-built payment_intent map. */
+function withRefunds(
+  row: PaymentRow,
+  inv: Stripe.Invoice,
+  refunds: { refunded: Map<string, number>; pending: Set<string> },
+): PaymentRow {
+  const pi = invoicePaymentIntentIdOf(inv);
+  if (pi) {
+    row.refundedPence = refunds.refunded.get(pi) ?? 0;
+    row.refundPending = refunds.pending.has(pi);
+  }
+  return row;
+}
+
 /** Newest invoices across the whole account, for the payments page. */
 export async function recentPayments(limit = 60): Promise<PaymentRow[] | null> {
   try {
     const { stripe } = await import("@/lib/stripe");
-    const invoices = await stripe().invoices.list({
-      limit,
-      expand: ["data.customer"],
-    });
+    const s = stripe();
+    const [invoices, refunds] = await Promise.all([
+      s.invoices.list({ limit, expand: ["data.customer", "data.payments"] }),
+      refundsByPaymentIntent(s),
+    ]);
     return invoices.data
       .filter((inv) => !invoiceCustomerDeleted(inv))
-      .map(toRow);
+      .map((inv) => withRefunds(toRow(inv), inv, refunds));
   } catch (e) {
     console.error("[payments] invoice list failed", e);
     return null;
@@ -115,19 +172,20 @@ export async function paymentsForMonth(
     const start = Math.floor(new Date(year, monthIndex, 1).getTime() / 1000);
     const end = Math.floor(new Date(year, monthIndex + 1, 1).getTime() / 1000);
     const rows: PaymentRow[] = [];
+    const refunds = await refundsByPaymentIntent(s);
     let startingAfter: string | undefined;
     // Five pages of 100 is far beyond any month Ben will have.
     for (let page = 0; page < 5; page++) {
       const invoices = await s.invoices.list({
         limit: 100,
         created: { gte: start, lt: end },
-        expand: ["data.customer"],
+        expand: ["data.customer", "data.payments"],
         ...(startingAfter ? { starting_after: startingAfter } : {}),
       });
       rows.push(
         ...invoices.data
           .filter((inv) => !invoiceCustomerDeleted(inv))
-          .map(toRow),
+          .map((inv) => withRefunds(toRow(inv), inv, refunds)),
       );
       if (!invoices.has_more) break;
       startingAfter = invoices.data[invoices.data.length - 1]?.id;
@@ -153,30 +211,9 @@ export async function paymentsForCustomer(
         limit,
         expand: ["data.payments"],
       }),
-      // Refunds don't live on the invoice, so a refunded payment showed as
-      // plain "paid" and the admin couldn't see money had gone back.
-      s.refunds.list({ limit: 100 }).catch(() => ({ data: [] })),
+      refundsByPaymentIntent(s),
     ]);
-    const refundedByPi = new Map<string, number>();
-    const pendingByPi = new Set<string>();
-    for (const r of refunds.data) {
-      const pi = typeof r.payment_intent === "string" ? r.payment_intent : r.payment_intent?.id;
-      if (pi && r.status !== "failed" && r.status !== "canceled") {
-        refundedByPi.set(pi, (refundedByPi.get(pi) ?? 0) + r.amount);
-        if (r.status === "pending" || r.status === "requires_action") {
-          pendingByPi.add(pi);
-        }
-      }
-    }
-    return invoices.data.map((inv) => {
-      const row = toRow(inv);
-      const pi = invoicePaymentIntentIdOf(inv);
-      if (pi) {
-        row.refundedPence = refundedByPi.get(pi) ?? 0;
-        row.refundPending = pendingByPi.has(pi);
-      }
-      return row;
-    });
+    return invoices.data.map((inv) => withRefunds(toRow(inv), inv, refunds));
   } catch (e) {
     console.error("[payments] customer invoice list failed", e);
     return null;
@@ -244,6 +281,10 @@ export async function monthlyRevenue12m(
   try {
     const { stripe } = await import("@/lib/stripe");
     const s = stripe();
+    // Refunds netted against the ORIGINAL invoice's month, so a £220 charge
+    // refunded in full nets to £0 in the month it was collected — not shown
+    // as £220 still collected.
+    const refunds = await refundsByPaymentIntent(s);
     let startingAfter: string | undefined;
     // A year of invoices at Ben's scale is a handful of pages; cap it so a
     // runaway never spins. 20 × 100 covers any realistic month-mix.
@@ -252,7 +293,7 @@ export async function monthlyRevenue12m(
         limit: 100,
         status: "paid",
         created: { gte: windowStart, lt: windowEnd },
-        expand: ["data.customer"],
+        expand: ["data.customer", "data.payments"],
         ...(startingAfter ? { starting_after: startingAfter } : {}),
       });
       for (const inv of invoices.data) {
@@ -260,7 +301,10 @@ export async function monthlyRevenue12m(
         const d = new Date(inv.created * 1000);
         const ym = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
         const row = bucket.get(ym);
-        if (row) row.collectedPence += inv.amount_paid ?? 0;
+        if (!row) continue;
+        const pi = invoicePaymentIntentIdOf(inv);
+        const refundedPence = pi ? (refunds.refunded.get(pi) ?? 0) : 0;
+        row.collectedPence += (inv.amount_paid ?? 0) - refundedPence;
       }
       if (!invoices.has_more) break;
       startingAfter = invoices.data[invoices.data.length - 1]?.id;
@@ -287,16 +331,30 @@ export async function forecastThisMonthPence(
     const monthEnd =
       new Date(now.getFullYear(), now.getMonth() + 1, 1).getTime() / 1000;
     let upcoming = 0;
-    const subs = await s.subscriptions.list({ status: "active", limit: 100 });
-    for (const sub of subs.data) {
-      const end = subscriptionPeriodEndUnix(
-        sub as Parameters<typeof subscriptionPeriodEndUnix>[0],
-      );
-      if (end && end < monthEnd) {
-        for (const item of sub.items.data) {
-          upcoming += (item.price.unit_amount ?? 0) * (item.quantity ?? 1);
+    let startingAfter: string | undefined;
+    // Paginate — a single limit:100 page silently truncated the forecast past
+    // 100 active subs.
+    for (let page = 0; page < 10; page++) {
+      const subs = await s.subscriptions.list({
+        status: "active",
+        limit: 100,
+        ...(startingAfter ? { starting_after: startingAfter } : {}),
+      });
+      for (const sub of subs.data) {
+        // A paused sub stays "active" in Stripe but collects nothing, so it
+        // must not inflate the forecast.
+        if (sub.pause_collection) continue;
+        const end = subscriptionPeriodEndUnix(
+          sub as Parameters<typeof subscriptionPeriodEndUnix>[0],
+        );
+        if (end && end < monthEnd) {
+          for (const item of sub.items.data) {
+            upcoming += (item.price.unit_amount ?? 0) * (item.quantity ?? 1);
+          }
         }
       }
+      if (!subs.has_more) break;
+      startingAfter = subs.data[subs.data.length - 1]?.id;
     }
     return collectedPence + upcoming;
   } catch (e) {
@@ -327,6 +385,9 @@ export async function liveMrrPence(): Promise<number | null> {
             ...(startingAfter ? { starting_after: startingAfter } : {}),
           });
           for (const sub of subs.data) {
+            // Paused subscriptions collect nothing; excluding them keeps MRR
+            // honest (they stay status:"active" in Stripe).
+            if (sub.pause_collection) continue;
             for (const item of sub.items.data) {
               const amount = item.price.unit_amount ?? 0;
               const interval = item.price.recurring?.interval;

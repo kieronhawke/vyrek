@@ -108,6 +108,10 @@ export default async function AdminPaymentsPage({
   const openInvoices = payments.filter((p) => !p.paid && p.status === "open" && !p.attempted);
   // The current view mixes months (newest 60 invoices), so the month
   // filter matters there; a browsed month is already scoped.
+  // Sum amount_paid (net of refunds), not amount_due — this is money actually
+  // collected, and it keeps this tile in step with the Finance page, which
+  // uses the same basis. The two disagreed whenever a proration or a refund
+  // made due ≠ paid.
   const collectedThisMonth = payments
     .filter(
       (p) =>
@@ -115,7 +119,7 @@ export default async function AdminPaymentsPage({
         new Date(p.createdISO).getMonth() === viewStart.getMonth() &&
         new Date(p.createdISO).getFullYear() === viewStart.getFullYear(),
     )
-    .reduce((sum, p) => sum + p.amountPence, 0);
+    .reduce((sum, p) => sum + Math.max(0, p.amountPaidPence - p.refundedPence), 0);
 
   if (isCurrent) forecast = await forecastThisMonthPence(collectedThisMonth);
 
