@@ -23,10 +23,14 @@ export function ResetTestData() {
     setError(null);
     setResult(null);
     try {
-      const r = await resetTestData();
-      setResult(r);
-      setTyped("");
-      router.refresh();
+      const r = await resetTestData(typed);
+      if (!r.ok) {
+        setError(r.error ?? "Reset failed.");
+      } else {
+        setResult(r);
+        setTyped("");
+        router.refresh();
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Reset failed.");
     } finally {

@@ -1,6 +1,6 @@
 "use server";
 
-import { assertAdmin } from "@/lib/admin/auth";
+import { assertAdmin, isAdminEmail } from "@/lib/admin/auth";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 /**
@@ -23,9 +23,29 @@ export async function setAccountDisabled(
   userId: string,
   disabled: boolean,
 ): Promise<ActionResult> {
-  await assertAdmin();
+  const { user } = await assertAdmin();
 
   if (!userId) return { ok: false, error: "Missing account id." };
+
+  // Never let the admin console lock an admin out. Admin access *is* the
+  // Supabase session, so banning an allowlisted login (or your own) is a
+  // one-click, dashboard-only-recoverable lockout. Disabling an admin is
+  // simply not this tool's job — admins are managed via ADMIN_EMAILS.
+  if (disabled) {
+    if (userId === user.id) {
+      return { ok: false, error: "You can't disable your own admin login." };
+    }
+    const { data: target } = await supabaseAdmin().auth.admin.getUserById(
+      userId,
+    );
+    if (isAdminEmail(target?.user?.email)) {
+      return {
+        ok: false,
+        error:
+          "That's an admin login. Remove it from ADMIN_EMAILS to revoke admin access — it can't be disabled here.",
+      };
+    }
+  }
 
   const { error } = await supabaseAdmin().auth.admin.updateUserById(userId, {
     ban_duration: disabled ? DISABLE_DURATION : "none",

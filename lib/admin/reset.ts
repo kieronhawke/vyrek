@@ -45,8 +45,34 @@ export type ResetResult = {
   error?: string;
 };
 
-export async function resetTestData(): Promise<ResetResult> {
+export async function resetTestData(confirm: string): Promise<ResetResult> {
   const { user } = await assertAdmin();
+
+  // Server-side confirmation — the client "type RESET" box is convenience,
+  // not security. A direct action call or a second admin must still clear
+  // this bar.
+  if ((confirm ?? "").trim().toUpperCase() !== "RESET") {
+    return {
+      ok: false,
+      cleared: {},
+      stripeCustomersDeleted: 0,
+      error: "Type RESET to confirm.",
+    };
+  }
+
+  // HARD STOP on real money. This wipes 13 tables and del()s every Stripe
+  // customer with no undo; against a live key that is a catastrophe, not a
+  // test reset. The presence of a live secret key is the "real money" signal.
+  if ((process.env.STRIPE_SECRET_KEY ?? "").startsWith("sk_live")) {
+    return {
+      ok: false,
+      cleared: {},
+      stripeCustomersDeleted: 0,
+      error:
+        "Refused: live Stripe keys are configured. This reset only runs in test/sandbox mode, never against real customers.",
+    };
+  }
+
   const sb = supabaseAdmin();
   const cleared: Record<string, number | "error"> = {};
 
@@ -96,9 +122,9 @@ export async function resetTestData(): Promise<ResetResult> {
 
   await logEvent({
     actor: user.email ?? "admin",
-    action: "customer.signed_up",
+    action: "test_data_reset",
     targetKind: "customer",
-    metadata: { event: "test_data_reset", cleared, stripeCustomersDeleted },
+    metadata: { cleared, stripeCustomersDeleted },
   }).catch(() => {});
 
   return { ok: true, cleared, stripeCustomersDeleted };

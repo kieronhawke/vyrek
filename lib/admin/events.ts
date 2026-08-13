@@ -44,6 +44,7 @@ export type AdminEventAction =
   | "subscription.early_payment_failure"
   | "subscription.change_requested"
   | "customer.signed_up"
+  | "test_data_reset"
   | "blog.post_saved";
 
 export type LogEventInput = {
@@ -153,6 +154,7 @@ export function eventLabel(action: AdminEventAction): string {
     "subscription.early_payment_failure": "Early payment failure (review)",
     "subscription.change_requested": "Client requested a change",
     "customer.signed_up": "Customer signed up",
+    "test_data_reset": "Test data reset (danger zone)",
     "blog.post_saved": "Blog post changed",
   };
   return labels[action] ?? action;

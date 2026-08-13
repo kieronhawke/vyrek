@@ -1,5 +1,6 @@
 import { PageHeader, NoticeCard } from "@/components/admin/ui";
 import { supabaseAdmin } from "@/lib/supabase/admin";
+import { isAdminEmail } from "@/lib/admin/auth";
 import {
   AccountsManager,
   type AccountRow,
@@ -40,6 +41,7 @@ export default async function AdminAccountsPage() {
           createdISO: u.created_at,
           confirmed: !!u.email_confirmed_at,
           disabled,
+          isAdmin: isAdminEmail(u.email),
         };
       })
       .sort((a, b) => (a.createdISO < b.createdISO ? 1 : -1));

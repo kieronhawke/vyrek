@@ -12,6 +12,8 @@ export type AccountRow = {
   createdISO: string;
   confirmed: boolean;
   disabled: boolean;
+  /** An admin-allowlisted login — never offered a Disable control. */
+  isAdmin?: boolean;
 };
 
 /**
@@ -152,25 +154,32 @@ export function AccountsManager({ accounts }: { accounts: AccountRow[] }) {
               ) : (
                 <Badge tone="good">active</Badge>
               )}
+              {row.isAdmin ? <Badge tone="neutral">admin</Badge> : null}
               {row.confirmed ? (
                 <Badge tone="neutral">confirmed</Badge>
               ) : (
                 <Badge tone="warn">unconfirmed</Badge>
               )}
             </span>,
-            <button
-              key="a"
-              type="button"
-              disabled={busyId === row.id}
-              onClick={() => toggle(row)}
-              className="inline-flex h-9 items-center justify-center rounded-pill border border-suth-border px-4 text-xs font-semibold text-suth-text transition-colors hover:border-suth-border-strong disabled:opacity-40"
-            >
-              {busyId === row.id
-                ? "Working…"
-                : row.disabled
-                  ? "Enable"
-                  : "Disable"}
-            </button>,
+            row.isAdmin ? (
+              <span key="a" className="text-xs text-suth-text-tertiary">
+                Managed via ADMIN_EMAILS
+              </span>
+            ) : (
+              <button
+                key="a"
+                type="button"
+                disabled={busyId === row.id}
+                onClick={() => toggle(row)}
+                className="inline-flex h-9 items-center justify-center rounded-pill border border-suth-border px-4 text-xs font-semibold text-suth-text transition-colors hover:border-suth-border-strong disabled:opacity-40"
+              >
+                {busyId === row.id
+                  ? "Working…"
+                  : row.disabled
+                    ? "Enable"
+                    : "Disable"}
+              </button>
+            ),
           ])}
         />
       </section>
