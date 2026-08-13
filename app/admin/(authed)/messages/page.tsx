@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { PageHeader, Card } from "@/components/admin/ui";
 import { listRealCoachClients, recentMessages } from "@/lib/coach/data";
+import { recentInboundMessages } from "@/lib/messaging/inbound";
 import { CoachMessenger } from "@/components/coach/messenger";
 
 export const dynamic = "force-dynamic";
@@ -18,9 +19,10 @@ export default async function AdminMessagesPage({
   searchParams: Promise<{ to?: string }>;
 }) {
   const { to } = await searchParams;
-  const [clients, history] = await Promise.all([
+  const [clients, history, inbound] = await Promise.all([
     listRealCoachClients(),
     recentMessages(30),
+    recentInboundMessages(20),
   ]);
   const nameById = new Map(clients.map((c) => [c.customerId, c.name] as const));
 
@@ -47,6 +49,33 @@ export default async function AdminMessagesPage({
             </div>
           </Card>
         )}
+
+        {inbound.length > 0 ? (
+          <section className="mt-8">
+            <h2 className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-suth-text-tertiary">
+              Replies from clients
+            </h2>
+            <ul role="list" className="space-y-2">
+              {inbound.map((m) => (
+                <li
+                  key={m.id}
+                  className="rounded-xl border border-suth-accent/30 bg-suth-elevated p-4 text-sm"
+                >
+                  <p>
+                    <strong className="text-suth-text">{m.fromNumber}</strong>
+                    <span className="text-suth-text-tertiary">
+                      {" "}
+                      · {format(new Date(m.receivedISO), "d MMM, h:mmaaa")}
+                    </span>
+                  </p>
+                  <p className="mt-1 whitespace-pre-wrap text-suth-text-secondary">
+                    {m.body}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
 
         {history.length > 0 ? (
           <section className="mt-8">

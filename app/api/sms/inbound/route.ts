@@ -19,11 +19,11 @@ import { createHmac, timingSafeEqual } from "node:crypto";
  * own reasons is how one bad message becomes thousands. An empty <Response/>
  * means "received, send nothing back".
  *
- * WHERE THE MESSAGE GOES. Logged for now, because there is no shared database
- * to put it in — the admin's message list lives in Ben's browser. This is the
- * honest half of the feature: the reply is received and recorded in the
- * platform logs rather than silently dropped, and one datastore credential
- * turns it into a row in his inbox.
+ * WHERE THE MESSAGE GOES. Persisted to inbound_messages and surfaced in the
+ * admin messages inbox. The store is best-effort and wrapped: a database blip
+ * still returns 200 (a non-200 makes Twilio retry, and a retry storm on a
+ * failing store is how one message becomes thousands), and it's also logged
+ * so nothing is lost even if the row doesn't write.
  */
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -82,7 +82,20 @@ export async function POST(request: Request) {
   const from = params.From ?? "unknown";
   const body = (params.Body ?? "").trim();
 
+  // Log first (never lost), then persist. A store failure must not fail the
+  // request — Twilio would retry and hammer a store that's already struggling.
   console.info("[sms/inbound]", JSON.stringify({ from, body, sid: params.MessageSid }));
+  try {
+    const { saveInboundMessage } = await import("@/lib/messaging/inbound");
+    const stored = await saveInboundMessage({ from, body, messageSid: params.MessageSid });
+    if (!stored) {
+      const { reportError } = await import("@/lib/observability");
+      void reportError(new Error("inbound SMS not stored"), { where: "sms/inbound", from });
+    }
+  } catch (e) {
+    const { reportError } = await import("@/lib/observability");
+    void reportError(e, { where: "sms/inbound", from });
+  }
 
   // Empty TwiML: received, nothing to send back. An auto-reply here would be
   // a message Ben did not write going to his client.
