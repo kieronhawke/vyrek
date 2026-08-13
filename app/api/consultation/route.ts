@@ -10,7 +10,7 @@ import {
 import { siteUrl } from "@/lib/site-url";
 import { newLeadId, shortPlace, type Lead } from "@/lib/leads/model";
 import { saveLead } from "@/lib/leads/store";
-import { leadAlertSms } from "@/lib/leads/alert";
+import { leadAlertSms, leadAlertSmsUnstored } from "@/lib/leads/alert";
 import { mapImagePath } from "@/lib/geo/static-map";
 import { sendSms } from "@/lib/sms/send";
 import { adminEmails, adminMobiles } from "@/lib/admin/recipients";
@@ -228,16 +228,18 @@ export async function POST(req: Request) {
   // The text. Short on purpose — it fires on every enquiry and every
   // segment is billed, so it carries the four facts Ben needs to decide
   // whether to ring now and puts everything else one tap away. Sent to
-  // every admin number (Kieron and Ben).
-  if (leadUrl) {
-    const smsBody = leadAlertSms(record, siteUrl());
-    for (const to of adminMobiles()) {
-      void sendSms({ to, body: smsBody, sender: "brand" }).then((r) => {
-        if (!r.ok && r.reason !== "NOT_A_PHONE_NUMBER") {
-          console.warn("[consultation] lead text failed", r.reason);
-        }
-      });
-    }
+  // every admin number (Kieron and Ben). It goes even when the lead couldn't
+  // be stored — a Redis blip must not swallow the most valuable message in
+  // the funnel; we just point at the admin list instead of a dead /l/ page.
+  const smsBody = leadUrl
+    ? leadAlertSms(record, siteUrl())
+    : leadAlertSmsUnstored(record, siteUrl());
+  for (const to of adminMobiles()) {
+    void sendSms({ to, body: smsBody, sender: "brand" }).then((r) => {
+      if (!r.ok && r.reason !== "NOT_A_PHONE_NUMBER") {
+        console.warn("[consultation] lead text failed", r.reason);
+      }
+    });
   }
   emailed = internal.ok;
   if (!internal.ok) {

@@ -68,8 +68,11 @@ export function asciiFold(input: string): string {
     .replace(/…/g, "...");
 }
 
-export function leadAlertSms(lead: Lead, siteUrl: string): string {
-  const link = `${siteUrl.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")}/l/${lead.id}`;
+function host(siteUrl: string): string {
+  return siteUrl.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+}
+
+function buildLeadSms(lead: Lead, link: string): string {
   const phone = lead.phone ?? "no number";
   const place = shortPlace(lead);
 
@@ -91,6 +94,20 @@ export function leadAlertSms(lead: Lead, siteUrl: string): string {
   const fixed = `New lead: , ${phone}. ${link}`;
   const room = Math.max(0, LIMIT - smsLength(fixed));
   return `New lead: ${name.slice(0, room).trim()}, ${phone}. ${link}`;
+}
+
+export function leadAlertSms(lead: Lead, siteUrl: string): string {
+  return buildLeadSms(lead, `${host(siteUrl)}/l/${lead.id}`);
+}
+
+/**
+ * The same alert for the case where the lead couldn't be stored, so the
+ * per-lead /l/{id} page doesn't exist. Ben still gets the who and the number
+ * to ring — the highest-value message in the funnel shouldn't vanish on a
+ * storage blip — with the admin list as the link instead of a dead page.
+ */
+export function leadAlertSmsUnstored(lead: Lead, siteUrl: string): string {
+  return buildLeadSms(lead, `${host(siteUrl)}/admin/leads`);
 }
 
 /** Exposed so the test can assert on the real thing rather than a guess. */

@@ -57,8 +57,12 @@ async function email(args: {
   react: React.ReactElement;
 }): Promise<Outcome> {
   const key = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM;
-  if (!key || !from) {
+  // Fall back to Resend's default verified sender when RESEND_FROM is unset —
+  // matching lib/email/send.ts. Booking was the only path that hard-required
+  // RESEND_FROM, so clearing that one var silently killed booking confirmations
+  // and admin booking alerts while every other email kept flowing.
+  const from = process.env.RESEND_FROM || "Suth Performance <onboarding@resend.dev>";
+  if (!key) {
     return { channel: `email:${args.to}`, ok: false, detail: "NOT_CONFIGURED" };
   }
   try {

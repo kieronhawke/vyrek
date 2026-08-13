@@ -3,7 +3,8 @@ import {
   SubscriptionNoticeEmail,
 } from "@/lib/email/templates/subscription-notice";
 import { AdminAlertEmail } from "@/lib/email/templates/admin-alert";
-import { adminEmails } from "@/lib/admin/recipients";
+import { adminEmails, adminMobiles } from "@/lib/admin/recipients";
+import { sendSms, smsConfigured } from "@/lib/sms/send";
 import { siteUrl } from "@/lib/site-url";
 import { stripeDashboardUrl } from "@/lib/billing/stripe-dashboard";
 import type { AdminAlertKind, CustomerEmailKind } from "@/lib/billing/lifecycle";
@@ -240,8 +241,18 @@ export async function sendAdminLifecycleAlert(args: {
 
   const c = copy[args.kind];
 
-  await Promise.all(
-    adminEmails().map((to) =>
+  // A one-line text per admin, alongside the email. A cancellation or a failed
+  // payment is exactly the kind of thing worth a buzz in the pocket, and these
+  // used to be email-only — unlike new-subscription and booking alerts.
+  const smsLine: Record<AdminAlertKind, string> = {
+    cancel_scheduled: `Cancellation: ${who}${endDate ? ` (until ${endDate})` : ""}.`,
+    cancelled: `Ended: ${who}. No more payments.`,
+    payment_failed: `Payment failed: ${who}. Stripe retries; they've a fix link.`,
+    refund_failed: `Refund FAILED: ${who}. Money hasn't gone back - open Stripe.`,
+  };
+
+  await Promise.all([
+    ...adminEmails().map((to) =>
       send({
         to,
         subject: c.subject,
@@ -254,5 +265,12 @@ export async function sendAdminLifecycleAlert(args: {
         }),
       }).catch((e) => console.error("[comms] admin alert failed", e)),
     ),
-  );
+    ...(smsConfigured()
+      ? adminMobiles().map((to) =>
+          sendSms({ to, body: smsLine[args.kind], sender: "brand" }).catch((e) =>
+            console.error("[comms] admin alert sms failed", e),
+          ),
+        )
+      : []),
+  ]);
 }
