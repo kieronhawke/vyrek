@@ -411,11 +411,22 @@ export async function POST(req: Request) {
             )
             .eq("customer_id", subRow.customer_id)
             .maybeSingle();
-          if (ref) {
+          // Already processed (a redelivered cancellation): the referral is in
+          // a terminal state, so there's nothing to flip or claw back. Skipping
+          // keeps it idempotent and stops a retry downgrading clawed_back to
+          // cancelled.
+          const alreadyTerminal =
+            ref?.status === "cancelled" || ref?.status === "clawed_back";
+          if (ref && !alreadyTerminal) {
+            // Only a still-"paid" referral can be clawed back. Gating on this
+            // makes a redelivered cancellation idempotent: once the status has
+            // moved to clawed_back/cancelled, a retry computes clawback 0 and
+            // can't subtract the commission from the partner a second time.
             const wasActive = ref.status === "paid";
-            const clawback = isInClawbackWindow(ref.first_paid_at)
-              ? ref.recurring_earnings_pence ?? 0
-              : 0;
+            const clawback =
+              wasActive && isInClawbackWindow(ref.first_paid_at)
+                ? ref.recurring_earnings_pence ?? 0
+                : 0;
             const newStatus = clawback > 0 ? "clawed_back" : "cancelled";
 
             await admin
@@ -525,44 +536,60 @@ export async function POST(req: Request) {
           (partner.total_referrals ?? 0) + (isFirstPaid ? 1 : 0);
         const promotedTier = tierForActiveCount(newActive);
 
-        await admin
-          .from("partner_referrals")
-          .update({
-            status: "paid",
-            first_paid_at: isFirstPaid
-              ? new Date().toISOString()
-              : ref.first_paid_at,
-            recurring_earnings_pence:
-              (ref.recurring_earnings_pence ?? 0) + commission,
-          })
-          .eq("id", ref.id);
-
-        await admin
-          .from("partners")
-          .update({
-            tier: promotedTier,
-            active_subscribers: newActive,
-            total_referrals: newTotal,
-            pending_payout_pence:
-              (partner.pending_payout_pence ?? 0) + commission,
-            lifetime_earnings_pence:
-              (partner.lifetime_earnings_pence ?? 0) + commission,
-          })
-          .eq("id", partner.id);
-
-        await logEvent({
-          actor: "system",
-          action: isFirstPaid
-            ? "partner.referral.activated"
-            : "subscription.activated",
-          targetKind: isFirstPaid ? "partner_referral" : "subscription",
-          targetId: isFirstPaid ? ref.id : subscriptionId,
-          metadata: {
-            partnerId: partner.id,
-            commission_pence: commission,
-            tier: promotedTier,
+        // Atomic + idempotent: the DB function claims this invoice and applies
+        // the ledger writes in one transaction, keyed on invoice.id. A Stripe
+        // retry (or the handler re-running after a mid-way throw) can no longer
+        // double-credit — the second call sees the claim and does nothing.
+        // invoice.id can be null on the Stripe type; skip the credit if so
+        // rather than key the ledger on an empty string.
+        if (!invoice.id) break;
+        const { data: credited, error: creditErr } = await admin.rpc(
+          "credit_partner_commission",
+          {
+            p_invoice_id: invoice.id,
+            p_partner_id: partner.id,
+            p_referral_id: ref.id,
+            p_commission_pence: commission,
+            p_is_first_paid: isFirstPaid,
+            p_new_active: newActive,
+            p_new_total: newTotal,
+            p_promoted_tier: promotedTier,
+            p_first_paid_at: new Date().toISOString(),
           },
-        });
+        );
+        if (creditErr) {
+          const code = (creditErr as { code?: string }).code;
+          // Migration 0121 not applied yet: don't wedge the whole funnel on a
+          // missing function (the same tolerance stripe_events gets). Log +
+          // report; reconciliation can backfill once it exists.
+          if (code === "42883" || /function .*does not exist/i.test(creditErr.message ?? "")) {
+            console.error("[stripe/webhook] credit_partner_commission missing — apply 0121", creditErr);
+            void import("@/lib/observability").then(({ reportError }) =>
+              reportError(creditErr, { where: "stripe/webhook", note: "commission RPC missing (0121)" }),
+            );
+            break;
+          }
+          // Any other DB error must not be swallowed — bubble it so Stripe
+          // retries rather than losing the commission silently.
+          throw creditErr;
+        }
+
+        // Only log when we actually credited (not on a deduped retry).
+        if (credited) {
+          await logEvent({
+            actor: "system",
+            action: isFirstPaid
+              ? "partner.referral.activated"
+              : "subscription.activated",
+            targetKind: isFirstPaid ? "partner_referral" : "subscription",
+            targetId: isFirstPaid ? ref.id : subscriptionId,
+            metadata: {
+              partnerId: partner.id,
+              commission_pence: commission,
+              tier: promotedTier,
+            },
+          });
+        }
 
         break;
       }
