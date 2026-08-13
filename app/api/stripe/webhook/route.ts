@@ -688,6 +688,11 @@ export async function POST(req: Request) {
     }
   } catch (err) {
     console.error("[stripe/webhook] handler error", err);
+    // A paid event we failed to process. Stripe will retry, but someone
+    // should know it happened rather than finding out from the client.
+    void import("@/lib/observability").then(({ reportError }) =>
+      reportError(err, { where: "stripe/webhook", eventType: event.type, eventId: event.id }),
+    );
     // Release the idempotency claim so Stripe's retry gets a clean run —
     // a claim written up front and kept on failure would dedupe the retry
     // away and the event would be lost for good.

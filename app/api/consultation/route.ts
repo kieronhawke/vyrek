@@ -281,6 +281,14 @@ export async function POST(req: Request) {
      person got "we couldn't submit your request" for a lead we had in
      fact captured. */
   if (!stored && !emailed && !leadStored) {
+    // A real enquiry that reached us and we failed to keep on any channel.
+    // This is the one outcome worth waking someone for.
+    const { reportError } = await import("@/lib/observability");
+    void reportError(new Error("consultation lead lost on all channels"), {
+      where: "consultation",
+      email: lead.email,
+      name: lead.name,
+    });
     return NextResponse.json(
       {
         ok: false,

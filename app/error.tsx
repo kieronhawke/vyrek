@@ -13,8 +13,12 @@ export default function GlobalError({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Sentry will pick this up automatically once the DSN is wired in Phase E.
     console.error("[suth] runtime error:", error);
+    // Reported to Sentry when a browser DSN is configured; a safe no-op
+    // otherwise (the SDK stays disabled without init).
+    import("@sentry/nextjs")
+      .then((S) => S.captureException(error))
+      .catch(() => {});
   }, [error]);
 
   return (
