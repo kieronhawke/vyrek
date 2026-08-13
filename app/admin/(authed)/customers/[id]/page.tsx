@@ -12,7 +12,9 @@ import { customerJourney } from "@/lib/admin/journey";
 import { subscriptionBilling } from "@/lib/billing/subscription-info";
 import { paymentsForCustomer } from "@/lib/billing/payments";
 import { plansForCustomer } from "@/lib/coach/data";
+import { getOnboardingProfileByEmail } from "@/lib/onboarding/profile";
 import { FitnessProfile } from "@/components/admin/fitness-profile";
+import { OnboardingProfileCard } from "@/components/admin/onboarding-profile-card";
 import { CustomerActions } from "@/components/admin/customer-actions";
 import { SubscriptionActions } from "@/components/admin/subscription-actions";
 import { ExportPaymentsCsv } from "@/components/admin/export-payments";
@@ -51,7 +53,8 @@ export default async function AdminCustomerDetailPage({
   // These four reads only depend on the customer/subscription already
   // loaded, not on each other — so they run together rather than as a
   // waterfall of awaits.
-  const [billing, payments, journey, memberMode, plans] = await Promise.all([
+  const [billing, payments, journey, memberMode, plans, onboardingProfile] =
+    await Promise.all([
     // Live from Stripe: the rate, the pause state and the card. Null when
     // Stripe is unreachable — the page still renders its DB fields.
     latestSub?.stripe_subscription_id && latestSub.status !== "canceled"
@@ -82,6 +85,9 @@ export default async function AdminCustomerDetailPage({
     // This person's training plans, so the billing page doubles as a full
     // client view: what Ben has written and how long it runs.
     plansForCustomer(customer.id),
+    // What they told us during onboarding — injuries, availability, coaching
+    // style, their photo. Joined by email, null until they've onboarded.
+    getOnboardingProfileByEmail(customer.email),
   ]);
   const lastPaid = payments?.find((p) => p.paid) ?? null;
 
@@ -177,6 +183,10 @@ export default async function AdminCustomerDetailPage({
             </div>
           ) : null}
         </Card>
+
+        {onboardingProfile ? (
+          <OnboardingProfileCard profile={onboardingProfile} />
+        ) : null}
 
         <Card>
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">

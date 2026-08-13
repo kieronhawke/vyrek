@@ -113,6 +113,25 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
     setBusy(true);
     setError(null);
     try {
+      // Save what they told us to the server BEFORE Stripe, so Ben has their
+      // injuries, availability and coaching preferences the moment they pay —
+      // not stuck in this browser. Best-effort: never block payment on it.
+      try {
+        await fetch("/api/onboarding/profile", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token,
+            email: answers.email,
+            answers,
+            photo: answers.photoDataUrl || undefined,
+            healthConsent: true,
+          }),
+        });
+      } catch {
+        /* Proceed to checkout regardless — the profile is a nice-to-have here. */
+      }
+
       const res = await fetch("/api/onboarding/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -1066,10 +1085,10 @@ function Pay({
         Cancel any time from your account.
       </p>
 
-      <p className="ob-note ob-note--warn">
-        Your answers are saved on this device until the client database is
-        connected. Ben has what you sent him; do not clear this browser before
-        your first week arrives.
+      <p className="ob-note">
+        Your answers go straight to Ben when you check out, so he has your
+        injuries, availability and how you like to be coached before he writes
+        week one. You don&apos;t need to keep this page open.
       </p>
     </div>
   );
