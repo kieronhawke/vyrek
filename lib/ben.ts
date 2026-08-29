@@ -98,7 +98,7 @@ export const BEN = {
 export const BEN_ATHLETE_PROOF: string[] = [
   "2 world records",
   "4 British records",
-  "Elite 15 Worlds, 6th in Doubles",
+  "6th Elite 15 Worlds, Doubles",
 ];
 
 /**

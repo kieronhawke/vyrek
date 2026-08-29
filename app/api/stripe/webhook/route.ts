@@ -6,7 +6,11 @@ import {
   getStripeWebhookSecret,
 } from "@/lib/stripe";
 import { supabaseAdmin } from "@/lib/supabase/admin";
-import { sendWelcomeEmail } from "@/lib/email/send";
+import {
+  adminRecipient,
+  sendPaymentReceived,
+  sendWelcomeEmail,
+} from "@/lib/email/send";
 import {
   tierForActiveCount,
   isInClawbackWindow,
@@ -219,6 +223,13 @@ export async function POST(req: Request) {
         // second finds the work already done. This is the path that saves
         // the client who pays and then closes the tab on Stripe's receipt
         // page: before it, they had paid and no account existed.
+        //
+        // Activation also notifies: notifyAdminNewSubscription emails every
+        // admin, texts Ben and writes the activity feed, only when it really
+        // inserted the row. origin/main added a second notifier here
+        // (notifyClientStarted) for the same moment; it is deliberately NOT
+        // called, because two "new client" emails for one client is a worse
+        // failure than the none it was written to fix.
         if (!customerId && session.metadata?.flow === "invite") {
           const full = await stripe().checkout.sessions.retrieve(session.id, {
             expand: ["subscription", "customer"],
@@ -484,6 +495,18 @@ export async function POST(req: Request) {
         const amountPence = invoice.amount_paid ?? 0;
         if (!subscriptionId || amountPence <= 0) break;
 
+        /*
+         * The receipt, before the partner accounting.
+         *
+         * The commission handling below exits early for anybody not referred
+         * by a partner — which is most people. So a payment from an ordinary
+         * client used to pass through this handler and produce nothing at all.
+         * Notifying first means the common case is the one that works.
+         */
+        await notifyPaymentReceived(invoice).catch((err) => {
+          console.error("[stripe/webhook] payment email failed", err);
+        });
+
         // A success on a retry closes the loop the failure email opened.
         await dispatchLifecycle(
           admin,
@@ -655,4 +678,66 @@ export async function POST(req: Request) {
   }
 
   return NextResponse.json({ received: true });
+}
+
+/* ── Telling Ben ─────────────────────────────────────────────────────────
+   Both of these read only what Stripe sent, so neither depends on a database
+   row existing. That is deliberate: the flow Ben uses most — his own setup
+   link — has no Supabase session to attach at checkout, and a notification
+   that only fires for the self-serve funnel is a notification that misses the
+   clients he actually onboards.
+
+   Both swallow their own failures at the call site. An email that will not
+   send must never make Stripe retry a webhook it already delivered. */
+
+/** "£150", "£149.50", or null. Never "£0.00" standing in for "unknown". */
+function money(minor: number | null | undefined, currency: string | null | undefined): string | null {
+  if (minor === null || minor === undefined || !Number.isFinite(minor)) return null;
+  if (minor <= 0) return null;
+  return new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: (currency ?? "gbp").toUpperCase(),
+    minimumFractionDigits: minor % 100 === 0 ? 0 : 2,
+  }).format(minor / 100);
+}
+
+function onDate(unix: number | null | undefined): string {
+  const d = unix ? new Date(unix * 1000) : new Date();
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Europe/London",
+  }).format(d);
+}
+
+async function notifyPaymentReceived(invoice: Stripe.Invoice) {
+  const to = adminRecipient();
+  if (!to) return;
+
+  const line = invoice.lines?.data?.[0];
+  /* `subscription_details.metadata` carries what the subscription was created
+     with, and it moved between SDK versions — read defensively rather than
+     losing the client name every time the pin moves. */
+  const subMeta =
+    (invoice as unknown as { subscription_details?: { metadata?: Record<string, string> } })
+      .subscription_details?.metadata ?? {};
+  const meta = { ...subMeta, ...(invoice.metadata ?? {}) };
+
+  await sendPaymentReceived({
+    to,
+    name:
+      (meta.client_name as string | undefined)?.trim() ||
+      invoice.customer_name?.trim() ||
+      invoice.customer_email?.trim() ||
+      "A client",
+    amount: money(invoice.amount_paid, invoice.currency),
+    planName: line?.description ?? (meta.plan as string | undefined) ?? null,
+    agreed: Boolean(meta.agreed_price_pence),
+    paidOn: onDate(invoice.created),
+    invoiceUrl: invoice.hosted_invoice_url ?? null,
+    /* billing_reason distinguishes the first invoice from every renewal, and
+       the first one is the only one worth reading twice. */
+    first: invoice.billing_reason === "subscription_create",
+  });
 }

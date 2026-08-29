@@ -29,19 +29,34 @@ export const revalidate = 3600;
 const HUMAN_TAKES: Record<string, string> = {};
 
 /**
- * ⚠️ Not prerendered at build.
+ * NO REPORT IS PREBUILT, AND THE REASON IS THE THIRD ATTEMPT AT THIS.
  *
- * This page reads the results database, and there are hundreds of it. Building
- * them all meant thousands of queries against the store while three build
- * workers hammered it in parallel — pages that answer in two seconds on an idle
- * database took past four minutes, and three deployments failed on it in a row.
- * Raising the budget only moved which page died.
+ * First I capped the count. Then I capped it by field size, after the largest
+ * event in the dataset blew the 240-second per-page ceiling. Both were built
+ * on the assumption that big fields are the slow ones. The build logs say
+ * otherwise: /reports/s8-2026-katowice has 2,638 athletes and still timed out
+ * three times, and so did washington-dc at 3,772 and warsaw at 4,261. There
+ * is no threshold here that is safe, because size is not what predicts it.
  *
- * `revalidate` above already caches each page once rendered, so returning no
- * params costs a slower first request and nothing else. Prerendering thousands
- * of database-backed pages at build time is the thing that does not scale.
+ * What does predict it is load. Four lanes push to main, every push starts a
+ * production build, and several were running at once — each with 29 workers,
+ * all reading the same results Supabase project. The same event data serves
+ * in about four seconds when nothing else is asking for it. The pages are not
+ * inherently four-minute pages; they are starved.
+ *
+ * A REPORT IS NEVER WORTH A FAILED DEPLOYMENT. Next.js exits the build when a
+ * page fails three times — /reports/s8-2026-lisboa is what actually printed
+ * `Command "pnpm run build" exited with 1` — so a page that is merely slow
+ * takes the whole site down with it. A report that nobody has requested has
+ * no claim on that.
+ *
+ * So: nothing here is prebuilt. Every report renders on first request under
+ * the same hourly revalidate and is cached from then on, where being slow
+ * costs one reader some seconds instead of costing everybody the deploy.
+ * Making the page cheap enough to prebuild is the real repair and belongs
+ * with whoever owns the results queries.
  */
-export function generateStaticParams() {
+export function generateStaticParams(): { event: string }[] {
   return [];
 }
 

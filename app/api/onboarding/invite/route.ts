@@ -9,7 +9,13 @@ import {
   type InviteKind,
 } from "@/lib/onboarding/token";
 import { storeInvite } from "@/lib/onboarding/invite-store";
-import { planByKey } from "@/lib/onboarding/model";
+import { parsePrice, planByKey } from "@/lib/onboarding/model";
+import {
+  parseStartDate,
+  startDateBlocker,
+  startDateISO,
+  todayDay,
+} from "@/lib/onboarding/start-date";
 import { sendOnboardingInvite } from "@/lib/email/send";
 import { onboardingInviteSms } from "@/lib/email/templates/onboarding-invite";
 import { sendSms, smsConfigured } from "@/lib/sms/send";
@@ -56,6 +62,19 @@ type Body = {
   rail?: string;
   /** When the invite came from an enquiry row, stamp it as invited. */
   leadId?: string;
+  /**
+   * A monthly price agreed with this person, as Ben typed it — "150", "£150".
+   * Parsed here rather than on the client, because the client is not where a
+   * money value gets to be decided.
+   */
+  agreedPrice?: string;
+  /**
+   * The day the first payment should be taken, as "2026-09-01".
+   *
+   * Omitted or today means charge at checkout. A future date defers the first
+   * collection to that morning and anchors every month after it.
+   */
+  startDate?: string;
 };
 
 export async function POST(request: Request) {
@@ -106,15 +125,60 @@ export async function POST(request: Request) {
 
   const plan = planByKey(body.plan);
 
-  // A custom rate must be a plausible one. Silently dropping a bad value
-  // would send a link charging the PUBLIC price to a client Ben promised a
-  // different rate — the worst possible failure here — so it's an error.
+  /*
+   * THE RATE, HOWEVER BEN TYPED IT.
+   *
+   * Two spellings reach here because two admin surfaces grew apart: a parsed
+   * `amountPence` from the older form, and `agreedPrice` as raw text ("150",
+   * "£150", "1,500") from the newer one. Both land in the same field.
+   *
+   * Refused rather than ignored when it will not read. Silently dropping the
+   * rate sends a link charging the PUBLIC price to somebody Ben told £150 on
+   * the phone, and he finds out when they ring back — which is the worst
+   * failure this endpoint has.
+   */
   let amountPence: number | undefined;
   if (body.amountPence !== undefined && body.amountPence !== null) {
     if (!validAmountPence(body.amountPence)) {
       return NextResponse.json({ error: "AMOUNT_INVALID" }, { status: 400 });
     }
     amountPence = Number(body.amountPence);
+  }
+  const agreedRaw = (body.agreedPrice ?? "").trim();
+  if (agreedRaw) {
+    const parsed = parsePrice(agreedRaw);
+    if (parsed === null) {
+      return NextResponse.json({ error: "PRICE_INVALID" }, { status: 400 });
+    }
+    amountPence = parsed;
+  }
+
+  /*
+   * WHEN THE FIRST PAYMENT COMES OUT.
+   *
+   * Checked HERE, while Ben is looking at the form, and not at checkout.
+   * Stripe will not anchor a monthly billing cycle more than about a month
+   * ahead, and the place to discover that is on his screen — not weeks later,
+   * silently, on the one screen where a client is trying to hand over a card.
+   */
+  let startDay: number | undefined;
+  const startRaw = (body.startDate ?? "").trim();
+  if (startRaw) {
+    const parsed = parseStartDate(startRaw);
+    if (parsed === null) {
+      return NextResponse.json({ error: "START_DATE_INVALID" }, { status: 400 });
+    }
+    const blocked = startDateBlocker(parsed);
+    if (blocked) {
+      return NextResponse.json(
+        { error: "START_DATE_OUT_OF_RANGE", detail: blocked },
+        { status: 400 },
+      );
+    }
+    /* Today is not a deferral — it is the default. Left off the invite so an
+       ordinary link stays exactly the length it was, and so checkout takes the
+       "charge now" path by the absence of a date rather than by comparing one. */
+    if (parsed > todayDay()) startDay = parsed;
   }
 
   /*
@@ -125,10 +189,10 @@ export async function POST(request: Request) {
    * and costs Ben extra SMS segments on every invite he sends. Storing the
    * payload and sending a ten-character id instead gives a 44-character link.
    *
-   * When there is nowhere to store it — no Redis configured, or Redis
-   * unreachable — the token is still a working invite, and a long link beats
-   * no link. The response says which form was used so the admin can report it
-   * rather than quietly shipping the long one for ever.
+   * When there is nowhere to store it — no store configured, or unreachable —
+   * the token is still a working invite, and a long link beats no link. The
+   * response says which form was used so the admin can report it rather than
+   * quietly shipping the long one for ever.
    */
   // Only "beginner" is meaningful; anything else is the default athlete
   // route and is left off so the link stays as short as it was.
@@ -138,10 +202,16 @@ export async function POST(request: Request) {
     email,
     phone,
     kind: kind as InviteKind,
-    // A custom rate needs a plan to describe what it buys; default to 1:1
-    // coaching, which is what Ben's existing clients are on.
-    plan: amountPence ? (plan?.key ?? "coaching-121") : plan?.key,
+    /* ⚠️ NO PLAN IS FORCED ONTO AN AGREED RATE.
+       This used to read `plan: amountPence ? (plan?.key ?? "coaching-121") : …`
+       so that a bespoke rate "had a plan to describe what it buys". What it
+       actually bought was a client being shown the words "1:1 Coaching" and
+       that package's five feature bullets under a number Ben had agreed for
+       something else entirely — and the same package name on their Stripe
+       receipt for ever after. An agreed rate describes itself. */
+    plan: amountPence ? undefined : plan?.key,
     ...(amountPence ? { amountPence } : {}),
+    ...(startDay ? { startDay } : {}),
     ...(rail ? { rail } : {}),
   };
   const stored = await storeInvite({
@@ -197,6 +267,10 @@ export async function POST(request: Request) {
     shortLink: short,
     /** False when the link is signed with the development fallback secret. */
     secured: signingConfigured(),
+    /** Echoed back so the admin can show what was actually agreed, in pence. */
+    agreedPence: amountPence ?? null,
+    /** The first-payment date the link will actually charge on, or null for today. */
+    startsOn: startDay ? startDateISO(startDay) : null,
     email: {
       attempted: Boolean(email),
       ok: emailResult.ok,

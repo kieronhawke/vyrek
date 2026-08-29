@@ -45,7 +45,12 @@ export type ActivityValue =
 export type SexValue = "men" | "women";
 export type WeightUnit = "kg" | "lb";
 
-export type DaysValue = 2 | 3 | 4 | 5 | 6;
+/* One day is a real answer, and on the beginner rail it is the honest one
+   for a lot of people. The scale used to start at two, which quietly told
+   somebody who has not trained in years that the minimum acceptable effort
+   was already more than they had — on the route whose whole job is to be
+   supportive rather than intimidating. */
+export type DaysValue = 1 | 2 | 3 | 4 | 5 | 6;
 export type SessionLengthValue = "30" | "45" | "60" | "90";
 export type LocationValue = "gym-full" | "gym-standard" | "home";
 export type PartnerValue = "solo" | "doubles" | "solo-partner-later";
@@ -129,6 +134,12 @@ export type QuizAnswers = {
   readiness?: ReadinessValue;
   /** Captured mid-flow, never at the end, never behind a password. */
   email?: string;
+  /** Asked with the email now: this route ends in Ben ringing them. */
+  name?: string;
+  /** ISO country for the dialling code, so the number can be dialled. */
+  phoneIso?: string;
+  /** As typed, in their own country's format. Normalised on submit. */
+  phone?: string;
   /** Asked once, on the email screen, and carried to the final step. */
   marketingOptIn?: boolean;
   experience?: ExperienceValue;

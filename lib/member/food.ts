@@ -80,6 +80,15 @@ export type LoggedFood = {
   quantity: number;
   /** Already scaled. Denormalised so an edit to the food table never rewrites history. */
   macros: Macros;
+  /**
+   * A downscaled JPEG data URL of the meal, when one was taken.
+   *
+   * Deliberately not a macro source. Nothing reads a plate and works the
+   * numbers out — see components/member/meal-photo.tsx. It is a record for
+   * Ben to look at, and the honest answer for a meal out that is in no
+   * database.
+   */
+  photo?: string;
 };
 
 const ZERO: Macros = { kcal: 0, protein: 0, carbs: 0, fat: 0, fibre: 0 };

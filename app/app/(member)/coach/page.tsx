@@ -10,5 +10,14 @@ export default async function MemberCoachPage() {
   if (state.stage !== "ready") {
     return <CoachEmpty firstName={state.facts.firstName} />;
   }
-  return <CoachScreen />;
+  /* The booking sheet posts to the same endpoint the public consultation
+     form does, and that endpoint requires a name, an email and a number. The
+     email is the one they signed in with; the phone is not stored yet, so the
+     sheet asks for it rather than the booking failing on submit. */
+  return (
+    <CoachScreen
+      firstName={state.facts.firstName ?? "there"}
+      email={ctx.user.email}
+    />
+  );
 }

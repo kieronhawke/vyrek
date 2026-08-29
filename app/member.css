@@ -136,7 +136,12 @@
   }
 }
 
-/* ── Desktop: left rail ───────────────────────────────────────────────── */
+/* ── Desktop: the rail ────────────────────────────────────────────────
+   One fixed column, laid out as flow. It used to be three separately fixed
+   elements — wordmark, week ring, links — held apart by hand-tuned `top`
+   offsets and a padding-top. That is why they crowded each other: nothing was
+   spacing them, three magic numbers were, and the moment the logo grew they
+   overlapped. A flex column spaces itself. */
 
 .member-rail {
   display: none;
@@ -148,11 +153,52 @@
     inset-block: 0;
     inset-inline-start: 0;
     z-index: 30;
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: var(--rail-w);
-    padding: var(--space-6) var(--space-2);
+    padding: var(--space-4) var(--space-2) var(--space-3);
     background: var(--surface);
     border-inline-end: 1px solid var(--border);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .member-rail__brand {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .member-rail__progress {
+    display: flex;
+    padding: 0 var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .member-rail__groups {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* Pushes Account to the bottom of the column without a fixed height or a
+     magic offset — the whole point of making this one flow container. */
+  .member-rail__foot {
+    margin-top: auto;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border);
+  }
+
+  .member-rail__grouplabel {
+    margin: 0 0 6px;
+    padding: 0 var(--space-2);
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
   }
 
   .member-rail__list {
@@ -164,7 +210,6 @@
     list-style: none;
   }
 
-
   .member-rail__link:hover {
     color: var(--text);
     background: var(--surface-raised);
@@ -174,74 +219,84 @@
     color: var(--accent-text);
     background: var(--accent-faint);
   }
+
+  /* The active row gets a marker as well as a tint: on the light surface the
+     tint alone is a very small contrast step, and colour is not something to
+     rely on alone for "which page am I on". */
+  .member-rail__link[data-active]::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block: 8px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: var(--accent);
+  }
 }
 
 /* The rail is hidden below 768px, so its links need no breakpoint. Keeping
    them out of the media query also keeps them out of its cascade order. */
 .member-rail__link {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: 44px;
-  padding: 0 var(--space-2);
+  min-height: 46px;
+  padding: 6px var(--space-2);
   border-radius: var(--radius-button);
   color: var(--text-muted);
-  font-size: var(--text-sm);
-  font-weight: 600;
   text-decoration: none;
   transition: color var(--dur-fast) var(--ease),
     background var(--dur-fast) var(--ease);
 }
 
-.member-railhead a,
+.member-rail__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+}
+
+.member-rail__label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+/* One line saying what the section is for. The rail has the room and a
+   one-word link list makes the reader guess — "Fuel" and "Connections" in
+   particular were not self-explanatory to anybody who had not been told. */
+.member-rail__hint {
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.member-rail__link[data-active] .member-rail__hint {
+  color: color-mix(in srgb, var(--accent-text) 65%, var(--text-muted));
+}
+
+.member-rail__brand a,
 .member-topbar a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
 }
 
-/* ── Rail header ──────────────────────────────────────────────────────── */
-
-.member-railhead {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .member-railhead {
-    position: fixed;
-    inset-inline-start: 0;
-    top: 0;
-    z-index: 31;
-    display: flex;
-    align-items: center;
-    width: var(--rail-w);
-    height: var(--space-6);
-    padding: var(--space-2) var(--space-3) 0;
-    align-items: flex-start;
-  }
-}
-
-/* ── Rail block progress ──────────────────────────────────────────────── */
-
-.member-railprogress {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .member-railprogress {
-    position: fixed;
-    inset-inline-start: 0;
-    top: calc(var(--space-6) + var(--space-1));
-    z-index: 31;
-    display: flex;
-    width: var(--rail-w);
-    padding: 0 var(--space-3);
-  }
-
-  /* The rail's own items start below the wordmark and the progress ring. */
-  .member-rail {
-    padding-top: var(--space-10);
-  }
+/* The mobile account avatar. Was a 12-property inline style object rebuilt on
+   every render of every member page. */
+.member-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
 }
 
 /* ── Mobile top bar ───────────────────────────────────────────────────── */
@@ -400,6 +455,15 @@
 
 .week__date { font-size: var(--text-xs); color: var(--text-muted); }
 
+/* On a phone this is just the stack the day already was. It earns its
+   keep at 1024px, where it becomes the right-hand half of a row. */
+.week__sessions {
+  display: grid;
+  gap: var(--space-1);
+  align-content: start;
+  min-width: 0;
+}
+
 .week__rest {
   margin: 0;
   font-size: var(--text-sm);
@@ -493,9 +557,119 @@
   cursor: pointer;
 }
 
-@media (min-width: 1024px) {
-  .week__grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
-  .week__day { padding: 10px; }
+/*
+ * Seven columns is a phone pattern that does not survive being widened.
+ *
+ * At 1000px it gave each day about 130px: "Mark done" wrapped onto two
+ * lines, a coach note wrapped onto four, and the columns ended at wildly
+ * different heights with a third of the row empty. The week shape is already
+ * carried by the block bar above and the strip on Today, so readability wins
+ * here — each day gets room enough to read a session and tick it off.
+ */
+/*
+ * A WEEK IS A LIST OF DAYS, NOT A NOTICEBOARD OF CARDS.
+ *
+ * This was a four-column card grid, and the arithmetic was against it from
+ * the start: seven days into four columns is two rows with a hole in the
+ * corner, and the days themselves are wildly different sizes — a rest day is
+ * one word, a Saturday brick is sixteen lines. Stretched to match, the rest
+ * day became a card-sized box with "Rest" floating at the top of it. Left to
+ * their own heights, the row became a staircase from 108px to 616px with
+ * dead space under the short ones. Both readings were correct and both
+ * looked broken, because the layout was fighting the shape of the content.
+ *
+ * So on anything wider than a phone each day is a row: a fixed label gutter
+ * on the left, the session blocks beside it. Rows are allowed to be
+ * different heights — that is what a row is for — and a rest day is
+ * legitimately one line rather than a hole where a card should be.
+ *
+ * THE SESSION BLOCKS ARE A FIXED WIDTH, and that is the part that fixes what
+ * this looked like. Every block is the same size everywhere in the week, so
+ * two sessions on a Saturday sit beside each other at the same width as the
+ * single one on a Monday. Letting them stretch to fill the row would put a
+ * thousand pixels of card around "20 mins ski".
+ */
+@media (min-width: 700px) {
+  .week__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+
+  .week__day {
+    grid-template-columns: 100px minmax(0, 1fr);
+    align-items: stretch;
+    gap: var(--space-2);
+    padding: var(--space-2);
+  }
+
+  /* The date becomes a gutter: a rule down the side rather than under it,
+     because it now labels what is next to it rather than what is below. */
+  .week__dayhead {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 2px;
+    padding-bottom: 0;
+    padding-right: var(--space-2);
+    border-bottom: 0;
+    border-right: 1px solid var(--border);
+  }
+
+  .week__sessions {
+    /* Fixed-width tracks, left-aligned. `auto-fill` rather than `auto-fit`
+       so a single session stays one block wide instead of stretching to
+       swallow the row. */
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fill, minmax(0, 268px));
+    gap: var(--space-2);
+    align-items: start;
+  }
+
+  .week__rest {
+    /* Sits on the label rather than at the top of an empty box. */
+    align-self: center;
+  }
+}
+
+/*
+ * TWO DAYS ABREAST ON A MONITOR.
+ *
+ * One day per full-width row is tidy and wastes two thirds of it: a session
+ * block is 268px because that is how wide "8x1km off 90" wants to be, and a
+ * thousand-pixel row around one of them is a lot of nothing. Stretching the
+ * block to fill instead just moves the nothing inside the box.
+ *
+ * Two columns halves the empty space and still reads as a week — left to
+ * right, then down, the way a calendar is read.
+ *
+ * A pair does stretch to match, which is the opposite of what the old grid
+ * had to stop doing, and the difference is how many cards are being matched.
+ * Stretching to the tallest of four turned a rest day into a card-sized box
+ * with one word at the top of it. Matching one neighbour puts a little
+ * padding under the shorter of two, which reads as a card rather than as a
+ * hole — and it gives the row a straight bottom edge, which is most of what
+ * "tidy" means here. A day with two sessions is exempt anyway: it takes the
+ * whole row, so it never sets a height for anything else.
+ */
+/* 1480px, not 1180. Below it a half-row is too narrow to hold a whole
+   session block, so the blocks in the paired days shrank to 236px while the
+   ones in a full-width day stayed 268px — two sizes of the same thing on one
+   screen, which is the fault this whole layout was rebuilt to fix. The
+   breakpoint is set where a half-row fits a block at full width, not where
+   two columns first look plausible. */
+@media (min-width: 1480px) {
+  .week__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+    align-items: stretch;
+  }
+  .week__dow { font-size: var(--text-lg); }
+
+  /* A day with two sessions takes the whole row so both fit beside each
+     other. Squeezed into half a row they stack, and the day becomes twice
+     the height of the one next to it — which is the raggedness this layout
+     exists to remove, reappearing one level up. */
+  .week__day[data-sessions="2"] { grid-column: 1 / -1; }
 }
 
 /* ── First-run walkthrough ────────────────────────────────────────────────
@@ -658,11 +832,6 @@
 
    The "none" variant is deliberately not a button: a week with no recording
    should not offer something to press. */
-.week__media--none {
-  margin: var(--space-1) 0 0;
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-}
 
 .week__media-player {
   display: flex;
@@ -1240,10 +1409,1298 @@
 .fuel__session-time { flex: none; font-size: var(--text-xs); color: var(--text-muted); }
 .fuel__session-body { min-width: 0; }
 
-/* ── Billing-only portal ──────────────────────────────────────────────────
+/* A button that has to sit in a row of links and read as one of them. Used
+   for actions that cannot be an anchor because they change local state
+   rather than navigate — replaying the first-run tour, for one. */
+.member-linkbtn {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--accent-text);
+  cursor: pointer;
+}
+.member-linkbtn:disabled {
+  color: var(--text-muted);
+  cursor: default;
+}
+
+/* ── Today: two columns on a desktop ──────────────────────────────────
+   Today was one stack at every width, so on a monitor the session card —
+   the thing the whole screen exists for — was a narrow ribbon, with the
+   training chart and the recent list a scroll below it and half the viewport
+   empty to the right. That is a mobile page stretched, not a desktop page.
+
+   The split starts at 1024px rather than 768px on purpose: between those two
+   the rail has already taken 264px, and splitting what is left again gives
+   two columns too narrow to be worth having. */
+.today-grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 1024px) {
+  .today-grid {
+    /* The session leads; the context beside it is deliberately narrower and
+       does not need to grow past a readable width. */
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  /* Sticky, so the week's load and the recent sessions stay in view while
+     the session's block list is scrolled. */
+  .today-side {
+    position: sticky;
+    top: var(--space-4);
+  }
+}
+
+/* The last section in either column should not push a gap onto the page
+   bottom; the grid gap already spaces them. */
+.today-main > section:last-child,
+.today-side > section:last-child {
+  margin-bottom: 0 !important;
+}
+
+
+
+/* ── Add food: three ways in ──────────────────────────────────────────
+   Search, scan, photo. The sheet used to be a search box over forty-three
+   hardcoded foods, so typing a brand name found nothing at all. */
+.addfood__modes {
+  display: flex;
+  gap: 6px;
+  margin-bottom: var(--space-2);
+}
+.addfood__mode {
+  flex: 1;
+  min-height: 40px;
+  padding: 0 10px;
+  border-radius: var(--radius-button);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+.addfood__mode[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent-faint);
+  color: var(--accent-text);
+}
+
+.addfood__notice,
+.addfood__photonote {
+  margin: 0 0 var(--space-2);
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* ── Barcode scanner ─────────────────────────────────────────────────── */
+.scanner { display: grid; gap: var(--space-2); }
+.scanner__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.scanner__title { margin: 0; font-weight: 700; font-size: var(--text-base); }
+.scanner__stage {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: #000;
+  aspect-ratio: 4 / 3;
+}
+.scanner__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Guidance, not a crop — the detector reads the whole frame. */
+.scanner__reticle {
+  position: absolute;
+  inset: 28% 12%;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.35);
+}
+.scanner__hint {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 8px;
+  margin: 0;
+  text-align: center;
+  font-size: var(--text-xs);
+  color: #fff;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 0.8);
+}
+.scanner__note {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.scanner__manual { display: grid; gap: 8px; }
+
+/* ── Meal photo ──────────────────────────────────────────────────────── */
+.mealphoto { display: grid; gap: var(--space-2); }
+.mealphoto__take,
+.mealphoto__remove {
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-button);
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+.mealphoto__preview { display: grid; gap: 8px; justify-items: start; }
+.mealphoto__preview img {
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+}
+.mealphoto__note,
+.mealphoto__error {
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.mealphoto__error { color: var(--danger); }
+
+/* ── Fuel on a desktop ───────────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  /* The sheet was a phone-width column centred in a monitor with the day's
+     log pushed below the fold. Side by side, the log stays readable while
+     something is being added to it. */
+  .addfood { max-width: 560px; }
+}
+
+/* ── Ask Ben ──────────────────────────────────────────────────────────
+   A messaging app. It was a heading, a card about other people failing to
+   stick at things, a second heading, then the conversation — so the actual
+   messages started below the fold on a phone. */
+.coachpage { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.coachpage__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border);
+}
+.coachpage__avatar {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #14100f;
+}
+.coachpage__avatar img {
+  width: 100%; height: 100%; object-fit: cover; filter: grayscale(1);
+}
+.coachpage__who { display: flex; flex-direction: column; min-width: 0; }
+.coachpage__name { font-weight: 700; font-size: var(--text-base); }
+.coachpage__sub { font-size: var(--text-xs); color: var(--text-muted); }
+
+/* Shown until dismissed, then gone. Aimed at the moment before somebody
+   sends their first message, not at every morning for a year. */
+.coachintro {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.coachintro__body {
+  margin: 0; font-size: var(--text-sm); line-height: 1.55; color: var(--text-muted);
+}
+.coachintro__dismiss {
+  min-height: 36px; padding: 0 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface-raised);
+  color: var(--text); font-size: var(--text-xs); font-weight: 600;
+}
+
+.ct { display: flex; flex-direction: column; gap: var(--space-2); }
+.ct__scroll { display: grid; gap: var(--space-3); }
+.ct__day { display: grid; gap: var(--space-1); }
+.ct__daylabel {
+  margin: 0; text-align: center;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.ct__row { display: flex; gap: var(--space-1); align-items: flex-end; justify-content: flex-end; }
+.ct__row[data-coach] { justify-content: flex-start; }
+.ct__avatar {
+  position: relative; flex: 0 0 auto; width: 32px; height: 32px;
+  border-radius: 999px; overflow: hidden; background: #14100f;
+}
+.ct__bubblewrap { max-width: 82%; }
+.ct__about {
+  margin: 0 0 3px; text-align: right;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+.ct__row[data-coach] .ct__about { text-align: left; }
+.ct__bubble {
+  padding: 10px 14px;
+  border-radius: 16px 16px 4px 16px;
+  background: var(--accent-faint);
+  border: 1px solid transparent;
+  color: var(--text);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.ct__bubble[data-coach] {
+  border-radius: 16px 16px 16px 4px;
+  background: var(--surface);
+  border-color: var(--border);
+}
+.ct__media {
+  display: block; width: 100%; max-height: 300px; object-fit: cover;
+  border-radius: 10px; margin-bottom: 8px;
+}
+.ct__meta {
+  margin: 3px 0 0; text-align: right;
+  font-size: var(--text-2xs, 11px); color: var(--text-muted);
+}
+.ct__row[data-coach] .ct__meta { text-align: left; }
+
+/* A booked call is a thing that happened, not somebody talking. */
+.ct__system { display: flex; justify-content: center; }
+.ct__system p {
+  margin: 0; padding: 6px 12px; border-radius: 999px;
+  background: var(--surface-raised); border: 1px dashed var(--border);
+  font-size: var(--text-xs); color: var(--text-muted); text-align: center;
+}
+
+.ct__notice {
+  margin: 0; padding: 8px 10px; border-radius: 8px;
+  background: var(--surface-raised); border: 1px solid var(--border);
+  font-size: var(--text-xs); line-height: 1.5; color: var(--text-muted);
+}
+
+/* ── Sheets, in place, so the thread is never left ────────────────────── */
+.ct__sheet {
+  display: grid; gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.ct__sheettitle { margin: 0; font-weight: 700; font-size: var(--text-sm); }
+.ct__topics { display: grid; gap: 6px; }
+@media (min-width: 640px) { .ct__topics { grid-template-columns: 1fr 1fr; } }
+.ct__topic {
+  display: grid; gap: 2px; text-align: left;
+  min-height: 56px; padding: 8px 12px;
+  border-radius: var(--radius-button);
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  cursor: pointer; color: inherit;
+}
+.ct__topic:hover { border-color: var(--accent); }
+.ct__topiclabel { font-weight: 650; font-size: var(--text-sm); color: var(--text); }
+.ct__topichint { font-size: var(--text-xs); color: var(--text-muted); }
+
+.ct__questions { display: grid; gap: 6px; }
+.ct__question {
+  text-align: left; min-height: 44px; padding: 10px 12px;
+  border-radius: var(--radius-button);
+  border: 1px solid var(--border); background: var(--surface-raised);
+  color: var(--text); font-size: var(--text-sm); cursor: pointer;
+}
+.ct__question:hover { border-color: var(--accent); }
+.ct__sheetrow { display: flex; gap: 8px; }
+.ct__sheetclose {
+  min-height: 40px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text-muted); font-size: var(--text-sm); cursor: pointer;
+}
+
+/* ── Composer ─────────────────────────────────────────────────────────── */
+.ct__composer {
+  display: grid; gap: 8px;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border);
+}
+.ct__actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.ct__action {
+  min-height: 40px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font-size: var(--text-sm); font-weight: 600;
+  cursor: pointer;
+}
+.ct__action:hover { border-color: var(--accent); color: var(--accent-text); }
+
+.ct__attachment {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px; border-radius: 10px;
+  background: var(--surface-raised); border: 1px solid var(--border);
+}
+.ct__thumb {
+  width: 44px; height: 44px; object-fit: cover; border-radius: 8px; flex: 0 0 auto;
+}
+.ct__attachname {
+  flex: 1; min-width: 0; font-size: var(--text-xs); color: var(--text-muted);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ct__remove {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--accent-text); font-size: var(--text-xs); font-weight: 600;
+}
+
+.ct__inputrow { display: flex; gap: 8px; align-items: flex-end; }
+.ct__input {
+  flex: 1; min-height: 44px; max-height: 160px;
+  padding: 11px 14px; border-radius: 20px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font: inherit; font-size: var(--text-sm);
+  resize: vertical;
+}
+.ct__send {
+  flex: 0 0 auto; min-height: 44px; padding: 0 20px; border-radius: 999px;
+  border: 0; background: var(--accent); color: var(--accent-ink, #0a0a0a);
+  font-size: var(--text-sm); font-weight: 700; cursor: pointer;
+}
+.ct__send:disabled {
+  background: var(--surface-raised); color: var(--text-faint); cursor: not-allowed;
+}
+.ct__foot { margin: 0; font-size: var(--text-xs); color: var(--text-muted); }
+
+/* ── Booking, inside the thread ───────────────────────────────────────── */
+.cbook {
+  display: grid; gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--accent);
+  background: var(--surface);
+}
+.cbook__head { display: flex; align-items: center; justify-content: space-between; }
+.cbook__title { margin: 0; font-weight: 700; font-size: var(--text-sm); }
+.cbook__close {
+  background: none; border: 0; cursor: pointer; color: var(--text-muted);
+  font-size: var(--text-base); min-height: 32px; min-width: 32px;
+}
+.cbook__note, .cbook__foot {
+  margin: 0; font-size: var(--text-xs); line-height: 1.5; color: var(--text-muted);
+}
+.cbook__error { margin: 0; font-size: var(--text-sm); color: var(--danger); }
+.cbook__grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.cbook__chip {
+  min-height: 40px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface-raised);
+  color: var(--text); font-size: var(--text-sm); font-weight: 600; cursor: pointer;
+}
+.cbook__chip:hover { border-color: var(--accent); color: var(--accent-text); }
+.cbook__back {
+  justify-self: start; background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--accent-text); font-size: var(--text-xs); font-weight: 600;
+}
+.cbook__field { display: grid; gap: 4px; font-size: var(--text-xs); color: var(--text-muted); }
+
+/* On a desktop the thread is a column, not a page-wide sprawl: a chat bubble
+   stretched across a monitor is unreadable. */
+@media (min-width: 1024px) {
+  .coachpage { max-width: 760px; }
+}
+
+/* ── Account ──────────────────────────────────────────────────────────
+   Two columns on a monitor. It was a single stack of label-left /
+   value-right rows at every width, which on a wide screen is a narrow
+   column of text with a metre of nothing beside it. */
+.account-grid { display: grid; gap: var(--space-4); }
+
+@media (min-width: 1024px) {
+  /*
+   * Multi-column rather than a two-column grid.
+   *
+   * A grid aligns its rows, so a short section sitting beside a tall one
+   * leaves a hole underneath it the height of the difference — and these
+   * sections are wildly uneven: three stat tiles beside a four-row
+   * subscription table left a visible gap the size of a card. Columns flow
+   * instead, so each section starts where the last one ended.
+   *
+   * `break-inside: avoid` stops a card being sliced across the column
+   * boundary, which is the one failure mode this layout has.
+   */
+  .account-grid { display: block; }
+  .account-main {
+    column-count: 2;
+    column-gap: var(--space-4);
+  }
+  .account-main > section {
+    break-inside: avoid;
+    /* Columns do not collapse margins the way a grid gap does. */
+    margin-bottom: var(--space-4) !important;
+  }
+}
+
+/* ── Profile editor ──────────────────────────────────────────────────── */
+.pe { display: grid; gap: var(--space-2); }
+.pe__identity { display: flex; align-items: center; gap: var(--space-2); }
+.pe__avatar {
+  flex: 0 0 auto; width: 72px; height: 72px; border-radius: 999px;
+  overflow: hidden; background: var(--surface-raised);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.pe__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.pe__initials { font-size: var(--text-lg); font-weight: 700; color: var(--text-muted); }
+.pe__identityActions { display: flex; flex-wrap: wrap; gap: 6px; }
+.pe__btn {
+  min-height: 36px; padding: 0 12px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface-raised);
+  color: var(--text); font-size: var(--text-xs); font-weight: 600;
+}
+.pe__fields { display: grid; gap: var(--space-2); }
+.pe__field { display: grid; gap: 4px; font-size: var(--text-xs); color: var(--text-muted); }
+.pe__field small { font-size: 11px; color: var(--text-faint); }
+.pe__input {
+  width: 100%; min-height: 44px; padding: 8px 12px;
+  border-radius: var(--radius-input, 10px);
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font: inherit; font-size: var(--text-sm);
+}
+.pe__input:disabled { color: var(--text-muted); background: var(--surface-raised); }
+.pe__actions { display: flex; gap: 8px; }
+.pe__save {
+  min-height: 44px; padding: 0 20px; border-radius: 999px; border: 0;
+  background: var(--accent); color: var(--accent-ink, #0a0a0a);
+  font-size: var(--text-sm); font-weight: 700; cursor: pointer;
+}
+.pe__save:disabled { background: var(--surface-raised); color: var(--text-faint); cursor: not-allowed; }
+.pe__note, .pe__error { margin: 0; font-size: var(--text-xs); line-height: 1.5; color: var(--text-muted); }
+.pe__error { color: var(--danger); }
+
+/* ── Billing block ───────────────────────────────────────────────────── */
+.acctbill { display: grid; gap: 8px; margin-top: var(--space-1); justify-items: start; }
+.acctbill__cancel {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--text-muted); font-size: var(--text-xs);
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.acctbill__cancel:hover { color: var(--danger); }
+.acctbill__note { margin: 0; font-size: var(--text-xs); color: var(--text-muted); }
+.acctbill__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* The two questions anybody opens a billing page to answer, on the page. */
+.acctbill__summary {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+}
+.acctbill__top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.acctbill__status {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.acctbill__status[data-tone="ok"] {
+  color: var(--accent-text);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.acctbill__status[data-tone="warn"] {
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 14%, transparent);
+}
+.acctbill__status[data-tone="off"] {
+  color: var(--text-muted);
+  background: var(--surface-2);
+}
+.acctbill__plan { font-size: var(--text-sm); font-weight: 700; }
+
+.acctbill__facts {
+  margin: 0;
+  display: grid;
+  gap: 8px 16px;
+  /* Wraps to one column on a phone and sits in a row on anything wider,
+     without a media query per breakpoint. */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.acctbill__facts dt {
+  margin: 0;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.acctbill__facts dd {
+  margin: 2px 0 0;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.acctbill__alert {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent);
+  background: color-mix(in srgb, var(--danger) 10%, transparent);
+  font-size: var(--text-xs);
+  color: var(--text);
+}
+.acctbill__invoices { font-size: var(--text-xs); }
+.acctbill__invoices summary {
+  cursor: pointer;
+  color: var(--text-muted);
+  /* The global 48px minimum applies to anything with a button role; a
+     disclosure triangle is not one, and 48px here would be a huge gap. */
+  padding: 4px 0;
+}
+.acctbill__invoices ul {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 4px;
+}
+.acctbill__invoices li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 5px 0;
+  border-top: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+.acctbill__invoices a { color: var(--accent-text); }
+
+/* ── Cancellation ────────────────────────────────────────────────────── */
+.cx {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--space-2);
+  background: color-mix(in srgb, #000 62%, transparent);
+  backdrop-filter: blur(4px);
+}
+.cx__card {
+  width: 100%; max-width: 460px; max-height: 90svh; overflow-y: auto;
+  display: grid; gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background: var(--bg); border: 1px solid var(--border);
+}
+.cx__ben { display: flex; align-items: center; gap: var(--space-2); }
+/* Larger than the avatars elsewhere and not desaturated: this is the one
+   screen whose point is that a person is asking, and the same treatment used
+   in the chrome made it a dark disc on a dark sheet. */
+.cx__portrait {
+  position: relative; flex: 0 0 auto; width: 72px; height: 72px;
+  border-radius: 999px; overflow: hidden; background: #14100f;
+  border: 1px solid var(--border);
+}
+.cx__benwho { display: flex; flex-direction: column; min-width: 0; }
+.cx__benname { font-weight: 700; font-size: var(--text-sm); }
+.cx__bensub { font-size: var(--text-xs); color: var(--text-muted); }
+.cx__x {
+  margin-left: auto; background: none; border: 0; cursor: pointer;
+  color: var(--text-muted); min-width: 36px; min-height: 36px; font-size: var(--text-base);
+}
+.cx__title { margin: 0; font-size: var(--text-lg); font-weight: 800; line-height: 1.2; }
+.cx__lede { margin: 0; font-size: var(--text-sm); line-height: 1.55; color: var(--text-muted); }
+.cx__reasons { display: grid; gap: 6px; }
+.cx__reason {
+  text-align: left; min-height: 44px; padding: 10px 12px;
+  border-radius: var(--radius-button); cursor: pointer;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font-size: var(--text-sm);
+}
+.cx__reason[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-faint); color: var(--accent-text); }
+.cx__field { display: grid; gap: 4px; font-size: var(--text-xs); color: var(--text-muted); }
+.cx__textarea {
+  width: 100%; padding: 10px 12px; border-radius: var(--radius-input, 10px);
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text); font: inherit; font-size: var(--text-sm); resize: vertical;
+}
+.cx__facts { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; font-size: var(--text-sm); line-height: 1.5; color: var(--text-muted); }
+.cx__actions { display: grid; gap: 8px; }
+.cx__go, .cx__danger, .cx__stay {
+  min-height: 46px; padding: 0 18px; border-radius: 999px; cursor: pointer;
+  font-size: var(--text-sm); font-weight: 700; border: 1px solid var(--border);
+}
+.cx__go { background: var(--accent); color: var(--accent-ink, #0a0a0a); border-color: transparent; }
+.cx__danger { background: var(--danger); color: #fff; border-color: transparent; }
+.cx__stay { background: transparent; color: var(--text); }
+/* Always visible, never disabled — the property lib/member/cancel.ts exists
+   to guarantee. It is quieter than the others, not hidden. */
+.cx__skip {
+  justify-self: center; background: none; border: 0; padding: 6px; cursor: pointer;
+  color: var(--text-faint); font-size: var(--text-xs);
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.cx__note { margin: 0; font-size: var(--text-xs); line-height: 1.5; color: var(--text-faint); }
+.cx__body { display: grid; gap: var(--space-2); align-content: start; }
+
+/* ── Leaving, on a desktop ────────────────────────────────────────────
+   It was a 460px column with a 72px thumbnail of Ben at the top, which on a
+   monitor is a phone screen floating in the middle of nothing — and the
+   whole premise of this screen is that a person is asking, which a
+   thumbnail does not carry.
+
+   So on a wide screen he is a column: a real portrait beside the question,
+   at the size a photograph of somebody has to be before it reads as a
+   photograph of somebody. Nothing else changes. The exit is still one tap
+   from every stage, still never disabled, still never hidden — the balance
+   the flow is built on does not move because the window got bigger. */
+@media (min-width: 900px) {
+  .cx__card {
+    max-width: 860px;
+    padding: var(--space-4);
+    gap: var(--space-4);
+    grid-template-columns: 240px minmax(0, 1fr);
+    align-items: start;
+  }
+  .cx__ben {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .cx__portrait {
+    width: 240px;
+    height: 300px;
+    /* A portrait, not a badge. Round at this size reads as an avatar and
+       loses the face to the crop. */
+    border-radius: var(--radius-card);
+  }
+  .cx__x {
+    /* Out of the column and back into the corner of the card, where a close
+       control belongs and where it does not push Ben's name sideways. */
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    margin-left: 0;
+  }
+  .cx__card { position: relative; }
+  .cx__title { font-size: var(--text-xl); }
+  .cx__lede { font-size: var(--text-base); }
+  /* Room for the buttons to sit side by side, with the quiet one second. */
+  .cx__actions {
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    justify-content: start;
+    gap: var(--space-2);
+  }
+  .cx__reasons { grid-template-columns: 1fr 1fr; }
+  .cx__skip { justify-self: start; padding-left: 0; }
+}
+
+/* ── The remaining screens on a desktop ───────────────────────────────
+   Plan, Fuel, Progress and Connections were all single columns that simply
+   got wider, so on a monitor each was a ribbon of content with the rest of
+   the viewport empty. None of them needs a bespoke layout — they need their
+   repeating parts to use the width they are given. */
+
+@media (min-width: 1024px) {
+  /* Connections: cards, not a stack. Six providers in one column is a
+     scroll for information that fits on a screen. */
+  .conn__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-2);
+    align-items: start;
+  }
+
+  /* Prose above a grid still wants a reading measure. */
+  .conn__intro { max-width: var(--member-prose); }
+}
+
+/* Fuel: two columns, so the day's totals stay visible while the meals below
+   are scrolled. `.fuel` is already a flex column, so this is a change of
+   direction rather than a restructure of the component. */
+@media (min-width: 1024px) {
+  .fuel {
+    display: grid;
+    grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-3);
+  }
+  /* The totals card leads and stays put; the meals take the wider column. */
+  .fuel > .fuel__card:first-of-type { position: sticky; top: var(--space-4); }
+  .fuel > *:not(.fuel__card:first-of-type) { grid-column: 2; }
+  .fuel > .fuel__card:first-of-type { grid-column: 1; grid-row: 1 / span 99; }
+}
+
+/* A stat strip that stretches to fill a monitor puts a metre between the
+   number and its label. Cap the tiles instead. */
+@media (min-width: 1024px) {
+  .member-main .statTiles,
+  .member-main [class*="statTiles"] {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 220px));
+  }
+}
+
+/* Progress: five stacked sections became five stacked sections on a monitor
+   too. Same treatment as Account — the sections flow down one column and
+   then the next, so the mobile reading order survives and the width gets
+   used. The volume chart is the exception: it wants to be wide. */
+@media (min-width: 1024px) {
+  /*
+   * Columns, not a grid, for the same reason as Account: a grid aligns its
+   * rows, so the short summary card beside the tall stations list left a
+   * gap the height of the difference — several hundred pixels of nothing in
+   * the left column while the right one kept going.
+   */
+  .progress-grid {
+    column-count: 2;
+    column-gap: var(--space-4);
+  }
+  .progress-grid > section {
+    break-inside: avoid;
+    margin-bottom: var(--space-4) !important;
+  }
+  /* The volume chart is the one thing that wants the full width, so it sits
+     outside the column flow. */
+  .progress-grid > section[data-wide] {
+    column-span: all;
+    break-inside: avoid;
+  }
+}
+
+/* Managing a booked call from the thread it was booked in. Quieter than the
+   message it hangs off — it is available, not shouting. */
+.ct__manage {
+  margin-top: 4px;
+  background: none;
+  border: 0;
+  padding: 2px 4px;
+  cursor: pointer;
+  color: var(--accent-text);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+/* ── The booking calendar ──────────────────────────────────────────────
+   A month grid, because "a Saturday in three weeks" is a question about a
+   calendar and a row of chips made you count. Days Ben has nothing free stay
+   visible and dimmed rather than vanishing, so the gaps read as him being
+   busy rather than as the list running out. */
+.cal {
+  /* Capped and centred. The cells are square, so left to fill a desktop
+     sheet a month becomes 700px tall and the times fall off the screen. */
+  max-width: 340px;
+  margin-inline: auto;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  background: var(--surface-1);
+}
+.cal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.cal__month {
+  font-weight: 700;
+  font-size: var(--text-sm);
+  letter-spacing: -0.01em;
+}
+.cal__nav {
+  width: 32px;
+  min-height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1;
+}
+.cal__nav:disabled { opacity: 0.3; }
+.cal__nav:not(:disabled):hover { color: var(--text); border-color: var(--accent); }
+.cal__dow,
+.cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.cal__dow {
+  margin-bottom: 4px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  text-align: center;
+}
+.cal__pad { aspect-ratio: 1; }
+.cal__day {
+  aspect-ratio: 1;
+  /* Overrides the global 48px button minimum: a calendar cell is sized by
+     the grid, and 48px would make a month taller than the sheet. The whole
+     square is the target, which is what the rule is protecting. */
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-faint);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+.cal__day:disabled { opacity: 0.45; }
+.cal__day.is-free {
+  color: var(--text);
+  background: var(--surface-2);
+  border-color: var(--line);
+  font-weight: 600;
+}
+.cal__day.is-free:hover { border-color: var(--accent); color: var(--accent-text); }
+.cal__day.is-picked {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-on);
+}
+.cbook__times {
+  display: grid;
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px solid var(--line);
+}
+.cbook__when {
+  margin: 0;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* The call they already have, stated before they are asked what to do with
+   it. Cancelling is a quiet link beside it, not the loudest thing here. */
+.cbook__current {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+.cbook__currentwhen { font-weight: 700; font-size: var(--text-sm); }
+.cbook__currentnote {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-right: auto;
+}
+.cbook__drop {
+
+  justify-self: start;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.cbook__drop:hover { color: var(--danger); }
+
+
+/* ── Stat tiles ───────────────────────────────────────────────────────
+   Capped rather than stretched. Three tiles filling a monitor put a
+   two-character number in the middle of a 330px box with its label a long
+   way from it. */
+.member-stattiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: var(--space-1);
+}
+
+@media (min-width: 700px) {
+  .member-stattiles {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 220px));
+  }
+}
+
+/* Station thumbnails have room to be legible on a desktop. At 52px a photo of
+   somebody mid-sled-push is a dark smudge; the point of having a photo at all
+   is that the row is identifiable at a glance. */
+@media (min-width: 1024px) {
+  .member-main { --station-thumb: 72px; }
+}
+
+
+/* ── Connections, member view ─────────────────────────────────────────
+   Was six cards of our own roadmap: which API is open, what we are waiting
+   on, and a link to each provider's developer terms. This is the same
+   providers with only what somebody linking a watch wants to know. */
+.conn__card {
+  display: grid;
+  gap: 8px;
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.conn__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.conn__mark {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.conn__name {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: 700;
+  min-width: 0;
+}
+.conn__soon {
+  margin-left: auto;
+  flex: 0 0 auto;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px dashed var(--border);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.conn__brings {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.conn__foot {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+/* ── Notification switches ────────────────────────────────────────────
+   Were four rows of text reading "On". Marketing is in its own group
+   because it is consent rather than a service message, and grouping it with
+   the others implies they are the same kind of thing. */
+.notif { display: grid; gap: var(--space-2); }
+.notif__group {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  overflow: hidden;
+}
+.notif__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 12px var(--space-2);
+  border-bottom: 1px solid var(--border);
+}
+.notif__group > .notif__row:last-child { border-bottom: 0; }
+.notif__text { display: grid; gap: 2px; min-width: 0; }
+.notif__label { font-size: var(--text-sm); font-weight: 600; color: var(--text); }
+.notif__hint { font-size: var(--text-xs); color: var(--text-faint); line-height: 1.45; }
+/* The button is the tap target — globals.css puts a 48px minimum on every
+   button and the visual suite checks it — so the visible pill is an inner
+   element. Styling the button as a 28px pill gave a 48x48 circle. */
+.notif__switch {
+  flex: 0 0 auto;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.notif__switch:disabled { opacity: 0.5; cursor: default; }
+
+.notif__track {
+  position: relative;
+  display: block;
+  width: 48px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  transition: background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+.notif__switch[aria-checked="true"] .notif__track {
+  background: var(--accent);
+  border-color: transparent;
+}
+.notif__knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--text-muted);
+  transition: transform var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
+}
+.notif__switch[aria-checked="true"] .notif__knob {
+  transform: translateX(20px);
+  background: var(--accent-ink, #0a0a0a);
+}
+.notif__note { margin: 0; font-size: var(--text-xs); color: var(--text-faint); }
+
+@media (prefers-reduced-motion: reduce) {
+  .notif__track, .notif__knob { transition: none; }
+}
+
+/* ── Phone field ─────────────────────────────────────────────────────
+   The old field was a text box placeholdered "07…", which assumes everybody
+   is in Britain. Ben coaches remotely. */
+.phone { display: grid; gap: 4px; }
+.phone__label { font-size: var(--text-xs); color: var(--text-muted); }
+.phone__row { display: flex; gap: 8px; }
+.phone__country {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  min-height: 44px;
+  border-radius: var(--radius-input, 10px);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  flex: 0 0 auto;
+}
+.phone__flag { font-size: 18px; line-height: 1; }
+.phone__dial { font-size: var(--text-sm); color: var(--text-muted); }
+/* The native select sits invisibly over the whole control, so the flag and
+   the code are what you see and the platform picker is what you get. */
+.phone__select {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px; /* iOS zooms a focused control below 16px. */
+}
+.phone__input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: var(--radius-input, 10px);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-sm);
+}
+.phone__input[aria-invalid="true"] { border-color: var(--warn, #f5b83c); }
+.phone__hint { margin: 0; font-size: 11px; color: var(--text-faint); }
+.phone__error { margin: 0; font-size: 11px; color: var(--warn, #f5b83c); }
+
+/* ── Photo cropper ───────────────────────────────────────────────────── */
+.crop {
+  position: fixed; inset: 0; z-index: 70;
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--space-2);
+  background: color-mix(in srgb, #000 66%, transparent);
+}
+.crop__card {
+  display: grid; gap: var(--space-2); justify-items: center;
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background: var(--bg); border: 1px solid var(--border);
+}
+.crop__title { margin: 0; font-weight: 700; font-size: var(--text-base); }
+.crop__stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #000;
+  touch-action: none;
+  cursor: grab;
+}
+.crop__stage:active { cursor: grabbing; }
+.crop__img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: none;
+  user-select: none;
+  pointer-events: none;
+}
+.crop__ring {
+  position: absolute; inset: 0;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 2px var(--accent);
+  pointer-events: none;
+}
+.crop__zoom { width: 240px; }
+.crop__zoom input { width: 100%; }
+.crop__hint { margin: 0; font-size: var(--text-xs); color: var(--text-faint); }
+.crop__actions { display: grid; gap: 8px; width: 240px; }
+.crop__save {
+  min-height: 44px; border-radius: 999px; border: 0; cursor: pointer;
+  background: var(--accent); color: var(--accent-ink, #0a0a0a);
+  font-size: var(--text-sm); font-weight: 700;
+}
+.crop__cancel {
+  min-height: 44px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text); font-size: var(--text-sm); font-weight: 600;
+}
+
+/* The step counter on a guided question. */
+.ct__sheetstep {
+  margin-left: 8px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-weight: 500;
+}
+
+/* ── Ask Ben on a desktop ─────────────────────────────────────────────
+   The thread was capped narrow and left-aligned, so on a monitor it sat in
+   the corner with two thirds of the screen empty beside it, and the whole
+   page scrolled — which meant opening the booking sheet pushed the composer
+   below the fold and you had to scroll to find the thing you had just asked
+   for.
+
+   Every chat app that works solves this the same way: the page does not
+   scroll, the conversation does, and the composer stays put at the bottom.
+   That is what this does. Phones keep the simple document scroll, where the
+   browser chrome collapsing on scroll is the expected behaviour. */
+@media (min-width: 1024px) {
+  .member-main:has(.coachpage) {
+    /* The frame stops scrolling so the thread can. */
+    height: 100svh;
+    max-width: 900px;
+    padding-bottom: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .coachpage {
+    flex: 1;
+    min-height: 0;
+  }
+  .ct {
+    flex: 1;
+    min-height: 0;
+  }
+  .ct__scroll {
+    /* flex:1 + min-height:0 is what lets a scroll region shrink inside a
+       flex column. Without the min-height it grows to fit its content and
+       the composer goes back off the bottom of the screen. */
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: var(--space-1);
+    scrollbar-width: thin;
+  }
+  /* A sheet is a panel above the composer, not another thing to scroll past.
+     Cap it and let its own contents scroll if a month plus times is tall. */
+  .ct > .cbook,
+  .ct > .ct__sheet {
+    max-height: 54svh;
+    overflow-y: auto;
+  }
+  .ct__bubblewrap { max-width: 68%; }
+
+  /* Times beside the month rather than under it. Underneath, picking a day
+     pushed its own times below the fold of the sheet — one tap forward, one
+     scroll back. */
+  .cbook__pick {
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: start;
+  }
+  .cbook__times {
+    border-top: 0;
+    border-left: 1px solid var(--line);
+    padding-top: 0;
+    padding-left: var(--space-3);
+  }
+  .cbook__pick > .cbook__note { align-self: center; }
+}
+
+.ct__sound {
+  margin-left: auto;
+  padding: 0;
+  width: 40px;
+  min-height: 40px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 15px;
+  line-height: 1;
+  opacity: 0.6;
+}
+.ct__sound:hover { opacity: 1; border-color: var(--line); }
+.ct__sound[aria-pressed="false"] { opacity: 0.35; }
+
+/* Drag a file anywhere over the thread. The whole panel lights up rather
+   than a small target, because on a laptop the pointer is wherever the file
+   came from and hunting for a drop zone is the friction this removes. */
+.ct.is-dragging {
+  outline: 2px dashed var(--accent);
+  outline-offset: 6px;
+  border-radius: var(--radius-md);
+}
+
+/* ── Billing-only portal ──────────────────────────────────────────────
    A payment-link client has one page, so there is no rail and no tab bar.
-   The desktop rules above reserve space for both; give it back. The
-   railhead/railprogress divs render nothing useful without a rail either. */
+   The desktop rules above reserve space for both; give it back.
+
+   This block is deliberately last in the file. Every rule in it is an
+   override of the member layout above, and keeping it at the end of the
+   cascade means it wins on order as well as on specificity — so a later
+   member-area change cannot quietly outrank it from below. */
 @media (min-width: 768px) {
   .member-main[data-mode="billing"] {
     margin-left: auto;
@@ -1262,4 +2719,13 @@
   .member-frame[data-mode="billing"] .member-topbar {
     display: flex;
   }
+}
+
+/* The rail and the tab bar are navigation to pages this client does not
+   have. The old shell solved that by not rendering them; the rebuilt shell
+   renders one member frame for everyone, so say it here instead. Harmless
+   if the markup is conditional again — it just never matches. */
+.member-frame[data-mode="billing"] .member-rail,
+.member-frame[data-mode="billing"] .member-tabbar {
+  display: none;
 }

@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   FOODS,
   MEALS,
-  searchFoods,
   scale,
   recentFoods,
   clockTime,
@@ -14,6 +13,9 @@ import {
   type MealKey,
   type Portion,
 } from "@/lib/member/food";
+import { useFoodSearch } from "@/hooks/use-food-search";
+import { BarcodeScanner } from "@/components/member/barcode-scanner";
+import { MealPhoto } from "@/components/member/meal-photo";
 
 /**
  * THE ADD-FOOD SHEET.
@@ -68,12 +70,17 @@ export function AddFood({
   const [quantity, setQuantity] = useState(1);
   const [custom, setCustom] = useState(false);
   const [justLogged, setJustLogged] = useState<string | null>(null);
+  /** Which way of finding food is on screen. Search is the default. */
+  const [mode, setMode] = useState<"search" | "scan" | "photo">("search");
+  const [photo, setPhoto] = useState<string | null>(null);
   const search = useRef<HTMLInputElement>(null);
   const tick = useRef<number | null>(null);
 
   useEffect(() => () => { if (tick.current) window.clearTimeout(tick.current); }, []);
 
-  const results = useMemo(() => searchFoods(query), [query]);
+  /* Curated foods answer on the keystroke; the packaged database lands a
+     moment later. See hooks/use-food-search.ts for why that order matters. */
+  const { foods: results, loading, offline } = useFoodSearch(query);
   const recents = useMemo(() => recentFoods(history, 8), [history]);
 
   function choose(food: Food) {
@@ -102,7 +109,9 @@ export function AddFood({
       portionLabel: p.label,
       quantity: qty,
       macros: scale(food, p, qty),
+      photo: photo ?? undefined,
     });
+    setPhoto(null);
     flash(food.id);
     setPicked(null);
     setQuery("");
@@ -150,16 +159,71 @@ export function AddFood({
         </button>
       </div>
 
-      <input
-        ref={search}
-        type="search"
-        className="addfood__search"
-        placeholder="Search foods…"
-        value={query}
-        onChange={(e) => { setQuery(e.target.value); setPicked(null); }}
-        aria-label="Search foods"
-        autoComplete="off"
-      />
+      {/* Three ways in. Search is the default because it is the one that
+          works everywhere; scan is the fastest when there is a packet in
+          your hand; the photo is for the meal that is in no database. */}
+      <div className="addfood__modes" role="group" aria-label="How to add food">
+        <button
+          type="button"
+          className="addfood__mode"
+          aria-pressed={mode === "search"}
+          onClick={() => setMode("search")}
+        >
+          Search
+        </button>
+        <button
+          type="button"
+          className="addfood__mode"
+          aria-pressed={mode === "scan"}
+          onClick={() => { setMode("scan"); setPicked(null); }}
+        >
+          Scan barcode
+        </button>
+        <button
+          type="button"
+          className="addfood__mode"
+          aria-pressed={mode === "photo"}
+          onClick={() => setMode("photo")}
+        >
+          Photo
+        </button>
+      </div>
+
+      {mode === "scan" ? (
+        <BarcodeScanner
+          onFound={(food) => {
+            choose(food);
+            setMode("search");
+          }}
+          onClose={() => setMode("search")}
+        />
+      ) : null}
+
+      {mode === "photo" ? <MealPhoto photo={photo} onPhoto={setPhoto} /> : null}
+
+      {mode === "search" ? (
+        <input
+          ref={search}
+          type="search"
+          className="addfood__search"
+          placeholder="Search any food or brand…"
+          value={query}
+          onChange={(e) => { setQuery(e.target.value); setPicked(null); }}
+          aria-label="Search foods"
+          autoComplete="off"
+        />
+      ) : null}
+
+      {/* A photo taken before the food is picked stays visible, so it is
+          obvious it will be attached to whatever is logged next. */}
+      {photo && mode !== "photo" ? (
+        <p className="addfood__photonote">
+          A photo will be attached to this entry.{" "}
+          <button type="button" className="addfood__link" onClick={() => setPhoto(null)}>
+            Remove
+          </button>
+        </p>
+      ) : null}
 
       {/* ── Portion picker, once something is chosen ─────────────────── */}
       {picked && portion ? (
@@ -218,8 +282,14 @@ export function AddFood({
       ) : null}
 
       {/* ── Results, or recents when nothing is typed ─────────────────── */}
-      {!picked ? (
+      {!picked && mode === "search" ? (
         <>
+          {offline ? (
+            <p className="addfood__notice" role="status">
+              Could not reach the food database. Showing the foods stored on
+              this device — a brand or packet may be missing until it is back.
+            </p>
+          ) : null}
           {query ? (
             <ul className="addfood__list" role="list">
               {results.map((f) => (
@@ -233,7 +303,12 @@ export function AddFood({
                   </button>
                 </li>
               ))}
-              {results.length === 0 ? (
+              {loading && results.length === 0 ? (
+                <li className="addfood__empty">
+                  <p>Searching…</p>
+                </li>
+              ) : null}
+              {!loading && results.length === 0 ? (
                 <li className="addfood__empty">
                   <p>Nothing matching “{query}”.</p>
                   <button type="button" className="addfood__link" onClick={() => setCustom(true)}>

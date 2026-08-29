@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
 import { RegisterTrainSW } from "@/components/client-app/register-sw";
 import "@/app/control-tokens.css";
+import "@/app/train.css";
 import { ThemeScript } from "@/components/control/theme-script";
 
 /**

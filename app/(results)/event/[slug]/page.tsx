@@ -29,25 +29,54 @@ import { CoachingCta } from "@/components/results/coaching-cta";
 export const revalidate = 300;
 
 /**
- * The recent season, prerendered; the archive, on demand.
+ * ONLY THE EVENTS THAT HAVE NOT HAPPENED YET.
  *
- * ⚠️ Both extremes are wrong here. Prerendering all 223 events meant thousands
- * of queries during the build and failed three deployments in a row. Building
- * none of them made every first visit a cold render — 2.5 to 5 seconds on the
- * page people click most, which reads as broken.
+ * Not a count, and not a size threshold — both of those were wrong, and the
+ * build logs are what corrected them. Pages from 2,638 athletes to 16,023
+ * all exceeded the 240-second per-page ceiling, so there is no field size
+ * below which prebuilding is safe.
  *
- * So the current season is built ahead of time and everything older is
- * rendered on first request and then cached by `revalidate`. That is where the
- * traffic is: nobody is waiting on a 2019 board, and everybody is waiting on
- * last weekend's.
+ * What separates a cheap page from an expensive one here is not how big the
+ * field is but whether there is a field at all. Look at the body below: the
+ * podium fan-out — one ranking read per headline division — runs only when
+ * `isFinal`. An event that has not been raced yet has no results to rank, so
+ * its page does no per-division reads whatever and cannot be slow for this
+ * reason. That is a property of the code rather than a guess about the data,
+ * which is what the last two attempts were missing.
+ *
+ * It is also the right list on its own merits: an upcoming race is what
+ * somebody checks in the week before it, and it is the page most likely to
+ * be hit cold by a crowd at once.
+ *
+ * Everything finished renders on first request and caches from then on. The
+ * 223 finished events were what pushed six consecutive deploys past the
+ * 45-minute limit.
+ *
+ * REJECTED, and worth recording because it reads as the kinder option:
+ * prebuilding the whole current season instead. It would warm last weekend's
+ * race, which is genuinely where the traffic is, and a 2.5-5s cold render on
+ * the page people click most does read as broken. But the current season is
+ * exactly where the measured timeouts live — katowice, washington-dc and
+ * lisboa are all s8-2026 and all finished — so that rule prebuilds precisely
+ * the pages that failed the deploy. A cold first visit costs one reader some
+ * seconds; a failed build costs everybody the release. Making the
+ * finished-event queries cheap enough to prebuild is the actual repair, and
+ * it belongs with whoever owns the results queries.
  */
+const PREBUILT_EVENTS = 20;
+
 export async function generateStaticParams() {
-  const events = await getResultsSource().listEvents();
-  const seasons = [...new Set(events.map((e) => e.season))].sort().reverse();
-  const current = seasons[0];
+  // A failure here must not fail the build: with no params every event
+  // simply renders on demand, which is the fallback anyway.
+  const events = await getResultsSource().listEvents().catch(() => []);
+
+  // Soonest first, so the cap spends itself on the races being checked this
+  // week rather than on something eight months out.
   return events
-    .filter((e) => e.season === current)
-    .map((event) => ({ slug: event.slug }));
+    .filter((e) => e.status !== "finished")
+    .sort((a, b) => a.year - b.year || a.slug.localeCompare(b.slug))
+    .slice(0, PREBUILT_EVENTS)
+    .map((e) => ({ slug: e.slug }));
 }
 
 export async function generateMetadata({

@@ -12,6 +12,7 @@ import {
 } from "@/components/member/ui";
 import { SessionBlocks } from "@/components/member/session-blocks";
 import { DEMO_BLOCKS, countIntervals } from "@/lib/member/session-structure";
+import { SEED_WEEK } from "@/lib/plan/model";
 import { HEROES, photoForStation, pickPhoto, type StationSlug } from "@/lib/photo-library";
 
 /**
@@ -50,6 +51,21 @@ export function SessionScreen({
 
   // Today's session is the only one the fixtures describe block by block.
   const blocks = day.isToday ? DEMO_BLOCKS : [];
+
+  /*
+   * What Ben actually wrote for this day.
+   *
+   * Every day but today used to fall through to "scheduled but not yet
+   * written out block by block" — so tapping Wednesday changed the heading
+   * and nothing else, and the whole week read as though nothing had been
+   * written. It had: the same free text the Plan screen has been showing all
+   * along, keyed by the date this page is already looked up by.
+   */
+  const planned = SEED_WEEK.days.find((d) => d.date === day.slug);
+  const written = [
+    { when: "Morning", text: planned?.am?.trim() ?? "" },
+    { when: "Afternoon", text: planned?.pm?.trim() ?? "" },
+  ].filter((s) => s.text.length > 0);
 
   const stations = rest
     ? []
@@ -113,6 +129,36 @@ export function SessionScreen({
             The session
           </Eyebrow>
           <SessionBlocks blocks={blocks} />
+        </section>
+      ) : written.length > 0 ? (
+        /* Ben's own words for the day, exactly as he typed them into the
+           week. Not parsed into blocks — the line breaks are his and they
+           carry the structure, so `pre-wrap` keeps them. */
+        <section style={{ marginBottom: "var(--space-4)" }}>
+          <Eyebrow right={day.durationMin ? `${day.durationMin} min` : undefined}>
+            The session
+          </Eyebrow>
+          <div style={{ display: "grid", gap: "var(--space-2)" }}>
+            {written.map((part) => (
+              <Card key={part.when}>
+                {written.length > 1 ? (
+                  <p className="eyebrow" style={{ margin: "0 0 6px" }}>
+                    {part.when}
+                  </p>
+                ) : null}
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: "var(--text-sm)",
+                    lineHeight: 1.65,
+                    whiteSpace: "pre-wrap",
+                  }}
+                >
+                  {part.text}
+                </p>
+              </Card>
+            ))}
+          </div>
         </section>
       ) : !rest ? (
         <section style={{ marginBottom: "var(--space-4)" }}>

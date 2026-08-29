@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { MemberNav } from "@/components/member/nav";
+import { MemberRailNav, MemberTabBar } from "@/components/member/nav";
 import { Wordmark } from "@/components/shared/logo";
 import { BlockProgress } from "@/components/member/block-progress";
 import { Walkthrough } from "@/components/member/walkthrough";
@@ -13,6 +13,18 @@ import { Walkthrough } from "@/components/member/walkthrough";
  * 768px while Home, Plan, Progress and Account did not, so Account rendered
  * label-left / value-right across a whole monitor. A page can no longer get
  * this wrong, because it no longer decides.
+ *
+ * THE RAIL IS ONE ELEMENT NOW
+ * ---------------------------
+ * It used to be three: a fixed `.member-railhead` holding the wordmark, a
+ * fixed `.member-railprogress` holding the week ring, and a fixed
+ * `.member-rail` holding the links — each positioned independently and kept
+ * from colliding by hand-tuned `top` offsets and a padding-top on the third.
+ *
+ * That arithmetic is why the logo, the week ring and the first link sat almost
+ * on top of each other: nothing was spacing them, three magic numbers were.
+ * One flow container spaces itself, so the logo can grow without anything
+ * underneath it needing to be recalculated.
  */
 export function MemberShell({
   base = "/app",
@@ -40,25 +52,31 @@ export function MemberShell({
 }) {
   return (
     <div className="member-frame" data-mode={mode}>
-      {/* Desktop: the wordmark sits above the rail. No rail in billing
-          mode, so nothing to sit above. */}
+      {/* ── Desktop: the rail, top to bottom, in one flow ─────────────── */}
+      {/* Billing mode drops the whole rail rather than the three fixed
+          elements it replaced: a portal is one page, and a rail of links
+          into screens this client cannot reach yet reads as broken. */}
       {mode === "billing" ? null : (
-        <>
-          <div className="member-railhead">
+        <aside className="member-rail" aria-label="Member navigation">
+          <div className="member-rail__brand">
             <Link href={base} aria-label="Suth Performance">
-              <Wordmark size="sm" accent="var(--accent)" className="text-[color:var(--text)]" />
+              {/* One step up from `sm`. The rail is 264px wide; a 28px wordmark
+                  in it read as an afterthought rather than the top of the app. */}
+              <Wordmark size="md" accent="var(--accent)" className="text-[color:var(--text)]" />
             </Link>
           </div>
 
-          {/* Desktop: block progress sits under the wordmark, above the rail. */}
-          <div className="member-railprogress">
+          {/* Where they are in the block. Its own row, with room around it,
+              rather than tucked against the wordmark. */}
+          <div className="member-rail__progress">
             <BlockProgress current={blockWeek} total={blockTotal} />
           </div>
-        </>
+
+          <MemberRailNav base={base} />
+        </aside>
       )}
 
-      {/* Mobile: wordmark left, account right. The rail replaces this above
-          768px, so the avatar is not duplicated. */}
+      {/* ── Mobile: wordmark left, progress centre, account right ─────── */}
       <header className="member-topbar">
         <Link href={base} aria-label="Suth Performance">
           <Wordmark size="sm" accent="var(--accent)" className="text-[color:var(--text)]" />
@@ -68,33 +86,20 @@ export function MemberShell({
           <Link
             href={`${base}/account`}
             aria-label="Account"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 34,
-              height: 34,
-              borderRadius: 999,
-              border: "1px solid var(--border)",
-              background: "var(--surface-raised)",
-              color: "var(--text)",
-              fontSize: 12,
-              fontWeight: 700,
-              letterSpacing: "0.02em",
-              textDecoration: "none",
-            }}
+            className="member-avatar"
           >
             {initials}
           </Link>
         ) : null}
       </header>
 
-      {mode === "billing" ? null : <MemberNav base={base} />}
+      {mode === "billing" ? null : <MemberTabBar base={base} />}
 
       <main
         className="member-main"
-        // The rail's grid column collapses when there is no rail, so a
-        // billing portal centres instead of hugging a phantom sidebar.
+        // Desktop indents this column past the fixed rail with a rail-width
+        // margin. There is no rail in billing mode, so the margin goes back
+        // to auto and the portal centres instead of hugging a phantom sidebar.
         data-mode={mode}
       >
         {children}

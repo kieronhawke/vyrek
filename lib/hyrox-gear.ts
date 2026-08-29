@@ -206,6 +206,123 @@ export const GEAR_GUIDES: GearGuide[] = [
     summary:
       "Thin merino or synthetic, snug at the arch, never pure cotton. Worn-in socks from your training rotation, not new ones from the pack.",
   },
+  /* THE THREE BELOW ARE DRAFTS PENDING BEN'S REVIEW.
+     Written to the same rule as the rest of this file — attributes and
+     trade-offs rather than product names, and no claim about what the rules
+     permit, because a competition rule quoted wrongly is worse than one not
+     quoted at all. They publish under an Elite 15 coach's name, so the
+     judgement calls in them are his to confirm or overturn. */
+  {
+    slug: "hyrox-race-day-kit-list",
+    title: "Hyrox race day kit list: what to actually bring",
+    seoTitle: "Hyrox race day kit list",
+    eyebrow: "Race day",
+    hook:
+      "Everything you need on the day, and the handful of things worth packing twice. Most first-race problems are kit problems, and all of them are avoidable the night before.",
+    intro: [
+      "Almost nothing on this list is expensive and almost none of it is optional. First races go wrong in small, boring ways: a bag left the wrong side of the venue, a top that turned out to chafe at kilometre six, no way to get a wet kit home.",
+      "Pack it the night before, not the morning of. The list is short enough that you can lay it out on a bed and see the gap.",
+    ],
+    whatToLookFor: [
+      "The kit you have already trained in. Race day is the worst possible day to find out how something feels.",
+      "A spare top, and a full spare set if you are travelling. Venues are hot and you will finish soaked.",
+      "Your race confirmation and photo ID, in whatever form the organiser asked for.",
+      "Water you can drink before the start, and something you know sits well in your stomach.",
+      "A small towel and a plastic bag for wet kit on the way home.",
+      "Layers for the wait. There is usually a lot of standing around before a wave goes.",
+    ],
+    whatToAvoid: [
+      "Anything brand new. New shoes, new socks and new tops are three of the most common causes of a race somebody remembers for the wrong reason.",
+      "Fuelling you have never tried. If you have not taken it in training, race morning is not the experiment.",
+      "Relying on the venue for anything you actually need — bag drop, water and phone signal all vary by site.",
+      "Over-packing. A heavy bag you have to carry across a venue is its own problem.",
+    ],
+    faqs: [
+      {
+        q: "What should I bring to my first Hyrox?",
+        a: "The kit you trained in, a spare top, your confirmation and ID, water, something familiar to eat, a towel and a bag for wet kit. Layers for the wait before your wave. Nothing on that list needs to be new or expensive.",
+      },
+      {
+        q: "Do I need to bring my own equipment?",
+        a: "No. The stations are provided. What you bring is what you wear, plus the things that make the hours around the race comfortable.",
+      },
+    ],
+    summary:
+      "Only kit you have already trained in, plus a spare top, water, ID and a bag for wet kit. Nothing new on race day, ever.",
+  },
+  {
+    slug: "what-to-wear-hyrox",
+    title: "What to wear for Hyrox: shorts, tights and tops",
+    seoTitle: "What to wear for Hyrox",
+    eyebrow: "Clothing",
+    hook:
+      "You run 8 km, lunge with a sandbag on your shoulders, and get hot early. The clothing question is really a chafing and heat question.",
+    intro: [
+      "Hyrox clothing has to survive two things most running kit never meets: a sandbag sitting across your shoulders and back for a full lunge station, and a venue that is warmer than anywhere you trained.",
+      "That rules out very little, but it rules it out firmly. Anything that traps heat, rides up under load, or has a seam where the bag sits is going to be a long morning.",
+    ],
+    whatToLookFor: [
+      "A close fit that does not ride up. Loose shorts under a sandbag move in ways you will notice by the second lunge length.",
+      "Fabric that moves sweat rather than holding it. You will be wet from early on.",
+      "Flat seams, and as few of them as possible across the shoulders and upper back.",
+      "Shorts with a liner, or tights, if you chafe on long runs — the runs total 8 km.",
+      "Something you can push sleeves up on, or short sleeves outright. Venues run hot.",
+    ],
+    whatToAvoid: [
+      "Cotton anything. It holds sweat, gets heavy and chafes once it is wet.",
+      "Zips, thick seams or logos where the sandbag sits.",
+      "Baggy vests that shift under the bag or catch on it.",
+      "A brand-new outfit. See every other guide here: train in it first.",
+    ],
+    faqs: [
+      {
+        q: "Shorts or tights for Hyrox?",
+        a: "Either works and it is mostly personal. Tights and lined shorts both solve chafing over the 8 km of running; the thing that matters more is that it does not ride up when you are under the sandbag.",
+      },
+      {
+        q: "Can I wear a vest?",
+        a: "Yes, provided it sits flat under the sandbag. A loose vest that shifts or bunches on your shoulders is the version to avoid.",
+      },
+    ],
+    summary:
+      "Close-fitting, sweat-wicking, flat seams where the sandbag sits. Never cotton, never brand new.",
+  },
+  {
+    slug: "hyrox-watch-heart-rate",
+    title: "Watches and heart rate monitors for Hyrox",
+    seoTitle: "Hyrox watch and heart rate monitor",
+    eyebrow: "Watch",
+    hook:
+      "A watch is a training tool that happens to be on your wrist during a race. What it is genuinely good for, and what it will lie to you about.",
+    intro: [
+      "A watch earns its place in training rather than on race day. Knowing what your easy runs actually cost you, and whether last week was harder than it felt, is worth far more than any number you will glance at mid-race.",
+      "On the day itself, expect less of it. Wrist heart rate is least reliable exactly when you need it most — grip-heavy stations, cold hands, and a wet strap all interfere — and split timing across eight stations is not something you want to be operating.",
+    ],
+    whatToLookFor: [
+      "Comfort under load first. If it digs in during a carry you will stop wearing it.",
+      "A chest strap if you care about heart rate accuracy. Wrist optical is convenient and approximate.",
+      "Battery that survives a long session without a thought.",
+      "An export you actually own, so your training history is not trapped in one app.",
+    ],
+    whatToAvoid: [
+      "Buying for race-day features. The stopwatch on the wall is the official time.",
+      "Trusting wrist heart rate during grip-heavy work, and then training to that number.",
+      "Chasing the recovery scores. They are a rough signal, not an instruction.",
+      "A watch so precious you train differently to protect it.",
+    ],
+    faqs: [
+      {
+        q: "Do I need a watch for Hyrox?",
+        a: "No. It is a training tool, not a race requirement. If you have one, its value is in the weeks beforehand — what your sessions actually cost you — rather than anything you will read mid-race.",
+      },
+      {
+        q: "Is wrist heart rate accurate enough?",
+        a: "For easy running, broadly. For grip-heavy stations and hard intervals it is the least reliable exactly when it matters most. A chest strap is the answer if the number is going to drive your training.",
+      },
+    ],
+    summary:
+      "A training tool, not a race one. Chest strap if heart rate is going to drive decisions; wrist optical is convenient and approximate.",
+  },
 ];
 
 export function getGearGuide(slug: string): GearGuide | undefined {

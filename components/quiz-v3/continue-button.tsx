@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useCopy } from "@/components/quiz-v3/copy-context";
 
 /**
  * The standardised Continue button used on every question screen. Full-width
@@ -24,6 +25,13 @@ export function ContinueButton({
    */
   ariaLabel?: string;
 }) {
+  /* The button's words are editable per screen, which matters more than it
+     sounds: "Continue" on twenty screens is fine, but the one before the
+     calendar reads better as "Pick a time". An override changes the visible
+     label only — the explicit aria-label, where one is set, is there to
+     disambiguate two buttons and stays as written. */
+  const editedLabel = useCopy("cta", label);
+
   return (
     <button
       type="button"
@@ -38,7 +46,7 @@ export function ContinueButton({
         "disabled:cursor-not-allowed disabled:opacity-50",
       )}
     >
-      {loading ? "One moment..." : label}
+      {loading ? "One moment..." : editedLabel}
     </button>
   );
 }

@@ -16,7 +16,13 @@
  * what most messages will be about, and therefore what Ben has to answer most.
  */
 
-export type MessageAuthor = "athlete" | "coach";
+/**
+ * "system" is not a person. It is the thread recording that something
+ * happened — a call booked, a plan published — and it renders as a centred
+ * line rather than a bubble, because attributing it to Ben would be a lie
+ * and attributing it to the athlete would be confusing.
+ */
+export type MessageAuthor = "athlete" | "coach" | "system";
 
 export type CoachMessage = {
   id: string;
@@ -28,6 +34,26 @@ export type CoachMessage = {
   about?: { day: string; title: string };
   /** Coach messages only: has the athlete opened it. */
   readByAthlete?: boolean;
+  /**
+   * A photo or a video of a set. The thing a written plan cannot do, and the
+   * reason people pay for a coach rather than buy a programme.
+   */
+  attachment?: {
+    kind: "image" | "video";
+    src: string;
+    name: string;
+    size: number;
+  };
+  /**
+   * Set on the entry a booking writes into the thread.
+   *
+   * A booked call is neither Ben talking nor the athlete talking — it is a
+   * thing that happened — so it renders as a system line rather than a
+   * bubble, and it doubles as the receipt.
+   */
+  booking?: { ref: string; startISO: string };
+  /** Which topic the athlete picked, so a reply can be filed against it. */
+  topic?: string;
 };
 
 /**

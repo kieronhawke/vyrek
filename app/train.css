@@ -1,0 +1,41 @@
+/**
+ * The session player.
+ *
+ * ITS OWN STYLESHEET, AND THAT IS THE POINT
+ * -----------------------------------------
+ * /train imports control-tokens.css and nothing else — deliberately, because
+ * it is a focused surface with no chrome and no navigation. Rules for it were
+ * previously written into member.css, which /train never loads, so they did
+ * nothing at all: the player still ran the full width of a monitor with the
+ * weight and reps steppers stretched to opposite edges and a metre of empty
+ * space between the numbers and the buttons.
+ *
+ * A session player is one thing at a time, held together. Wide is wrong here
+ * whatever the screen.
+ */
+
+.wp-root {
+  width: 100%;
+  max-width: 620px;
+  margin-inline: auto;
+  padding-inline: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .wp-root {
+    padding-inline: var(--space-4);
+    /* Centre the work in the viewport rather than pinning it to the top with
+       a void underneath. Mid-set, the thing you are looking at should be in
+       front of you. */
+    justify-content: center;
+  }
+}
+
+/* The action bar is fixed to the viewport, so the bar spans the screen — a
+   full-width border along the bottom is right — while its contents are held
+   to the same column as the player above them. */
+@media (min-width: 768px) {
+  .wp-actions {
+    padding-inline: max(var(--space-4), calc((100vw - 620px) / 2)) !important;
+  }
+}

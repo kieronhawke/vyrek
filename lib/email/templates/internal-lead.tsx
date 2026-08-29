@@ -101,7 +101,7 @@ export function InternalLeadEmail({
   const dialable = phone ? phone.replace(/\s+/g, "") : null;
 
   return (
-    <EmailLayout
+    <EmailLayout internal
       preview={`${name}${place ? ` · ${place}` : ""} · ${wants}`}
       campaign="internal-lead"
     >

@@ -232,11 +232,22 @@ export function EmailLayout({
   children,
   /** Adds the one-click unsubscribe line. Off for transactional mail. */
   marketing = false,
+  /**
+   * An email to Ben rather than to a client.
+   *
+   * Drops the marketing footer. "Suth Club · HYROX guides · Journal · Contact"
+   * is a set of links inviting the reader to go and look at the website — and
+   * the reader here owns the website. On an internal email it is four links
+   * nobody will ever press, sitting under the one thing he is meant to do,
+   * competing with it.
+   */
+  internal = false,
   campaign = "general",
 }: {
   preview: string;
   children: ReactNode;
   marketing?: boolean;
+  internal?: boolean;
   campaign?: string;
 }) {
   return (
@@ -303,6 +314,7 @@ export function EmailLayout({
           <Hr style={hrRule} />
 
           <Section>
+            {internal ? null : (
             <Text
               style={{
                 color: TEXT_FAINT,
@@ -337,6 +349,7 @@ export function EmailLayout({
                 Contact
               </Link>
             </Text>
+            )}
 
             <Text
               style={{

@@ -210,18 +210,16 @@ export function RestBand({ children }: { children: ReactNode }) {
 
 /* ── Stat tile ─────────────────────────────────────────────────────────── */
 
+/**
+ * A row of stat tiles.
+ *
+ * Was an inline `repeat(auto-fit, minmax(96px, 1fr))`, which on a monitor
+ * stretched three tiles across a thousand pixels — a two-character number
+ * marooned in the middle of a 330px box. A class rather than an inline style
+ * so the width can be capped per breakpoint; see `.member-stattiles`.
+ */
 export function StatTiles({ children }: { children: ReactNode }) {
-  return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(96px, 1fr))",
-        gap: "var(--space-1)",
-      }}
-    >
-      {children}
-    </div>
-  );
+  return <div className="member-stattiles">{children}</div>;
 }
 
 export function StatTile({

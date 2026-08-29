@@ -31,7 +31,17 @@ export function ReassuranceScreen2({
       image="/media/images/track/straight-elevated-bw.jpg"
       imagePosition="50% 45%"
       eyebrow={beginner ? "Your programme" : "12-week programme"}
-      title="Give us a few sessions a week. We'll dial in the rest."
+      /* "Give us a few sessions a week. We'll dial in the rest." was a
+         transaction — it asked for something and promised admin. This screen
+         is the one place in the funnel that has nothing to ask, so it should
+         be the one that makes somebody want to start. Rail-aware, because
+         what is inspiring to a beginner and what is inspiring to somebody
+         chasing a time are not the same sentence. */
+      title={
+        beginner
+          ? "A few hours a week. Ben will make every one of them count."
+          : "You bring the hours. Ben turns them into a faster clock."
+      }
       body={
         beginner
           ? "You do not need to live in a gym. You need a week that fits around your actual life, where every session has a reason to exist and the next one builds on it."

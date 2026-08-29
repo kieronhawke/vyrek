@@ -21,7 +21,7 @@ export function PostFinalCta() {
           href="/quiz"
           className="inline-flex h-12 items-center justify-center rounded-pill bg-suth-accent px-6 text-base font-medium tracking-tight text-[#0A0A0A] transition-[background,transform] duration-fast ease-out hover:bg-suth-accent-hover active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-suth-text"
         >
-          See your Week 1 free →
+          Free fitness assessment →
         </Link>
         <Link
           href="/free-consultation"

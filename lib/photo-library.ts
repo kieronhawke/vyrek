@@ -414,6 +414,18 @@ export const HEROES: readonly Photo[] = ALL_PHOTOS.filter(
 /** Frames where Ben is the subject. For about, coach and press surfaces. */
 export const BEN_PHOTOS: readonly Photo[] = ALL_PHOTOS.filter((p) => p.isBen);
 
+/**
+ * Ben, facing the camera, for the screens where the point is that a person is
+ * asking rather than a form.
+ *
+ * Named rather than picked from the pool, because most of `BEN_PHOTOS` are
+ * action frames — the back of somebody on a rower is a fine banner and a
+ * useless portrait. At 240px an action shot with no face in it reads as an
+ * empty black box, which is the opposite of what a screen like the
+ * cancellation flow is for.
+ */
+export const BEN_PORTRAIT: Photo = ELITE15.portraitFrontScoreboard;
+
 export function photosBySubject(subject: PhotoSubject): Photo[] {
   return ALL_PHOTOS.filter((p) => p.subject === subject).sort(
     (a, b) => b.quality - a.quality,

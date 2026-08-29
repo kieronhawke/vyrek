@@ -1,50 +1,56 @@
 import { CoachThread } from "@/components/member/coach-thread";
-import { Card, Chip, ChipRow, Eyebrow } from "@/components/member/ui";
+import { CoachIntro } from "@/components/member/coach-intro";
 import { BEN_PHOTOS, pickPhoto } from "@/lib/photo-library";
-import { BEN } from "@/lib/ben";
 
 /**
  * ASK BEN.
  *
- * The athlete could answer back to a session but could not ask a question,
- * which is the thing people actually pay a coach for. One thread, his face on
- * it, and his credentials at the top so it is clear who is answering.
+ * The screen is the thread. It used to be a heading, a card explaining that
+ * most of the people Ben coaches have never finished anything, a second
+ * heading, and then the conversation — so on a phone the actual messages
+ * started below the fold, and the first thing an athlete read every single
+ * morning was a paragraph about other people failing to stick at things.
+ *
+ * That paragraph is true and worth saying once, to somebody deciding whether
+ * to send a first message. It is not worth saying on visit forty. It is now a
+ * prompt above the composer that can be dismissed and does not come back.
  */
-export function CoachScreen() {
+export function CoachScreen({
+  firstName = "there",
+  email = "",
+  phone = "",
+}: {
+  firstName?: string;
+  email?: string;
+  phone?: string;
+}) {
   const portrait = pickPhoto(BEN_PHOTOS, "coach-thread");
 
   return (
-    <>
-      <p className="eyebrow">Your coach</p>
-      <h1
-        style={{
-          fontSize: "var(--text-2xl)",
-          lineHeight: 1.1,
-          fontWeight: 800,
-          letterSpacing: "-0.025em",
-          margin: "var(--space-1) 0 var(--space-3)",
-        }}
-      >
-        Ask Ben
-      </h1>
+    <div className="coachpage">
+      {/* Ben's face at the top of his own thread, the way every messaging app
+          puts the other person there. */}
+      <header className="coachpage__head">
+        <span className="coachpage__avatar">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={portrait.src} alt="" />
+        </span>
+        <span className="coachpage__who">
+          <span className="coachpage__name">Ben Sutherland</span>
+          <span className="coachpage__sub">
+            Your coach · usually replies within a day
+          </span>
+        </span>
+      </header>
 
-      <Card style={{ marginBottom: "var(--space-4)" }}>
-        <p style={{ margin: 0, fontSize: "var(--text-sm)", lineHeight: 1.55 }}>
-          {BEN.beginnerPromise}
-        </p>
-        <div style={{ marginTop: "var(--space-1)" }}>
-          <ChipRow>
-            {BEN.racing.slice(0, 2).map((r) => (
-              <Chip key={r} tone="accent">
-                {r}
-              </Chip>
-            ))}
-          </ChipRow>
-        </div>
-      </Card>
+      <CoachIntro />
 
-      <Eyebrow right="One thread">Messages</Eyebrow>
-      <CoachThread coachPhoto={portrait} />
-    </>
+      <CoachThread
+        coachPhoto={portrait}
+        firstName={firstName}
+        email={email}
+        phone={phone}
+      />
+    </div>
   );
 }

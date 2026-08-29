@@ -4,6 +4,16 @@ import { useState } from "react";
 import type { Lead } from "@/lib/leads/model";
 import { shortPlace } from "@/lib/leads/model";
 import { cn } from "@/lib/utils";
+import { PLANS } from "@/lib/onboarding/model";
+import {
+  sendSetupInvite,
+  setupBlocker,
+  deliveryLine,
+  type SetupResult,
+} from "@/lib/control/setup-invite";
+
+/** The plan-select value meaning "a price Ben agreed on the call". */
+const AGREED = "__agreed";
 
 /**
  * THE LEADS BEN WORKS THROUGH.
@@ -74,6 +84,7 @@ export function LeadsList({ leads, durable }: Props) {
 function LeadRow({ lead, now }: { lead: Lead; now: number }) {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState<string | null>(null);
+  const [result, setResult] = useState<SetupResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   // Stamped server-side, so it survives a refresh — the old client-only
   // "sent ✓" vanished on reload and Ben couldn't tell who he'd invited.
@@ -82,35 +93,61 @@ function LeadRow({ lead, now }: { lead: Lead; now: number }) {
   const waited = waitedFor(lead.createdISO, now);
   const place = shortPlace(lead);
 
+  /*
+   * THE HANDOFF, WITH THE DETAIL IT ACTUALLY NEEDS.
+   *
+   * This was one button. Ben rang somebody, agreed a price on the call, and
+   * then had a control that could only send the standard tiers — so the
+   * agreed price lived in his head and got applied by hand later, or not at
+   * all.
+   *
+   * Opening a small form instead costs one tap and buys the two things the
+   * call produced: which route they are on, and what he told them it would
+   * cost.
+   */
+  const [open, setOpen] = useState(false);
+  const [kind, setKind] = useState<"full" | "payment">("full");
+  const [plan, setPlan] = useState("");
+  const [agreed, setAgreed] = useState("");
+  const [agreedName, setAgreedName] = useState("");
+
+  const request = {
+    name: lead.name,
+    email: lead.email ?? "",
+    phone: lead.phone ?? "",
+    kind,
+    plan: plan === AGREED ? undefined : plan || undefined,
+    agreedPrice: plan === AGREED ? agreed : undefined,
+    agreedName: plan === AGREED ? agreedName : undefined,
+    // The lead knows which route they came down; without this the setup
+    // link asks a "getting fit" client about their HYROX races.
+    rail: /getting fit|beginner/i.test(lead.rail ?? "")
+      ? ("beginner" as const)
+      : undefined,
+    // WHICH ROW THIS CAME FROM. The invite API stamps the lead as invited
+    // from this, and that stamp is the only reason "Invited 12/08" and
+    // "Send again" survive a refresh. sendSetupInvite still has to forward
+    // it — SetupRequest needs `leadId?: string` and the posted body needs
+    // `leadId: req.leadId` — until then nothing is stamped.
+    leadId: lead.id,
+  };
+  const blocked = setupBlocker(request);
+
   const sendSetup = async () => {
     setSending(true);
     setError(null);
-    try {
-      const res = await fetch("/api/onboarding/invite", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: lead.name,
-          email: lead.email,
-          phone: lead.phone ?? "",
-          kind: "full",
-          // The lead knows which route they came down; without this the
-          // setup link asks a "getting fit" client about their HYROX races.
-          rail: /getting fit|beginner/i.test(lead.rail ?? "") ? "beginner" : undefined,
-          leadId: lead.id,
-        }),
-      });
-      const d = (await res.json()) as { link?: string; error?: string };
-      if (!res.ok || !d.link) {
-        setError(d.error ?? "Couldn't send the setup link.");
-        return;
-      }
-      setSent(d.link);
-    } catch {
-      setError("Couldn't reach the server.");
-    } finally {
-      setSending(false);
+    // The shared sender: same request shape, same error wording and same
+    // delivery report as the add-a-client panel. The hand-rolled fetch this
+    // replaced is what let the two screens drift apart.
+    const out = await sendSetupInvite(request);
+    setSending(false);
+    if (!out.ok) {
+      setError(out.message);
+      return;
     }
+    setResult(out.result);
+    setSent(out.result.link);
+    setOpen(false);
   };
 
   return (
@@ -156,14 +193,18 @@ function LeadRow({ lead, now }: { lead: Lead; now: number }) {
             text, and they set up the account and the card themselves. */}
         <button
           type="button"
-          onClick={sendSetup}
-          disabled={sending || Boolean(sent)}
+          onClick={() => setOpen((o) => !o)}
+          disabled={Boolean(sent)}
+          aria-expanded={open}
           className="inline-flex h-9 items-center rounded-pill border border-suth-accent px-4 text-xs font-medium text-suth-accent transition-colors hover:bg-suth-accent hover:text-[#0A0A0A] disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-suth-accent"
         >
-          {sending
-            ? "Sending…"
-            : sent
-              ? "Setup link sent ✓"
+          {/* This button now only opens the form — "Sending…" belongs on the
+              "Send it" button inside it. "Send again" stays: a row Ben has
+              already invited must not look like one he has not. */}
+          {sent
+            ? "Setup link sent \u2713"
+            : open
+              ? "Close"
               : alreadyInvited
                 ? "Send again"
                 : "Send account setup"}
@@ -175,15 +216,118 @@ function LeadRow({ lead, now }: { lead: Lead; now: number }) {
         ) : null}
       </div>
 
-      {sent ? (
+      {open && !sent ? (
+        <div className="mt-4 grid gap-3 rounded-lg border border-suth-border bg-suth-bg/50 p-4">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <label className="grid gap-1">
+              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
+                What to send
+              </span>
+              <select
+                value={kind}
+                onChange={(e) => setKind(e.target.value as "full" | "payment")}
+                className="h-9 rounded-md border border-suth-border bg-suth-elevated px-2 text-sm text-suth-text"
+              >
+                <option value="full">Full setup — questions, then pay</option>
+                <option value="payment">Payment only — straight to the plan</option>
+              </select>
+            </label>
+
+            <label className="grid gap-1">
+              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
+                Plan
+              </span>
+              <select
+                value={plan}
+                onChange={(e) => setPlan(e.target.value)}
+                className="h-9 rounded-md border border-suth-border bg-suth-elevated px-2 text-sm text-suth-text"
+              >
+                <option value="">Let them choose</option>
+                {PLANS.map((p) => (
+                  <option key={p.key} value={p.key}>
+                    {p.name} — {p.display} {p.cadence}
+                  </option>
+                ))}
+                <option value={AGREED}>A price you agreed on the call…</option>
+              </select>
+            </label>
+          </div>
+
+          {/* Only when he says there is one. A money field sitting open on
+              every enquiry is a money field somebody eventually types in by
+              accident. */}
+          {plan === AGREED ? (
+            <div className="grid gap-3 sm:grid-cols-2">
+              <label className="grid gap-1">
+                <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
+                  Agreed monthly price
+                </span>
+                <input
+                  value={agreed}
+                  onChange={(e) => setAgreed(e.target.value)}
+                  inputMode="decimal"
+                  placeholder="150"
+                  className="h-9 rounded-md border border-suth-border bg-suth-elevated px-2 text-sm text-suth-text"
+                />
+              </label>
+              <label className="grid gap-1">
+                <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
+                  Call it (optional)
+                </span>
+                <input
+                  value={agreedName}
+                  onChange={(e) => setAgreedName(e.target.value)}
+                  placeholder="Your agreed plan"
+                  maxLength={40}
+                  className="h-9 rounded-md border border-suth-border bg-suth-elevated px-2 text-sm text-suth-text"
+                />
+              </label>
+              <p className="sm:col-span-2 text-xs text-suth-text-tertiary">
+                This appears first on their setup link, only on theirs, and it
+                is what Stripe charges. The price is signed into the link, so
+                they cannot change it.
+              </p>
+            </div>
+          ) : null}
+
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={sendSetup}
+              disabled={sending || Boolean(blocked)}
+              className="inline-flex h-9 items-center rounded-pill bg-suth-accent px-4 text-xs font-medium text-[#0A0A0A] hover:bg-suth-accent-hover disabled:opacity-50"
+            >
+              {sending ? "Sending…" : "Send it"}
+            </button>
+            {/* Why the button is not lit, rather than a dead control. */}
+            {blocked ? (
+              <span className="text-xs text-suth-text-tertiary">{blocked}</span>
+            ) : null}
+          </div>
+        </div>
+      ) : null}
+
+      {sent && result ? (
         // Shown as well as sent: a delivery failure must never leave Ben
-        // without a way to onboard somebody.
-        <p
-          aria-live="polite"
-          className="mt-3 break-all rounded-lg border border-suth-accent/40 bg-suth-accent/10 px-3 py-2 font-mono text-[11px] text-suth-text"
-        >
-          {sent}
-        </p>
+        // without a way to onboard somebody, and a tick over a message that
+        // never transmitted would stop him chasing.
+        <div aria-live="polite" className="mt-3 grid gap-2">
+          <p className="text-xs text-suth-text-secondary">
+            {deliveryLine(result)}
+            {result.agreedPence
+              ? ` Agreed price £${(result.agreedPence / 100).toFixed(2).replace(/\.00$/, "")} a month.`
+              : ""}
+          </p>
+          <p className="break-all rounded-lg border border-suth-accent/40 bg-suth-accent/10 px-3 py-2 font-mono text-[11px] text-suth-text">
+            {sent}
+          </p>
+          {!result.secured ? (
+            <p className="text-xs text-suth-danger">
+              This link is signed with a development key. Set ONBOARDING_SECRET
+              before sending it to a real client.
+            </p>
+          ) : null}
+        </div>
       ) : null}
 
       {error ? (

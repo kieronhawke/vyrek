@@ -693,3 +693,94 @@ test.describe("coach voice note", () => {
     }
   });
 });
+
+/**
+ * THE WEEK'S LAYOUT.
+ *
+ * This was a four-column card grid, and seven days into four columns is two
+ * rows with a hole in the corner. Worse, the days are wildly different sizes —
+ * a rest day is one word, a Saturday brick is sixteen lines — so the cards
+ * either stretched to match the tallest, which turned a rest day into a
+ * card-sized box with one word floating in it, or kept their own heights and
+ * made a staircase from 108px to 616px. Both looked broken.
+ *
+ * The rebuilt version is a list of day rows with fixed-width session blocks.
+ * These tests hold the two properties that were actually wrong, at every
+ * width, because a layout regression here is invisible in code review and
+ * obvious to whoever opens the page.
+ */
+test.describe("the week's layout", () => {
+  const WIDTHS = [390, 430, 768, 1024, 1180, 1440, 1728];
+
+  test("every session block is the same width at any given size", async ({
+    browser,
+  }, testInfo) => {
+    test.skip(testInfo.project.name !== "desktop-1440", "drives its own viewports");
+
+    const problems: string[] = [];
+    for (const width of WIDTHS) {
+      const ctx = await browser.newContext({ viewport: { width, height: 900 } });
+      const page = await ctx.newPage();
+      await page.goto("/control-preview/app/plan", { waitUntil: "domcontentloaded" });
+      await page.waitForSelector(".week__session");
+
+      const sizes = await page.evaluate(() => {
+        const blocks = [...document.querySelectorAll(".week__session")];
+        return [
+          ...new Set(blocks.map((b) => Math.round(b.getBoundingClientRect().width))),
+        ];
+      });
+
+      /*
+       * The failure this caught: at 1180px a half-row was too narrow to hold
+       * a whole block, so the paired days rendered theirs at 236px while a
+       * full-width day kept 268px — two sizes of the same thing on one
+       * screen. It is the exact complaint the rebuild answers, reappearing
+       * because a breakpoint was chosen by eye.
+       */
+      if (sizes.length !== 1) {
+        problems.push(`${width}px: ${sizes.length} block widths (${sizes.join(", ")})`);
+      }
+      await ctx.close();
+    }
+    expect(problems, problems.join("\n")).toEqual([]);
+  });
+
+  test("no day towers over the week, and nothing overflows sideways", async ({
+    browser,
+  }, testInfo) => {
+    test.skip(testInfo.project.name !== "desktop-1440", "drives its own viewports");
+
+    const problems: string[] = [];
+    for (const width of WIDTHS) {
+      const ctx = await browser.newContext({ viewport: { width, height: 900 } });
+      const page = await ctx.newPage();
+      await page.goto("/control-preview/app/plan", { waitUntil: "domcontentloaded" });
+      await page.waitForSelector(".week__day");
+
+      const m = await page.evaluate(() => {
+        const days = [...document.querySelectorAll(".week__day")];
+        const heights = days.map((d) => Math.round(d.getBoundingClientRect().height));
+        return {
+          overflow:
+            document.documentElement.scrollWidth -
+            document.documentElement.clientWidth,
+          tallest: Math.max(...heights),
+          shortest: Math.min(...heights),
+        };
+      });
+
+      if (m.overflow > 1) problems.push(`${width}px: ${m.overflow}px of horizontal overflow`);
+
+      /* On a wide screen a two-session day takes the whole row so both
+         sessions sit side by side. Without that it stacks in half a row and
+         becomes several times the height of the day beside it, which is the
+         raggedness this layout removed, one level up. */
+      if (width >= 1180 && m.tallest > 420) {
+        problems.push(`${width}px: tallest day is ${m.tallest}px — a day is stacking`);
+      }
+      await ctx.close();
+    }
+    expect(problems, problems.join("\n")).toEqual([]);
+  });
+});

@@ -1,7 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MemberSignOut } from "@/components/member/sign-out";
-import { ManageBillingButton } from "@/components/member/manage-billing-button";
+import { ReplayTour } from "@/components/member/replay-tour";
+import { NotificationSettings } from "@/components/member/notification-settings";
+import { ProfileEditor } from "@/components/member/profile-editor";
+import { DataExport } from "@/components/member/data-export";
+import { AccountBilling } from "@/components/member/account-billing";
 import {
   Card,
   Chip,
@@ -93,6 +97,21 @@ export function AccountScreen({
         {email}
       </p>
 
+      {/* Two columns on a monitor. Account was a single stack of label-left /
+          value-right rows at every width, which on a wide screen is a column
+          of text with a metre of nothing beside it. */}
+      <div className="account-grid">
+        <div className="account-main">
+
+      <section style={{ marginBottom: "var(--space-4)" }}>
+        <Eyebrow>Your details</Eyebrow>
+        {/* Account was entirely read-only: no way to fix a name typed wrong
+            during onboarding, no photo, no way to add the number reminders
+            are sent to. Shown in the billing portal too — a name and a
+            number are account facts, not training ones. */}
+        <ProfileEditor firstName={firstName} email={email} />
+      </section>
+
       {/* The member is paying for access to a person, so the person appears on
           the screen where they manage that. */}
       <Card
@@ -150,11 +169,13 @@ export function AccountScreen({
             value="Carries on with Ben as normal"
           />
         ) : (
+          /* This pointed at Today, which is not where the thread is. Somebody
+             following it landed on their session and had to go looking. */
           <Row
             label="Message Ben"
             value="Open →"
             tone="var(--accent-text)"
-            href={`${base}/today`}
+            href={`${base}/coach`}
           />
         )}
       </Card>
@@ -188,6 +209,11 @@ export function AccountScreen({
 
       <section style={{ marginBottom: "var(--space-4)" }}>
         <Eyebrow>Subscription</Eyebrow>
+        {/* Two layers here, deliberately. These rows are rendered on the
+            server from the subscription the page has already read, so the
+            plan, the rate and the paused / ending-soon flags are on the
+            screen before any JavaScript runs and are still right when the
+            live read below cannot reach Stripe. */}
         <RowGroup>
           <Row label="Plan" value={sub?.planName ?? programme} />
           {sub?.amountPence ? (
@@ -216,6 +242,14 @@ export function AccountScreen({
             tone={sub ? undefined : "var(--text-muted)"}
           />
         </RowGroup>
+        {/* "Manage billing" was a link to /account — a marketing route that
+            has nothing to do with billing. AccountBilling mounts the portal
+            button and the portal route that both already existed and were
+            mounted nowhere, and adds what only a live read can give: the
+            card, the receipts, and the way out. */}
+        {/* It carries the "nothing is being charged yet" note itself, so the
+            copy that used to sit here would render that a second time. */}
+        <AccountBilling firstName={firstName} hasSubscription={Boolean(sub)} />
         {sub ? (
           <div
             style={{
@@ -225,10 +259,9 @@ export function AccountScreen({
               marginTop: "var(--space-2)",
             }}
           >
-            {/* The real door: Stripe's hosted portal. Card changes and
-                cancellation happen there, so card details never come near
-                this codebase. */}
-            <ManageBillingButton />
+            {/* Ben's door rather than Stripe's. Changing programme is a
+                conversation about training, which the hosted portal cannot
+                have — it can only change what is being charged. */}
             <Link
               href={`${base}/account/change`}
               style={{
@@ -246,18 +279,7 @@ export function AccountScreen({
               Request a change
             </Link>
           </div>
-        ) : (
-          <p
-            style={{
-              margin: "var(--space-1) 0 0",
-              fontSize: "var(--text-xs)",
-              color: "var(--text-muted)",
-            }}
-          >
-            No subscription on this account yet. If that looks wrong, message
-            Ben. Nothing here is invented.
-          </p>
-        )}
+        ) : null}
         <p
           style={{
             margin: "var(--space-1) 0 0",
@@ -265,9 +287,11 @@ export function AccountScreen({
             color: "var(--text-muted)",
           }}
         >
-          Update your card, change plan or cancel any time in Manage billing.
-          Cancelling keeps your access until the end of what you&apos;ve paid
-          for.
+          {/* Cancelling used to be listed as something you did inside Manage
+              billing. It has its own button now, so this says where the card
+              lives and keeps the fact that matters either way. */}
+          Update your card or change plan in Manage billing. Cancelling keeps
+          your access until the end of what you&apos;ve paid for.
         </p>
       </section>
 
@@ -303,21 +327,10 @@ export function AccountScreen({
 
           <section style={{ marginBottom: "var(--space-4)" }}>
             <Eyebrow>Notifications</Eyebrow>
-            <RowGroup>
-              <Row label="Session reminders" value="On" tone="var(--ok)" />
-              <Row label="Plan ready each Sunday" value="On" tone="var(--ok)" />
-              <Row label="Ben's weekly email" value="On" tone="var(--ok)" />
-              <Row label="Offers and news" value="Off" tone="var(--text-muted)" />
-            </RowGroup>
-            <p
-              style={{
-                margin: "var(--space-1) 0 0",
-                fontSize: "var(--text-xs)",
-                color: "var(--text-muted)",
-              }}
-            >
-              Reminders start sending once email and SMS are connected.
-            </p>
+            {/* Four rows of static text reading "On, On, On, Off" — a settings
+                screen that displayed settings and changed none of them, which is
+                worse than a missing feature because it looks like a working one. */}
+            <NotificationSettings />
           </section>
         </>
       )}
@@ -331,10 +344,31 @@ export function AccountScreen({
               <Row label="Connections" value="Manage →" href={`${base}/connections`} />
             </>
           )}
-          <Row label="Download everything" value="Request →" tone="var(--accent-text)" />
+          {/* This said "Request →" and had no handler on it at all — a control
+              that exists to satisfy a legal right, doing nothing. */}
+          <Row label="Download everything" value={<DataExport email={email} />} />
           <Row label="Privacy policy" value="Read →" href="/legal/privacy" />
         </RowGroup>
       </section>
+
+      {billing ? null : (
+        <section style={{ marginBottom: "var(--space-4)" }}>
+          <Eyebrow>Help</Eyebrow>
+          <RowGroup>
+            {/* The tour's own last card promises this is here. Not in the
+                billing portal: the shell only mounts the walkthrough outside
+                billing mode, so the button would set a replay flag that
+                nothing there ever reads. */}
+            <Row
+              label="Guided tour"
+              value={<ReplayTour className="member-linkbtn" />}
+            />
+          </RowGroup>
+        </section>
+      )}
+
+        </div>
+      </div>
 
       <MemberSignOut />
 

@@ -46,6 +46,9 @@ const NAV: SideNavItem[] = [
   { href: "/admin/waitlist", label: "Waitlist", group: "Marketing", icon: "waitlist" },
   { href: "/admin/messaging", label: "Emails & texts", group: "Marketing", icon: "quiz" },
   { href: "/admin/quiz", label: "Quiz responses", group: "Marketing", icon: "quiz" },
+  // Editing the quiz wording, not reading its answers — the pencil keeps it
+  // apart from "Quiz responses" sitting directly above it.
+  { href: "/admin/quiz-copy", label: "Quiz wording", group: "Marketing", icon: "blog" },
   { href: "/admin/settings", label: "Settings", group: "System", icon: "settings" },
 ];
 

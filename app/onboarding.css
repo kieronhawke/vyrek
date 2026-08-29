@@ -690,6 +690,34 @@
   .ob-days { grid-template-columns: repeat(7, minmax(0, 1fr)); }
 }
 
+/*
+ * THE PLAN STEP, ON A SCREEN WITH ROOM.
+ *
+ * Every other step is a short form and belongs in one narrow column, which is
+ * why the whole flow is capped at 560px. The plan step is the exception: it is
+ * four cards being compared against each other, and stacked in a phone-width
+ * column on a monitor the fourth one is two scrolls below the first. Nobody
+ * compares options they cannot see at the same time.
+ *
+ * So this one step gets the width, and only this one. The column stays
+ * everywhere else, because widening a question with three radio buttons makes
+ * it harder to read, not easier.
+ */
+@media (min-width: 900px) {
+  .ob-main:has(.ob-plans) { max-width: 980px; }
+
+  .ob-plans {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+
+  /* The agreed price, or the recommended tier, spans both columns and leads.
+     It is the one they were quoted; making them find it among three others is
+     the whole problem this feature exists to solve. */
+  .ob-plan[data-featured] { grid-column: 1 / -1; }
+}
+
 /* ── The moment after they pay ────────────────────────────────────────── */
 
 .obw { justify-content: center; }

@@ -11,8 +11,8 @@ import {
   StatTile,
   StatTiles,
 } from "@/components/member/ui";
-import { photoForStation, pickPhoto, HEROES, type StationSlug } from "@/lib/photo-library";
 import Image from "next/image";
+import { photoForStation, pickPhoto, HEROES, type StationSlug } from "@/lib/photo-library";
 
 /**
  * PROGRESS — spec/11 §4 and §7.
@@ -60,7 +60,7 @@ export function ProgressScreen() {
   const weakest = [...BENCHMARKS].sort((a, b) => a.percentile - b.percentile)[0];
 
   return (
-    <>
+    <div className="progress-grid">
       <PhotoHeader
         photo={hero}
         eyebrow="Progress"
@@ -138,30 +138,42 @@ export function ProgressScreen() {
                       style={{
                         position: "relative",
                         flex: "0 0 auto",
-                        width: 52,
-                        height: 52,
+                        width: "var(--station-thumb, 52px)",
+                        height: "var(--station-thumb, 52px)",
                         borderRadius: "var(--radius-card)",
                         overflow: "hidden",
                         background: "var(--bg)",
                       }}
                     >
                       {/*
-                        52px thumbnails. As raw `<img>` these bypassed the
-                        optimiser and shipped seven full-size originals to fill
-                        a column of postage stamps — the one page in the member
-                        area still doing it, and the member area is the part
-                        somebody opens every day on mobile data.
+                        Station thumbnails. As raw <img> these bypassed the
+                        optimiser and pulled the full 1200x1800 originals —
+                        about a megabyte of photography to draw eight postage
+                        stamps, on a screen a member opens on mobile data.
 
-                        `fill` rather than width/height: the parent is already
-                        `position: relative` with a fixed 52px box, and `sizes`
-                        tells the optimiser that is all it ever needs to serve.
+                        `fill` rather than width/height because the parent is
+                        already a fixed box with `position: relative`. The box
+                        is `--station-thumb`, which the wide layout takes to
+                        72px, so `sizes` states the largest it ever gets rather
+                        than the 52px phone default — understate it and the
+                        optimiser serves a thumbnail that renders soft on
+                        desktop.
+
+                        Not greyscaled any more either: at this size, a dark
+                        photo desaturated is a black square, and eight
+                        identical black squares tell the athlete nothing about
+                        which station they are looking at.
                       */}
                       <Image
                         src={photo.src}
                         alt=""
                         fill
-                        sizes="52px"
-                        style={{ objectFit: "cover", filter: "grayscale(1)" }}
+                        sizes="72px"
+                        /* Lifted a little. These are dark action frames and
+                           at thumbnail size, unlifted, eight of them read as
+                           eight identical black squares — which tells the
+                           athlete nothing about which station a row is. */
+                        style={{ objectFit: "cover", filter: "brightness(1.35) contrast(1.05)" }}
                       />
                     </div>
                   ) : null}
@@ -253,7 +265,7 @@ export function ProgressScreen() {
       </section>
 
       {/* ── Volume ───────────────────────────────────────────────────── */}
-      <section style={{ marginBottom: "var(--space-4)" }}>
+      <section style={{ marginBottom: "var(--space-4)" }} data-wide>
         <Eyebrow right="8 weeks">Training load</Eyebrow>
         <VolumeChart data={DEMO_VOLUME} />
       </section>
@@ -265,6 +277,6 @@ export function ProgressScreen() {
         </Eyebrow>
         <RecentSessionList sessions={DEMO_RECENT_SESSIONS} />
       </section>
-    </>
+    </div>
   );
 }

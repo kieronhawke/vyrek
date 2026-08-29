@@ -167,6 +167,39 @@ export async function activateFromSession(
           "[activation] user exists but id unrecoverable:",
           created.error.message,
         );
+      } else if (isBillingOnly) {
+        /* ⚠️ THE MODE HAS TO BE SET HERE TOO, NOT ONLY ON A FRESH USER.
+         *
+         * `member_mode` was written inside createUser and nowhere else, so
+         * every activation that took this branch left it unset — and
+         * lib/member/auth.ts reads an absent mode as "full". The effect was
+         * the exact opposite of what a payment invite means: an existing
+         * client, whose training happens with Ben off the site, paid and
+         * landed in the whole training app.
+         *
+         * This branch is not rare. It is taken by the loser of the
+         * welcome-page/webhook race — which is one of the two callers on
+         * EVERY checkout — and by anybody who set a password before paying.
+         *
+         * Only ever fills in a BLANK mode. Somebody Ben has deliberately
+         * switched to "full" must not be demoted by a later payment. */
+        try {
+          const { data: current } = await sb.auth.admin.getUserById(authUserId);
+          if (!current.user?.user_metadata?.member_mode) {
+            await sb.auth.admin.updateUserById(authUserId, {
+              user_metadata: {
+                ...(current.user?.user_metadata ?? {}),
+                member_mode: "billing",
+              },
+            });
+          }
+        } catch (e) {
+          /* Not critical: they are paying and have an account. The worst case
+             is a client seeing more of the app than Ben meant them to, which
+             is not worth failing a paid activation and retrying the webhook
+             over. Logged so it is findable. */
+          console.error("[activation] could not set member_mode on existing user", e);
+        }
       }
     }
   } catch (e) {

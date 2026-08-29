@@ -116,8 +116,21 @@ export function WeekGrid({
         {week.days.map((day) => {
           const rest =
             !day.am.trim() || day.am.trim().toLowerCase() === "rest";
+          /* How many sessions the day holds, so the layout can give a double
+             day the room to put both beside each other. Stacked in half a
+             row, a Saturday with two sessions is twice the height of the day
+             next to it and the whole week looks broken around it. */
+          const count = (["am", "pm"] as Slot[]).filter((slot) => {
+            const t = day[slot].trim().toLowerCase();
+            return t.length > 0 && t !== "rest";
+          }).length;
           return (
-            <section key={day.date} className="week__day" role="listitem">
+            <section
+              key={day.date}
+              className="week__day"
+              data-sessions={count}
+              role="listitem"
+            >
               {/* The header is the way into the day's own page, which is where
                   the session detail and the feedback control live. The grid
                   answers "what is the week"; the page answers "what is this
@@ -130,44 +143,50 @@ export function WeekGrid({
                 </span>
               </Link>
 
-              {rest && !day.pm.trim() ? (
-                <p className="week__rest">Rest</p>
-              ) : (
-                (["am", "pm"] as Slot[]).map((slot) => {
-                  const text = day[slot];
-                  if (!text.trim() || text.trim().toLowerCase() === "rest")
-                    return null;
-                  const k = slotKey(day.date, slot);
-                  const isDone = !!done[k];
-                  return (
-                    <div
-                      key={slot}
-                      className="week__session"
-                      data-done={isDone || undefined}
-                    >
-                      <div className="week__slot">
-                        <span className="eyebrow">{slot}</span>
-                        <span style={{ position: "relative", display: "inline-flex" }}>
-                          <button
-                            type="button"
-                            className="week__tick"
-                            aria-pressed={isDone}
-                            aria-label={`Mark ${day.dayName} ${slot} ${isDone ? "not done" : "done"}`}
-                            onClick={() => toggle(day.date, slot)}
-                          >
-                            {isDone ? "✓ Done" : "Mark done"}
-                          </button>
-                          {/* The burst is anchored to the tick that fired it,
-                              so it reads as coming from that session rather
-                              than from the page. */}
-                          {justTicked === slotKey(day.date, slot) ? celebration : null}
-                        </span>
+              {/* The sessions get their own box so the day can lay itself out
+                  as a row on a wide screen — a fixed label gutter, then the
+                  work beside it. Without a wrapper the header and the sessions
+                  are siblings and the two cannot be separated. */}
+              <div className="week__sessions">
+                {rest && !day.pm.trim() ? (
+                  <p className="week__rest">Rest</p>
+                ) : (
+                  (["am", "pm"] as Slot[]).map((slot) => {
+                    const text = day[slot];
+                    if (!text.trim() || text.trim().toLowerCase() === "rest")
+                      return null;
+                    const k = slotKey(day.date, slot);
+                    const isDone = !!done[k];
+                    return (
+                      <div
+                        key={slot}
+                        className="week__session"
+                        data-done={isDone || undefined}
+                      >
+                        <div className="week__slot">
+                          <span className="eyebrow">{slot}</span>
+                          <span style={{ position: "relative", display: "inline-flex" }}>
+                            <button
+                              type="button"
+                              className="week__tick"
+                              aria-pressed={isDone}
+                              aria-label={`Mark ${day.dayName} ${slot} ${isDone ? "not done" : "done"}`}
+                              onClick={() => toggle(day.date, slot)}
+                            >
+                              {isDone ? "✓ Done" : "Mark done"}
+                            </button>
+                            {/* The burst is anchored to the tick that fired it,
+                                so it reads as coming from that session rather
+                                than from the page. */}
+                            {justTicked === slotKey(day.date, slot) ? celebration : null}
+                          </span>
+                        </div>
+                        <SessionBody text={text} />
                       </div>
-                      <SessionBody text={text} />
-                    </div>
-                  );
-                })
-              )}
+                    );
+                  })
+                )}
+              </div>
             </section>
           );
         })}

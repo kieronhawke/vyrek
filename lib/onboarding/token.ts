@@ -1,4 +1,5 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
+import { CUSTOM_MAX_PENCE, CUSTOM_MIN_PENCE } from "./model";
 
 /**
  * THE INVITE, CARRIED IN THE LINK.
@@ -39,9 +40,22 @@ export type InvitePayload = {
   /**
    * The rate Ben agreed with THIS client, in pence per month. Existing
    * clients are on all sorts of grandfathered rates, so the public plan
-   * price cannot be the only price. Signed like everything else here — a
-   * client cannot edit their own rate without breaking the signature —
-   * and the checkout route reads it server-side, never from the request.
+   * price cannot be the only price.
+   *
+   * THIS IS WHY THE TOKEN IS SIGNED. Everything else in here is a
+   * convenience — a name to greet them with, which step to start on. This is
+   * money. An athlete who could edit it would set their own price, so it
+   * travels inside the signed body, any change breaks the signature, and the
+   * link stops resolving. Checkout reads the amount from the verified invite
+   * and never from the request that asked for it.
+   *
+   * NAMED ONCE. `main` called this `amountPence` and `origin/main` called it
+   * `customPence` (with a `customName` beside it); the two branches grew the
+   * same feature independently. `amountPence` wins because it is the name the
+   * live invite route, checkout route, activation and four test files already
+   * use. `customName` is dropped rather than merged: Ben types a rate, not a
+   * product name, and a label he never sets is a field that can only ever be
+   * blank or wrong.
    */
   amountPence?: number;
   /**
@@ -54,6 +68,21 @@ export type InvitePayload = {
    * moment they actually become a client.
    */
   rail?: "beginner" | "athlete";
+  /**
+   * The day the first payment should come out, as days since the epoch.
+   *
+   * Signed like the price, and for the same reason: between them these two
+   * fields ARE the arrangement. A client who could move the date could take a
+   * month of coaching before the first collection.
+   *
+   * A day number rather than a timestamp, because "the 1st" is a calendar
+   * date and not an instant. Five characters in a link that goes out by SMS,
+   * and it cannot drift across a timezone on the way. The instant is worked
+   * out once, at checkout, in London — see start-date.ts.
+   *
+   * Absent means charge at checkout, which is what most of these are.
+   */
+  startDay?: number;
   /** Issued at, epoch seconds. */
   iat: number;
   /** Expires at, epoch seconds. */
@@ -190,6 +219,10 @@ export function createInvite(
     // Only ever "b": athlete is the default, so spending a character to say
     // so would make every racing link longer for nothing.
     ...(payload.rail === "beginner" ? { r: "b" } : {}),
+    // The first-payment date, days since epoch. Five characters, and only
+    // present when Ben set one, so an invite that charges today is exactly
+    // the length it was.
+    ...(payload.startDay ? { s: payload.startDay } : {}),
     x: Math.floor(payload.exp / 86400),
   };
   const body = b64url(JSON.stringify(compact));
@@ -201,13 +234,34 @@ export type InviteResult =
   | { ok: false; reason: "malformed" | "tampered" | "expired" };
 
 /**
- * A monthly rate that could plausibly be real: whole pence, £1 to £1,000 a
- * month. Shared by the invite API (validating Ben's input) and the token
- * reader (refusing a nonsense value that somehow got signed).
+ * A monthly rate that could plausibly be real: whole pence, within the band
+ * declared in the model. Shared by the invite API (validating Ben's input)
+ * and the token reader (refusing a nonsense value that somehow got signed).
+ *
+ * THE BOUNDS COME FROM ONE PLACE ON PURPOSE. `parsePrice` in model.ts read
+ * Ben's typing against £1–£2,000 while this read the result against
+ * £1–£1,000. A rate between the two — £1,500, an entirely legitimate figure —
+ * parsed cleanly, then vanished here, and the invite went out priced at the
+ * PUBLIC tier instead. Silently charging a different number from the one Ben
+ * agreed is the worst failure this file has, so the two now cannot disagree.
  */
 export function validAmountPence(value: unknown): boolean {
   const n = Number(value);
-  return Number.isInteger(n) && n >= 100 && n <= 100_000;
+  return Number.isInteger(n) && n >= CUSTOM_MIN_PENCE && n <= CUSTOM_MAX_PENCE;
+}
+
+/**
+ * A first-payment day that could plausibly be real.
+ *
+ * Whole days since the epoch, somewhere between 2020 and 2100. Deliberately
+ * loose: this is a sanity check on a decoded token, not the business rule.
+ * WHAT BEN MAY PICK is decided by `startDateBlocker` in start-date.ts against
+ * Stripe's own ceiling, and it is checked when the invite is CREATED so he
+ * finds out — rather than here, weeks later, while a client is trying to pay.
+ */
+export function validStartDay(value: unknown): boolean {
+  const n = Number(value);
+  return Number.isInteger(n) && n >= 18262 && n <= 47482;
 }
 
 /**
@@ -261,11 +315,23 @@ export function readInvite(token: string, now = Date.now()): InviteResult {
       phone: String(raw.p ?? raw.phone ?? ""),
       kind,
       ...(raw.l || raw.plan ? { plan: String(raw.l ?? raw.plan) } : {}),
-      ...(validAmountPence(raw.a ?? raw.amountPence)
-        ? { amountPence: Number(raw.a ?? raw.amountPence) }
+      /* Coerced and bounds-checked on the way out, not trusted because it
+         was signed. A signature proves nobody changed the value; it does not
+         prove the value was sane when it was written.
+         `c` is origin/main's spelling of the same field — read so a link
+         minted on that branch still resolves; only `a` is ever written. */
+      ...(validAmountPence(raw.a ?? raw.c ?? raw.amountPence)
+        ? { amountPence: Number(raw.a ?? raw.c ?? raw.amountPence) }
         : {}),
       ...(raw.r === "b" || raw.rail === "beginner"
         ? { rail: "beginner" as const }
+        : {}),
+      /* Bounds-checked on the way out like the price is. A day number outside
+         any plausible range means a mangled or hand-made token, and the safe
+         reading of "I cannot tell when this should start" is to drop it and
+         charge at checkout — never to guess a date and take money on it. */
+      ...(validStartDay(raw.s ?? raw.startDay)
+        ? { startDay: Number(raw.s ?? raw.startDay) }
         : {}),
       iat: Number(raw.i ?? raw.iat ?? 0),
       exp,

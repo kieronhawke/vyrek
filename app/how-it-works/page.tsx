@@ -10,7 +10,7 @@ import { CtaButton } from "@/components/shared/cta-button";
 export const metadata: Metadata = {
   title: "How it works",
   description:
-    "Suth Performance in four steps: quiz, Week 1 reveal, a free call with Ben, then train and adapt. See exactly what you get.",
+    "Suth Performance in four steps: a few questions, a free call with Ben Sutherland, a plan built round your week, and a coach who adjusts it. No card, no commitment.",
   alternates: { canonical: "/how-it-works" },
 };
 
@@ -22,46 +22,52 @@ type Step = {
   cta?: { label: string; href: string };
 };
 
-/* Step 3 talks about Ben monitoring your progress, so it shows Ben.
-   These were three frames from the generic track shoot. */
+/* THIS PAGE DESCRIBED A PRODUCT THAT NO LONGER EXISTS.
+   It walked through "take the quiz, see your Week 1 free, start your trial,
+   cancel anytime in the app" — the funnel from before the route became a
+   free assessment with Ben. Every other page now promises a phone call and
+   this one promised a self-serve trial, which is worse than looking weak:
+   somebody reading it arrives at the quiz expecting something different
+   from what they get.
+
+   The four steps are the four things that actually happen now. Step 3 is
+   the call, so it shows Ben. */
 const STEPS: Step[] = [
   {
     number: "01",
-    label: "Take the quiz",
+    label: "Tell us where you're at",
     image: "/media/images/camp/camp-portrait-dawn-hr-strap-wide.jpg",
     body: [
-      "Around 3 minutes. We ask about your race, your experience, the time you can commit, the kit you can train with, and any injuries to plan around.",
-      "Single-select questions auto-advance. Multi-select uses a Continue button. Your answers save as you go, so a refresh, a phone call, or a closed tab doesn't cost you anything.",
+      "Around three minutes. What you want out of this, what you've tried, how much time your week really has in it, and anything to train around.",
+      "Your answers save as you go, so a phone call or a closed tab costs you nothing. There is no card and nothing to pay at any point in this.",
     ],
   },
   {
     number: "02",
-    label: "See your Week 1",
+    label: "Pick a time that suits you",
     image: "/media/images/camp/camp-trail-run-pair-sky-wide.jpg",
     body: [
-      "Real workouts, dated, for free. Day-by-day for the next seven days, structured to fit the time you have and the kit you have access to.",
-      "Tap any day to open the full session: warm-up, main block, cool-down. Total time, intensity zone, every block listed. No demo screens. This is your actual first week.",
+      "You choose a slot from Ben's actual diary — evenings and weekends included — and it's yours. A confirmation lands by email and text straight away.",
+      "Need to move it? The email does that in two taps. No forms, no waiting on a reply.",
     ],
   },
   {
     number: "03",
-    label: "Start your trial",
+    label: "Ben calls you",
     image: "/media/images/camp/camp-portrait-forders-banner-wide.jpg",
     body: [
-      "It starts with a free consultation. No commitment.",
-      "From day 1, Ben Sutherland, your Elite 15 coach, is monitoring your progress, ready to answer questions about your training, your form, your race strategy.",
-      "You can cancel anytime in the app. Two taps.",
+      "Half an hour on the phone, free, no obligation. He'll have read everything you sent before he rings, so you're not starting from the beginning.",
+      "He'll tell you honestly what it would take to get where you want to go — and if he isn't the right coach for it, he'll say so and point you somewhere better.",
     ],
-    cta: { label: "Find your plan →", href: "/quiz" },
+    cta: { label: "Book your free assessment →", href: "/book" },
   },
   {
     number: "04",
-    label: "Train and adapt",
+    label: "Train, and keep adapting",
     image: "/media/images/track/gym-coach-row-colour.jpg",
     body: [
-      "Every Sunday, your plan rebuilds based on what you logged.",
-      "Hit a session feeling strong? Next week pushes harder. Missed two sessions? We rebuild with more recovery.",
-      "Your plan is never the same plan twice.",
+      "If you decide to go ahead, your plan is built round the week you described rather than an ideal one you don't have.",
+      "It rebuilds as you log sessions. Strong week, it pushes. Rough week, it backs off and rebuilds. Ben is on the other end of it the whole way through.",
     ],
   },
 ];
@@ -86,7 +92,8 @@ export default function HowItWorksPage() {
                 From quiz to start line, in four steps.
               </SplitHeading>
               <p className="mt-5 text-base text-suth-text-secondary md:text-lg">
-                No mystery. No drip-feed. Here is the whole arc.
+                No mystery, no drip-feed, and nothing to pay to find out
+                whether this is for you. Here is the whole arc.
               </p>
             </div>
           </Container>
@@ -99,18 +106,39 @@ export default function HowItWorksPage() {
             className="border-t border-suth-border-subtle py-14 md:py-20"
           >
             <Container>
+              {/* THE NUMBER CARRIES ITS OWN COLUMN FROM lg.
+                  Two even columns of text-and-photo at max-w-5xl is the same
+                  shape four times running, and on a wide screen it read as a
+                  narrow strip down the middle of an empty page — the "weak"
+                  Kieron saw. A third, narrow column holds the step number as
+                  a large numeral with a rule under it, so the sequence is
+                  legible at a glance instead of being announced in 14px mono
+                  four times. The text column keeps a readable measure rather
+                  than stretching to fill, which is the other half of why
+                  wide-screen pages look thin. */}
               <div
-                className={`mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-2 md:gap-12 ${
-                  i % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""
+                className={`mx-auto grid max-w-6xl items-start gap-10 md:grid-cols-2 md:items-center md:gap-12 lg:grid-cols-[5rem_minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14 ${
+                  i % 2 === 1
+                    ? "md:[&>*:first-child]:order-2 lg:[&>*:first-child]:order-none lg:[&>*:nth-child(2)]:order-3"
+                    : ""
                 }`}
               >
-                <div>
-                  <p className="font-mono text-sm font-medium uppercase tracking-[0.18em] text-suth-accent">
+                <div
+                  aria-hidden
+                  className="hidden lg:block lg:pt-2"
+                >
+                  <span className="block font-mono text-[2.75rem] font-bold leading-none tracking-[-0.04em] text-suth-accent">
+                    {step.number}
+                  </span>
+                  <span className="mt-4 block h-px w-12 bg-suth-border-strong" />
+                </div>
+                <div className="max-w-[46ch]">
+                  <p className="font-mono text-sm font-medium uppercase tracking-[0.18em] text-suth-accent lg:hidden">
                     [ {step.number} ]
                   </p>
                   <h2
                     id={`step-${step.number}`}
-                    className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[34px]"
+                    className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[34px] lg:mt-0"
                   >
                     {step.label}
                   </h2>
@@ -158,7 +186,7 @@ export default function HowItWorksPage() {
                     src={step.image}
                     alt=""
                     fill
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    sizes="(min-width: 1024px) 42vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover grayscale"
                   />
                   <div
@@ -179,18 +207,19 @@ export default function HowItWorksPage() {
             <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
               <Eyebrow>Start</Eyebrow>
               <h2 className="mt-4 text-3xl font-black leading-[1.05] tracking-[-0.04em] text-suth-text md:text-[44px]">
-                Ready to find your plan?
+                Start with a conversation.
               </h2>
               <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
-                Three-minute quiz. Real Week 1, free.
+                Three minutes of questions, then half an hour with Ben. Free,
+                and you&apos;ll know either way by the end of it.
               </p>
               <div className="mt-8">
                 <CtaButton href="/quiz" size="lg">
-                  Find your plan →
+                  Free assessment →
                 </CtaButton>
               </div>
               <p className="mt-4 text-sm text-suth-text-tertiary">
-                Free consultation first. Cancel anytime.
+                No card. No obligation. Move or cancel the call any time.
               </p>
             </div>
           </Container>

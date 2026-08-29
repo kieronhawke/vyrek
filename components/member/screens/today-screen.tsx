@@ -2,11 +2,9 @@ import Link from "next/link";
 import {
   DEMO_TODAY,
   DEMO_RECENT_SESSIONS,
-  DEMO_COMMUNITY,
   DEMO_VOLUME,
 } from "@/lib/member/demo";
 import { RecentSessionList } from "@/components/member/recent-session-list";
-import { CommunityFeed } from "@/components/member/community-feed";
 import { VolumeChart } from "@/components/member/volume-chart";
 import { WeekStrip } from "@/components/member/week-strip";
 import {
@@ -68,6 +66,19 @@ export function TodayScreen({
         <WeekStrip days={week} base={base} />
       </section>
 
+      {/*
+        Two columns above 1024px, one below.
+
+        Today was a single stack at every width, so on a monitor the session
+        card — the thing the whole screen exists for — was a narrow ribbon with
+        the training chart and the recent list pushed a scroll below it. The
+        session now holds the main column at full height while the context that
+        supports it sits alongside, which is the arrangement a wide screen is
+        actually for. The DOM order is the mobile order, so nothing reflows
+        into a different reading sequence on a phone.
+      */}
+      <div className="today-grid">
+        <div className="today-main">
       {/* The session, as one unmissable object. */}
       <section style={{ marginBottom: "var(--space-4)" }}>
         <Eyebrow right={`${DEMO_TODAY.durationMin} min`}>Today</Eyebrow>
@@ -115,7 +126,9 @@ export function TodayScreen({
           <PrimaryAction href="/train">Start session</PrimaryAction>
         </div>
       </section>
+        </div>
 
+        <aside className="today-side">
       <section style={{ marginBottom: "var(--space-4)" }}>
         <Eyebrow right={`Week ${DEMO_TODAY.weekNumber}`}>Training load</Eyebrow>
         <VolumeChart data={DEMO_VOLUME} />
@@ -144,11 +157,8 @@ export function TodayScreen({
         </Eyebrow>
         <RecentSessionList sessions={DEMO_RECENT_SESSIONS.slice(0, 4)} />
       </section>
-
-      <section>
-        <Eyebrow right="Live">Community</Eyebrow>
-        <CommunityFeed posts={DEMO_COMMUNITY.slice(0, 5)} />
-      </section>
+        </aside>
+      </div>
     </>
   );
 }

@@ -336,6 +336,12 @@ export function WorkoutPlayer() {
   return (
     <div
       data-testid="workout-player"
+      /* Constrained and centred rather than full-bleed. A session player is a
+         focus mode: on a monitor the set counter, the rep target and the
+         controls were spread across the whole width with nothing between
+         them, which is a mobile layout stretched rather than a desktop one.
+         Capping it keeps the eye's travel short at any size. */
+      className="wp-root"
       style={{
         minHeight: "100svh",
         display: "flex",
@@ -521,6 +527,9 @@ export function WorkoutPlayer() {
               tapped control in the product and a thumb reaches the bottom
               third of a phone, not the middle. spec/14 §6. ──────────── */}
       <div
+        /* Matches the player's own width so the controls sit under the thing
+           they control instead of running the full width of a monitor. */
+        className="wp-actions"
         style={{
           position: "fixed",
           insetInline: 0,

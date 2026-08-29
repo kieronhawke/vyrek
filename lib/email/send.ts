@@ -73,6 +73,12 @@ import {
   InternalLeadEmail,
   internalLeadSubject,
 } from "@/lib/email/templates/internal-lead";
+import {
+  PaymentReceivedEmail,
+  SubscriptionStartedEmail,
+  paymentReceivedSubject,
+  subscriptionStartedSubject,
+} from "@/lib/email/templates/internal-subscription";
 
 /**
  * Resend send helpers. All sends no-op (log + return ok=false) when
@@ -299,6 +305,30 @@ export function sendInternalLeadBrief(args: {
   });
 }
 
+/* ── To Ben, about money ───────────────────────────────────────────────
+   The chain from enquiry to paying client used to stop at Stripe: the
+   subscription started, the money arrived, and nothing told him. He found
+   out by opening Stripe, which meant days later, which meant a new client's
+   first week did not get written because he did not know there was one.
+
+   Both branches built a piece of this and neither is redundant:
+   `sendNewSubscriptionAlert` is the rich internal alert with the links
+   straight into the admin and into Stripe; `sendSubscriptionStarted` and
+   `sendPaymentReceived` are the lifecycle pair the billing webhook fires.
+   They are kept side by side deliberately. */
+
+/**
+ * Where an internal email goes.
+ *
+ * The first address in ADMIN_EMAILS, the same list the booking notifications
+ * already use, so there is one place this is configured rather than two that
+ * can disagree. Null when it is unset, and every caller treats that as "do
+ * not send" rather than guessing at an address.
+ */
+export function adminRecipient(): string | null {
+  return (process.env.ADMIN_EMAILS ?? "").split(",")[0]?.trim() || null;
+}
+
 /** Internal: a client just set their payment up. The good-news email. */
 export function sendNewSubscriptionAlert(args: {
   to: string;
@@ -316,6 +346,44 @@ export function sendNewSubscriptionAlert(args: {
     to,
     subject: newSubscriptionSubject(rest.clientName || rest.email, rest.rate),
     react: NewSubscriptionEmail(rest),
+  });
+}
+
+/** Somebody finished setup and the subscription is live. */
+export function sendSubscriptionStarted(args: {
+  to: string;
+  name: string;
+  email?: string | null;
+  planName: string | null;
+  amount: string | null;
+  agreed?: boolean;
+  trialDays?: number | null;
+  startedOn: string;
+}): Promise<Result> {
+  const { to, ...rest } = args;
+  return send({
+    to,
+    subject: subscriptionStartedSubject({ name: rest.name, amount: rest.amount }),
+    react: SubscriptionStartedEmail(rest),
+  });
+}
+
+/** A payment landed. Filed rather than acted on, which is why it is separate. */
+export function sendPaymentReceived(args: {
+  to: string;
+  name: string;
+  amount: string | null;
+  planName: string | null;
+  agreed?: boolean;
+  paidOn: string;
+  invoiceUrl?: string | null;
+  first?: boolean;
+}): Promise<Result> {
+  const { to, ...rest } = args;
+  return send({
+    to,
+    subject: paymentReceivedSubject({ name: rest.name, amount: rest.amount }),
+    react: PaymentReceivedEmail(rest),
   });
 }
 

@@ -18,7 +18,13 @@
  * whatever Ben typed, so the first screen confirms rather than collects.
  */
 
-export type PlanKey = "coaching-121" | "coaching-tier2" | "club";
+/**
+ * "custom" is not in `PLANS`. It is built per invite from a price Ben agreed
+ * with one person, and it exists only inside their signed link.
+ */
+export type PlanKey = "coaching-121" | "coaching-tier2" | "club" | "custom";
+
+export const CUSTOM_PLAN_KEY = "custom" as const;
 
 export type Plan = {
   key: PlanKey;
@@ -102,6 +108,122 @@ export function planByKey(key: string | undefined): Plan | undefined {
   return PLANS.find((p) => p.key === key);
 }
 
+/* ── A price agreed with one person ───────────────────────────────────────
+   Ben negotiates. Somebody comes off a consultation having agreed £150 a
+   month for something between the two published tiers, and until now the
+   only ways to honour that were to send them to a plan at the wrong price
+   or to take the card details himself.
+
+   So an invite can carry a price. It is built here, from the figure he
+   typed, and it appears alongside the standard plans on that one person's
+   onboarding.
+
+   THE PRICE LIVES IN THE SIGNED LINK, AND THAT IS THE WHOLE SECURITY MODEL.
+   The token is HMAC-signed, so an athlete cannot edit £150 down to £15 —
+   any change breaks the signature and the link stops resolving. Checkout
+   reads the amount from the verified invite and never from the request
+   body, which is the difference between a negotiable price and a public
+   one.
+
+   IT IS NOT A PUBLISHED PRICE. It never appears on a marketing page, in
+   metadata, or on any indexable route: it is on one person's private setup
+   link, agreed with them directly. That is what keeps this the right side
+   of the no-pricing rule, and it is why there is no route that lists custom
+   plans. */
+
+export type CustomPlan = {
+  /** Pence per month. */
+  pence: number;
+  /** What Ben calls it on their screen. Optional; a sensible default is used. */
+  name?: string;
+  /** One line explaining what they agreed. Optional. */
+  summary?: string;
+  /** Days free before the first charge. */
+  trialDays?: number;
+};
+
+/**
+ * The lowest and highest a bespoke monthly price may be, in pence.
+ *
+ * £1 to £2,000 a month. Wide on purpose: this is a guard against a typo, not
+ * a policy about what Ben may charge, and a ceiling set to what looks
+ * reasonable today is a ceiling that silently blocks a legitimate deal in six
+ * months. What it does catch is the extra digit — £1,500 typed as £15,000 —
+ * which is the mistake that actually happens.
+ */
+export const CUSTOM_MIN_PENCE = 100;
+export const CUSTOM_MAX_PENCE = 200000;
+
+/**
+ * Read a price Ben typed. "150", "£150", "150.00", "1,500" all work.
+ *
+ * Returns pence, or null. Null rather than zero, because zero is a real
+ * amount that would sail through a truthiness check and set up a free
+ * subscription nobody agreed to.
+ */
+export function parsePrice(input: string): number | null {
+  const text = input.trim().replace(/[£\s,]/g, "");
+  if (!text) return null;
+  if (!/^\d+(\.\d{1,2})?$/.test(text)) return null;
+  const pence = Math.round(Number(text) * 100);
+  if (!Number.isFinite(pence)) return null;
+  if (pence < CUSTOM_MIN_PENCE || pence > CUSTOM_MAX_PENCE) return null;
+  return pence;
+}
+
+/** Pence to "£150" or "£149.50" — no trailing ".00" on a round number. */
+export function displayPrice(pence: number): string {
+  const pounds = pence / 100;
+  return Number.isInteger(pounds) ? `£${pounds}` : `£${pounds.toFixed(2)}`;
+}
+
+/** Build the plan card for a price agreed with one person. */
+export function customPlan(custom: CustomPlan): Plan {
+  return {
+    key: CUSTOM_PLAN_KEY,
+    name: custom.name?.trim() || "Your agreed plan",
+    pence: custom.pence,
+    display: displayPrice(custom.pence),
+    cadence: "a month",
+    summary:
+      custom.summary?.trim() ||
+      "The plan you agreed with Ben on your call, at the price you agreed.",
+    includes: [
+      "Everything you and Ben talked through",
+      "A dated week, every week, written for you",
+      "Direct line to Ben",
+      "Cancel any time",
+    ],
+    /* Featured, and the standard tiers lose their star for this person.
+       Two highlighted options is no recommendation at all, and the one he
+       agreed with them on the phone is the one they came here for. */
+    featured: true,
+    trialDays: custom.trialDays ?? 0,
+  };
+}
+
+/**
+ * The plans to show on one invite.
+ *
+ * The agreed price goes first. Somebody who spoke to Ben on Tuesday and was
+ * told £150 should not have to hunt for it under two prices he did not
+ * quote them.
+ */
+export function plansFor(custom?: CustomPlan | null): Plan[] {
+  if (!custom) return PLANS;
+  const bespoke = customPlan(custom);
+  return [bespoke, ...PLANS.map((p) => ({ ...p, featured: false }))];
+}
+
+/** Resolve a plan key against one invite, custom included. */
+export function planFor(
+  key: string | undefined,
+  custom?: CustomPlan | null,
+): Plan | undefined {
+  if (key === CUSTOM_PLAN_KEY) return custom ? customPlan(custom) : undefined;
+  return planByKey(key);
+}
+
 /* ── The steps ─────────────────────────────────────────────────────────── */
 
 export type StepKey =
@@ -139,13 +261,52 @@ export const STEPS: Step[] = [
   { key: "pay", title: "Payment", blurb: "Secure checkout, handled by Stripe.", required: true },
 ];
 
-/** A payment-only invite skips straight to the plan. */
-export const PAYMENT_STEPS: StepKey[] = ["welcome", "plan", "pay"];
+/**
+ * AN EXISTING CLIENT SEES THREE SCREENS AND CHOOSES NOTHING.
+ *
+ * This used to be ["welcome", "plan", "pay"] — the middle one a menu of three
+ * packages. That was wrong in both directions for the person it is shown to.
+ * They are already Ben's client: there is no package to pick, because what
+ * they get is whatever they have always got, at the rate the two of them
+ * agreed. Showing them a menu invited them to change an arrangement that was
+ * never on the table, and printing a package's feature list under their price
+ * described something nobody had promised them.
+ *
+ * So the menu is gone and a sign-up screen takes its place. What they actually
+ * need, and did not have, is a way back into the account they are about to
+ * start paying for.
+ */
+export const PAYMENT_STEPS: StepKey[] = ["welcome", "account", "pay"];
+
+/**
+ * The same three step keys, said differently for somebody Ben already coaches.
+ *
+ * "Five minutes, and Ben writes your first week" is true of a new client and
+ * false of this one — their first week was written months ago. Copy that
+ * assumes the wrong person is the most obvious way this flow could insult
+ * somebody it is asking for money.
+ */
+const PAYMENT_COPY: Partial<Record<StepKey, { title: string; blurb: string }>> = {
+  welcome: {
+    title: "Let's get your payments set up",
+    blurb: "Two minutes. Your details, then your card.",
+  },
+  account: {
+    title: "Your details",
+    blurb: "So you can get into your account whenever you need to.",
+  },
+  pay: {
+    title: "Your card",
+    blurb: "Secure checkout, handled by Stripe.",
+  },
+};
 
 export function stepsFor(kind: "full" | "payment"): Step[] {
-  return kind === "payment"
-    ? STEPS.filter((s) => PAYMENT_STEPS.includes(s.key))
-    : STEPS;
+  if (kind !== "payment") return STEPS;
+  return STEPS.filter((s) => PAYMENT_STEPS.includes(s.key)).map((s) => ({
+    ...s,
+    ...(PAYMENT_COPY[s.key] ?? {}),
+  }));
 }
 
 /* ── The answers ───────────────────────────────────────────────────────── */

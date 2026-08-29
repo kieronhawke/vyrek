@@ -28,7 +28,7 @@ test("nav: primary links navigate (desktop)", async ({ page }, testInfo) => {
   expect(page.url()).toContain("/blog");
 });
 
-test("nav: primary CTA books a call (desktop)", async ({
+test("nav: primary CTA reaches the booking page (desktop)", async ({
   page,
 }, testInfo) => {
   // The desktop CTA pill in the header is `hidden sm:inline-flex`.
@@ -39,10 +39,18 @@ test("nav: primary CTA books a call (desktop)", async ({
   /* The primary path is the free consultation, not the quiz. Both routes
      exist, but only one can be the button in the nav, and they ask for very
      different things: a call costs half an hour and nothing else, the quiz
-     starts a fifteen-screen questionnaire that ends in a price. Changed
-     deliberately; this test moved with it. */
+     starts a fifteen-screen questionnaire.
+
+     The label is "Free assessment" now — it names what somebody gets rather
+     than the mechanism, and matches what the quiz and the booking page both
+     promise. The destination is what this test is actually about, so the
+     name matcher accepts the previous wording too rather than failing the
+     next time it is tuned. */
   await page.goto("/");
-  await page.getByRole("link", { name: /book a free call/i }).first().click();
+  await page
+    .getByRole("link", { name: /free assessment|book a free call/i })
+    .first()
+    .click();
   await page.waitForURL("**/book**");
   expect(page.url()).toContain("/book");
 });
@@ -69,13 +77,16 @@ test("mobile hamburger: primary CTA reachable", async ({
   const drawer = page.locator(`#${drawerId}`);
   await expect(drawer).toBeVisible();
 
-  /* The CTA is "Book a free call", not "Build my plan".
-     That is deliberate and current: under the no-pricing policy every coached
+  /* The CTA is "Free assessment" now, having been "Book a free call" and
+     "Build my plan" before that. Under the no-pricing policy every coached
      path ends at a free consultation with Ben, so that is the primary action
-     everywhere. The point of this test is that a mobile visitor can reach a
-     conversion page from the drawer at all, so it asserts that rather than the
-     wording — which is what left it failing after a copy change. */
-  const cta = drawer.getByRole("link", { name: /free call|build my plan|get started/i });
+     everywhere; only the words have moved. The point of this test is that a
+     mobile visitor can reach a conversion page from the drawer at all, so it
+     asserts that rather than the wording — which is what left it failing
+     after the last copy change. */
+  const cta = drawer.getByRole("link", {
+    name: /free assessment|free call|build my plan|get started/i,
+  });
   await expect(cta, "the mobile drawer has no primary CTA").toBeVisible();
   await cta.click();
 
@@ -138,11 +149,21 @@ test("programmes: each programme has a Start CTA going to quiz", async ({
   expect(page.url()).toMatch(/\/quiz\?program=(first-race|sub-90|doubles|pro)/);
 });
 
-test("how-it-works: Find your plan CTA reaches quiz", async ({ page }) => {
+test("how-it-works: the primary CTA reaches a conversion route", async ({
+  page,
+}) => {
+  /* The page used to end on "Find your plan" into the quiz, back when the
+     quiz ended in a plan. It describes a free assessment now and its CTAs
+     say so, which is the point of the rewrite — so this asserts that the
+     page still hands somebody onward, not which of the two wordings it
+     happens to use this month. */
   await page.goto("/how-it-works");
-  const cta = page.getByRole("link", { name: /find your plan/i }).first();
+  const cta = page
+    .getByRole("link", { name: /free assessment|find your plan/i })
+    .first();
+  await expect(cta, "how-it-works has no primary CTA").toBeVisible();
   await cta.click();
-  await page.waitForURL("**/quiz**");
+  await page.waitForURL(/\/(quiz|book)/);
 });
 
 test("about: Find your plan CTA reaches quiz", async ({ page }) => {
@@ -203,6 +224,11 @@ test("hamburger drawer opens on mobile and contains all primary links", async ({
   const drawerId = await toggle.getAttribute("aria-controls");
   await toggle.click();
   expect(drawerId, "the toggle must point at a drawer").toBeTruthy();
+  // And it really did open, rather than the assertions below passing
+  // against a drawer that was in the DOM all along.
+  await expect(
+    page.getByRole("button", { name: /close navigation/i }),
+  ).toBeVisible();
   // An attribute selector, because useId() ids contain characters
   // (colons) that are not valid unescaped in a CSS id selector.
   const drawer = page.locator(`[id="${drawerId}"]`);
@@ -237,21 +263,21 @@ test("partner application: an empty step cannot be advanced", async ({
   ).toBeDisabled();
 });
 
-test("quiz welcome: tapping next slide advances the carousel", async ({
-  page,
-}) => {
+test("quiz entry: the first tap answers a question", async ({ page }) => {
+  /* This used to tap through a welcome carousel and assert the headline
+     changed. The carousel is gone — it cost six seconds and asked nothing —
+     so what replaces it is the behaviour that actually matters: the first
+     thing on screen is answerable, and answering it moves the quiz on. */
   await page.goto("/quiz");
-  // The carousel renders a heading per slide. After tapping the
-  // background-overlay button, the headline should change.
-  const firstHeadline = await page
-    .locator("h1#welcome-heading")
-    .textContent();
+  const first = page.getByRole("heading", {
+    name: /what brings you to suth performance/i,
+  });
+  await expect(first).toBeVisible({ timeout: 15_000 });
 
-  await page.getByRole("button", { name: /next slide/i }).click();
-  await page.waitForTimeout(400);
+  await page.getByRole("button", { name: /my first HYROX race/i }).first().click();
+  await page.getByRole("button", { name: /^continue/i }).first().click();
+  await page.waitForTimeout(700);
 
-  const secondHeadline = await page
-    .locator("h1#welcome-heading")
-    .textContent();
-  expect(secondHeadline).not.toEqual(firstHeadline);
+  await expect(first).toHaveCount(0);
+  await expect(page.locator("h1").first()).toBeVisible();
 });

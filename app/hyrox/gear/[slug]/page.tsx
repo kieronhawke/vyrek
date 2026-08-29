@@ -6,7 +6,6 @@ import { MarketingFooter } from "@/components/marketing/footer";
 import { Container } from "@/components/shared/container";
 import { Eyebrow } from "@/components/shared/eyebrow";
 import { SplitHeading } from "@/components/shared/split-heading";
-import { CtaButton } from "@/components/shared/cta-button";
 import {
   Accordion,
   AccordionContent,
@@ -116,7 +115,15 @@ export default async function GearPage({
             <span className="text-suth-text">{g.eyebrow}</span>
           </nav>
 
-          <div className="mx-auto max-w-3xl">
+          {/* TWO COLUMNS FROM lg, AND THE BOTTOM LINE TRAVELS WITH YOU.
+              This was a max-w-3xl column all the way down: intro, then two
+              lists, then FAQs, on a page whose whole job is to answer one
+              purchase question. On a monitor that is a narrow ribbon, and
+              the answer — which the data already carries as `summary` — was
+              nowhere on the page at all. It is the first thing now, and it
+              stays in view while the reasoning scrolls past it. */}
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-16">
+          <div className="min-w-0 max-w-3xl">
             <Eyebrow>Gear · {g.eyebrow}</Eyebrow>
             <SplitHeading
               as="h1"
@@ -129,9 +136,8 @@ export default async function GearPage({
                 {p}
               </p>
             ))}
-          </div>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10 md:grid md:grid-cols-2 md:gap-10">
+          <section className="mt-16 border-t border-suth-border-subtle pt-10 md:grid md:grid-cols-2 md:gap-10">
             <div>
               <Eyebrow>What to look for</Eyebrow>
               <ul role="list" className="mt-4 space-y-2 text-base leading-relaxed text-suth-text-secondary">
@@ -157,7 +163,7 @@ export default async function GearPage({
           </section>
 
           <section
-            className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10"
+            className="mt-16 border-t border-suth-border-subtle pt-10"
             aria-labelledby="gear-faq-heading"
           >
             <Eyebrow>FAQs</Eyebrow>
@@ -184,42 +190,58 @@ export default async function GearPage({
             </div>
           </section>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10 text-center">
-            <Eyebrow>Gear doesn&apos;t train you</Eyebrow>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-suth-text md:text-4xl">
-              The plan does.
-            </h2>
-            <p className="mt-4 text-base text-suth-text-secondary md:text-lg">
-              Right kit, wrong plan: still slow. Right plan: any decent kit
-              will do. Take the quiz, see your Week 1 free.
-            </p>
-            <div className="mt-8">
-              <CtaButton href="/quiz" size="lg">
-                Find your plan →
-              </CtaButton>
-            </div>
-          </section>
+          </div>
 
-          <section className="mx-auto mt-16 max-w-3xl border-t border-suth-border-subtle pt-10">
-            <Eyebrow>More gear guides</Eyebrow>
-            <ul role="list" className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {GEAR_GUIDES.filter((x) => x.slug !== g.slug).map((x) => (
-                <li key={x.slug}>
-                  <Link
-                    href={`/hyrox/gear/${x.slug}`}
-                    className="block rounded-md border border-suth-border-subtle bg-suth-elevated p-4 transition-colors hover:border-suth-border-strong"
-                  >
-                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
-                      {x.eyebrow}
-                    </p>
-                    <p className="mt-1 text-sm font-medium text-suth-text">
-                      {x.title}
-                    </p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
+          {/* THE ASIDE. The answer, then the thing that actually matters,
+              then the rest of the guides — in that order because that is the
+              order somebody stops caring: they came for a verdict, they may
+              take a plan, and they might read another guide. */}
+          <aside className="lg:sticky lg:top-28 lg:self-start">
+            <div className="rounded-xl border border-suth-accent/40 bg-suth-elevated p-6">
+              <Eyebrow>The short answer</Eyebrow>
+              <p className="mt-3 text-base leading-relaxed text-suth-text">
+                {g.summary}
+              </p>
+            </div>
+
+            <div className="mt-6 rounded-xl border border-suth-border bg-suth-elevated p-6">
+              <Eyebrow>Gear doesn&apos;t train you</Eyebrow>
+              <p className="mt-3 text-sm leading-relaxed text-suth-text-secondary">
+                Right kit and the wrong plan is still slow. Right plan and any
+                decent kit will do. Half an hour with Ben, free, and
+                you&apos;ll know where you stand.
+              </p>
+              <Link
+                href="/book"
+                className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-pill bg-suth-accent px-5 text-sm font-semibold text-[#0A0A0A] transition-colors hover:bg-suth-accent-hover"
+              >
+                Free assessment →
+              </Link>
+            </div>
+
+            <div className="mt-6">
+              <Eyebrow>More gear guides</Eyebrow>
+              <ul role="list" className="mt-4 space-y-2">
+                {GEAR_GUIDES.filter((x) => x.slug !== g.slug).map((x) => (
+                  <li key={x.slug}>
+                    <Link
+                      href={`/hyrox/gear/${x.slug}`}
+                      className="block rounded-md border border-suth-border-subtle bg-suth-elevated p-4 transition-colors hover:border-suth-border-strong"
+                    >
+                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-suth-text-tertiary">
+                        {x.eyebrow}
+                      </p>
+                      <p className="mt-1 text-sm font-medium leading-snug text-suth-text">
+                        {x.title}
+                      </p>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+          </div>
+
         </Container>
       </main>
       <MarketingFooter />

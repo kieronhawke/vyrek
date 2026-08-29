@@ -28,6 +28,7 @@ import {
   type InjuryValue,
 } from "@/lib/quiz-flow";
 import type { InvitePayload } from "@/lib/onboarding/token";
+import { firstPaymentLine } from "@/lib/onboarding/start-date";
 
 /**
  * THE ONBOARDING FLOW.
@@ -76,17 +77,41 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
   );
   const [index, setIndex] = useState(startIndex === -1 ? 0 : startIndex);
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(
-    cancelled ? "No problem. Nothing was charged, so pick up where you left off." : null,
+  /* React state, deliberately NOT part of `answers`.
+     `answers` is persisted to this browser's storage so somebody who gets a
+     phone call halfway through comes back to where they were. A password does
+     not belong in that, and would still be sitting there long after they had
+     finished. */
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  /* Coming back from Stripe having pressed cancel is not a failure, and it was
+     being rendered through the error box — red border, role="alert" — which
+     reads as "your payment was declined" to somebody already wondering whether
+     something went wrong. */
+  const [notice] = useState<string | null>(
+    cancelled ? "No problem, nothing was charged. Carry on when you're ready." : null,
   );
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   const step = steps[index];
-  const stop = blocker(step.key, answers);
+  const needsPassword = step.key === "account";
+  const stop =
+    blocker(step.key, answers) ??
+    (needsPassword && !answers.name.trim()
+      ? "What should Ben call you?"
+      : needsPassword && password.length > 0 && password.length < 8
+        ? "A password needs to be at least 8 characters."
+        : needsPassword && password.length === 0
+          ? "Choose a password, so you can get back into your account."
+          : null);
   const set = (patch: Partial<Answers>) => save({ ...answers, ...patch });
 
-  // A plan Ben already agreed comes in on the invite, so they confirm rather
-  // than choose.
+  /* A plan Ben already chose comes in on the invite, so it is ticked when they
+     arrive rather than sitting there as one of three things to weigh up.
+
+     An AGREED RATE has nothing to tick. There is no plan on that invite by
+     design — checkout prices it from the signed amount and ignores anything
+     this page sends — so the plan step is not in their journey at all. */
   useEffect(() => {
     if (invite.plan && !answers.plan && planByKey(invite.plan)) {
       save({ ...answers, plan: invite.plan as PlanKey });
@@ -113,6 +138,47 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
     setBusy(true);
     setError(null);
     try {
+      /*
+       * The account first, then the card.
+       *
+       * Blocking rather than best-effort, and that is deliberate: if this
+       * fails the client must not be sent to Stripe, because the failure they
+       * would meet afterwards is "you have paid and cannot sign in". Every
+       * other pre-checkout call here is allowed to fail quietly. This one is
+       * not.
+       *
+       * Idempotent server-side: coming back from a cancelled Stripe page and
+       * paying properly runs it a second time, and an account that already
+       * exists is a success, not an error.
+       */
+      if (password) {
+        const acct = await fetch("/api/onboarding/account", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token,
+            name: answers.name,
+            email: answers.email,
+            phone: answers.phone,
+            password,
+          }),
+        });
+        if (!acct.ok) {
+          const d = await acct.json().catch(() => ({}));
+          setError(
+            d?.error === "WEAK_PASSWORD"
+              ? "That password is too short. Use at least 8 characters."
+              : d?.error === "EMAIL_INVALID"
+                ? "That email address does not look right."
+                : d?.error === "INVITE_INVALID"
+                  ? "This link has expired. Ask Ben for a new one."
+                  : "Could not set your account up just now. Nothing has been charged. Try again in a moment.",
+          );
+          setBusy(false);
+          return;
+        }
+      }
+
       // Save what they told us to the server BEFORE Stripe, so Ben has their
       // injuries, availability and coaching preferences the moment they pay —
       // not stuck in this browser. Best-effort: never block payment on it.
@@ -187,6 +253,12 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
           </h1>
           <p className="ob-blurb">{step.blurb}</p>
 
+          {notice && !error ? (
+            <p className="ob-note" role="status">
+              {notice}
+            </p>
+          ) : null}
+
           {error ? (
             <p className="ob-error" role="alert">
               {error}
@@ -194,7 +266,14 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
           ) : null}
 
           <div className="ob-body">
-            <StepBody step={step} answers={answers} set={set} invite={invite} />
+            <StepBody
+              step={step}
+              answers={answers}
+              set={set}
+              invite={invite}
+              password={password}
+              setPassword={setPassword}
+            />
           </div>
         </div>
       </main>
@@ -215,7 +294,12 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
         ) : null}
 
         {step.key === "pay" ? (
-          <button type="button" className="ob-next" onClick={pay} disabled={busy || !answers.plan}>
+          <button
+            type="button"
+            className="ob-next"
+            onClick={pay}
+            disabled={busy || (!answers.plan && typeof invite.amountPence !== "number")}
+          >
             {busy ? "Opening checkout…" : "Go to secure checkout"}
           </button>
         ) : (
@@ -246,17 +330,28 @@ function StepBody({
   answers,
   set,
   invite,
+  password,
+  setPassword,
 }: {
   step: Step;
   answers: Answers;
   set: (patch: Partial<Answers>) => void;
   invite: InvitePayload;
+  password: string;
+  setPassword: (v: string) => void;
 }) {
   switch (step.key) {
     case "welcome":
       return <Welcome invite={invite} />;
     case "account":
-      return <Account answers={answers} set={set} />;
+      return (
+        <Account
+          answers={answers}
+          set={set}
+          password={password}
+          setPassword={setPassword}
+        />
+      );
     case "about":
       return <About answers={answers} set={set} />;
     case "training":
@@ -286,16 +381,38 @@ function StepBody({
   }
 }
 
+/**
+ * THE FIRST SCREEN, WHICH HAS TO KNOW WHO IT IS TALKING TO.
+ *
+ * Every line here used to address a new client. "This is where Ben gets what
+ * he needs to write your training" and "your first week lands with you" are
+ * true of somebody who has just found him, and slightly insulting to somebody
+ * he has coached for two years who has been sent a link to move onto card
+ * payment. The checklist promised a plan menu that no longer exists on that
+ * journey, which would have been the first thing they noticed was wrong.
+ */
 function Welcome({ invite }: { invite: InvitePayload }) {
   const first = invite.name.split(/\s+/)[0];
+  const payment = invite.kind === "payment";
+  const amount =
+    typeof invite.amountPence === "number" ? formatPence(invite.amountPence) : null;
+
   return (
     <div className="ob-welcome">
       <p className="ob-lead">
-        {first}, this is where Ben gets what he needs to write your training.
+        {payment
+          ? `${first}, this is where you put your card on file.`
+          : `${first}, this is where Ben gets what he needs to write your training.`}
       </p>
       <ul className="ob-checklist">
-        {(invite.kind === "payment"
-          ? ["Pick the plan that suits you", "Add a card", "Your first week lands with you"]
+        {(payment
+          ? [
+              "Your details, and a password for your account",
+              amount
+                ? `Your card, for the ${amount} a month you agreed`
+                : "Your card",
+              firstPaymentLine(invite.startDay),
+            ]
           : [
               "A few questions about you and your training",
               "Anything he needs to know about injuries",
@@ -307,48 +424,51 @@ function Welcome({ invite }: { invite: InvitePayload }) {
         ))}
       </ul>
       <p className="ob-note">
-        {invite.kind === "payment" ? "About two minutes." : "About five minutes."} You can
-        stop and come back. It saves as you go.
+        {payment ? "About two minutes." : "About five minutes."} You can stop
+        and come back. It saves as you go.
       </p>
     </div>
   );
 }
 
-function Account({ answers, set }: { answers: Answers; set: (p: Partial<Answers>) => void }) {
+/**
+ * WHO THEY ARE, AND A WAY BACK IN.
+ *
+ * TWO DEAD BUTTONS USED TO SIT AT THE TOP OF THIS SCREEN. "Continue with
+ * Google" and "Continue with Apple", both carrying a literal `disabled`, under
+ * a note apologising that neither was switched on. That is three lines of
+ * screen, on a phone, above the only two fields that worked — spent telling
+ * somebody about a feature they cannot have. They are gone. When OAuth is
+ * genuinely wired up they can come back, working.
+ *
+ * THE PASSWORD IS NEW AND IT MATTERS. The only door into the account used to
+ * be a single-use sign-in link emailed after checkout. Lose that email and
+ * somebody paying every month cannot reach the thing they are paying for.
+ */
+function Account({
+  answers,
+  set,
+  password,
+  setPassword,
+}: {
+  answers: Answers;
+  set: (p: Partial<Answers>) => void;
+  password: string;
+  setPassword: (v: string) => void;
+}) {
   return (
     <div className="ob-fields">
-      {/* Sign-in options first: for most people this is one tap instead of
-          inventing a password they will forget. */}
-      <div className="ob-oauth">
-        <button type="button" className="ob-oauth__btn" data-provider="google" disabled>
-          {/* Drawn, not a letter and not the  character: that glyph only
-              exists in Apple's own system font and renders as a blank box on
-              Android and Windows, which is most of the people opening this. */}
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden focusable="false">
-            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.4a5.5 5.5 0 0 1-2.4 3.6v3h3.9c2.3-2.1 3.6-5.2 3.6-8.8z" />
-            <path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.9-3c-1.1.7-2.5 1.2-4.1 1.2-3.1 0-5.8-2.1-6.7-5H1.3v3.1A12 12 0 0 0 12 24z" />
-            <path fill="#FBBC05" d="M5.3 14.2a7.2 7.2 0 0 1 0-4.6V6.6H1.3a12 12 0 0 0 0 10.8l4-3.2z" />
-            <path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.3 6.6l4 3.1c.9-2.9 3.6-5 6.7-5z" />
-          </svg>
-          Continue with Google
-        </button>
-        <button type="button" className="ob-oauth__btn" data-provider="apple" disabled>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden focusable="false">
-            <path d="M17.05 12.54c.02-2.3 1.88-3.4 1.96-3.45-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.83-.81-3-.79-1.55.02-2.98.9-3.77 2.28-1.6 2.79-.41 6.92 1.15 9.18.76 1.11 1.67 2.35 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.38 0 1.77.74 2.98.72 1.23-.02 2.01-1.13 2.76-2.24.87-1.28 1.23-2.52 1.25-2.59-.03-.01-2.4-.92-2.42-3.7zM14.9 5.1c.63-.77 1.06-1.83.94-2.9-.91.04-2.01.61-2.67 1.37-.59.68-1.1 1.76-.96 2.8 1.01.08 2.05-.51 2.69-1.27z" />
-          </svg>
-          Continue with Apple
-        </button>
-        <p className="ob-note">
-          Not switched on yet. Google and Apple sign-in need their providers
-          enabling. Use your email for now and you can link them later.
-        </p>
-      </div>
-
-      <div className="ob-or" aria-hidden>
-        <span>or</span>
-      </div>
-
-      <Field label="Email" hint="Where your plan lands every week.">
+      <Field label="Your name">
+        <input
+          type="text"
+          autoComplete="name"
+          value={answers.name}
+          onChange={(e) => set({ name: e.target.value })}
+          className="ob-input"
+          placeholder="Sam Reeves"
+        />
+      </Field>
+      <Field label="Email" hint="Your receipts go here, and it is how you sign in.">
         <input
           type="email"
           inputMode="email"
@@ -359,7 +479,7 @@ function Account({ answers, set }: { answers: Answers; set: (p: Partial<Answers>
           placeholder="you@example.com"
         />
       </Field>
-      <Field label="Mobile" hint="Optional. Ben texts when a week goes out.">
+      <Field label="Mobile" hint="Optional. So Ben can reach you about a payment.">
         <input
           type="tel"
           inputMode="tel"
@@ -368,6 +488,18 @@ function Account({ answers, set }: { answers: Answers; set: (p: Partial<Answers>
           onChange={(e) => set({ phone: e.target.value })}
           className="ob-input"
           placeholder="07700 900000"
+        />
+      </Field>
+      <Field label="Choose a password" hint="At least 8 characters.">
+        <input
+          type="password"
+          /* new-password, not current-password: this tells a password manager
+             to OFFER a generated one rather than trying to fill an old one. */
+          autoComplete="new-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="ob-input"
+          placeholder="At least 8 characters"
         />
       </Field>
     </div>
@@ -953,49 +1085,13 @@ function formatPence(pence: number): string {
 function Plans({
   answers,
   set,
-  invite,
 }: {
   answers: Answers;
   set: (p: Partial<Answers>) => void;
   invite: InvitePayload;
 }) {
-  // Ben agreed a personal rate with this client, so there is nothing to
-  // choose: one card, their plan, their price. Showing the public menu here
-  // would show an existing client a different number from the one Ben
-  // quoted them, at the exact moment they reach for a card.
-  if (invite.amountPence) {
-    const p = planByKey(invite.plan) ?? PLANS[0];
-    return (
-      <div className="ob-plans">
-        <button
-          type="button"
-          className="ob-plan"
-          data-on
-          data-featured
-          onClick={() => set({ plan: p.key })}
-          aria-pressed
-        >
-          <span className="ob-plan__flag">Your plan</span>
-          <span className="ob-plan__head">
-            <span className="ob-plan__name">{p.name}</span>
-            <span className="ob-plan__price">
-              <span className="num">{formatPence(invite.amountPence)}</span>
-              <span className="ob-plan__cadence">a month</span>
-            </span>
-          </span>
-          <span className="ob-plan__summary">
-            The rate you agreed with Ben. Collected monthly, cancel any time.
-          </span>
-          <ul className="ob-plan__list">
-            {p.includes.map((i) => (
-              <li key={i}>{i}</li>
-            ))}
-          </ul>
-        </button>
-      </div>
-    );
-  }
-
+  /* Only new clients ever reach this step. An existing client on a rate Ben
+     agreed has no menu — see PAYMENT_STEPS in lib/onboarding/model.ts. */
   return (
     <div className="ob-plans">
       {PLANS.map((p) => (
@@ -1031,6 +1127,18 @@ function Plans({
   );
 }
 
+/**
+ * THE LAST SCREEN BEFORE THE CARD.
+ *
+ * For an existing client this says four things and nothing else: the amount,
+ * the day it first comes out, that they can stop whenever they like, and who
+ * handles the card. Everything that used to be here besides those — a package
+ * name, a list of what that package includes, a summary of questionnaire
+ * answers they were never asked — described somebody else's arrangement. On
+ * the one screen where a person decides whether to trust you with a card, a
+ * sentence that is not true about them is the most expensive thing you can
+ * put in front of them.
+ */
 function Pay({
   answers,
   beginner,
@@ -1040,14 +1148,35 @@ function Pay({
   beginner?: boolean;
   invite: InvitePayload;
 }) {
+  const agreed = typeof invite.amountPence === "number";
+
+  if (agreed) {
+    return (
+      <div className="ob-pay">
+        <div className="ob-total">
+          <span className="ob-total__name">The rate you agreed with Ben</span>
+          <span className="ob-total__price num">
+            {formatPence(invite.amountPence!)}
+            <span className="ob-plan__cadence">a month</span>
+          </span>
+          <span className="ob-total__trial">{firstPaymentLine(invite.startDay)}</span>
+        </div>
+
+        <p className="ob-note">
+          It collects automatically each month from then on. Cancel any time
+          from your account.
+        </p>
+
+        <p className="ob-note">
+          Card details are handled by Stripe. They never touch Suth Performance.
+        </p>
+      </div>
+    );
+  }
+
   const plan = planByKey(answers.plan);
   const rows = summarise(answers, beginner);
-  // The agreed rate wins over the public price, and an agreed rate has no
-  // free days — the first collection is at checkout.
-  const price = invite.amountPence
-    ? formatPence(invite.amountPence)
-    : plan?.display;
-  const trialDays = invite.amountPence ? 0 : (plan?.trialDays ?? 0);
+  const trialDays = plan?.trialDays ?? 0;
 
   return (
     <div className="ob-pay">
@@ -1055,7 +1184,7 @@ function Pay({
         <div className="ob-total">
           <span className="ob-total__name">{plan.name}</span>
           <span className="ob-total__price num">
-            {price}
+            {plan.display}
             <span className="ob-plan__cadence">{plan.cadence}</span>
           </span>
           {trialDays > 0 ? (

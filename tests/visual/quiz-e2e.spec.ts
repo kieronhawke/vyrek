@@ -15,20 +15,13 @@ async function tapWelcomeCarouselThrough(page: Page, url = "/quiz") {
   // slide. Each slide auto-advances after a few seconds, but tapping the
   // primary CTA on every slide simply advances to the next one until the
   // final slide, then routes into the question flow.
-  await page.goto(url, { waitUntil: "networkidle" });
-
-  // Wait for the welcome carousel headline to render
-  await expect(page.locator("#welcome-heading")).toBeVisible();
-
-  // The "Find your plan" CTA is the safe way to advance through every
-  // slide. Click it up to 6 times (carousel is 4 slides).
-  for (let i = 0; i < 6; i++) {
-    const cta = page.getByRole("button", { name: /find your plan/i }).first();
-    const stillOnCarousel = await cta.isVisible().catch(() => false);
-    if (!stillOnCarousel) break;
-    await cta.click();
-    await page.waitForTimeout(450);
-  }
+  /* The entry carousel is gone.
+     It held two full-bleed slides on a timer, so somebody who clicked
+     "free fitness assessment" waited six seconds watching an animation
+     before being asked anything. The quiz opens on the first question now,
+     so there is nothing to click through — just wait for it. */
+  await page.goto(url, { waitUntil: "domcontentloaded" });
+  await expect(page.locator("h1").first()).toBeVisible({ timeout: 15_000 });
 }
 
 async function pickSingle(page: Page, label: RegExp | string) {
@@ -41,7 +34,7 @@ async function pickSingle(page: Page, label: RegExp | string) {
 
 /** The Meet Ben interstitial, which uses its own CTA label. */
 async function clickSeeMyPlan(page: Page) {
-  const cta = page.getByRole("button", { name: /see my plan/i }).first();
+  const cta = page.getByRole("button", { name: /pick a time|see my plan/i }).first();
   await expect(cta).toBeVisible({ timeout: 10_000 });
   await cta.click();
   await page.waitForTimeout(700);
@@ -64,6 +57,23 @@ async function backUntil(page: Page, heading: RegExp, max = 6) {
 }
 
 async function clickContinue(page: Page) {
+  /* Fill anything still empty before checking the button.
+     The contact screen used to ask for an email alone ("Where should we
+     send your plan?"). This route ends in Ben ringing them, so it asks for
+     a name and a number as well, and Continue stays disabled until all
+     three are there — which is what every walk in this file started
+     failing on. Filling here covers every caller rather than each one
+     learning the new screen separately. */
+  for (const [sel, value] of [
+    ['input[type="text"]', "Sam Reeves"],
+    ['input[type="tel"]', "07700900123"],
+  ] as const) {
+    const field = page.locator(sel).first();
+    if (await field.isVisible().catch(() => false)) {
+      if (!(await field.inputValue().catch(() => "x"))) await field.fill(value);
+    }
+  }
+
   // Continue button is rendered by the quiz shell footer.
   const cta = page.getByRole("button", { name: /^continue/i }).first();
   await expect(cta).toBeVisible({ timeout: 10_000 });
@@ -184,18 +194,30 @@ test.describe("Quiz V3, happy path UI walk", () => {
     await expect(
       page.getByRole("heading", { name: /ben sutherland/i }),
     ).toBeVisible({ timeout: 8000 });
-    await expect(page.getByText(/2 world records/i)).toBeVisible();
+    /* The record is two elements now: a big numeral and its label.
+       Kieron asked for the records to read as a big deal rather than as
+       10px pills the same weight as a field name, so "2" and "world
+       records" are separately styled and getByText can no longer match the
+       whole phrase. Asserting each part keeps the check honest. */
+    await expect(page.getByText("world records").first()).toBeVisible();
+    await expect(page.getByText("2", { exact: true }).first()).toBeVisible();
     await clickSeeMyPlan(page);
 
-    // === Screen 18: Plan summary, routed by the sift ===
-    // An explicit "coached" answer must land on the lead form, not the
-    // club, and must not offer the other option.
+    /* THE ENDING CHANGED.
+       This route opens "free fitness assessment" and never mentions a
+       product, so it now ends on the promise it made: the times Ben has
+       free. The plan reveal, the sift's two destinations and the Club
+       trial link all belonged to a funnel that sold a twelve-week
+       programme — showing "First Race Programme" to somebody who asked for
+       help getting fit named a race they never mentioned and offered a
+       product they were never promised. */
     await expect(
-      page.getByRole("button", { name: /send my plan to ben/i }).first(),
-    ).toBeVisible({ timeout: 8000 });
+      page.getByRole("heading", { name: /when shall ben call/i }),
+    ).toBeVisible({ timeout: 12_000 });
+    // A real calendar with real days on it, not an empty month.
     await expect(
-      page.getByRole("link", { name: /start 7 days free/i }),
-    ).toHaveCount(0);
+      page.locator('[aria-label^="Choose a day"] button:not([disabled])').first(),
+    ).toBeVisible({ timeout: 12_000 });
 
     // The sticky footer must not compete with the lead form. On a phone it
     // is the only CTA in view, so if it said "Save my plan" it would walk
@@ -216,13 +238,14 @@ test.describe("Quiz V3, happy path UI walk", () => {
       // Readiness is skipped on this branch, so Meet Ben comes next.
       await clickSeeMyPlan(page);
 
+      /* Both sift answers now end in the same place: the times Ben has
+         free. The reveal used to split — coached went to a lead form,
+         self-serve to the Club trial — because the funnel sold a product.
+         This route promises a free conversation and ends on one, so the
+         sift's answer is information for Ben rather than a fork in the UI. */
       await expect(
-        page.getByRole("link", { name: /start 7 days free/i }),
-      ).toBeVisible({ timeout: 8000 });
-      await expect(page.getByText(/nobody will call you/i)).toBeVisible();
-      await expect(
-        page.getByRole("button", { name: /send my plan to ben/i }),
-      ).toHaveCount(0);
+        page.getByRole("heading", { name: /when shall ben call/i }),
+      ).toBeVisible({ timeout: 12_000 });
 
       // Stay on the self-serve route to finish the walk. On the coached
       // route the sticky button deliberately scrolls to the lead form
@@ -230,25 +253,18 @@ test.describe("Quiz V3, happy path UI walk", () => {
       // way, which is the intended behaviour rather than a limitation.
     }
 
-    {
-      const save = page.getByRole("button", { name: /save my plan/i }).first();
-      await expect(save).toBeVisible({ timeout: 8000 });
-      await save.click();
-      await page.waitForTimeout(400);
-    }
-
-    // === Screen 17: Account creation (email + password) ===
+    /* THE ACCOUNT GATE IS NOT ON THIS ROUTE ANY MORE.
+       It ends on the times Ben has free — no password, no plan, no price,
+       because nothing before it promised any of those. Account creation
+       still exists and is still tested: it is reached from the paid
+       onboarding link, which is where somebody who has agreed to be
+       coached actually signs up. */
     await expect(
-      page.getByRole("heading", { name: /save your plan|create your account/i }),
-    ).toBeVisible();
+      page.locator('[aria-label^="Choose a day"] button:not([disabled])').first(),
+    ).toBeVisible({ timeout: 12_000 });
+    await expect(page.locator('input[type="password"]')).toHaveCount(0);
 
-    const emailInput = page.locator('input[type="email"]').first();
-    await expect(emailInput).toBeVisible();
-    const passwordInput = page.locator('input[type="password"]').first();
-    await expect(passwordInput).toBeVisible();
-
-    // We've walked every visible screen. No console errors thrown along
-    // the way (auth-related errors are filtered above).
+    // No console errors on the whole walk.
     expect(errors).toEqual([]);
   });
 
@@ -297,16 +313,21 @@ test.describe("Quiz V3, happy path UI walk", () => {
     // Straight to Meet Ben: no sift, and no readiness either.
     await clickSeeMyPlan(page);
 
-    const trial = page.getByRole("link", { name: /start 7 days free/i });
-    await expect(trial).toBeVisible({ timeout: 8000 });
-    await expect(page.getByText(/nobody will call you/i)).toBeVisible();
-
-    // And the destination is a real page, not the 404 it used to be.
-    await trial.click();
+    /* THE ENDING CHANGED.
+       This route opens "free fitness assessment" and never mentions a
+       product, so it now ends on the promise it made: the times Ben has
+       free. The plan reveal, the sift's two destinations and the Club
+       trial link all belonged to a funnel that sold a twelve-week
+       programme — showing "First Race Programme" to somebody who asked for
+       help getting fit named a race they never mentioned and offered a
+       product they were never promised. */
     await expect(
-      page.getByRole("heading", { name: /elite structure/i }),
-    ).toBeVisible({ timeout: 15_000 });
-    await expect(page.getByText(/7 days free\. no card needed/i).first()).toBeVisible();
+      page.getByRole("heading", { name: /when shall ben call/i }),
+    ).toBeVisible({ timeout: 12_000 });
+    // A real calendar with real days on it, not an empty month.
+    await expect(
+      page.locator('[aria-label^="Choose a day"] button:not([disabled])').first(),
+    ).toBeVisible({ timeout: 12_000 });
   });
 
   test("beginner rail never asks a beginner about racing", async ({
@@ -384,13 +405,10 @@ test.describe("Quiz V3, happy path UI walk", () => {
     await expect(page.getByText(/2 world records/i)).toHaveCount(0);
     await clickSeeMyPlan(page);
 
-    // Reveal routes to the lead form, and the recommendation is not shown
-    // because the user chose outright.
-    // Two buttons carry this label by design: the sticky footer mirrors the
-    // inline form and scrolls to it.
+    // Same ending for every route: a time in Ben's diary.
     await expect(
-      page.getByRole("button", { name: /send my plan to ben/i }).first(),
-    ).toBeVisible({ timeout: 8000 });
+      page.getByRole("heading", { name: /when shall ben call/i }),
+    ).toBeVisible({ timeout: 12_000 });
 
     // The whole point of the rail: nothing HYROX reached a beginner, on the
     // questions OR on the reveal. The reveal is the easy one to get wrong,
@@ -402,10 +420,11 @@ test.describe("Quiz V3, happy path UI walk", () => {
     expect(body).not.toMatch(/wall ball|sled|farmers carry/i);
     expect(body).not.toMatch(/start line|race-ready|weeks to your race/i);
 
-    // And it is framed around the twelve weeks instead. The block length is
-    // measured start to finish, not from today, or a 12-week plan starting
-    // next week reads as 13.
-    await expect(page.getByText(/twelve weeks, starting/i)).toBeVisible();
-    await expect(page.getByText(/12 weeks of training/i)).toBeVisible();
+    /* The twelve-week framing went with the plan reveal. What replaced it
+       is the thing this route actually promises — a free half hour on the
+       phone — so that is what the last screen has to say, and it must say
+       it without naming a race. */
+    await expect(page.getByText(/free/i).first()).toBeVisible();
+    await expect(page.getByText(/30 minutes|half an hour/i).first()).toBeVisible();
   });
 });

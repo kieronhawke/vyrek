@@ -145,7 +145,7 @@ export async function notifyBooked(b: Booking): Promise<Outcome[]> {
     // From the number: this one gets replied to.
     text(
       b.phone,
-      `${first}, it's Ben. You're booked in for ${short}. I'll call you then. Need to move it? ${manageUrl(b.ref)}`,
+      `Hi ${first}, it's Ben. You're booked in for ${short}. I'll call you then. Need to move it? ${manageUrl(b.ref)}`,
       "number",
     ),
     ...adminEmailFanout(
@@ -192,7 +192,7 @@ export async function notifyRescheduled(
     // original confirmation arriving twice, and gets ignored.
     text(
       b.phone,
-      `${first}, it's Ben. I've had to move our call - it's now ${short}. Doesn't work? Pick another: ${manageUrl(b.ref)}`,
+      `Hi ${first}, it's Ben. I've had to move our call - it's now ${short}. Doesn't work? Pick another: ${manageUrl(b.ref)}`,
       "number",
     ),
     ...adminEmailFanout(
@@ -225,7 +225,7 @@ export async function notifyCancelled(b: Booking): Promise<Outcome[]> {
     }),
     text(
       b.phone,
-      `${first}, it's Ben. Our call on ${short} is cancelled. Book another time whenever suits: ${siteUrl()}/book`,
+      `Hi ${first}, it's Ben. Our call on ${short} is cancelled. Book another time whenever suits: ${siteUrl()}/book`,
       "number",
     ),
     ...adminEmailFanout(

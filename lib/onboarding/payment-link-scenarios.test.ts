@@ -83,7 +83,8 @@ describe("every rate in the band survives signing exactly", () => {
   });
 
   it("out-of-band rates are dropped by the reader even when signed", () => {
-    for (const bad of [0, 1, 99, 100_001, 1_000_000, -500]) {
+    /* £2,000 is the ceiling, shared with parsePrice — see custom-rate.test.ts. */
+    for (const bad of [0, 1, 99, 200_001, 1_000_000, -500]) {
       const token = createInvite({
         name: "Sam",
         email: "",

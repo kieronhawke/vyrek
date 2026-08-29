@@ -11,8 +11,8 @@ import {
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { QuizShell, withViewTransition } from "@/components/quiz-v3/quiz-shell";
+import { QuizCopyProvider, ScreenCopyScope } from "@/components/quiz-v3/copy-context";
 import { ContinueButton } from "@/components/quiz-v3/continue-button";
-import { WelcomeCarousel } from "@/components/quiz-v3/welcome-carousel";
 import { PrimaryIntentScreen } from "@/components/quiz-v3/screens/primary-intent";
 import { ExperienceScreen } from "@/components/quiz-v3/screens/experience";
 import { BestTimeScreen } from "@/components/quiz-v3/screens/best-time";
@@ -30,9 +30,9 @@ import { InjuriesScreen } from "@/components/quiz-v3/screens/injuries";
 import { InjuryDetailScreen } from "@/components/quiz-v3/screens/injury-detail";
 import { SupportPreferenceScreen } from "@/components/quiz-v3/screens/support-preference";
 import {
-  EmailCaptureScreen,
-  isEmailValid,
-} from "@/components/quiz-v3/screens/email-capture";
+  ContactCaptureScreen,
+  isContactValid,
+} from "@/components/quiz-v3/screens/contact-capture";
 import { validateAccountForm } from "@/components/quiz-v3/screens/account-creation";
 import {
   BarriersScreen,
@@ -113,6 +113,7 @@ import {
   applySupportPreSelect,
   determineProgramme,
   injuryNeedsDetail,
+  INJURY_LABEL,
   isBeginnerRail,
   type BarrierValue,
   type IntentValue,
@@ -120,9 +121,14 @@ import {
   type QuizAnswers,
 } from "@/lib/quiz-flow";
 import { sift } from "@/lib/quiz-sift";
+import { leadBrief } from "@/lib/lead-brief";
+import {
+  BookSlotScreen,
+  BookedScreen,
+} from "@/components/quiz-v3/screens/book-slot";
+import { DEFAULT_ISO } from "@/lib/dial-codes";
 
 type ScreenKind =
-  | "welcome"
   | "primary-intent"
   | "goal"
   | "starting-point"
@@ -148,7 +154,9 @@ type ScreenKind =
   | "meet-ben"
   | "plan-summary"
   | "account-creation"
-  | "calculating";
+  | "calculating"
+  | "book-slot"
+  | "booked";
 
 type ScreenDef = {
   kind: ScreenKind;
@@ -156,7 +164,13 @@ type ScreenDef = {
 };
 
 const SCREENS: ScreenDef[] = [
-  { kind: "welcome" },
+  /* THE CAROUSEL IS GONE.
+     It held two full-bleed slides on a 3.2-second timer, so somebody who
+     clicked "free fitness assessment" waited six seconds, watching an
+     animation, before being asked anything. It was the only auto-advancing
+     screen in the funnel and the only one that took time away rather than
+     giving something back. The quiz now opens on the question — which is
+     the screen that actually earns their attention. */
   // Skipped when the entry surface already told us the rail, so a visitor
   // from a personal-training page isn't asked what brought them here.
   { kind: "primary-intent", showIf: (a) => !a.railLocked },
@@ -220,9 +234,22 @@ const SCREENS: ScreenDef[] = [
   { kind: "readiness", showIf: (a) => a.supportPreference !== "self" },
   // The human moment, immediately before the reveal.
   { kind: "meet-ben" },
-  { kind: "plan-summary" },
-  { kind: "account-creation" },
-  { kind: "calculating" },
+  /* THE ENDING.
+     This route opens "free fitness assessment" and never mentions a
+     product, so it ends on the promise it made: a time in Ben's diary.
+     The plan reveal, the account gate and the calculating cinematic all
+     belonged to a funnel that sold a twelve-week programme, and showing
+     "First Race Programme" to somebody who asked for help getting fit was
+     the wrong ending twice — it named a race they never mentioned and
+     offered a product they were never promised.
+
+     Kept in SCREENS, unreachable, so a session saved mid-quiz under the
+     old flow still resolves rather than crashing on an unknown kind. */
+  { kind: "book-slot" },
+  { kind: "booked" },
+  { kind: "plan-summary", showIf: () => false },
+  { kind: "account-creation", showIf: () => false },
+  { kind: "calculating", showIf: () => false },
 ];
 
 function visibleScreens(answers: QuizAnswers): ScreenDef[] {
@@ -268,7 +295,7 @@ function questionScreenIndex(
   return [idx + 1, visibleQuestions.length];
 }
 
-function QuizV3Inner() {
+function QuizV3Inner({ country }: { country?: string }) {
   const router = useRouter();
   const params = useSearchParams();
   const haptic = useHaptics();
@@ -356,6 +383,13 @@ function QuizV3Inner() {
 
   // Submit / loading flags for account creation.
   const [creating, setCreating] = useState(false);
+  /* The booked slot, held for the confirmation screen.
+     Deliberately component state rather than the persisted quiz store: it
+     belongs to this visit, and a stale "you're booked for Tuesday" restored
+     from localStorage a fortnight later would be a lie. */
+  const [booked, setBooked] = useState<{ startISO: string; ref: string } | null>(
+    null,
+  );
   const [accountError, setAccountError] = useState<string | null>(null);
 
   // Track when the current screen mounted, for `time_on_screen_ms`.
@@ -670,6 +704,22 @@ function QuizV3Inner() {
     );
   }
 
+  /* EVERYTHING BELOW RENDERS ONE SCREEN, AND THE SCOPE TELLS THE HEADER
+     AND BUTTON WHICH ONE IT IS.
+     Wrapping the whole chain once rather than every branch is deliberate:
+     there are twenty-odd early returns and a new screen added tomorrow
+     would otherwise be the one nobody remembered to wrap. Hooks all run
+     above this line, so an inline function here is safe.
+     Named tokens rather than baked-in text — an edited question may say
+     "{first}" or "{area}", and those are per-person words that must never
+     end up stored in the copy table. */
+  const screenTokens = {
+    first: (state.answers.name ?? "").trim().split(/\s+/)[0] || undefined,
+    area: state.answers.injuries
+      ? INJURY_LABEL[state.answers.injuries]?.toLowerCase()
+      : undefined,
+  };
+  const rendered = (() => {
   const hasAnswers = Object.keys(state.answers).some((k) => {
     const v = state.answers[k as keyof QuizAnswers];
     if (Array.isArray(v)) return v.length > 0;
@@ -684,9 +734,6 @@ function QuizV3Inner() {
   const backHandler = screenIndex > 0 ? back : undefined;
 
   // ── Full-bleed screens (no shell)
-  if (current.kind === "welcome") {
-    return <WelcomeCarousel onAdvance={advance} />;
-  }
   if (current.kind === "reassurance-1") {
     return (
       <ReassuranceScreen1
@@ -720,6 +767,60 @@ function QuizV3Inner() {
       />
     );
   }
+  if (current.kind === "book-slot") {
+    return (
+      <QuizShell
+        answers={state.answers}
+        currentScreen={pos}
+        totalScreens={total}
+        onBack={backHandler}
+        hasAnswers={hasAnswers}
+      >
+        <BookSlotScreen
+          answers={state.answers}
+          brief={leadBrief(state.answers, sift(state.answers))}
+          onBooked={(startISO, ref) => {
+            capture("assessment_booked", {
+              user_uuid: state.uuid,
+              rail: state.answers.rail,
+            });
+            haptic("success");
+            setBooked({ startISO, ref });
+            advance();
+          }}
+        />
+      </QuizShell>
+    );
+  }
+
+  if (current.kind === "booked") {
+    // Falls back to the picker if somebody deep-links here without booking.
+    if (!booked) {
+      return (
+        <QuizShell
+          answers={state.answers}
+          currentScreen={pos}
+          totalScreens={total}
+          onBack={backHandler}
+          hasAnswers={hasAnswers}
+        >
+          <BookSlotScreen
+            answers={state.answers}
+            brief={leadBrief(state.answers, sift(state.answers))}
+            onBooked={(startISO, ref) => setBooked({ startISO, ref })}
+          />
+        </QuizShell>
+      );
+    }
+    return (
+      <BookedScreen
+        answers={state.answers}
+        startISO={booked.startISO}
+        reference={booked.ref}
+      />
+    );
+  }
+
   if (current.kind === "calculating") {
     return <CalculatingScreen answers={state.answers} />;
   }
@@ -1283,8 +1384,18 @@ function QuizV3Inner() {
   }
 
   if (current.kind === "email-capture") {
-    const value = state.answers.email ?? "";
-    const optIn = state.answers.marketingOptIn ?? false;
+    /* Was "Where should we send your plan?" — asking for an email so we could
+       send something this route does not produce. It ends in a free call
+       about their fitness, so it asks for the three things needed to make
+       that call happen, and the phone carries a real dialling code. */
+    const nameValue = state.answers.name ?? "";
+    const emailValue = state.answers.email ?? "";
+    /* Their own country first, the UK only as a last resort. An explicit
+       choice always wins — once they have touched the dropdown, the answer
+       is theirs and the header stops mattering. */
+    const isoValue = state.answers.phoneIso ?? country ?? DEFAULT_ISO;
+    const phoneValue = state.answers.phone ?? "";
+    const ready = isContactValid(nameValue, emailValue, isoValue, phoneValue);
     return (
       <QuizShell
         answers={state.answers}
@@ -1294,22 +1405,26 @@ function QuizV3Inner() {
         hasAnswers={hasAnswers}
         footer={
           <ContinueButton
-            disabled={!isEmailValid(value)}
-            onClick={() => continueWithHaptic({ hasEmail: true })}
+            disabled={!ready}
+            onClick={() => continueWithHaptic({ hasContact: true })}
           />
         }
       >
-        <EmailCaptureScreen
-          value={value}
-          marketingOptIn={optIn}
-          // Nag only once they have committed to typing something, never on
-          // an empty field they haven't reached yet.
-          showError={value.trim().length > 3}
-          onChange={(v) => setAnswer("email", v)}
-          onMarketingChange={(v) => {
+        <ContactCaptureScreen
+          name={nameValue}
+          email={emailValue}
+          phoneIso={isoValue}
+          phone={phoneValue}
+          // Complain only once they have committed to typing, never on a
+          // field they have not reached yet.
+          showError={emailValue.length > 3 || phoneValue.length > 3}
+          onName={(v) => setAnswer("name", v)}
+          onEmail={(v) => setAnswer("email", v)}
+          onIso={(v) => {
             haptic("light");
-            setAnswer("marketingOptIn", v);
+            setAnswer("phoneIso", v);
           }}
+          onPhone={(v) => setAnswer("phone", v)}
         />
       </QuizShell>
     );
@@ -1445,6 +1560,13 @@ function QuizV3Inner() {
   // Avoid blank screen
   router.push("/");
   return null;
+  })();
+
+  return (
+    <ScreenCopyScope kind={current.kind} tokens={screenTokens}>
+      {rendered}
+    </ScreenCopyScope>
+  );
 }
 
 function QuizColdLoadFallback() {
@@ -1485,10 +1607,20 @@ function QuizColdLoadFallback() {
   );
 }
 
-export default function QuizV3() {
+export default function QuizV3({
+  copy = {},
+  country,
+}: {
+  /** Ben's edits, read on the server. Empty means "as shipped". */
+  copy?: Record<string, string>;
+  /** ISO country from the visitor's IP, for the phone field's default. */
+  country?: string;
+}) {
   return (
-    <Suspense fallback={<QuizColdLoadFallback />}>
-      <QuizV3Inner />
-    </Suspense>
+    <QuizCopyProvider overrides={copy}>
+      <Suspense fallback={<QuizColdLoadFallback />}>
+        <QuizV3Inner country={country} />
+      </Suspense>
+    </QuizCopyProvider>
   );
 }

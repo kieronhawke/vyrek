@@ -126,16 +126,23 @@ export function variantCopy(
       {
         title: "A programme written for you",
         body: "Your level, your equipment, your available days. The quiz takes three minutes and your first week appears before you decide anything.",
-        image: "/media/images/camp/camp-portrait-dawn-hr-strap-wide.jpg",
-        alt: "Ben Sutherland under a rig arch at dawn, heart rate strap on",
+        /* THREE NEARLY IDENTICAL PORTRAITS OF THE SAME MAN.
+           These cards say "a programme written for you", "it adapts every
+           week" and "a real athlete behind it", and all three were carrying
+           a mid-shot of Ben from the same camp shoot. Only the third is
+           about him; the other two are about the training, so they show it.
+           A card whose picture does not agree with its heading is a card
+           nobody reads twice. */
+        image: "/media/images/camp/camp-wall-ball-catch-wide.jpg",
+        alt: "An athlete catching a wall ball mid-set",
       },
       {
         title: "It adapts every single week",
         body: seo.gyms.length
           ? `Log your sessions and the plan recalibrates each Sunday, around whichever of the ${seo.gyms.length} places near ${name} you actually got to. Strong week, it pushes harder. Missed sessions, it rebuilds with more recovery.`
           : "Log your sessions and the plan recalibrates each Sunday. Strong week, next week pushes harder. Missed sessions, next week rebuilds with more recovery.",
-        image: "/media/images/camp/camp-row-erg-front-wide.jpg",
-        alt: "Rowing front on, seen across the flywheel",
+        image: "/media/images/camp/camp-trail-run-group-wide.jpg",
+        alt: "A group running together on a trail, strung out by pace",
       },
       {
         title: "A real athlete behind it",
