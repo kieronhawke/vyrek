@@ -153,6 +153,27 @@ export async function activateFromSession(
    * earlier email's sign-in button was already dead when it arrived. */
   let authUserId: string | null = null;
   let userIsNew = false;
+  /**
+   * Did THIS run create the subscription row?
+   *
+   * This is the dedupe token for the client's "you're in" email, and it
+   * replaced `userIsNew`, which had quietly stopped working.
+   *
+   * `userIsNew` was chosen because activation runs TWICE per checkout — the
+   * welcome page and the webhook both fire it — and createUser is atomic, so
+   * exactly one caller saw a fresh user. That was true right up until the flow
+   * started creating the account BEFORE the card, so the client could set a
+   * password. From then on the user was never new at activation time, the
+   * condition was false on both runs, and a client who had just paid received
+   * nothing from Ben at all — only Stripe's receipt.
+   *
+   * The subscription insert is the better token: it is guarded by a
+   * select-then-insert on the Stripe subscription id, so exactly one caller
+   * performs it, and unlike the user it is genuinely new on every new
+   * subscription — including a client who cancelled and came back, who should
+   * be welcomed again.
+   */
+  let subscriptionIsNew = false;
   /** Set only where the email is actually dispatched. */
   let emailed = false;
   try {
@@ -355,6 +376,9 @@ export async function activateFromSession(
           criticalError = "SUBSCRIPTION_INSERT_FAILED";
           console.error("[activation] subscription insert failed", error.message);
         } else {
+          /* The same dedupe the admin alert below already relies on, now also
+             gating the CLIENT's email — see the note on `subscriptionIsNew`. */
+          subscriptionIsNew = true;
           // A NEW subscription row = money just arrived. Tell the admin on
           // every channel; inserting the row is the dedupe — the losing
           // activation caller takes the update branch above and stays quiet.
@@ -386,7 +410,7 @@ export async function activateFromSession(
    * by Supabase but sent by us through Resend on the verified domain, and
    * it targets our own /auth/callback with the token hash so the exchange
    * actually happens. */
-  if (userIsNew) {
+  if (userIsNew || subscriptionIsNew) {
     let signInUrl = `${siteUrl()}/login`;
     // A billing-only client's home is their subscription page — landing
     // them on "Ben is writing your first week" would promise a feature
