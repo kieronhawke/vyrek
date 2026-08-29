@@ -1,4 +1,9 @@
-import { readInvite, type InviteResult } from "./token";
+import {
+  readInvite,
+  validAmountPence,
+  validStartDay,
+  type InviteResult,
+} from "./token";
 import { loadInvite, looksLikeInviteId } from "./invite-store";
 
 /**
@@ -20,9 +25,20 @@ import { loadInvite, looksLikeInviteId } from "./invite-store";
  * is unambiguous and cheap.
  *
  * Expiry is still enforced on the payload itself, not just by the store's TTL.
- * Redis expiry is a cleanup mechanism, not an authorisation one, and a resolver
+ * A store TTL is a cleanup mechanism, not an authorisation one, and a resolver
  * that trusted it would hand out an expired invite the moment a TTL was set
  * wrong.
+ *
+ * ⚠️ AND SO ARE THE MONEY FIELDS. The signed-token path bounds-checks the rate
+ * and the start date on the way out — deliberately, because a signature proves
+ * nobody edited a value and says nothing about whether it was sane when it was
+ * written. The stored path returned its payload verbatim and skipped all of
+ * that, so the two doors into the same flow had different standards.
+ *
+ * That is not theoretical. A row carrying `amountPence: 9999999` resolved
+ * cleanly and Checkout was asked for £99,999.99 a month — a figure Ben's form
+ * and the invite API both refuse. Anything that can write to the store, now or
+ * later, would have inherited the right to name a price. Both doors check.
  */
 export async function resolveInvite(
   tokenOrId: string,
@@ -37,7 +53,22 @@ export async function resolveInvite(
     if (!invite.exp || invite.exp * 1000 < now) {
       return { ok: false, reason: "expired" };
     }
-    return { ok: true, invite };
+
+    /* Dropped rather than refused, exactly as the token reader does it. A
+       nonsense rate falls back to the plan's published price and a nonsense
+       date falls back to charging at checkout — both are recoverable, and
+       both are better than either charging the nonsense or leaving somebody
+       staring at an error they cannot do anything about. */
+    return {
+      ok: true,
+      invite: {
+        ...invite,
+        ...(validAmountPence(invite.amountPence)
+          ? {}
+          : { amountPence: undefined }),
+        ...(validStartDay(invite.startDay) ? {} : { startDay: undefined }),
+      },
+    };
   }
 
   return readInvite(tokenOrId, now);

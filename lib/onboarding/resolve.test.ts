@@ -87,3 +87,71 @@ describe("resolveInvite", () => {
     await expect(resolveInvite(forged)).resolves.toEqual({ ok: false, reason: "tampered" });
   });
 });
+
+/**
+ * BOTH DOORS CHECK THE MONEY.
+ *
+ * The signed-token reader has always bounds-checked the rate and the date on
+ * the way out: a signature proves nobody edited a value and says nothing about
+ * whether it was sane when it was written. The stored path returned its payload
+ * verbatim and skipped all of that — so the two doors into the same checkout
+ * held different standards.
+ *
+ * Found by putting `amountPence: 9999999` in the store and watching Checkout be
+ * asked for £99,999.99 a month, a figure both Ben's form and the invite API
+ * refuse. These pin the fix.
+ */
+describe("the stored path bounds-checks like the signed one", () => {
+  const now = Math.floor(Date.now() / 1000);
+
+  async function resolveStored(extra: Partial<InvitePayload>) {
+    const stored = await storeInvite({
+      ...base,
+      kind: "payment",
+      iat: now,
+      exp: now + 86400,
+      ...extra,
+    } as InvitePayload);
+    if (!stored.ok) throw new Error("store failed");
+    return resolveInvite(stored.id);
+  }
+
+  it("drops a rate outside the band rather than charging it", async () => {
+    for (const bad of [9_999_999, 1, 99, 0, -500]) {
+      const r = await resolveStored({ amountPence: bad });
+      expect(r.ok).toBe(true);
+      if (r.ok) expect(r.invite.amountPence, `${bad}p survived`).toBeUndefined();
+    }
+  });
+
+  it("keeps a rate inside the band exactly", async () => {
+    for (const good of [100, 15000, 22000, 200000]) {
+      const r = await resolveStored({ amountPence: good });
+      expect(r.ok).toBe(true);
+      if (r.ok) expect(r.invite.amountPence).toBe(good);
+    }
+  });
+
+  it("drops an implausible start day rather than charging on it", async () => {
+    for (const bad of [0, 1, 999_999_999, -20]) {
+      const r = await resolveStored({ amountPence: 15000, startDay: bad });
+      expect(r.ok).toBe(true);
+      if (r.ok) expect(r.invite.startDay, `day ${bad} survived`).toBeUndefined();
+    }
+  });
+
+  it("keeps a plausible start day", async () => {
+    const r = await resolveStored({ amountPence: 15000, startDay: 20711 });
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.invite.startDay).toBe(20711);
+  });
+
+  /* Dropping, not refusing. A bad value falls back to "charge the published
+     price at checkout", which somebody can recover from; an error page is a
+     dead end for a person holding a link they did not write. */
+  it("still resolves the invite when it drops a field", async () => {
+    const r = await resolveStored({ amountPence: 9_999_999 });
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.invite.email).toBe("kieron@example.com");
+  });
+});
