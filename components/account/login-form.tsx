@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
 
@@ -20,6 +20,36 @@ function safeNext(next: string | null): string {
  * now asks for one before the card, so an existing client set up by Ben has
  * one from the moment they pay.
  */
+
+/**
+ * KEEP WHAT THEY TYPED BEFORE REACT WOKE UP.
+ *
+ * These fields are controlled by React state that starts empty. The markup is
+ * server-rendered and interactive to a person the moment it paints, but state
+ * does not attach until hydration — so anything typed in between is thrown
+ * away the instant React takes over, and the field goes blank on its own.
+ *
+ * On a fast connection the window is invisible. On a phone on mobile data it
+ * is long enough to type an email address into, and the symptom is a login
+ * form that clears itself and then complains the field is empty. It was caught
+ * by a test that filled both boxes and found only the second one still had
+ * anything in it.
+ *
+ * So on mount, whatever the DOM actually holds wins.
+ */
+function useAdoptTypedValue(
+  ref: React.RefObject<HTMLInputElement | null>,
+  value: string,
+  set: (v: string) => void,
+) {
+  useEffect(() => {
+    const typed = ref.current?.value ?? "";
+    if (typed && typed !== value) set(typed);
+    // Mount only: after hydration React is the source of truth again.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+}
+
 export function CustomerLoginForm() {
   const router = useRouter();
   const sp = useSearchParams();
@@ -31,6 +61,8 @@ export function CustomerLoginForm() {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const emailRef = useRef<HTMLInputElement>(null);
+  useAdoptTypedValue(emailRef, email, setEmail);
   const [sent, setSent] = useState<"link" | "reset" | null>(null);
 
   async function onSendLink(e: React.FormEvent) {
@@ -150,6 +182,7 @@ export function CustomerLoginForm() {
             Email
           </span>
           <input
+            ref={emailRef}
             type="email"
             required
             autoComplete="email"

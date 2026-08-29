@@ -1,8 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createBrowserClient } from "@supabase/ssr";
+
+
+/**
+ * KEEP WHAT THEY TYPED BEFORE REACT WOKE UP.
+ *
+ * These fields are controlled by React state that starts empty. The markup is
+ * server-rendered and interactive to a person the moment it paints, but state
+ * does not attach until hydration — so anything typed in between is thrown
+ * away the instant React takes over, and the field goes blank on its own.
+ *
+ * On a fast connection the window is invisible. On a phone on mobile data it
+ * is long enough to type an email address into, and the symptom is a login
+ * form that clears itself and then complains the field is empty. It was caught
+ * by a test that filled both boxes and found only the second one still had
+ * anything in it.
+ *
+ * So on mount, whatever the DOM actually holds wins.
+ */
+function useAdoptTypedValue(
+  ref: React.RefObject<HTMLInputElement | null>,
+  value: string,
+  set: (v: string) => void,
+) {
+  useEffect(() => {
+    const typed = ref.current?.value ?? "";
+    if (typed && typed !== value) set(typed);
+    // Mount only: after hydration React is the source of truth again.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+}
 
 export function AdminLoginForm() {
   const router = useRouter();
@@ -10,6 +40,10 @@ export function AdminLoginForm() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  useAdoptTypedValue(emailRef, email, setEmail);
+  useAdoptTypedValue(passwordRef, password, setPassword);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -41,6 +75,7 @@ export function AdminLoginForm() {
           Email
         </span>
         <input
+          ref={emailRef}
           type="email"
           required
           autoComplete="email"
@@ -54,6 +89,7 @@ export function AdminLoginForm() {
           Password
         </span>
         <input
+          ref={passwordRef}
           type="password"
           required
           autoComplete="current-password"

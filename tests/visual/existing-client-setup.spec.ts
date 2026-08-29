@@ -91,10 +91,25 @@ test.describe("Ben sets up an existing client", () => {
     page,
   }) => {
     await page.goto("/admin/login");
-    await page.getByLabel("Email").fill(EMAIL!);
-    await page.getByLabel("Password").fill(PASSWORD!);
+
+    /* Filled, then CHECKED, then filled again if it did not stick.
+       The form is a client component and hydration lands after the first
+       paint: type into it too early and React's own state wins on hydrate,
+       silently blanking the field. It failed intermittently as "missing email
+       or phone" with the password present and the email box empty — which
+       looks like a broken login form and is really a race. */
+    const email = page.getByLabel("Email");
+    const pw = page.getByLabel("Password");
+    await expect(email).toBeVisible();
+    await email.fill(EMAIL!);
+    await pw.fill(PASSWORD!);
+    if ((await email.inputValue()) !== EMAIL!) await email.fill(EMAIL!);
+    if ((await pw.inputValue()) !== PASSWORD!) await pw.fill(PASSWORD!);
+    await expect(email).toHaveValue(EMAIL!);
+    await expect(pw).toHaveValue(PASSWORD!);
+
     await page.getByRole("button", { name: /sign in/i }).click();
-    await page.waitForURL(/\/admin(?!\/login)/, { timeout: 20_000 });
+    await page.waitForURL(/\/admin(?!\/login)/, { timeout: 30_000 });
 
     await page.goto("/admin/clients");
     await expect(

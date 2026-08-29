@@ -229,8 +229,12 @@ export function OnboardingWelcome({
           </p>
         ) : emailedTo ? (
           <p className="obw-note" aria-live="polite">
-            Sign in with <strong>{emailedTo}</strong> and the password you just
-            chose.
+            {/* "the password you just chose" is not safe to say here. If the
+                account already existed, the endpoint left the original
+                password alone rather than letting a link overwrite it — so
+                the one they typed a minute ago may not be the one that works.
+                "your password" is true either way. */}
+            Sign in with <strong>{emailedTo}</strong> and your password.
           </p>
         ) : null}
 

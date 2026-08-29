@@ -88,7 +88,7 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
      being rendered through the error box — red border, role="alert" — which
      reads as "your payment was declined" to somebody already wondering whether
      something went wrong. */
-  const [notice] = useState<string | null>(
+  const [notice, setNotice] = useState<string | null>(
     cancelled ? "No problem, nothing was charged. Carry on when you're ready." : null,
   );
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -136,6 +136,8 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
    */
   function go(next: number) {
     setError(null);
+    /* `notice` deliberately survives this. It is set as the client leaves the
+       details step and is meant to be read on the next one. */
     setIndex(next);
     window.history.replaceState(null, "", `?step=${steps[next].key}`);
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
@@ -146,66 +148,6 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
     setBusy(true);
     setError(null);
     try {
-      /*
-       * The account first, then the card.
-       *
-       * Blocking rather than best-effort, and that is deliberate: if this
-       * fails the client must not be sent to Stripe, because the failure they
-       * would meet afterwards is "you have paid and cannot sign in". Every
-       * other pre-checkout call here is allowed to fail quietly. This one is
-       * not.
-       *
-       * Idempotent server-side: coming back from a cancelled Stripe page and
-       * paying properly runs it a second time, and an account that already
-       * exists is a success, not an error.
-       */
-      if (password) {
-        const acct = await fetch("/api/onboarding/account", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            token,
-            name: answers.name,
-            email: answers.email,
-            phone: answers.phone,
-            password,
-          }),
-        });
-        if (!acct.ok) {
-          const d = await acct.json().catch(() => ({}));
-          setError(
-            d?.error === "WEAK_PASSWORD"
-              ? "That password is too short. Use at least 8 characters."
-              : d?.error === "EMAIL_INVALID"
-                ? "That email address does not look right."
-                : d?.error === "INVITE_INVALID"
-                  ? "This link has expired. Ask Ben for a new one."
-                  : "Could not set your account up just now. Nothing has been charged. Try again in a moment.",
-          );
-          setBusy(false);
-          return;
-        }
-      }
-
-      // Save what they told us to the server BEFORE Stripe, so Ben has their
-      // injuries, availability and coaching preferences the moment they pay —
-      // not stuck in this browser. Best-effort: never block payment on it.
-      try {
-        await fetch("/api/onboarding/profile", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            token,
-            email: answers.email,
-            answers,
-            photo: answers.photoDataUrl || undefined,
-            healthConsent: true,
-          }),
-        });
-      } catch {
-        /* Proceed to checkout regardless — the profile is a nice-to-have here. */
-      }
-
       const res = await fetch("/api/onboarding/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -230,6 +172,68 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
                 ? "This link has expired. Ask Ben for a new one. Your answers are saved on this device."
                 : "Something went wrong reaching the payment page. Try again in a moment.",
       );
+    } catch {
+      setError("No connection. Try again when you are back online.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  /**
+   * FINISHING THE DETAILS STEP CREATES THE ACCOUNT.
+   *
+   * Here rather than at the card button, for one reason: if this comes back
+   * saying the account already existed — because Ben sent a link before, or
+   * because they abandoned a previous run at this one — the client needs to be
+   * TOLD, and told while they are still looking at a screen that can say it.
+   * Doing it at the card button means the next thing that happens is a
+   * redirect to Stripe, and the message is gone before it is read.
+   *
+   * Blocking, unlike everything else this flow does before checkout. A
+   * failure here means "you would pay and not be able to sign in", so it stops
+   * rather than shrugging.
+   */
+  async function finishAccount() {
+    if (!password) {
+      go(index + 1);
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/onboarding/account", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token,
+          name: answers.name,
+          email: answers.email,
+          phone: answers.phone,
+          password,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(
+          data?.error === "WEAK_PASSWORD"
+            ? "That password is too short. Use at least 8 characters."
+            : data?.error === "EMAIL_INVALID"
+              ? "That email address does not look right."
+              : data?.error === "INVITE_INVALID"
+                ? "This link has expired. Ask Ben for a new one."
+                : "Could not set your account up just now. Nothing has been charged. Try again in a moment.",
+        );
+        return;
+      }
+      /* The endpoint will not overwrite an existing password on nothing more
+         than possession of a link, so the one they just typed is not the one
+         that works. This is the only screen that can say so. */
+      if (data?.alreadyRegistered) {
+        setNotice(
+          "You already have an account with this email, so your existing password still applies. Nothing else changes.",
+        );
+      }
+      go(index + 1);
     } catch {
       setError("No connection. Try again when you are back online.");
     } finally {
@@ -314,10 +318,10 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
           <button
             type="button"
             className="ob-next"
-            onClick={() => go(index + 1)}
-            disabled={Boolean(stop)}
+            onClick={step.key === "account" ? finishAccount : () => go(index + 1)}
+            disabled={Boolean(stop) || busy}
           >
-            {step.required ? "Continue" : "Continue"}
+            {busy && step.key === "account" ? "Setting up…" : "Continue"}
           </button>
         )}
 
