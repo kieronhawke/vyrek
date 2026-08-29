@@ -31,17 +31,31 @@ export default async function OnboardingWelcomePage({
   let confirmed = false;
   let trialing = false;
   let billingOnly = false;
+  let amountPence: number | null = null;
+  let startsOn: string | null = null;
 
   if (sessionId) {
     try {
       const session = await stripe().checkout.sessions.retrieve(sessionId, {
         expand: ["subscription"],
       });
+      /* `payment_status` is "no_payment_required" — NOT "paid" — whenever the
+         first charge is deferred to a start date, because the session total is £0.
+         `status === "complete"` is what actually means "they finished and the
+         card is on file", and it is true in both cases. */
       confirmed =
-        session.payment_status === "paid" || session.status === "complete";
+        session.payment_status === "paid" ||
+        session.payment_status === "no_payment_required" ||
+        session.status === "complete";
       name = String(session.metadata?.client_name ?? "");
       planName = String(session.metadata?.plan ?? "");
       billingOnly = session.metadata?.onboarding === "payment";
+      /* Both are stamped on the SESSION by the checkout route, not only on the
+         subscription, precisely so this page can say what will be charged and
+         when without a second round trip to Stripe. */
+      const pence = Number(session.metadata?.amount_pence);
+      amountPence = Number.isFinite(pence) && pence > 0 ? pence : null;
+      startsOn = session.metadata?.starts_on ?? null;
       const sub = session.subscription;
       trialing = typeof sub === "object" && sub !== null && sub.status === "trialing";
     } catch {
@@ -60,6 +74,8 @@ export default async function OnboardingWelcomePage({
       trialing={trialing}
       hadSession={Boolean(sessionId)}
       billingOnly={billingOnly}
+      amountPence={amountPence}
+      startsOn={startsOn}
     />
   );
 }

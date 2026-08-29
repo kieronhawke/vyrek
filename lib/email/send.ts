@@ -175,7 +175,10 @@ export async function sendOnboardingInvite(args: {
   firstName: string;
   link: string;
   kind: "full" | "payment";
-  planName?: string;
+  /** The agreed monthly rate, formatted — "£150". */
+  amount?: string | null;
+  /** When the first payment comes out, formatted, or null for today. */
+  startsOn?: string | null;
 }): Promise<Result> {
   return send({
     to: args.to,
@@ -184,7 +187,8 @@ export async function sendOnboardingInvite(args: {
       firstName: args.firstName,
       link: args.link,
       kind: args.kind,
-      planName: args.planName,
+      amount: args.amount,
+      startsOn: args.startsOn,
     }),
   });
 }
@@ -426,6 +430,10 @@ export function sendAccountReady(args: {
   signInUrl: string;
   planName?: string;
   variant?: "billing" | "full";
+  /** The agreed monthly rate, formatted — "£150". */
+  amount?: string | null;
+  /** When the first payment comes out, formatted, or null if it already has. */
+  startsOn?: string | null;
 }): Promise<Result> {
   const { to, ...rest } = args;
   return send({

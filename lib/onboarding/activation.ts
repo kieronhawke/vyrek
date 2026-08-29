@@ -4,6 +4,11 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
 import { siteUrl } from "@/lib/site-url";
 import { sendAccountReady } from "@/lib/email/send";
 import { planByKey } from "@/lib/onboarding/model";
+import {
+  billingAnchorUnix,
+  formatStartDate,
+  parseStartDate,
+} from "@/lib/onboarding/start-date";
 
 /**
  * TURN A PAID CHECKOUT SESSION INTO AN ACCOUNT THEY CAN GET INTO.
@@ -17,13 +22,23 @@ import { planByKey } from "@/lib/onboarding/model";
  * and before this was shared, that person had paid and no account existed.
  * Both paths are idempotent, so whichever fires second finds the work done.
  *
- * NO PASSWORD, DELIBERATELY. The person has just paid; a password field
- * between them and their plan is a drop-off for no security gain. The
- * account is created confirmed and they get a branded sign-in link by
- * email. The link goes through our own /auth/callback with a token hash,
- * because Supabase's hosted action_link redirected to a page that had no
- * way to exchange it — every invited customer was stranded at a password
- * login they could never pass.
+ * THE PASSWORD, IF THERE IS ONE, WAS SET BEFORE THIS RAN.
+ * This used to create the account with no password at all, on the reasoning
+ * that a password field between somebody and their plan is a drop-off for no
+ * security gain. That was right about the drop-off and wrong about the gain:
+ * the only door in was a single-use emailed link, so losing that email locked
+ * a paying client out of the thing they were paying for.
+ *
+ * The flow now asks for one on the sign-up screen and POSTs it to
+ * /api/onboarding/account BEFORE checkout, which is why the "already
+ * registered" branch below is the normal path for those clients rather than a
+ * rare race. createUser here still passes no password, so it never overwrites
+ * one somebody already chose.
+ *
+ * The emailed sign-in link stays, because it is still the easier door. It goes
+ * through our own /auth/callback with a token hash, because Supabase's hosted
+ * action_link redirected to a page that had no way to exchange it — every
+ * invited customer was stranded at a password login they could never pass.
  */
 
 /**
@@ -379,12 +394,29 @@ export async function activateFromSession(
       console.error("[activation] generateLink failed", e);
     }
 
+    /* The figure and the date the checkout route stamped on the session, so
+       this email describes what will actually happen rather than the general
+       case. `starts_on` is only ever present when the first collection is
+       deferred; a date that has since passed is not carried, because by then
+       the money HAS moved and saying otherwise would be wrong the other way. */
+    const stampedPence = Number(session.metadata?.amount_pence);
+    const stampedStart = session.metadata?.starts_on ?? null;
+    const startDay = stampedStart ? parseStartDate(stampedStart) : null;
+    const stillAhead = startDay !== null && billingAnchorUnix(startDay) !== null;
+
     void sendAccountReady({
       to: email,
       firstName: (name || email).split(/[\s@]/)[0],
       signInUrl,
       planName: plan,
       variant: isBillingOnly ? "billing" : "full",
+      amount:
+        Number.isFinite(stampedPence) && stampedPence > 0
+          ? stampedPence % 100 === 0
+            ? `£${stampedPence / 100}`
+            : `£${(stampedPence / 100).toFixed(2)}`
+          : null,
+      startsOn: stillAhead ? formatStartDate(startDay!) : null,
     }).catch(() => {});
   }
 

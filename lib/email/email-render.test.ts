@@ -67,7 +67,8 @@ const EMAILS: { name: string; el: React.ReactElement }[] = [
       firstName: "Sam",
       link: LINK,
       kind: "payment",
-      planName: "1:1 Coaching",
+      amount: "£150",
+      startsOn: "Tuesday 1 September",
     }),
   },
   {

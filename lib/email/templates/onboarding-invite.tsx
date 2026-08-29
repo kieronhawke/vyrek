@@ -43,14 +43,27 @@ export function OnboardingInviteEmail({
   link,
   kind,
   coach = "Ben",
-  planName,
+  amount,
+  startsOn,
 }: {
   firstName: string;
   link: string;
   kind: "full" | "payment";
   coach?: string;
-  /** Named only when Ben has already agreed one with them. */
-  planName?: string;
+  /**
+   * The agreed monthly rate, already formatted — "£150".
+   *
+   * ⚠️ THIS REPLACED `planName`, AND THAT MATTERS. The old email said "We
+   * agreed 1:1 Coaching, so it's already selected" — and the plan name it
+   * printed was one the invite route had INVENTED, because a bespoke rate was
+   * forced onto a default package so it would "have a plan to describe what it
+   * buys". So the first email an existing client received named a package
+   * nobody had discussed, and did not state the figure that had actually been
+   * agreed. The number is the thing they are checking for.
+   */
+  amount?: string | null;
+  /** When the first payment comes out, already formatted, or null for today. */
+  startsOn?: string | null;
 }) {
   const payment = kind === "payment";
 
@@ -58,29 +71,35 @@ export function OnboardingInviteEmail({
     <EmailLayout
       preview={
         payment
-          ? "Pick your plan and you're set. It takes two minutes."
+          ? "Add your card and you're set. It takes two minutes."
           : "Five minutes, and Ben can write your first week."
       }
       campaign="onboarding-invite"
     >
       <Eyebrow>{payment ? "One step left" : "Welcome aboard"}</Eyebrow>
-      <H1>{payment ? "Let's get you started." : `Good to have you, ${firstName}.`}</H1>
+      <H1>
+        {payment ? `Let's get you on card, ${firstName}.` : `Good to have you, ${firstName}.`}
+      </H1>
 
       <P>
         {payment
-          ? "Everything is ready at my end. Pick the plan that suits you, add a card, and I'll get your first week written."
+          ? "Nothing changes about your training. This just moves your payments onto a card so neither of us has to think about it again."
           : "Before I write your first week I need a few things from you: what you're training for, how you're training now, and anything I should know about injuries."}
       </P>
 
       <P>
         {payment
-          ? planName
-            ? `We agreed ${planName}, so it's already selected. Confirm and you're done.`
+          ? amount
+            ? `${amount} a month, exactly as we agreed. ${
+                startsOn
+                  ? `Nothing comes out today — your first payment is on ${startsOn}.`
+                  : "The first payment comes out when you add your card."
+              }`
             : "It takes about two minutes."
           : "It takes about five minutes, and it's all on your phone."}
       </P>
 
-      <Btn href={link}>{payment ? "Choose your plan" : "Set up my account"}</Btn>
+      <Btn href={link}>{payment ? "Set up my payments" : "Set up my account"}</Btn>
 
       <Text
         style={{
@@ -133,8 +152,11 @@ export function OnboardingInviteEmail({
 }
 
 export function onboardingInviteSubject(firstName: string, kind: "full" | "payment"): string {
+  /* Not "choose your plan". There is nothing to choose — this goes to somebody
+     Ben already coaches, and a subject line inviting them to pick a package
+     is the first thing they would have had to ignore. */
   return kind === "payment"
-    ? `${firstName}, choose your plan`
+    ? `${firstName}, set up your payments`
     : `${firstName}, let's get you set up`;
 }
 
@@ -162,11 +184,28 @@ export function onboardingInviteSms(
   firstName: string,
   link: string,
   kind: "full" | "payment",
+  /** "£150", when Ben agreed one. */
+  amount?: string | null,
+  /** "1 Sept", when the first payment is not today. */
+  startsOn?: string | null,
 ): string {
   // A payment-only invite goes to an EXISTING client on an agreed rate, so
   // "pick your plan" was wrong: there is nothing to pick. The link sets up
   // their account and card, that's all.
-  return kind === "payment"
-    ? `Hi ${firstName}, it's Ben. Your account set-up link: ${link}`
-    : `${firstName}, it's Ben. Welcome aboard! 5 mins to set up: ${link}`;
+  //
+  // The FIGURE goes in when there is one. This is the message most of them
+  // actually read, and a link asking for card details is exactly the shape of
+  // a scam text — the agreed number is the thing only Ben could know, so it is
+  // what makes the message obviously genuine. It costs about 12 characters and
+  // invite-cost.test.ts holds the one-segment line.
+  if (kind !== "payment") {
+    return `${firstName}, it's Ben. Welcome aboard! 5 mins to set up: ${link}`;
+  }
+  if (amount && startsOn) {
+    return `Hi ${firstName}, it's Ben. Set your card up for ${amount}/mo from ${startsOn}: ${link}`;
+  }
+  if (amount) {
+    return `Hi ${firstName}, it's Ben. Set your card up for ${amount}/mo: ${link}`;
+  }
+  return `Hi ${firstName}, it's Ben. Your account set-up link: ${link}`;
 }

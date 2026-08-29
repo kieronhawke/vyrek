@@ -2,35 +2,52 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { CUSTOM_MAX_PENCE, CUSTOM_MIN_PENCE, displayPrice, parsePrice } from "@/lib/onboarding/model";
+import {
+  MAX_START_DAYS_AHEAD,
+  formatStartDate,
+  parseStartDate,
+  startDateBlocker,
+  startDateISO,
+  todayDay,
+} from "@/lib/onboarding/start-date";
 
 /**
- * THE ONE-CLICK HANDOFF, WITH THE RATE BEN ACTUALLY AGREED.
+ * SETTING UP AN EXISTING CLIENT.
  *
- * Ben's existing clients are on all sorts of rates, so the price is a
- * field, not a menu: pick a preset or type the number he quoted. The link
- * goes out by email and text, the client taps through, pays, and their
- * account is created — card on file, collected monthly from then on.
+ * Five fields: who they are, what they pay, and when it starts. Ben types
+ * those and presses send. The client taps the link, gives their details,
+ * enters a card, and it collects every month from the date he chose.
  *
- * EVERY RESULT IS REPORTED HONESTLY from the API's own response: whether
- * the email went, whether the text went and as whom, and the link itself
- * either way — a delivery failure must never leave Ben with no way to
- * onboard somebody. (A previous version of this form hardcoded "SMS not
- * sent — no provider connected" regardless of what actually happened.)
+ * ── WHAT USED TO BE HERE, AND WHY IT IS NOT ───────────────────────────────
+ * A row of package pills — 1:1 Coaching £220, Programming £80, a greyed-out
+ * Suth Club — then a fourth pill, "Their rate…", which had to be tapped
+ * before the £ box appeared at all. And a toggle between "payment only" and
+ * "full onboarding".
+ *
+ * Two things were wrong with that. The small one: an agreed rate, which is
+ * what every existing client is on, took an extra tap to reach and was not
+ * the default. The large one: the packages were not decoration. Whichever
+ * pill was lit rode along on the invite, so the client was shown that
+ * package's NAME and its five feature bullets underneath the number Ben had
+ * agreed for something else — and the same package name landed on their
+ * Stripe receipt for ever after. Worse, the default state of this form was a
+ * lit "1:1 Coaching · £220" pill with no rate entered, so the happy path —
+ * type a name, type an email, press send — sent somebody a link charging
+ * £220 and offering them a menu.
+ *
+ * There is no package. There is a person, a number, and a date.
  */
-
-const PRESETS = [
-  { key: "coaching-121", label: "1:1 Coaching", pounds: 220, soon: false },
-  { key: "coaching-tier2", label: "Programming", pounds: 80, soon: false },
-  // Visible so Ben knows it's on the way, disabled so nobody is invited
-  // to a product that isn't ready.
-  { key: "club", label: "Suth Club", pounds: 12.99, soon: true },
-] as const;
 
 type SendResult = {
   link?: string;
+  linkLength?: number;
   shortLink?: boolean;
   secured?: boolean;
+  agreedPence?: number | null;
+  startsOn?: string | null;
   error?: string;
+  detail?: string;
   email?: { attempted: boolean; ok: boolean; reason: string | null; sandbox: boolean };
   sms?: {
     attempted: boolean;
@@ -52,25 +69,37 @@ export function SendPaymentLink({
   initialEmail?: string;
 } = {}) {
   const router = useRouter();
+  const today = todayDay();
+
   const [name, setName] = useState(initialName);
   const [email, setEmail] = useState(initialEmail);
   const [phone, setPhone] = useState("");
-  const [kind, setKind] = useState<"payment" | "full">("payment");
-  const [plan, setPlan] = useState<string>("coaching-121");
-  const [customRate, setCustomRate] = useState(false);
-  const [rate, setRate] = useState<string>("220");
-  const [beginner, setBeginner] = useState(false);
+  const [rate, setRate] = useState("");
+  const [startDate, setStartDate] = useState(startDateISO(today));
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<SendResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  const ratePence = Math.round(Number(rate.replace(/[£,\s]/g, "")) * 100);
-  const rateValid =
-    !customRate || (Number.isFinite(ratePence) && ratePence >= 100 && ratePence <= 100_000);
+  const ratePence = parsePrice(rate);
+  const startDay = parseStartDate(startDate);
+  const dateProblem = startDay === null ? "Pick a date." : startDateBlocker(startDay);
 
-  const canSend =
-    name.trim().length > 0 && (email.trim().length > 0 || phone.trim().length > 0) && rateValid;
+  /* One place decides whether this can be sent, and it explains itself. A
+     disabled button with no reason is the commonest way a form stalls. */
+  const blocker: string | null = !name.trim()
+    ? "A name, so the link can greet them."
+    : !email.trim() && !phone.trim()
+      ? "An email or a mobile — otherwise there is nowhere to send it."
+      : email.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())
+        ? "That email address does not look right."
+        : !rate.trim()
+          ? "What are they paying a month?"
+          : ratePence === null
+            ? `That rate does not look right. A monthly figure between ${displayPrice(CUSTOM_MIN_PENCE)} and ${displayPrice(CUSTOM_MAX_PENCE)}.`
+            : dateProblem;
+
+  const startsToday = startDay !== null && startDay <= today;
 
   async function send() {
     setBusy(true);
@@ -85,27 +114,32 @@ export function SendPaymentLink({
           name: name.trim(),
           email: email.trim(),
           phone: phone.trim(),
-          kind,
-          plan,
-          ...(customRate ? { amountPence: ratePence } : {}),
-          ...(beginner ? { rail: "beginner" } : {}),
+          // Fixed. This surface exists for one job.
+          kind: "payment",
+          agreedPrice: rate.trim(),
+          startDate,
         }),
       });
       const data = (await res.json()) as SendResult;
       if (!res.ok || !data.link) {
         setError(
-          data.error === "AMOUNT_INVALID"
-            ? "That rate doesn't look right. It needs to be between £1 and £1,000 a month."
-            : data.error === "RATE_LIMITED"
-              ? "Too many links in a short time. Wait a few minutes and try again."
-              : (data.error ?? "Couldn't create the link."),
+          data.detail ??
+            (data.error === "PRICE_INVALID" || data.error === "AMOUNT_INVALID"
+              ? `That rate does not look right. A monthly figure between ${displayPrice(CUSTOM_MIN_PENCE)} and ${displayPrice(CUSTOM_MAX_PENCE)}.`
+              : data.error === "START_DATE_INVALID"
+                ? "That start date does not look right."
+                : data.error === "RATE_LIMITED"
+                  ? "Too many links in a short time. Wait a few minutes and try again."
+                  : data.error === "CONTACT_REQUIRED"
+                    ? "Give an email address or a mobile number."
+                    : "Could not create the link. Nothing was sent."),
         );
         return;
       }
       setResult(data);
       router.refresh();
     } catch {
-      setError("Couldn't reach the server. Check the connection and try again.");
+      setError("Couldn't reach the server. Nothing was sent.");
     } finally {
       setBusy(false);
     }
@@ -132,11 +166,11 @@ export function SendPaymentLink({
   return (
     <div className="rounded-xl border border-suth-border bg-suth-surface p-5">
       <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
-        Send a payment link
+        Set up an existing client
       </p>
       <p className="mt-2 text-sm text-suth-text-secondary">
-        Their link, their rate. It goes by email and text; they set up their
-        card once and it collects monthly.
+        Their rate, their start date. The link goes out by email and text; they
+        add a card once and it collects every month.
       </p>
 
       <div className="mt-5 grid gap-4 sm:grid-cols-3">
@@ -154,6 +188,7 @@ export function SendPaymentLink({
           <span className={labelCls}>Email</span>
           <input
             type="email"
+            inputMode="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={inputCls}
@@ -165,6 +200,7 @@ export function SendPaymentLink({
           <span className={labelCls}>Mobile</span>
           <input
             type="tel"
+            inputMode="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             className={inputCls}
@@ -174,141 +210,71 @@ export function SendPaymentLink({
         </label>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={() => setKind("payment")}
-          aria-pressed={kind === "payment"}
-          className={`inline-flex h-11 items-center rounded-pill border px-4 text-sm font-medium transition-colors ${
-            kind === "payment"
-              ? "border-suth-accent bg-suth-accent text-[#0A0A0A]"
-              : "border-suth-border text-suth-text-secondary hover:border-suth-border-strong"
-          }`}
-        >
-          Payment only · existing client
-        </button>
-        <button
-          type="button"
-          onClick={() => setKind("full")}
-          aria-pressed={kind === "full"}
-          className={`inline-flex h-11 items-center rounded-pill border px-4 text-sm font-medium transition-colors ${
-            kind === "full"
-              ? "border-suth-accent bg-suth-accent text-[#0A0A0A]"
-              : "border-suth-border text-suth-text-secondary hover:border-suth-border-strong"
-          }`}
-        >
-          Full onboarding · new client
-        </button>
-      </div>
-      <p className="mt-2 text-xs text-suth-text-tertiary">
-        {kind === "payment"
-          ? "Three taps: welcome, their plan, pay. For somebody Ben has already spoken to."
-          : "The whole set-up: goals, injuries, availability, then plan and payment."}
-      </p>
-
-      <div className="mt-5">
-        <span className={labelCls}>Plan &amp; rate</span>
-        <div className="mt-2 flex flex-wrap items-center gap-2">
-          {PRESETS.map((p) =>
-            p.soon ? (
-              <span
-                key={p.key}
-                className="inline-flex h-11 cursor-not-allowed items-center gap-2 rounded-pill border border-suth-border-subtle px-4 text-sm text-suth-text-tertiary opacity-60"
-                title="Suth Club opens for clients soon"
-              >
-                {p.label}
-                <span className="font-mono text-[9px] uppercase tracking-[0.16em]">
-                  Coming soon
-                </span>
-              </span>
-            ) : (
-              <button
-                key={p.key}
-                type="button"
-                onClick={() => {
-                  setPlan(p.key);
-                  setCustomRate(false);
-                }}
-                aria-pressed={plan === p.key && !customRate}
-                className={`inline-flex h-11 items-center rounded-pill border px-4 text-sm font-medium transition-colors ${
-                  plan === p.key && !customRate
-                    ? "border-suth-accent bg-suth-accent/15 text-suth-accent"
-                    : "border-suth-border text-suth-text-secondary hover:border-suth-border-strong"
-                }`}
-              >
-                {p.label} · £{p.pounds}
-              </button>
-            ),
-          )}
-          <button
-            type="button"
-            onClick={() => setCustomRate(true)}
-            aria-pressed={customRate}
-            className={`inline-flex h-11 items-center rounded-pill border px-4 text-sm font-medium transition-colors ${
-              customRate
-                ? "border-suth-accent bg-suth-accent/15 text-suth-accent"
-                : "border-suth-border text-suth-text-secondary hover:border-suth-border-strong"
-            }`}
-          >
-            Their rate…
-          </button>
-          {customRate ? (
-            <label className="flex items-center gap-1.5">
-              <span className="text-base text-suth-text">£</span>
-              <input
-                inputMode="decimal"
-                value={rate}
-                onChange={(e) => setRate(e.target.value)}
-                className="h-12 w-28 rounded-md border border-suth-border bg-suth-elevated px-3 text-base text-suth-text outline-none focus:border-suth-accent"
-                aria-label="Monthly rate in pounds"
-              />
-              <span className="text-xs text-suth-text-tertiary">a month</span>
-            </label>
-          ) : null}
-        </div>
-        {customRate ? (
-          <p className="mt-2 text-xs text-suth-text-tertiary">
-            The exact monthly figure Ben agreed with them. Charged from the
-            first payment; no trial on an agreed rate.
-          </p>
-        ) : null}
-        {!rateValid ? (
-          <p className="mt-2 text-xs text-suth-danger">
-            The rate needs to be between £1 and £1,000 a month.
-          </p>
-        ) : null}
-      </div>
-
-      {kind === "full" ? (
-        <label className="mt-4 flex items-center gap-2 text-xs text-suth-text-secondary">
-          <input
-            type="checkbox"
-            checked={beginner}
-            onChange={(e) => setBeginner(e.target.checked)}
-            className="h-4 w-4 accent-[#A3E635]"
-          />
-          General fitness client (keeps racing language out of their set-up)
+      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <label className="block">
+          <span className={labelCls}>Monthly rate</span>
+          <div className="relative mt-1.5">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-base text-suth-text-secondary">
+              £
+            </span>
+            <input
+              inputMode="decimal"
+              value={rate}
+              onChange={(e) => setRate(e.target.value)}
+              className="block h-12 w-full rounded-md border border-suth-border bg-suth-elevated pl-7 pr-3 text-base text-suth-text outline-none focus:border-suth-accent"
+              placeholder="150"
+              aria-label="Monthly rate in pounds"
+              autoComplete="off"
+            />
+          </div>
         </label>
+        <label className="block">
+          <span className={labelCls}>First payment</span>
+          <input
+            type="date"
+            value={startDate}
+            min={startDateISO(today)}
+            /* Stripe will not anchor a monthly cycle further out than this,
+               and the place to find that out is here rather than at the
+               moment a client is trying to pay. */
+            max={startDateISO(today + MAX_START_DAYS_AHEAD)}
+            onChange={(e) => setStartDate(e.target.value)}
+            className={inputCls}
+          />
+        </label>
+      </div>
+
+      {/* What he is about to send, in one sentence, before he sends it. */}
+      {ratePence !== null && startDay !== null && !dateProblem ? (
+        <p className="mt-3 rounded-md border border-suth-accent/30 bg-suth-accent/5 px-3 py-2 text-sm text-suth-text">
+          {displayPrice(ratePence)} a month
+          {startsToday
+            ? ", collected as soon as they enter a card."
+            : `, first payment on ${formatStartDate(startDay)}, then monthly.`}
+        </p>
       ) : null}
 
-      <div className="mt-6">
+      <div className="mt-5">
         <button
           type="button"
           onClick={send}
-          disabled={busy || !canSend}
+          disabled={busy || Boolean(blocker)}
           className="inline-flex h-12 w-full items-center justify-center rounded-pill bg-suth-accent px-6 text-base font-semibold text-[#0A0A0A] hover:bg-suth-accent-hover disabled:opacity-50 sm:w-auto"
         >
           {busy ? "Sending…" : "Send the link"}
         </button>
-        {!canSend && name.trim() ? (
+        {blocker ? (
           <p className="mt-2 text-xs text-suth-text-tertiary sm:ml-3 sm:mt-0 sm:inline">
-            Needs an email or a mobile number.
+            {blocker}
           </p>
         ) : null}
       </div>
 
       {error ? (
-        <p role="alert" className="mt-4 rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+        <p
+          role="alert"
+          className="mt-4 rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300"
+        >
           {error}
         </p>
       ) : null}
@@ -322,11 +288,21 @@ export function SendPaymentLink({
             <button
               type="button"
               onClick={copyLink}
-              className="inline-flex h-8 items-center rounded-pill border border-suth-border px-3 text-xs text-suth-text-secondary hover:border-suth-border-strong hover:text-suth-text"
+              className="inline-flex h-9 items-center rounded-pill border border-suth-border px-3 text-xs text-suth-text-secondary hover:border-suth-border-strong hover:text-suth-text"
             >
               {copied ? "Copied ✓" : "Copy link"}
             </button>
           </div>
+
+          {result.agreedPence ? (
+            <p className="mt-2 text-sm text-suth-text">
+              {displayPrice(result.agreedPence)} a month
+              {result.startsOn
+                ? `, first payment ${formatStartDate(parseStartDate(result.startsOn)!)}.`
+                : ", collected when they enter a card."}
+            </p>
+          ) : null}
+
           <p className="mt-2 break-all font-mono text-[12px] text-suth-text">{result.link}</p>
 
           <ul className="mt-3 space-y-1 text-xs">

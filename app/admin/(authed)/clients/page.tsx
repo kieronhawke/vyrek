@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/admin/ui";
 import { SendPaymentLink } from "@/components/admin/send-payment-link";
 import { recentInvites } from "@/lib/onboarding/invite-store";
 import { planByKey } from "@/lib/onboarding/model";
+import { formatStartDate } from "@/lib/onboarding/start-date";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export const dynamic = "force-dynamic";
@@ -62,7 +63,7 @@ export default async function AdminClientsPage({
       <PageHeader
         eyebrow="Members"
         title="Clients"
-        description="Send a payment or set-up link at the client's own rate. Once they pay, they appear under Customers with a live subscription."
+        description="Set an existing client up on card payment at the rate you agreed, starting when you choose. Once they pay they appear under Customers with a live subscription."
       />
 
       <SendPaymentLink
@@ -102,6 +103,14 @@ export default async function AdminClientsPage({
                 : plan
                   ? `${plan.display}/mo`
                   : "—";
+              /* When the first collection actually happens. A link sent on the
+                 28th that does not charge until the 1st looks unpaid for four
+                 days, and without this Ben has no way to tell that apart from
+                 a client who has ignored him. */
+              const starts =
+                typeof p.startDay === "number"
+                  ? `first payment ${formatStartDate(p.startDay)}`
+                  : null;
               // The journey in one line: sent, then opened, then signed up.
               // "Opened, not signed up" is the one worth a follow-up call.
               const opened = inv.openedISO
@@ -133,6 +142,9 @@ export default async function AdminClientsPage({
                   </div>
                   <div className="text-right">
                     <p className="num text-sm text-suth-text">{rate}</p>
+                    {starts ? (
+                      <p className="mt-0.5 text-[11px] text-suth-accent">{starts}</p>
+                    ) : null}
                     <p
                       className={`mt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] ${
                         expired && !customerId ? "text-suth-danger" : "text-suth-text-tertiary"

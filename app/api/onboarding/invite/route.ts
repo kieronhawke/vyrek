@@ -9,8 +9,10 @@ import {
   type InviteKind,
 } from "@/lib/onboarding/token";
 import { storeInvite } from "@/lib/onboarding/invite-store";
-import { parsePrice, planByKey } from "@/lib/onboarding/model";
+import { displayPrice, parsePrice, planByKey } from "@/lib/onboarding/model";
 import {
+  formatStartDate,
+  formatStartDateShort,
   parseStartDate,
   startDateBlocker,
   startDateISO,
@@ -229,15 +231,33 @@ export async function POST(request: Request) {
 
   // The text gets the bare-domain link; the email keeps the full one so it
   // renders as a proper anchor.
+  /* The agreed figure and the date, said the same way in both channels. */
+  const amountText = amountPence ? displayPrice(amountPence) : null;
+  const startsLong = startDay ? formatStartDate(startDay) : null;
+  const startsShort = startDay ? formatStartDateShort(startDay) : null;
+
   const smsText = phone
-    ? onboardingInviteSms(firstName, inviteUrlForSms(key, siteUrl()), kind)
+    ? onboardingInviteSms(
+        firstName,
+        inviteUrlForSms(key, siteUrl()),
+        kind,
+        amountText,
+        startsShort,
+      )
     : null;
 
   // Both at once. Sequentially, a slow email delays the text for no reason,
   // and neither is allowed to fail the other.
   const [emailResult, smsResult] = await Promise.all([
     email
-      ? sendOnboardingInvite({ to: email, firstName, link, kind, planName: plan?.name })
+      ? sendOnboardingInvite({
+          to: email,
+          firstName,
+          link,
+          kind,
+          amount: amountText,
+          startsOn: startsLong,
+        })
       : Promise.resolve({ ok: false as const, reason: "NO_EMAIL_GIVEN" }),
     phone && smsText
       ? sendSms({

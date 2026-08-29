@@ -3,6 +3,16 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { planByKey } from "@/lib/onboarding/model";
+import {
+  billingAnchorUnix,
+  formatStartDate,
+  parseStartDate,
+} from "@/lib/onboarding/start-date";
+
+/** "£220" for whole pounds, "£12.99" otherwise. */
+function formatPence(pence: number): string {
+  return pence % 100 === 0 ? `£${pence / 100}` : `£${(pence / 100).toFixed(2)}`;
+}
 
 /**
  * THE MOMENT AFTER THEY PAY.
@@ -32,12 +42,18 @@ export function OnboardingWelcome({
   hadSession,
   sessionId,
   billingOnly = false,
+  amountPence = null,
+  startsOn = null,
 }: {
   name: string;
   planKey: string;
   confirmed: boolean;
   trialing: boolean;
   hadSession: boolean;
+  /** The agreed monthly rate in pence, when there is one. */
+  amountPence?: number | null;
+  /** "2026-09-01" when the first payment is deferred, else null. */
+  startsOn?: string | null;
   /** The Stripe session. Creating the account is authorised by it, not by us. */
   sessionId?: string;
   /** Payment-only invite: an existing client whose training stays with Ben.
@@ -47,6 +63,14 @@ export function OnboardingWelcome({
 }) {
   const plan = planByKey(planKey);
   const first = name.split(/\s+/)[0];
+  const startDay = startsOn ? parseStartDate(startsOn) : null;
+  /* A date the link was built with can have passed while it sat in somebody's
+     messages, in which case checkout collected today and saying "your first
+     payment is on the 1st" would be describing something that already
+     happened. */
+  const deferred = startDay !== null && billingAnchorUnix(startDay) !== null;
+  const rate =
+    typeof amountPence === "number" && amountPence > 0 ? formatPence(amountPence) : null;
   const [emailedTo, setEmailedTo] = useState<string | null>(null);
 
   /* CREATE THE ACCOUNT THEY HAVE JUST BEEN TOLD THEY HAVE.
@@ -94,20 +118,28 @@ export function OnboardingWelcome({
         </h1>
 
         <p className="obw-lead">
+          {/* ⚠️ THIS LINE MUST NOT SAY MONEY MOVED WHEN IT DID NOT.
+              With a deferred start date the session total is £0 and nothing has
+              been charged — "your subscription is live" would be the first
+              thing a client checked against their bank and found missing. */}
           {confirmed
-            ? trialing
-              ? "Your trial has started. Nothing has been charged yet."
-              : "Your subscription is live."
+            ? deferred
+              ? `Your card is saved. Nothing has been taken yet — your first payment${
+                  rate ? ` of ${rate}` : ""
+                } is on ${formatStartDate(startDay!)}.`
+              : trialing
+                ? "Your trial has started. Nothing has been charged yet."
+                : "Your subscription is live."
             : hadSession
               ? "Payment received. The confirmation is still coming through. Nothing more for you to do."
               : "Your account is set up."}
-          {/* The plan name, not the price.
+          {/* The plan name, not the price — for a published tier.
             *
             * Somebody who has just paid does not need reminding what it cost
             * — they chose it two screens ago and they have a receipt coming.
-            * Repeating the figure at the moment of celebration reads as a
-            * charge notification rather than a welcome. */}
-          {plan ? ` You're on ${plan.name}.` : ""}
+            * An AGREED rate has no plan name to print, and inventing one is
+            * what this whole flow exists to stop. */}
+          {plan && !billingOnly ? ` You're on ${plan.name}.` : ""}
         </p>
 
         <ol className="obw-next">
@@ -116,8 +148,20 @@ export function OnboardingWelcome({
               <li>
                 <span className="obw-next__n num">1</span>
                 <span>
-                  <strong>Your payment collects automatically</strong> each
-                  month from now on. Nothing to remember.
+                  {deferred ? (
+                    <>
+                      <strong>
+                        Your first payment{rate ? ` of ${rate}` : ""} comes out
+                        on {formatStartDate(startDay!)}
+                      </strong>
+                      , then the same day each month. Nothing to remember.
+                    </>
+                  ) : (
+                    <>
+                      <strong>Your payment collects automatically</strong> each
+                      month from now on. Nothing to remember.
+                    </>
+                  )}
                 </span>
               </li>
               <li>
@@ -165,16 +209,20 @@ export function OnboardingWelcome({
             to a login they had no password for — the flow deliberately never
             asks for one. The way in is the link in the email, so that is
             what this says. */}
+        {/* "No password to remember" was true when the flow never asked for
+            one. It does now — it is set before the card, so that somebody
+            paying every month is not locked out the day they lose an email.
+            The emailed link still works and is still the easier door. */}
         {emailedTo ? (
           <p className="obw-note" aria-live="polite">
-            Check <strong>{emailedTo}</strong>. I&apos;ve sent you a link
-            that signs you straight in. No password to remember.
+            Check <strong>{emailedTo}</strong>. There&apos;s a link in there
+            that signs you straight in, or use the password you just chose.
           </p>
         ) : null}
 
         <div className="obw-actions">
           <Link href="/login" className="obw-go">
-            Set up my account
+            Sign in to my account
           </Link>
           <Link href="/" className="obw-second">
             Back to the site

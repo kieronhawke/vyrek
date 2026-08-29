@@ -39,6 +39,27 @@ function gbp(pence: number): string {
  * TodayScreen: the ungated preview mount renders it without a bypass in
  * shipped auth code.
  */
+/**
+ * Stripe's status, said the way a person would say it.
+ *
+ * Anything not in here falls through to the raw string rather than being
+ * silently relabelled — a status nobody anticipated should look odd on the
+ * screen, not be dressed up as something reassuring.
+ */
+const STATUS_WORDS: Record<string, string> = {
+  active: "Active",
+  trialing: "Trial",
+  past_due: "Payment failed",
+  unpaid: "Unpaid",
+  incomplete: "Not finished",
+  incomplete_expired: "Expired",
+  canceled: "Cancelled",
+  paused: "Paused",
+};
+
+/** The states where green is the truth. */
+const HEALTHY_STATUS = new Set(["active", "trialing"]);
+
 export function AccountScreen({
   firstName,
   email,
@@ -156,11 +177,17 @@ export function AccountScreen({
             >
               Ben Sutherland
             </p>
-            <div style={{ marginTop: 6 }}>
-              <ChipRow>
-                <Chip tone="accent">{programme}</Chip>
-              </ChipRow>
-            </div>
+            {/* A billing-only client has no programme. The chip printed
+                whatever `programme` resolved to for somebody who never took
+                the quiz, under the heading "Your coach" — a label for a thing
+                they were never sold. */}
+            {billing ? null : (
+              <div style={{ marginTop: 6 }}>
+                <ChipRow>
+                  <Chip tone="accent">{programme}</Chip>
+                </ChipRow>
+              </div>
+            )}
           </div>
         </div>
         {billing ? (
@@ -215,22 +242,38 @@ export function AccountScreen({
             screen before any JavaScript runs and are still right when the
             live read below cannot reach Stripe. */}
         <RowGroup>
-          <Row label="Plan" value={sub?.planName ?? programme} />
+          {/* Billing-only clients are on a rate, not a package. Showing
+              `programme` here as a fallback labelled somebody's arrangement
+              with a training programme they never chose. */}
+          {billing ? null : <Row label="Plan" value={sub?.planName ?? programme} />}
           {sub?.amountPence ? (
             <Row label="Rate" value={`${gbp(sub.amountPence)} a month`} />
           ) : null}
+          {/* ⚠️ THIS USED TO PRINT STRIPE'S RAW STATUS, ALWAYS IN GREEN.
+              "past_due" and "unpaid" and "incomplete" all rendered verbatim
+              and tinted `--ok`, so the one client who most needs to notice
+              something is wrong saw a reassuring green "past_due". Said in
+              words now, and only actually-fine states are green. */}
           <Row
             label="Status"
             value={
-              sub
-                ? sub.paused
-                  ? "paused"
+              !sub
+                ? "Not connected"
+                : sub.paused
+                  ? "Paused"
                   : sub.cancelAtPeriodEnd
-                    ? `${sub.status} · ends soon`
-                    : sub.status
-                : "Not connected"
+                    ? "Ending soon"
+                    : STATUS_WORDS[sub.status] ?? sub.status
             }
-            tone={sub ? "var(--ok)" : "var(--text-muted)"}
+            tone={
+              !sub
+                ? "var(--text-muted)"
+                : sub.paused || sub.cancelAtPeriodEnd
+                  ? "var(--text-muted)"
+                  : HEALTHY_STATUS.has(sub.status)
+                    ? "var(--ok)"
+                    : "var(--danger)"
+            }
           />
           <Row
             label="Next payment"
