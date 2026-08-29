@@ -116,13 +116,20 @@ export function AccountBilling({
 
       <div className="acctbill__actions">
         <ManageBillingButton />
-        <button
-          type="button"
-          className="acctbill__cancel"
-          onClick={() => setCancelling(true)}
-        >
-          Cancel my membership
-        </button>
+        {/* Offered only when there is something to cancel. It was shown to
+            somebody whose membership had already ended, three lines under the
+            word CANCELLED — which reads as "that did not work, try again". */}
+        {state.kind === "ready" &&
+        state.summary.status !== "canceled" &&
+        !state.summary.endingAtPeriodEnd ? (
+          <button
+            type="button"
+            className="acctbill__cancel"
+            onClick={() => setCancelling(true)}
+          >
+            Cancel my membership
+          </button>
+        ) : null}
       </div>
 
       {cancelling ? (

@@ -71,6 +71,17 @@ export type ActivationOutcome = {
   ok: boolean;
   email?: string;
   error?: string;
+  /**
+   * Whether a sign-in email actually went out on THIS run.
+   *
+   * ⚠️ REPORTED, NOT ASSUMED. The route used to answer a hardcoded
+   * `emailed: true` and the welcome screen printed "check your email for a
+   * link that signs you straight in" on the strength of it. The email is
+   * gated on `userIsNew`, and since the flow started creating the account
+   * before checkout, the user almost never IS new — so the screen was
+   * telling nearly every client to go and look for a message nobody sent.
+   */
+  emailed?: boolean;
 };
 
 function periodEndUnix(sub: Stripe.Subscription): number | null {
@@ -142,6 +153,8 @@ export async function activateFromSession(
    * earlier email's sign-in button was already dead when it arrived. */
   let authUserId: string | null = null;
   let userIsNew = false;
+  /** Set only where the email is actually dispatched. */
+  let emailed = false;
   try {
     const created = await sb.auth.admin.createUser({
       email,
@@ -404,6 +417,7 @@ export async function activateFromSession(
     const startDay = stampedStart ? parseStartDate(stampedStart) : null;
     const stillAhead = startDay !== null && billingAnchorUnix(startDay) !== null;
 
+    emailed = true;
     void sendAccountReady({
       to: email,
       firstName: (name || email).split(/[\s@]/)[0],
@@ -424,6 +438,6 @@ export async function activateFromSession(
   // is idempotent (createUser dedupes, customer/subscription are
   // select-then-write on natural keys), so a redelivery completes what this
   // run couldn't rather than duplicating it.
-  if (criticalError) return { ok: false, email, error: criticalError };
-  return { ok: true, email };
+  if (criticalError) return { ok: false, email, error: criticalError, emailed };
+  return { ok: true, email, emailed };
 }

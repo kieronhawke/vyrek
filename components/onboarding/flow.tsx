@@ -95,8 +95,16 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
 
   const step = steps[index];
   const needsPassword = step.key === "account";
+  const agreedRate = typeof invite.amountPence === "number";
+  /* `blocker("pay")` says "Choose a plan first, then head to checkout" when no
+     plan is set — right for the published tiers, and nonsense on an agreed
+     rate, where there is no plan to choose and the step it names does not
+     exist in this journey. It rendered directly above a button that was
+     already lit, which reads as a form refusing to work. */
+  const modelStop =
+    step.key === "pay" && agreedRate ? null : blocker(step.key, answers);
   const stop =
-    blocker(step.key, answers) ??
+    modelStop ??
     (needsPassword && !answers.name.trim()
       ? "What should Ben call you?"
       : needsPassword && password.length > 0 && password.length < 8
@@ -490,6 +498,9 @@ function Account({
           placeholder="07700 900000"
         />
       </Field>
+      {/* The hint carries the rule; the placeholder said the same eight words
+          again directly above it, which on a phone is two lines of screen
+          spent twice. */}
       <Field label="Choose a password" hint="At least 8 characters.">
         <input
           type="password"
@@ -499,7 +510,6 @@ function Account({
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="ob-input"
-          placeholder="At least 8 characters"
         />
       </Field>
     </div>

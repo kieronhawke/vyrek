@@ -72,6 +72,10 @@ export function OnboardingWelcome({
   const rate =
     typeof amountPence === "number" && amountPence > 0 ? formatPence(amountPence) : null;
   const [emailedTo, setEmailedTo] = useState<string | null>(null);
+  /* Null until activation answers. The two outcomes need different sentences
+     and guessing at one of them is how somebody ends up hunting for an email
+     that was never sent. */
+  const [signInBy, setSignInBy] = useState<"email" | "password" | null>(null);
 
   /* CREATE THE ACCOUNT THEY HAVE JUST BEEN TOLD THEY HAVE.
      This page has said "your account is set up" since it was written, and
@@ -88,8 +92,10 @@ export function OnboardingWelcome({
       body: JSON.stringify({ sessionId }),
     })
       .then((r) => r.json())
-      .then((d: { ok?: boolean; email?: string }) => {
-        if (live && d.ok && d.email) setEmailedTo(d.email);
+      .then((d: { ok?: boolean; email?: string; emailed?: boolean }) => {
+        if (!live || !d.ok || !d.email) return;
+        setEmailedTo(d.email);
+        setSignInBy(d.emailed ? "email" : "password");
       })
       .catch(() => {
         /* They have paid and are looking at the confirmation. A failure here
@@ -209,14 +215,22 @@ export function OnboardingWelcome({
             to a login they had no password for — the flow deliberately never
             asks for one. The way in is the link in the email, so that is
             what this says. */}
-        {/* "No password to remember" was true when the flow never asked for
-            one. It does now — it is set before the card, so that somebody
-            paying every month is not locked out the day they lose an email.
-            The emailed link still works and is still the easier door. */}
-        {emailedTo ? (
+        {/* Two outcomes, two sentences.
+            A sign-in email only goes out when activation created the account,
+            and it usually does not: the flow sets the password before the card,
+            so by the time this runs the account already exists. Telling
+            everybody to "check your email" sent most clients looking for a
+            message that was never sent — which is a bad first minute for
+            somebody who has just handed over a card. */}
+        {emailedTo && signInBy === "email" ? (
           <p className="obw-note" aria-live="polite">
             Check <strong>{emailedTo}</strong>. There&apos;s a link in there
-            that signs you straight in, or use the password you just chose.
+            that signs you straight in.
+          </p>
+        ) : emailedTo ? (
+          <p className="obw-note" aria-live="polite">
+            Sign in with <strong>{emailedTo}</strong> and the password you just
+            chose.
           </p>
         ) : null}
 

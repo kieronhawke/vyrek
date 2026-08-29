@@ -81,7 +81,9 @@ export async function POST(request: Request) {
   return NextResponse.json({
     ok: true,
     email: outcome.email,
-    // The client shows a "check your email" line; it never gets the link.
-    emailed: true,
+    /* What actually happened, not what usually happens. The screen decides
+       between "check your email" and "sign in with the password you chose"
+       on this, and only one of those is true for any given client. */
+    emailed: Boolean(outcome.emailed),
   });
 }

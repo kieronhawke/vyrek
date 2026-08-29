@@ -12,10 +12,13 @@ function safeNext(next: string | null): string {
 }
 
 /**
- * Two doors, sign-in link first. Most clients never set a password —
- * invite onboarding deliberately never asks for one — so the emailed link
- * is the primary path and the password form is the secondary one for
- * people who signed up through the quiz.
+ * Two doors, sign-in link first.
+ *
+ * The link leads because it is one tap and nothing to remember. The password
+ * form sits behind "Use a password instead" — and it is no longer the rare
+ * path it was: invite onboarding used to refuse to ask for a password, and
+ * now asks for one before the card, so an existing client set up by Ben has
+ * one from the moment they pay.
  */
 export function CustomerLoginForm() {
   const router = useRouter();

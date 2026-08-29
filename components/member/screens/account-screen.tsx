@@ -275,8 +275,19 @@ export function AccountScreen({
                     : "var(--danger)"
             }
           />
+          {/* ⚠️ THE SAME DATE MEANS TWO DIFFERENT THINGS.
+              On a live subscription `current_period_end` is when the next
+              payment comes out. On a cancelled or ending one it is when access
+              runs out and nothing is taken at all — and this row still called
+              it "Next payment", directly under a Status row saying "Cancelled".
+              The live panel below already said "Access until" for the same
+              date, so the page contradicted itself. */}
           <Row
-            label="Next payment"
+            label={
+              sub && (sub.cancelAtPeriodEnd || sub.status === "canceled")
+                ? "Access until"
+                : "Next payment"
+            }
             value={
               sub?.paused
                 ? "paused"
