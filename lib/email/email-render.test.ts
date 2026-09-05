@@ -67,8 +67,12 @@ const EMAILS: { name: string; el: React.ReactElement }[] = [
       firstName: "Sam",
       link: LINK,
       kind: "payment",
-      amount: "£150",
-      startsOn: "Tuesday 1 September",
+      payLine:
+        "£100 today, for your outstanding balance. Then £150 a month from Tuesday 1 September, on the same day each month.",
+      payRows: [
+        { label: "Today", value: "£100 (outstanding balance)" },
+        { label: "From Tuesday 1 September", value: "£150 a month" },
+      ],
     }),
   },
   {

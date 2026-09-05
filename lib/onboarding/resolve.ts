@@ -5,6 +5,7 @@ import {
   type InviteResult,
 } from "./token";
 import { loadInvite, looksLikeInviteId } from "./invite-store";
+import { validDueTodayPence } from "./schedule";
 
 /**
  * ONE DOOR, TWO KINDS OF KEY.
@@ -67,6 +68,9 @@ export async function resolveInvite(
           ? {}
           : { amountPence: undefined }),
         ...(validStartDay(invite.startDay) ? {} : { startDay: undefined }),
+        ...(validDueTodayPence(invite.dueTodayPence)
+          ? {}
+          : { dueTodayPence: undefined }),
       },
     };
   }

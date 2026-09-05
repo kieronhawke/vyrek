@@ -175,10 +175,10 @@ export async function sendOnboardingInvite(args: {
   firstName: string;
   link: string;
   kind: "full" | "payment";
-  /** The agreed monthly rate, formatted — "£150". */
-  amount?: string | null;
-  /** When the first payment comes out, formatted, or null for today. */
-  startsOn?: string | null;
+  /** The schedule in a sentence or two, from scheduleLines(). */
+  payLine?: string | null;
+  /** The schedule as rows, from scheduleRows(). */
+  payRows?: { label: string; value: string }[] | null;
 }): Promise<Result> {
   return send({
     to: args.to,
@@ -187,8 +187,8 @@ export async function sendOnboardingInvite(args: {
       firstName: args.firstName,
       link: args.link,
       kind: args.kind,
-      amount: args.amount,
-      startsOn: args.startsOn,
+      payLine: args.payLine,
+      payRows: args.payRows,
     }),
   });
 }
@@ -340,6 +340,10 @@ export function sendNewSubscriptionAlert(args: {
   email: string;
   planName: string | null;
   rate: string | null;
+  /** "£100" taken at checkout for a balance owed, or null. */
+  paidToday?: string | null;
+  /** "Tuesday 1 October" when the first monthly collection is deferred. */
+  startsOn?: string | null;
   paymentMethod?: string | null;
   adminUrl: string;
   stripeUrl: string;
@@ -348,7 +352,11 @@ export function sendNewSubscriptionAlert(args: {
   const { to, ...rest } = args;
   return send({
     to,
-    subject: newSubscriptionSubject(rest.clientName || rest.email, rest.rate),
+    subject: newSubscriptionSubject(
+      rest.clientName || rest.email,
+      rest.rate,
+      rest.paidToday,
+    ),
     react: NewSubscriptionEmail(rest),
   });
 }
@@ -430,10 +438,8 @@ export function sendAccountReady(args: {
   signInUrl: string;
   planName?: string;
   variant?: "billing" | "full";
-  /** The agreed monthly rate, formatted — "£150". */
-  amount?: string | null;
-  /** When the first payment comes out, formatted, or null if it already has. */
-  startsOn?: string | null;
+  /** What was taken today and what comes out monthly — scheduleAfterLines(). */
+  after?: { today: string; monthly: string } | null;
 }): Promise<Result> {
   const { to, ...rest } = args;
   return send({

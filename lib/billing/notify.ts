@@ -26,12 +26,19 @@ export async function notifyAdminNewSubscription(args: {
   planName: string | null;
   /** "payment link" | "full set-up link" | "website sign-up" */
   source: string;
+  /** A balance taken at checkout, in pence, when there was one. */
+  paidTodayPence?: number | null;
+  /** "Tuesday 1 October" when the first monthly collection is deferred. */
+  startsOn?: string | null;
+  /** "1 Oct" for the text, where characters are billed. */
+  startsOnShort?: string | null;
 }): Promise<void> {
-  const rate =
-    args.amountPence != null
-      ? args.amountPence % 100 === 0
-        ? `£${args.amountPence / 100}`
-        : `£${(args.amountPence / 100).toFixed(2)}`
+  const gbp = (pence: number) =>
+    pence % 100 === 0 ? `£${pence / 100}` : `£${(pence / 100).toFixed(2)}`;
+  const rate = args.amountPence != null ? gbp(args.amountPence) : null;
+  const paidToday =
+    args.paidTodayPence != null && args.paidTodayPence > 0
+      ? gbp(args.paidTodayPence)
       : null;
   const adminUrl = args.customerRowId
     ? `${siteUrl()}/admin/customers/${args.customerRowId}`
@@ -65,6 +72,8 @@ export async function notifyAdminNewSubscription(args: {
         email: args.email,
         planName: args.planName,
         rate,
+        paidToday,
+        startsOn: args.startsOn ?? null,
         paymentMethod,
         adminUrl,
         stripeUrl,
@@ -76,9 +85,14 @@ export async function notifyAdminNewSubscription(args: {
     (async () => {
       if (!smsConfigured()) return;
       const who = args.clientName || args.email;
-      const body = `NEW SUB: ${who}${rate ? ` - ${rate}/mo` : ""}${
+      /* Says what actually happened: a balance taken today, and the date the
+         monthly cycle starts when it is not today. "Collects monthly" alone
+         had Ben expecting money on a date nothing was scheduled for. */
+      const body = `CLIENT SET UP: ${who}${rate ? ` - ${rate}/mo` : ""}${
+        args.startsOnShort ? ` from ${args.startsOnShort}` : ""
+      }${paidToday ? ` (+${paidToday} taken today)` : ""}${
         args.planName ? ` (${args.planName})` : ""
-      }. Card on file, collects monthly. ${siteUrl().replace(/^https?:\/\/(www\.)?/, "")}/admin`;
+      }. Card on file. ${siteUrl().replace(/^https?:\/\/(www\.)?/, "")}/admin`;
       await Promise.all(
         adminMobiles().map((to) =>
           sendSms({ to, body, sender: "brand" }).catch((e) => {

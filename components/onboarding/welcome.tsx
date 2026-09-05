@@ -3,16 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { planByKey } from "@/lib/onboarding/model";
-import {
-  billingAnchorUnix,
-  formatStartDate,
-  parseStartDate,
-} from "@/lib/onboarding/start-date";
-
-/** "£220" for whole pounds, "£12.99" otherwise. */
-function formatPence(pence: number): string {
-  return pence % 100 === 0 ? `£${pence / 100}` : `£${(pence / 100).toFixed(2)}`;
-}
+import { parseStartDate } from "@/lib/onboarding/start-date";
+import { paymentSchedule, scheduleAfterLines } from "@/lib/onboarding/schedule";
 
 /**
  * THE MOMENT AFTER THEY PAY.
@@ -43,6 +35,7 @@ export function OnboardingWelcome({
   sessionId,
   billingOnly = false,
   amountPence = null,
+  dueTodayPence = null,
   startsOn = null,
 }: {
   name: string;
@@ -52,7 +45,9 @@ export function OnboardingWelcome({
   hadSession: boolean;
   /** The agreed monthly rate in pence, when there is one. */
   amountPence?: number | null;
-  /** "2026-09-01" when the first payment is deferred, else null. */
+  /** A balance taken at checkout, in pence, when there was one. */
+  dueTodayPence?: number | null;
+  /** "2026-09-01" when the first monthly payment is deferred, else null. */
   startsOn?: string | null;
   /** The Stripe session. Creating the account is authorised by it, not by us. */
   sessionId?: string;
@@ -64,13 +59,18 @@ export function OnboardingWelcome({
   const plan = planByKey(planKey);
   const first = name.split(/\s+/)[0];
   const startDay = startsOn ? parseStartDate(startsOn) : null;
-  /* A date the link was built with can have passed while it sat in somebody's
-     messages, in which case checkout collected today and saying "your first
-     payment is on the 1st" would be describing something that already
-     happened. */
-  const deferred = startDay !== null && billingAnchorUnix(startDay) !== null;
-  const rate =
-    typeof amountPence === "number" && amountPence > 0 ? formatPence(amountPence) : null;
+  /* What happened and what happens next, in the past and future tense, from
+     the figures the checkout stamped on the session. A date the link was
+     built with can have passed while it sat in somebody's messages, in which
+     case checkout collected today — the schedule says so rather than
+     promising a date that has gone. Null for a published tier, which has no
+     agreed figures. */
+  const after =
+    typeof amountPence === "number" && amountPence > 0
+      ? scheduleAfterLines(
+          paymentSchedule({ amountPence, dueTodayPence, startDay }),
+        )
+      : null;
   const [emailedTo, setEmailedTo] = useState<string | null>(null);
   /* Null until activation answers. The two outcomes need different sentences
      and guessing at one of them is how somebody ends up hunting for an email
@@ -129,10 +129,8 @@ export function OnboardingWelcome({
               been charged — "your subscription is live" would be the first
               thing a client checked against their bank and found missing. */}
           {confirmed
-            ? deferred
-              ? `Your card is saved. Nothing has been taken yet — your first payment${
-                  rate ? ` of ${rate}` : ""
-                } is on ${formatStartDate(startDay!)}.`
+            ? after
+              ? `${after.today} ${after.monthly}`
               : trialing
                 ? "Your trial has started. Nothing has been charged yet."
                 : "Your subscription is live."
@@ -154,13 +152,9 @@ export function OnboardingWelcome({
               <li>
                 <span className="obw-next__n num">1</span>
                 <span>
-                  {deferred ? (
+                  {after ? (
                     <>
-                      <strong>
-                        Your first payment{rate ? ` of ${rate}` : ""} comes out
-                        on {formatStartDate(startDay!)}
-                      </strong>
-                      , then the same day each month. Nothing to remember.
+                      <strong>{after.monthly}</strong> Nothing to remember.
                     </>
                   ) : (
                     <>

@@ -2,8 +2,13 @@ import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { resolveInvite } from "@/lib/onboarding/resolve";
 import { signingConfigured } from "@/lib/onboarding/token";
-import { planByKey } from "@/lib/onboarding/model";
-import { billingAnchorUnix, startDateISO } from "@/lib/onboarding/start-date";
+import { displayPrice, planByKey } from "@/lib/onboarding/model";
+import {
+  billingAnchorUnix,
+  formatStartDate,
+  startDateISO,
+} from "@/lib/onboarding/start-date";
+import { paymentSchedule } from "@/lib/onboarding/schedule";
 import { siteUrl } from "@/lib/site-url";
 import { ensurePlanProduct } from "@/lib/billing/products";
 import { supabaseAdmin } from "@/lib/supabase/admin";
@@ -20,13 +25,19 @@ import { limiters, requestIp } from "@/lib/rate-limit";
  * would be a real hole in the funnel that already works.
  *
  * THE INVITE IS THE AUTHORISATION. It is HMAC-signed, so the caller cannot
- * change the price, the start date or the expiry.
+ * change the price, the balance, the start date or the expiry.
  *
  * `price_data` rather than a pre-created price: Ben has one price in Stripe
  * (the Club) and sells several things, and every existing client is on their
  * own agreed number. Inline prices against a durable product mean a rate is
  * whatever Ben typed, without anybody logging into Stripe — which matters,
  * because nobody is going to.
+ *
+ * THREE SHAPES, ONE CARD ENTRY. The invite can carry a balance owed today on
+ * top of the monthly rate, and Stripe Checkout cannot express every
+ * combination of "balance + rate + date" in one subscription session. The
+ * shape is chosen by lib/onboarding/schedule.ts, which documents what was
+ * measured; this route only builds the session that shape needs.
  */
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -95,7 +106,7 @@ export async function POST(request: Request) {
   const amountPence = agreedPence ?? plan!.pence;
 
   /*
-   * WHEN THE FIRST PAYMENT COMES OUT.
+   * WHAT THE CARD IS CHARGED TODAY, AND WHEN THE MONTHLY CYCLE STARTS.
    *
    * `billing_cycle_anchor` with `proration_behavior: "none"` raises NO invoice
    * today and the full amount on the date, monthly from then. The alternative,
@@ -105,10 +116,16 @@ export async function POST(request: Request) {
    * agreed arrangement onto a card. They are not on a trial, and saying so at
    * the moment they hand over card details would be a lie.
    *
-   * Null means charge now: no start date was set, or the one Ben chose has
-   * been and gone while the link sat in somebody's messages. Collecting today
-   * is the right answer to a date that has passed — see start-date.ts.
+   * A balance owed today only ever rides an AGREED rate: it is part of an
+   * arrangement between Ben and one person, and a published tier has no such
+   * thing. The schedule decides the shape; see schedule.ts for the three and
+   * why Checkout cannot do all of them in one subscription session.
    */
+  const schedule = paymentSchedule({
+    amountPence,
+    dueTodayPence: agreedPence !== null ? invite.dueTodayPence : 0,
+    startDay: invite.startDay,
+  });
   const anchorUnix = billingAnchorUnix(invite.startDay);
 
   /*
@@ -179,16 +196,114 @@ export async function POST(request: Request) {
    * Pricing a bespoke arrangement against the "1:1 Coaching" product put a
    * package name the client never agreed to on their Stripe receipt, their
    * card statement descriptor and every invoice thereafter. "Coaching" is the
-   * true and sufficient description of what they are buying.
+   * true and sufficient description of what they are buying. The balance
+   * gets its own durable product for the same reason: "Outstanding balance"
+   * is what it is, on the receipt and in Ben's dashboard.
    */
   const product =
     agreedPence !== null
       ? await ensurePlanProduct("coaching", "Coaching")
       : await ensurePlanProduct(plan!.key, plan!.name, plan!.summary);
+  const balanceProduct =
+    schedule.dueTodayPence > 0
+      ? await ensurePlanProduct("balance", "Outstanding balance")
+      : null;
 
   const startISO = invite.startDay != null ? startDateISO(invite.startDay) : null;
 
+  /* Stamped on the SESSION as well as the subscription, because the welcome
+     screen and activation read session.metadata and nothing else; without
+     these they cannot say what was charged and when without a second round
+     trip to Stripe. `due_today_pence` is only present when a balance was
+     owed, so a session without one reads exactly as it did. */
+  const stamps = {
+    plan: plan?.key ?? "agreed",
+    onboarding: invite.kind,
+    client_name: invite.name,
+    /* Stamped on every subscription, not just bespoke ones, so any amount is
+       identifiable in Stripe a year later. An amount that matches no
+       published tier otherwise looks like a mistake to whoever finds it. */
+    amount_pence: String(amountPence),
+    ...(agreedPence !== null ? { agreed_price_pence: String(agreedPence) } : {}),
+    ...(startISO ? { starts_on: startISO } : {}),
+    ...(schedule.dueTodayPence > 0
+      ? { due_today_pence: String(schedule.dueTodayPence) }
+      : {}),
+  };
+
+  /*
+   * ONE SESSION PER INVITE, PRICE, BALANCE AND START DATE.
+   *
+   * Invites stay valid for thirty days and are never consumed, so the
+   * commonest double-charge is somebody re-opening the text to check it went
+   * through. Keyed on what the payment IS rather than on when it was asked
+   * for: a second tap replays the first session instead of minting a new one.
+   * Changing any of the four — a re-issued invite, a corrected rate, a new
+   * balance, a new start date — is a genuinely different payment and gets its
+   * own key.
+   */
+  const idempotencyKey = `invite:${body.token}:${amountPence}:${startISO ?? "now"}${
+    schedule.dueTodayPence > 0 ? `:due${schedule.dueTodayPence}` : ""
+  }`;
+
+  const success_url = `${base}/onboarding/welcome?session_id={CHECKOUT_SESSION_ID}`;
+  const cancel_url = `${base}/onboarding/${body.token}?step=pay&cancelled=1`;
+
   try {
+    if (schedule.shape === "balance-then-subscription") {
+      /*
+       * THE BALANCE NOW, THE SUBSCRIPTION ON THE DATE.
+       *
+       * A PAYMENT checkout for the balance, with the card saved for
+       * off-session use. When it completes, activation creates the anchored
+       * subscription against that card (lib/onboarding/activation.ts,
+       * ensureDeferredSubscription). The checkout page states the monthly
+       * arrangement in Stripe's own words under the pay button, so the
+       * person entering the card is told the whole of it there too.
+       */
+      const session = await client.checkout.sessions.create(
+        {
+          mode: "payment",
+          ...(existingStripeCustomer
+            ? { customer: existingStripeCustomer }
+            : {
+                customer_email: clientEmail || undefined,
+                // Payment mode does not make a Customer unless asked, and the
+                // subscription needs one to hang off.
+                customer_creation: "always" as const,
+              }),
+          line_items: [
+            {
+              quantity: 1,
+              price_data: {
+                currency: "gbp",
+                unit_amount: schedule.dueTodayPence,
+                product: balanceProduct!,
+              },
+            },
+          ],
+          payment_intent_data: {
+            setup_future_usage: "off_session",
+            description: "Suth Performance · outstanding balance",
+            metadata: stamps,
+          },
+          custom_text: {
+            submit: {
+              message: `Then ${displayPrice(amountPence)} a month from ${formatStartDate(
+                invite.startDay!,
+              )}, taken automatically from this card. Cancel any time.`,
+            },
+          },
+          metadata: { flow: "invite", deferred_subscription: "1", ...stamps },
+          locale: "en-GB",
+          success_url,
+          cancel_url,
+        },
+        { idempotencyKey },
+      );
+      return NextResponse.json({ url: session.url });
+    }
+
     const session = await client.checkout.sessions.create(
       {
         mode: "subscription",
@@ -212,6 +327,22 @@ export async function POST(request: Request) {
               product,
             },
           },
+          /* The balance, as a one-off line on the same invoice as the first
+             month. Only ever here when the monthly cycle starts today —
+             Checkout refuses a one-off line beside a future anchor with no
+             proration, which is why the shape above exists. */
+          ...(schedule.shape === "subscription-with-balance"
+            ? [
+                {
+                  quantity: 1,
+                  price_data: {
+                    currency: "gbp",
+                    unit_amount: schedule.dueTodayPence,
+                    product: balanceProduct!,
+                  },
+                },
+              ]
+            : []),
         ],
         /* Explicit, because the deferred-anchor session totals £0 today and a
            £0 total is exactly the case where Checkout would otherwise be free
@@ -222,18 +353,7 @@ export async function POST(request: Request) {
             ? { billing_cycle_anchor: anchorUnix, proration_behavior: "none" as const }
             : {}),
           ...(trialDays > 0 ? { trial_period_days: trialDays } : {}),
-          metadata: {
-            plan: plan?.key ?? "agreed",
-            onboarding: invite.kind,
-            client_name: invite.name,
-            /* Stamped on every subscription, not just bespoke ones, so any
-               amount is identifiable in Stripe a year later. An amount that
-               matches no published tier otherwise looks like a mistake to
-               whoever finds it. */
-            amount_pence: String(amountPence),
-            ...(agreedPence !== null ? { agreed_price_pence: String(agreedPence) } : {}),
-            ...(startISO ? { starts_on: startISO } : {}),
-          },
+          metadata: stamps,
         },
         metadata: {
           // "flow" is what the webhook branches on: an invite session has no
@@ -241,16 +361,7 @@ export async function POST(request: Request) {
           // creates the account server-side even if the buyer never returns
           // from Stripe's receipt page.
           flow: "invite",
-          plan: plan?.key ?? "agreed",
-          onboarding: invite.kind,
-          client_name: invite.name,
-          /* Also on the SESSION, not only on the subscription. The welcome
-             screen reads session.metadata and nothing else, so without these
-             it cannot tell somebody what they will be charged or when without
-             a second round trip to Stripe. */
-          amount_pence: String(amountPence),
-          ...(agreedPence !== null ? { agreed_price_pence: String(agreedPence) } : {}),
-          ...(startISO ? { starts_on: startISO } : {}),
+          ...stamps,
         },
         /*
          * NO PROMOTION CODES ON AN AGREED RATE.
@@ -262,23 +373,10 @@ export async function POST(request: Request) {
          */
         ...(agreedPence === null ? { allow_promotion_codes: true } : {}),
         locale: "en-GB",
-        success_url: `${base}/onboarding/welcome?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${base}/onboarding/${body.token}?step=pay&cancelled=1`,
+        success_url,
+        cancel_url,
       },
-      {
-        /*
-         * ONE SESSION PER INVITE, PRICE AND START DATE.
-         *
-         * Invites stay valid for thirty days and are never consumed, so the
-         * commonest double-charge is somebody re-opening the text to check it
-         * went through. Keyed on what the payment IS rather than on when it
-         * was asked for: a second tap replays the first session instead of
-         * minting a new one. Changing any of the three — a re-issued invite,
-         * a corrected rate, a new start date — is a genuinely different
-         * payment and gets its own key.
-         */
-        idempotencyKey: `invite:${body.token}:${amountPence}:${startISO ?? "now"}`,
-      },
+      { idempotencyKey },
     );
 
     return NextResponse.json({ url: session.url });

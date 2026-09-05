@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { PageHeader } from "@/components/admin/ui";
 import { SendPaymentLink } from "@/components/admin/send-payment-link";
+import { InviteRowActions } from "@/components/admin/invite-row-actions";
 import { recentInvites } from "@/lib/onboarding/invite-store";
 import { planByKey } from "@/lib/onboarding/model";
-import { formatStartDate } from "@/lib/onboarding/start-date";
+import { formatStartDate, startDateISO } from "@/lib/onboarding/start-date";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export const dynamic = "force-dynamic";
@@ -26,7 +27,14 @@ function gbp(pence: number): string {
 export default async function AdminClientsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ name?: string; email?: string }>;
+  searchParams: Promise<{
+    name?: string;
+    email?: string;
+    phone?: string;
+    rate?: string;
+    due?: string;
+    start?: string;
+  }>;
 }) {
   const sp = await searchParams;
   const invites = await recentInvites(50);
@@ -63,12 +71,16 @@ export default async function AdminClientsPage({
       <PageHeader
         eyebrow="Members"
         title="Clients"
-        description="Set an existing client up on card payment at the rate you agreed, starting when you choose. Once they pay they appear under Customers with a live subscription."
+        description="Set an existing client up on card payment: anything they owe today, the rate you agreed, and the date it starts. You see exactly what they'll receive before it goes. Once they pay they appear under Customers with a live subscription."
       />
 
       <SendPaymentLink
         initialName={sp.name?.trim() || undefined}
         initialEmail={sp.email?.trim() || undefined}
+        initialPhone={sp.phone?.trim() || undefined}
+        initialRate={sp.rate?.trim() || undefined}
+        initialDueToday={sp.due?.trim() || undefined}
+        initialStart={sp.start?.trim() || undefined}
       />
 
       <section className="mt-8">
@@ -103,6 +115,12 @@ export default async function AdminClientsPage({
                 : plan
                   ? `${plan.display}/mo`
                   : "—";
+              /* The balance owed on top, so a link that says "£100 today" in
+                 the client's inbox says it here too. */
+              const due =
+                typeof p.dueTodayPence === "number" && p.dueTodayPence > 0
+                  ? `+ ${gbp(p.dueTodayPence)} owed today`
+                  : null;
               /* When the first collection actually happens. A link sent on the
                  28th that does not charge until the 1st looks unpaid for four
                  days, and without this Ben has no way to tell that apart from
@@ -142,6 +160,9 @@ export default async function AdminClientsPage({
                   </div>
                   <div className="text-right">
                     <p className="num text-sm text-suth-text">{rate}</p>
+                    {due ? (
+                      <p className="mt-0.5 text-[11px] text-suth-accent">{due}</p>
+                    ) : null}
                     {starts ? (
                       <p className="mt-0.5 text-[11px] text-suth-accent">{starts}</p>
                     ) : null}
@@ -178,6 +199,19 @@ export default async function AdminClientsPage({
                   ) : (
                     <div className="rounded-xl border border-suth-border bg-suth-elevated p-4">
                       {body}
+                      {!expired ? (
+                        <InviteRowActions
+                          id={inv.id}
+                          name={p.name || ""}
+                          email={p.email || ""}
+                          phone={p.phone || ""}
+                          ratePence={p.amountPence ?? null}
+                          dueTodayPence={p.dueTodayPence ?? null}
+                          startISO={
+                            typeof p.startDay === "number" ? startDateISO(p.startDay) : null
+                          }
+                        />
+                      ) : null}
                     </div>
                   )}
                 </li>

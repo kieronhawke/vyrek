@@ -28,7 +28,7 @@ import {
   type InjuryValue,
 } from "@/lib/quiz-flow";
 import type { InvitePayload } from "@/lib/onboarding/token";
-import { firstPaymentLine } from "@/lib/onboarding/start-date";
+import { paymentSchedule, scheduleLines } from "@/lib/onboarding/schedule";
 
 /**
  * THE ONBOARDING FLOW.
@@ -406,8 +406,19 @@ function StepBody({
 function Welcome({ invite }: { invite: InvitePayload }) {
   const first = invite.name.split(/\s+/)[0];
   const payment = invite.kind === "payment";
-  const amount =
-    typeof invite.amountPence === "number" ? formatPence(invite.amountPence) : null;
+  /* The money, said once from the same numbers the checkout charges: what
+     comes out today (a balance owed, the first month, or nothing) and what
+     comes out monthly from when. See lib/onboarding/schedule.ts. */
+  const lines =
+    typeof invite.amountPence === "number"
+      ? scheduleLines(
+          paymentSchedule({
+            amountPence: invite.amountPence,
+            dueTodayPence: invite.dueTodayPence,
+            startDay: invite.startDay,
+          }),
+        )
+      : null;
 
   return (
     <div className="ob-welcome">
@@ -420,10 +431,8 @@ function Welcome({ invite }: { invite: InvitePayload }) {
         {(payment
           ? [
               "Your details, and a password for your account",
-              amount
-                ? `Your card, for the ${amount} a month you agreed`
-                : "Your card",
-              firstPaymentLine(invite.startDay),
+              lines ? `Your card. ${lines.today}` : "Your card",
+              lines ? lines.monthly : "Your first payment is taken today.",
             ]
           : [
               "A few questions about you and your training",
@@ -1165,20 +1174,32 @@ function Pay({
   const agreed = typeof invite.amountPence === "number";
 
   if (agreed) {
+    /* Both lines, always: what the card is charged the moment they press the
+       button, and what it is charged monthly from when. A client who owes a
+       balance sees "£100 today" here, in the same words as the email and the
+       text, before Stripe asks for the card. */
+    const schedule = paymentSchedule({
+      amountPence: invite.amountPence!,
+      dueTodayPence: invite.dueTodayPence,
+      startDay: invite.startDay,
+    });
+    const lines = scheduleLines(schedule);
     return (
       <div className="ob-pay">
         <div className="ob-total">
           <span className="ob-total__name">The rate you agreed with Ben</span>
           <span className="ob-total__price num">
-            {formatPence(invite.amountPence!)}
+            {formatPence(schedule.monthlyPence)}
             <span className="ob-plan__cadence">a month</span>
           </span>
-          <span className="ob-total__trial">{firstPaymentLine(invite.startDay)}</span>
+          <span className="ob-total__trial">{lines.today}</span>
+          <span className="ob-total__trial">{lines.monthly}</span>
         </div>
 
         <p className="ob-note">
-          It collects automatically each month from then on. Cancel any time
-          from your account.
+          {schedule.dueTodayPence > 0
+            ? "The balance is what you and Ben agreed you owe so far. After that it collects automatically each month. Cancel any time from your account."
+            : "It collects automatically each month from then on. Cancel any time from your account."}
         </p>
 
         <p className="ob-note">

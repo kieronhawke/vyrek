@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { createInvite, inviteUrl, inviteUrlForSms } from "./token";
+import { paymentSchedule, scheduleSms } from "./schedule";
+import { todayDay } from "./start-date";
 import { onboardingInviteSms } from "@/lib/email/templates/onboarding-invite";
 import { isGsm7, segments } from "@/lib/sms/messages";
 
@@ -17,28 +19,44 @@ import { isGsm7, segments } from "@/lib/sms/messages";
 
 const SITE = "https://www.suthperformance.com";
 
+/** A day still ahead whenever this runs, so the "from" clause is present. */
+const FAR_DAY = todayDay() + 25;
+
 function costOf(
   name: string,
   email: string,
   kind: "full" | "payment" = "full",
-  amount?: string | null,
-  startsOn?: string | null,
+  /** The schedule as the route builds it: rate, optional balance, optional date. */
+  money?: { amountPence: number; dueTodayPence?: number; deferred?: boolean } | null,
 ) {
   const token = createInvite({
     name,
     email,
     phone: "+447398790378",
     kind,
-    ...(amount ? { amountPence: 200000 } : {}),
-    ...(startsOn ? { startDay: 20700 } : {}),
+    ...(money ? { amountPence: money.amountPence } : {}),
+    ...(money?.dueTodayPence ? { dueTodayPence: money.dueTodayPence } : {}),
+    ...(money?.deferred ? { startDay: FAR_DAY } : {}),
   });
   // The stripped link, because that is the one the route actually sends. The
   // full https://www. form is twelve characters the phone adds back for free,
   // and measuring it here would test a message nobody receives.
   const link = inviteUrlForSms(token, SITE);
-  const body = onboardingInviteSms(name.split(" ")[0], link, kind, amount, startsOn);
+  const schedule = money
+    ? scheduleSms(
+        paymentSchedule({
+          amountPence: money.amountPence,
+          dueTodayPence: money.dueTodayPence,
+          startDay: money.deferred ? FAR_DAY : undefined,
+        }),
+      )
+    : null;
+  const body = onboardingInviteSms(name.split(" ")[0], link, kind, schedule);
   return { body, segments: segments(body), gsm: isGsm7(body) };
 }
+
+/* The longest schedule the form can produce: the top of both bands, a date. */
+const WORST = { amountPence: 200000, dueTodayPence: 1_000_000, deferred: true };
 
 describe("the invite text", () => {
   it("fits in ONE segment", () => {
@@ -104,9 +122,37 @@ describe("the invite text", () => {
       "Bartholomew",
       "Alexandrina",
     ]) {
-      const body = onboardingInviteSms(name, SHORT_LINK, "payment", "£2,000", "30 Sept");
+      const body = onboardingInviteSms(name, SHORT_LINK, "payment", "£2,000/mo from 30 Sept");
       expect(segments(body), `${body.length} chars: ${body}`).toBe(1);
       expect(isGsm7(body), `non-GSM in: ${body}`).toBe(true);
+    }
+  });
+
+  /*
+   * THE BALANCE OWED TODAY, IN THE TEXT.
+   *
+   * "£100 today, then £60/mo from 1 Oct" is about twenty characters more than
+   * the rate alone. The short-link path — the one clients actually get — must
+   * still fit in one segment at the TOP of both bands with a long first name,
+   * because the day it does not, the longest arrangement Ben can type is the
+   * one that costs him double, silently.
+   */
+  it("still fits in ONE segment on the short-link path with a balance, at the top of both bands", () => {
+    const worst = scheduleSms(
+      paymentSchedule({ amountPence: 200000, dueTodayPence: 1_000_000, startDay: FAR_DAY }),
+    );
+    expect(worst).toMatch(/^£10000 today, then £2000\/mo from \d{1,2} \w+$/);
+    for (const name of ["Konstantinos", "Christopher", "Bartholomew", "Alexandrina"]) {
+      const body = onboardingInviteSms(name, SHORT_LINK, "payment", worst);
+      expect(segments(body), `${body.length} chars: ${body}`).toBe(1);
+      expect(isGsm7(body), `non-GSM in: ${body}`).toBe(true);
+    }
+    // And the other balance wording, which is longer still.
+    const both = scheduleSms(paymentSchedule({ amountPence: 200000, dueTodayPence: 1_000_000 }));
+    expect(both).toBe("£12000 today (incl £10000 owed), then £2000/mo");
+    for (const name of ["Konstantinos", "Alexandrina"]) {
+      const body = onboardingInviteSms(name, SHORT_LINK, "payment", both);
+      expect(segments(body), `${body.length} chars: ${body}`).toBe(1);
     }
   });
 
@@ -114,13 +160,7 @@ describe("the invite text", () => {
     // lib/sms/send.ts refuses anything over three segments — that is the line
     // that must never be crossed, because crossing it sends nothing at all.
     for (const name of ["Konstantinos Papadopoulos", "Christopher Worthington-Fairbairn"]) {
-      const { segments: n, body } = costOf(
-        name,
-        "someone@example.com",
-        "payment",
-        "£2,000",
-        "30 Sept",
-      );
+      const { segments: n, body } = costOf(name, "someone@example.com", "payment", WORST);
       expect(n, `${body.length} chars: ${body}`).toBeLessThanOrEqual(2);
       expect(isGsm7(body), `non-GSM in: ${body}`).toBe(true);
     }

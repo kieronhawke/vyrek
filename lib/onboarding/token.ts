@@ -1,5 +1,6 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { CUSTOM_MAX_PENCE, CUSTOM_MIN_PENCE } from "./model";
+import { validDueTodayPence } from "./schedule";
 
 /**
  * THE INVITE, CARRIED IN THE LINK.
@@ -58,6 +59,16 @@ export type InvitePayload = {
    * blank or wrong.
    */
   amountPence?: number;
+  /**
+   * What this client owes Ben TODAY, in pence, on top of the monthly rate.
+   *
+   * A month in arrears, a block coached before the card existed. Signed for
+   * the same reason the rate is: it is money, and the person holding the link
+   * must not be able to edit it. Absent means nothing is owed, so an invite
+   * with no balance is exactly the length it was. See schedule.ts for how it
+   * combines with the rate and the date.
+   */
+  dueTodayPence?: number;
   /**
    * Which route they came in on, so onboarding can ask the right questions.
    *
@@ -216,6 +227,9 @@ export function createInvite(
     // The agreed per-client rate. Six characters at most (£1000 = "a":100000)
     // and only present when Ben set one, so standard invites stay short.
     ...(payload.amountPence ? { a: payload.amountPence } : {}),
+    // The balance owed today. Seven characters at most and only present when
+    // Ben set one — see the note on `dueTodayPence` in the payload type.
+    ...(payload.dueTodayPence ? { d: payload.dueTodayPence } : {}),
     // Only ever "b": athlete is the default, so spending a character to say
     // so would make every racing link longer for nothing.
     ...(payload.rail === "beginner" ? { r: "b" } : {}),
@@ -322,6 +336,12 @@ export function readInvite(token: string, now = Date.now()): InviteResult {
          minted on that branch still resolves; only `a` is ever written. */
       ...(validAmountPence(raw.a ?? raw.c ?? raw.amountPence)
         ? { amountPence: Number(raw.a ?? raw.c ?? raw.amountPence) }
+        : {}),
+      /* Bounds-checked exactly like the rate: signed says unedited, not sane.
+         Out of band is dropped, which reads as "nothing owed" — the recoverable
+         direction, since Ben sees the sent list and can re-send. */
+      ...(validDueTodayPence(raw.d ?? raw.dueTodayPence)
+        ? { dueTodayPence: Number(raw.d ?? raw.dueTodayPence) }
         : {}),
       ...(raw.r === "b" || raw.rail === "beginner"
         ? { rail: "beginner" as const }

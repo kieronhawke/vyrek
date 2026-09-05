@@ -188,6 +188,33 @@ export async function loadInvite(id: string): Promise<InvitePayload | null> {
 }
 
 /**
+ * Cancel a sent link.
+ *
+ * Ben reviewed it, sent it, and then spotted the wrong figure — or the client
+ * rang to say the date should be the 15th. The row goes; the link resolves to
+ * "expired", which is the message that tells the client to ask Ben for a new
+ * one, and Ben sends the corrected link from the same form. A signed-token
+ * fallback link cannot be cancelled this way because nothing stores it; the
+ * admin says so rather than offering a button that does nothing.
+ *
+ * Returns whether a row was actually removed.
+ */
+export async function deleteInvite(id: string): Promise<boolean> {
+  if (!looksLikeInviteId(id)) return false;
+  if (!dbConfigured()) return devStore.delete(id);
+  try {
+    const { data, error } = await supabaseAdmin()
+      .from("onboarding_invites")
+      .delete()
+      .eq("id", id)
+      .select("id");
+    return !error && Boolean(data && data.length > 0);
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Delete invites past their expiry.
  *
  * Redis did this for us. Called by the nightly cron in

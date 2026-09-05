@@ -7,8 +7,10 @@ import { planByKey } from "@/lib/onboarding/model";
 import {
   billingAnchorUnix,
   formatStartDate,
+  formatStartDateShort,
   parseStartDate,
 } from "@/lib/onboarding/start-date";
+import { paymentSchedule, scheduleAfterLines } from "@/lib/onboarding/schedule";
 
 /**
  * TURN A PAID CHECKOUT SESSION INTO AN ACCOUNT THEY CAN GET INTO.
@@ -118,11 +120,11 @@ export async function activateFromSession(
     typeof session.customer === "string"
       ? session.customer
       : (session.customer?.id ?? null);
-  const sub =
+  let sub =
     typeof session.subscription === "object" && session.subscription !== null
       ? session.subscription
       : null;
-  const subscriptionId =
+  let subscriptionId =
     typeof session.subscription === "string"
       ? session.subscription
       : (sub?.id ?? null);
@@ -131,6 +133,29 @@ export async function activateFromSession(
     // Stripe always has an email for a subscription; a session without one
     // is a real anomaly rather than a normal branch.
     return { ok: false, error: "NO_EMAIL" };
+  }
+
+  /* THE SUBSCRIPTION CHECKOUT COULD NOT MAKE.
+   *
+   * A client who owed a balance AND starts monthly billing on a later date
+   * paid through a PAYMENT checkout — Stripe will not put a one-off line on a
+   * subscription checkout with a future anchor and no proration (see
+   * schedule.ts). The card is saved; the subscription is created HERE, once,
+   * from the figures the checkout route stamped on the session. Both
+   * activation callers pass through this, and it is idempotent: a Stripe
+   * idempotency key on the create, plus a search for a subscription already
+   * carrying this session's id, so the welcome page and the webhook cannot
+   * mint two. If it fails, the function returns ok:false so the webhook 500s
+   * and Stripe redelivers — the balance has been taken, so giving up is not
+   * an option. */
+  if (session.metadata?.deferred_subscription === "1" && !subscriptionId) {
+    const made = await ensureDeferredSubscription(session);
+    if (!made.ok) {
+      console.error("[activation] deferred subscription not created:", made.error);
+      return { ok: false, email, error: made.error };
+    }
+    sub = made.subscription;
+    subscriptionId = made.subscription.id;
   }
 
   const sb = supabaseAdmin();
@@ -386,6 +411,10 @@ export async function activateFromSession(
             "@/lib/billing/notify"
           );
           const amountPence = sub?.items?.data?.[0]?.price?.unit_amount ?? null;
+          /* What the checkout took today and when the monthly cycle starts,
+             from the same stamps the client's email reads below, so Ben's
+             confirmation and the client's say the same thing. */
+          const stamped = stampedSchedule(session);
           void notifyAdminNewSubscription({
             clientName: name,
             email,
@@ -394,6 +423,13 @@ export async function activateFromSession(
             amountPence,
             planName: plan || null,
             source: isBillingOnly ? "payment link" : "set-up link",
+            paidTodayPence: stamped?.dueTodayPence ?? null,
+            startsOn:
+              stamped?.startDay != null ? formatStartDate(stamped.startDay) : null,
+            startsOnShort:
+              stamped?.startDay != null
+                ? formatStartDateShort(stamped.startDay)
+                : null,
           }).catch(() => {});
         }
       }
@@ -431,15 +467,10 @@ export async function activateFromSession(
       console.error("[activation] generateLink failed", e);
     }
 
-    /* The figure and the date the checkout route stamped on the session, so
-       this email describes what will actually happen rather than the general
-       case. `starts_on` is only ever present when the first collection is
-       deferred; a date that has since passed is not carried, because by then
-       the money HAS moved and saying otherwise would be wrong the other way. */
-    const stampedPence = Number(session.metadata?.amount_pence);
-    const stampedStart = session.metadata?.starts_on ?? null;
-    const startDay = stampedStart ? parseStartDate(stampedStart) : null;
-    const stillAhead = startDay !== null && billingAnchorUnix(startDay) !== null;
+    /* The figures the checkout route stamped on the session — rate, balance,
+       date — resolved into past-tense sentences AS OF THE CHECKOUT, so this
+       email describes what actually happened rather than the general case. */
+    const stamped = stampedSchedule(session);
 
     emailed = true;
     void sendAccountReady({
@@ -448,13 +479,7 @@ export async function activateFromSession(
       signInUrl,
       planName: plan,
       variant: isBillingOnly ? "billing" : "full",
-      amount:
-        Number.isFinite(stampedPence) && stampedPence > 0
-          ? stampedPence % 100 === 0
-            ? `£${stampedPence / 100}`
-            : `£${(stampedPence / 100).toFixed(2)}`
-          : null,
-      startsOn: stillAhead ? formatStartDate(startDay!) : null,
+      after: stamped ? scheduleAfterLines(stamped) : null,
     }).catch(() => {});
   }
 
@@ -464,4 +489,140 @@ export async function activateFromSession(
   // run couldn't rather than duplicating it.
   if (criticalError) return { ok: false, email, error: criticalError, emailed };
   return { ok: true, email, emailed };
+}
+
+/**
+ * The schedule the checkout was built with, read back off the session.
+ *
+ * Resolved at `session.created`, not now: a webhook redelivered two days after
+ * a Friday checkout must still describe Friday's decision. Null when the
+ * session carries no rate — a published-tier sign-up, which has no schedule
+ * of this kind.
+ */
+export function stampedSchedule(session: Stripe.Checkout.Session) {
+  const amountPence = Number(session.metadata?.amount_pence);
+  if (!Number.isInteger(amountPence) || amountPence <= 0) return null;
+  const due = Number(session.metadata?.due_today_pence);
+  const startDay = session.metadata?.starts_on
+    ? parseStartDate(session.metadata.starts_on)
+    : null;
+  const at = session.created ? session.created * 1000 : Date.now();
+  return paymentSchedule(
+    {
+      amountPence,
+      dueTodayPence: Number.isInteger(due) && due > 0 ? due : 0,
+      startDay,
+    },
+    at,
+  );
+}
+
+export type DeferredOutcome =
+  | { ok: true; subscription: Stripe.Subscription }
+  | { ok: false; error: string };
+
+/**
+ * Create the anchored subscription behind a balance-first checkout, exactly
+ * once per session. See the note at the call site in `activateFromSession`.
+ *
+ * The anchor is recomputed from the stamped date at the moment this runs. If
+ * the date has passed in between — a client who paid the balance on the 30th
+ * and whose webhook lands on the 1st — the subscription is created with no
+ * anchor and charges its first month now, which is what the date meant.
+ */
+export async function ensureDeferredSubscription(
+  session: Stripe.Checkout.Session,
+): Promise<DeferredOutcome> {
+  const customerId =
+    typeof session.customer === "string"
+      ? session.customer
+      : (session.customer?.id ?? null);
+  if (!customerId) return { ok: false, error: "DEFERRED_NO_CUSTOMER" };
+
+  const amountPence = Number(session.metadata?.amount_pence);
+  if (!Number.isInteger(amountPence) || amountPence <= 0) {
+    return { ok: false, error: "DEFERRED_NO_AMOUNT" };
+  }
+
+  const { stripe } = await import("@/lib/stripe");
+  const s = stripe();
+
+  // Already made by the other activation caller? The session id is stamped
+  // on the subscription for exactly this question.
+  try {
+    const existing = await s.subscriptions.list({ customer: customerId, limit: 20 });
+    const hit = existing.data.find(
+      (x) => x.metadata?.checkout_session === session.id,
+    );
+    if (hit) return { ok: true, subscription: hit };
+  } catch (e) {
+    console.error("[activation] deferred: subscription search failed", e);
+  }
+
+  // The card that just paid the balance, saved for off-session use.
+  let paymentMethod: string | null = null;
+  try {
+    const piId =
+      typeof session.payment_intent === "string"
+        ? session.payment_intent
+        : (session.payment_intent?.id ?? null);
+    if (piId) {
+      const pi = await s.paymentIntents.retrieve(piId);
+      paymentMethod =
+        typeof pi.payment_method === "string"
+          ? pi.payment_method
+          : (pi.payment_method?.id ?? null);
+    }
+  } catch (e) {
+    console.error("[activation] deferred: payment intent lookup failed", e);
+  }
+  if (!paymentMethod) return { ok: false, error: "DEFERRED_NO_PAYMENT_METHOD" };
+
+  const startDay = session.metadata?.starts_on
+    ? parseStartDate(session.metadata.starts_on)
+    : null;
+  const anchorUnix = billingAnchorUnix(startDay);
+
+  try {
+    const { ensurePlanProduct } = await import("@/lib/billing/products");
+    const product = await ensurePlanProduct("coaching", "Coaching");
+    const created = await s.subscriptions.create(
+      {
+        customer: customerId,
+        default_payment_method: paymentMethod,
+        items: [
+          {
+            price_data: {
+              currency: "gbp",
+              unit_amount: amountPence,
+              recurring: { interval: "month" },
+              product,
+            },
+          },
+        ],
+        // No invoice today, the full amount on the date, monthly after — and
+        // never a prorated slice of the first month. Measured in start-date.ts.
+        ...(anchorUnix
+          ? { billing_cycle_anchor: anchorUnix, proration_behavior: "none" as const }
+          : {}),
+        metadata: {
+          plan: "agreed",
+          onboarding: session.metadata?.onboarding ?? "payment",
+          client_name: session.metadata?.client_name ?? "",
+          amount_pence: String(amountPence),
+          agreed_price_pence: String(amountPence),
+          ...(session.metadata?.starts_on ? { starts_on: session.metadata.starts_on } : {}),
+          ...(session.metadata?.due_today_pence
+            ? { due_today_pence: session.metadata.due_today_pence }
+            : {}),
+          checkout_session: session.id,
+        },
+      },
+      { idempotencyKey: `deferred-sub:${session.id}` },
+    );
+    return { ok: true, subscription: created };
+  } catch (e) {
+    console.error("[activation] deferred: subscription create failed", e);
+    return { ok: false, error: "DEFERRED_SUB_FAILED" };
+  }
 }

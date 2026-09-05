@@ -32,6 +32,7 @@ export default async function OnboardingWelcomePage({
   let trialing = false;
   let billingOnly = false;
   let amountPence: number | null = null;
+  let dueTodayPence: number | null = null;
   let startsOn: string | null = null;
 
   if (sessionId) {
@@ -55,6 +56,8 @@ export default async function OnboardingWelcomePage({
          when without a second round trip to Stripe. */
       const pence = Number(session.metadata?.amount_pence);
       amountPence = Number.isFinite(pence) && pence > 0 ? pence : null;
+      const due = Number(session.metadata?.due_today_pence);
+      dueTodayPence = Number.isFinite(due) && due > 0 ? due : null;
       startsOn = session.metadata?.starts_on ?? null;
       const sub = session.subscription;
       trialing = typeof sub === "object" && sub !== null && sub.status === "trialing";
@@ -75,6 +78,7 @@ export default async function OnboardingWelcomePage({
       hadSession={Boolean(sessionId)}
       billingOnly={billingOnly}
       amountPence={amountPence}
+      dueTodayPence={dueTodayPence}
       startsOn={startsOn}
     />
   );

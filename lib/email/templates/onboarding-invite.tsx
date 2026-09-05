@@ -6,6 +6,7 @@ import {
   H1,
   P,
   Panel,
+  Row,
   SignOff,
 } from "@/lib/email/templates/_layout";
 import {
@@ -36,34 +37,36 @@ import {
  * THE LINK IS PRINTED AS TEXT TOO. Some corporate clients strip the button,
  * and the plain-text alternative has no button at all; without the URL in
  * words those recipients have no way through. It costs one line.
+ *
+ * THE MONEY IS SAID ONCE, IN FULL. What comes out today and what comes out
+ * monthly, from when — built by lib/onboarding/schedule.ts from the same
+ * numbers the checkout charges, so this email and the card screen cannot
+ * disagree. It replaced `amount` + `startsOn`, which between them could not
+ * describe a balance owed today at all.
  */
+
+export type PayRow = { label: string; value: string };
 
 export function OnboardingInviteEmail({
   firstName,
   link,
   kind,
   coach = "Ben",
-  amount,
-  startsOn,
+  payLine,
+  payRows,
 }: {
   firstName: string;
   link: string;
   kind: "full" | "payment";
   coach?: string;
   /**
-   * The agreed monthly rate, already formatted — "£150".
-   *
-   * ⚠️ THIS REPLACED `planName`, AND THAT MATTERS. The old email said "We
-   * agreed 1:1 Coaching, so it's already selected" — and the plan name it
-   * printed was one the invite route had INVENTED, because a bespoke rate was
-   * forced onto a default package so it would "have a plan to describe what it
-   * buys". So the first email an existing client received named a package
-   * nobody had discussed, and did not state the figure that had actually been
-   * agreed. The number is the thing they are checking for.
+   * The schedule in one or two sentences — "£100 today, for your outstanding
+   * balance. Then £60 a month from Tuesday 1 October, on the same day each
+   * month." Null when no rate was agreed on the invite.
    */
-  amount?: string | null;
-  /** When the first payment comes out, already formatted, or null for today. */
-  startsOn?: string | null;
+  payLine?: string | null;
+  /** The same schedule as rows, for the panel. */
+  payRows?: PayRow[] | null;
 }) {
   const payment = kind === "payment";
 
@@ -89,12 +92,8 @@ export function OnboardingInviteEmail({
 
       <P>
         {payment
-          ? amount
-            ? `${amount} a month, exactly as we agreed. ${
-                startsOn
-                  ? `Nothing comes out today — your first payment is on ${startsOn}.`
-                  : "The first payment comes out when you add your card."
-              }`
+          ? payLine
+            ? `Exactly as we agreed: ${payLine}`
             : "It takes about two minutes."
           : "It takes about five minutes, and it's all on your phone."}
       </P>
@@ -120,6 +119,14 @@ export function OnboardingInviteEmail({
         <span style={{ color: TEXT_DIM }}>{link}</span>
       </Text>
 
+      {payment && payRows && payRows.length > 0 ? (
+        <Panel title="What you'll pay">
+          {payRows.map((r) => (
+            <Row key={r.label} label={r.label} value={r.value} />
+          ))}
+        </Panel>
+      ) : null}
+
       {!payment ? (
         <Panel title="What I'll ask you">
           <Text
@@ -143,7 +150,7 @@ export function OnboardingInviteEmail({
       ) : null}
 
       <Section>
-        <P>Any questions at all, just reply to this. It comes straight to me.</P>
+        <P>Any questions at all, just reply to this. It comes straight to {coach === "Ben" ? "me" : coach}.</P>
       </Section>
 
       <SignOff />
@@ -184,28 +191,27 @@ export function onboardingInviteSms(
   firstName: string,
   link: string,
   kind: "full" | "payment",
-  /** "£150", when Ben agreed one. */
-  amount?: string | null,
-  /** "1 Sept", when the first payment is not today. */
-  startsOn?: string | null,
+  /**
+   * "£60/mo from 1 Oct", "£100 today, then £60/mo from 1 Oct" — built by
+   * scheduleSms() so it says the same thing as the email. Null when no rate
+   * was agreed.
+   */
+  schedule?: string | null,
 ): string {
   // A payment-only invite goes to an EXISTING client on an agreed rate, so
   // "pick your plan" was wrong: there is nothing to pick. The link sets up
   // their account and card, that's all.
   //
-  // The FIGURE goes in when there is one. This is the message most of them
+  // The FIGURES go in when there are any. This is the message most of them
   // actually read, and a link asking for card details is exactly the shape of
-  // a scam text — the agreed number is the thing only Ben could know, so it is
-  // what makes the message obviously genuine. It costs about 12 characters and
-  // invite-cost.test.ts holds the one-segment line.
+  // a scam text — the agreed numbers are the thing only Ben could know, so
+  // they are what make the message obviously genuine. invite-cost.test.ts
+  // holds the one-segment line for the longest schedule and a long name.
   if (kind !== "payment") {
     return `${firstName}, it's Ben. Welcome aboard! 5 mins to set up: ${link}`;
   }
-  if (amount && startsOn) {
-    return `Hi ${firstName}, it's Ben. Set your card up for ${amount}/mo from ${startsOn}: ${link}`;
-  }
-  if (amount) {
-    return `Hi ${firstName}, it's Ben. Set your card up for ${amount}/mo: ${link}`;
+  if (schedule) {
+    return `Hi ${firstName}, it's Ben. Set your card up for ${schedule}: ${link}`;
   }
   return `Hi ${firstName}, it's Ben. Your account set-up link: ${link}`;
 }
