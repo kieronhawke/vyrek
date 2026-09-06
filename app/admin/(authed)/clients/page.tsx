@@ -107,9 +107,15 @@ export default async function AdminClientsPage({
               const p = inv.payload;
               const plan = planByKey(p.plan);
               const expired = new Date(inv.expiresISO).getTime() < now;
-              const customerId = customerByEmail.get(
-                (p.email || "").trim().toLowerCase(),
-              );
+              /* The invite's own stamp first, the email match second.
+                 Matching by email alone missed every client who corrected
+                 the address Ben typed on the way through — their row sat
+                 there reading "not opened yet" while they were paying. */
+              const customerId =
+                inv.usedCustomerId ??
+                customerByEmail.get((p.email || "").trim().toLowerCase()) ??
+                null;
+              const paid = Boolean(inv.usedISO) || Boolean(customerId);
               const rate = p.amountPence
                 ? `${gbp(p.amountPence)}/mo, their rate`
                 : plan
@@ -148,9 +154,9 @@ export default async function AdminClientsPage({
                       <span className="ml-2 font-mono text-[10px] uppercase tracking-[0.16em] text-suth-text-tertiary">
                         {p.kind === "payment" ? "payment link" : "full set-up"}
                       </span>
-                      {customerId ? (
+                      {paid ? (
                         <span className="ml-2 rounded-pill bg-emerald-500/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-emerald-300">
-                          signed up →
+                          {customerId ? "signed up →" : "signed up"}
                         </span>
                       ) : null}
                     </p>
@@ -168,14 +174,14 @@ export default async function AdminClientsPage({
                     ) : null}
                     <p
                       className={`mt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] ${
-                        expired && !customerId ? "text-suth-danger" : "text-suth-text-tertiary"
+                        expired && !paid ? "text-suth-danger" : "text-suth-text-tertiary"
                       }`}
                     >
-                      {expired && !customerId
+                      {expired && !paid
                         ? "expired"
                         : `sent ${new Date(inv.createdISO).toLocaleDateString("en-GB")}`}
                     </p>
-                    {!customerId ? (
+                    {!paid ? (
                       <p
                         className={`mt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] ${
                           opened ? "text-amber-300" : "text-suth-text-tertiary"
@@ -199,7 +205,10 @@ export default async function AdminClientsPage({
                   ) : (
                     <div className="rounded-xl border border-suth-border bg-suth-elevated p-4">
                       {body}
-                      {!expired ? (
+                      {/* Not offered once it has been paid: there is nothing
+                          to cancel, and re-sending would be a second link to
+                          somebody who is already set up. */}
+                      {!expired && !paid ? (
                         <InviteRowActions
                           id={inv.id}
                           name={p.name || ""}

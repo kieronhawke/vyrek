@@ -76,10 +76,20 @@ export function OnboardingInviteEmail({
 
   return (
     <EmailLayout
+      /* The line the inbox shows beside the subject, before anything is
+         opened. It has to be Ben's own first sentence once he has rewritten
+         the message: a fixed "Add your card and you're set" sitting next to
+         a subject he wrote himself is the one part of the email that would
+         still be talking over him. Trimmed, because most clients show around
+         ninety characters and cut mid-word after that. */
       preview={
-        payment
-          ? "Add your card and you're set. It takes two minutes."
-          : "Five minutes, and Ben can write your first week."
+        paragraphs[0]
+          ? paragraphs[0].length > 100
+            ? `${paragraphs[0].slice(0, 97).trimEnd()}...`
+            : paragraphs[0]
+          : payment
+            ? "Add your card and you're set. It takes two minutes."
+            : "Five minutes, and Ben can write your first week."
       }
       campaign="onboarding-invite"
     >
@@ -88,8 +98,21 @@ export function OnboardingInviteEmail({
         {payment ? `Let's get you on card, ${firstName}.` : `Good to have you, ${firstName}.`}
       </H1>
 
+      {/* Single newlines inside a paragraph become line breaks. Somebody
+          typing a note presses return once between lines and expects to see
+          them separated; without this the whole thing renders as one run-on
+          sentence and the message looks broken rather than merely different.
+          Rendered as text nodes throughout, so whatever Ben types is escaped
+          and no email can be broken by a stray angle bracket. */}
       {paragraphs.map((text, i) => (
-        <P key={i}>{text}</P>
+        <P key={i}>
+          {text.split("\n").map((line, j, all) => (
+            <span key={j}>
+              {line}
+              {j < all.length - 1 ? <br /> : null}
+            </span>
+          ))}
+        </P>
       ))}
 
       <Btn href={link}>{payment ? "Set up my payments" : "Set up my account"}</Btn>

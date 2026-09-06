@@ -1,7 +1,8 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { MIN_PASSWORD_LENGTH, scorePassword } from "@/lib/password-strength";
+import { useAdoptTypedValue } from "@/lib/adopt-typed-value";
 
 /**
  * The bar and the sentence, without the input.
@@ -108,6 +109,11 @@ export function PasswordField({
 }) {
   const [shown, setShown] = useState(false);
   const id = useId();
+  /* Somebody who starts typing before the page finishes waking up keeps what
+     they typed, and the meter reads it. Without this the box visibly holds a
+     password while the meter insists there is none. */
+  const inputRef = useRef<HTMLInputElement>(null);
+  useAdoptTypedValue(inputRef, value, onChange);
 
   return (
     <div className={fieldClassName}>
@@ -131,6 +137,7 @@ export function PasswordField({
 
       <div className="pw-wrap">
         <input
+          ref={inputRef}
           id={id}
           name={name}
           type={shown ? "text" : "password"}

@@ -206,6 +206,19 @@ export function SendPaymentLink({
   const [emailSubject, setEmailSubject] = useState<string | null>(null);
   const [emailBody, setEmailBody] = useState<string | null>(null);
   const [editing, setEditing] = useState<"sms" | "email" | null>(null);
+  /**
+   * WHAT HIS WORDING WAS WRITTEN ABOUT.
+   *
+   * ⚠️ THE REASON THIS EXISTS. Ben reviews at £60, edits the text so it says
+   * "£60/mo", goes Back to edit, changes the rate to £80, and reviews again.
+   * Without this, his message still says £60 and the link charges £80 — the
+   * client is told one number and billed another, which is the single worst
+   * thing this system can do. Any change to who it is for or what it costs
+   * drops the custom wording and says so, rather than sending a sentence
+   * that is quietly no longer true.
+   */
+  const [copyBasis, setCopyBasis] = useState<string | null>(null);
+  const [copyDropped, setCopyDropped] = useState(false);
 
   const [stage, setStage] = useState<"edit" | "review" | "sent">("edit");
   const [busy, setBusy] = useState(false);
@@ -213,6 +226,21 @@ export function SendPaymentLink({
   const [result, setResult] = useState<SendResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+
+  /* Everything the wording could mention. The name is in the greeting; the
+     rest is in the figures. */
+  const basis = JSON.stringify([name.trim(), rate.trim(), dueToday.trim(), startDate]);
+  const hasCustomCopy = smsMessage !== null || emailSubject !== null || emailBody !== null;
+
+  /* Dropped during render rather than in an effect: the very next thing that
+     happens is a preview or a send, and both must not carry stale wording. */
+  if (hasCustomCopy && copyBasis !== null && copyBasis !== basis) {
+    setSmsMessage(null);
+    setEmailSubject(null);
+    setEmailBody(null);
+    setCopyBasis(null);
+    setCopyDropped(true);
+  }
 
   const ratePence = parsePrice(rate);
   const duePence = parseDueToday(dueToday);
@@ -335,6 +363,8 @@ export function SendPaymentLink({
     setSmsMessage(null);
     setEmailSubject(null);
     setEmailBody(null);
+    setCopyBasis(null);
+    setCopyDropped(false);
     setEditing(null);
     setStage("edit");
   }
@@ -432,7 +462,10 @@ export function SendPaymentLink({
       p.sms?.attempted && p.sms.configured && !p.sms.reserved && p.sms.text,
     );
     return (
-      <div className="rounded-xl border border-suth-accent/40 bg-suth-surface p-5">
+      <div
+        data-testid="invite-review"
+        className="rounded-xl border border-suth-accent/40 bg-suth-surface p-5"
+      >
         <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-suth-accent">
           Check before it goes
         </p>
@@ -503,6 +536,8 @@ export function SendPaymentLink({
                 onCancel={() => setEditing(null)}
                 onSave={(m) => {
                   setSmsMessage(m);
+                  setCopyBasis(basis);
+                  setCopyDropped(false);
                   void review({ smsMessage: m });
                 }}
               />
@@ -555,6 +590,8 @@ export function SendPaymentLink({
                 onSave={(subject, bodyText) => {
                   setEmailSubject(subject);
                   setEmailBody(bodyText);
+                  setCopyBasis(basis);
+                  setCopyDropped(false);
                   void review({ emailSubject: subject, emailBody: bodyText });
                 }}
               />
@@ -723,6 +760,16 @@ export function SendPaymentLink({
           />
         </label>
       </div>
+
+      {copyDropped ? (
+        <p
+          role="status"
+          className="mt-3 rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-200"
+        >
+          You changed the details, so your own wording has gone back to the
+          standard message. It named the old figures.
+        </p>
+      ) : null}
 
       {/* What he is about to send, in the client's words, before he sends it. */}
       {liveLines ? (

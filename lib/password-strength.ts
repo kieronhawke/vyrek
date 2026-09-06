@@ -126,23 +126,54 @@ function isRepetitive(value: string): boolean {
 }
 
 /**
- * Words drawn from what we already know about this person: their name, the
- * local part of their email. A password built out of those is the first
- * thing anyone who has seen one of Ben's invites would try.
+ * Words that belong to the mail provider rather than to the person.
+ *
+ * Without this, "gmail" counts as personal for every client with a Gmail
+ * address, so "demolition gmail" — and, worse, any password containing the
+ * letters "gmail" — is reported as using their own email. The domain says
+ * nothing about who they are.
+ */
+const EMAIL_NOISE = new Set([
+  "gmail", "googlemail", "google", "yahoo", "ymail", "hotmail", "outlook",
+  "live", "msn", "icloud", "me", "mac", "aol", "btinternet", "sky", "virgin",
+  "talktalk", "protonmail", "proton", "gmx", "mail", "email", "com", "co",
+  "uk", "net", "org", "www",
+]);
+
+/**
+ * Words drawn from what we already know about this person: their name and the
+ * local part of their email. A password built out of those is the first thing
+ * anyone who has seen one of Ben's invites would try.
+ *
+ * ⚠️ IT ASKS WHAT IS LEFT, NOT WHETHER THE NAME APPEARS. "sarahreeves99" is
+ * her name and nothing else, and is genuinely weak. "sarah walked the dog on
+ * tuesday" contains her name and is a thirty-character passphrase — calling
+ * that "too easy to guess" is both wrong and the kind of scolding that makes
+ * somebody give up and use their name on its own instead. So the test is what
+ * survives once every personal word is removed: if that is still a decent
+ * password, the name inside it was incidental.
  */
 function usesPersonal(password: string, personal: string[]): boolean {
   const p = deleet(password);
   if (p.length < 3) return false;
+
+  let remaining = p;
+  let matched = false;
   for (const raw of personal) {
     for (const word of String(raw ?? "").toLowerCase().split(/[^a-z0-9]+/i)) {
       const w = deleet(word);
       // Three letters is too short to be meaningful ("ben" is caught by the
       // common list instead, where it belongs).
-      if (w.length < 4) continue;
-      if (p.includes(w)) return true;
+      if (w.length < 4 || EMAIL_NOISE.has(w)) continue;
+      if (remaining.includes(w)) {
+        matched = true;
+        remaining = remaining.split(w).join("");
+      }
     }
   }
-  return false;
+  // Their name plus a couple of digits is their name. Their name inside a
+  // real phrase is a real phrase.
+  return matched && remaining.length < MIN_PASSWORD_LENGTH;
 }
 
 /**

@@ -404,6 +404,16 @@ export async function activateFromSession(
           /* The same dedupe the admin alert below already relies on, now also
              gating the CLIENT's email — see the note on `subscriptionIsNew`. */
           subscriptionIsNew = true;
+          /* This link has now bought something. Stamped here rather than at
+             checkout, because an abandoned checkout must leave the link
+             usable — it is a paid subscription that spends it, not an
+             attempt. Swallows its own failures: the guard degrades to the
+             email check it always had. */
+          const stampedInvite = session.metadata?.invite_id;
+          if (stampedInvite) {
+            const { markInviteUsed } = await import("@/lib/onboarding/invite-store");
+            void markInviteUsed(stampedInvite, customerRowId).catch(() => {});
+          }
           // A NEW subscription row = money just arrived. Tell the admin on
           // every channel; inserting the row is the dedupe — the losing
           // activation caller takes the update branch above and stays quiet.

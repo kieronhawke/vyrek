@@ -73,6 +73,32 @@ describe("the three ways people actually lose an account", () => {
     expect(s.score).toBeGreaterThan(1);
   });
 
+  it("allows a real passphrase that happens to contain their name", () => {
+    /* Their name plus digits IS their name. Their name inside thirty
+       characters of phrase is a phrase, and calling it "too easy to guess"
+       is the kind of scolding that makes somebody use the bare name
+       instead. */
+    const s = score("sarah walked the dog on tuesday", ["Sarah Reeves"]);
+    expect(s.score).toBe(4);
+    expect(s.hint).toBeNull();
+  });
+
+  it("still objects when the name is all there is", () => {
+    for (const p of ["sarahreeves", "SarahReeves1", "reeves2026", "sarah.reeves"]) {
+      expect(score(p, ["Sarah Reeves", "sarah@example.com"]).score, p).toBe(1);
+    }
+  });
+
+  it("does not treat the mail provider as personal", () => {
+    /* Without this every client on Gmail is told their password uses their
+       own email whenever the letters happen to appear. */
+    for (const p of ["gmail carpet slipper", "the outlook is bright today"]) {
+      const s = score(p, ["Sarah Reeves", "sarah@googlemail.com"]);
+      expect(s.score, p).toBeGreaterThan(1);
+      expect(s.hint ?? "", p).not.toMatch(/name or email/i);
+    }
+  });
+
   it("catches repetition and keyboard runs however long they are", () => {
     expect(score("abababababab").score).toBe(1);
     expect(score("aaaaaaaaaaaa").score).toBe(1);

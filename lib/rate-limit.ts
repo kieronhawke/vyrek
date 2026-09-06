@@ -107,6 +107,10 @@ export const limiters = {
   // roster in one sitting, tight enough that a runaway loop can't burn
   // SMS credit.
   adminInvite: build("rl:inv", 60, "1 h"),
+  /* Rendering the review panel. Sends nothing and costs nothing but a render,
+     and the compose-and-check loop makes several per invite — counting those
+     against adminInvite would ration the care Ben takes over the wording. */
+  adminPreview: build("rl:inv_p", 400, "1 h"),
 } as const;
 
 /** Pull an IP for keying. Falls back to "anon". */

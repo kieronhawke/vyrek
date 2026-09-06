@@ -167,6 +167,13 @@ describe("the email", () => {
     expect(body).toMatch(/Then £60 a month from \w+ \d+ \w+/);
   });
 
+  it("keeps single line breaks inside a paragraph", () => {
+    /* Somebody typing a note presses return once between lines. Collapsing
+       those runs the whole thing together and the email looks broken. */
+    const paras = toParagraphs("line one\nline two\n\nsecond para");
+    expect(paras).toEqual(["line one\nline two", "second para"]);
+  });
+
   it("splits into paragraphs on blank lines", () => {
     expect(toParagraphs("one\n\ntwo\n\n\nthree")).toEqual(["one", "two", "three"]);
     expect(toParagraphs("  \n ")).toEqual([]);

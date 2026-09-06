@@ -258,6 +258,14 @@ test.describe("Ben sets up an existing client", () => {
        rules. What must never happen is the reverse — a client blocked at
        the moment they are about to hand over a card. */
     const pw = page.getByLabel(/choose a password/i);
+    /* Wait for React to attach before driving a controlled input. The field
+       itself now survives being typed into early, but a test that races
+       hydration measures the network rather than the meter. */
+    await page.waitForFunction(() =>
+      [document, document.body].some((n) =>
+        Object.keys(n).some((k) => k.startsWith("__reactContainer")),
+      ),
+    );
     await pw.fill("pass");
     await expect(page.getByText("Too short")).toBeVisible();
     await expect(page.getByText(/4 more characters to go/)).toBeVisible();
@@ -358,7 +366,7 @@ test.describe("Ben sets up an existing client", () => {
 
     await expect(page.getByText("your wording").first()).toBeVisible({ timeout: 30_000 });
     await expect(
-      page.getByText("Morning Sam, here's that link we talked about:", { exact: false }),
+      page.getByTestId("invite-review").getByText("Morning Sam, here's that link we talked about:", { exact: false }),
     ).toBeVisible();
 
     /* ── the email ────────────────────────────────────────────────────── */
@@ -373,8 +381,11 @@ test.describe("Ben sets up an existing client", () => {
 
     await expect(page.getByText("Sam, the link we talked about")).toBeVisible({ timeout: 30_000 });
     const frame = page.frameLocator('iframe[title="Email preview"]');
-    await expect(frame.getByText("Here you go, as promised.")).toBeVisible();
-    await expect(frame.getByText("Anything at all, give me a shout.")).toBeVisible();
+    /* Exact, because his opening line now appears twice on purpose: once in
+       the hidden preview text an inbox shows beside the subject, and once in
+       the body. That is the point of it, so the test names which one. */
+    await expect(frame.getByText("Here you go, as promised.", { exact: true })).toBeVisible();
+    await expect(frame.getByText("Anything at all, give me a shout.", { exact: true })).toBeVisible();
     // The parts that are not his to edit are still there.
     await expect(frame.getByText("Set up my payments")).toBeVisible();
 
@@ -383,6 +394,28 @@ test.describe("Ben sets up an existing client", () => {
     await page.getByRole("button", { name: /back to the standard wording/i }).click();
     await expect(subject).toHaveValue("Playwright, your payment link");
     await page.getByRole("button", { name: "Cancel", exact: true }).click();
+
+    /* ── the wording cannot outlive the figures it names ──────────────
+       Ben reviews at one rate, rewrites the message around it, then goes
+       back and changes the rate. Without the guard his sentence still names
+       the old number while the link charges the new one, which is the exact
+       failure this whole flow exists to prevent. */
+    await page.getByRole("button", { name: /back to edit/i }).click();
+    await page.getByLabel("Monthly rate in pounds").fill("99");
+    await expect(page.getByText(/your own wording has gone back to the standard message/i)).toBeVisible();
+
+    await page.getByRole("button", { name: /review before sending/i }).click();
+    await expect(page.getByText("Check before it goes")).toBeVisible({ timeout: 30_000 });
+    /* Scoped to the panel. The "Links sent" list underneath carries rows from
+       every other device project running at the same time, so a page-wide
+       search for a rate matches somebody else's invite. */
+    const review = page.getByTestId("invite-review");
+    await expect(review.getByText("your wording")).toHaveCount(0);
+    await expect(review.getByText(/Here's your payment link as we discussed/)).toBeVisible();
+    await expect(review.getByText("Morning Sam, here's that link we talked about:", { exact: false })).toHaveCount(0);
+    // And the standard message names the NEW rate, not the old one.
+    await expect(review.getByText(/£99\/mo/)).toBeVisible();
+    await expect(review.getByText(new RegExp(RATE_SHOWN.replace(".", "\\.") + "/mo"))).toHaveCount(0);
 
     // Nothing was sent by any of that.
     await expect(page.getByRole("button", { name: /^send to playwright$/i })).toBeVisible();

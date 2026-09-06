@@ -11,7 +11,30 @@ import { createClient } from "@supabase/supabase-js";
 const dry = process.argv.includes("--dry");
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SECRET_KEY, { auth: { persistSession: false } });
-const isE2E = (email) => /^kieron\.hawke\+(e2e-|admin-e2e)/.test(email ?? "");
+/**
+ * Exactly what the harness creates, and nothing else.
+ *
+ * ⚠️ DELIBERATELY NARROW. This runs against the live database with the
+ * service key, so it matches only the addresses these scripts and the
+ * Playwright spec mint for themselves. Ben, Kieron's own accounts and the
+ * hand-made test clients from earlier work are all left alone — an
+ * over-eager pattern here deletes somebody's real record.
+ *
+ * The Playwright spec creates an auth user on every run (the client sets a
+ * password before paying) and never pays, so nothing else would ever tidy
+ * those up. They were accumulating one per run.
+ */
+const E2E_PATTERNS = [
+  /^kieron\.hawke\+e2e-/,
+  /^kieron\.hawke\+sc-/,
+  /^kieron\.hawke\+admin-e2e@/,
+  /^kieron\.hawke\+editcheck@/,
+  /^kieron\.hawke\+livecheck@/,
+  /^playwright\+\d+@example\.com$/,
+  /^pw\+\d+@example\.com$/,
+  /^verify\+/,
+];
+const isE2E = (email) => E2E_PATTERNS.some((re) => re.test((email ?? "").toLowerCase()));
 const out = { dry, stripeCustomers: [], dbCustomers: [], dbSubscriptions: 0, invites: [], authUsers: [] };
 
 // Stripe: every test customer whose email is an e2e address.
@@ -26,8 +49,9 @@ for await (const c of stripe.customers.list({ limit: 100 })) {
 }
 
 // DB: customers + their subscriptions rows.
-const { data: custs } = await sb.from("customers").select("id, email").like("email", "kieron.hawke+e2e-%");
-for (const c of custs ?? []) {
+const { data: allCusts } = await sb.from("customers").select("id, email");
+const custs = (allCusts ?? []).filter((c) => isE2E(c.email));
+for (const c of custs) {
   if (!dry) {
     const { count } = await sb.from("subscriptions").delete({ count: "exact" }).eq("customer_id", c.id);
     out.dbSubscriptions += count ?? 0;
@@ -40,7 +64,7 @@ for (const c of custs ?? []) {
 const { data: invites } = await sb.from("onboarding_invites").select("id, payload");
 for (const i of invites ?? []) {
   const email = i.payload?.email ?? "";
-  if (isE2E(email) || /^playwright\+/.test(email)) {
+  if (isE2E(email)) {
     if (!dry) await sb.from("onboarding_invites").delete().eq("id", i.id);
     out.invites.push(`${i.id} ${email}`);
   }

@@ -108,12 +108,102 @@ export async function storeInvite(payload: InvitePayload): Promise<StoreResult> 
   }
 }
 
+/**
+ * MARKING AN INVITE SPENT.
+ *
+ * ⚠️ WHY THIS EXISTS, AND WHY IT IS NOT A NEW COLUMN.
+ *
+ * The double-charge guard used to work off the email address, and it had a
+ * hole: the client can correct the address Ben typed on the account screen,
+ * so the customer record ends up under one address while the invite carries
+ * another. Re-open the link on a second device — where the browser has none
+ * of their typing — and the guard checks only Ben's version, finds nobody,
+ * and lets the payment through. Measured: it was Stripe's idempotency key,
+ * not this code, that stopped a second subscription being created. That key
+ * expires after 24 hours, so the protection was real for a day and imaginary
+ * afterwards.
+ *
+ * The invite is the stable identifier: one link, one client, one payment.
+ * Stamping it closes the hole whatever address anybody typed and whatever
+ * device it was opened on.
+ *
+ * It goes INSIDE the existing jsonb payload rather than in a new column
+ * because applying DDL to this database needs somebody with the dashboard
+ * open, and a correctness fix should not wait on that. The keys are
+ * underscore-prefixed and stripped on read, so nothing downstream can mistake
+ * them for part of the invite.
+ */
+export type InviteUsage = { usedISO: string; customerId: string | null };
+
+export async function markInviteUsed(
+  id: string,
+  customerId: string | null,
+): Promise<void> {
+  if (!looksLikeInviteId(id) || !dbConfigured()) return;
+  try {
+    const sb = supabaseAdmin();
+    const { data } = await sb
+      .from("onboarding_invites")
+      .select("payload")
+      .eq("id", id)
+      .maybeSingle();
+    if (!data) return;
+    const payload = (data.payload ?? {}) as Record<string, unknown>;
+    // First use wins, so the stamp always answers "when did they pay".
+    if (payload._usedAt) return;
+    await sb
+      .from("onboarding_invites")
+      .update({
+        payload: {
+          ...payload,
+          _usedAt: new Date().toISOString(),
+          ...(customerId ? { _usedCustomerId: customerId } : {}),
+        },
+      })
+      .eq("id", id);
+  } catch {
+    /* Never the reason an activation fails. The email guard still stands, and
+       the worst case is the state we had before this existed. */
+  }
+}
+
+/** When this invite was paid, or null. Cheap: one row by primary key. */
+export async function inviteUsage(id: string): Promise<InviteUsage | null> {
+  if (!looksLikeInviteId(id) || !dbConfigured()) return null;
+  try {
+    const { data } = await supabaseAdmin()
+      .from("onboarding_invites")
+      .select("payload")
+      .eq("id", id)
+      .maybeSingle();
+    const payload = (data?.payload ?? {}) as Record<string, unknown>;
+    if (!payload._usedAt) return null;
+    return {
+      usedISO: String(payload._usedAt),
+      customerId: payload._usedCustomerId ? String(payload._usedCustomerId) : null,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/** The bookkeeping keys, kept out of the invite everything else reads. */
+function stripInternal(payload: Record<string, unknown>): InvitePayload {
+  const clean = { ...payload };
+  delete clean._usedAt;
+  delete clean._usedCustomerId;
+  return clean as unknown as InvitePayload;
+}
+
 /** Resolve a short id back to its invite. Null when unknown or expired. */
 export type StoredInvite = {
   id: string;
   createdISO: string;
   expiresISO: string;
   openedISO: string | null;
+  /** When this link was actually paid, straight from the invite. */
+  usedISO: string | null;
+  usedCustomerId: string | null;
   payload: InvitePayload;
 };
 
@@ -148,13 +238,21 @@ export async function recentInvites(limit = 50): Promise<StoredInvite[]> {
       .order("created_at", { ascending: false })
       .limit(limit);
     if (error || !data) return [];
-    return data.map((r) => ({
-      id: r.id as string,
-      createdISO: r.created_at as string,
-      expiresISO: r.expires_at as string,
-      openedISO: (r.opened_at as string | null) ?? null,
-      payload: r.payload as InvitePayload,
-    }));
+    return data.map((r) => {
+      const raw = (r.payload ?? {}) as Record<string, unknown>;
+      return {
+        id: r.id as string,
+        createdISO: r.created_at as string,
+        expiresISO: r.expires_at as string,
+        openedISO: (r.opened_at as string | null) ?? null,
+        /* Straight from the invite itself, so a client who corrected the
+           address Ben typed still shows as signed up. Matching the sent list
+           to customers by email missed exactly those people. */
+        usedISO: raw._usedAt ? String(raw._usedAt) : null,
+        usedCustomerId: raw._usedCustomerId ? String(raw._usedCustomerId) : null,
+        payload: stripInternal(raw),
+      };
+    });
   } catch {
     return [];
   }
@@ -181,7 +279,7 @@ export async function loadInvite(id: string): Promise<InvitePayload | null> {
     // itself; Postgres does not, so an unswept row must still be refused
     // rather than merely untidy.
     if (new Date(data.expires_at).getTime() < Date.now()) return null;
-    return data.payload as InvitePayload;
+    return stripInternal(data.payload as Record<string, unknown>);
   } catch {
     return null;
   }

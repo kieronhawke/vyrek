@@ -139,7 +139,16 @@ export function leadBrief(a: QuizAnswers, result: SiftResult = sift(a)): string 
         )
       : null,
     !beginner && a.raceDate
+      /* ⚠️ PINNED TO LONDON, NOT THE SERVER'S CLOCK.
+         The quiz stores a race date as UTC midnight. Formatted in whatever
+         zone the process happens to be in, anywhere west of UTC renders the
+         day before — so a client who told Ben they race on the 11th appears
+         in his brief as racing on the 10th. It showed up as a unit test that
+         passed in London and failed on a laptop set to Atlantic time, which
+         is exactly how it would reach production: invisibly, on somebody
+         else's machine. The business runs on London time everywhere else. */
       ? `Race booked: ${a.raceDate.toLocaleDateString("en-GB", {
+          timeZone: "Europe/London",
           day: "numeric",
           month: "long",
           year: "numeric",

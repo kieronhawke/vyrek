@@ -138,9 +138,12 @@ try {
   // ── the client signs in and sees billing only ─────────────────────────
   await ctx.clearCookies();
   await page.goto(`${BASE}/login`);
-  await page.getByLabel(/email/i).first().fill(client.email);
-  await page.getByLabel(/password/i).first().fill(client.password);
-  await page.getByRole("button", { name: /sign in|log in/i }).first().click();
+  // The member login leads with the emailed sign-in link; the password form
+  // is behind this control.
+  await page.getByRole("button", { name: /use a password instead/i }).click();
+  await page.locator('input[type="email"]').first().fill(client.email);
+  await page.locator('input[type="password"]').first().fill(client.password);
+  await page.locator('button[type="submit"]').last().click();
   await page.waitForURL(/\/app/, { timeout: 60_000 });
   await page.goto(`${BASE}/app/account`);
   await page.waitForTimeout(3000);

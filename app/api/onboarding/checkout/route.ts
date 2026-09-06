@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { resolveInvite } from "@/lib/onboarding/resolve";
+import { inviteUsage, looksLikeInviteId } from "@/lib/onboarding/invite-store";
 import { signingConfigured } from "@/lib/onboarding/token";
 import { displayPrice, planByKey } from "@/lib/onboarding/model";
 import {
@@ -79,6 +80,25 @@ export async function POST(request: Request) {
   }
 
   const invite = read.invite;
+  const inviteId = looksLikeInviteId(body.token ?? "") ? (body.token as string) : null;
+
+  /*
+   * HAS THIS LINK ALREADY BEEN PAID?
+   *
+   * Asked before anything else, because it is the only guard that does not
+   * depend on anybody having typed the same email address twice. One link,
+   * one client, one payment — whatever address ended up on the account and
+   * whichever device the link is re-opened on. See markInviteUsed().
+   */
+  if (inviteId) {
+    const used = await inviteUsage(inviteId);
+    if (used) {
+      return NextResponse.json(
+        { error: "ALREADY_SUBSCRIBED", accountUrl: `${siteUrl().replace(/\/$/, "")}/app/account` },
+        { status: 409 },
+      );
+    }
+  }
 
   /*
    * THE PRICE COMES FROM THE VERIFIED INVITE, NEVER FROM THE REQUEST.
@@ -135,45 +155,65 @@ export async function POST(request: Request) {
    */
   const trialDays = agreedPence !== null ? 0 : (plan?.trialDays ?? 0);
 
-  // The address we dedupe and pre-fill against. The short-SMS invite path
-  // deliberately drops the email from the signed token to keep the text to one
-  // segment — so on that path we fall back to the email the client just typed
-  // into the flow. Without this, the double-charge guard below was silently
-  // skipped for every SMS invite (and Stripe collected a fresh email too),
-  // which is exactly when a re-opened link causes a second charge.
+  /*
+   * THE ADDRESS THIS SUBSCRIPTION BELONGS TO.
+   *
+   * ⚠️ THE ONE THE CLIENT CONFIRMED WINS, AND THAT ORDER MATTERS.
+   *
+   * It used to be the invite's address first. The account screen lets them
+   * correct the email Ben typed — and plenty do, because Ben types it off a
+   * phone screen between sessions — so /api/onboarding/account created their
+   * login under the corrected address while Stripe was handed the original.
+   * Activation then made a SECOND account under Ben's version, hung the
+   * customer row and the subscription off that one, and left the client
+   * signing in successfully to an account with no subscription on it. They
+   * had paid, the money was in Stripe, and their account showed nothing.
+   *
+   * The invite is still what authorises the payment and still fixes the
+   * amount; the signature covers the money, not the mailbox. So the address
+   * the person actually confirmed is the one everything hangs off, and the
+   * invite's is the fallback for the short-SMS path where the signed token
+   * carries no email at all.
+   */
   const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
   const bodyEmail = (body.email || "").trim().toLowerCase();
-  const clientEmail =
-    (invite.email || "").trim().toLowerCase() ||
-    (EMAIL_RE.test(bodyEmail) ? bodyEmail : "");
+  const inviteEmail = (invite.email || "").trim().toLowerCase();
+  const clientEmail = (EMAIL_RE.test(bodyEmail) ? bodyEmail : "") || inviteEmail;
 
   // Already paying? Stop here. Invites stay valid for weeks, so the commonest
   // way to double-charge somebody is them re-opening the text ("did that go
   // through?") and paying a second time. If this email already has a live
   // subscription, send them to their account instead of creating another.
   let existingStripeCustomer: string | null = null;
-  if (clientEmail) {
+  /* BOTH addresses, when they differ. Checking only the confirmed one would
+     miss somebody who already paid under the address Ben typed and has since
+     corrected it — which is precisely the person most likely to re-open the
+     link and try again. */
+  const guardEmails = [...new Set([clientEmail, inviteEmail].filter(Boolean))];
+  for (const address of guardEmails) {
     try {
       const sb = supabaseAdmin();
       const { data: cust } = await sb
         .from("customers")
         .select("id, stripe_customer_id")
-        .eq("email", clientEmail)
+        .eq("email", address)
         .maybeSingle();
-      if (cust?.id) {
+      if (!cust?.id) continue;
+      // Reuse the Stripe customer of the address we are actually billing.
+      if (address === clientEmail) {
         existingStripeCustomer = cust.stripe_customer_id ?? null;
-        const { data: live } = await sb
-          .from("subscriptions")
-          .select("id")
-          .eq("customer_id", cust.id)
-          .in("status", ["active", "trialing", "past_due"])
-          .limit(1);
-        if (live && live.length > 0) {
-          return NextResponse.json(
-            { error: "ALREADY_SUBSCRIBED", accountUrl: `${siteUrl().replace(/\/$/, "")}/app/account` },
-            { status: 409 },
-          );
-        }
+      }
+      const { data: live } = await sb
+        .from("subscriptions")
+        .select("id")
+        .eq("customer_id", cust.id)
+        .in("status", ["active", "trialing", "past_due"])
+        .limit(1);
+      if (live && live.length > 0) {
+        return NextResponse.json(
+          { error: "ALREADY_SUBSCRIBED", accountUrl: `${siteUrl().replace(/\/$/, "")}/app/account` },
+          { status: 409 },
+        );
       }
     } catch (e) {
       // A lookup blip must not block a genuine first payment; log and proceed.
@@ -229,6 +269,9 @@ export async function POST(request: Request) {
     ...(schedule.dueTodayPence > 0
       ? { due_today_pence: String(schedule.dueTodayPence) }
       : {}),
+    /* So activation can stamp the invite as spent without having to work out
+       which link a payment came from by matching email addresses. */
+    ...(inviteId ? { invite_id: inviteId } : {}),
   };
 
   /*

@@ -29,7 +29,6 @@ import {
   scheduleSms,
 } from "@/lib/onboarding/schedule";
 import {
-  assembleSms,
   checkEmail,
   checkSmsMessage,
   defaultInviteEmailBody,
@@ -44,7 +43,6 @@ import {
   smsConfigured,
   toE164,
 } from "@/lib/sms/send";
-import { isGsm7, segments } from "@/lib/sms/messages";
 import { siteUrl } from "@/lib/site-url";
 import { supabaseServer } from "@/lib/supabase/server";
 import { isAdminEmail } from "@/lib/admin/auth";
@@ -143,18 +141,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
   }
 
-  // Belt and braces even for an authed admin: a runaway client-side loop
-  // should not be able to burn SMS credit.
-  const rl = await limiters.adminInvite.limit(`invite:${requestIp(request)}`);
-  if (!rl.success) {
-    return NextResponse.json({ error: "RATE_LIMITED" }, { status: 429 });
-  }
-
   let body: Body;
   try {
     body = (await request.json()) as Body;
   } catch {
     return NextResponse.json({ error: "BAD_REQUEST" }, { status: 400 });
+  }
+
+  /* Belt and braces even for an authed admin: a runaway client-side loop
+     should not be able to burn SMS credit.
+
+     A PREVIEW IS NOT A SEND, AND IS COUNTED SEPARATELY. Editing the wording
+     re-previews on every save, so one carefully written invite can easily be
+     five or six previews — and charging those against the send budget would
+     mean the more care Ben takes, the sooner he is locked out of sending. A
+     preview costs a render and nothing else. */
+  const limiter = body.preview ? limiters.adminPreview : limiters.adminInvite;
+  const rl = await limiter.limit(`invite:${requestIp(request)}`);
+  if (!rl.success) {
+    return NextResponse.json({ error: "RATE_LIMITED" }, { status: 429 });
   }
 
   const name = (body.name ?? "").trim();
@@ -434,11 +439,19 @@ export async function POST(request: Request) {
   const key = short && stored.ok ? stored.id : createInvite(fields);
   const link = inviteUrl(key, siteUrl());
 
-  // The text gets the bare-domain link; the email keeps the full one so it
-  // renders as a proper anchor. Re-assembled against the REAL link rather
-  // than the sample: on the signed-token fallback the two differ by nearly
-  // a hundred characters, and the message that gets sent is this one.
-  const smsText = phone ? assembleSms(smsCheck.message, inviteUrlForSms(key, siteUrl())) : null;
+  /* The text gets the bare-domain link; the email keeps the full one so it
+     renders as a proper anchor.
+     ⚠️ RE-CHECKED AGAINST THE REAL LINK. The preview measures a ten-character
+     short id; the signed-token fallback is around a hundred characters longer,
+     and it is the fallback that gets sent when the invite store is down. A
+     message that previewed as one text can be three, which lib/sms/send.ts
+     refuses outright — so the length that matters is measured here, against
+     the link actually going out, and reported honestly rather than assumed
+     from the sample. */
+  const realSms = phone
+    ? checkSmsMessage(smsCheck.message, inviteUrlForSms(key, siteUrl()))
+    : null;
+  const smsText = realSms?.body ?? null;
 
   // Both at once. Sequentially, a slow email delays the text for no reason,
   // and neither is allowed to fail the other.
@@ -506,6 +519,11 @@ export async function POST(request: Request) {
       sentAs: smsResult.ok ? smsResult.sentAs : null,
       /** Returned either way, so a failure never leaves Ben without a route. */
       text: smsText,
+      /** What it actually cost, measured against the link that went out. */
+      segments: realSms?.segments ?? 0,
+      /** Set when the real link pushed it past what the preview measured. */
+      longerThanPreviewed:
+        realSms !== null && realSms.segments > smsCheck.segments,
     },
   });
 }
