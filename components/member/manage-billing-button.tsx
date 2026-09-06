@@ -2,6 +2,24 @@
 
 import { useState } from "react";
 
+const GENERIC = "Couldn't open the billing portal. Try again in a moment.";
+
+/**
+ * What actually went wrong, rather than "try again" for everything.
+ *
+ * Every failure used to read "Try again in a moment", including the two that
+ * retrying can never fix. Signed in as somebody with no subscription — an
+ * admin looking at the member area, most often — returns 404 for ever, and a
+ * person told to wait will sit there clicking. Say which it is.
+ */
+function messageFor(status: number): string {
+  if (status === 401) return "Your session has ended. Sign in again to manage billing.";
+  if (status === 404) {
+    return "This account has no subscription to manage. If you pay Suth Performance, sign in with the email address your payment link was sent to.";
+  }
+  return GENERIC;
+}
+
 /**
  * Client-side trigger for the Stripe Billing Portal. Posts to
  * `/api/stripe/create-portal-session` (server creates the portal session
@@ -21,7 +39,7 @@ export function ManageBillingButton() {
         method: "POST",
       });
       if (!res.ok) {
-        setError("Couldn't open the billing portal. Try again in a moment.");
+        setError(messageFor(res.status));
         return;
       }
       const data = (await res.json()) as { url?: string };
@@ -29,7 +47,7 @@ export function ManageBillingButton() {
         window.location.href = data.url;
         return;
       }
-      setError("Couldn't open the billing portal. Try again in a moment.");
+      setError(GENERIC);
     } catch {
       setError("Couldn't reach Stripe. Check your connection and retry.");
     } finally {

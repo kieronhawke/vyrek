@@ -409,10 +409,12 @@ export function AccountScreen({
         <section style={{ marginBottom: "var(--space-4)" }}>
           <Eyebrow>Help</Eyebrow>
           <RowGroup>
-            {/* The tour's own last card promises this is here. Not in the
-                billing portal: the shell only mounts the walkthrough outside
-                billing mode, so the button would set a replay flag that
-                nothing there ever reads. */}
+            {/* The tour's own last card promises this is here. Still not for
+                a billing-only client: the shell mounts the walkthrough once
+                there is a published block, and they have none, so the button
+                would set a replay flag nothing ever reads. (The shell used to
+                gate that on billing mode itself; it gates on the block now,
+                which comes to the same thing here.) */}
             <Row
               label="Guided tour"
               value={<ReplayTour className="member-linkbtn" />}

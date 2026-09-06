@@ -2693,39 +2693,364 @@
   border-radius: var(--radius-md);
 }
 
-/* ── Billing-only portal ──────────────────────────────────────────────
-   A payment-link client has one page, so there is no rail and no tab bar.
-   The desktop rules above reserve space for both; give it back.
+/* ── Billing-only clients ─────────────────────────────────────────────
+   A payment-link client used to get a stripped frame: no rail, no tab bar,
+   one centred column. On a desktop that read as an unstyled mobile page
+   rather than an app, and it hid the fact that there is a product here at
+   all. They now get the same frame as everybody else, with the sections
+   they cannot use yet leading to their own Coming soon screens.
 
-   This block is deliberately last in the file. Every rule in it is an
-   override of the member layout above, and keeping it at the end of the
-   cascade means it wins on order as well as on specificity — so a later
-   member-area change cannot quietly outrank it from below. */
-@media (min-width: 768px) {
-  .member-main[data-mode="billing"] {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: min(var(--member-max), 760px);
+   Nothing is hidden by mode any more, so the rules that did it are gone.
+   `data-mode` is still on the frame for anything that wants to know. */
+
+/* ── Coming soon ──────────────────────────────────────────────────────────
+   The six sections a billing-only client can open but not use yet. Written
+   against the member tokens so it inherits the theme rather than restating
+   it.
+
+   Every animation below is decorative and every one of them ENDS at the
+   finished drawing, so the reduced-motion block at the bottom can simply
+   turn them off and still leave a complete picture. Nothing here animates
+   in from opacity 0 without also being given its final state. */
+
+.cs {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--radius-card, 16px);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.cs__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.cs__bg-img {
+  object-fit: cover;
+  object-position: 50% 22%;
+  /* Almost out. It is a texture, not a photograph on display. */
+  opacity: 0.16;
+  filter: grayscale(0.55) contrast(1.05);
+}
+
+/* A wash so the type never sits on the busiest part of the picture. */
+.cs__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      120% 90% at 12% 0%,
+      color-mix(in srgb, var(--surface) 62%, transparent) 0%,
+      var(--surface) 68%
+    );
+}
+
+.cs__inner {
+  position: relative;
+  z-index: 1;
+  padding: clamp(24px, 5vw, 48px);
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+}
+
+.cs__eyebrow {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.cs__title {
+  margin: 0;
+  font-size: clamp(34px, 6vw, 52px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+.cs__lede {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--text-muted);
+  font-size: clamp(15px, 1.6vw, 17px);
+  line-height: 1.6;
+}
+
+.cs__stage {
+  width: 100%;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  padding: clamp(8px, 2vw, 16px) 0;
+}
+
+/* Wide enough for the drawing to sit BESIDE the words rather than under
+   them. Stacked, the left-aligned text left a column of dead space next to
+   it and the centred art floated in another; paired, they fill the card and
+   the eye goes title → art. The breakpoint is viewport-based but the rail
+   is already 264px of it by this width, so the card is still ~700px. */
+@media (min-width: 1000px) {
+  .cs__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    column-gap: clamp(28px, 4vw, 56px);
+    align-items: center;
   }
-}
-.member-main[data-mode="billing"] {
-  /* No floating tab bar to clear on mobile. */
-  padding-bottom: calc(env(safe-area-inset-bottom) + var(--space-6));
-}
 
-/* The topbar normally hands over to the rail at 768px; a billing portal
-   has no rail, so the topbar stays as the header at every width. */
-@media (min-width: 768px) {
-  .member-frame[data-mode="billing"] .member-topbar {
-    display: flex;
+  .cs__eyebrow { grid-column: 1; grid-row: 1; align-self: end; }
+  .cs__title   { grid-column: 1; grid-row: 2; }
+  .cs__lede    { grid-column: 1; grid-row: 3; align-self: start; }
+
+  .cs__stage {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    margin-top: 0;
+    padding: 0;
   }
+
+  .cs__foot { grid-column: 1 / -1; }
 }
 
-/* The rail and the tab bar are navigation to pages this client does not
-   have. The old shell solved that by not rendering them; the rebuilt shell
-   renders one member frame for everyone, so say it here instead. Harmless
-   if the markup is conditional again — it just never matches. */
-.member-frame[data-mode="billing"] .member-rail,
-.member-frame[data-mode="billing"] .member-tabbar {
-  display: none;
+.cs-art {
+  width: min(100%, 420px);
+  height: auto;
+  overflow: visible;
+}
+
+.cs__foot {
+  margin: 4px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  width: 100%;
+  color: var(--text-faint);
+  font-size: 14px;
+}
+
+.cs__link {
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+/* ── Shared drawing primitives ──────────────────────────────────────── */
+
+.cs-panel {
+  fill: color-mix(in srgb, var(--text) 4%, transparent);
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.cs-bar {
+  fill: color-mix(in srgb, var(--text) 14%, transparent);
+  opacity: 0;
+  animation: cs-rise 0.55s ease-out forwards;
+}
+
+.cs-d1 { animation-delay: 0.10s; }
+.cs-d2 { animation-delay: 0.22s; }
+.cs-d3 { animation-delay: 0.34s; }
+.cs-d4 { animation-delay: 0.46s; }
+
+@keyframes cs-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Today — the progress ring sweeps once and stays. */
+.cs-ring-track {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 5;
+}
+
+.cs-ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 5;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 56px 58px;
+  stroke-dasharray: 138;
+  stroke-dashoffset: 138;
+  animation: cs-sweep 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+
+@keyframes cs-sweep {
+  to { stroke-dashoffset: 42; }
+}
+
+/* Plan — twelve weeks arriving in order. */
+.cs-cell {
+  /* Was 5% on a near-black card, which read as nothing at all. Every cell
+     stays identical: a grid where some were filled would look like weeks
+     already written, and there are none. */
+  fill: color-mix(in srgb, var(--text) 11%, transparent);
+  stroke: color-mix(in srgb, var(--text) 22%, transparent);
+  stroke-width: 1;
+  opacity: 0;
+  animation: cs-cell-in 0.5s ease-out forwards;
+}
+
+@keyframes cs-cell-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.94); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Progress — axes, then the line draws left to right. */
+.cs-axis { stroke: var(--border-strong, var(--border)); stroke-width: 1.5; }
+.cs-grid { stroke: var(--border); stroke-width: 1; opacity: 0.5; }
+
+.cs-line {
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: cs-draw 1.8s cubic-bezier(0.33, 1, 0.68, 1) 0.35s forwards;
+}
+
+@keyframes cs-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.cs-endpoint {
+  fill: var(--accent);
+  opacity: 0;
+  animation: cs-pop 0.4s ease-out 2.0s forwards, cs-pulse 2.4s ease-in-out 2.4s infinite;
+}
+
+@keyframes cs-pop {
+  from { opacity: 0; transform: scale(0.4); transform-origin: 216px 36px; }
+  to   { opacity: 1; transform: scale(1); transform-origin: 216px 36px; }
+}
+
+@keyframes cs-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+
+/* Fuel — three arcs filling to different lengths. */
+.cs-arc-track {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 7;
+}
+
+.cs-arc {
+  fill: none;
+  stroke-width: 7;
+  stroke-linecap: round;
+  animation: cs-fill 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.cs-arc--1 { stroke: var(--accent); animation-delay: 0.15s; }
+.cs-arc--2 { stroke: color-mix(in srgb, var(--accent) 62%, var(--surface)); animation-delay: 0.3s; }
+.cs-arc--3 { stroke: color-mix(in srgb, var(--accent) 36%, var(--surface)); animation-delay: 0.45s; }
+
+/* Each arc carries its full circumference inline as its dasharray and its
+   own stopping point as --cs-stop, so one keyframe set serves all three and
+   none of them closes into a complete ring. A full circle would read as
+   "100% of your macros", which is a number nobody has measured. */
+.cs-arc--1 { --cs-stop: 104; }
+.cs-arc--2 { --cs-stop: 84; }
+.cs-arc--3 { --cs-stop: 62; }
+
+@keyframes cs-fill {
+  to { stroke-dashoffset: var(--cs-stop); }
+}
+
+/* Coach — bubbles land, then Ben starts typing. */
+.cs-bubble {
+  fill: color-mix(in srgb, var(--accent) 16%, transparent);
+  stroke: color-mix(in srgb, var(--accent) 30%, transparent);
+  stroke-width: 1;
+  opacity: 0;
+  animation: cs-rise 0.5s ease-out forwards;
+}
+
+.cs-bubble--them {
+  fill: color-mix(in srgb, var(--text) 7%, transparent);
+  stroke: var(--border);
+}
+
+.cs-dot {
+  fill: var(--text-faint);
+  animation: cs-blink 1.4s ease-in-out infinite;
+}
+
+.cs-dot--1 { animation-delay: 0s; }
+.cs-dot--2 { animation-delay: 0.18s; }
+.cs-dot--3 { animation-delay: 0.36s; }
+
+.cs-typing { opacity: 0; animation: cs-rise 0.4s ease-out 0.6s forwards; }
+
+@keyframes cs-blink {
+  0%, 60%, 100% { opacity: 0.35; }
+  30%           { opacity: 1; }
+}
+
+/* Connections — a hub with two rings turning at different speeds. */
+.cs-orbit {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 7;
+}
+
+.cs-hub {
+  fill: color-mix(in srgb, var(--accent) 22%, transparent);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.cs-node {
+  fill: var(--accent);
+}
+
+.cs-spin--in  { animation: cs-rotate 9s linear infinite; }
+.cs-spin--out { animation: cs-rotate 16s linear infinite reverse; }
+
+@keyframes cs-rotate {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────────
+   Every animation above finishes at the complete drawing, so switching them
+   off is enough — except the three that START from a hidden or unfilled
+   state, which have to be put into their end state by hand. */
+@media (prefers-reduced-motion: reduce) {
+  .cs-bar,
+  .cs-cell,
+  .cs-ring,
+  .cs-line,
+  .cs-arc,
+  .cs-endpoint,
+  .cs-bubble,
+  .cs-typing,
+  .cs-dot,
+  .cs-spin--in,
+  .cs-spin--out {
+    animation: none !important;
+  }
+
+  .cs-bar,
+  .cs-cell,
+  .cs-bubble,
+  .cs-typing,
+  .cs-endpoint {
+    opacity: 1;
+    transform: none;
+  }
+
+  .cs-ring { stroke-dashoffset: 42; }
+  .cs-line { stroke-dashoffset: 0; }
+  .cs-arc  { stroke-dashoffset: var(--cs-stop) !important; }
 }

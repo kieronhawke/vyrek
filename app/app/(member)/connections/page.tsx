@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { assertFullMember } from "@/lib/member/auth";
+import { ComingSoon } from "@/components/member/screens/coming-soon";
 import { Connections } from "@/components/member/connections";
 
 export const metadata: Metadata = { title: "Connections" };
 
 /** CONNECTIONS — auth boundary only. */
 export default async function MemberConnectionsPage() {
-  await assertFullMember("/app/connections");
+  const ctx = await assertFullMember("/app/connections");
+  if (ctx.locked) return <ComingSoon section="connections" />;
   return (
     <>
       <p className="eyebrow">Account</p>

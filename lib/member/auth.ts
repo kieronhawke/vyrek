@@ -45,16 +45,30 @@ export type MemberContext = {
 };
 
 /**
- * The gate for TRAINING pages. Billing-only clients — existing clients
- * moved onto Stripe via a payment link — bounce to their subscription
- * page rather than seeing training screens the admin hasn't switched on.
+ * The gate for TRAINING pages.
+ *
+ * Billing-only clients — existing clients moved onto Stripe via a payment
+ * link — used to be REDIRECTED to /app/account from every training page.
+ * Combined with a shell that also hid the rail for them, that meant the whole
+ * product was a single stripped page: there was no way to see that Today,
+ * Plan, Progress, Fuel, Coach and Connections exist at all.
+ *
+ * They now reach every section and get a Coming soon screen on the ones that
+ * are not built yet, so `locked` replaces the redirect. Callers render the
+ * placeholder when it is true:
+ *
+ *   const ctx = await assertFullMember("/app/today");
+ *   if (ctx.locked) return <ComingSoon section="today" />;
+ *
+ * A page that forgets the check shows the ordinary empty state rather than
+ * anything private — every training screen is driven by this member's own
+ * (absent) plan — so the failure mode is a duller page, not a leak.
  */
 export async function assertFullMember(
   pagePath = "/app",
-): Promise<MemberContext> {
+): Promise<MemberContext & { locked: boolean }> {
   const ctx = await assertMember(pagePath);
-  if (ctx.memberMode === "billing") redirect("/app/account");
-  return ctx;
+  return { ...ctx, locked: ctx.memberMode === "billing" };
 }
 
 export async function assertMember(

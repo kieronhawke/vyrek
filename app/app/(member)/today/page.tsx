@@ -1,4 +1,5 @@
 import { assertFullMember } from "@/lib/member/auth";
+import { ComingSoon } from "@/components/member/screens/coming-soon";
 import { programmeLabel } from "@/lib/member/demo";
 import { TodayScreen } from "@/components/member/screens/today-screen";
 import { FirstRunScreen } from "@/components/member/screens/first-run-screen";
@@ -15,6 +16,7 @@ import { factsFromContext, resolveFirstRun } from "@/lib/member/first-run";
  */
 export default async function TodayPage() {
   const ctx = await assertFullMember("/app/today");
+  if (ctx.locked) return <ComingSoon section="today" />;
   const state = resolveFirstRun(factsFromContext(ctx));
 
   if (state.stage !== "ready") {

@@ -149,7 +149,11 @@ export async function POST(req: Request) {
 
   // Branded templates, not hand-rolled text. Both go through
   // lib/email/send.ts so the whole lifecycle shares one sender config.
-  const inbox = process.env.CONSULTATION_INBOX ?? "kieron.hawke@gmail.com";
+  // Ben, not Kieron. This used to default to kieron.hawke@gmail.com, so
+  // every enquiry landed in the builder's inbox rather than the coach's.
+  // adminEmails() is the single list; the first address drives the response
+  // and the rest get a copy.
+  const [inbox, ...otherAdmins] = adminEmails();
   const firstName = lead.name.split(" ")[0];
 
   // City-level, off the Vercel edge headers. Null everywhere else, which
@@ -221,24 +225,21 @@ export async function POST(req: Request) {
     pageViews: session.pageViews ?? null,
     leadUrl,
   };
-  // Kieron gets the primary send (its result drives the response); Ben and
-  // any other admins get their own copy, best-effort.
+  // The first admin address drives the response; the rest get their own
+  // copy, best-effort.
   const internal = await sendInternalLeadBrief({ to: inbox, ...briefArgs });
-  const inboxKey = inbox.trim().toLowerCase();
   void Promise.all(
-    adminEmails()
-      .filter((to) => to !== inboxKey)
-      .map((to) =>
-        sendInternalLeadBrief({ to, ...briefArgs }).catch((e) =>
-          console.error("[consultation] admin brief copy failed", e),
-        ),
+    otherAdmins.map((to) =>
+      sendInternalLeadBrief({ to, ...briefArgs }).catch((e) =>
+        console.error("[consultation] admin brief copy failed", e),
       ),
+    ),
   );
 
   // The text. Short on purpose — it fires on every enquiry and every
   // segment is billed, so it carries the four facts Ben needs to decide
   // whether to ring now and puts everything else one tap away. Sent to
-  // every admin number (Kieron and Ben). It goes even when the lead couldn't
+  // every admin number. It goes even when the lead couldn't
   // be stored — a Redis blip must not swallow the most valuable message in
   // the funnel; we just point at the admin list instead of a dead /l/ page.
   const smsBody = leadUrl
