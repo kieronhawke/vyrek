@@ -283,7 +283,7 @@ export async function POST(request: Request) {
      that could drift from this one. */
   const defaultSms = defaultInviteSmsMessage(firstName, kind, schedule);
   const defaultSubject = defaultInviteEmailSubject(firstName, kind);
-  const defaultBody = defaultInviteEmailBody(kind, schedule);
+  const defaultBody = defaultInviteEmailBody(kind);
 
   const smsMessage =
     typeof body.smsMessage === "string" && body.smsMessage.trim()

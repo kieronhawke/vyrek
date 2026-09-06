@@ -179,27 +179,27 @@ export function defaultInviteEmailSubject(
  * is a box that eventually sends a broken email. The template renders each
  * paragraph as text, so anything he types is escaped by React on the way in.
  */
-export function defaultInviteEmailBody(
-  kind: "full" | "payment",
-  schedule: PaymentSchedule | null,
-): string {
+export function defaultInviteEmailBody(kind: "full" | "payment"): string {
   /* The greeting is the email's headline and is not part of this. Otherwise
      an edited body would sit under "Let's get you on card, Sam" and open by
      greeting him a second time. Ben edits the message; the headline, the
-     button, the figures and the sign-off belong to the template. */
+     button, the figures and the sign-off belong to the template.
+
+     ⚠️ IT NO LONGER RECITES THE FIGURES. It used to, and the panel
+     underneath printed the same numbers again — so the client read "£100
+     today, then £60 a month from Tuesday 15 September" twice in one email,
+     once as a sentence and once as a table. That is most of what "too much
+     going on" meant. The table keeps them; the prose says why the email
+     exists and gets out of the way. */
   if (kind !== "payment") {
     return [
-      "Before I write your first week I need a few things from you: what you're training for, how you're training now, and anything I should know about injuries.",
-      "It takes about five minutes, and it's all on your phone.",
+      "Before I write your first week, I need a few things from you: what you're training for, how you're training now, and anything I should know about injuries.",
+      "It takes about five minutes, all on your phone.",
     ].join("\n\n");
   }
-  const lines = schedule ? scheduleLines(schedule) : null;
   return [
-    "Here's the link to get your payments set up, as we discussed. Nothing changes about your training, this just moves things onto a card so neither of us has to think about it again.",
-    lines
-      ? `Exactly as we agreed: ${lines.today} ${lines.monthly}`
-      : "It only takes a couple of minutes.",
-    "Any questions at all, just reply to this and it comes straight to me.",
+    "Here's the link to set your payments up, as we discussed. Nothing changes about your training.",
+    "Any questions, just reply to this.",
   ].join("\n\n");
 }
 

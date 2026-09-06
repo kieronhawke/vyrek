@@ -41,6 +41,17 @@ export function InviteRowActions({
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  /**
+   * Say it happened the moment it happens.
+   *
+   * The row itself is server-rendered, so it only disappears once
+   * `router.refresh()` has re-fetched the page — and that is a full render of
+   * the list plus a customer lookup. Ben pressed "Yes, cancel it" and watched
+   * nothing change for a second or two, which reads as a button that did not
+   * work and invites a second press. This says so immediately; the refresh
+   * then takes the row away underneath it.
+   */
+  const [cancelled, setCancelled] = useState(false);
 
   const pounds = (pence: number) =>
     pence % 100 === 0 ? String(pence / 100) : (pence / 100).toFixed(2);
@@ -65,6 +76,7 @@ export function InviteRowActions({
         setError("Could not cancel it. Try again in a moment.");
         return;
       }
+      setCancelled(true);
       router.refresh();
     } catch {
       setError("Could not reach the server. The link is still live.");
@@ -76,6 +88,17 @@ export function InviteRowActions({
 
   const btn =
     "inline-flex h-9 items-center rounded-pill border border-suth-border px-3 text-xs text-suth-text-secondary hover:border-suth-border-strong hover:text-suth-text disabled:opacity-50";
+
+  if (cancelled) {
+    return (
+      <p
+        role="status"
+        className="mt-3 text-xs text-suth-text-secondary"
+      >
+        Link cancelled. It will not open for them any more.
+      </p>
+    );
+  }
 
   return (
     <div className="mt-3 flex flex-wrap items-center gap-2">

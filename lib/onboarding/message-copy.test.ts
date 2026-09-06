@@ -155,16 +155,25 @@ describe("the email", () => {
   });
 
   it("does not repeat the greeting the template already prints", () => {
-    const body = defaultInviteEmailBody("payment", paymentSchedule({ amountPence: 6000 }));
+    const body = defaultInviteEmailBody("payment");
     expect(body).not.toMatch(/^(Hi|Good|Hello|Dear)\b/i);
     expect(body).toContain("as we discussed");
   });
 
-  it("states the schedule in the same words as everywhere else", () => {
-    const schedule = paymentSchedule({ amountPence: 6000, dueTodayPence: 10000, startDay: DATED });
-    const body = defaultInviteEmailBody("payment", schedule);
-    expect(body).toContain("£100 today, for your outstanding balance.");
-    expect(body).toMatch(/Then £60 a month from \w+ \d+ \w+/);
+  it("leaves the figures to the table rather than saying them twice", () => {
+    /* The body used to recite the schedule in prose while the panel
+       underneath printed the same numbers again — the client read them
+       twice in one email, which is most of what "too much going on" meant. */
+    const body = defaultInviteEmailBody("payment");
+    expect(body).not.toMatch(/£/);
+    expect(body).not.toMatch(/\bmonth\b/);
+  });
+
+  it("stays short enough to read in one glance", () => {
+    for (const kind of ["payment", "full"] as const) {
+      const words = defaultInviteEmailBody(kind).split(/\s+/).filter(Boolean).length;
+      expect(words, `${kind}: ${words} words`).toBeLessThanOrEqual(45);
+    }
   });
 
   it("keeps single line breaks inside a paragraph", () => {

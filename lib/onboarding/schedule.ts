@@ -207,6 +207,37 @@ export function scheduleRows(s: PaymentSchedule): { label: string; value: string
 }
 
 /**
+ * The same table, in the past tense, for after the card has gone through.
+ *
+ * `scheduleRows` says "Today: £160" to somebody deciding whether to pay.
+ * Once they have, the same row has to say it already happened — a receipt
+ * that still reads like a quote leaves people wondering whether they are
+ * about to be charged a second time.
+ */
+export function scheduleAfterRows(s: PaymentSchedule): { label: string; value: string }[] {
+  const monthly = `${displayPrice(s.monthlyPence)} a month`;
+  const rows: { label: string; value: string }[] = [];
+  if (s.dueTodayPence > 0 && s.deferred) {
+    rows.push({ label: "Paid today", value: `${displayPrice(s.dueTodayPence)} (outstanding balance)` });
+    rows.push({ label: `From ${formatStartDate(s.startDay!)}`, value: monthly });
+  } else if (s.dueTodayPence > 0) {
+    rows.push({
+      label: "Paid today",
+      value: `${displayPrice(s.todayPence)} (${displayPrice(s.dueTodayPence)} balance + first month)`,
+    });
+    rows.push({ label: "Then", value: monthly });
+  } else if (s.deferred) {
+    rows.push({ label: "Paid today", value: "Nothing" });
+    rows.push({ label: "First payment", value: `${monthly}, from ${formatStartDate(s.startDay!)}` });
+  } else {
+    rows.push({ label: "Paid today", value: displayPrice(s.monthlyPence) });
+    rows.push({ label: "Then", value: monthly });
+  }
+  return rows;
+}
+
+
+/**
  * The schedule for a text message, where every character is billed.
  *
  * "£100 today, then £60/mo from 1 Oct". Plain GSM-7 — no curly quotes, no

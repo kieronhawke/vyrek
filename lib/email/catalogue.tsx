@@ -1,5 +1,14 @@
 import type { ReactElement } from "react";
 import {
+  OnboardingInviteEmail,
+  onboardingInviteSubject,
+} from "@/lib/email/templates/onboarding-invite";
+import {
+  AccountReadyEmail,
+  accountReadySubject,
+} from "@/lib/email/templates/account-ready";
+import { defaultInviteEmailBody, toParagraphs } from "@/lib/onboarding/message-copy";
+import {
   LeadConfirmationEmail,
   leadConfirmationSubject,
   CallBookedEmail,
@@ -498,5 +507,49 @@ export const EMAIL_SAMPLES: EmailSample[] = [
     when: "Contact form submitted",
     subject: contactAckSubject,
     element: <ContactAckEmail firstName={NAME} />,
+  },
+  /*
+   * ⚠️ THE TWO A PAYING CLIENT ACTUALLY RECEIVES, AND THEY WERE MISSING.
+   *
+   * Everything above is a funnel or lifecycle email. The invite and the
+   * "you're all set" that follow a payment link were the only two Ben could
+   * not look at without sending one to somebody — which is exactly backwards,
+   * because they are the two that carry money. Sample figures below are the
+   * shape a real client sees: a balance today and a rate from a date.
+   */
+  {
+    id: "onboarding-invite",
+    audience: "Client",
+    when: "Ben sets an existing client up on card payment",
+    subject: onboardingInviteSubject(NAME, "payment"),
+    element: (
+      <OnboardingInviteEmail
+        firstName={NAME}
+        link="https://www.suthperformance.com/o/k7m2xq9raf"
+        kind="payment"
+        paragraphs={toParagraphs(defaultInviteEmailBody("payment"))}
+        payRows={[
+          { label: "Today", value: "£100 (outstanding balance)" },
+          { label: "From Tuesday 15 September", value: "£60 a month" },
+        ]}
+      />
+    ),
+  },
+  {
+    id: "account-ready",
+    audience: "Client",
+    when: "The moment their payment goes through",
+    subject: accountReadySubject(NAME),
+    element: (
+      <AccountReadyEmail
+        firstName={NAME}
+        signInUrl="https://www.suthperformance.com/app/account"
+        variant="billing"
+        rows={[
+          { label: "Paid today", value: "£100 (outstanding balance)" },
+          { label: "From Tuesday 15 September", value: "£60 a month" },
+        ]}
+      />
+    ),
   },
 ];

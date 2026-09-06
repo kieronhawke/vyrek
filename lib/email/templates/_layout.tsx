@@ -4,7 +4,6 @@ import {
   Head,
   Hr,
   Html,
-  Img,
   Link,
   Preview,
   Section,
@@ -87,7 +86,9 @@ export function trackedUrl(path: string, campaign: string): string {
 }
 
 const headerStyle = {
-  paddingBottom: 8,
+  /* Room to breathe. At 8px the wordmark sat directly on top of the eyebrow
+     and the two read as one four-line block. */
+  paddingBottom: 26,
 };
 
 const h1Style = {
@@ -242,12 +243,22 @@ export function EmailLayout({
    * competing with it.
    */
   internal = false,
+  /**
+   * The four site links in the footer.
+   *
+   * Off for anything transactional. A payment email asks the reader to do one
+   * thing, and "Suth Club · HYROX guides · Journal · Contact" underneath it is
+   * four invitations to go and do something else instead — which is most of
+   * what "too much going on" means on a screen that small.
+   */
+  nav = true,
   campaign = "general",
 }: {
   preview: string;
   children: ReactNode;
   marketing?: boolean;
   internal?: boolean;
+  nav?: boolean;
   campaign?: string;
 }) {
   return (
@@ -282,30 +293,76 @@ export function EmailLayout({
               <td align="center" style={{ background: BG }} {...OUTLOOK_BG}>
         <Container style={containerStyle}>
           <Section style={headerStyle}>
-            {/* A large share of recipients block images by default, so the
-                alt text is the logo for them. Styled to match the wordmark
-                rather than left as a default blue underlined link. */}
+            {/*
+              THE WORDMARK IS TEXT, NOT A PICTURE OF TEXT.
+              ⚠️ IT USED TO BE A 13KB PNG, AND THAT WAS THE PROBLEM.
+
+              Two complaints, one cause. It "took a few seconds to appear"
+              because /public on Vercel is served `max-age=0,
+              must-revalidate`, so every open of every email made a fresh
+              conditional request — measured at 0.4 to 1.1 seconds, every
+              time, for ever. And it "sometimes didn't appear at all" because
+              blocking remote images is the DEFAULT in Outlook desktop and
+              most corporate mail, so for those readers the header was empty
+              space above the message.
+
+              Text has neither problem: it is in the message, it paints with
+              the message, and no client can decline to show it. The letter-
+              forms are not Oswald — email strips @font-face — but a wordmark
+              that is always there in Helvetica beats a perfect one that is
+              sometimes missing. The square full stop is the brand's, and it
+              is a styled table cell rather than an image so it survives too.
+            */}
             <Link
               href={trackedUrl("/", campaign)}
               style={{ color: TEXT, textDecoration: "none" }}
             >
-              <Img
-                src={url("/email/logo-wordmark.png")}
-                width="180"
-                height="109"
-                alt="Suth Performance"
-                style={{
-                  display: "block",
-                  border: 0,
-                  outline: "none",
-                  color: TEXT,
-                  fontFamily: fontStack,
-                  fontSize: 20,
-                  fontWeight: 800,
-                  letterSpacing: "-0.02em",
-                  textDecoration: "none",
-                }}
-              />
+              <table role="presentation" cellPadding={0} cellSpacing={0} border={0}>
+                <tbody>
+                  <tr>
+                    <td>
+                      {/* The full stop is a character, not a coloured cell.
+                          A filled table cell would have been a second block
+                          of chartreuse in the markup, which is how the "one
+                          call to action" guard counts buttons — and it needed
+                          a 1px font size to stop the spacer growing, which
+                          the "nothing under 11px" guard rightly refuses. A
+                          period in the accent colour needs neither.
+
+                          Both lines share one cell, separated by a break,
+                          because two table rows come out of the plain-text
+                          renderer as "SUTH.Performance" on a single line —
+                          and the text alternative is the whole email for a
+                          screen reader. */}
+                      <span
+                        style={{
+                          color: TEXT,
+                          fontFamily: fontStack,
+                          fontSize: 30,
+                          fontWeight: 800,
+                          letterSpacing: "0.01em",
+                          lineHeight: "1.2",
+                        }}
+                      >
+                        SUTH<span style={{ color: ACCENT }}>.</span>
+                      </span>
+                      <br />
+                      <span
+                        style={{
+                          color: TEXT_DIM,
+                          fontFamily: monoStack,
+                          fontSize: 11,
+                          letterSpacing: "0.3em",
+                          lineHeight: "1.6",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Performance
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </Link>
           </Section>
 
@@ -314,7 +371,7 @@ export function EmailLayout({
           <Hr style={hrRule} />
 
           <Section>
-            {internal ? null : (
+            {internal || !nav ? null : (
             <Text
               style={{
                 color: TEXT_FAINT,

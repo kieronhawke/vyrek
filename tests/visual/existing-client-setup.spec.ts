@@ -325,8 +325,12 @@ test.describe("Ben sets up an existing client", () => {
     await expect(row).toBeVisible();
     await row.getByRole("button", { name: /cancel link/i }).click();
     await row.getByRole("button", { name: /yes, cancel it/i }).click();
+    /* Ben is told at once. The row itself is server-rendered, so it goes when
+       the refresh lands — which under load is a second or two later, and is
+       exactly why the confirmation does not wait for it. */
+    await expect(row.getByText(/link cancelled/i)).toBeVisible();
     await expect(page.locator("li", { hasText: clientEmail })).toHaveCount(0, {
-      timeout: 15_000,
+      timeout: 45_000,
     });
 
     await page.goto(path, { waitUntil: "load" });

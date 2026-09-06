@@ -440,8 +440,15 @@ export function sendAccountReady(args: {
   signInUrl: string;
   planName?: string;
   variant?: "billing" | "full";
-  /** What was taken today and what comes out monthly — scheduleAfterLines(). */
-  after?: { today: string; monthly: string } | null;
+  /**
+   * What was taken and what comes next, as label/value rows.
+   *
+   * Rows rather than sentences: the figures used to be two sentences of
+   * prose at the top of the email, which is how it grew into the wall
+   * Kieron quoted back. Built by scheduleAfterRows() so they match the
+   * table the client already saw on the invite.
+   */
+  rows?: { label: string; value: string }[] | null;
 }): Promise<Result> {
   const { to, ...rest } = args;
   return send({

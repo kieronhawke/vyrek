@@ -105,6 +105,31 @@ async function payAs(browser, link, { email, password = "Scenario-Pass-2026!", e
 const dbCustomer = (email) =>
   sb.from("customers").select("id, email, stripe_customer_id, auth_user_id").eq("email", email).maybeSingle();
 
+/**
+ * Wait for activation to finish rather than guessing at it.
+ *
+ * Activation runs twice per checkout — from the welcome page and from the
+ * webhook — and how long it takes depends on what else is hitting the server.
+ * A fixed five-second sleep passed on a quiet machine and failed straight
+ * after a ten-project browser run, reporting a linkage fault that did not
+ * exist. Poll for the state the test is actually about.
+ */
+async function settled(email, ms = 45_000) {
+  const until = Date.now() + ms;
+  for (;;) {
+    const { data } = await dbCustomer(email);
+    if (data?.id && data.auth_user_id) {
+      const { data: subs } = await sb
+        .from("subscriptions")
+        .select("id")
+        .eq("customer_id", data.id);
+      if ((subs ?? []).length > 0) return data;
+    }
+    if (Date.now() > until) return data ?? null;
+    await new Promise((r) => setTimeout(r, 1500));
+  }
+}
+
 async function authUser(email) {
   const { data } = await sb.auth.admin.listUsers({ perPage: 200 });
   return data.users.find((u) => u.email === email) ?? null;
@@ -178,6 +203,7 @@ async function scenarioCorrectedEmail(browser) {
   });
   const paid = await payAs(browser, body.link, { email: typo, editEmailTo: real });
 
+  await settled(real);
   const { data: onReal } = await dbCustomer(real);
   const { data: onTypo } = await dbCustomer(typo);
   check("corrected email", "the customer record is under the address they confirmed", Boolean(onReal?.id),

@@ -221,8 +221,19 @@ try {
   check("and it is the billing-only view", /Coming to your account/.test(account));
 
   /* ── 6 · What Stripe and the database hold ────────────────────────────── */
-  const { data: cust } = await sb.from("customers")
-    .select("id, email, stripe_customer_id").eq("email", CLIENT.email).maybeSingle();
+  /* Polled, not slept on. Activation's timing depends on what else is
+     hitting the server, and a fixed wait reports a fault that is really a
+     busy machine. */
+  const settledUntil = Date.now() + 45_000;
+  let cust = null;
+  for (;;) {
+    const { data } = await sb.from("customers")
+      .select("id, email, stripe_customer_id").eq("email", CLIENT.email).maybeSingle();
+    cust = data;
+    if (cust?.id && cust.stripe_customer_id) break;
+    if (Date.now() > settledUntil) break;
+    await new Promise((r) => setTimeout(r, 1500));
+  }
   check("one customer record, under the right address", Boolean(cust?.id), cust?.email ?? "none");
   if (cust?.id) {
     const { data: subs } = await sb.from("subscriptions").select("status").eq("customer_id", cust.id);

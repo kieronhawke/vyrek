@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { render } from "@react-email/components";
 import { OnboardingInviteEmail } from "@/lib/email/templates/onboarding-invite";
+import { AccountReadyEmail } from "@/lib/email/templates/account-ready";
 import { WelcomeEmail } from "@/lib/email/templates/welcome";
 import { SubscriptionNoticeEmail } from "@/lib/email/templates/subscription-notice";
 import {
@@ -209,12 +210,20 @@ describe("the invite specifically", () => {
     expect(html).toContain("Sam");
   });
 
-  it("shows the logo", async () => {
+  it("shows the wordmark, and does not need an image to do it", async () => {
+    /* ⚠️ THIS USED TO REQUIRE THE PNG. It was replaced because the PNG was
+       the whole problem: /public is served must-revalidate, so every open
+       re-fetched it (0.4–1.1s each time), and blocking remote images is the
+       default in Outlook desktop, so for those readers the header was empty.
+       Text paints with the message and cannot be declined. */
     const html = await render(
       OnboardingInviteEmail({ firstName: "Sam", link: LINK, kind: "full", paragraphs: ["A line of body copy."] }),
     );
-    expect(html).toMatch(/src="https:\/\/[^"]*\/email\/logo-wordmark\.png"/);
-    expect(html).toMatch(/alt="Suth Performance"/);
+    expect(html).toContain("SUTH");
+    expect(html).toMatch(/Performance/i);
+    expect(html).not.toMatch(/logo-wordmark\.png/);
+    // No remote image anywhere: nothing in the header can fail to load.
+    expect(html).not.toMatch(/<img[^>]+src="https?:/i);
   });
 
   it("has exactly one call-to-action button", async () => {
@@ -224,6 +233,73 @@ describe("the invite specifically", () => {
     // A second call to action halves the first.
     const buttons = html.match(/background-color:#A3E635|background:#A3E635/gi) ?? [];
     expect(buttons.length).toBeLessThanOrEqual(1);
+  });
+
+  it("says what it needs and stops", async () => {
+    /* ⚠️ A LENGTH BUDGET, BECAUSE THESE TWO GREW.
+       The "all set" email had drifted to a single opening sentence carrying
+       five separate facts — what was taken, that the card was saved, the
+       monthly figure, the date, and what the account is for — and the invite
+       recited the schedule in prose while the table underneath printed the
+       same numbers again. Read back by the person receiving them as "a lot
+       of words going on", which it was. Prose only: the figures live in a
+       table and do not count against this. */
+    const cases: [string, React.ReactElement][] = [
+      [
+        "invite",
+        OnboardingInviteEmail({
+          firstName: "Sam",
+          link: LINK,
+          kind: "payment",
+          paragraphs: [
+            "Here's the link to set your payments up, as we discussed. Nothing changes about your training.",
+            "Any questions, just reply to this.",
+          ],
+          payRows: [
+            { label: "Today", value: "£100 (outstanding balance)" },
+            { label: "From Tuesday 15 September", value: "£150 a month" },
+          ],
+        }),
+      ],
+      [
+        "account ready",
+        AccountReadyEmail({
+          firstName: "Sam",
+          signInUrl: LINK,
+          variant: "billing",
+          rows: [
+            { label: "Paid today", value: "£100 (outstanding balance)" },
+            { label: "From Tuesday 15 September", value: "£150 a month" },
+          ],
+        }),
+      ],
+    ];
+    for (const [name, el] of cases) {
+      const text = await render(el, { plainText: true });
+      const words = text
+        .replace(/https?:\/\/\S+/g, "")
+        .split(/\s+/)
+        .filter(Boolean).length;
+      expect(words, `${name}: ${words} words`).toBeLessThanOrEqual(80);
+    }
+  });
+
+  it("puts the money in a table rather than in a sentence", async () => {
+    const html = await render(
+      AccountReadyEmail({
+        firstName: "Sam",
+        signInUrl: LINK,
+        variant: "billing",
+        rows: [
+          { label: "Paid today", value: "£100 (outstanding balance)" },
+          { label: "From Tuesday 15 September", value: "£60 a month" },
+        ],
+      }),
+    );
+    expect(html).toContain("Paid today");
+    // The prose must not recite the schedule as well.
+    expect(html).not.toMatch(/has been taken today/i);
+    expect(html).not.toMatch(/comes out from/i);
   });
 
   it("carries no unsubscribe line — it is transactional", async () => {

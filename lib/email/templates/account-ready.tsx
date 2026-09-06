@@ -1,4 +1,4 @@
-import { Section, Text } from "@react-email/components";
+import { Text } from "@react-email/components";
 import {
   Btn,
   EmailLayout,
@@ -6,6 +6,7 @@ import {
   H1,
   P,
   Panel,
+  Row,
   SignOff,
 } from "@/lib/email/templates/_layout";
 import { TEXT_DIM, fontStack } from "@/lib/email/templates/_styles";
@@ -13,24 +14,22 @@ import { TEXT_DIM, fontStack } from "@/lib/email/templates/_styles";
 /**
  * THE WAY IN, SENT THE MOMENT THEY PAY.
  *
- * The onboarding flow never asks for a password, on purpose — somebody who
- * has just handed over a card should not then have to invent a credential
- * they will forget. So this is how they get into the account: one link,
- * already signed in at the other end.
+ * One job: get them into the account they have just started paying for.
  *
- * THE LINK IS TIME-LIMITED, and the email says so plainly. A magic link
- * that has quietly expired, in an email that promised it would work, is a
- * support message at the worst possible moment — the first hour of somebody
- * paying. There is a fallback line for when it does expire.
+ * ── SHORTER, ON PURPOSE ───────────────────────────────────────────────────
+ * This email used to open with a single sentence carrying five separate
+ * facts: what was taken, that the card was saved, the monthly figure, the
+ * date, that nothing else changes, and what the account is for. Read aloud it
+ * is thirty seconds of talking before the reader is told what to do. Kieron
+ * quoted it back as exactly that — "a lot of words going on".
  *
- * IT IS NOT A RECEIPT. Stripe sends that, and duplicating it here would
- * bury the one thing this email exists to do.
+ * So the prose says one thing, and the figures moved into a table where a
+ * figure belongs. Somebody checking what they paid finds it by looking rather
+ * than by reading, which is the whole difference between a receipt and a
+ * paragraph about a receipt.
  *
- * THE MONEY IS DESCRIBED IN THE PAST TENSE, FROM THE SCHEDULE. It used to be
- * assembled here from `amount` and `startsOn`, which could say "nothing has
- * been taken yet" to somebody who had just paid a £100 balance. The two
- * sentences now come from lib/onboarding/schedule.ts, built from the same
- * numbers the checkout actually charged.
+ * IT IS NOT A RECEIPT. Stripe sends that. Duplicating it here would bury the
+ * one thing this email exists to do.
  */
 
 export function AccountReadyEmail({
@@ -38,49 +37,57 @@ export function AccountReadyEmail({
   signInUrl,
   planName,
   variant = "full",
-  after,
+  rows,
 }: {
   firstName: string;
   signInUrl: string;
   planName?: string;
   /**
    * "billing" is an existing client moved onto Stripe by a payment link:
-   * their training already happens with Ben, so the email promises the
-   * subscription portal — not a first week that deliberately isn't
-   * switched on yet.
+   * their training already happens with Ben, so this promises the
+   * subscription portal, not a first week that deliberately isn't switched
+   * on yet.
    */
   variant?: "billing" | "full";
   /**
-   * What happened today and what happens monthly, past and future tense —
-   * `scheduleAfterLines()`. Null when the figures are not known, in which
-   * case the email says less rather than guessing.
+   * What was taken and what comes next, as label/value pairs — the same rows
+   * the invite showed them before they paid, so the two match. Null when the
+   * figures are not known, in which case the email says less rather than
+   * guessing.
    */
-  after?: { today: string; monthly: string } | null;
+  rows?: { label: string; value: string }[] | null;
 }) {
+  const billing = variant === "billing";
   return (
     <EmailLayout
-      preview="Your account is ready. One tap and you're in."
+      preview={`You're all set, ${firstName}. Here's the way into your account.`}
       campaign="account-ready"
+      /* Transactional. The site links belong on an email that wants a browse,
+         not on the one telling somebody their payment went through. */
+      nav={false}
     >
-      <Eyebrow>You&apos;re in</Eyebrow>
+      <Eyebrow>{billing ? "All set" : "You're in"}</Eyebrow>
       <H1>
-        {variant === "billing"
-          ? `All set, ${firstName}.`
-          : `Welcome aboard, ${firstName}.`}
+        {billing ? `You're all set, ${firstName}.` : `Welcome aboard, ${firstName}.`}
       </H1>
 
       <P>
-        {variant === "billing"
-          ? after
-            ? `${after.today} ${after.monthly} Nothing else changes. Your account is where you see payments, update your card, or make changes.`
-            : "Your card is saved and your payments now collect automatically. Nothing else changes. Your account is where you see payments, update your card, or make changes."
+        {billing
+          ? "Thanks for getting that sorted. Everything is set up at your end."
           : planName
             ? `Your ${planName} is set up and your account is waiting.`
-            : "Your account is set up and waiting."}{" "}
-        This link signs you straight in, or use the password you chose.
+            : "Your account is set up and waiting."}
       </P>
 
       <Btn href={signInUrl}>Open my account</Btn>
+
+      {rows && rows.length > 0 ? (
+        <Panel title="Your payments">
+          {rows.map((r) => (
+            <Row key={r.label} label={r.label} value={r.value} />
+          ))}
+        </Panel>
+      ) : null}
 
       <Text
         style={{
@@ -88,52 +95,17 @@ export function AccountReadyEmail({
           fontFamily: fontStack,
           fontSize: 13,
           lineHeight: "1.6",
-          margin: "16px 0 0",
+          margin: "20px 0 0",
         }}
       >
-        {/* Said out loud rather than discovered. A link that has silently
+        {/* Said out loud rather than discovered. A link that has quietly
             expired, in an email that promised it would work, is a support
             message in the first hour of somebody paying. */}
-        The link works for a short while for security. If it&apos;s stopped
-        working, sign in with your email and password, or ask for a new link
-        from the sign-in page.
+        That button works for a short while. After that, sign in with your
+        email and password.
       </Text>
 
-      <Panel title="What happens next">
-        <Text
-          style={{
-            color: TEXT_DIM,
-            fontFamily: fontStack,
-            fontSize: 15,
-            lineHeight: "1.8",
-            margin: 0,
-          }}
-        >
-          {variant === "billing" ? (
-            <>
-              {after?.monthly ?? "Your payment collects automatically each month"}
-              <br />
-              Update your card or make changes any time from your account
-              <br />
-              Training carries on with me exactly as it does now
-            </>
-          ) : (
-            <>
-              I write your first week around what you told me
-              <br />
-              It lands in your account, and you get a text
-              <br />
-              Message me any time from inside the app
-            </>
-          )}
-        </Text>
-      </Panel>
-
-      <Section>
-        <P>Any questions at all, just reply. It comes straight to me.</P>
-      </Section>
-
-      <SignOff />
+      <SignOff line="Any questions, just reply." />
     </EmailLayout>
   );
 }

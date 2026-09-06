@@ -92,6 +92,9 @@ export function OnboardingInviteEmail({
             : "Five minutes, and Ben can write your first week."
       }
       campaign="onboarding-invite"
+      /* Transactional. Four site links under a payment link are four
+         invitations to go and do something else instead. */
+      nav={false}
     >
       <Eyebrow>{payment ? "One step left" : "Welcome aboard"}</Eyebrow>
       <H1>
@@ -117,25 +120,6 @@ export function OnboardingInviteEmail({
 
       <Btn href={link}>{payment ? "Set up my payments" : "Set up my account"}</Btn>
 
-      <Text
-        style={{
-          color: TEXT_FAINT,
-          fontFamily: monoStack,
-          fontSize: 13,
-          lineHeight: "1.6",
-          margin: "18px 0 0",
-          wordBreak: "break-all",
-        }}
-      >
-        {/* Deliberately muted, not accent. This is a fallback for clients
-            that strip the button — set in the same chartreuse it competes
-            with the button it exists to back up, and the eye goes to the
-            longest thing on the screen rather than the thing to press. */}
-        Or paste this into your browser:
-        <br />
-        <span style={{ color: TEXT_DIM }}>{link}</span>
-      </Text>
-
       {payment && payRows && payRows.length > 0 ? (
         <Panel title="What you'll pay">
           {payRows.map((r) => (
@@ -143,6 +127,26 @@ export function OnboardingInviteEmail({
           ))}
         </Panel>
       ) : null}
+
+      <Text
+        style={{
+          color: TEXT_FAINT,
+          fontFamily: monoStack,
+          fontSize: 12,
+          lineHeight: "1.6",
+          margin: "20px 0 0",
+          wordBreak: "break-all",
+        }}
+      >
+        {/* Deliberately muted, not accent. This is a fallback for clients
+            that strip the button — set in the same chartreuse it competes
+            with the button it exists to back up, and the eye goes to the
+            longest thing on the screen rather than the thing to press.
+            It sits UNDER the figures now: it is the least important line in
+            the email and it was second from the top. */}
+        Button not working?{" "}
+        <span style={{ color: TEXT_DIM }}>{link}</span>
+      </Text>
 
       {!payment ? (
         <Panel title="What I'll ask you">

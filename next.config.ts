@@ -136,6 +136,23 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       { source: "/:path*", headers: BASELINE_HEADERS },
+      /*
+       * The email images, cached hard.
+       *
+       * Vercel serves /public with `max-age=0, must-revalidate`, so every
+       * open of every email made a fresh conditional request for the logo —
+       * measured at 0.4 to 1.1 seconds each time, which is why it "took a few
+       * seconds to appear". The header no longer uses an image at all, but
+       * every email already sitting in somebody's inbox still points at these
+       * files and will for months. They are content-addressed by name and
+       * never edited in place, so a year is safe.
+       */
+      {
+        source: "/email/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
       { source: "/admin/:path*", headers: PRIVATE_HEADERS },
       { source: "/app/:path*", headers: PRIVATE_HEADERS },
       { source: "/partners/dashboard/:path*", headers: PRIVATE_HEADERS },

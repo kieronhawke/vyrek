@@ -10,7 +10,7 @@ import {
   formatStartDateShort,
   parseStartDate,
 } from "@/lib/onboarding/start-date";
-import { paymentSchedule, scheduleAfterLines } from "@/lib/onboarding/schedule";
+import { paymentSchedule, scheduleAfterRows } from "@/lib/onboarding/schedule";
 
 /**
  * TURN A PAID CHECKOUT SESSION INTO AN ACCOUNT THEY CAN GET INTO.
@@ -489,7 +489,7 @@ export async function activateFromSession(
       signInUrl,
       planName: plan,
       variant: isBillingOnly ? "billing" : "full",
-      after: stamped ? scheduleAfterLines(stamped) : null,
+      rows: stamped ? scheduleAfterRows(stamped) : null,
     }).catch(() => {});
   }
 
