@@ -12,8 +12,11 @@ import { logEvent } from "@/lib/admin/events";
  * surface and every number goes back to zero, and (best effort) deletes
  * the Stripe sandbox customers so the payments page empties too.
  *
- * KEPT ON PURPOSE: blog_posts (real content) and booking_availability
- * (Ben's diary hours). Only people/leads/plans/stats are cleared.
+ * KEPT ON PURPOSE: blog_posts (real content), booking_availability
+ * (Ben's diary hours), and live_sessions. That last one is NOT test
+ * data — it is the real analytics log, hundreds of thousands of rows of
+ * genuine visitor and crawler traffic, and it was in this list until
+ * 2026-09-06. Only people/leads/plans/stats are cleared.
  *
  * Admin-gated. It runs with the service-role key, so the assertAdmin gate
  * is the whole of its security — do not expose it unauthenticated.
@@ -30,9 +33,9 @@ const TABLES_CHILD_FIRST: Array<{ table: string; ts: string }> = [
   { table: "abandoned_plans", ts: "created_at" },
   { table: "consultation_bookings", ts: "created_at" },
   { table: "consultation_leads", ts: "created_at" },
+  { table: "consultation_requests", ts: "created_at" },
   { table: "onboarding_invites", ts: "created_at" },
   { table: "waitlist", ts: "created_at" },
-  { table: "live_sessions", ts: "started_at" },
   { table: "admin_events", ts: "created_at" },
   { table: "stripe_events", ts: "received_at" },
   { table: "customers", ts: "created_at" },
