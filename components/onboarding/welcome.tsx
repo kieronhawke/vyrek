@@ -1,10 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { Confetti } from "@/components/onboarding/confetti";
 import { planByKey } from "@/lib/onboarding/model";
 import { parseStartDate } from "@/lib/onboarding/start-date";
 import { paymentSchedule, scheduleAfterLines } from "@/lib/onboarding/schedule";
+
+/** How long they get to read the page before it moves. */
+const REDIRECT_SECONDS = 15;
 
 /**
  * THE MOMENT AFTER THEY PAY.
@@ -14,9 +19,13 @@ import { paymentSchedule, scheduleAfterLines } from "@/lib/onboarding/schedule";
  * beat — a mark that draws itself, then the words, then what happens next —
  * and then it gets out of the way.
  *
- * NOT A CONFETTI CANNON. The brand is a coach who writes training plans at
- * six in the morning, not a consumer app celebrating a streak. One tick, one
- * rise, done.
+ * IT DOES GET CONFETTI, AS OF 6 SEPTEMBER 2026, ON KIERON'S INSTRUCTION.
+ * This paragraph used to say the opposite — "not a confetti cannon, the brand
+ * is a coach who writes training plans at six in the morning" — and that
+ * reasoning is why the burst is two seconds of brand colours from the bottom
+ * corners rather than a shower of primary colours from the top. The tick
+ * still draws itself first; the confetti is the punctuation, not the
+ * sentence. See components/onboarding/confetti.tsx.
  *
  * IT NEVER CLAIMS MORE THAN IT KNOWS. When Stripe could not be reached the
  * heading is the same but the line underneath says the confirmation is still
@@ -37,6 +46,7 @@ export function OnboardingWelcome({
   amountPence = null,
   dueTodayPence = null,
   startsOn = null,
+  signedIn = false,
 }: {
   name: string;
   planKey: string;
@@ -49,6 +59,12 @@ export function OnboardingWelcome({
   dueTodayPence?: number | null;
   /** "2026-09-01" when the first monthly payment is deferred, else null. */
   startsOn?: string | null;
+  /**
+   * Whether this browser can actually reach the account. The flow signs them
+   * in at the password screen, so it is usually true; when it is not, the
+   * page offers a way in rather than marching them at a login form.
+   */
+  signedIn?: boolean;
   /** The Stripe session. Creating the account is authorised by it, not by us. */
   sessionId?: string;
   /** Payment-only invite: an existing client whose training stays with Ben.
@@ -71,6 +87,7 @@ export function OnboardingWelcome({
           paymentSchedule({ amountPence, dueTodayPence, startDay }),
         )
       : null;
+  const router = useRouter();
   const [emailedTo, setEmailedTo] = useState<string | null>(null);
   /* Null until activation answers. The two outcomes need different sentences
      and guessing at one of them is how somebody ends up hunting for an email
@@ -106,11 +123,48 @@ export function OnboardingWelcome({
     };
   }, [sessionId, confirmed]);
 
+  /*
+   * TAKING THEM TO THEIR ACCOUNT, WITHOUT TAKING THE DECISION AWAY.
+   *
+   * Fifteen seconds: long enough to read what was charged and when the next
+   * payment lands, short enough that nobody is left wondering whether the
+   * page is finished with them. The countdown is on screen the whole time and
+   * there is a control to stop it, because a page that moves under somebody
+   * who is still reading is worse than one that never moves at all — and
+   * every reason to stay is a real one: reading it twice, taking a
+   * screenshot, showing it to someone.
+   *
+   * It only ever runs when they are signed in AND the payment is confirmed.
+   * Counting somebody down to a login screen would be a strange reward for
+   * having just paid.
+   */
+  const canLand = signedIn && confirmed;
+  const [secondsLeft, setSecondsLeft] = useState(REDIRECT_SECONDS);
+  const [holding, setHolding] = useState(false);
+
+  const goToAccount = useCallback(() => {
+    router.push("/app/account");
+  }, [router]);
+
+  useEffect(() => {
+    if (!canLand || holding) return;
+    if (secondsLeft <= 0) {
+      goToAccount();
+      return;
+    }
+    const t = setTimeout(() => setSecondsLeft((n) => n - 1), 1000);
+    return () => clearTimeout(t);
+  }, [canLand, holding, secondsLeft, goToAccount]);
+
   // The entrance animation lives entirely in CSS now. Gating it on a
   // script-set attribute once left the page blank on the live site, and
   // this is the one screen that must never be blank.
   return (
     <div className="ob obw">
+      {/* Only when it is actually true. A burst over "the confirmation is
+          still coming through" would be celebrating something we cannot
+          see. */}
+      {confirmed ? <Confetti /> : null}
       <main className="obw-main">
         <div className="obw-mark" aria-hidden>
           <svg viewBox="0 0 64 64" width="76" height="76">
@@ -233,13 +287,59 @@ export function OnboardingWelcome({
         ) : null}
 
         <div className="obw-actions">
-          <Link href="/login" className="obw-go">
-            Sign in to my account
-          </Link>
-          <Link href="/" className="obw-second">
-            Back to the site
-          </Link>
+          {canLand ? (
+            <>
+              <button type="button" className="obw-go" onClick={goToAccount}>
+                Go to my account
+              </button>
+              {holding ? (
+                <Link href="/" className="obw-second">
+                  Back to the site
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  className="obw-second"
+                  onClick={() => setHolding(true)}
+                >
+                  Stay on this page
+                </button>
+              )}
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="obw-go">
+                Sign in to my account
+              </Link>
+              <Link href="/" className="obw-second">
+                Back to the site
+              </Link>
+            </>
+          )}
         </div>
+
+        {/* Said in words, and announced once rather than on every tick: a live
+            region that fires every second is a screen reader counting out
+            loud over the top of everything else on the page. */}
+        {canLand ? (
+          <p className="obw-countdown" role="status" aria-live="polite">
+            {holding ? (
+              <>Take your time. Your account is there whenever you want it.</>
+            ) : (
+              <>
+                <span aria-hidden>
+                  Taking you to your account in{" "}
+                  <strong className="num">{secondsLeft}</strong>
+                  {secondsLeft === 1 ? " second" : " seconds"}.
+                </span>
+                <span className="obw-sr">
+                  Taking you to your account shortly. Choose Stay on this page
+                  to remain here.
+                </span>
+              </>
+            )}
+          </p>
+        ) : null}
 
         <p className="ob-note obw-receipt">
           A receipt is on its way from Stripe. Manage or cancel any time from

@@ -33,6 +33,9 @@ const E2E_PATTERNS = [
   /^playwright\+\d+@example\.com$/,
   /^pw\+\d+@example\.com$/,
   /^verify\+/,
+  /^kieron\.hawke\+j-/,
+  /^kieron\.hawke\+journey@/,
+  /^load-\d+@example\.com$/,
 ];
 const isE2E = (email) => E2E_PATTERNS.some((re) => re.test((email ?? "").toLowerCase()));
 const out = { dry, stripeCustomers: [], dbCustomers: [], dbSubscriptions: 0, invites: [], authUsers: [] };

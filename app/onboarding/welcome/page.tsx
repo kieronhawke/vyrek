@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/app/onboarding.css";
 import { stripe } from "@/lib/stripe";
+import { currentUserOrNull } from "@/lib/supabase/optional";
 import { OnboardingWelcome } from "@/components/onboarding/welcome";
 
 export const metadata: Metadata = {
@@ -25,6 +26,16 @@ export default async function OnboardingWelcomePage({
   searchParams: Promise<{ session_id?: string }>;
 }) {
   const { session_id: sessionId } = await searchParams;
+
+  /* ARE THEY ACTUALLY SIGNED IN?
+     The flow signs them in when they choose their password, a screen before
+     the card, so most people arrive here authenticated. Asked rather than
+     assumed, because the page offers to take them to their account after a
+     few seconds — and doing that to somebody who is not signed in lands them
+     on a login screen, which is a strange reward for having just paid. When
+     the answer is no, the page offers the door instead of walking them
+     through it. */
+  const user = await currentUserOrNull();
 
   let name = "";
   let planName = "";
@@ -80,6 +91,7 @@ export default async function OnboardingWelcomePage({
       amountPence={amountPence}
       dueTodayPence={dueTodayPence}
       startsOn={startsOn}
+      signedIn={Boolean(user)}
     />
   );
 }

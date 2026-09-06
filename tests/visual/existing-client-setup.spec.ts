@@ -315,6 +315,11 @@ test.describe("Ben sets up an existing client", () => {
     expect(body.includes("choose a plan")).toBe(false);
 
     /* ── Ben cancels it, and the link stops working ───────────────────── */
+    /* Signed back in first. Walking the client's journey signs THIS browser
+       in as the client — that is what makes the welcome page able to carry
+       them to their account — so the admin session it started with is gone
+       by now. Without this the next line loads a redirect, not the list. */
+    await signInAsAdmin(page);
     await page.goto("/admin/clients");
     const row = page.locator("li", { hasText: clientEmail }).first();
     await expect(row).toBeVisible();

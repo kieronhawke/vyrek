@@ -235,6 +235,49 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
           "You already have an account with this email, so your existing password still applies. Nothing else changes.",
         );
       }
+
+      /*
+       * SIGN THEM IN NOW, WHILE THE PASSWORD IS IN THEIR HANDS.
+       *
+       * They typed it two seconds ago, on this device. Doing it here is what
+       * lets the page after Stripe actually take them to their account rather
+       * than to a login screen — "you're in" followed by "please sign in" is
+       * a strange thing to show somebody who has just paid.
+       *
+       * Deliberately best-effort. It runs AFTER the account call succeeded,
+       * so a failure here costs nothing: the account exists, the card is
+       * next, and the welcome page falls back to offering the sign-in link.
+       * It fails legitimately for the client who already had an account with
+       * a different password — the branch above has just told them so.
+       *
+       * Not a security step. Nothing about the payment depends on it, and
+       * signing in before the card only ever gives them their own account,
+       * which at that moment correctly shows no subscription.
+       *
+       * ⚠️ IT REPLACES WHATEVER SESSION THE BROWSER HAD. One session per
+       * browser is how every auth system works, but it has a consequence
+       * worth knowing: if Ben opens a client's link on his own phone to see
+       * what it looks like, he finishes the details screen signed in as that
+       * client and his admin session is gone. Nothing is damaged and signing
+       * back in fixes it — but he will wonder why Mission Control bounced
+       * him, so it is written down here.
+       */
+      if (!data?.alreadyRegistered) {
+        try {
+          const { createBrowserClient } = await import("@supabase/ssr");
+          const sb = createBrowserClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+          );
+          await sb.auth.signInWithPassword({
+            email: answers.email.trim(),
+            password,
+          });
+        } catch {
+          /* The card screen is next either way. */
+        }
+      }
+
       go(index + 1);
     } catch {
       setError("No connection. Try again when you are back online.");

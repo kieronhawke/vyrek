@@ -141,6 +141,28 @@ the button for those.
   in `lib/admin/recipients.ts`. Test runs reach him too; see the note in the
   verification section.
 
+## After they pay
+
+The congratulations page confirms in the past tense what was actually taken,
+then carries them into their account.
+
+- **Confetti.** One burst, two seconds, brand colours only, thrown up from the
+  bottom corners. It scales with the viewport, so a laptop is not a few stray
+  flecks. It cannot swallow a tap on the buttons underneath, it removes itself
+  when it finishes, and under `prefers-reduced-motion` it does not run at all.
+  `components/onboarding/confetti.tsx`. This reverses the note that used to sit
+  in `welcome.tsx` saying the brand should not have one; Kieron asked for it on
+  6 September and the old reasoning is why it is restrained.
+- **Fifteen seconds, then their account.** A visible countdown with a
+  **Stay on this page** control beside it. It only runs when they are actually
+  signed in and the payment is confirmed, because counting somebody down to a
+  login screen would be a strange reward for having just paid.
+- **They are signed in a screen earlier.** The flow calls
+  `signInWithPassword` right after the account is created, while the password
+  they chose is still in hand. ⚠️ One session per browser: if Ben walks a
+  client's link on his own phone he finishes signed in as that client and has
+  to sign back into Mission Control.
+
 ## Verification, 5 September 2026
 
 All against a production build served locally, the live Supabase project and

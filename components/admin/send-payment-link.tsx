@@ -156,7 +156,10 @@ function explain(data: { error?: string; detail?: string }): string {
     case "START_DATE_INVALID":
       return "That start date does not look right.";
     case "RATE_LIMITED":
-      return "Too many links in a short time. Wait a few minutes and try again.";
+      /* Said without claiming anything went out. On the review step nothing
+         has been sent, and "too many links" would have Ben checking whether
+         a client got one twice. */
+      return "That is a lot of activity in a short time, so this one has been held back. Nothing was sent. Try again in a few minutes.";
     case "CONTACT_REQUIRED":
       return "Give an email address or a mobile number.";
     case "SMS_COPY_INVALID":
