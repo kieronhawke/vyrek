@@ -29,6 +29,7 @@ const E2E_PATTERNS = [
   /^kieron\.hawke\+sc-/,
   /^kieron\.hawke\+admin-e2e@/,
   /^kieron\.hawke\+editcheck@/,
+  /^kieron\.hawke\+emailcheck@/,
   /^kieron\.hawke\+livecheck@/,
   /^playwright\+\d+@example\.com$/,
   /^pw\+\d+@example\.com$/,
