@@ -94,6 +94,7 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
     cancelled ? "No problem, nothing was charged. Carry on when you're ready." : null,
   );
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
 
   const step = steps[index];
   const needsPassword = step.key === "account";
@@ -115,6 +116,41 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
           ? "Choose a password, so you can get back into your account."
           : null);
   const set = (patch: Partial<Answers>) => save({ ...answers, ...patch });
+
+  /**
+   * A BLOCKED "CONTINUE" TAKES THEM TO WHAT IS BLOCKING IT.
+   *
+   * This was reported as "the Continue button isn't working", and it was not
+   * a broken button. On the details step a payment-link client arrives with
+   * their name, email and mobile already filled in by Ben — so the only thing
+   * left to do is choose a password, and on a phone that field sits BELOW THE
+   * FOLD, behind the pinned action bar. What they see is a completed form and
+   * a dead button, which is indistinguishable from a bug.
+   *
+   * So the button is no longer `disabled`. It still looks unavailable and
+   * still says why, but pressing it now scrolls the offending field into view
+   * and puts the cursor in it. A control that explains itself when pressed
+   * beats one that cannot be pressed at all — a disabled button cannot even
+   * take focus, so a screen reader lands on nothing and a thumb gets no
+   * feedback whatsoever.
+   *
+   * The first EMPTY field is the right target rather than simply the first:
+   * on this step the first field is their name, which Ben already filled.
+   */
+  function nudgeToBlocker() {
+    const body = bodyRef.current;
+    if (!body) return;
+    const fields = [...body.querySelectorAll<HTMLElement>("input, textarea, select")];
+    const target =
+      fields.find((el) => !(el as HTMLInputElement).value?.trim()) ??
+      fields[0] ??
+      body.querySelector<HTMLElement>("button");
+    if (!target) return;
+    target.scrollIntoView({ block: "center", behavior: "smooth" });
+    // Focus after the scroll so the on-screen keyboard does not fight it.
+    window.setTimeout(() => target.focus({ preventScroll: true }), 250);
+  }
+
 
   /* A plan Ben already chose comes in on the invite, so it is ticked when they
      arrive rather than sitting there as one of three things to weigh up.
@@ -322,7 +358,7 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
             </p>
           ) : null}
 
-          <div className="ob-body">
+          <div className="ob-body" ref={bodyRef}>
             <StepBody
               step={step}
               answers={answers}
@@ -363,8 +399,20 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
           <button
             type="button"
             className="ob-next"
-            onClick={step.key === "account" ? finishAccount : () => go(index + 1)}
-            disabled={Boolean(stop) || busy}
+            /* `aria-disabled`, not `disabled`: see nudgeToBlocker above. It
+               reads as unavailable and looks it, but it can still be pressed
+               and focused, so pressing it does something. */
+            aria-disabled={Boolean(stop) || busy}
+            data-blocked={stop ? "" : undefined}
+            onClick={() => {
+              if (busy) return;
+              if (stop) {
+                nudgeToBlocker();
+                return;
+              }
+              if (step.key === "account") void finishAccount();
+              else go(index + 1);
+            }}
           >
             {busy && step.key === "account" ? "Setting up…" : "Continue"}
           </button>

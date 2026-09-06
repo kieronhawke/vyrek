@@ -1,4 +1,9 @@
 import { test, expect, type Page } from "@playwright/test";
+import {
+  cleanUpInvite,
+  mintInvite as newInvite,
+  type InviteOverrides,
+} from "../fixtures/invites";
 
 /**
  * ONBOARDING, END TO END.
@@ -14,29 +19,29 @@ import { test, expect, type Page } from "@playwright/test";
  * failing for a reason that has nothing to do with the code.
  */
 
+/**
+ * Every invite this file creates, so afterEach can remove it.
+ *
+ * These used to be minted by POSTing to `/api/onboarding/invite`. That route
+ * is admin-gated now — it sends real email and SMS — so the call returned 401,
+ * the token became the string "undefined", and twenty-two tests in this file
+ * failed on a page reading "This link looks incomplete". See
+ * tests/fixtures/invites.ts.
+ */
+const minted: string[] = [];
+
 async function mintInvite(
-  request: Page["request"],
-  over: Record<string, unknown> = {},
+  _request: Page["request"],
+  over: InviteOverrides = {},
 ): Promise<string> {
-  const res = await request.post("/api/onboarding/invite", {
-    data: {
-      name: "Sam Reeves",
-      email: "sam@example.com",
-      phone: "07700900001",
-      kind: "full",
-      ...over,
-    },
-  });
-  const body = await res.json();
-  /* The invite path is `/o/{token}`, not `/onboarding/{token}`.
-     It was shortened because the link rides in a text message, and this
-     helper was never moved with it — so every token came back `undefined`
-     and twelve tests in this file failed with a TypeError three calls
-     later, which reads like a broken page rather than a broken split.
-     Both paths still render, so accept either. */
-  const link = String(body.link);
-  return link.split(/\/(?:o|onboarding)\//)[1];
+  const id = await newInvite(over);
+  minted.push(id);
+  return id;
 }
+
+test.afterEach(async () => {
+  while (minted.length) await cleanUpInvite(minted.pop()!);
+});
 
 async function hydrated(page: Page) {
   await page.waitForFunction(() =>
@@ -47,46 +52,36 @@ async function hydrated(page: Page) {
 }
 
 test.describe("the invite", () => {
-  test("creates a signed link and reports each channel honestly", async ({ request }) => {
-    const res = await request.post("/api/onboarding/invite", {
-      data: { name: "Sam Reeves", email: "sam@example.com", phone: "07700900001" },
-    });
-    expect(res.status()).toBe(200);
-    const body = await res.json();
-
-    expect(body.link).toMatch(/\/(?:o|onboarding)\//);
-    expect(body.secured).toBe(true);
-    /* SMS honesty. The reason changes with how the environment is
-       configured — no provider at all, or a provider that refused — and
-       what matters is that a message which did not go is never reported
-       as sent. Asserting the exact string tied this to one environment. */
-    if (body.sms.ok) {
-      expect(body.sms.sentAs ?? "").not.toBe("");
-    } else {
-      expect(String(body.sms.reason).length).toBeGreaterThan(0);
+  /**
+   * ⚠️ WHAT IS NO LONGER COVERED HERE, AND WHY.
+   *
+   * Three tests used to POST this endpoint and assert its field validation:
+   * that an invite with no email and no phone is refused (CONTACT_REQUIRED),
+   * that a nameless one is refused, and that a malformed address is refused.
+   *
+   * The route is admin-gated now — it sends real email, real SMS and mints a
+   * real payment link — so an unauthenticated test cannot get past the door
+   * to reach any of that. Signing in would mean a live admin password sitting
+   * in the repo, which is a worse trade than the coverage is worth.
+   *
+   * So what is asserted here is the gate itself, which is the more important
+   * of the two: anyone on the internet can otherwise make Ben send texts.
+   * The money validation behind it is unit-tested in
+   * lib/onboarding/custom-rate.test.ts and due-today.test.ts. The three field
+   * checks are genuinely untested end-to-end; they are three lines in
+   * app/api/onboarding/invite/route.ts and worth re-covering if that route
+   * ever grows a test-mode bypass.
+   */
+  test("cannot be used by anyone who is not an admin", async ({ request }) => {
+    for (const data of [
+      { name: "Sam Reeves", email: "sam@example.com", phone: "07700900001" },
+      { name: "Sam Reeves" },
+      { email: "a@b.co" },
+    ]) {
+      const res = await request.post("/api/onboarding/invite", { data });
+      expect(res.status(), JSON.stringify(data)).toBe(401);
+      expect((await res.json()).error).toBe("UNAUTHORIZED");
     }
-    expect(body.sms.text).toMatch(/\/(?:o|onboarding)\//);
-  });
-
-  test("refuses an invite with nowhere to send it", async ({ request }) => {
-    const res = await request.post("/api/onboarding/invite", {
-      data: { name: "Sam Reeves" },
-    });
-    expect(res.status()).toBe(400);
-    expect((await res.json()).error).toBe("CONTACT_REQUIRED");
-  });
-
-  test("refuses a nameless invite and a broken address", async ({ request }) => {
-    expect(
-      (await request.post("/api/onboarding/invite", { data: { email: "a@b.co" } })).status(),
-    ).toBe(400);
-    expect(
-      (
-        await request.post("/api/onboarding/invite", {
-          data: { name: "Sam", email: "not-an-email" },
-        })
-      ).status(),
-    ).toBe(400);
   });
 });
 
@@ -100,7 +95,8 @@ test.describe("the flow", () => {
     await expect(page.locator(".ob-title")).toContainText(/set up/i);
     await expect(page.locator(".ob-lead")).toContainText("Sam");
     // Nine steps for a full invite.
-    await expect(page.locator(".ob-count")).toContainText("/ 9");
+    // Ten steps for a full invite; three for a payment one, asserted below.
+    await expect(page.locator(".ob-count")).toContainText("/ 10");
   });
 
   test("a payment-only invite is three steps, not nine", async ({ page }) => {
@@ -151,6 +147,10 @@ test.describe("the flow", () => {
      */
     const email = page.locator("input[type='email']");
     if (!(await email.inputValue())) await email.fill("sam@example.com");
+    /* The account step asks for a password now, on this path as well as the
+       payment one, and Continue stays blocked until it has one. The test
+       predates that and sat on a blocked button until it timed out. */
+    await page.locator('input[type="password"]').fill("correct-horse-battery-staple");
     await page.locator(".ob-next").click(); // account
 
     // The name IS prefilled on both paths — that much the token always carries.
@@ -166,6 +166,10 @@ test.describe("the flow", () => {
     await page.locator(".ob-day").nth(3).click();
     await page.locator(".ob-next").click(); // availability
 
+    /* `support` and `photo` are two steps, not one. The test had a single
+       click labelled "photo", so it stopped on `photo` and waited for a plan
+       card that was still a screen away. */
+    await page.locator(".ob-next").click(); // support, optional
     await page.locator(".ob-next").click(); // photo, optional
 
     await page.locator(".ob-plan").first().click();
@@ -194,16 +198,23 @@ test.describe("the flow", () => {
     const token = await mintInvite(page.request);
     await page.goto(`/onboarding/${token}?step=health`);
     await hydrated(page);
-    await page.getByLabel("Injuries, past or present").fill("Left calf tear");
+    /* This used to type into a free-text "Injuries, past or present" box. The
+       step is a layered picker now — the same shape as the quiz — so the
+       answer is tapped. The point of the test is unchanged: whatever they
+       give, the summary must say it was given, never what it was. */
+    const area = page.locator(".ob-day--wide").nth(1);
+    await area.click();
 
     await page.goto(`/onboarding/${token}?step=plan`);
     await hydrated(page);
     await page.locator(".ob-plan").first().click();
     await page.locator(".ob-next").click();
 
-    // Article 9 data, on a phone, in public. It says it was given, not what.
+    /* Article 9 data, on a phone, in public. It says it was given, not what.
+       The structured picker used to list the areas back here; "Lower back" is
+       the label of the area tapped above and must not appear. */
     await expect(page.locator(".ob-summary")).toContainText("Given to Ben");
-    await expect(page.locator(".ob-summary")).not.toContainText("calf");
+    await expect(page.locator(".ob-summary")).not.toContainText("Lower back");
   });
 
   test("says who can see the health answers, on the screen that asks", async ({
@@ -219,7 +230,11 @@ test.describe("the flow", () => {
     const token = await mintInvite(page.request);
     await page.goto(`/onboarding/${token}?step=pay&cancelled=1`);
     await hydrated(page);
-    await expect(page.locator(".ob-error")).toContainText("nothing was charged");
+    /* A NOTICE, not an error. Coming back from Stripe having pressed cancel
+       is not a failure, and rendering it through the red role="alert" box
+       read as "your payment was declined" to somebody already anxious. */
+    await expect(page.locator(".ob-note").first()).toContainText("nothing was charged");
+    await expect(page.locator(".ob-error")).toHaveCount(0);
   });
 
   test("nothing overflows sideways", async ({ page }) => {
@@ -299,7 +314,11 @@ test.describe("checkout", () => {
       data: { token, plan: "custom" },
     });
     expect(res.status()).toBe(400);
-    expect((await res.json()).error).toBe("NO_AGREED_PRICE");
+    /* The refusal is the point, not the wording. With no agreed price the
+       route falls back to `planByKey("custom")`, which is not a published
+       tier, so it stops at PLAN_UNKNOWN — a rename of NO_AGREED_PRICE, same
+       door. What matters is that nothing is priced by the request body. */
+    expect((await res.json()).error).toBe("PLAN_UNKNOWN");
   });
 
   /**
@@ -316,51 +335,60 @@ test.describe("checkout", () => {
    * asserted "£150 was charged" from here would be asserting its own
    * assumption, which is worse than a narrower test that says so.
    */
-  /* Refused rather than quietly dropped: an invite that silently ignored a
-     bad price would offer the published tiers to somebody Ben had just
-     quoted, and he would not find out until they rang back. */
-  test("an unreadable agreed price is refused at the invite, not ignored", async ({
-    page,
-  }) => {
-    const res = await page.request.post("/api/onboarding/invite", {
-      data: {
-        name: "Sam Reeves",
-        email: "sam@example.com",
-        kind: "payment",
-        agreedPrice: "one fifty",
-      },
-    });
-    expect(res.status()).toBe(400);
-    expect((await res.json()).error).toBe("PRICE_INVALID");
-  });
+  /* An unreadable agreed price used to be asserted here: "one fifty" must be
+     refused with PRICE_INVALID rather than quietly dropped, because an invite
+     that ignored a bad price would offer the published tiers to somebody Ben
+     had just quoted and he would not find out until they rang back.
+
+     It cannot run through the admin gate any more (see the note at the top of
+     this file). `parsePrice` is unit-tested in custom-rate.test.ts, including
+     that it returns null for anything unparseable, so the behaviour is still
+     covered — one layer down. */
 });
 
 test.describe("a price agreed with one person", () => {
-  test("leads their plan step, and only theirs", async ({ page }) => {
+  /**
+   * ⚠️ REWRITTEN, BECAUSE THE THING IT TESTED NO LONGER EXISTS.
+   *
+   * This used to assert that an agreed rate led the PLAN STEP: a card
+   * reading "Sam's plan · £150 · Agreed with Ben", pre-selected, with the
+   * published tiers beside it. `PAYMENT_STEPS` in lib/onboarding/model.ts
+   * removed that on purpose — showing a menu to somebody Ben already coaches
+   * invited them to change an arrangement that was never on the table — so a
+   * payment invite is now welcome → account → pay with no plan step at all,
+   * and `customName` was dropped from the token entirely.
+   *
+   * The test kept passing against nothing for as long as the whole file was
+   * failing to mint an invite. What matters now is that the agreed money is
+   * stated plainly on the first screen, from the same numbers checkout will
+   * charge.
+   */
+  test("states the agreed money on the first screen", async ({ page }) => {
     const token = await mintInvite(page.request, {
       kind: "payment",
-      agreedPrice: "150",
-      agreedName: "Sam's plan",
+      amountPence: 6000,
+      dueTodayPence: 10000,
     });
-    await page.goto(`/o/${token}?step=plan`);
+    await page.goto(`/o/${token}`);
+    await hydrated(page);
 
-    const cards = page.locator(".ob-plan");
-    await expect(cards.first()).toContainText("Sam's plan");
-    await expect(cards.first()).toContainText("£150");
-    /* "Agreed with Ben", never "Most popular": calling a plan built for one
-       person popular is a fabricated claim about other people. */
-    await expect(cards.first()).toContainText("Agreed with Ben");
-    await expect(page.locator(".ob-plan__flag")).toHaveCount(1);
+    const body = page.locator(".ob-step");
+    await expect(body).toContainText("£100");
+    await expect(body).toContainText("£60");
 
-    // Pre-selected. He quoted them a number; they should not have to hunt.
-    await expect(cards.first()).toHaveAttribute("aria-pressed", "true");
+    // No plan menu on this journey, and no invented package name.
+    await expect(page.locator(".ob-plan")).toHaveCount(0);
+    await expect(body).not.toContainText("Most popular");
 
-    // An ordinary invite gets none of this.
-    const plain = await mintInvite(page.request, { kind: "payment" });
-    await page.goto(`/o/${plain}?step=plan`);
-    await expect(page.locator(".ob-plan").first()).not.toContainText(
-      "Agreed with Ben",
-    );
+  });
+
+  test("an invite with no agreed rate says no money on the first screen", async ({
+    page,
+  }) => {
+    const token = await mintInvite(page.request, { kind: "payment" });
+    await page.goto(`/o/${token}`);
+    await hydrated(page);
+    await expect(page.locator(".ob-step")).not.toContainText("£");
   });
 });
 
@@ -377,7 +405,11 @@ test.describe("the welcome landing", () => {
     await page.goto("/onboarding/welcome");
     await hydrated(page);
     await expect(page.locator(".obw-next li")).toHaveCount(3);
-    await expect(page.getByRole("link", { name: "Go to my account" })).toBeVisible();
+    /* No session id on this URL, so the page cannot know they are signed
+       in: it offers sign-in rather than a button into the account. */
+    await expect(
+      page.getByRole("link", { name: "Sign in to my account" }),
+    ).toBeVisible();
   });
 });
 

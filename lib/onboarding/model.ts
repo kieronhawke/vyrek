@@ -524,15 +524,21 @@ export function summarise(
         .join(", "),
     });
   }
+  /**
+   * ⚠️ HEALTH ANSWERS ARE ACKNOWLEDGED, NEVER REPEATED.
+   *
+   * This screen is the last one before the card, so it is read on a phone, in
+   * a gym, in public. Injuries and conditions are special-category data and
+   * printing them here puts them on a stranger's screen over somebody's
+   * shoulder for no benefit — the client already knows what they typed.
+   *
+   * The free-text branch below always said "Given to Ben". The structured
+   * picker that replaced it did NOT: it listed the areas back ("Lower back"),
+   * because the rule was written on the old path and not carried over when
+   * the step was redesigned. Both say the same thing now.
+   */
   const flaggedInjuries = a.injuryAreas.filter((k) => k !== "none");
-  if (flaggedInjuries.length > 0) {
-    out.push({
-      label: "Injuries",
-      value: INJURY_AREAS.filter((i) => flaggedInjuries.includes(i.key))
-        .map((i) => i.label)
-        .join(", "),
-    });
-  } else if (a.injuries.trim() || a.conditions.trim()) {
+  if (flaggedInjuries.length > 0 || a.injuries.trim() || a.conditions.trim()) {
     out.push({ label: "Health notes", value: "Given to Ben" });
   }
   if (a.coachingStyle) {

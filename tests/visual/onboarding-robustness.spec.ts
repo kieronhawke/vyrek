@@ -277,9 +277,16 @@ test.describe("Onboarding funnel robustness", () => {
     await expect(page.getByText(/talk to ben instead if/i)).toBeVisible();
     await expect(page.getByText(/£12\.99/).first()).toBeVisible();
 
-    await page.getByRole("link", { name: /start 7 days free/i }).first().click();
-    await page.waitForURL("**/quiz**");
-    expect(page.url()).toContain("support=self");
+    /* The club CTA used to be "Start 7 days free" into the quiz carrying
+       support=self. It is a WAITING LIST now — there is no link from this
+       page into the quiz at all any more — so the assertion follows the
+       button that actually exists. If self-serve signup reopens, this is the
+       test to change back. */
+    await page
+      .getByRole("link", { name: /join the waiting list/i })
+      .first()
+      .click();
+    await page.waitForURL("**/club/waitlist**");
   });
 
   test("no horizontal overflow on any quiz screen", async ({ page }) => {

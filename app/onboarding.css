@@ -663,10 +663,22 @@
   cursor: pointer;
 }
 
+/* The "pay" button still uses a real `disabled`; Continue uses aria-disabled
+   so that pressing it can carry them to the field that is blocking it (see
+   nudgeToBlocker in components/onboarding/flow.tsx). Both must look the same,
+   so both are styled here.
+
+   `cursor: not-allowed` is deliberately NOT set on the aria variant: it can
+   be pressed, and saying otherwise would be a lie the pointer tells. */
 .ob-next:disabled {
   background: var(--ob-raised);
   color: var(--ob-faint);
   cursor: not-allowed;
+}
+
+.ob-next[aria-disabled="true"] {
+  background: var(--ob-raised);
+  color: var(--ob-faint);
 }
 
 .ob-skip {
