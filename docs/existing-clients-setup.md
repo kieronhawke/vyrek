@@ -134,9 +134,22 @@ the button for those.
 
 ## What is still Kieron's
 
-- **Stripe is in test mode in production.** Nothing here takes real money
-  until the live keys go into Vercel. Every checkout in this document was
-  a `4242` card.
+- **Production is on LIVE Stripe keys.** Confirmed 6 September 2026 two ways:
+  a checkout started from suthperformance.com returned a `cs_live_` session,
+  and the "view in Stripe" links in the admin have no `/test/` prefix (the
+  builder only drops it for a non-test key). This reverses what this document
+  said before. Consequences worth knowing:
+  - Every link Ben sends from production now charges a real card.
+  - The `4242` card no longer works there. It is refused, which is why
+    `scripts/e2e/full-journey.mjs` refuses to run against production at all.
+  - Production's `STRIPE_WEBHOOK_SECRET` differs from the test one — a
+    payload signed with the test secret is rejected — which is consistent
+    with a live webhook endpoint being configured. **Still worth confirming
+    in the Stripe dashboard**, in live mode, under Developers → Webhooks:
+    that the endpoint is `https://www.suthperformance.com/api/stripe/webhook`,
+    that it carries the eight events listed above, and that recent deliveries
+    are succeeding. Without it, a client who pays and closes the tab on the
+    receipt page gets no account and Ben gets no alert.
 - Ben's alert goes to his personal mobile and both his addresses, hardcoded
   in `lib/admin/recipients.ts`. Test runs reach him too; see the note in the
   verification section.

@@ -63,6 +63,24 @@ const profile = DESKTOP
 
 console.log(`\n── ${DESKTOP ? "desktop" : "phone"}${LIVE ? ", live email + text" : ""} ──`);
 
+/*
+ * ⚠️ NEVER AGAINST PRODUCTION.
+ *
+ * This script pays. It was pointed at suthperformance.com once and Stripe
+ * handed back a `cs_live_` session — production is on LIVE keys, so the run
+ * was attempting a real charge on a real account. The 4242 card is refused in
+ * live mode so nothing happened, but nothing is the wrong thing to rely on.
+ * Run it against a locally served build, where .env.local supplies the test
+ * key. Pass --i-know to override, and be certain first.
+ */
+if (/suthperformance\.com|vercel\.app/.test(BASE) && !process.argv.includes("--i-know")) {
+  console.error(
+    `\nRefusing to run against ${BASE}.\n` +
+      "This script completes a real checkout. Point E2E_BASE at a local build.\n",
+  );
+  process.exit(2);
+}
+
 const browser = await chromium.launch();
 let invite = null;
 try {
@@ -256,6 +274,15 @@ try {
   await ctx.close();
 } catch (e) {
   check("the journey ran to completion", false, String(e.message).split("\n")[0]);
+  /* Where it actually stopped, which is the only thing worth having when a
+     run against production fails. */
+  try {
+    const pages = browser.contexts().flatMap((c) => c.pages());
+    for (const [i, pg] of pages.entries()) {
+      console.log(`       page ${i}: ${pg.url().slice(0, 110)}`);
+      await pg.screenshot({ path: `${process.env.SHOT_DIR ?? "/tmp"}/journey-fail-${i}.png` }).catch(() => {});
+    }
+  } catch {}
 } finally {
   await browser.close();
 }
