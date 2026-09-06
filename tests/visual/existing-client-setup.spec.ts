@@ -98,6 +98,10 @@ async function inputsAreThumbSized(page: Page, where: string) {
 async function signInAsAdmin(page: Page) {
   await page.goto("/admin/login");
 
+  /* The business, not just the tool. This screen carried the words
+     "[ MISSION CONTROL ]" and no mark at all. */
+  await expect(page.getByRole("img", { name: "Suth Performance" })).toBeVisible();
+
   /* Filled, then CHECKED, then filled again if it did not stick.
      The form is a client component and hydration lands after the first
      paint: type into it too early and React's own state wins on hydrate,
@@ -133,6 +137,9 @@ test.describe("Ben sets up an existing client", () => {
     page,
   }) => {
     await signInAsAdmin(page);
+
+    // The lockup follows into the admin itself, above the console's own name.
+    await expect(page.getByRole("img", { name: "Suth Performance" }).first()).toBeVisible();
 
     await page.goto("/admin/clients");
     await expect(
@@ -182,12 +189,16 @@ test.describe("Ben sets up an existing client", () => {
 
     // The text, word for word — and the reserved number called out BEFORE send.
     await expect(
-      page.getByText(new RegExp(`Hi Playwright, it's Ben\\. Set your card up for ${OWED_SHOWN} today, then ${RATE_SHOWN.replace(".", "\\.")}/mo from`)),
+      page.getByText(
+        new RegExp(
+          `Hi Playwright, it's Ben\\. Here's your payment link as we discussed - ${OWED_SHOWN} today, then ${RATE_SHOWN.replace(".", "\\.")}/mo from`,
+        ),
+      ),
     ).toBeVisible();
     await expect(page.getByText(/reserved test number/i)).toBeVisible();
 
     // The email, actually rendered: subject line here, body in the frame.
-    await expect(page.getByText("Playwright, set up your payments")).toBeVisible();
+    await expect(page.getByText("Playwright, your payment link")).toBeVisible();
     const frame = page.frameLocator('iframe[title="Email preview"]');
     await expect(frame.getByText("Let's get you on card, Playwright.")).toBeVisible();
     await expect(frame.getByText(`${OWED_SHOWN} (outstanding balance)`)).toBeVisible();
@@ -241,7 +252,35 @@ test.describe("Ben sets up an existing client", () => {
       page.getByText(/choose a password, so you can get back/i),
     ).toBeVisible();
 
-    await page.getByLabel(/choose a password/i).fill("PlaywrightPass2026");
+    /* ── the strength meter ────────────────────────────────────────────
+       Advisory, not a gate: a weak password still gets through, and the
+       meter says the one thing that would improve it rather than listing
+       rules. What must never happen is the reverse — a client blocked at
+       the moment they are about to hand over a card. */
+    const pw = page.getByLabel(/choose a password/i);
+    await pw.fill("pass");
+    await expect(page.getByText("Too short")).toBeVisible();
+    await expect(page.getByText(/4 more characters to go/)).toBeVisible();
+
+    await pw.fill("password");
+    await expect(page.getByText("Too easy to guess")).toBeVisible();
+    await expect(page.getByText(/every guessing list/i)).toBeVisible();
+
+    await pw.fill("Playwright Client");
+    // It knows their own name, which is the first thing anybody would try.
+    await expect(page.getByText(/name or email/i)).toBeVisible();
+
+    await pw.fill("copper kettle window latch");
+    await expect(page.getByText("Strong")).toBeVisible();
+    await expect(page.getByText("That will do nicely.")).toBeVisible();
+
+    // Show reveals it, so nobody is fighting an autocorrect they cannot see.
+    await page.getByRole("button", { name: /^show$/i }).click();
+    await expect(pw).toHaveAttribute("type", "text");
+    await page.getByRole("button", { name: /^hide$/i }).click();
+    await expect(pw).toHaveAttribute("type", "password");
+
+    await pw.fill("PlaywrightPass2026");
     await page.getByRole("button", { name: /continue/i }).click();
 
     // The card screen: the rate, the balance, the date, and nothing invented.
@@ -279,6 +318,74 @@ test.describe("Ben sets up an existing client", () => {
 
     await page.goto(path, { waitUntil: "load" });
     await expect(page.getByText(/expired|ask ben/i).first()).toBeVisible();
+  });
+
+  test("Ben rewrites the text and the email before it goes", async ({ page }) => {
+    await signInAsAdmin(page);
+    await page.goto("/admin/clients");
+
+    const stamp = Date.now();
+    await page.getByPlaceholder("Sam Reeves").fill("Playwright Edit");
+    await page.getByPlaceholder("sam@example.com").fill(`playwright+edit${stamp}@example.com`);
+    await page.getByPlaceholder("07700 900123").fill(RESERVED_MOBILE);
+    await page.getByLabel("Monthly rate in pounds").fill(RATE);
+    await page.getByRole("button", { name: /review before sending/i }).click();
+    await expect(page.getByText("Check before it goes")).toBeVisible({ timeout: 30_000 });
+
+    /* The standard wording reads like Ben, not like an instruction. The old
+       text opened "Set your card up for £137.50" — a demand, from a machine,
+       to somebody doing him a favour by moving onto a card at all. */
+    await expect(page.getByText(/Here's your payment link as we discussed/)).toBeVisible();
+    await expect(page.getByText(/set your card up/i)).toHaveCount(0);
+
+    /* ── the text ─────────────────────────────────────────────────────── */
+    await page.getByRole("button", { name: /edit the wording/i }).first().click();
+    const smsBox = page.getByLabel("Your message").first();
+    await expect(smsBox).toBeVisible();
+    // The link is attached and is not his to delete.
+    await expect(page.getByText(/The link is added automatically on the end/)).toBeVisible();
+
+    await smsBox.fill("Morning Sam, here's that link we talked about:");
+    await expect(page.getByText(/^1 text ·/)).toBeVisible();
+
+    // Over the line, and it says so rather than failing at send.
+    await smsBox.fill("x".repeat(400));
+    await expect(page.getByRole("button", { name: /use this message/i })).toBeDisabled();
+    await expect(page.getByText(/Keep it under/)).toBeVisible();
+
+    await smsBox.fill("Morning Sam, here's that link we talked about:");
+    await page.getByRole("button", { name: /use this message/i }).click();
+
+    await expect(page.getByText("your wording").first()).toBeVisible({ timeout: 30_000 });
+    await expect(
+      page.getByText("Morning Sam, here's that link we talked about:", { exact: false }),
+    ).toBeVisible();
+
+    /* ── the email ────────────────────────────────────────────────────── */
+    await page.getByRole("button", { name: /edit the wording/i }).last().click();
+    const subject = page.getByLabel("Subject");
+    await expect(subject).toBeVisible();
+    await subject.fill("Sam, the link we talked about");
+    await page.getByLabel("Your message").last().fill(
+      "Here you go, as promised.\n\nAnything at all, give me a shout.",
+    );
+    await page.getByRole("button", { name: /use this email/i }).click();
+
+    await expect(page.getByText("Sam, the link we talked about")).toBeVisible({ timeout: 30_000 });
+    const frame = page.frameLocator('iframe[title="Email preview"]');
+    await expect(frame.getByText("Here you go, as promised.")).toBeVisible();
+    await expect(frame.getByText("Anything at all, give me a shout.")).toBeVisible();
+    // The parts that are not his to edit are still there.
+    await expect(frame.getByText("Set up my payments")).toBeVisible();
+
+    /* Back to the standard wording, in one press. */
+    await page.getByRole("button", { name: /edit the wording/i }).last().click();
+    await page.getByRole("button", { name: /back to the standard wording/i }).click();
+    await expect(subject).toHaveValue("Playwright, your payment link");
+    await page.getByRole("button", { name: "Cancel", exact: true }).click();
+
+    // Nothing was sent by any of that.
+    await expect(page.getByRole("button", { name: /^send to playwright$/i })).toBeVisible();
   });
 
   test("nothing owed: the review says so plainly and names the first payment date", async ({

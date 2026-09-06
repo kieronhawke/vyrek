@@ -110,8 +110,10 @@ export function AdminLoginForm() {
       >
         {busy ? "Signing in..." : "Sign in →"}
       </button>
-      <p className="text-center font-mono text-[10px] uppercase tracking-[0.22em] text-suth-text-tertiary">
-        Phase 1 · Email allowlist
+      {/* "Phase 1 · Email allowlist" was a note to the developers on the one
+          screen the business owner sees most. It says who to ask now. */}
+      <p className="text-center text-xs text-suth-text-tertiary">
+        Trouble getting in? Ask Kieron to check the admin list.
       </p>
     </form>
   );

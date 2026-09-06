@@ -29,6 +29,8 @@ import {
 } from "@/lib/quiz-flow";
 import type { InvitePayload } from "@/lib/onboarding/token";
 import { paymentSchedule, scheduleLines } from "@/lib/onboarding/schedule";
+import { PasswordField } from "@/components/shared/password-field";
+import { MIN_PASSWORD_LENGTH } from "@/lib/password-strength";
 
 /**
  * THE ONBOARDING FLOW.
@@ -107,8 +109,8 @@ export function OnboardingFlow({ token, invite, startStep, cancelled, prefill }:
     modelStop ??
     (needsPassword && !answers.name.trim()
       ? "What should Ben call you?"
-      : needsPassword && password.length > 0 && password.length < 8
-        ? "A password needs to be at least 8 characters."
+      : needsPassword && password.length > 0 && password.length < MIN_PASSWORD_LENGTH
+        ? `A password needs to be at least ${MIN_PASSWORD_LENGTH} characters.`
         : needsPassword && password.length === 0
           ? "Choose a password, so you can get back into your account."
           : null);
@@ -511,20 +513,18 @@ function Account({
           placeholder="07700 900000"
         />
       </Field>
-      {/* The hint carries the rule; the placeholder said the same eight words
-          again directly above it, which on a phone is two lines of screen
-          spent twice. */}
-      <Field label="Choose a password" hint="At least 8 characters.">
-        <input
-          type="password"
-          /* new-password, not current-password: this tells a password manager
-             to OFFER a generated one rather than trying to fill an old one. */
-          autoComplete="new-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="ob-input"
-        />
-      </Field>
+      {/* The meter carries the rule and the encouragement, so there is no
+          separate hint line saying "at least 8 characters" — it says that
+          itself until there are eight, then moves on to what would actually
+          make the password better. Their own name and email go in so it can
+          object to a password built out of either. */}
+      <PasswordField
+        value={password}
+        onChange={setPassword}
+        personal={[answers.name, answers.email]}
+        labelClassName="ob-label"
+        inputClassName="ob-input"
+      />
     </div>
   );
 }

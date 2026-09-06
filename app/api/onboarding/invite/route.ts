@@ -28,12 +28,16 @@ import {
   scheduleRows,
   scheduleSms,
 } from "@/lib/onboarding/schedule";
-import { sendOnboardingInvite } from "@/lib/email/send";
 import {
-  OnboardingInviteEmail,
-  onboardingInviteSms,
-  onboardingInviteSubject,
-} from "@/lib/email/templates/onboarding-invite";
+  assembleSms,
+  checkEmail,
+  checkSmsMessage,
+  defaultInviteEmailBody,
+  defaultInviteEmailSubject,
+  defaultInviteSmsMessage,
+} from "@/lib/onboarding/message-copy";
+import { sendOnboardingInvite } from "@/lib/email/send";
+import { OnboardingInviteEmail } from "@/lib/email/templates/onboarding-invite";
 import {
   isReservedTestNumber,
   sendSms,
@@ -111,6 +115,16 @@ type Body = {
   startDate?: string;
   /** Validate and render, send nothing, store nothing. */
   preview?: boolean;
+  /**
+   * Ben's own wording, when he has edited it on the review step.
+   *
+   * The SMS message is his half only — the link is appended by this route and
+   * cannot be removed, because a payment text without a payment link costs
+   * money to send and does nothing. See lib/onboarding/message-copy.ts.
+   */
+  smsMessage?: string;
+  emailSubject?: string;
+  emailBody?: string;
 };
 
 export async function POST(request: Request) {
@@ -253,12 +267,55 @@ export async function POST(request: Request) {
     ? paymentSchedule({ amountPence, dueTodayPence, startDay })
     : null;
   const lines = schedule ? scheduleLines(schedule) : null;
-  const payLine = lines ? `${lines.today} ${lines.monthly}` : null;
   const payRows = schedule ? scheduleRows(schedule) : null;
-  const smsSchedule = schedule ? scheduleSms(schedule) : null;
   const firstName = name.split(/\s+/)[0];
-  const subject = onboardingInviteSubject(firstName, kind);
   const sandbox = (process.env.RESEND_FROM ?? "").includes("resend.dev");
+
+  /* ── WHAT IT SAYS, HIS WAY OR THE STANDARD WAY ────────────────────────
+     Both come through the same checks, so an edited message cannot be sent
+     in a state the default would be refused in — and the preview Ben reads
+     is built from exactly these values, not from a second rendering path
+     that could drift from this one. */
+  const defaultSms = defaultInviteSmsMessage(firstName, kind, schedule);
+  const defaultSubject = defaultInviteEmailSubject(firstName, kind);
+  const defaultBody = defaultInviteEmailBody(kind, schedule);
+
+  const smsMessage =
+    typeof body.smsMessage === "string" && body.smsMessage.trim()
+      ? body.smsMessage
+      : defaultSms;
+  const emailCheck = checkEmail(
+    typeof body.emailSubject === "string" && body.emailSubject.trim()
+      ? body.emailSubject
+      : defaultSubject,
+    typeof body.emailBody === "string" && body.emailBody.trim()
+      ? body.emailBody
+      : defaultBody,
+  );
+  if (!emailCheck.ok) {
+    return NextResponse.json(
+      { error: "EMAIL_COPY_INVALID", detail: emailCheck.error },
+      { status: 400 },
+    );
+  }
+  const subject = emailCheck.subject;
+  const paragraphs = emailCheck.paragraphs;
+
+  /* Checked against a sample link of exactly the length the real one will be,
+     so the segment count Ben is shown before sending is the one he pays for.
+     A short id is always ten characters; the signed-token fallback is longer,
+     and is measured with the real thing further down. */
+  const sampleId = newInviteId();
+  const smsCheck = checkSmsMessage(
+    smsMessage,
+    inviteUrlForSms(sampleId, siteUrl()),
+  );
+  if (phone && !smsCheck.ok) {
+    return NextResponse.json(
+      { error: "SMS_COPY_INVALID", detail: smsCheck.error },
+      { status: 400 },
+    );
+  }
 
   /*
    * THE REVIEW STEP.
@@ -270,12 +327,9 @@ export async function POST(request: Request) {
    * actual message rather than a description of it.
    */
   if (body.preview) {
-    const sampleId = newInviteId();
     const link = inviteUrl(sampleId, siteUrl());
-    const smsText = phone
-      ? onboardingInviteSms(firstName, inviteUrlForSms(sampleId, siteUrl()), kind, smsSchedule)
-      : null;
-    const element = OnboardingInviteEmail({ firstName, link, kind, payLine, payRows });
+    const smsText = phone ? smsCheck.body : null;
+    const element = OnboardingInviteEmail({ firstName, link, kind, paragraphs, payRows });
     const [html, text] = await Promise.all([
       render(element),
       render(element, { plainText: true }),
@@ -287,11 +341,25 @@ export async function POST(request: Request) {
       dueTodayPence,
       startsOn: startDay ? startDateISO(startDay) : null,
       schedule: schedule
-        ? { ...schedule, lines, rows: payRows, sms: smsSchedule }
+        ? { ...schedule, lines, rows: payRows, sms: scheduleSms(schedule) }
         : null,
       link,
       shortLink: inviteStoreDurable(),
       secured: signingConfigured(),
+      /* What Ben is editing, and what the standard version says, so the
+         composer can open on his words and still offer a way back. */
+      copy: {
+        smsMessage: smsCheck.message,
+        smsDefault: defaultSms,
+        emailSubject: subject,
+        emailSubjectDefault: defaultSubject,
+        emailBody: emailCheck.body,
+        emailBodyDefault: defaultBody,
+        edited: {
+          sms: smsCheck.message !== defaultSms,
+          email: subject !== defaultSubject || emailCheck.body !== defaultBody,
+        },
+      },
       email: {
         attempted: Boolean(email),
         configured: Boolean(process.env.RESEND_API_KEY),
@@ -306,8 +374,13 @@ export async function POST(request: Request) {
         configured: smsConfigured(),
         sentAs: process.env.TWILIO_ALPHA_SENDER ?? "number",
         text: smsText,
-        segments: smsText ? segments(smsText) : 0,
-        gsm: smsText ? isGsm7(smsText) : true,
+        /* The link is appended by the server and cannot be edited away, so
+           the composer shows it separately from the part Ben types. */
+        message: smsCheck.message,
+        linkPreview: inviteUrlForSms(sampleId, siteUrl()),
+        segments: smsCheck.segments,
+        gsm: smsCheck.gsm,
+        warning: smsCheck.warning,
         /* Ofcom's reserved drama range: the transport refuses it, so say so
            now rather than reporting a failed text after the email went. */
         reserved: phoneE164 ? isReservedTestNumber(phoneE164) : false,
@@ -362,10 +435,10 @@ export async function POST(request: Request) {
   const link = inviteUrl(key, siteUrl());
 
   // The text gets the bare-domain link; the email keeps the full one so it
-  // renders as a proper anchor.
-  const smsText = phone
-    ? onboardingInviteSms(firstName, inviteUrlForSms(key, siteUrl()), kind, smsSchedule)
-    : null;
+  // renders as a proper anchor. Re-assembled against the REAL link rather
+  // than the sample: on the signed-token fallback the two differ by nearly
+  // a hundred characters, and the message that gets sent is this one.
+  const smsText = phone ? assembleSms(smsCheck.message, inviteUrlForSms(key, siteUrl())) : null;
 
   // Both at once. Sequentially, a slow email delays the text for no reason,
   // and neither is allowed to fail the other.
@@ -376,8 +449,9 @@ export async function POST(request: Request) {
           firstName,
           link,
           kind,
-          payLine,
+          paragraphs,
           payRows,
+          subject,
         })
       : Promise.resolve({ ok: false as const, reason: "NO_EMAIL_GIVEN" }),
     phone && smsText
@@ -415,7 +489,7 @@ export async function POST(request: Request) {
     dueTodayPence,
     /** The first monthly payment date the link will actually charge on, or null for today. */
     startsOn: startDay ? startDateISO(startDay) : null,
-    schedule: schedule ? { ...schedule, lines, rows: payRows, sms: smsSchedule } : null,
+    schedule: schedule ? { ...schedule, lines, rows: payRows, sms: scheduleSms(schedule) } : null,
     email: {
       attempted: Boolean(email),
       ok: emailResult.ok,

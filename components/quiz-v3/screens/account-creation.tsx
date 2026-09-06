@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { QuestionHeader } from "@/components/quiz-v3/question-header";
 import { cn } from "@/lib/utils";
+import { PasswordMeter } from "@/components/shared/password-field";
 
 export function AccountCreationScreen({
   email,
@@ -52,7 +53,7 @@ export function AccountCreationScreen({
 
         <label className="block">
           <span className="mb-2 block text-xs uppercase tracking-[0.15em] text-suth-text-tertiary">
-            Password (8+ characters)
+            Password
           </span>
           <div className="relative">
             <input
@@ -73,6 +74,10 @@ export function AccountCreationScreen({
               {showPassword ? "Hide" : "Show"}
             </button>
           </div>
+          {/* The same meter the invite flow uses, so "Strong" means the same
+              thing on both roads into an account. It carries the length rule
+              itself, which is why the label above no longer repeats it. */}
+          <PasswordMeter value={password} personal={[email]} />
         </label>
 
         <label className="flex cursor-pointer items-center gap-3 py-2 text-sm text-suth-text-secondary">

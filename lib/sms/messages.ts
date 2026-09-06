@@ -24,6 +24,18 @@
  *  - **Say who it is.** These come from a number nobody has saved.
  *  - **Give an opt-out** on anything that isn't a direct reply to something
  *    the person just did. UK PECR expects it and it costs seven characters.
+ *  - **"Reply here" only works from the NUMBER.** The messaging service holds
+ *    two senders: the brand name SUTH, which cannot receive anything, and the
+ *    UK number, which can. Anything below that invites a reply must be sent
+ *    with the default sender, never `sender: "brand"` — see lib/sms/send.ts.
+ *    The onboarding invite is the one client-facing message sent from the
+ *    brand name, and it deliberately does not ask for a reply.
+ *  - **It is a person texting, not a system.** These go out under Ben's name
+ *    to people he coaches. Reviewed 5 September 2026 and rewritten where they
+ *    had drifted into instructions: "Set your card up for £100" became "here's
+ *    your payment link as we discussed". The information is identical; the
+ *    difference is whether the person on the other end feels chased or
+ *    looked after. Terseness is a budget, not a tone.
  *
  * Spec: docs/onboarding-funnel-proposal.md section 6.
  */
@@ -67,27 +79,27 @@ export const leadSms = {
    * the system: contact inside five minutes transforms reach rates.
    */
   confirmation: ({ firstName }: { firstName: string }) =>
-    `Hi ${firstName}, it's Ben from Suth Performance. Got your plan and your answers. I'll be in touch shortly. Reply here any time.`,
+    `Hi ${firstName}, it's Ben from Suth Performance. Thanks for that. I've got your plan and your answers, and I'll be in touch shortly. Reply here any time.`,
 
   /** When a specific slot is agreed. */
   callBooked: ({ firstName, when }: { firstName: string; when: string }) =>
-    `Hi ${firstName}, Ben from Suth Performance. You're booked in for ${when}. Reply here if you need to move it.`,
+    `Hi ${firstName}, it's Ben from Suth Performance. You're booked in for ${when}. Just reply here if you need to move it.`,
 
   /** Day before. The single biggest lever on no-show rate. */
   reminder24h: ({ when }: { when: string }) =>
-    `Ben from Suth Performance. Reminder we're speaking ${when}. Reply here if the timing has changed.`,
+    `It's Ben from Suth Performance. Just a reminder we're speaking ${when}. Reply here if anything has changed and we'll move it.`,
 
   /** An hour before. Short on purpose. */
   reminder1h: ({ when }: { when: string }) =>
-    `Ben here. We're on in about an hour (${when}). Speak shortly.`,
+    `It's Ben. We're on in about an hour, ${when}. Speak to you shortly.`,
 
   /** Same day as a missed call. Warm, never disappointed. */
   noShow: ({ firstName }: { firstName: string }) =>
-    `Hi ${firstName}, Ben from Suth Performance. Missed you today, no problem at all. Reply with a couple of times that suit and I'll work around them.`,
+    `Hi ${firstName}, it's Ben from Suth Performance. Missed you today, no problem at all. Send me a couple of times that suit and I'll work around them.`,
 
   /** They became a coaching client. */
   clientWelcome: ({ firstName }: { firstName: string }) =>
-    `Welcome aboard ${firstName}. Ben here. Your first week is in your account now. Any questions, this number reaches me.`,
+    `Welcome aboard, ${firstName}. It's Ben. Your first week is in your account now. Any questions at all, this number reaches me.`,
 
   /** Morning of a race. Coaching clients only, and never automated blind. */
   raceDay: ({ firstName }: { firstName: string }) =>
@@ -101,7 +113,7 @@ export const leadSms = {
     firstName: string;
     window: string;
   }) =>
-    `Hi ${firstName}, Ben from Suth Performance. Got your details. I'll call you ${window}. Reply here if that changes.`,
+    `Hi ${firstName}, it's Ben from Suth Performance. Thanks for those details. I'll give you a call ${window}. Reply here if that changes.`,
 } as const;
 
 /* ─── To Ben, internal ──────────────────────────────────────────────── */
@@ -130,7 +142,7 @@ export const benSms = {
 
   /** Nobody turned up. Prompts Ben to send the rebook link himself. */
   noShow: ({ name }: { name: string }) =>
-    `${name} did not show for their call. Rebook link not sent yet.`,
+    `${name} did not make their call. No rebook link has gone out yet.`,
 
   /** A club member took the day-30 offer. Warmest lead there is. */
   clubUpgradeInterest: ({ name }: { name: string }) =>
@@ -166,7 +178,7 @@ export const memberSms = {
     firstName: string;
     link: string;
   }) =>
-    `${firstName}, Ben has replied to your message. Read it here: ${link}`,
+    `Hi ${firstName}, Ben has replied to your message. Have a read here: ${link}`,
 } as const;
 
 /* ─── Club lifecycle ────────────────────────────────────────────────── */
@@ -180,7 +192,7 @@ export const clubSms = {
     `Suth Club: the card on your account expires ${month}. Update it and nothing changes. suthperformance.com/app/account${STOP}`,
 
   paymentFailed: () =>
-    `Suth Club: your payment did not go through. Update your card and nothing else changes. suthperformance.com/app/account${STOP}`,
+    `Suth Club: we could not take this month's payment. Update your card and nothing else changes. suthperformance.com/app/account${STOP}`,
 } as const;
 
 /* ─── Registry, for the preview screen and tests ────────────────────── */

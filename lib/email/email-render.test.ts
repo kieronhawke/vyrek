@@ -59,7 +59,15 @@ const LEAD = {
 const EMAILS: { name: string; el: React.ReactElement }[] = [
   {
     name: "onboarding invite (full)",
-    el: OnboardingInviteEmail({ firstName: "Sam", link: LINK, kind: "full" }),
+    el: OnboardingInviteEmail({
+      firstName: "Sam",
+      link: LINK,
+      kind: "full",
+      paragraphs: [
+        "Before I write your first week I need a few things from you.",
+        "It takes about five minutes, and it's all on your phone.",
+      ],
+    }),
   },
   {
     name: "onboarding invite (payment)",
@@ -67,8 +75,10 @@ const EMAILS: { name: string; el: React.ReactElement }[] = [
       firstName: "Sam",
       link: LINK,
       kind: "payment",
-      payLine:
-        "£100 today, for your outstanding balance. Then £150 a month from Tuesday 1 September, on the same day each month.",
+      paragraphs: [
+        "Here's the link to get your payments set up, as we discussed.",
+        "Exactly as we agreed: £100 today, for your outstanding balance. Then £150 a month from Tuesday 1 September, on the same day each month.",
+      ],
       payRows: [
         { label: "Today", value: "£100 (outstanding balance)" },
         { label: "From Tuesday 1 September", value: "£150 a month" },
@@ -185,7 +195,7 @@ describe.each(EMAILS)("$name", ({ el }) => {
 describe("the invite specifically", () => {
   it("carries the link both as a button and as readable text", async () => {
     const html = await render(
-      OnboardingInviteEmail({ firstName: "Sam", link: LINK, kind: "full" }),
+      OnboardingInviteEmail({ firstName: "Sam", link: LINK, kind: "full", paragraphs: ["A line of body copy."] }),
     );
     // Some corporate clients strip the button entirely.
     expect((html.match(new RegExp(LINK.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) ?? []).length)
@@ -194,14 +204,14 @@ describe("the invite specifically", () => {
 
   it("greets them by name", async () => {
     const html = await render(
-      OnboardingInviteEmail({ firstName: "Sam", link: LINK, kind: "full" }),
+      OnboardingInviteEmail({ firstName: "Sam", link: LINK, kind: "full", paragraphs: ["A line of body copy."] }),
     );
     expect(html).toContain("Sam");
   });
 
   it("shows the logo", async () => {
     const html = await render(
-      OnboardingInviteEmail({ firstName: "Sam", link: LINK, kind: "full" }),
+      OnboardingInviteEmail({ firstName: "Sam", link: LINK, kind: "full", paragraphs: ["A line of body copy."] }),
     );
     expect(html).toMatch(/src="https:\/\/[^"]*\/email\/logo-wordmark\.png"/);
     expect(html).toMatch(/alt="Suth Performance"/);
@@ -209,7 +219,7 @@ describe("the invite specifically", () => {
 
   it("has exactly one call-to-action button", async () => {
     const html = await render(
-      OnboardingInviteEmail({ firstName: "Sam", link: LINK, kind: "full" }),
+      OnboardingInviteEmail({ firstName: "Sam", link: LINK, kind: "full", paragraphs: ["A line of body copy."] }),
     );
     // A second call to action halves the first.
     const buttons = html.match(/background-color:#A3E635|background:#A3E635/gi) ?? [];
@@ -218,7 +228,7 @@ describe("the invite specifically", () => {
 
   it("carries no unsubscribe line — it is transactional", async () => {
     const html = await render(
-      OnboardingInviteEmail({ firstName: "Sam", link: LINK, kind: "full" }),
+      OnboardingInviteEmail({ firstName: "Sam", link: LINK, kind: "full", paragraphs: ["A line of body copy."] }),
     );
     // HARD-RULES §11. An opt-out here invites somebody to opt out of their
     // own account setup.

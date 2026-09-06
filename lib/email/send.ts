@@ -175,19 +175,21 @@ export async function sendOnboardingInvite(args: {
   firstName: string;
   link: string;
   kind: "full" | "payment";
-  /** The schedule in a sentence or two, from scheduleLines(). */
-  payLine?: string | null;
+  /** The body above the button, one string per paragraph. Ben's if he edited it. */
+  paragraphs: string[];
   /** The schedule as rows, from scheduleRows(). */
   payRows?: { label: string; value: string }[] | null;
+  /** Ben's subject line when he changed it; the standard one otherwise. */
+  subject?: string | null;
 }): Promise<Result> {
   return send({
     to: args.to,
-    subject: onboardingInviteSubject(args.firstName, args.kind),
+    subject: args.subject?.trim() || onboardingInviteSubject(args.firstName, args.kind),
     react: OnboardingInviteEmail({
       firstName: args.firstName,
       link: args.link,
       kind: args.kind,
-      payLine: args.payLine,
+      paragraphs: args.paragraphs,
       payRows: args.payRows,
     }),
   });

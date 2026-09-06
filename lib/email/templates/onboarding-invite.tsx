@@ -1,4 +1,4 @@
-import { Section, Text } from "@react-email/components";
+import { Text } from "@react-email/components";
 import {
   Btn,
   EmailLayout,
@@ -43,6 +43,13 @@ import {
  * numbers the checkout charges, so this email and the card screen cannot
  * disagree. It replaced `amount` + `startsOn`, which between them could not
  * describe a balance owed today at all.
+ *
+ * THE MESSAGE IS BEN'S, THE REST IS THE TEMPLATE'S. `paragraphs` is plain
+ * text he can rewrite before sending (lib/onboarding/message-copy.ts). It is
+ * rendered as text nodes, so whatever he types is escaped on the way in and
+ * an email can never be broken by a stray angle bracket. The headline, the
+ * button, the payment table and the sign-off are not his to edit: they are
+ * the parts that have to be right every time.
  */
 
 export type PayRow = { label: string; value: string };
@@ -51,21 +58,18 @@ export function OnboardingInviteEmail({
   firstName,
   link,
   kind,
-  coach = "Ben",
-  payLine,
+  paragraphs,
   payRows,
 }: {
   firstName: string;
   link: string;
   kind: "full" | "payment";
-  coach?: string;
   /**
-   * The schedule in one or two sentences — "£100 today, for your outstanding
-   * balance. Then £60 a month from Tuesday 1 October, on the same day each
-   * month." Null when no rate was agreed on the invite.
+   * The body above the button, one string per paragraph. Ben's own words when
+   * he has edited them, otherwise `defaultInviteEmailBody`.
    */
-  payLine?: string | null;
-  /** The same schedule as rows, for the panel. */
+  paragraphs: string[];
+  /** The schedule as rows, for the panel. */
   payRows?: PayRow[] | null;
 }) {
   const payment = kind === "payment";
@@ -84,19 +88,9 @@ export function OnboardingInviteEmail({
         {payment ? `Let's get you on card, ${firstName}.` : `Good to have you, ${firstName}.`}
       </H1>
 
-      <P>
-        {payment
-          ? "Nothing changes about your training. This just moves your payments onto a card so neither of us has to think about it again."
-          : "Before I write your first week I need a few things from you: what you're training for, how you're training now, and anything I should know about injuries."}
-      </P>
-
-      <P>
-        {payment
-          ? payLine
-            ? `Exactly as we agreed: ${payLine}`
-            : "It takes about two minutes."
-          : "It takes about five minutes, and it's all on your phone."}
-      </P>
+      {paragraphs.map((text, i) => (
+        <P key={i}>{text}</P>
+      ))}
 
       <Btn href={link}>{payment ? "Set up my payments" : "Set up my account"}</Btn>
 
@@ -148,10 +142,6 @@ export function OnboardingInviteEmail({
           </Text>
         </Panel>
       ) : null}
-
-      <Section>
-        <P>Any questions at all, just reply to this. It comes straight to {coach === "Ben" ? "me" : coach}.</P>
-      </Section>
 
       <SignOff />
     </EmailLayout>

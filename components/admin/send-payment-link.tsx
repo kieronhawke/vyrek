@@ -21,6 +21,7 @@ import {
   paymentSchedule,
   scheduleLines,
 } from "@/lib/onboarding/schedule";
+import { EmailComposer, SmsComposer } from "@/components/admin/message-composer";
 
 /**
  * SETTING UP AN EXISTING CLIENT.
@@ -61,8 +62,20 @@ type Schedule = {
   sms: string | null;
 };
 
+/** What Ben is sending and what the standard version says, from the server. */
+type Copy = {
+  smsMessage: string;
+  smsDefault: string;
+  emailSubject: string;
+  emailSubjectDefault: string;
+  emailBody: string;
+  emailBodyDefault: string;
+  edited: { sms: boolean; email: boolean };
+};
+
 type Preview = {
   preview?: true;
+  copy?: Copy;
   to?: { name: string; firstName: string; email: string | null; phone: string | null };
   agreedPence?: number | null;
   dueTodayPence?: number;
@@ -85,8 +98,11 @@ type Preview = {
     configured: boolean;
     sentAs: string;
     text: string | null;
+    message: string;
+    linkPreview: string;
     segments: number;
     gsm: boolean;
+    warning: string | null;
     reserved: boolean;
   };
   error?: string;
@@ -143,6 +159,9 @@ function explain(data: { error?: string; detail?: string }): string {
       return "Too many links in a short time. Wait a few minutes and try again.";
     case "CONTACT_REQUIRED":
       return "Give an email address or a mobile number.";
+    case "SMS_COPY_INVALID":
+    case "EMAIL_COPY_INVALID":
+      return "That wording will not send. Open the message and check what it says underneath it.";
     case "UNAUTHORIZED":
       return "Your admin session has ended. Sign in again.";
     default:
@@ -180,6 +199,14 @@ export function SendPaymentLink({
     const d = initialStart ? parseStartDate(initialStart) : null;
     return d !== null && d >= today ? initialStart! : startDateISO(today);
   });
+  /* Ben's own wording, when he has changed it. Null means "send the standard
+     one", which is what almost every invite is — so an unedited send carries
+     no copy at all and cannot drift from the default by accident. */
+  const [smsMessage, setSmsMessage] = useState<string | null>(null);
+  const [emailSubject, setEmailSubject] = useState<string | null>(null);
+  const [emailBody, setEmailBody] = useState<string | null>(null);
+  const [editing, setEditing] = useState<"sms" | "email" | null>(null);
+
   const [stage, setStage] = useState<"edit" | "review" | "sent">("edit");
   const [busy, setBusy] = useState(false);
   const [preview, setPreview] = useState<Preview | null>(null);
@@ -220,27 +247,39 @@ export function SendPaymentLink({
         )
       : null;
 
-  const body = () =>
-    JSON.stringify({
-      name: name.trim(),
-      email: email.trim(),
-      phone: phone.trim(),
-      // Fixed. This surface exists for one job.
-      kind: "payment",
-      agreedPrice: rate.trim(),
-      dueToday: dueToday.trim(),
-      startDate,
-    });
+  /** Everything the route needs, with Ben's wording only when he changed it. */
+  const payload = (over: Partial<Record<"smsMessage" | "emailSubject" | "emailBody", string>> = {}) => ({
+    name: name.trim(),
+    email: email.trim(),
+    phone: phone.trim(),
+    // Fixed. This surface exists for one job.
+    kind: "payment",
+    agreedPrice: rate.trim(),
+    dueToday: dueToday.trim(),
+    startDate,
+    ...(smsMessage !== null ? { smsMessage } : {}),
+    ...(emailSubject !== null ? { emailSubject } : {}),
+    ...(emailBody !== null ? { emailBody } : {}),
+    ...over,
+  });
 
-  async function review() {
+  /**
+   * Build the preview on the server, so what Ben reads is what will send.
+   *
+   * `over` carries an edit that has just been made, because React state set in
+   * the same tick is not readable yet — and re-previewing with the previous
+   * wording would show him the message he just replaced.
+   */
+  async function review(
+    over: Partial<Record<"smsMessage" | "emailSubject" | "emailBody", string>> = {},
+  ) {
     setBusy(true);
     setError(null);
-    setPreview(null);
     try {
       const res = await fetch("/api/onboarding/invite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...JSON.parse(body()), preview: true }),
+        body: JSON.stringify({ ...payload(over), preview: true }),
       });
       const data = (await res.json()) as Preview;
       if (!res.ok || !data.preview) {
@@ -248,6 +287,7 @@ export function SendPaymentLink({
         return;
       }
       setPreview(data);
+      setEditing(null);
       setStage("review");
     } catch {
       setError("Couldn't reach the server. Nothing was sent.");
@@ -265,7 +305,7 @@ export function SendPaymentLink({
       const res = await fetch("/api/onboarding/invite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: body(),
+        body: JSON.stringify(payload()),
       });
       const data = (await res.json()) as SendResult;
       if (!res.ok || !data.link) {
@@ -292,6 +332,10 @@ export function SendPaymentLink({
     setPreview(null);
     setResult(null);
     setError(null);
+    setSmsMessage(null);
+    setEmailSubject(null);
+    setEmailBody(null);
+    setEditing(null);
     setStage("edit");
   }
 
@@ -431,23 +475,91 @@ export function SendPaymentLink({
 
         {p.sms?.attempted ? (
           <section className="mt-5">
-            <p className={eyebrow}>The text message</p>
-            <div className="mt-2 max-w-md rounded-2xl rounded-tl-sm border border-suth-border bg-suth-elevated px-4 py-3 text-sm text-suth-text">
-              {p.sms.text}
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <p className={eyebrow}>
+                The text message
+                {p.copy?.edited.sms ? (
+                  <span className="ml-2 rounded-pill bg-suth-accent/15 px-2 py-0.5 text-suth-accent">
+                    your wording
+                  </span>
+                ) : null}
+              </p>
+              {editing !== "sms" ? (
+                <button
+                  type="button"
+                  className="text-xs text-suth-text-secondary underline underline-offset-4 hover:text-suth-text"
+                  onClick={() => setEditing("sms")}
+                >
+                  Edit the wording
+                </button>
+              ) : null}
             </div>
-            <p className={`mt-1.5 text-xs ${smsWillSend ? "text-suth-text-secondary" : "text-amber-300"}`}>
-              {p.sms.reserved
-                ? "That is a reserved test number. No text will be sent."
-                : !p.sms.configured
-                  ? "Texts are not switched on in this environment, so this will not send. The email still goes; copy the text and send it yourself if you need to."
-                  : `${p.sms.segments} segment${p.sms.segments === 1 ? "" : "s"}, sent as ${p.sms.sentAs}.${p.sms.gsm ? "" : " Contains characters that halve each segment."}`}
-            </p>
+
+            {editing === "sms" && p.copy ? (
+              <SmsComposer
+                message={p.copy.smsMessage}
+                standard={p.copy.smsDefault}
+                link={p.sms.linkPreview}
+                onCancel={() => setEditing(null)}
+                onSave={(m) => {
+                  setSmsMessage(m);
+                  void review({ smsMessage: m });
+                }}
+              />
+            ) : (
+              <>
+                <div className="mt-2 max-w-md rounded-2xl rounded-tl-sm border border-suth-border bg-suth-elevated px-4 py-3 text-sm text-suth-text">
+                  {p.sms.text}
+                </div>
+                <p className={`mt-1.5 text-xs ${smsWillSend ? "text-suth-text-secondary" : "text-amber-300"}`}>
+                  {p.sms.reserved
+                    ? "That is a reserved test number. No text will be sent."
+                    : !p.sms.configured
+                      ? "Texts are not switched on in this environment, so this will not send. The email still goes; copy the text and send it yourself if you need to."
+                      : `${p.sms.segments} text${p.sms.segments === 1 ? "" : "s"}, sent as ${p.sms.sentAs}.${p.sms.warning ? ` ${p.sms.warning}` : ""}`}
+                </p>
+              </>
+            )}
           </section>
         ) : null}
 
         {p.email?.attempted ? (
           <section className="mt-5">
-            <p className={eyebrow}>The email</p>
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <p className={eyebrow}>
+                The email
+                {p.copy?.edited.email ? (
+                  <span className="ml-2 rounded-pill bg-suth-accent/15 px-2 py-0.5 text-suth-accent">
+                    your wording
+                  </span>
+                ) : null}
+              </p>
+              {editing !== "email" ? (
+                <button
+                  type="button"
+                  className="text-xs text-suth-text-secondary underline underline-offset-4 hover:text-suth-text"
+                  onClick={() => setEditing("email")}
+                >
+                  Edit the wording
+                </button>
+              ) : null}
+            </div>
+
+            {editing === "email" && p.copy ? (
+              <EmailComposer
+                subject={p.copy.emailSubject}
+                body={p.copy.emailBody}
+                standardSubject={p.copy.emailSubjectDefault}
+                standardBody={p.copy.emailBodyDefault}
+                onCancel={() => setEditing(null)}
+                onSave={(subject, bodyText) => {
+                  setEmailSubject(subject);
+                  setEmailBody(bodyText);
+                  void review({ emailSubject: subject, emailBody: bodyText });
+                }}
+              />
+            ) : null}
+
             <p className="mt-2 text-xs text-suth-text-secondary">
               From <span className="text-suth-text">{p.email.from ?? "the default sender"}</span>
               {" · "}
@@ -486,7 +598,14 @@ export function SendPaymentLink({
         ) : null}
 
         <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <button type="button" onClick={send} disabled={busy} className={primary}>
+          <button
+            type="button"
+            onClick={send}
+            /* Not while a composer is open: the box on screen holds a version
+               he has not confirmed, and sending would quietly use the old one. */
+            disabled={busy || editing !== null}
+            className={primary}
+          >
             {busy ? "Sending…" : `Send to ${first}`}
           </button>
           <button
@@ -615,7 +734,9 @@ export function SendPaymentLink({
       <div className="mt-5">
         <button
           type="button"
-          onClick={review}
+          /* Wrapped, not passed: `review` takes an overrides object and a
+             click handler would hand it a MouseEvent. */
+          onClick={() => void review()}
           disabled={busy || Boolean(blocker)}
           className={primary}
         >

@@ -88,11 +88,9 @@ export async function notifyAdminNewSubscription(args: {
       /* Says what actually happened: a balance taken today, and the date the
          monthly cycle starts when it is not today. "Collects monthly" alone
          had Ben expecting money on a date nothing was scheduled for. */
-      const body = `CLIENT SET UP: ${who}${rate ? ` - ${rate}/mo` : ""}${
+      const body = `${who} is all set up: ${rate ? `${rate}/mo` : "their rate"}${
         args.startsOnShort ? ` from ${args.startsOnShort}` : ""
-      }${paidToday ? ` (+${paidToday} taken today)` : ""}${
-        args.planName ? ` (${args.planName})` : ""
-      }. Card on file. ${siteUrl().replace(/^https?:\/\/(www\.)?/, "")}/admin`;
+      }${paidToday ? `, ${paidToday} taken today` : ""}. Card on file. ${siteUrl().replace(/^https?:\/\/(www\.)?/, "")}/admin`;
       await Promise.all(
         adminMobiles().map((to) =>
           sendSms({ to, body, sender: "brand" }).catch((e) => {
